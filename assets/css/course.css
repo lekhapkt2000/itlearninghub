@@ -3,8 +3,7 @@
 .breadcrumb a:hover{color:var(--primary)}
 .breadcrumb span{margin:0 6px;color:#cbd5e1}
 
-.course-header{position:relative;overflow:hidden;display:flex;align-items:flex-start;justify-content:space-between;gap:32px;padding:28px 0}
-.course-header>*{position:relative;z-index:1}
+.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;padding:28px 0}
 .course-header .course-code{color:var(--primary);font:700 12px var(--font-mono);letter-spacing:.1em}
 .course-header h1{margin:10px 0 6px;font-size:clamp(32px,4.5vw,48px)}
 .course-header .course-en{color:var(--muted);font-size:13px}
@@ -18,11 +17,6 @@
 .progress-card strong{display:block;margin-top:14px;color:var(--ink);font-size:28px;letter-spacing:-.03em}
 .progress-card strong span{color:var(--muted);font-size:14px}
 .progress-card>span{color:var(--muted);font-size:11px}
-
-.course-card-wrap{position:relative;margin-top:28px;width:230px}
-.course-card-float{position:relative;z-index:1;width:230px;padding:20px 22px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 24px -8px rgb(15 23 42 / .1)}
-.course-card-sql{margin-top:14px;color:var(--ink);font:12px/1.8 var(--font-mono)}
-.course-card-sql span{color:var(--primary)}
 
 /* Horizontal course navigation - shared across overview + week pages */
 .course-nav{display:flex;gap:4px;overflow-x:auto;margin-top:8px;padding-bottom:0;border-bottom:1px solid var(--line)}

@@ -83,10 +83,10 @@
 .lesson-layout{display:grid;grid-template-columns:190px minmax(0,760px) 220px;gap:40px;align-items:start;padding-top:8px}
 .lesson-toc{position:sticky;top:128px;display:flex;flex-direction:column;gap:2px}
 .lesson-toc .side-label{margin-bottom:10px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.14em}
-.lesson-toc a{display:flex;gap:8px;padding:7px 8px;border-left:3px solid transparent;border-radius:0 6px 6px 0;color:var(--muted);font-size:12px;font-weight:600}
+.lesson-toc a{display:flex;gap:8px;padding:7px 8px;border-left:3px solid transparent;border-radius:0 6px 6px 0;color:var(--muted);font-size:12px;font-weight:600;transition:background .2s,color .2s,border-color .2s,transform .2s}
 .lesson-toc a b{color:#cbd5e1;font:700 10px var(--font-mono)}
 .lesson-toc a:hover{background:var(--tint);color:var(--ink)}
-.lesson-toc a.active{background:#dbeafe;border-left-color:var(--primary);color:var(--primary-ink);font-weight:800}
+.lesson-toc a.active{background:#dbeafe;border-left-color:var(--primary);color:var(--primary-ink);font-weight:800;transform:translateX(2px)}
 .lesson-toc a.active b{color:var(--primary)}
 
 .lesson-content{min-width:0}

@@ -100,34 +100,62 @@ document.querySelectorAll('.trigger-demo').forEach((demo) => {
     });
   }
 
-  // Scroll-position based spy: whichever section's top has crossed the
-  // trigger line closest to (but not past) it is the active one. Plain
-  // scroll + getBoundingClientRect math instead of IntersectionObserver,
-  // so behaviour doesn't depend on rootMargin/threshold edge cases.
-  function updateActiveSection() {
-    var triggerY = window.innerHeight * 0.35;
-    var activeId = sectionIds[0];
-    for (var i = 0; i < sections.length; i++) {
-      var rect = sections[i].getBoundingClientRect();
-      if (rect.top <= triggerY) {
-        activeId = sectionIds[i];
+  setActive(sectionIds[0]);
+
+  if ('IntersectionObserver' in window) {
+    // Track which sections are currently inside the top "activation band"
+    // (top 35% of the viewport) and always activate the FIRST one in
+    // document order among those. Picking by document order - not by
+    // whichever entry the browser happened to report last in a batch -
+    // is what keeps this stable when two sections intersect at once;
+    // that ordering bug is the likely cause of an earlier IntersectionObserver
+    // attempt misbehaving.
+    var visible = {};
+    function activateFromVisible() {
+      for (var i = 0; i < sectionIds.length; i++) {
+        if (visible[sectionIds[i]]) {
+          setActive(sectionIds[i]);
+          return;
+        }
       }
     }
-    setActive(activeId);
-  }
 
-  var ticking = false;
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () {
-      updateActiveSection();
-      ticking = false;
-    });
-  }
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          visible[entry.target.id] = entry.isIntersecting;
+        });
+        activateFromVisible();
+      },
+      { root: null, rootMargin: '0px 0px -65% 0px', threshold: 0 }
+    );
+    sections.forEach(function (s) { observer.observe(s); });
+  } else {
+    function updateActiveSection() {
+      var triggerY = window.innerHeight * 0.35;
+      var activeId = sectionIds[0];
+      for (var i = 0; i < sections.length; i++) {
+        var rect = sections[i].getBoundingClientRect();
+        if (rect.top <= triggerY) {
+          activeId = sectionIds[i];
+        }
+      }
+      setActive(activeId);
+    }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  updateActiveSection();
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        updateActiveSection();
+        ticking = false;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    updateActiveSection();
+  }
 })();
 </content>

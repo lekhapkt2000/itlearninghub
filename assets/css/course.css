@@ -3,27 +3,35 @@
 .breadcrumb a:hover{color:var(--primary)}
 .breadcrumb span{margin:0 6px;color:#cbd5e1}
 
-.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;padding:28px 0}
+.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;padding:36px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
 .course-header .course-code{color:var(--primary);font:700 12px var(--font-mono);letter-spacing:.1em}
 .course-header h1{margin:10px 0 6px;font-size:clamp(32px,4.5vw,48px)}
 .course-header .course-en{color:var(--muted);font-size:13px}
 .course-header-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
 .stat-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.stat-card{min-width:104px;padding:16px 18px;background:var(--surface);border:1px solid var(--line)}
-.stat-card strong{display:block;color:var(--ink);font-size:24px;letter-spacing:-.03em}
+.stat-card{display:flex;align-items:center;gap:10px;min-width:112px;padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 10px -6px rgb(15 23 42 / .12)}
+.stat-card .icon{flex-shrink:0;width:20px;height:20px;color:var(--primary)}
+.stat-card strong{display:block;color:var(--ink);font-size:22px;letter-spacing:-.03em}
 .stat-card span{color:var(--muted);font-size:10px;letter-spacing:.02em}
 
-.progress-card{width:190px;padding:18px 20px;background:var(--surface);border:1px solid var(--line)}
+.progress-card{width:190px;padding:18px 20px;background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 10px -6px rgb(15 23 42 / .12)}
 .progress-card strong{display:block;margin-top:14px;color:var(--ink);font-size:28px;letter-spacing:-.03em}
 .progress-card strong span{color:var(--muted);font-size:14px}
 .progress-card>span{color:var(--muted);font-size:11px}
+.progress-percent{margin-left:6px;color:var(--primary);font-size:11px;font-weight:700}
+.mini-progress b{background:linear-gradient(90deg,var(--primary),#60a5fa)}
+.status-dot{position:relative}
+.status-dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;background:var(--primary);opacity:.55;animation:status-pulse 1.8s ease-out infinite}
+@media (prefers-reduced-motion:reduce){.status-dot::after{animation:none;display:none}}
+@keyframes status-pulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.4);opacity:0}}
 
 /* Horizontal course navigation - shared across overview + week pages */
-.course-nav{display:flex;gap:4px;overflow-x:auto;margin-top:8px;padding-bottom:0;border-bottom:1px solid var(--line)}
+.course-nav{position:sticky;top:76px;z-index:5;display:flex;gap:4px;overflow-x:auto;margin-top:8px;padding-bottom:0;background:var(--bg);border-bottom:1px solid var(--line)}
 .course-nav a,.course-nav .nav-item{display:inline-flex;align-items:center;gap:6px;padding:14px 16px;white-space:nowrap;color:var(--muted);font-size:13px;font-weight:600;border-bottom:2px solid transparent}
 .course-nav a:hover{color:var(--ink)}
 .course-nav a.active{color:var(--primary);border-bottom-color:var(--primary)}
 .course-nav .nav-item[aria-disabled="true"]{color:#cbd5e1;cursor:not-allowed}
+.course-nav .nav-item svg{width:11px;height:11px;flex-shrink:0}
 .course-nav .nav-item small{font-size:9px;font-weight:600;color:#cbd5e1}
 
 .panel{padding:36px 0}
@@ -73,7 +81,7 @@
 
 /* 3-column lesson layout: TOC | content | learning panel */
 .lesson-layout{display:grid;grid-template-columns:190px minmax(0,760px) 220px;gap:40px;align-items:start;padding-top:8px}
-.lesson-toc{position:sticky;top:96px;display:flex;flex-direction:column;gap:2px}
+.lesson-toc{position:sticky;top:128px;display:flex;flex-direction:column;gap:2px}
 .lesson-toc .side-label{margin-bottom:10px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.14em}
 .lesson-toc a{display:flex;gap:8px;padding:7px 8px;border-left:3px solid transparent;border-radius:0 6px 6px 0;color:var(--muted);font-size:12px;font-weight:600}
 .lesson-toc a b{color:#cbd5e1;font:700 10px var(--font-mono)}
@@ -161,7 +169,7 @@
 .challenge-card details .ascii-block{margin:10px 0 0}
 .challenge-card details[open] summary{margin-bottom:2px}
 
-.learning-panel{position:sticky;top:96px;display:flex;flex-direction:column;gap:24px}
+.learning-panel{position:sticky;top:128px;display:flex;flex-direction:column;gap:24px}
 .panel-box{padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
 .panel-box .side-label{margin-bottom:12px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.1em}
 .panel-progress strong{font:700 22px var(--font-sans);color:var(--ink)}
@@ -198,6 +206,9 @@
 .week-nav-links .next{text-align:right}
 .week-nav-links .nav-disabled{opacity:.5;cursor:not-allowed}
 
+@media(max-width:760px){
+  .course-nav{top:64px}
+}
 @media(max-width:1000px){
   .lesson-layout{grid-template-columns:1fr;gap:28px}
   .lesson-toc{position:static;flex-direction:row;overflow-x:auto;gap:4px}

@@ -22,8 +22,9 @@
   var cta = document.querySelector('[data-progress-cta]');
   var countEl = document.querySelector('[data-progress-count]');
   var barEl = document.querySelector('[data-progress-bar]');
+  var percentEl = document.querySelector('[data-progress-percent]');
 
-  if (cta || countEl || barEl) {
+  if (cta || countEl || barEl || percentEl) {
     var done = Math.min(getProgress(), AVAILABLE_WEEKS);
     var nextWeek = done + 1;
     var ctaText, ctaHref;
@@ -46,8 +47,12 @@
     if (countEl) {
       countEl.innerHTML = done + '<span>/' + TOTAL_WEEKS + '</span>';
     }
+    var percent = Math.round((done / TOTAL_WEEKS) * 100);
     if (barEl) {
-      barEl.style.width = Math.round((done / TOTAL_WEEKS) * 100) + '%';
+      barEl.style.width = percent + '%';
+    }
+    if (percentEl) {
+      percentEl.textContent = percent + '%';
     }
   }
 })();

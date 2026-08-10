@@ -4,8 +4,9 @@
 .hero-text{max-width:480px;color:var(--muted);font-size:15px;line-height:1.75}
 .hero-actions{display:flex;align-items:center;gap:24px;margin-top:32px}
 .hero-tags{margin-top:20px;color:var(--muted);font-size:11px;letter-spacing:.02em}
-.hero-proof{display:flex;align-items:center;gap:10px;max-width:480px;margin-top:40px;color:var(--muted);font-size:12px;line-height:1.5}
-.hero-proof .icon{flex-shrink:0;color:var(--primary)}
+.hero-checks{list-style:none;margin:36px 0 0;padding:0;display:flex;flex-direction:column;gap:12px;max-width:480px}
+.hero-checks li{display:flex;align-items:center;gap:10px;color:var(--ink);font-size:13px;font-weight:500}
+.hero-checks .icon{flex-shrink:0;color:var(--primary)}
 
 .hero-visual{position:relative;min-height:360px;display:grid;place-items:center}
 .visual-grid{position:absolute;width:330px;height:330px;border-radius:50%;background:repeating-linear-gradient(0deg,transparent 0 33px,#2563eb14 34px 35px),repeating-linear-gradient(90deg,transparent 0 33px,#2563eb14 34px 35px)}
@@ -32,8 +33,8 @@
 .course-category{color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.08em}
 .status-pill{padding:5px 10px;border-radius:99px;background:var(--tint);color:var(--primary-ink);font-size:9px;font-weight:700}
 .status-pill.soon{background:var(--line);color:var(--muted)}
-.course-card-body .course-code{display:block;margin-bottom:8px;color:var(--primary);font:700 12px var(--font-mono);letter-spacing:.06em}
-.course-card-body h3{font-size:20px;margin-bottom:4px}
+.course-card-body .course-code{display:block;margin-bottom:6px;color:var(--primary);font:800 26px var(--font-mono);letter-spacing:-.02em}
+.course-card-body h3{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px}
 .course-card-body .course-en{color:var(--muted);font-size:11px}
 .course-card-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:10px;font-weight:600}
 .course-card-bottom a{color:var(--primary);font-weight:700}

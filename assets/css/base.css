@@ -22,8 +22,8 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .orbit-two{width:390px;height:170px;transform:rotate(50deg)}
 .float-label{color:var(--muted);font-size:8px;letter-spacing:.13em;font-weight:800}
 .status-dot{display:inline-block;width:6px;height:6px;margin-right:5px;border-radius:50%;background:var(--primary)}
-.mini-progress{height:4px;background:var(--line);margin:22px 0 8px}
-.mini-progress b{display:block;height:100%;background:var(--primary)}
+.mini-progress{height:8px;border-radius:99px;background:var(--line);margin:22px 0 8px;overflow:hidden}
+.mini-progress b{display:block;height:100%;border-radius:99px;background:var(--primary)}
 
 .topbar{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);background:#f8fafcea;backdrop-filter:blur(14px)}
 .topbar-inner{max-width:1240px;min-height:76px;padding:0 32px;margin:auto;display:flex;align-items:center;gap:32px}

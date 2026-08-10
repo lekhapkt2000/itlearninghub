@@ -146,6 +146,21 @@
 .practice-lab .primary-button{background:#fff;color:var(--ink)}
 .practice-lab .primary-button:hover{background:#e2e8f0}
 
+.challenge-list{display:flex;flex-direction:column;gap:14px;margin:20px 0}
+.challenge-card{padding:20px 22px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px}
+.challenge-card-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.challenge-num{display:grid;place-items:center;flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--tint);color:var(--primary-ink);font:800 11px var(--font-mono)}
+.challenge-card h4{margin:0;font-size:15px;color:var(--ink)}
+.challenge-stars{margin-left:auto;flex-shrink:0;color:#f59e0b;font-size:13px;letter-spacing:1px}
+.challenge-card>p{margin:0;color:var(--ink);font-size:13px;line-height:1.7}
+.challenge-card details{margin-top:12px}
+.challenge-card summary{list-style:none;display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--primary);font-size:12px;font-weight:700}
+.challenge-card summary::-webkit-details-marker{display:none}
+.challenge-card summary::before{content:'▸';display:inline-block;font-size:9px;transition:transform .15s}
+.challenge-card details[open] summary::before{transform:rotate(90deg)}
+.challenge-card details .ascii-block{margin:10px 0 0}
+.challenge-card details[open] summary{margin-bottom:2px}
+
 .learning-panel{position:sticky;top:96px;display:flex;flex-direction:column;gap:24px}
 .panel-box{padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
 .panel-box .side-label{margin-bottom:12px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.1em}

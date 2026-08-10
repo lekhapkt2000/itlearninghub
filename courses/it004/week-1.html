@@ -6,7 +6,7 @@
   <meta name="description" content="IT004 Tuần 1 - Nền tảng cơ sở dữ liệu: tổng quan CSDL, SSMS, kiểu dữ liệu, Database, Table, Constraints và thao tác dữ liệu (DML).">
   <title>Tuần 1 · Nền tảng cơ sở dữ liệu - IT004</title>
   <link rel="stylesheet" href="../../assets/css/base.css?v=12">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=16">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=17">
 </head>
 <body>
   <header class="topbar">
@@ -15,7 +15,7 @@
       <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
         <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
       </nav>
-      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>→</span></a></div>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>›</span></a></div>
     </div>
   </header>
 
@@ -160,7 +160,7 @@ DaTotNghiep → BIT</div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">MaSV INT
 SoLuong INT
 Tuoi TINYINT</code></pre></div>
-          <div class="inline-ok"><strong>Nguyên tắc chọn:</strong> ưu tiên kiểu có phạm vi nhỏ nhất nhưng vẫn đủ chứa dữ liệu thực tế, để tiết kiệm dung lượng lưu trữ. Ví dụ <code>Tuoi</code> (0–150) nên dùng <code>TINYINT</code> thay vì <code>INT</code>.</div>
+          <div class="inline-ok"><strong>Nguyên tắc chọn:</strong> Ưu tiên kiểu có phạm vi nhỏ nhất nhưng vẫn đủ chứa dữ liệu thực tế, để tiết kiệm dung lượng lưu trữ. Ví dụ <code>Tuoi</code> (0–150) nên dùng <code>TINYINT</code> thay vì <code>INT</code>.</div>
 
           <h3>Kiểu Boolean - BIT</h3>
           <p><code>BIT</code> lưu giá trị đúng/sai, thường dùng cho các cột dạng "có/không":</p>
@@ -179,7 +179,7 @@ SMALLMONEY</code></pre></div>
           <p>Có thể lưu: <code>8.50</code>, <code>9.25</code>, <code>10.00</code></p>
           <p><code>MONEY</code> và <code>SMALLMONEY</code> dùng riêng cho giá trị tiền tệ, chính xác hơn <code>FLOAT</code>/<code>REAL</code> khi tính toán:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DonGia MONEY</code></pre></div>
-          <div class="inline-ok"><strong>Khuyến nghị:</strong> với điểm số, đơn giá, tiền - ưu tiên <code>DECIMAL(p,s)</code> hoặc <code>MONEY</code> vì cho kết quả chính xác. <code>FLOAT</code>/<code>REAL</code> là số gần đúng, dễ sai lệch khi tính toán nhiều lần.</div>
+          <div class="inline-ok"><strong>Khuyến nghị:</strong> Với điểm số, đơn giá, tiền - ưu tiên <code>DECIMAL(p,s)</code> hoặc <code>MONEY</code> vì cho kết quả chính xác. <code>FLOAT</code>/<code>REAL</code> là số gần đúng, dễ sai lệch khi tính toán nhiều lần.</div>
 
           <h3>Kiểu chuỗi</h3>
           <p><code>CHAR(n)</code> - chuỗi có độ dài <strong>cố định</strong> (luôn chiếm đủ n ký tự, phần dư được đệm khoảng trắng):</p>
@@ -200,7 +200,7 @@ DiaChi NVARCHAR(200)</code></pre></div>
             <tr><td><code>NCHAR(n)</code></td><td>Cố định</td><td>Có</td><td>Mã tiếng Việt có độ dài luôn giống nhau</td></tr>
             <tr><td><code>NVARCHAR(n)</code></td><td>Thay đổi</td><td>Có</td><td>Họ tên, địa chỉ, mô tả tiếng Việt - <strong>dùng phổ biến nhất</strong></td></tr>
           </table></div>
-          <div class="inline-ok"><strong>Khuyến nghị:</strong> khi lưu dữ liệu tiếng Việt trong SQL Server, thường sử dụng <code>NVARCHAR</code> và chuỗi Unicode với tiền tố <code>N</code> khi nhập giá trị.</div>
+          <div class="inline-ok"><strong>Khuyến nghị:</strong> Khi lưu dữ liệu tiếng Việt trong SQL Server, thường sử dụng <code>NVARCHAR</code> và chuỗi Unicode với tiền tố <code>N</code> khi nhập giá trị.</div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (1, N'Nguyễn Văn An', 'HTTT2022.1');</code></pre></div>
 
@@ -234,7 +234,7 @@ NgayLap DATETIME</code></pre></div>
 
           <h3>Xóa Database</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DROP DATABASE QuanLySinhVien;</code></pre></div>
-          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cẩn thận:</strong> thao tác này xóa Database và toàn bộ dữ liệu bên trong. Database đang được sử dụng hoặc còn kết nối không thể xóa trực tiếp.</div>
+          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cẩn thận:</strong> Thao tác này xóa Database và toàn bộ dữ liệu bên trong. Database đang được sử dụng hoặc còn kết nối không thể xóa trực tiếp.</div>
         </section>
 
         <!-- 05 - Table -->
@@ -445,10 +445,10 @@ UPDATE      → Cập nhật dữ liệu
 SELECT INTO → Sao chép dữ liệu</div>
 
           <h3>INSERT - Thêm dữ liệu</h3>
-          <p><strong>Cách 1:</strong> không chỉ định tên cột</p>
+          <p><strong>Cách 1:</strong> Không chỉ định tên cột</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (101, N'Nguyễn Văn An', '2004-05-20', N'HTTT2022.1');</code></pre></div>
-          <p><strong>Cách 2:</strong> chỉ định tên cột - <strong>nên ưu tiên cách này</strong>, vì câu lệnh rõ ràng hơn và ít phụ thuộc vào thứ tự cột.</p>
+          <p><strong>Cách 2:</strong> Chỉ định tên cột - <strong>nên ưu tiên cách này</strong>, vì câu lệnh rõ ràng hơn và ít phụ thuộc vào thứ tự cột.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 (
     MaSV,
@@ -479,7 +479,7 @@ WHERE &lt;Điều kiện&gt;;</code></pre></div>
           <p>Ví dụ - chỉ sinh viên có <code>MaSV = 101</code> bị xóa:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien
 WHERE MaSV = 101;</code></pre></div>
-          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cực kỳ quan trọng:</strong> nếu không có <code>WHERE</code> -
+          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cực kỳ quan trọng:</strong> Nếu không có <code>WHERE</code> -
             <br><code>DELETE FROM SinhVien;</code>
             <br>→ <strong>tất cả các dòng trong bảng sẽ bị xóa.</strong>
           </div>
@@ -579,12 +579,12 @@ WHERE MaSV = 103;</code></pre></div>
             <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
             <h3>Quản lý bán hàng</h3>
             <ol>
-              <li><strong>Bài 1 - Tạo Database:</strong> tạo Database <code style="background:#ffffff1a;color:#e2e8f0">QuanLyBanHang</code></li>
+              <li><strong>Bài 1 - Tạo Database:</strong> Tạo Database <code style="background:#ffffff1a;color:#e2e8f0">QuanLyBanHang</code></li>
               <li><strong>Bài 2 - Tạo bảng:</strong> KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD</li>
               <li><strong>Bài 3 - Thiết lập ràng buộc:</strong> Primary Key, Foreign Key, NOT NULL, UNIQUE, CHECK, DEFAULT</li>
-              <li><strong>Bài 4 - Thêm dữ liệu:</strong> tối thiểu 5 khách hàng, 5 nhân viên, 10 sản phẩm, 10 hóa đơn</li>
-              <li><strong>Bài 5 - Thao tác dữ liệu:</strong> thực hiện INSERT, UPDATE, DELETE, SELECT INTO</li>
-              <li><strong>Bài 6 - Kiểm tra ràng buộc:</strong> thử nhập dữ liệu sai để quan sát SQL Server báo lỗi</li>
+              <li><strong>Bài 4 - Thêm dữ liệu:</strong> Tối thiểu 5 khách hàng, 5 nhân viên, 10 sản phẩm, 10 hóa đơn</li>
+              <li><strong>Bài 5 - Thao tác dữ liệu:</strong> Thực hiện INSERT, UPDATE, DELETE, SELECT INTO</li>
+              <li><strong>Bài 6 - Kiểm tra ràng buộc:</strong> Thử nhập dữ liệu sai để quan sát SQL Server báo lỗi</li>
             </ol>
           </div>
 
@@ -646,8 +646,8 @@ VALUES (105, N'Sinh viên lỗi ngày', '1800-01-01', 1);</code></pre></div>
         </section>
 
         <nav class="week-nav-links" aria-label="Điều hướng tuần">
-          <a href="index.html"><span class="nav-dir">← TUẦN TRƯỚC</span><span class="nav-title">Tổng quan môn học</span></a>
-          <a href="week-2.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO →</span><span class="nav-title">Tuần 2: Truy vấn dữ liệu với SQL</span></a>
+          <a href="index.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tổng quan môn học</span></a>
+          <a href="week-2.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 2: Truy vấn dữ liệu với SQL</span></a>
         </nav>
       </div>
 
@@ -696,7 +696,7 @@ VALUES (105, N'Sinh viên lỗi ngày', '1800-01-01', 1);</code></pre></div>
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../assets/js/main.js?v=5"></script>
-  <script src="../../assets/js/progress.js?v=1"></script>
+  <script src="../../assets/js/progress.js?v=2"></script>
   <script src="../../assets/js/course.js?v=7"></script>
 </body>
 </html>

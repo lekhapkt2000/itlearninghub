@@ -6,7 +6,7 @@
   <meta name="description" content="IT004 Tuần 5 - Trigger trong SQL Server: AFTER, INSTEAD OF, bảng INSERTED và DELETED.">
   <title>Tuần 5 · Trigger — IT004</title>
   <link rel="stylesheet" href="../../assets/css/base.css?v=12">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=16">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=17">
 </head>
 <body>
   <header class="topbar">
@@ -15,7 +15,7 @@
       <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
         <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
       </nav>
-      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>→</span></a></div>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>›</span></a></div>
     </div>
   </header>
 
@@ -26,7 +26,7 @@
       <span class="week-tag">THỰC HÀNH 05 · BTHT5</span>
       <h1>Trigger trong SQL Server</h1>
       <div class="week-meta"><span>5 tiết</span><span>Database</span><span>SQL Server</span></div>
-      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> hiểu cách SQL Server tự động thực hiện một nhóm câu lệnh khi dữ liệu trong bảng phát sinh các thao tác <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>.</p>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hiểu cách SQL Server tự động thực hiện một nhóm câu lệnh khi dữ liệu trong bảng phát sinh các thao tác <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>.</p>
     </div>
 
     <nav class="course-nav" aria-label="Điều hướng IT004">
@@ -80,10 +80,10 @@
           <h3>Tại sao cần Trigger?</h3>
           <p>Trigger thường dùng để <strong>tự động kiểm soát dữ liệu ngay tại tầng cơ sở dữ liệu</strong>:</p>
           <ul>
-            <li><strong>Kiểm tra dữ liệu:</strong> số lượng sản phẩm ≥ 0</li>
-            <li><strong>Ngăn thao tác không hợp lệ:</strong> không cho xóa khách hàng đã phát sinh giao dịch</li>
-            <li><strong>Tự động cập nhật:</strong> thêm CTHD → tự động cập nhật trị giá hóa đơn</li>
-            <li><strong>Theo dõi thay đổi:</strong> tên khách hàng cũ → mới</li>
+            <li><strong>Kiểm tra dữ liệu:</strong> Số lượng sản phẩm ≥ 0</li>
+            <li><strong>Ngăn thao tác không hợp lệ:</strong> Không cho xóa khách hàng đã phát sinh giao dịch</li>
+            <li><strong>Tự động cập nhật:</strong> Thêm CTHD → tự động cập nhật trị giá hóa đơn</li>
+            <li><strong>Theo dõi thay đổi:</strong> Tên khách hàng cũ → mới</li>
             <li><strong>Đồng bộ dữ liệu:</strong> CTHD thay đổi → cập nhật tổng tiền hóa đơn → cập nhật doanh số khách hàng</li>
           </ul>
         </section>
@@ -408,30 +408,42 @@ ROLLBACK     → Hủy thao tác / giao dịch</div>
           <h3>Challenge - thử thách cuối tuần</h3>
           <p>Mỗi bài có gợi ý ẩn - bấm để mở.</p>
 
-          <h4>Challenge 01 - Không cho số lượng âm</h4>
-          <p>Tạo Trigger: không cho phép <code>SOLUONG &lt; 0</code> trong <code>SANPHAM</code>.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">AFTER INSERT, UPDATE + IF EXISTS + RAISERROR + ROLLBACK</div></details>
+          <div class="challenge-list">
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">01</span><h4>Không cho số lượng âm</h4></div>
+              <p>Tạo Trigger: không cho phép <code>SOLUONG &lt; 0</code> trong <code>SANPHAM</code>.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">AFTER INSERT, UPDATE + IF EXISTS + RAISERROR + ROLLBACK</div></details>
+            </article>
 
-          <h4>Challenge 02 - Theo dõi thay đổi</h4>
-          <p>Khi thay đổi tên khách hàng, hiển thị: 'Tên khách hàng đã thay đổi từ "..." sang "..."'.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">INSERTED + DELETED + AFTER UPDATE</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">02</span><h4>Theo dõi thay đổi</h4></div>
+              <p>Khi thay đổi tên khách hàng, hiển thị: 'Tên khách hàng đã thay đổi từ "..." sang "..."'.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">INSERTED + DELETED + AFTER UPDATE</div></details>
+            </article>
 
-          <h4>Challenge 03 - Không cho xóa</h4>
-          <p>Không cho phép xóa nhân viên nếu nhân viên đã có hóa đơn.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">INSTEAD OF DELETE + DELETED + IF EXISTS</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">03</span><h4>Không cho xóa</h4></div>
+              <p>Không cho phép xóa nhân viên nếu nhân viên đã có hóa đơn.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">INSTEAD OF DELETE + DELETED + IF EXISTS</div></details>
+            </article>
 
-          <h4>Challenge 04 - Tự động cập nhật</h4>
-          <p>Khi thêm chi tiết hóa đơn, tự động cập nhật trị giá hóa đơn.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">AFTER INSERT + INSERTED + UPDATE</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">04</span><h4>Tự động cập nhật</h4></div>
+              <p>Khi thêm chi tiết hóa đơn, tự động cập nhật trị giá hóa đơn.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">AFTER INSERT + INSERTED + UPDATE</div></details>
+            </article>
 
-          <h4>Challenge 05 ⭐⭐</h4>
-          <p>Khi thêm hoặc cập nhật hóa đơn, tự động cập nhật doanh số khách hàng.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">AFTER INSERT, UPDATE + INSERTED + UPDATE KHACHHANG.DOANHSO</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">⭐⭐</span></div>
+              <p>Khi thêm hoặc cập nhật hóa đơn, tự động cập nhật doanh số khách hàng.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">AFTER INSERT, UPDATE + INSERTED + UPDATE KHACHHANG.DOANHSO</div></details>
+            </article>
+          </div>
         </section>
 
         <nav class="week-nav-links" aria-label="Điều hướng tuần">
-          <a href="week-4.html"><span class="nav-dir">← TUẦN TRƯỚC</span><span class="nav-title">Tuần 4: Hàm mở rộng, CASE &amp; Subquery</span></a>
-          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO →</span><span class="nav-title">Tuần 6: Ôn tập &amp; thi thực hành (sắp mở)</span></span>
+          <a href="week-4.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 4: Hàm mở rộng, CASE &amp; Subquery</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 6: Ôn tập &amp; thi thực hành (sắp mở)</span></span>
         </nav>
       </div>
 
@@ -480,7 +492,7 @@ ROLLBACK     → Hủy thao tác / giao dịch</div>
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../assets/js/main.js?v=5"></script>
-  <script src="../../assets/js/progress.js?v=1"></script>
+  <script src="../../assets/js/progress.js?v=2"></script>
   <script src="../../assets/js/course.js?v=7"></script>
 </body>
 </html>

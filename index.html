@@ -6,7 +6,7 @@
   <meta name="description" content="IT Learning Hub - Kho học liệu thực hành dành cho sinh viên Công nghệ Thông tin, bắt đầu với IT004 Cơ sở dữ liệu.">
   <title>IT Learning Hub · Kho học liệu CNTT</title>
   <link rel="stylesheet" href="assets/css/base.css?v=12">
-  <link rel="stylesheet" href="assets/css/home.css?v=11">
+  <link rel="stylesheet" href="assets/css/home.css?v=12">
 </head>
 <body>
   <header class="topbar">
@@ -15,7 +15,7 @@
       <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
         <a href="#mon-hoc">Môn học</a><a href="#thong-tin">Thông tin</a><a href="#lien-he">Liên hệ</a>
       </nav>
-      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="#mon-hoc">Khám phá môn học <span>→</span></a></div>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="#mon-hoc">Khám phá môn học <span>›</span></a></div>
     </div>
   </header>
 
@@ -28,7 +28,7 @@
           <h1 class="hero-title">Học tập. <em>Thực hành.</em> Phát triển.</h1>
           <p class="hero-text">Hệ thống học liệu thực hành theo tuần cho sinh viên ngành Công nghệ Thông tin - tổng hợp lý thuyết, ví dụ và bài tập cho từng môn học, bắt đầu từ IT004.</p>
           <div class="hero-actions">
-            <a class="primary-button" href="courses/it004/index.html">Vào học ngay <span>→</span></a>
+            <a class="primary-button" href="courses/it004/index.html">Vào học ngay <span>›</span></a>
           </div>
         </div>
         <div class="hero-visual" aria-label="Minh họa hệ thống môn học">
@@ -64,6 +64,11 @@
           <h3>Dự án học liệu phi lợi nhuận</h3>
           <p class="instructor-role">DÀNH CHO SINH VIÊN CÔNG NGHỆ THÔNG TIN</p>
           <p class="instructor-bio">IT Learning Hub được xây dựng để hỗ trợ sinh viên CNTT ôn tập và thực hành theo từng tuần học, bám sát nội dung giảng dạy trên lớp. Toàn bộ nội dung được biên soạn và cập nhật miễn phí, không nhằm mục đích thương mại.</p>
+          <div class="instructor-stats">
+            <div><strong>Miễn phí</strong><span>Không thu phí truy cập</span></div>
+            <div><strong id="hub-course-count-2">05</strong><span>Môn học trong lộ trình</span></div>
+            <div><strong>Theo tuần</strong><span>Nội dung bám sát lịch học</span></div>
+          </div>
         </div>
       </div>
     </section>
@@ -107,8 +112,8 @@
         var c = COURSES[i];
         var isActive = c.status === 'active';
         var action = isActive
-          ? '<a class="course-cta" href="' + c.path + '">Bắt đầu học <span>→</span></a>'
-          : '<span class="course-cta is-disabled">Sắp có <span>→</span></span>';
+          ? '<a class="course-cta" href="' + c.path + '">Bắt đầu học <span>›</span></a>'
+          : '<span class="course-cta is-disabled">Sắp có <span>›</span></span>';
         var statusPill = isActive
           ? '<span class="status-pill">Đang triển khai</span>'
           : '<span class="status-pill soon">Sắp ra mắt</span>';
@@ -132,10 +137,11 @@
       grid.innerHTML = html;
     }
 
+    var courseCountText = COURSES.length < 10 ? '0' + COURSES.length : String(COURSES.length);
     var hubCount = document.getElementById('hub-course-count');
-    if (hubCount) {
-      hubCount.textContent = COURSES.length < 10 ? '0' + COURSES.length : String(COURSES.length);
-    }
+    if (hubCount) { hubCount.textContent = courseCountText; }
+    var hubCount2 = document.getElementById('hub-course-count-2');
+    if (hubCount2) { hubCount2.textContent = courseCountText; }
   </script>
 </body>
 </html>

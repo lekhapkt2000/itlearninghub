@@ -41,7 +41,7 @@
 
     if (cta) {
       cta.setAttribute('href', ctaHref);
-      cta.innerHTML = ctaText + ' <span>→</span>';
+      cta.innerHTML = ctaText + ' <span>›</span>';
     }
     if (countEl) {
       countEl.innerHTML = done + '<span>/' + TOTAL_WEEKS + '</span>';

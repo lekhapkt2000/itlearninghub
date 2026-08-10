@@ -6,7 +6,7 @@
   <meta name="description" content="IT004 Tuần 3 - Truy vấn nâng cao: phép chia, gom nhóm và kết ngoài trong SQL Server.">
   <title>Tuần 3 · Phép chia, gom nhóm và kết ngoài — IT004</title>
   <link rel="stylesheet" href="../../assets/css/base.css?v=12">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=16">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=17">
 </head>
 <body>
   <header class="topbar">
@@ -15,7 +15,7 @@
       <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
         <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
       </nav>
-      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>→</span></a></div>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>›</span></a></div>
     </div>
   </header>
 
@@ -26,7 +26,7 @@
       <span class="week-tag">THỰC HÀNH 03 · BTHT3</span>
       <h1>Phép chia, gom nhóm và kết ngoài</h1>
       <div class="week-meta"><span>5 tiết</span><span>Database</span><span>SQL Server</span></div>
-      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> hiểu bản chất phép chia trong SQL, nhận diện bài toán dạng "tất cả", viết truy vấn bằng GROUP BY + HAVING COUNT và hai lớp NOT EXISTS, sử dụng các hàm tập hợp, kết hợp TOP/ORDER BY/WITH TIES/DISTINCT, và dùng LEFT/RIGHT/FULL OUTER JOIN để không bỏ sót dữ liệu.</p>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hiểu bản chất phép chia trong SQL, nhận diện bài toán dạng "tất cả", viết truy vấn bằng GROUP BY + HAVING COUNT và hai lớp NOT EXISTS, sử dụng các hàm tập hợp, kết hợp TOP/ORDER BY/WITH TIES/DISTINCT, và dùng LEFT/RIGHT/FULL OUTER JOIN để không bỏ sót dữ liệu.</p>
     </div>
 
     <nav class="course-nav" aria-label="Điều hướng IT004">
@@ -234,7 +234,7 @@ HAVING COUNT(DISTINCT DK.MaMH) =
     FROM MonHoc
     WHERE SoTinChi > 3
 );</code></pre></div>
-          <div class="inline-warning"><strong>Lưu ý:</strong> trong tài liệu gốc, phần điều kiện ở truy vấn con được trình bày với tham chiếu alias cần rà soát lại. Câu trên là cách viết độc lập, rõ ràng hơn cho SQL Server.</div>
+          <div class="inline-warning"><strong>Lưu ý:</strong> Trong tài liệu gốc, phần điều kiện ở truy vấn con được trình bày với tham chiếu alias cần rà soát lại. Câu trên là cách viết độc lập, rõ ràng hơn cho SQL Server.</div>
         </section>
 
         <!-- 04 - Chia NOT EXISTS -->
@@ -429,7 +429,7 @@ FROM NhanVien;</code></pre></div>
     Luong
 FROM NhanVien
 ORDER BY Luong DESC;</code></pre></div>
-          <div class="inline-warning"><strong>Cực kỳ quan trọng:</strong> không nên chỉ viết <code>SELECT TOP 4 * FROM NhanVien;</code> nếu đề bài yêu cầu "4 nhân viên có lương cao nhất" - phải có <code>ORDER BY Luong DESC</code>.</div>
+          <div class="inline-warning"><strong>Cực kỳ quan trọng:</strong> Không nên chỉ viết <code>SELECT TOP 4 * FROM NhanVien;</code> nếu đề bài yêu cầu "4 nhân viên có lương cao nhất" - phải có <code>ORDER BY Luong DESC</code>.</div>
 
           <h3>TOP ... WITH TIES</h3>
           <p>Nếu người thứ 4 có mức lương 15 triệu và có thêm người khác cũng nhận 15 triệu, <code>WITH TIES</code> sẽ lấy cả những người đó:</p>
@@ -538,32 +538,44 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
           <h3>Challenge - thử thách thêm</h3>
           <p>Ngoài câu 26-53 theo tài liệu chính thức, đây là các bài tự luyện mở rộng để hiểu sâu hơn tư duy Tuần 3. Mỗi bài có gợi ý ẩn - bấm để mở.</p>
 
-          <h4>Challenge 01 - "Mua tất cả"</h4>
-          <p>Tìm những khách hàng đã mua tất cả sản phẩm thuộc danh mục <code>Điện tử</code>.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">"tất cả" → phép chia → GROUP BY → HAVING COUNT</div></details>
+          <div class="challenge-list">
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">01</span><h4>"Mua tất cả"</h4></div>
+              <p>Tìm những khách hàng đã mua tất cả sản phẩm thuộc danh mục <code>Điện tử</code>.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">"tất cả" → phép chia → GROUP BY → HAVING COUNT</div></details>
+            </article>
 
-          <h4>Challenge 02 - "Không bỏ sót"</h4>
-          <p>Tìm những phòng ban chưa có nhân viên nào.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">LEFT JOIN + IS NULL</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">02</span><h4>"Không bỏ sót"</h4></div>
+              <p>Tìm những phòng ban chưa có nhân viên nào.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">LEFT JOIN + IS NULL</div></details>
+            </article>
 
-          <h4>Challenge 03 - "Top có đồng hạng"</h4>
-          <p>Tìm 3 mức lương cao nhất và lấy tất cả nhân viên có các mức lương đó.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">TOP + WITH TIES + ORDER BY</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">03</span><h4>"Top có đồng hạng"</h4></div>
+              <p>Tìm 3 mức lương cao nhất và lấy tất cả nhân viên có các mức lương đó.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">TOP + WITH TIES + ORDER BY</div></details>
+            </article>
 
-          <h4>Challenge 04 - "Tất cả nhưng có điều kiện"</h4>
-          <p>Tìm những sinh viên đã đăng ký tất cả môn học có số tín chỉ từ 3 trở lên.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">Conditional Division</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">04</span><h4>"Tất cả nhưng có điều kiện"</h4></div>
+              <p>Tìm những sinh viên đã đăng ký tất cả môn học có số tín chỉ từ 3 trở lên.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">Conditional Division</div></details>
+            </article>
 
-          <h4>Challenge 05 - "Hai cách giải"</h4>
-          <p>Tìm nhân viên đã tham gia tất cả dự án. Yêu cầu viết <strong>2 câu SQL khác nhau</strong>: cách 1 dùng <code>GROUP BY</code> + <code>HAVING COUNT</code>, cách 2 dùng hai lớp <code>NOT EXISTS</code>.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">Cách 1: GROUP BY + HAVING COUNT
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">05</span><h4>"Hai cách giải"</h4></div>
+              <p>Tìm nhân viên đã tham gia tất cả dự án. Yêu cầu viết <strong>2 câu SQL khác nhau</strong>: cách 1 dùng <code>GROUP BY</code> + <code>HAVING COUNT</code>, cách 2 dùng hai lớp <code>NOT EXISTS</code>.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">Cách 1: GROUP BY + HAVING COUNT
 Cách 2: NOT EXISTS + NOT EXISTS</div></details>
+            </article>
+          </div>
           <p style="margin-top:14px">Đây là bài rất tốt để hiểu rằng <strong>một bài toán SQL có thể có nhiều cách biểu diễn</strong>.</p>
         </section>
 
         <nav class="week-nav-links" aria-label="Điều hướng tuần">
-          <a href="week-2.html"><span class="nav-dir">← TUẦN TRƯỚC</span><span class="nav-title">Tuần 2: Truy vấn dữ liệu với SQL</span></a>
-          <a href="week-4.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO →</span><span class="nav-title">Tuần 4: Hàm mở rộng, CASE &amp; Subquery</span></a>
+          <a href="week-2.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 2: Truy vấn dữ liệu với SQL</span></a>
+          <a href="week-4.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 4: Hàm mở rộng, CASE &amp; Subquery</span></a>
         </nav>
       </div>
 
@@ -612,7 +624,7 @@ Cách 2: NOT EXISTS + NOT EXISTS</div></details>
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../assets/js/main.js?v=5"></script>
-  <script src="../../assets/js/progress.js?v=1"></script>
+  <script src="../../assets/js/progress.js?v=2"></script>
   <script src="../../assets/js/course.js?v=7"></script>
 </body>
 </html>

@@ -42,12 +42,17 @@
 .course-card-placeholder .course-en{color:var(--muted);opacity:.8}
 
 .instructor-section{max-width:1240px;margin:0 auto;padding:0 32px 100px}
-.instructor-card{display:flex;gap:32px;align-items:center;padding:40px;background:var(--surface);border:1px solid var(--line)}
-.instructor-avatar{display:grid;place-items:center;width:96px;height:96px;flex-shrink:0;border-radius:50%;background:var(--tint);color:var(--primary)}
-.instructor-avatar svg{width:36px;height:36px}
+.instructor-card{position:relative;overflow:hidden;display:flex;gap:32px;align-items:center;padding:44px;background:linear-gradient(135deg,var(--tint) 0%,var(--surface) 55%);border:1px solid var(--line)}
+.instructor-card::before{content:'';position:absolute;top:-70px;right:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgb(37 99 235 / .12),transparent 70%)}
+.instructor-avatar{position:relative;z-index:1;display:grid;place-items:center;width:88px;height:88px;flex-shrink:0;border-radius:50%;background:var(--primary);color:#fff;box-shadow:0 12px 26px -8px rgb(37 99 235 / .4)}
+.instructor-avatar svg{width:34px;height:34px}
+.instructor-info{position:relative;z-index:1}
 .instructor-info h3{font-size:22px;margin-bottom:4px}
 .instructor-role{margin-bottom:14px;color:var(--primary);font-size:11px;font-weight:700;letter-spacing:.06em}
-.instructor-bio{max-width:640px;color:var(--muted);font-size:13px;line-height:1.7}
+.instructor-bio{max-width:600px;color:var(--muted);font-size:13px;line-height:1.7}
+.instructor-stats{display:flex;gap:32px;margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.instructor-stats strong{display:block;color:var(--ink);font-size:17px;font-weight:800}
+.instructor-stats span{color:var(--muted);font-size:11px}
 
 .info-section{max-width:1240px;margin:0 auto;padding:0 32px 100px}
 .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -66,5 +71,6 @@
   .course-grid,.info-grid{grid-template-columns:1fr}
   .info-section,.instructor-section{padding:0 20px 70px}
   .instructor-card{flex-direction:column;text-align:center;padding:32px 24px}
+  .instructor-stats{justify-content:center}
 }
 </content>

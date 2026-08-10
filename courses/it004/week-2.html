@@ -6,7 +6,7 @@
   <meta name="description" content="IT004 Tuần 2 - Truy vấn dữ liệu với SQL: toán tử, hàm, SELECT, JOIN, phép toán tập hợp và Subquery.">
   <title>Tuần 2 · Truy vấn dữ liệu với SQL - IT004</title>
   <link rel="stylesheet" href="../../assets/css/base.css?v=12">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=16">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=17">
 </head>
 <body>
   <header class="topbar">
@@ -15,7 +15,7 @@
       <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
         <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
       </nav>
-      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>→</span></a></div>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>›</span></a></div>
     </div>
   </header>
 
@@ -26,7 +26,7 @@
       <span class="week-tag">THỰC HÀNH 02 · BTHT2</span>
       <h1>Truy vấn dữ liệu với SQL</h1>
       <div class="week-meta"><span>5 tiết</span><span>Database</span><span>SQL Server</span></div>
-      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> sử dụng toán tử và hàm để xây dựng điều kiện truy vấn; viết <code>SELECT</code> lọc, sắp xếp, gom nhóm dữ liệu; kết hợp dữ liệu nhiều bảng bằng <code>JOIN</code>; dùng <code>UNION</code>/<code>INTERSECT</code>/<code>EXCEPT</code>; viết truy vấn lồng với <code>IN</code>, <code>ANY</code>, <code>ALL</code>, <code>EXISTS</code>, <code>NOT EXISTS</code>.</p>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Sử dụng toán tử và hàm để xây dựng điều kiện truy vấn; viết <code>SELECT</code> lọc, sắp xếp, gom nhóm dữ liệu; kết hợp dữ liệu nhiều bảng bằng <code>JOIN</code>; dùng <code>UNION</code>/<code>INTERSECT</code>/<code>EXCEPT</code>; viết truy vấn lồng với <code>IN</code>, <code>ANY</code>, <code>ALL</code>, <code>EXISTS</code>, <code>NOT EXISTS</code>.</p>
     </div>
 
     <nav class="course-nav" aria-label="Điều hướng IT004">
@@ -114,7 +114,7 @@ FROM NhanVien;</code></pre></div>
 Nguyễn An      10000000    11000000
 Trần Bình      15000000    16500000
 Lê Cường       12000000    13200000</div>
-          <div class="inline-ok"><strong>Lưu ý:</strong> toán tử số học có thể dùng trực tiếp trong <code>SELECT</code> để tạo giá trị tính toán mà không cần lưu thêm cột mới vào bảng.</div>
+          <div class="inline-ok"><strong>Lưu ý:</strong> Toán tử số học có thể dùng trực tiếp trong <code>SELECT</code> để tạo giá trị tính toán mà không cần lưu thêm cột mới vào bảng.</div>
 
           <h3>Toán tử so sánh</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -187,7 +187,7 @@ WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
           <div class="definition">Hàm giúp xử lý và biến đổi dữ liệu: hàm xử lý số, hàm xử lý chuỗi, hàm xử lý ngày giờ và hàm tập hợp.</div>
 
           <div class="inline-warning">
-            <strong>Lưu ý quan trọng:</strong> tài liệu gốc trình bày một số hàm theo cú pháp SQL tổng quát/MySQL (<code>NOW()</code>, <code>CURDATE()</code>, <code>LENGTH()</code>, <code>DATE_ADD()</code>, <code>CEIL()</code>...). Môn thực hành dùng <strong>Microsoft SQL Server</strong>, nên các hàm dưới đây đã được chuẩn hóa sang <strong>T-SQL</strong> - chạy được trực tiếp, không copy nguyên bản MySQL.
+            <strong>Lưu ý quan trọng:</strong> Tài liệu gốc trình bày một số hàm theo cú pháp SQL tổng quát/MySQL (<code>NOW()</code>, <code>CURDATE()</code>, <code>LENGTH()</code>, <code>DATE_ADD()</code>, <code>CEIL()</code>...). Môn thực hành dùng <strong>Microsoft SQL Server</strong>, nên các hàm dưới đây đã được chuẩn hóa sang <strong>T-SQL</strong> - chạy được trực tiếp, không copy nguyên bản MySQL.
             <div class="table-wrap"><table class="ref-table">
             <tr><th>MySQL / tổng quát</th><th>T-SQL (SQL Server)</th></tr>
             <tr><td><code>NOW()</code></td><td><code>GETDATE()</code></td></tr>
@@ -597,12 +597,12 @@ WHERE NOT EXISTS
             <tr><th>Câu</th><th>Trạng thái</th></tr>
             <tr><td>01 – 17</td><td>☐ Chưa hoàn thành</td></tr>
           </table></div>
-          <div class="inline-ok"><strong>Cách làm:</strong> tự viết câu SQL trước, sau đó mới mở gợi ý hoặc đáp án tham khảo - không xem đáp án ngay để đảm bảo hiệu quả luyện tập.</div>
+          <div class="inline-ok"><strong>Cách làm:</strong> Tự viết câu SQL trước, sau đó mới mở gợi ý hoặc đáp án tham khảo - không xem đáp án ngay để đảm bảo hiệu quả luyện tập.</div>
         </section>
 
         <nav class="week-nav-links" aria-label="Điều hướng tuần">
-          <a href="week-1.html"><span class="nav-dir">← TUẦN TRƯỚC</span><span class="nav-title">Tuần 1: Nền tảng cơ sở dữ liệu</span></a>
-          <a href="week-3.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO →</span><span class="nav-title">Tuần 3: Phép chia &amp; gom nhóm</span></a>
+          <a href="week-1.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 1: Nền tảng cơ sở dữ liệu</span></a>
+          <a href="week-3.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 3: Phép chia &amp; gom nhóm</span></a>
         </nav>
       </div>
 
@@ -651,7 +651,7 @@ WHERE NOT EXISTS
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../assets/js/main.js?v=5"></script>
-  <script src="../../assets/js/progress.js?v=1"></script>
+  <script src="../../assets/js/progress.js?v=2"></script>
   <script src="../../assets/js/course.js?v=7"></script>
 </body>
 </html>

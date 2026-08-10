@@ -6,7 +6,7 @@
   <meta name="description" content="IT004 Tuần 4 - Hàm mở rộng (CAST, GETDATE, LEFT, RIGHT), CASE...END, Alias và Subquery trong SQL Server.">
   <title>Tuần 4 · Hàm mở rộng, CASE &amp; Subquery — IT004</title>
   <link rel="stylesheet" href="../../assets/css/base.css?v=12">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=16">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=17">
 </head>
 <body>
   <header class="topbar">
@@ -15,7 +15,7 @@
       <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
         <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
       </nav>
-      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>→</span></a></div>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>›</span></a></div>
     </div>
   </header>
 
@@ -26,7 +26,7 @@
       <span class="week-tag">THỰC HÀNH 04 · BTHT4</span>
       <h1>Hàm mở rộng, CASE &amp; Subquery</h1>
       <div class="week-meta"><span>5 tiết</span><span>Database</span><span>SQL Server</span></div>
-      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> sau Tuần 4, sinh viên không chỉ biết viết truy vấn để lấy dữ liệu, mà có thể <strong>biến đổi dữ liệu, phân loại dữ liệu và tạo ra các cột tính toán từ truy vấn con</strong>.</p>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Sau Tuần 4, sinh viên không chỉ biết viết truy vấn để lấy dữ liệu, mà có thể <strong>biến đổi dữ liệu, phân loại dữ liệu và tạo ra các cột tính toán từ truy vấn con</strong>.</p>
     </div>
 
     <nav class="course-nav" aria-label="Điều hướng IT004">
@@ -128,7 +128,7 @@ FROM NhanVien;</code></pre></div>
 
           <h3>Ví dụ tính tuổi</h3>
           <p>Giả sử <code>NgaySinh = '2000-08-15'</code>. Lấy ngày hiện tại bằng <code>SELECT GETDATE() AS HomNay;</code></p>
-          <div class="inline-warning"><strong>Lưu ý:</strong> không nên dùng phép trừ đơn giản giữa năm hiện tại và năm sinh để tính tuổi chính xác, vì còn phụ thuộc người đó đã qua sinh nhật trong năm hay chưa - đây là sự khác biệt giữa <strong>xử lý dữ liệu đơn giản</strong> và <strong>xử lý dữ liệu đúng về mặt nghiệp vụ</strong>.</div>
+          <div class="inline-warning"><strong>Lưu ý:</strong> Không nên dùng phép trừ đơn giản giữa năm hiện tại và năm sinh để tính tuổi chính xác, vì còn phụ thuộc người đó đã qua sinh nhật trong năm hay chưa - đây là sự khác biệt giữa <strong>xử lý dữ liệu đơn giản</strong> và <strong>xử lý dữ liệu đúng về mặt nghiệp vụ</strong>.</div>
         </section>
 
         <!-- 04 - LEFT RIGHT -->
@@ -206,7 +206,7 @@ FROM KhachHang;</code></pre></div>
     WHEN TongChiTieu >= 10000000 THEN N'VIP'
     ELSE N'Thường'
 END</code></pre></div>
-          <div class="inline-warning">Vì <code>15.000.000 &gt;= 5.000.000</code> đã đúng ngay ở điều kiện đầu tiên, nên <code>15.000.000</code> sẽ bị phân loại "Thân thiết" thay vì "VIP". <strong>Quy tắc:</strong> điều kiện cụ thể/cao hơn nên đặt trước điều kiện rộng hơn (<code>&gt;=10M</code> → <code>&gt;=5M</code> → còn lại).</div>
+          <div class="inline-warning">Vì <code>15.000.000 &gt;= 5.000.000</code> đã đúng ngay ở điều kiện đầu tiên, nên <code>15.000.000</code> sẽ bị phân loại "Thân thiết" thay vì "VIP". <strong>Quy tắc:</strong> Điều kiện cụ thể/cao hơn nên đặt trước điều kiện rộng hơn (<code>&gt;=10M</code> → <code>&gt;=5M</code> → còn lại).</div>
 
           <h3>CASE dạng so sánh giá trị</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE expression
@@ -447,30 +447,42 @@ SELECT (SELECT ...) AS X → Cột tính toán bằng Subquery</div>
           <h3>Challenge - thử thách cuối tuần</h3>
           <p>Sau Tuần 4, sinh viên đã có đủ kiến thức để giải những bài khá hay. Mỗi bài có gợi ý ẩn - bấm để mở.</p>
 
-          <h4>Challenge 01</h4>
-          <p>Hiển thị mã sinh viên, họ tên và 3 ký tự cuối của mã sinh viên.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">RIGHT()</div></details>
+          <div class="challenge-list">
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">01</span></div>
+              <p>Hiển thị mã sinh viên, họ tên và 3 ký tự cuối của mã sinh viên.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">RIGHT()</div></details>
+            </article>
 
-          <h4>Challenge 02</h4>
-          <p>Hiển thị ngày hiện tại chỉ dưới dạng DATE.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">GETDATE() + CAST()</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">02</span></div>
+              <p>Hiển thị ngày hiện tại chỉ dưới dạng DATE.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">GETDATE() + CAST()</div></details>
+            </article>
 
-          <h4>Challenge 03</h4>
-          <p>Phân loại sinh viên theo điểm: ≥8.5 → Xuất sắc, ≥7.0 → Tốt, ≥5.0 → Đạt, &lt;5.0 → Không đạt.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">CASE</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">03</span></div>
+              <p>Phân loại sinh viên theo điểm: ≥8.5 → Xuất sắc, ≥7.0 → Tốt, ≥5.0 → Đạt, &lt;5.0 → Không đạt.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">CASE</div></details>
+            </article>
 
-          <h4>Challenge 04</h4>
-          <p>Hiển thị mỗi sinh viên và số học phần đã đăng ký.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">Correlated Subquery</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">04</span></div>
+              <p>Hiển thị mỗi sinh viên và số học phần đã đăng ký.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">Correlated Subquery</div></details>
+            </article>
 
-          <h4>Challenge 05 ⭐</h4>
-          <p>Hiển thị mỗi sinh viên, số học phần đã đăng ký và phân loại: ≥20 → Đăng ký nhiều, 15-19 → Bình thường, &lt;15 → Đăng ký ít.</p>
-          <details><summary>Gợi ý</summary><div class="ascii-block">CASE + Correlated Subquery</div></details>
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">⭐</span></div>
+              <p>Hiển thị mỗi sinh viên, số học phần đã đăng ký và phân loại: ≥20 → Đăng ký nhiều, 15-19 → Bình thường, &lt;15 → Đăng ký ít.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">CASE + Correlated Subquery</div></details>
+            </article>
+          </div>
         </section>
 
         <nav class="week-nav-links" aria-label="Điều hướng tuần">
-          <a href="week-3.html"><span class="nav-dir">← TUẦN TRƯỚC</span><span class="nav-title">Tuần 3: Phép chia &amp; gom nhóm</span></a>
-          <a href="week-5.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO →</span><span class="nav-title">Tuần 5: Trigger</span></a>
+          <a href="week-3.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 3: Phép chia &amp; gom nhóm</span></a>
+          <a href="week-5.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 5: Trigger</span></a>
         </nav>
       </div>
 
@@ -519,7 +531,7 @@ SELECT (SELECT ...) AS X → Cột tính toán bằng Subquery</div>
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../assets/js/main.js?v=5"></script>
-  <script src="../../assets/js/progress.js?v=1"></script>
+  <script src="../../assets/js/progress.js?v=2"></script>
   <script src="../../assets/js/course.js?v=7"></script>
 </body>
 </html>

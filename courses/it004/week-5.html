@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT004 Tuần 5 - Trigger trong SQL Server: AFTER, INSTEAD OF, bảng INSERTED và DELETED.">
+  <title>Tuần 5 · Trigger — IT004</title>
+  <link rel="stylesheet" href="../../assets/css/base.css?v=11">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=16">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><span class="brand-mark">⌁</span><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>→</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IT004</a><span>/</span>Tuần 5</p>
+
+    <div class="week-header">
+      <span class="week-tag">THỰC HÀNH 05 · BTHT5</span>
+      <h1>Trigger trong SQL Server</h1>
+      <div class="week-meta"><span>5 tiết</span><span>Database</span><span>SQL Server</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> hiểu cách SQL Server tự động thực hiện một nhóm câu lệnh khi dữ liệu trong bảng phát sinh các thao tác <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IT004">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html">Tuần 4</a>
+      <a href="week-5.html" class="active">Tuần 5</a>
+      <span class="nav-item" aria-disabled="true">Tuần 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true">Ôn tập <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true">Thi <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 5">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#trigger-la-gi" data-toc><b>01</b> Trigger là gì?</a>
+        <a href="#loai-trigger" data-toc><b>02</b> AFTER &amp; INSTEAD OF</a>
+        <a href="#cu-phap" data-toc><b>03</b> Cú pháp Trigger</a>
+        <a href="#kiem-tra-loi" data-toc><b>04</b> Kiểm tra &amp; xử lý lỗi</a>
+        <a href="#inserted-deleted" data-toc><b>05</b> INSERTED &amp; DELETED</a>
+        <a href="#ung-dung" data-toc><b>06</b> Ứng dụng thực tế</a>
+        <a href="#nhieu-dong" data-toc><b>07</b> Xử lý nhiều dòng</a>
+        <a href="#quy-trinh" data-toc><b>08</b> Quy trình &amp; Cheat sheet</a>
+        <a href="#bai-tap" data-toc><b>09</b> Bài tập</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Trigger la gi -->
+        <section class="lesson-section" id="trigger-la-gi">
+          <p class="eyebrow">01 · TRIGGER LÀ GÌ?</p>
+          <h2>Trigger là gì?</h2>
+          <div class="definition"><strong>Trigger</strong> là một đoạn chương trình SQL được gắn với một bảng hoặc view, được <strong>SQL Server tự động kích hoạt</strong> khi xảy ra thao tác <code>INSERT</code>, <code>UPDATE</code> hoặc <code>DELETE</code>.</div>
+
+          <h3>Không có Trigger, so với có Trigger</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Người dùng</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">INSERT / UPDATE / DELETE</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Trigger được kích hoạt</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Kiểm tra / xử lý / thông báo</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Dữ liệu được cập nhật</span>
+          </div>
+          <p>Ví dụ: "không cho phép số lượng sản phẩm nhỏ hơn 0." Khi người dùng chạy <code>UPDATE SANPHAM SET SOLUONG = -10 WHERE MASP = 'SP01';</code>, Trigger phát hiện <code>SOLUONG &lt; 0</code> → báo lỗi → <code>ROLLBACK</code> → hủy thao tác.</p>
+
+          <h3>Tại sao cần Trigger?</h3>
+          <p>Trigger thường dùng để <strong>tự động kiểm soát dữ liệu ngay tại tầng cơ sở dữ liệu</strong>:</p>
+          <ul>
+            <li><strong>Kiểm tra dữ liệu:</strong> số lượng sản phẩm ≥ 0</li>
+            <li><strong>Ngăn thao tác không hợp lệ:</strong> không cho xóa khách hàng đã phát sinh giao dịch</li>
+            <li><strong>Tự động cập nhật:</strong> thêm CTHD → tự động cập nhật trị giá hóa đơn</li>
+            <li><strong>Theo dõi thay đổi:</strong> tên khách hàng cũ → mới</li>
+            <li><strong>Đồng bộ dữ liệu:</strong> CTHD thay đổi → cập nhật tổng tiền hóa đơn → cập nhật doanh số khách hàng</li>
+          </ul>
+        </section>
+
+        <!-- 02 - Loai trigger -->
+        <section class="lesson-section" id="loai-trigger">
+          <p class="eyebrow">02 · CÁC LOẠI TRIGGER</p>
+          <h2>AFTER và INSTEAD OF</h2>
+          <p>SQL Server hỗ trợ hai loại Trigger chính. <strong>SQL Server không hỗ trợ <code>BEFORE TRIGGER</code></strong> theo cách một số hệ quản trị CSDL khác có.</p>
+          <p><code>AFTER</code> - chạy <strong>sau khi</strong> thao tác DML hoàn tất thành công (<code>AFTER INSERT</code>, <code>AFTER UPDATE</code>, <code>AFTER DELETE</code>). <code>INSTEAD OF</code> - <strong>thay thế</strong> thao tác DML ban đầu bằng các câu lệnh định nghĩa bên trong Trigger.</p>
+
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loại</th><th>Cách hoạt động</th><th>Ví dụ</th></tr>
+            <tr><td><code>AFTER</code></td><td>Thao tác gốc xảy ra trước, Trigger xử lý sau</td><td>Kiểm tra và cập nhật dữ liệu</td></tr>
+            <tr><td><code>INSTEAD OF</code></td><td>Trigger thay thế thao tác gốc</td><td>Không cho phép xóa</td></tr>
+            <tr><td><code>BEFORE</code></td><td>Không hỗ trợ trong SQL Server</td><td>-</td></tr>
+          </table></div>
+
+          <div class="ascii-block">AFTER:        DELETE → Xóa dữ liệu → Trigger → Xử lý tiếp
+INSTEAD OF:   DELETE → Trigger → KHÔNG thực hiện DELETE gốc</div>
+        </section>
+
+        <!-- 03 - Cu phap -->
+        <section class="lesson-section" id="cu-phap">
+          <p class="eyebrow">03 · CÚ PHÁP TRIGGER</p>
+          <h2>Cú pháp tạo Trigger</h2>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER &lt;Tên_Trigger&gt;
+ON &lt;Tên_Bảng&gt;
+AFTER | INSTEAD OF INSERT, UPDATE, DELETE
+AS
+BEGIN
+    -- Các câu lệnh xử lý
+END;</code></pre></div>
+          <p><code>FOR</code> cũng có thể được dùng thay cho <code>AFTER</code>.</p>
+
+          <h3>Giải thích từng thành phần</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterInsert_KhachHang
+ON KHACHHANG
+AFTER INSERT
+AS
+BEGIN
+    -- xử lý
+END;</code></pre></div>
+          <p><code>CREATE TRIGGER</code> tạo Trigger mới. Tên nên dễ hiểu, ví dụ <code>trg_AfterInsert_KhachHang</code>, <code>trg_CheckQuantity_SanPham</code>, <code>trg_PreventDelete_NhanVien</code>. <code>ON KHACHHANG</code> gắn Trigger vào bảng đó. <code>AFTER INSERT</code> chạy sau khi có <code>INSERT</code>. <code>BEGIN...END</code> chứa các câu lệnh thực hiện.</p>
+
+          <h3>Ví dụ - AFTER INSERT</h3>
+          <p>Khi thêm khách hàng mới, hiển thị thông báo:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterInsert_KhachHang
+ON KHACHHANG
+AFTER INSERT
+AS
+BEGIN
+    PRINT N'Khách hàng mới đã được thêm vào KHACHHANG.';
+END;</code></pre></div>
+          <p>Thử nghiệm:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO KHACHHANG
+VALUES (
+    'KH99',
+    N'Nguyễn Văn A',
+    N'Hà Nội',
+    '0909000000',
+    '2026-08-11',
+    0
+);</code></pre></div>
+          <div class="inline-ok">Người dùng <strong>không cần gọi Trigger bằng tay</strong> - SQL Server tự động kích hoạt Trigger ngay sau khi <code>INSERT</code> thành công.</div>
+
+          <h3>Ví dụ - INSTEAD OF DELETE</h3>
+          <p>Không cho phép xóa khách hàng:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_PreventDelete_KhachHang
+ON KHACHHANG
+INSTEAD OF DELETE
+AS
+BEGIN
+    PRINT N'Không được xóa khách hàng.';
+END;</code></pre></div>
+          <p>Khi chạy <code>DELETE FROM KHACHHANG WHERE MAKH = 'KH01';</code>, thay vì xóa, hệ thống chỉ in ra "Không được xóa khách hàng."</p>
+        </section>
+
+        <!-- 04 - Kiem tra loi -->
+        <section class="lesson-section" id="kiem-tra-loi">
+          <p class="eyebrow">04 · KIỂM TRA VÀ XỬ LÝ LỖI</p>
+          <h2>Trigger kiểm tra dữ liệu</h2>
+          <p>Bài toán: số lượng sản phẩm trong <code>SANPHAM</code> không được nhỏ hơn 0.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_CheckQuantity_SanPham
+ON SANPHAM
+AFTER INSERT, UPDATE
+AS
+BEGIN
+
+    IF EXISTS (
+        SELECT *
+        FROM SANPHAM
+        WHERE SOLUONG < 0
+    )
+    BEGIN
+        RAISERROR (
+            N'Số lượng không thể âm.',
+            16,
+            1
+        );
+
+        ROLLBACK;
+    END
+
+END;</code></pre></div>
+
+          <h3>Phân tích</h3>
+          <div class="ascii-block">IF EXISTS → RAISERROR → ROLLBACK → Hủy thao tác sai</div>
+          <p><code>IF EXISTS(...)</code> kiểm tra có tồn tại bản ghi vi phạm điều kiện hay không. <code>RAISERROR(N'...', 16, 1)</code> báo lỗi - mức độ <code>16</code> là mức thường dùng để biểu diễn lỗi do người dùng gây ra (dữ liệu nhập sai, vi phạm quy tắc). <code>ROLLBACK</code> hủy giao dịch đang thực hiện, đưa dữ liệu về trạng thái trước đó.</p>
+
+          <h3>PRINT và RAISERROR - phân biệt</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th></th><th>PRINT</th><th>RAISERROR</th></tr>
+            <tr><td>Mục đích</td><td>Thông báo</td><td>Báo lỗi</td></tr>
+            <tr><td>Có thể dừng thao tác</td><td>Không</td><td>Có</td></tr>
+            <tr><td>Dùng với ROLLBACK</td><td>Có thể nhưng không tự động</td><td>Thường kết hợp</td></tr>
+            <tr><td>Ví dụ</td><td>"Đã thêm khách hàng"</td><td>"Số lượng không thể âm"</td></tr>
+          </table></div>
+
+          <div class="quick-check">
+            <p class="eyebrow">KIỂM TRA NHANH</p>
+            <p class="qc-question">Muốn hủy hẳn một thao tác UPDATE khi phát hiện dữ liệu sai trong Trigger, cần dùng thêm lệnh nào ngoài RAISERROR?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">PRINT</button>
+              <button class="qc-option" type="button" data-correct="true">ROLLBACK</button>
+              <button class="qc-option" type="button" data-correct="false">SELECT</button>
+            </div>
+            <div class="qc-feedback correct">✓ Chính xác! <code>RAISERROR</code> chỉ báo lỗi, còn <code>ROLLBACK</code> mới thực sự hủy giao dịch và đưa dữ liệu về trạng thái trước đó.</div>
+          </div>
+        </section>
+
+        <!-- 05 - INSERTED DELETED -->
+        <section class="lesson-section" id="inserted-deleted">
+          <p class="eyebrow">05 · INSERTED VÀ DELETED</p>
+          <h2>INSERTED và DELETED</h2>
+          <div class="definition">Trong Trigger, SQL Server cung cấp hai <strong>bảng ảo</strong>: <code>INSERTED</code> và <code>DELETED</code>. Chúng chỉ tồn tại trong phạm vi Trigger, chứa dữ liệu liên quan đến thao tác DML đang xảy ra.</div>
+
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Thao tác</th><th>INSERTED</th><th>DELETED</th></tr>
+            <tr><td><code>INSERT</code></td><td>Bản ghi mới</td><td>-</td></tr>
+            <tr><td><code>DELETE</code></td><td>-</td><td>Bản ghi bị xóa</td></tr>
+            <tr><td><code>UPDATE</code></td><td>Giá trị mới</td><td>Giá trị cũ</td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>Mẹo nhớ:</strong> <code>INSERTED</code> = cái <strong>mới</strong>. <code>DELETED</code> = cái <strong>cũ / bị xóa</strong>.</div>
+
+          <h3>Thử trực tiếp</h3>
+          <p>Bấm một nút để xem <code>INSERTED</code>/<code>DELETED</code> chứa gì với từng thao tác (ví dụ: đổi tên khách hàng từ "Nguyễn Văn A" thành "Nguyễn Văn B"):</p>
+          <div class="trigger-demo">
+            <p class="eyebrow">DEMO TRỰC QUAN</p>
+            <div class="trigger-demo-actions">
+              <button type="button" data-demo="insert">INSERT</button>
+              <button type="button" data-demo="update">UPDATE</button>
+              <button type="button" data-demo="delete">DELETE</button>
+            </div>
+            <div class="trigger-demo-tables">
+              <div class="trigger-demo-table" data-table="deleted">
+                <span class="side-label">DELETED (dữ liệu cũ)</span>
+                <div class="trigger-demo-row">-</div>
+              </div>
+              <div class="trigger-demo-table" data-table="inserted">
+                <span class="side-label">INSERTED (dữ liệu mới)</span>
+                <div class="trigger-demo-row">-</div>
+              </div>
+            </div>
+            <p class="trigger-demo-caption">INSERT → chỉ INSERTED có dữ liệu · DELETE → chỉ DELETED có dữ liệu · UPDATE → cả hai đều có dữ liệu.</p>
+          </div>
+
+          <h3>Ví dụ - đọc INSERTED</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterInsert_KhachHang
+ON KHACHHANG
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @MAKH CHAR(4);
+
+    SELECT @MAKH = MAKH
+    FROM INSERTED;
+
+    PRINT N'Khách hàng mới được thêm vào với MAKH: '
+        + CAST(@MAKH AS VARCHAR);
+END;</code></pre></div>
+
+          <h3>Ví dụ - đọc DELETED</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterDelete_KhachHang
+ON KHACHHANG
+AFTER DELETE
+AS
+BEGIN
+    SELECT *
+    FROM DELETED;
+END;</code></pre></div>
+
+          <h3>Ví dụ hoàn chỉnh - theo dõi thay đổi tên (UPDATE)</h3>
+          <p>Khi <code>UPDATE</code>, <code>DELETED</code> chứa giá trị cũ và <code>INSERTED</code> chứa giá trị mới, nên có thể so sánh "giá trị cũ → giá trị mới":</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterUpdate_KhachHang
+ON KHACHHANG
+AFTER UPDATE
+AS
+BEGIN
+
+    DECLARE
+        @OldName VARCHAR(40),
+        @NewName VARCHAR(40);
+
+    SELECT @OldName = HOTEN
+    FROM DELETED;
+
+    SELECT @NewName = HOTEN
+    FROM INSERTED;
+
+    PRINT N'Tên khách hàng đã thay đổi từ "'
+        + @OldName
+        + N'" sang "'
+        + @NewName
+        + N'".';
+
+END;</code></pre></div>
+        </section>
+
+        <!-- 06 - Ung dung -->
+        <section class="lesson-section" id="ung-dung">
+          <p class="eyebrow">06 · ỨNG DỤNG THỰC TẾ</p>
+          <h2>Ứng dụng thực tế của Trigger</h2>
+
+          <h3>Kiểm tra tồn tại trước khi thêm</h3>
+          <p>Không cho phép thêm hóa đơn nếu khách hàng chưa tồn tại:</p>
+          <div class="ascii-block">INSERT HOADON → Lấy MAKH từ INSERTED → Kiểm tra KHACHHANG
+   → Có tồn tại? Có → Cho phép | Không → RAISERROR + ROLLBACK</div>
+          <p><code>IF EXISTS</code> kiểm tra có tồn tại dữ liệu thỏa điều kiện; <code>IF NOT EXISTS</code> kiểm tra ngược lại - không tồn tại dữ liệu thỏa điều kiện.</p>
+
+          <h3>Trigger tự động cập nhật dữ liệu</h3>
+          <p>Bảng <code>HOADON(MAHD, TRIGIA)</code> và <code>CTHD(MAHD, MASP, SOLUONG, DONGIA)</code>. Khi <code>INSERT INTO CTHD</code>, Trigger tự động tính lại <code>TRIGIA</code> và <code>UPDATE HOADON</code>.</p>
+
+          <h3>Trigger cập nhật doanh số khách hàng</h3>
+          <p>Bài toán nâng cao hơn: thêm/sửa hóa đơn → Trigger tính tổng trị giá → cập nhật <code>DOANHSO</code> trong <code>KHACHHANG</code>.</p>
+
+          <h3>Không cho xóa dữ liệu đang được tham chiếu</h3>
+          <p>Không cho phép xóa nhân viên nếu nhân viên đã tham gia bán hàng:</p>
+          <div class="ascii-block">DELETE NHANVIEN → Kiểm tra HOADON → Có hóa đơn? Có → ROLLBACK | Không → Cho phép</div>
+
+          <h3>Tự động cập nhật ngày đăng ký</h3>
+          <p>Khi thêm khách hàng mới, nếu không nhập <code>NGDK</code>, hệ thống tự động lấy ngày hiện tại bằng <code>GETDATE()</code>.</p>
+
+          <h3>Một số bài toán mở rộng</h3>
+          <ul>
+            <li>Sản phẩm chỉ được thêm vào hóa đơn nếu sản phẩm tồn tại và đủ tồn kho</li>
+            <li>Tổng giá trị trong CTHD phải khớp với HOADON</li>
+            <li>Hóa đơn vượt 1.000.000.000 phải chuyển trạng thái "Kiểm tra đặc biệt"</li>
+            <li>Tổng số lượng sản phẩm bán ra trong một ngày không vượt 10.000 sản phẩm</li>
+            <li>Không cho nhân viên trở thành cấp trên của chính mình</li>
+          </ul>
+        </section>
+
+        <!-- 07 - Nhieu dong -->
+        <section class="lesson-section" id="nhieu-dong">
+          <p class="eyebrow">07 · TRIGGER XỬ LÝ NHIỀU DÒNG</p>
+          <h2>Trigger nên tư duy theo tập dữ liệu</h2>
+          <p>Sinh viên thường viết:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECLARE @MAKH CHAR(4);
+
+SELECT @MAKH = MAKH
+FROM INSERTED;</code></pre></div>
+          <p>Cách này dễ hiểu khi minh họa <strong>một bản ghi</strong>, nhưng một câu <code>INSERT INTO ... SELECT ...</code> có thể thêm <strong>nhiều dòng cùng lúc</strong>.</p>
+          <div class="ascii-block">INSERTED
+├── dòng 1
+├── dòng 2
+├── dòng 3
+├── ...
+└── dòng n</div>
+          <div class="inline-warning">Trigger nên được tư duy theo <strong>tập hợp dữ liệu (set-based)</strong> thay vì mặc định chỉ có một dòng - đây là kỹ năng quan trọng khi bước từ bài thực hành sang SQL thực tế. Không nên chỉ tư duy "INSERTED → 1 dòng → 1 biến", mà cần xử lý <strong>toàn bộ tập dữ liệu</strong> trong INSERTED/DELETED.</div>
+        </section>
+
+        <!-- 08 - Quy trinh + cheat sheet -->
+        <section class="lesson-section" id="quy-trinh">
+          <p class="eyebrow">08 · QUY TRÌNH XÂY TRIGGER</p>
+          <h2>Quy trình 6 bước</h2>
+          <p>Khi gặp bài tập Trigger, có thể làm theo 6 bước:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">1. Xác định sự kiện: INSERT / UPDATE / DELETE</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">2. Xác định bảng: ON ...</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">3. Xác định loại: AFTER hay INSTEAD OF</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">4. Xác định dữ liệu cần kiểm tra: INSERTED / DELETED / bảng khác</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">5. Viết điều kiện: IF EXISTS / IF NOT EXISTS</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">6. Xử lý: PRINT / RAISERROR / ROLLBACK / INSERT / UPDATE / DELETE</span>
+          </div>
+
+          <h3>Quản lý Trigger</h3>
+          <p>Xóa Trigger:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DROP TRIGGER trg_AfterInsert_KhachHang;</code></pre></div>
+          <p>Xem thông tin Trigger:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM INFORMATION_SCHEMA.TRIGGERS;</code></pre></div>
+
+          <h3>Cheat Sheet Tuần 5</h3>
+          <div class="ascii-block">TRIGGER      → Tự động chạy khi DML xảy ra
+INSERT/UPDATE/DELETE → Các thao tác kích hoạt Trigger
+AFTER        → Chạy sau thao tác DML
+INSTEAD OF   → Thay thế thao tác DML
+INSERTED     → Dữ liệu mới
+DELETED      → Dữ liệu cũ / bị xóa
+IF EXISTS    → Kiểm tra có dữ liệu thỏa điều kiện
+IF NOT EXISTS → Kiểm tra không tồn tại dữ liệu
+PRINT        → Thông báo
+RAISERROR    → Báo lỗi
+ROLLBACK     → Hủy thao tác / giao dịch</div>
+
+          <h3>Năm tuần đầu của IT004</h3>
+          <p>Tuần 1: tạo CSDL. Tuần 2: truy vấn. Tuần 3: truy vấn nâng cao. Tuần 4: xử lý dữ liệu (CAST/CASE/Subquery). Tuần 5: <strong>tự động hóa &amp; kiểm soát</strong> bằng Trigger, INSERTED/DELETED, RAISERROR/ROLLBACK. Tuần 6 theo khung môn học sẽ là ôn tập và thi thực hành, thời gian và hình thức thi được thông báo sau.</p>
+        </section>
+
+        <!-- 09 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">09 · BÀI TẬP THỰC HÀNH</p>
+          <h2>Thực hành tổng hợp</h2>
+          <p>Nội dung Tuần 5 gồm: trigger kiểm tra dữ liệu, trigger ngăn thao tác không hợp lệ, trigger tự động cập nhật dữ liệu, và trigger theo dõi thay đổi. Nội dung từng câu hỏi sẽ được cập nhật trực tiếp trên Moodle của môn học.</p>
+
+          <h3>Challenge - thử thách cuối tuần</h3>
+          <p>Mỗi bài có gợi ý ẩn - bấm để mở.</p>
+
+          <h4>Challenge 01 - Không cho số lượng âm</h4>
+          <p>Tạo Trigger: không cho phép <code>SOLUONG &lt; 0</code> trong <code>SANPHAM</code>.</p>
+          <details><summary>Gợi ý</summary><div class="ascii-block">AFTER INSERT, UPDATE + IF EXISTS + RAISERROR + ROLLBACK</div></details>
+
+          <h4>Challenge 02 - Theo dõi thay đổi</h4>
+          <p>Khi thay đổi tên khách hàng, hiển thị: 'Tên khách hàng đã thay đổi từ "..." sang "..."'.</p>
+          <details><summary>Gợi ý</summary><div class="ascii-block">INSERTED + DELETED + AFTER UPDATE</div></details>
+
+          <h4>Challenge 03 - Không cho xóa</h4>
+          <p>Không cho phép xóa nhân viên nếu nhân viên đã có hóa đơn.</p>
+          <details><summary>Gợi ý</summary><div class="ascii-block">INSTEAD OF DELETE + DELETED + IF EXISTS</div></details>
+
+          <h4>Challenge 04 - Tự động cập nhật</h4>
+          <p>Khi thêm chi tiết hóa đơn, tự động cập nhật trị giá hóa đơn.</p>
+          <details><summary>Gợi ý</summary><div class="ascii-block">AFTER INSERT + INSERTED + UPDATE</div></details>
+
+          <h4>Challenge 05 ⭐⭐</h4>
+          <p>Khi thêm hoặc cập nhật hóa đơn, tự động cập nhật doanh số khách hàng.</p>
+          <details><summary>Gợi ý</summary><div class="ascii-block">AFTER INSERT, UPDATE + INSERTED + UPDATE KHACHHANG.DOANHSO</div></details>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần">
+          <a href="week-4.html"><span class="nav-dir">← TUẦN TRƯỚC</span><span class="nav-title">Tuần 4: Hàm mở rộng, CASE &amp; Subquery</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO →</span><span class="nav-title">Tuần 6: Ôn tập &amp; thi thực hành (sắp mở)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">TIẾN ĐỘ</span>
+          <strong>5<span>/6 tuần</span></strong>
+          <div class="mini-progress"><b style="width:83%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="trigger-la-gi"><b>○</b> Trigger là gì?</li>
+            <li data-section="loai-trigger"><b>○</b> AFTER &amp; INSTEAD OF</li>
+            <li data-section="cu-phap"><b>○</b> Cú pháp Trigger</li>
+            <li data-section="kiem-tra-loi"><b>○</b> Kiểm tra &amp; xử lý lỗi</li>
+            <li data-section="inserted-deleted"><b>○</b> INSERTED &amp; DELETED</li>
+            <li data-section="ung-dung"><b>○</b> Ứng dụng thực tế</li>
+            <li data-section="nhieu-dong"><b>○</b> Xử lý nhiều dòng</li>
+            <li data-section="quy-trinh"><b>○</b> Quy trình &amp; Cheat sheet</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>INSERTED = dữ liệu mới. DELETED = dữ liệu cũ/bị xóa.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-top">
+      <div class="brand"><span class="brand-mark">⌁</span><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+    </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=7"></script>
+</body>
+</html>
+</content>

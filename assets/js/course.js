@@ -33,6 +33,31 @@ document.querySelectorAll('.quick-check').forEach((qc) => {
   });
 });
 
+document.querySelectorAll('.trigger-demo').forEach((demo) => {
+  const scenarios = {
+    insert: { old: null, new: "HOTEN = 'Nguyễn Văn A' (bản ghi mới)" },
+    update: { old: "HOTEN = 'Nguyễn Văn A'", new: "HOTEN = 'Nguyễn Văn B'" },
+    delete: { old: "HOTEN = 'Nguyễn Văn A' (đã xóa)", new: null },
+  };
+  const buttons = demo.querySelectorAll('[data-demo]');
+  const deletedBox = demo.querySelector('[data-table="deleted"]');
+  const insertedBox = demo.querySelector('[data-table="inserted"]');
+  const deletedRow = deletedBox.querySelector('.trigger-demo-row');
+  const insertedRow = insertedBox.querySelector('.trigger-demo-row');
+
+  function render(key) {
+    const s = scenarios[key];
+    buttons.forEach((b) => b.classList.toggle('active', b.dataset.demo === key));
+    deletedRow.textContent = s.old || '(trống)';
+    insertedRow.textContent = s.new || '(trống)';
+    deletedBox.classList.toggle('is-active', !!s.old);
+    insertedBox.classList.toggle('is-active', !!s.new);
+  }
+
+  buttons.forEach((b) => b.addEventListener('click', () => render(b.dataset.demo)));
+  render('insert');
+});
+
 (function () {
   var tocLinks = document.querySelectorAll('.lesson-toc a[data-toc]');
   if (!tocLinks.length) return;

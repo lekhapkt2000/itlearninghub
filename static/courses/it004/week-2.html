@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT004 Tuần 2 - Truy vấn dữ liệu với SQL: toán tử, hàm, SELECT, JOIN, phép toán tập hợp và Subquery.">
+  <title>Tuần 2 · Truy vấn dữ liệu với SQL — IT004</title>
+  <link rel="stylesheet" href="../../assets/css/base.css?v=3">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=3">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><span class="brand-mark">⌁</span><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>→</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IT004</a><span>/</span>Tuần 2</p>
+
+    <div class="week-header">
+      <span class="week-tag">THỰC HÀNH 02 · BTHT2</span>
+      <h1>Truy vấn dữ liệu với SQL</h1>
+      <div class="week-meta"><span>5 tiết</span><span>Database</span><span>SQL Server</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> sử dụng toán tử và hàm để xây dựng điều kiện truy vấn; viết <code>SELECT</code> lọc, sắp xếp, gom nhóm dữ liệu; kết hợp dữ liệu nhiều bảng bằng <code>JOIN</code>; dùng <code>UNION</code>/<code>INTERSECT</code>/<code>EXCEPT</code>; viết truy vấn lồng với <code>IN</code>, <code>ANY</code>, <code>ALL</code>, <code>EXISTS</code>, <code>NOT EXISTS</code>.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IT004">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html" class="active">Tuần 2</a>
+      <span class="nav-item" aria-disabled="true">Tuần 3 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true">Tuần 4 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true">Tuần 5 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true">Tuần 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true">Ôn tập <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true">Thi <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 2">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#on-tap" data-toc><b>01</b> Ôn tập Tuần 1</a>
+        <a href="#toan-tu" data-toc><b>02</b> Toán tử</a>
+        <a href="#ham" data-toc><b>03</b> Hàm trong SQL</a>
+        <a href="#select" data-toc><b>04</b> SELECT</a>
+        <a href="#join" data-toc><b>05</b> JOIN</a>
+        <a href="#set-operations" data-toc><b>06</b> Set Operations</a>
+        <a href="#subquery" data-toc><b>07</b> Subquery</a>
+        <a href="#tong-hop" data-toc><b>08</b> Chọn công cụ nào?</a>
+        <a href="#bai-tap" data-toc><b>09</b> Bài tập</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 — Ôn tập Tuần 1 -->
+        <section class="lesson-section" id="on-tap">
+          <p class="eyebrow">01 · ÔN TẬP TUẦN 1</p>
+          <h2>Ôn tập trước khi bắt đầu</h2>
+          <p>Trước khi bắt đầu nội dung mới, sinh viên cần ôn lại Database, Table và các lệnh thao tác dữ liệu đã học ở Tuần 1.</p>
+          <h3>Database</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QuanLyNhanVien;
+GO
+
+USE QuanLyNhanVien;
+GO</code></pre></div>
+          <h3>Table</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE PhongBan
+(
+    MaPB CHAR(4) PRIMARY KEY,
+    TenPB NVARCHAR(50)
+);</code></pre></div>
+          <h3>Insert</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO PhongBan
+VALUES
+('PB01', N'Phòng Kỹ thuật'),
+('PB02', N'Phòng Kinh doanh'),
+('PB03', N'Phòng Nhân sự');</code></pre></div>
+          <p>Các khái niệm cần nhớ: Database, Table, Column, Row, Primary Key, Foreign Key, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> — đảm bảo sinh viên có thể thao tác với dữ liệu trước khi chuyển sang truy vấn nâng cao hơn.</p>
+        </section>
+
+        <!-- 02 — Toán tử -->
+        <section class="lesson-section" id="toan-tu">
+          <p class="eyebrow">02 · TOÁN TỬ TRONG SQL</p>
+          <h2>Toán tử</h2>
+          <div class="definition">Toán tử là các ký hiệu hoặc từ khóa dùng để thực hiện phép toán, so sánh hoặc kết hợp điều kiện trong câu truy vấn.</div>
+          <p>Ví dụ dùng trong các mục dưới đây, giả sử có bảng:</p>
+          <div class="ascii-block">NhanVien
+────────────────────────────────
+MaNV | HoTen        | Luong
+────────────────────────────────
+NV01 | Nguyễn An    | 10000000
+NV02 | Trần Bình    | 15000000
+NV03 | Lê Cường     | 12000000</div>
+
+          <h3>Toán tử số học</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Toán tử</th><th>Ý nghĩa</th></tr>
+            <tr><td><code>+</code></td><td>Cộng</td></tr>
+            <tr><td><code>-</code></td><td>Trừ</td></tr>
+            <tr><td><code>*</code></td><td>Nhân</td></tr>
+            <tr><td><code>/</code></td><td>Chia</td></tr>
+            <tr><td><code>%</code></td><td>Lấy phần dư</td></tr>
+          </table></div>
+          <p>Tính lương sau khi tăng 10%:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong, Luong * 1.1 AS LuongMoi
+FROM NhanVien;</code></pre></div>
+          <div class="ascii-block">HoTen          Luong       LuongMoi
+------------------------------------
+Nguyễn An      10000000    11000000
+Trần Bình      15000000    16500000
+Lê Cường       12000000    13200000</div>
+          <div class="inline-ok"><strong>Lưu ý:</strong> toán tử số học có thể dùng trực tiếp trong <code>SELECT</code> để tạo giá trị tính toán mà không cần lưu thêm cột mới vào bảng.</div>
+
+          <h3>Toán tử so sánh</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Toán tử</th><th>Ý nghĩa</th></tr>
+            <tr><td><code>=</code></td><td>Bằng</td></tr>
+            <tr><td><code>&lt;&gt;</code> hoặc <code>!=</code></td><td>Khác</td></tr>
+            <tr><td><code>&gt;</code></td><td>Lớn hơn</td></tr>
+            <tr><td><code>&lt;</code></td><td>Nhỏ hơn</td></tr>
+            <tr><td><code>&gt;=</code></td><td>Lớn hơn hoặc bằng</td></tr>
+            <tr><td><code>&lt;=</code></td><td>Nhỏ hơn hoặc bằng</td></tr>
+          </table></div>
+          <p>Tìm nhân viên có lương trên 10 triệu:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong
+FROM NhanVien
+WHERE Luong > 10000000;</code></pre></div>
+          <p>Tìm nhân viên thuộc phòng <code>PB01</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE MaPB = 'PB01';</code></pre></div>
+
+          <h3>Toán tử logic</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Toán tử</th><th>Ý nghĩa</th></tr>
+            <tr><td><code>AND</code></td><td>Tất cả điều kiện phải đúng</td></tr>
+            <tr><td><code>OR</code></td><td>Chỉ cần một điều kiện đúng</td></tr>
+            <tr><td><code>NOT</code></td><td>Phủ định điều kiện</td></tr>
+          </table></div>
+          <p><code>AND</code> — nhân viên phải <strong>đồng thời</strong> thỏa cả hai điều kiện:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE Luong > 5000000
+  AND MaPB = 'PB01';</code></pre></div>
+          <p><code>OR</code> — chỉ cần thỏa một trong hai điều kiện:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE Luong > 15000000
+   OR MaPB = 'PB01';</code></pre></div>
+          <p><code>NOT</code> — lấy nhân viên không thuộc PB01:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE NOT MaPB = 'PB01';</code></pre></div>
+
+          <h3>Toán tử đặc biệt</h3>
+          <div class="ascii-block">LIKE
+IN
+BETWEEN
+IS NULL
+IS NOT NULL
+ANY
+ALL</div>
+          <p><code>LIKE</code> — <code>%</code> đại diện cho chuỗi ký tự bất kỳ:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
+FROM NhanVien
+WHERE HoTen LIKE N'Nguyễn%';</code></pre></div>
+          <p>Đều có thể được tìm thấy: <code>Nguyễn An</code>, <code>Nguyễn Bình</code>, <code>Nguyễn Văn Nam</code>.</p>
+          <p><code>BETWEEN</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE Luong BETWEEN 10000000 AND 15000000;</code></pre></div>
+          <p><code>IN</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
+        </section>
+
+        <!-- 03 — Hàm trong SQL -->
+        <section class="lesson-section" id="ham">
+          <p class="eyebrow">03 · HÀM TRONG SQL</p>
+          <h2>Hàm trong SQL</h2>
+          <div class="definition">Hàm giúp xử lý và biến đổi dữ liệu: hàm xử lý số, hàm xử lý chuỗi, hàm xử lý ngày giờ và hàm tập hợp.</div>
+
+          <div class="inline-warning">
+            <strong>Lưu ý quan trọng:</strong> tài liệu gốc trình bày một số hàm theo cú pháp SQL tổng quát/MySQL (<code>NOW()</code>, <code>CURDATE()</code>, <code>LENGTH()</code>, <code>DATE_ADD()</code>, <code>CEIL()</code>...). Môn thực hành dùng <strong>Microsoft SQL Server</strong>, nên các hàm dưới đây đã được chuẩn hóa sang <strong>T-SQL</strong> — chạy được trực tiếp, không copy nguyên bản MySQL.
+            <div class="table-wrap"><table class="ref-table">
+            <tr><th>MySQL / tổng quát</th><th>T-SQL (SQL Server)</th></tr>
+            <tr><td><code>NOW()</code></td><td><code>GETDATE()</code></td></tr>
+            <tr><td><code>CURDATE()</code></td><td><code>CAST(GETDATE() AS DATE)</code></td></tr>
+            <tr><td><code>LENGTH()</code></td><td><code>LEN()</code></td></tr>
+            <tr><td><code>CEIL()</code></td><td><code>CEILING()</code></td></tr>
+            <tr><td><code>DATE_ADD(date, INTERVAL n unit)</code></td><td><code>DATEADD(unit, n, date)</code></td></tr>
+            <tr><td><code>DATEDIFF(date1, date2)</code> — số ngày</td><td><code>DATEDIFF(DAY, date1, date2)</code> — cần chỉ rõ đơn vị</td></tr>
+          </table></div>
+          </div>
+
+          <h3>Hàm xử lý số</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Hàm</th><th>Công dụng</th></tr>
+            <tr><td><code>ABS()</code></td><td>Giá trị tuyệt đối</td></tr>
+            <tr><td><code>ROUND()</code></td><td>Làm tròn</td></tr>
+            <tr><td><code>CEILING()</code></td><td>Làm tròn lên</td></tr>
+            <tr><td><code>FLOOR()</code></td><td>Làm tròn xuống</td></tr>
+            <tr><td><code>SQRT()</code></td><td>Căn bậc hai</td></tr>
+            <tr><td><code>POWER()</code></td><td>Lũy thừa</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    ABS(-10) AS GiaTriTuyetDoi,
+    ROUND(3.14159, 2) AS LamTron,
+    SQRT(16) AS CanBacHai;</code></pre></div>
+
+          <h3>Hàm xử lý chuỗi</h3>
+          <div class="ascii-block">CONCAT()
+LEN()
+SUBSTRING()
+TRIM()
+UPPER()
+LOWER()
+REPLACE()</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    HoTen,
+    UPPER(HoTen) AS HoTenInHoa
+FROM NhanVien;</code></pre></div>
+          <p>Nối mã nhân viên và họ tên:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    CONCAT(MaNV, ' - ', HoTen) AS ThongTinNhanVien
+FROM NhanVien;</code></pre></div>
+
+          <h3>Hàm xử lý ngày giờ</h3>
+          <div class="ascii-block">GETDATE()
+YEAR()
+MONTH()
+DAY()
+DATEADD()
+DATEDIFF()</div>
+          <p>Lấy năm của ngày vào làm:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    HoTen,
+    YEAR(NgVL) AS NamVaoLam
+FROM NhanVien;</code></pre></div>
+          <p>Tìm số ngày nhân viên đã làm việc (T-SQL <code>DATEDIFF</code> cần chỉ rõ đơn vị <code>DAY</code>):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    HoTen,
+    DATEDIFF(DAY, NgVL, GETDATE()) AS SoNgayLamViec
+FROM NhanVien;</code></pre></div>
+        </section>
+
+        <!-- 04 — SELECT -->
+        <section class="lesson-section" id="select">
+          <p class="eyebrow">04 · MỆNH ĐỀ SELECT</p>
+          <h2>SELECT</h2>
+          <div class="definition"><code>SELECT</code> là một trong những thành phần quan trọng nhất của SQL, dùng để truy xuất dữ liệu từ một hoặc nhiều bảng.</div>
+
+          <h3>Cú pháp tổng quát</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT [DISTINCT] &lt;DanhSachCot&gt;
+FROM &lt;TenBang&gt;
+[WHERE &lt;DieuKien&gt;]
+[GROUP BY &lt;DanhSachCot&gt;]
+[HAVING &lt;DieuKienNhom&gt;]
+[ORDER BY &lt;DanhSachCot&gt; [ASC | DESC]];</code></pre></div>
+
+          <h3>SELECT cơ bản</h3>
+          <p>Lấy tất cả dữ liệu:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien;</code></pre></div>
+          <p>Chỉ lấy một số cột:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV, HoTen, Luong
+FROM NhanVien;</code></pre></div>
+
+          <h3>DISTINCT</h3>
+          <p>Loại bỏ dữ liệu trùng:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT MaPB
+FROM NhanVien;</code></pre></div>
+          <p>Dữ liệu <code>PB01, PB01, PB02, PB02, PB03</code> → kết quả chỉ còn <code>PB01, PB02, PB03</code>.</p>
+
+          <h3>WHERE</h3>
+          <p>Dùng để lọc các dòng theo điều kiện:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE Luong > 10000000
+  AND MaPB = 'PB01';</code></pre></div>
+
+          <h3>ORDER BY</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong
+FROM NhanVien
+ORDER BY Luong DESC;</code></pre></div>
+          <p><code>ASC</code> — tăng dần, <code>DESC</code> — giảm dần.</p>
+
+          <h3>TOP</h3>
+          <p>Ví dụ lấy nhân viên mới nhất:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 HoTen, NgVL
+FROM NhanVien
+ORDER BY NgVL DESC;</code></pre></div>
+
+          <h3>GROUP BY</h3>
+          <p>Dùng để gom các dòng có cùng giá trị thành nhóm. Ví dụ — số lượng nhân viên trong từng phòng ban:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaPB,
+    COUNT(*) AS SoLuong
+FROM NhanVien
+GROUP BY MaPB;</code></pre></div>
+
+          <h3>HAVING</h3>
+          <p><code>WHERE</code> lọc <strong>dòng dữ liệu</strong>, còn <code>HAVING</code> lọc <strong>nhóm dữ liệu</strong> sau <code>GROUP BY</code>. Ví dụ — chỉ hiển thị mức lương có ít nhất 3 nhân viên:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    Luong,
+    COUNT(*) AS SoLuong
+FROM NhanVien
+GROUP BY Luong
+HAVING COUNT(*) >= 3;</code></pre></div>
+          <div class="ascii-block">WHERE
+  ↓
+lọc từng dòng
+  ↓
+GROUP BY
+  ↓
+gom nhóm
+  ↓
+HAVING
+  ↓
+lọc nhóm</div>
+
+          <div class="quick-check">
+            <p class="eyebrow">KIỂM TRA NHANH</p>
+            <p class="qc-question">Mệnh đề nào dùng để lọc NHÓM dữ liệu sau GROUP BY?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">WHERE</button>
+              <button class="qc-option" type="button" data-correct="true">HAVING</button>
+              <button class="qc-option" type="button" data-correct="false">ORDER BY</button>
+              <button class="qc-option" type="button" data-correct="false">DISTINCT</button>
+            </div>
+            <div class="qc-feedback correct">✓ Chính xác! <strong>HAVING</strong> lọc nhóm sau khi <code>GROUP BY</code>, còn <code>WHERE</code> lọc từng dòng trước khi gom nhóm.</div>
+          </div>
+        </section>
+
+        <!-- 05 — JOIN -->
+        <section class="lesson-section" id="join">
+          <p class="eyebrow">05 · CÁC PHÉP KẾT JOIN</p>
+          <h2>JOIN</h2>
+          <div class="definition"><code>JOIN</code> dùng để kết hợp dữ liệu từ hai hoặc nhiều bảng dựa trên một điều kiện liên quan giữa các bảng.</div>
+          <div class="ascii-block">NhanVien                PhongBan
+┌─────────────┐         ┌─────────────┐
+│ MaNV        │         │ MaPB        │
+│ HoTen       │         │ TenPB       │
+│ MaPB ───────┼─────────┼─ MaPB       │
+└─────────────┘         └─────────────┘</div>
+
+          <h3>INNER JOIN</h3>
+          <p>Chỉ lấy những dòng <strong>có dữ liệu khớp ở cả hai bảng</strong>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen,
+    pb.TenPB
+FROM NhanVien nv
+INNER JOIN PhongBan pb
+    ON nv.MaPB = pb.MaPB;</code></pre></div>
+
+          <h3>LEFT JOIN</h3>
+          <p>Lấy <strong>tất cả dữ liệu của bảng bên trái</strong>, kể cả khi không có dữ liệu tương ứng ở bảng phải:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen,
+    pb.TenPB
+FROM NhanVien nv
+LEFT JOIN PhongBan pb
+    ON nv.MaPB = pb.MaPB;</code></pre></div>
+          <div class="ascii-block">HoTen          TenPB
+----------------------------
+Nguyễn An      Phòng KT
+Trần Bình      Phòng KD
+Lê Cường       NULL</div>
+
+          <h3>RIGHT JOIN</h3>
+          <p>Ngược lại với <code>LEFT JOIN</code>: giữ toàn bộ dữ liệu của bảng bên phải:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen,
+    pb.TenPB
+FROM NhanVien nv
+RIGHT JOIN PhongBan pb
+    ON nv.MaPB = pb.MaPB;</code></pre></div>
+
+          <h3>FULL OUTER JOIN</h3>
+          <p>Giữ dữ liệu từ <strong>cả hai bảng</strong>, bất kể có khớp hay không:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen,
+    pb.TenPB
+FROM NhanVien nv
+FULL OUTER JOIN PhongBan pb
+    ON nv.MaPB = pb.MaPB;</code></pre></div>
+
+          <h3>CROSS JOIN</h3>
+          <p>Tạo tích Cartesian — nếu <code>NhanVien</code> có 5 dòng, <code>PhongBan</code> có 3 dòng thì kết quả là <code>5 × 3 = 15</code> dòng:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen,
+    pb.TenPB
+FROM NhanVien nv
+CROSS JOIN PhongBan pb;</code></pre></div>
+
+          <h3>SELF JOIN</h3>
+          <p>Một bảng được sử dụng <strong>hai lần</strong> để thể hiện quan hệ giữa các dòng trong chính bảng đó — ví dụ nhân viên và người quản lý:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen AS NhanVien,
+    ql.HoTen AS QuanLy
+FROM NhanVien nv
+JOIN NhanVien ql
+    ON nv.MaQL = ql.MaNV;</code></pre></div>
+
+          <h3>EQUI JOIN &amp; khuyến nghị cú pháp</h3>
+          <p>EQUI JOIN sử dụng phép so sánh bằng <code>=</code> giữa các cột liên quan. Nên ưu tiên cú pháp <code>JOIN ... ON</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">FROM NhanVien nv
+INNER JOIN PhongBan pb
+    ON nv.MaPB = pb.MaPB</code></pre></div>
+          <p>thay vì đưa điều kiện kết vào <code>WHERE</code> (vẫn chạy được nhưng không được khuyến khích):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">FROM NhanVien nv, PhongBan pb
+WHERE nv.MaPB = pb.MaPB;</code></pre></div>
+        </section>
+
+        <!-- 06 — Set Operations -->
+        <section class="lesson-section" id="set-operations">
+          <p class="eyebrow">06 · CÁC PHÉP TOÁN TẬP HỢP</p>
+          <h2>Set Operations</h2>
+          <p>Có 3 phép chính, dùng để kết hợp <strong>kết quả của nhiều truy vấn</strong>:</p>
+          <div class="ascii-block">UNION
+INTERSECT
+EXCEPT</div>
+
+          <h3>UNION</h3>
+          <p>Lấy tất cả kết quả và <strong>loại bỏ dòng trùng</strong>. Ví dụ — nhân viên thực hiện DA01 hoặc DA02:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA01'
+
+UNION
+
+SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA02';</code></pre></div>
+
+          <h3>INTERSECT</h3>
+          <p>Lấy phần <strong>giao nhau</strong>. Ví dụ — nhân viên thực hiện cả DA01 và DA02:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA01'
+
+INTERSECT
+
+SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA02';</code></pre></div>
+
+          <h3>EXCEPT</h3>
+          <p>Lấy kết quả có trong truy vấn thứ nhất nhưng <strong>không có</strong> trong truy vấn thứ hai. Ví dụ — nhân viên thực hiện DA01 nhưng không thực hiện DA02:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA01'
+
+EXCEPT
+
+SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA02';</code></pre></div>
+          <div class="ascii-block">A UNION B      → A hoặc B
+A INTERSECT B  → A và B
+A EXCEPT B     → A nhưng không B</div>
+        </section>
+
+        <!-- 07 — Subquery -->
+        <section class="lesson-section" id="subquery">
+          <p class="eyebrow">07 · TRUY VẤN LỒNG SUBQUERY</p>
+          <h2>Subquery</h2>
+          <div class="definition">Subquery là một câu truy vấn được đặt <strong>bên trong</strong> một câu truy vấn khác. Truy vấn bên trong được thực hiện để cung cấp kết quả cho truy vấn bên ngoài.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
+FROM SanPham
+WHERE MaSP IN
+(
+    SELECT MaSP
+    FROM HoaDon
+);</code></pre></div>
+
+          <h3>Non-Correlated Subquery</h3>
+          <p>Truy vấn con <strong>không phụ thuộc</strong> vào truy vấn cha. Ví dụ — tìm sản phẩm đã bán trong tháng 1/2024:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
+FROM SanPham
+WHERE MaSP IN
+(
+    SELECT MaSP
+    FROM HoaDon
+    WHERE MONTH(NgayBan) = 1
+      AND YEAR(NgayBan) = 2024
+);</code></pre></div>
+
+          <h3>IN / NOT IN</h3>
+          <p><code>IN</code> — kiểm tra một giá trị có nằm trong tập kết quả của truy vấn con hay không:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
+FROM SanPham
+WHERE MaSP IN
+(
+    SELECT MaSP
+    FROM HoaDon
+);</code></pre></div>
+          <p><code>NOT IN</code> — tìm sản phẩm chưa từng xuất hiện trong hóa đơn:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
+FROM SanPham
+WHERE MaSP NOT IN
+(
+    SELECT MaSP
+    FROM HoaDon
+);</code></pre></div>
+
+          <h3>ANY / ALL</h3>
+          <p><code>ANY</code> so sánh với <strong>ít nhất một giá trị</strong> trong kết quả truy vấn con. Ví dụ — lương lớn hơn bất kỳ nhân viên nào thuộc PB01, PB02 hoặc PB03:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong
+FROM NhanVien
+WHERE Luong > ANY
+(
+    SELECT Luong
+    FROM NhanVien
+    WHERE MaPB IN ('PB01', 'PB02', 'PB03')
+);</code></pre></div>
+          <p><code>ALL</code> yêu cầu điều kiện đúng với <strong>tất cả giá trị</strong> trong truy vấn con. Ví dụ — sản phẩm có giá cao hơn tất cả sản phẩm thuộc danh mục Laptop:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaSP, TenSP, GiaBan
+FROM SanPham
+WHERE DanhMuc = 'Phu Kien'
+  AND GiaBan > ALL
+(
+    SELECT GiaBan
+    FROM SanPham
+    WHERE DanhMuc = 'Laptop'
+);</code></pre></div>
+          <div class="ascii-block">> ANY → lớn hơn ít nhất một
+> ALL → lớn hơn tất cả</div>
+
+          <h3>EXISTS / NOT EXISTS</h3>
+          <p><code>EXISTS</code> kiểm tra truy vấn con có trả về <strong>ít nhất một dòng</strong> hay không. Ví dụ — nhân viên có ít nhất một đơn hàng:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
+FROM NhanVien nv
+WHERE EXISTS
+(
+    SELECT *
+    FROM DonHang dh
+    WHERE dh.MaNV = nv.MaNV
+);</code></pre></div>
+          <p>Truy vấn con ở đây <strong>tham chiếu đến dòng hiện tại của truy vấn cha</strong> (<code>nv.MaNV</code>) — đây gọi là <strong>Correlated Subquery</strong>.</p>
+          <p><code>NOT EXISTS</code> — tìm nhân viên không có bất kỳ đơn hàng nào:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
+FROM NhanVien nv
+WHERE NOT EXISTS
+(
+    SELECT *
+    FROM DonHang dh
+    WHERE dh.MaNV = nv.MaNV
+);</code></pre></div>
+        </section>
+
+        <!-- 08 — Tổng hợp -->
+        <section class="lesson-section" id="tong-hop">
+          <p class="eyebrow">08 · TỔNG HỢP — CHỌN CÔNG CỤ NÀO?</p>
+          <h2>Chọn công cụ nào?</h2>
+          <p>Bảng tra nhanh: biết cú pháp là một việc, biết <strong>khi nào dùng cái gì</strong> mới là quan trọng.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Bài toán</th><th>Công cụ</th></tr>
+            <tr><td>Lọc dữ liệu</td><td><code>WHERE</code></td></tr>
+            <tr><td>Nhiều điều kiện</td><td><code>AND</code>, <code>OR</code>, <code>NOT</code></td></tr>
+            <tr><td>Tìm theo mẫu</td><td><code>LIKE</code></td></tr>
+            <tr><td>Tìm trong danh sách</td><td><code>IN</code></td></tr>
+            <tr><td>Sắp xếp</td><td><code>ORDER BY</code></td></tr>
+            <tr><td>Loại trùng</td><td><code>DISTINCT</code></td></tr>
+            <tr><td>Gom nhóm</td><td><code>GROUP BY</code></td></tr>
+            <tr><td>Lọc nhóm</td><td><code>HAVING</code></td></tr>
+            <tr><td>Kết hợp bảng</td><td><code>JOIN</code></td></tr>
+            <tr><td>Kết hợp kết quả truy vấn</td><td><code>UNION</code></td></tr>
+            <tr><td>Phần chung</td><td><code>INTERSECT</code></td></tr>
+            <tr><td>Có A nhưng không B</td><td><code>EXCEPT</code></td></tr>
+            <tr><td>So sánh với tập kết quả</td><td><code>ANY</code>, <code>ALL</code></td></tr>
+            <tr><td>Kiểm tra có dữ liệu</td><td><code>EXISTS</code></td></tr>
+            <tr><td>Kiểm tra không có dữ liệu</td><td><code>NOT EXISTS</code></td></tr>
+          </table></div>
+        </section>
+
+        <!-- 09 — Bài tập -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">09 · BÀI TẬP THỰC HÀNH</p>
+          <h2>Thực hành tổng hợp</h2>
+          <p>Theo tài liệu hướng dẫn Tuần 2, sinh viên sử dụng Microsoft SQL Server để thực hiện <strong>Phần III – Bài tập Quản lý bán hàng, câu 1 đến câu 17</strong>.</p>
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
+            <h3>Quản lý bán hàng — Câu 1 → 17</h3>
+            <p style="color:#cbd5e1;font-size:13px;margin-bottom:14px">Nội dung từng câu hỏi sẽ được cập nhật trực tiếp trên Moodle của môn học. Bảng dưới đây dùng để tự theo dõi tiến độ làm bài.</p>
+            <ol>
+              <li>Câu 01 – 17: hoàn thành lần lượt, tự làm trước khi xem gợi ý/đáp án</li>
+            </ol>
+          </div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Câu</th><th>Trạng thái</th></tr>
+            <tr><td>01 – 17</td><td>☐ Chưa hoàn thành</td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>Cách làm:</strong> tự viết câu SQL trước, sau đó mới mở gợi ý hoặc đáp án tham khảo — không xem đáp án ngay để đảm bảo hiệu quả luyện tập.</div>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần">
+          <a href="week-1.html"><span class="nav-dir">← TUẦN TRƯỚC</span><span class="nav-title">Tuần 1: Nền tảng cơ sở dữ liệu</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO →</span><span class="nav-title">Tuần 3: Phép chia &amp; gom nhóm (sắp mở)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">TIẾN ĐỘ</span>
+          <strong>2<span>/6 tuần</span></strong>
+          <div class="mini-progress"><b style="width:33%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="on-tap"><b>○</b> Ôn tập Tuần 1</li>
+            <li data-section="toan-tu"><b>○</b> Toán tử</li>
+            <li data-section="ham"><b>○</b> Hàm trong SQL</li>
+            <li data-section="select"><b>○</b> SELECT</li>
+            <li data-section="join"><b>○</b> JOIN</li>
+            <li data-section="set-operations"><b>○</b> Set Operations</li>
+            <li data-section="subquery"><b>○</b> Subquery</li>
+            <li data-section="tong-hop"><b>○</b> Chọn công cụ nào?</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Dùng đúng T-SQL của SQL Server — tránh copy nguyên cú pháp MySQL trong tài liệu tham khảo.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-top">
+      <div class="brand"><span class="brand-mark">⌁</span><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+    </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=3"></script>
+  <script src="../../assets/js/course.js?v=3"></script>
+</body>
+</html>
+</content>

@@ -1,0 +1,48 @@
+window.COURSES = [
+  {
+    code: 'IT004',
+    name: 'Cơ sở dữ liệu',
+    englishName: 'Database',
+    category: 'Cơ sở ngành',
+    status: 'active',
+    weeks: 6,
+    path: 'courses/it004/index.html',
+  },
+  {
+    code: 'IS201',
+    name: 'Phân tích thiết kế hệ thống thông tin',
+    englishName: 'Information Systems Analysis and Design',
+    category: 'Chuyên ngành',
+    status: 'coming-soon',
+    weeks: 6,
+    path: 'courses/is201/index.html',
+  },
+  {
+    code: 'IS210',
+    name: 'Hệ quản trị cơ sở dữ liệu',
+    englishName: 'Database Management Systems',
+    category: 'Chuyên ngành',
+    status: 'coming-soon',
+    weeks: 6,
+    path: 'courses/is210/index.html',
+  },
+  {
+    code: 'IS336',
+    name: 'Hoạch định nguồn lực doanh nghiệp',
+    englishName: 'Enterprise Resource Planning',
+    category: 'Chuyên ngành',
+    status: 'coming-soon',
+    weeks: 6,
+    path: 'courses/is336/index.html',
+  },
+  {
+    code: 'IS208',
+    name: 'Quản lý dự án công nghệ thông tin',
+    englishName: 'IT Project Management',
+    category: 'Chuyên ngành',
+    status: 'coming-soon',
+    weeks: 6,
+    path: 'courses/is208/index.html',
+  },
+];
+</content>

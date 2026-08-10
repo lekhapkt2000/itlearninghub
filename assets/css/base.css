@@ -26,7 +26,7 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .mini-progress b{display:block;height:100%;border-radius:99px;background:var(--primary)}
 
 .topbar{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);background:#f8fafcea;backdrop-filter:blur(14px)}
-.topbar-inner{max-width:1240px;min-height:76px;padding:0 32px;margin:auto;display:flex;align-items:center;gap:32px}
+.topbar-inner{max-width:1320px;min-height:76px;padding:0 32px;margin:auto;display:flex;align-items:center;gap:32px}
 .brand{display:inline-flex;align-items:center;gap:10px;font-size:20px;font-weight:700;letter-spacing:-.04em}
 .brand>span:last-child>span{color:var(--primary)}
 .brand-mark{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--primary);color:#fff;font:26px Georgia}
@@ -46,7 +46,7 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .dark-button:hover,.ghost-button:hover{transform:translateY(-2px)}
 .outline-button[aria-disabled="true"],.ghost-button[aria-disabled="true"]{opacity:.45;cursor:not-allowed;transform:none!important}
 
-footer{max-width:1240px;margin:auto;padding:56px 32px 30px;border-top:1px solid var(--line)}
+footer{max-width:1320px;margin:auto;padding:56px 32px 30px;border-top:1px solid var(--line)}
 footer .brand{color:var(--ink);font-size:16px}
 .footer-top{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
 .footer-tagline{margin:0;color:var(--muted);font-size:12px}

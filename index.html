@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="IT Learning Hub - Kho học liệu thực hành dành cho sinh viên Công nghệ Thông tin, bắt đầu với IT004 Cơ sở dữ liệu.">
   <title>IT Learning Hub · Kho học liệu CNTT</title>
-  <link rel="stylesheet" href="assets/css/base.css?v=12">
-  <link rel="stylesheet" href="assets/css/home.css?v=14">
+  <link rel="stylesheet" href="assets/css/base.css?v=13">
+  <link rel="stylesheet" href="assets/css/home.css?v=15">
 </head>
 <body>
   <header class="topbar">
@@ -26,7 +26,7 @@
         <div class="hero-copy">
           <p class="eyebrow">HỆ THỐNG HỌC LIỆU THỰC HÀNH CNTT</p>
           <h1 class="hero-title">Học tập. <em>Thực hành.</em> Phát triển.</h1>
-          <p class="hero-text">Hệ thống học liệu thực hành theo tuần cho sinh viên ngành Công nghệ Thông tin - tổng hợp lý thuyết, ví dụ và bài tập cho từng môn học, bắt đầu từ IT004.</p>
+          <p class="hero-text">Hệ thống học liệu thực hành theo tuần cho sinh viên ngành Công nghệ Thông tin - tổng hợp lý thuyết, ví dụ và bài tập cho từng môn học. Hiện IT004 đã triển khai đầy đủ, các môn còn lại đang được xây dựng.</p>
           <div class="hero-actions">
             <a class="primary-button" href="courses/it004/index.html">Vào học ngay <span>›</span></a>
           </div>
@@ -35,9 +35,7 @@
           <div class="visual-grid"></div>
           <div class="hub-card-float">
             <div class="float-label"><span class="status-dot"></span> LỘ TRÌNH HỌC TẬP</div>
-            <strong id="hub-course-count">05</strong>
-            <span>Môn học đang triển khai</span>
-            <small>Cập nhật liên tục theo tuần</small>
+            <ul class="hub-course-list" id="hub-course-list"></ul>
           </div>
           <div class="visual-note">SELECT *<br><span>FROM</span> knowledge;</div>
           <div class="visual-orbit orbit-one"></div>
@@ -159,10 +157,21 @@
     }
 
     var courseCountText = COURSES.length < 10 ? '0' + COURSES.length : String(COURSES.length);
-    var hubCount = document.getElementById('hub-course-count');
-    if (hubCount) { hubCount.textContent = courseCountText; }
     var hubCount2 = document.getElementById('hub-course-count-2');
     if (hubCount2) { hubCount2.textContent = courseCountText; }
+
+    var hubList = document.getElementById('hub-course-list');
+    if (hubList) {
+      var listHtml = '';
+      for (var k = 0; k < COURSES.length; k++) {
+        var hc = COURSES[k];
+        listHtml += '<li><span class="hub-course-dot ' + (hc.status === 'active' ? 'is-active' : '') + '"></span>'
+          + '<span class="hub-course-code">' + hc.code + '</span>'
+          + '<span class="hub-course-state">' + (hc.status === 'active' ? 'Đang học' : 'Sắp mở') + '</span>'
+          + '</li>';
+      }
+      hubList.innerHTML = listHtml;
+    }
 
     var IT004_WEEKS = [
       { title: 'Nền tảng cơ sở dữ liệu', topics: 'SSMS · Data Types · Table · Constraints · DML', path: 'courses/it004/week-1.html' },

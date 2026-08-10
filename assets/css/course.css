@@ -19,7 +19,8 @@
 .progress-card strong span{color:var(--muted);font-size:14px}
 .progress-card>span{color:var(--muted);font-size:11px}
 
-.course-card-float{margin-top:28px;width:230px;padding:20px 22px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 24px -8px rgb(15 23 42 / .1)}
+.course-card-wrap{position:relative;margin-top:28px;width:230px}
+.course-card-float{position:relative;z-index:1;width:230px;padding:20px 22px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 24px -8px rgb(15 23 42 / .1)}
 .course-card-sql{margin-top:14px;color:var(--ink);font:12px/1.8 var(--font-mono)}
 .course-card-sql span{color:var(--primary)}
 

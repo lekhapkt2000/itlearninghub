@@ -15,6 +15,11 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:1em;height:1em;vertical-align:-.15em}
 .icon svg{width:100%;height:100%;display:block}
 .bg-canvas{position:absolute;inset:0;z-index:0;pointer-events:none}
+.visual-grid{position:absolute;width:330px;height:330px;border-radius:50%;background:repeating-linear-gradient(0deg,transparent 0 33px,#2563eb14 34px 35px),repeating-linear-gradient(90deg,transparent 0 33px,#2563eb14 34px 35px)}
+.visual-grid:after{content:'';position:absolute;inset:34px;border:1px solid #2563eb33;border-radius:50%}
+.visual-orbit{position:absolute;border:1px solid #2563eb26;border-radius:50%}
+.orbit-one{width:430px;height:110px;transform:rotate(-31deg)}
+.orbit-two{width:390px;height:170px;transform:rotate(50deg)}
 .float-label{color:var(--muted);font-size:8px;letter-spacing:.13em;font-weight:800}
 .status-dot{display:inline-block;width:6px;height:6px;margin-right:5px;border-radius:50%;background:var(--primary)}
 .mini-progress{height:4px;background:var(--line);margin:22px 0 8px}

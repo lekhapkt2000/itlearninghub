@@ -3,7 +3,8 @@
 .breadcrumb a:hover{color:var(--primary)}
 .breadcrumb span{margin:0 6px;color:#cbd5e1}
 
-.course-header{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;padding-bottom:28px}
+.course-header{position:relative;overflow:hidden;display:flex;align-items:flex-start;justify-content:space-between;gap:32px;padding:28px 0}
+.course-header>*{position:relative;z-index:1}
 .course-header .course-code{color:var(--primary);font:700 12px var(--font-mono);letter-spacing:.1em}
 .course-header h1{margin:10px 0 6px;font-size:clamp(32px,4.5vw,48px)}
 .course-header .course-en{color:var(--muted);font-size:13px}
@@ -18,7 +19,7 @@
 .progress-card strong span{color:var(--muted);font-size:14px}
 .progress-card>span{color:var(--muted);font-size:11px}
 
-/* Horizontal course navigation — shared across overview + week pages */
+/* Horizontal course navigation - shared across overview + week pages */
 .course-nav{display:flex;gap:4px;overflow-x:auto;margin-top:8px;padding-bottom:0;border-bottom:1px solid var(--line)}
 .course-nav a,.course-nav .nav-item{display:inline-flex;align-items:center;gap:6px;padding:14px 16px;white-space:nowrap;color:var(--muted);font-size:13px;font-weight:600;border-bottom:2px solid transparent}
 .course-nav a:hover{color:var(--ink)}
@@ -52,14 +53,21 @@
 .score-card strong{display:block;color:var(--primary);font-size:32px;font-weight:800;letter-spacing:-.03em}
 .score-card span{color:var(--muted);font-size:11px;line-height:1.5}
 
-.timeline{display:flex;flex-direction:column;margin-top:30px}
-.timeline-item{display:grid;grid-template-columns:56px 1fr;gap:22px;padding:22px 0}
-.timeline-item:not(:last-child){border-bottom:1px dashed var(--line)}
-.timeline-num{color:var(--primary);font:700 20px var(--font-mono)}
-.timeline-body h3{margin-bottom:6px;font-size:19px}
-.timeline-topics{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.timeline-topics span{padding:5px 10px;background:var(--tint);color:var(--primary-ink);border-radius:6px;font-size:10px;font-weight:600}
-.timeline-item .week-status{margin-top:12px}
+.roadmap{margin-top:34px}
+.roadmap-track{display:flex;position:relative;padding:0 4px}
+.roadmap-track:before{content:'';position:absolute;top:28px;left:56px;right:56px;height:2px;background:var(--line);z-index:0}
+.roadmap-step{flex:1;min-width:0;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 6px;text-align:center;text-decoration:none;color:inherit}
+.roadmap-node{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--line);color:var(--muted);font:700 16px var(--font-mono);margin-bottom:8px;transition:.2s}
+.roadmap-step.is-done .roadmap-node{background:var(--primary);border-color:var(--primary);color:#fff}
+.roadmap-step.is-current .roadmap-node{background:var(--tint);border-color:var(--primary);color:var(--primary-ink);box-shadow:0 0 0 4px var(--tint)}
+.roadmap-step:not([aria-disabled="true"]):hover .roadmap-node{transform:translateY(-2px)}
+.roadmap-label{color:var(--muted);font:700 10px var(--font-mono);letter-spacing:.08em}
+.roadmap-step.is-current .roadmap-label{color:var(--primary-ink)}
+.roadmap-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.4;max-width:150px}
+.roadmap-step[aria-disabled="true"] .roadmap-title{color:var(--muted);font-weight:500}
+.roadmap-status{font-size:10px;color:var(--muted)}
+.roadmap-step.is-current .roadmap-status{color:var(--primary-ink);font-weight:600}
+.roadmap-step.is-done .roadmap-status{color:var(--primary)}
 
 .week-status{display:inline-flex;padding:6px 11px;border-radius:99px;background:var(--line);color:var(--muted);font-size:10px;font-weight:700}
 .week-status.current{background:var(--tint);color:var(--primary-ink)}
@@ -180,6 +188,9 @@
 @media(max-width:900px){
   .score-grid,.req-grid{grid-template-columns:1fr 1fr}
   .example-grid{grid-template-columns:1fr 1fr}
+  .roadmap-track{overflow-x:auto;padding-bottom:6px}
+  .roadmap-step{min-width:130px}
+  .roadmap-track:before{left:0;right:0}
 }
 @media(max-width:600px){
   .course-shell{padding:40px 20px 70px}

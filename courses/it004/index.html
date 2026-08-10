@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="IT004 Cơ sở dữ liệu - lộ trình thực hành 6 tuần, cách đánh giá và yêu cầu trước khi đến lớp.">
-  <title>IT004 · Cơ sở dữ liệu — IT Learning Hub</title>
-  <link rel="stylesheet" href="../../assets/css/base.css?v=5">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=5">
+  <title>IT004 · Cơ sở dữ liệu - IT Learning Hub</title>
+  <link rel="stylesheet" href="../../assets/css/base.css?v=9">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=9">
 </head>
 <body>
   <header class="topbar">
@@ -23,6 +23,7 @@
     <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="../../index.html#mon-hoc">Môn học</a><span>/</span>IT004</p>
 
     <div class="course-header">
+      <canvas class="bg-canvas" aria-hidden="true"></canvas>
       <div>
         <span class="course-code">IT004</span>
         <h1>Cơ sở dữ liệu</h1>
@@ -108,53 +109,43 @@
         <section class="panel">
           <p class="eyebrow">LỘ TRÌNH THỰC HÀNH</p>
           <h2>6 tuần học IT004</h2>
-          <div class="timeline">
-            <a class="timeline-item" href="week-1.html" style="text-decoration:none;color:inherit">
-              <span class="timeline-num">01</span>
-              <div class="timeline-body">
-                <h3>Nền tảng cơ sở dữ liệu</h3>
-                <div class="timeline-topics"><span>Tổng quan</span><span>SSMS</span><span>Data Types</span><span>Database</span><span>Table</span><span>Constraints</span><span>DML</span></div>
-                <span class="week-status done">Đã học</span>
+          <div class="roadmap">
+            <div class="roadmap-track">
+              <a class="roadmap-step is-done" href="week-1.html">
+                <span class="roadmap-node">01</span>
+                <span class="roadmap-label">TUẦN 01</span>
+                <span class="roadmap-title">Nền tảng cơ sở dữ liệu</span>
+                <span class="roadmap-status">Đã học</span>
+              </a>
+              <a class="roadmap-step is-current" href="week-2.html">
+                <span class="roadmap-node">02</span>
+                <span class="roadmap-label">TUẦN 02</span>
+                <span class="roadmap-title">Truy vấn dữ liệu với SQL</span>
+                <span class="roadmap-status">Đang học</span>
+              </a>
+              <div class="roadmap-step" aria-disabled="true">
+                <span class="roadmap-node">03</span>
+                <span class="roadmap-label">TUẦN 03</span>
+                <span class="roadmap-title">Phép chia &amp; gom nhóm</span>
+                <span class="roadmap-status">Sắp mở</span>
               </div>
-            </a>
-            <a class="timeline-item" href="week-2.html" style="text-decoration:none;color:inherit">
-              <span class="timeline-num">02</span>
-              <div class="timeline-body">
-                <h3>Truy vấn dữ liệu với SQL</h3>
-                <div class="timeline-topics"><span>Toán tử &amp; Hàm</span><span>SELECT</span><span>JOIN</span><span>Set Operations</span><span>Subqueries</span></div>
-                <span class="week-status current">Đang học</span>
+              <div class="roadmap-step" aria-disabled="true">
+                <span class="roadmap-node">04</span>
+                <span class="roadmap-label">TUẦN 04</span>
+                <span class="roadmap-title">Ôn tập &amp; Quản lý giáo vụ</span>
+                <span class="roadmap-status">Sắp mở</span>
               </div>
-            </a>
-            <div class="timeline-item">
-              <span class="timeline-num">03</span>
-              <div class="timeline-body">
-                <h3>Phép chia &amp; gom nhóm</h3>
-                <div class="timeline-topics"><span>Ôn tập</span><span>Division</span><span>Basic Division</span><span>Conditional Division</span><span>NOT EXISTS</span><span>Aggregate &amp; Grouping</span></div>
-                <span class="week-status">Sắp mở</span>
+              <div class="roadmap-step" aria-disabled="true">
+                <span class="roadmap-node">05</span>
+                <span class="roadmap-label">TUẦN 05</span>
+                <span class="roadmap-title">Trigger</span>
+                <span class="roadmap-status">Sắp mở</span>
               </div>
-            </div>
-            <div class="timeline-item">
-              <span class="timeline-num">04</span>
-              <div class="timeline-body">
-                <h3>Ôn tập &amp; Quản lý giáo vụ</h3>
-                <div class="timeline-topics"><span>Ôn tập</span><span>Bài tập Quản lý giáo vụ</span></div>
-                <span class="week-status">Sắp mở</span>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <span class="timeline-num">05</span>
-              <div class="timeline-body">
-                <h3>Trigger</h3>
-                <div class="timeline-topics"><span>Trigger</span><span>Cú pháp</span><span>Inserted / Deleted</span><span>Ví dụ</span></div>
-                <span class="week-status">Sắp mở</span>
-              </div>
-            </div>
-            <div class="timeline-item">
-              <span class="timeline-num">06</span>
-              <div class="timeline-body">
-                <h3>Ôn tập &amp; thi thực hành</h3>
-                <div class="timeline-topics"><span>Ôn tập</span><span>Thi thực hành</span></div>
-                <span class="week-status">Sắp mở</span>
+              <div class="roadmap-step" aria-disabled="true">
+                <span class="roadmap-node">06</span>
+                <span class="roadmap-label">TUẦN 06</span>
+                <span class="roadmap-title">Ôn tập &amp; thi thực hành</span>
+                <span class="roadmap-status">Sắp mở</span>
               </div>
             </div>
           </div>
@@ -171,6 +162,7 @@
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/bg-canvas.js?v=1"></script>
 </body>
 </html>
 </content>

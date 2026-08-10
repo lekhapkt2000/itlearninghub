@@ -14,6 +14,7 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .eyebrow{margin-bottom:18px;color:var(--primary);font-size:10px;font-weight:800;letter-spacing:.18em}
 .icon{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:1em;height:1em;vertical-align:-.15em}
 .icon svg{width:100%;height:100%;display:block}
+.bg-canvas{position:absolute;inset:0;z-index:0;pointer-events:none}
 .float-label{color:var(--muted);font-size:8px;letter-spacing:.13em;font-weight:800}
 .status-dot{display:inline-block;width:6px;height:6px;margin-right:5px;border-radius:50%;background:var(--primary)}
 .mini-progress{height:4px;background:var(--line);margin:22px 0 8px}
@@ -25,7 +26,7 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .brand>span:last-child>span{color:var(--primary)}
 .brand-mark{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--primary);color:#fff;font:26px Georgia}
 .main-nav{display:flex;gap:32px;margin-left:auto;color:var(--muted);font-size:13px;font-weight:600}
-.main-nav a:hover,.text-link:hover{color:var(--primary)}
+.main-nav a:hover{color:var(--primary)}
 .topbar-actions{display:flex;align-items:center;gap:16px}
 .mobile-toggle{border:0;background:none;color:var(--muted);cursor:pointer;font-size:24px}
 .mobile-toggle{display:none}

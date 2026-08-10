@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="IT004 Tuần 1 - Nền tảng cơ sở dữ liệu: tổng quan CSDL, SSMS, kiểu dữ liệu, Database, Table, Constraints và thao tác dữ liệu (DML).">
-  <title>Tuần 1 · Nền tảng cơ sở dữ liệu — IT004</title>
-  <link rel="stylesheet" href="../../assets/css/base.css?v=5">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=5">
+  <title>Tuần 1 · Nền tảng cơ sở dữ liệu - IT004</title>
+  <link rel="stylesheet" href="../../assets/css/base.css?v=9">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=9">
 </head>
 <body>
   <header class="topbar">
@@ -57,7 +57,7 @@
 
       <div class="lesson-content">
 
-        <!-- 01 — Tổng quan -->
+        <!-- 01 - Tổng quan -->
         <section class="lesson-section" id="tong-quan">
           <p class="eyebrow">01 · TỔNG QUAN VỀ CƠ SỞ DỮ LIỆU</p>
           <h2>Cơ sở dữ liệu là gì?</h2>
@@ -98,7 +98,7 @@
         └──────────────┘</div>
         </section>
 
-        <!-- 02 — SSMS -->
+        <!-- 02 - SSMS -->
         <section class="lesson-section" id="ssms">
           <p class="eyebrow">02 · SQL SERVER MANAGEMENT STUDIO</p>
           <h2>Cài đặt SQL Server Management Studio</h2>
@@ -136,11 +136,11 @@
           <div class="ascii-block">Hello SQL Server</div>
         </section>
 
-        <!-- 03 — Data Types -->
+        <!-- 03 - Data Types -->
         <section class="lesson-section" id="data-types">
           <p class="eyebrow">03 · KIỂU DỮ LIỆU TRONG SQL</p>
           <h2>Kiểu dữ liệu trong SQL</h2>
-          <div class="definition">Khi tạo một bảng, mỗi cột phải được xác định <strong>kiểu dữ liệu</strong> — quy định loại giá trị cột có thể lưu (số, chữ, ngày...) và dung lượng lưu trữ. Chọn đúng kiểu dữ liệu giúp dữ liệu chính xác, tiết kiệm dung lượng và các phép xử lý sau này hoạt động đúng.</div>
+          <div class="definition">Khi tạo một bảng, mỗi cột phải được xác định <strong>kiểu dữ liệu</strong> - quy định loại giá trị cột có thể lưu (số, chữ, ngày...) và dung lượng lưu trữ. Chọn đúng kiểu dữ liệu giúp dữ liệu chính xác, tiết kiệm dung lượng và các phép xử lý sau này hoạt động đúng.</div>
           <div class="ascii-block">SinhVien
 
 MaSV       → INT
@@ -162,7 +162,7 @@ SoLuong INT
 Tuoi TINYINT</code></pre></div>
           <div class="inline-ok"><strong>Nguyên tắc chọn:</strong> ưu tiên kiểu có phạm vi nhỏ nhất nhưng vẫn đủ chứa dữ liệu thực tế, để tiết kiệm dung lượng lưu trữ. Ví dụ <code>Tuoi</code> (0–150) nên dùng <code>TINYINT</code> thay vì <code>INT</code>.</div>
 
-          <h3>Kiểu Boolean — BIT</h3>
+          <h3>Kiểu Boolean - BIT</h3>
           <p><code>BIT</code> lưu giá trị đúng/sai, thường dùng cho các cột dạng "có/không":</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DaTotNghiep BIT</code></pre></div>
           <p>Giá trị lưu trữ: <code>1</code> (true), <code>0</code> (false) hoặc <code>NULL</code> (chưa xác định).</p>
@@ -179,26 +179,26 @@ SMALLMONEY</code></pre></div>
           <p>Có thể lưu: <code>8.50</code>, <code>9.25</code>, <code>10.00</code></p>
           <p><code>MONEY</code> và <code>SMALLMONEY</code> dùng riêng cho giá trị tiền tệ, chính xác hơn <code>FLOAT</code>/<code>REAL</code> khi tính toán:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DonGia MONEY</code></pre></div>
-          <div class="inline-ok"><strong>Khuyến nghị:</strong> với điểm số, đơn giá, tiền — ưu tiên <code>DECIMAL(p,s)</code> hoặc <code>MONEY</code> vì cho kết quả chính xác. <code>FLOAT</code>/<code>REAL</code> là số gần đúng, dễ sai lệch khi tính toán nhiều lần.</div>
+          <div class="inline-ok"><strong>Khuyến nghị:</strong> với điểm số, đơn giá, tiền - ưu tiên <code>DECIMAL(p,s)</code> hoặc <code>MONEY</code> vì cho kết quả chính xác. <code>FLOAT</code>/<code>REAL</code> là số gần đúng, dễ sai lệch khi tính toán nhiều lần.</div>
 
           <h3>Kiểu chuỗi</h3>
-          <p><code>CHAR(n)</code> — chuỗi có độ dài <strong>cố định</strong> (luôn chiếm đủ n ký tự, phần dư được đệm khoảng trắng):</p>
+          <p><code>CHAR(n)</code> - chuỗi có độ dài <strong>cố định</strong> (luôn chiếm đủ n ký tự, phần dư được đệm khoảng trắng):</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">MaSV CHAR(8)</code></pre></div>
           <p>Ví dụ giá trị: <code>"23520001"</code></p>
-          <p><code>VARCHAR(n)</code> — chuỗi có độ dài <strong>thay đổi</strong> (chỉ chiếm dung lượng đúng bằng số ký tự thực tế):</p>
+          <p><code>VARCHAR(n)</code> - chuỗi có độ dài <strong>thay đổi</strong> (chỉ chiếm dung lượng đúng bằng số ký tự thực tế):</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">Email VARCHAR(100)</code></pre></div>
-          <p><code>NCHAR</code> và <code>NVARCHAR</code> — tương tự <code>CHAR</code>/<code>VARCHAR</code> nhưng lưu chuỗi Unicode, phù hợp khi lưu tiếng Việt có dấu:</p>
+          <p><code>NCHAR</code> và <code>NVARCHAR</code> - tương tự <code>CHAR</code>/<code>VARCHAR</code> nhưng lưu chuỗi Unicode, phù hợp khi lưu tiếng Việt có dấu:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">HoTen NVARCHAR(50)
 DiaChi NVARCHAR(200)</code></pre></div>
           <p>Khi dữ liệu văn bản rất dài (không xác định trước độ dài, ví dụ mô tả sản phẩm), dùng <code>VARCHAR(MAX)</code> hoặc <code>NVARCHAR(MAX)</code> thay vì khai báo số cố định.</p>
 
-          <h4>So sánh nhanh — chọn kiểu chuỗi nào?</h4>
+          <h4>So sánh nhanh - chọn kiểu chuỗi nào?</h4>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Kiểu</th><th>Độ dài</th><th>Unicode (tiếng Việt)</th><th>Dùng khi</th></tr>
             <tr><td><code>CHAR(n)</code></td><td>Cố định</td><td>Không</td><td>Mã có độ dài luôn giống nhau (VD: mã SV 8 ký tự)</td></tr>
             <tr><td><code>VARCHAR(n)</code></td><td>Thay đổi</td><td>Không</td><td>Chuỗi tiếng Anh/số, độ dài không cố định</td></tr>
             <tr><td><code>NCHAR(n)</code></td><td>Cố định</td><td>Có</td><td>Mã tiếng Việt có độ dài luôn giống nhau</td></tr>
-            <tr><td><code>NVARCHAR(n)</code></td><td>Thay đổi</td><td>Có</td><td>Họ tên, địa chỉ, mô tả tiếng Việt — <strong>dùng phổ biến nhất</strong></td></tr>
+            <tr><td><code>NVARCHAR(n)</code></td><td>Thay đổi</td><td>Có</td><td>Họ tên, địa chỉ, mô tả tiếng Việt - <strong>dùng phổ biến nhất</strong></td></tr>
           </table></div>
           <div class="inline-ok"><strong>Khuyến nghị:</strong> khi lưu dữ liệu tiếng Việt trong SQL Server, thường sử dụng <code>NVARCHAR</code> và chuỗi Unicode với tiền tố <code>N</code> khi nhập giá trị.</div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
@@ -217,9 +217,9 @@ VALUES (1, N'Nguyễn Văn An', 'HTTT2022.1');</code></pre></div>
 NgayLap DATETIME</code></pre></div>
         </section>
 
-        <!-- 04 — Database -->
+        <!-- 04 - Database -->
         <section class="lesson-section" id="database">
-          <p class="eyebrow">04 · DATABASE — CƠ SỞ DỮ LIỆU</p>
+          <p class="eyebrow">04 · DATABASE - CƠ SỞ DỮ LIỆU</p>
           <h2>Database</h2>
           <h3>Tạo Database</h3>
           <p>Cú pháp:</p>
@@ -237,9 +237,9 @@ NgayLap DATETIME</code></pre></div>
           <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cẩn thận:</strong> thao tác này xóa Database và toàn bộ dữ liệu bên trong. Database đang được sử dụng hoặc còn kết nối không thể xóa trực tiếp.</div>
         </section>
 
-        <!-- 05 — Table -->
+        <!-- 05 - Table -->
         <section class="lesson-section" id="table">
-          <p class="eyebrow">05 · TABLE — BẢNG DỮ LIỆU</p>
+          <p class="eyebrow">05 · TABLE - BẢNG DỮ LIỆU</p>
           <h2>Table</h2>
           <p>Một Table bao gồm Column (thuộc tính của dữ liệu) và Row (một bản ghi). Table là tập hợp các bản ghi có cùng cấu trúc. Ví dụ:</p>
           <div class="ascii-block">SINHVIEN
@@ -298,9 +298,9 @@ DROP COLUMN Email;</code></pre></div>
 ALTER COLUMN NgaySinh DATE;</code></pre></div>
         </section>
 
-        <!-- 06 — Constraints -->
+        <!-- 06 - Constraints -->
         <section class="lesson-section" id="constraints">
-          <p class="eyebrow">06 · RÀNG BUỘC TOÀN VẸN — CONSTRAINTS</p>
+          <p class="eyebrow">06 · RÀNG BUỘC TOÀN VẸN - CONSTRAINTS</p>
           <h2>Constraints</h2>
           <div class="definition"><strong>Constraint</strong> giúp đảm bảo dữ liệu trong Database tuân thủ các quy tắc nhất định.</div>
           <p>Các ràng buộc quan trọng trong Tuần 1:</p>
@@ -413,7 +413,7 @@ VALUES (101, N'Nguyễn Văn An');</code></pre></div>
           <p>thì SQL Server tự động đặt <code>GioiTinh = 'M'</code>.</p>
 
           <h3>Khai báo nhiều Constraint</h3>
-          <p>Có thể kết hợp nhiều ràng buộc — kiểu dữ liệu và ràng buộc luôn đi cùng nhau khi thiết kế Table:</p>
+          <p>Có thể kết hợp nhiều ràng buộc - kiểu dữ liệu và ràng buộc luôn đi cùng nhau khi thiết kế Table:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
 (
     MaSV INT PRIMARY KEY,
@@ -433,9 +433,9 @@ VALUES (101, N'Nguyễn Văn An');</code></pre></div>
 );</code></pre></div>
         </section>
 
-        <!-- 07 — DML -->
+        <!-- 07 - DML -->
         <section class="lesson-section" id="dml">
-          <p class="eyebrow">07 · THAO TÁC DỮ LIỆU — DML</p>
+          <p class="eyebrow">07 · THAO TÁC DỮ LIỆU - DML</p>
           <h2>Data Manipulation Language</h2>
           <div class="definition"><strong>DML (Data Manipulation Language)</strong> là nhóm lệnh dùng để thao tác với dữ liệu trong Table.</div>
           <p>Trong Tuần 1, sinh viên làm quen với:</p>
@@ -444,11 +444,11 @@ DELETE      → Xóa dữ liệu
 UPDATE      → Cập nhật dữ liệu
 SELECT INTO → Sao chép dữ liệu</div>
 
-          <h3>INSERT — Thêm dữ liệu</h3>
+          <h3>INSERT - Thêm dữ liệu</h3>
           <p><strong>Cách 1:</strong> không chỉ định tên cột</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (101, N'Nguyễn Văn An', '2004-05-20', N'HTTT2022.1');</code></pre></div>
-          <p><strong>Cách 2:</strong> chỉ định tên cột — <strong>nên ưu tiên cách này</strong>, vì câu lệnh rõ ràng hơn và ít phụ thuộc vào thứ tự cột.</p>
+          <p><strong>Cách 2:</strong> chỉ định tên cột - <strong>nên ưu tiên cách này</strong>, vì câu lệnh rõ ràng hơn và ít phụ thuộc vào thứ tự cột.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 (
     MaSV,
@@ -473,18 +473,18 @@ VALUES
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM SinhVien;</code></pre></div>
 
-          <h3>DELETE — Xóa dữ liệu</h3>
+          <h3>DELETE - Xóa dữ liệu</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM &lt;Tên bảng&gt;
 WHERE &lt;Điều kiện&gt;;</code></pre></div>
-          <p>Ví dụ — chỉ sinh viên có <code>MaSV = 101</code> bị xóa:</p>
+          <p>Ví dụ - chỉ sinh viên có <code>MaSV = 101</code> bị xóa:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien
 WHERE MaSV = 101;</code></pre></div>
-          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cực kỳ quan trọng:</strong> nếu không có <code>WHERE</code> —
+          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cực kỳ quan trọng:</strong> nếu không có <code>WHERE</code> -
             <br><code>DELETE FROM SinhVien;</code>
             <br>→ <strong>tất cả các dòng trong bảng sẽ bị xóa.</strong>
           </div>
 
-          <h3>UPDATE — Cập nhật dữ liệu</h3>
+          <h3>UPDATE - Cập nhật dữ liệu</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE &lt;Tên bảng&gt;
 SET &lt;Cột 1&gt; = &lt;Giá trị mới&gt;
 WHERE &lt;Điều kiện&gt;;</code></pre></div>
@@ -498,7 +498,7 @@ SET
     Lop = N'HTTT2022.2'
 WHERE MaSV = 101;</code></pre></div>
 
-          <h3>SELECT INTO — Sao chép dữ liệu</h3>
+          <h3>SELECT INTO - Sao chép dữ liệu</h3>
           <p><code>SELECT INTO</code> cho phép tạo một Table mới từ kết quả truy vấn.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 INTO SinhVien_Backup
@@ -514,20 +514,20 @@ INTO SinhVien_HTTT
 FROM SinhVien
 WHERE Lop LIKE 'HTTT%';</code></pre></div>
 
-          <h3>Ví dụ tổng hợp — Quản lý sinh viên</h3>
-          <p><strong>Bước 1 — Tạo Database</strong></p>
+          <h3>Ví dụ tổng hợp - Quản lý sinh viên</h3>
+          <p><strong>Bước 1 - Tạo Database</strong></p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QuanLySinhVien;
 GO
 
 USE QuanLySinhVien;
 GO</code></pre></div>
-          <p><strong>Bước 2 — Tạo bảng Lớp</strong></p>
+          <p><strong>Bước 2 - Tạo bảng Lớp</strong></p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE Lop
 (
     MaLop INT PRIMARY KEY,
     TenLop NVARCHAR(50) NOT NULL
 );</code></pre></div>
-          <p><strong>Bước 3 — Tạo bảng Sinh viên</strong></p>
+          <p><strong>Bước 3 - Tạo bảng Sinh viên</strong></p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
 (
     MaSV INT PRIMARY KEY,
@@ -542,18 +542,18 @@ GO</code></pre></div>
     CONSTRAINT CK_SinhVien_NgaySinh
         CHECK (NgaySinh >= '1900-01-01')
 );</code></pre></div>
-          <p><strong>Bước 4 — Thêm lớp</strong></p>
+          <p><strong>Bước 4 - Thêm lớp</strong></p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO Lop
 VALUES
     (1, N'HTTT2022.1'),
     (2, N'HTTT2022.2');</code></pre></div>
-          <p><strong>Bước 5 — Thêm sinh viên</strong></p>
+          <p><strong>Bước 5 - Thêm sinh viên</strong></p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES
     (101, N'Nguyễn Văn An', '2004-05-20', 1),
     (102, N'Trần Thị Bình', '2004-08-15', 1),
     (103, N'Lê Văn Cường', '2004-11-02', 2);</code></pre></div>
-          <p><strong>Bước 6 — Kiểm tra</strong></p>
+          <p><strong>Bước 6 - Kiểm tra</strong></p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM SinhVien;</code></pre></div>
           <div class="table-wrap"><table class="ref-table">
@@ -562,16 +562,16 @@ FROM SinhVien;</code></pre></div>
             <tr><td>102</td><td>Trần Thị Bình</td><td>2004-08-15</td><td>1</td></tr>
             <tr><td>103</td><td>Lê Văn Cường</td><td>2004-11-02</td><td>2</td></tr>
           </table></div>
-          <p><strong>Bước 7 — Cập nhật</strong></p>
+          <p><strong>Bước 7 - Cập nhật</strong></p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SinhVien
 SET HoTen = N'Nguyễn Văn Nam'
 WHERE MaSV = 101;</code></pre></div>
-          <p><strong>Bước 8 — Xóa</strong></p>
+          <p><strong>Bước 8 - Xóa</strong></p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien
 WHERE MaSV = 103;</code></pre></div>
         </section>
 
-        <!-- 08 — Bài tập -->
+        <!-- 08 - Bài tập -->
         <section class="lesson-section" id="bai-tap">
           <p class="eyebrow">08 · BÀI TẬP THỰC HÀNH VÀ HỎI ĐÁP</p>
           <h2>Thực hành tổng hợp</h2>
@@ -579,16 +579,16 @@ WHERE MaSV = 103;</code></pre></div>
             <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
             <h3>Quản lý bán hàng</h3>
             <ol>
-              <li><strong>Bài 1 — Tạo Database:</strong> tạo Database <code style="background:#ffffff1a;color:#e2e8f0">QuanLyBanHang</code></li>
-              <li><strong>Bài 2 — Tạo bảng:</strong> KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD</li>
-              <li><strong>Bài 3 — Thiết lập ràng buộc:</strong> Primary Key, Foreign Key, NOT NULL, UNIQUE, CHECK, DEFAULT</li>
-              <li><strong>Bài 4 — Thêm dữ liệu:</strong> tối thiểu 5 khách hàng, 5 nhân viên, 10 sản phẩm, 10 hóa đơn</li>
-              <li><strong>Bài 5 — Thao tác dữ liệu:</strong> thực hiện INSERT, UPDATE, DELETE, SELECT INTO</li>
-              <li><strong>Bài 6 — Kiểm tra ràng buộc:</strong> thử nhập dữ liệu sai để quan sát SQL Server báo lỗi</li>
+              <li><strong>Bài 1 - Tạo Database:</strong> tạo Database <code style="background:#ffffff1a;color:#e2e8f0">QuanLyBanHang</code></li>
+              <li><strong>Bài 2 - Tạo bảng:</strong> KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD</li>
+              <li><strong>Bài 3 - Thiết lập ràng buộc:</strong> Primary Key, Foreign Key, NOT NULL, UNIQUE, CHECK, DEFAULT</li>
+              <li><strong>Bài 4 - Thêm dữ liệu:</strong> tối thiểu 5 khách hàng, 5 nhân viên, 10 sản phẩm, 10 hóa đơn</li>
+              <li><strong>Bài 5 - Thao tác dữ liệu:</strong> thực hiện INSERT, UPDATE, DELETE, SELECT INTO</li>
+              <li><strong>Bài 6 - Kiểm tra ràng buộc:</strong> thử nhập dữ liệu sai để quan sát SQL Server báo lỗi</li>
             </ol>
           </div>
 
-          <h3>Bài 6 — Ví dụ kiểm tra ràng buộc</h3>
+          <h3>Bài 6 - Ví dụ kiểm tra ràng buộc</h3>
           <p>Thử nhập dữ liệu <strong>sai</strong> để quan sát SQL Server báo lỗi:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (101, N'Sinh viên trùng mã', '2004-01-01', 1);</code></pre></div>
@@ -601,7 +601,7 @@ VALUES (105, N'Sinh viên lỗi ngày', '1800-01-01', 1);</code></pre></div>
           <p>→ Vi phạm <code>CHECK</code>.</p>
         </section>
 
-        <!-- 09 — Checklist -->
+        <!-- 09 - Checklist -->
         <section class="lesson-section" id="checklist">
           <p class="eyebrow">09 · CHECKLIST CUỐI TUẦN 1</p>
           <h2>Tự kiểm tra kiến thức</h2>
@@ -696,7 +696,7 @@ VALUES (105, N'Sinh viên lỗi ngày', '1800-01-01', 1);</code></pre></div>
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../assets/js/main.js?v=5"></script>
-  <script src="../../assets/js/course.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=6"></script>
 </body>
 </html>
 </content>

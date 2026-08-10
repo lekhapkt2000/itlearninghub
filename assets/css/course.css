@@ -20,9 +20,8 @@
 .progress-card>span{color:var(--muted);font-size:11px}
 
 .course-card-float{margin-top:28px;width:230px;padding:20px 22px;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 24px -8px rgb(15 23 42 / .1)}
-.course-card-float strong{display:block;margin-top:14px;color:var(--ink);font:800 22px var(--font-mono);letter-spacing:-.02em}
-.course-card-float>span{color:var(--muted);font-size:12px}
-.course-card-float small{display:block;margin-top:12px;color:var(--muted);font-size:10px}
+.course-card-sql{margin-top:14px;color:var(--ink);font:12px/1.8 var(--font-mono)}
+.course-card-sql span{color:var(--primary)}
 
 /* Horizontal course navigation - shared across overview + week pages */
 .course-nav{display:flex;gap:4px;overflow-x:auto;margin-top:8px;padding-bottom:0;border-bottom:1px solid var(--line)}

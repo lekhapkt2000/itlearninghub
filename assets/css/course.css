@@ -76,10 +76,10 @@
 .lesson-layout{display:grid;grid-template-columns:190px minmax(0,760px) 220px;gap:40px;align-items:start;padding-top:8px}
 .lesson-toc{position:sticky;top:96px;display:flex;flex-direction:column;gap:2px}
 .lesson-toc .side-label{margin-bottom:10px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.14em}
-.lesson-toc a{display:flex;gap:8px;padding:7px 8px;border-radius:6px;color:var(--muted);font-size:12px;font-weight:600}
+.lesson-toc a{display:flex;gap:8px;padding:7px 8px;border-left:3px solid transparent;border-radius:0 6px 6px 0;color:var(--muted);font-size:12px;font-weight:600}
 .lesson-toc a b{color:#cbd5e1;font:700 10px var(--font-mono)}
 .lesson-toc a:hover{background:var(--tint);color:var(--ink)}
-.lesson-toc a.active{background:var(--tint);color:var(--primary-ink)}
+.lesson-toc a.active{background:#dbeafe;border-left-color:var(--primary);color:var(--primary-ink);font-weight:800}
 .lesson-toc a.active b{color:var(--primary)}
 
 .lesson-content{min-width:0}
@@ -154,9 +154,10 @@
 .panel-progress strong span{color:var(--muted);font-size:13px;font-weight:600}
 .checklist{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
 .checklist li{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
-.checklist li b{width:14px;color:var(--primary);font-size:12px}
-.checklist li.done{color:var(--ink)}
-.checklist li.current{color:var(--primary-ink);font-weight:600}
+.checklist li b{display:inline-flex;align-items:center;justify-content:center;width:14px;flex-shrink:0;color:var(--primary);font-size:12px}
+.checklist li.done{color:var(--ink);font-weight:600}
+.checklist li.current{color:var(--primary-ink);font-weight:800;background:#dbeafe;margin:0 -8px;padding:4px 8px;border-radius:6px}
+.checklist li.current b{width:16px;height:16px;border-radius:50%;background:var(--primary);color:#fff;font-size:10px}
 .resource-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
 .resource-list li{display:flex;align-items:center;gap:8px;color:var(--ink);font-size:12px;font-weight:600}
 .resource-list .icon{color:var(--primary)}

@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT004 Tuần 4 - Hàm mở rộng (CAST, GETDATE, LEFT, RIGHT), CASE...END, Alias và Subquery trong SQL Server.">
+  <title>Tuần 4 · Hàm mở rộng, CASE &amp; Subquery — IT004</title>
+  <link rel="stylesheet" href="../../assets/css/base.css?v=11">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=14">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><span class="brand-mark">⌁</span><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>→</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IT004</a><span>/</span>Tuần 4</p>
+
+    <div class="week-header">
+      <span class="week-tag">THỰC HÀNH 04 · BTHT4</span>
+      <h1>Hàm mở rộng, CASE &amp; Subquery</h1>
+      <div class="week-meta"><span>5 tiết</span><span>Database</span><span>SQL Server</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> sau Tuần 4, sinh viên không chỉ biết viết truy vấn để lấy dữ liệu, mà có thể <strong>biến đổi dữ liệu, phân loại dữ liệu và tạo ra các cột tính toán từ truy vấn con</strong>.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IT004">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html" class="active">Tuần 4</a>
+      <span class="nav-item" aria-disabled="true">Tuần 5 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true">Tuần 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true">Ôn tập <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true">Thi <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 4">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#tong-quan" data-toc><b>01</b> Tổng quan</a>
+        <a href="#cast" data-toc><b>02</b> CAST()</a>
+        <a href="#getdate" data-toc><b>03</b> GETDATE()</a>
+        <a href="#left-right" data-toc><b>04</b> LEFT &amp; RIGHT</a>
+        <a href="#case" data-toc><b>05</b> CASE...END</a>
+        <a href="#alias-subquery" data-toc><b>06</b> Alias &amp; Subquery</a>
+        <a href="#subquery-nang-cao" data-toc><b>07</b> Subquery nâng cao</a>
+        <a href="#cheat-sheet" data-toc><b>08</b> Cheat sheet</a>
+        <a href="#bai-tap" data-toc><b>09</b> Bài tập</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Tong quan -->
+        <section class="lesson-section" id="tong-quan">
+          <p class="eyebrow">01 · TỔNG QUAN TUẦN 4</p>
+          <h2>Từ truy vấn dữ liệu đến xử lý dữ liệu</h2>
+          <div class="ascii-block">TUẦN 4
+├── Hàm mở rộng: CAST() · GETDATE() · LEFT() · RIGHT()
+├── CASE...END: theo điều kiện · theo giá trị · phân loại dữ liệu
+├── Alias + Subquery: alias bảng/cột · subquery trong FROM · subquery trong SELECT
+└── Bài tập tổng hợp: Quản lý giáo vụ · Quản lý bán hàng</div>
+          <p>Đây là bước chuyển từ <strong>truy vấn dữ liệu</strong> sang <strong>xử lý và tạo thông tin từ dữ liệu</strong>. Sau khi hoàn thành, sinh viên có thể chuyển đổi kiểu dữ liệu, trích xuất chuỗi, xây dựng logic điều kiện với <code>CASE</code>, và viết subquery trong <code>FROM</code>/<code>SELECT</code> kết hợp alias.</p>
+        </section>
+
+        <!-- 02 - CAST -->
+        <section class="lesson-section" id="cast">
+          <p class="eyebrow">02 · HÀM CAST()</p>
+          <h2>CAST()</h2>
+          <div class="definition"><code>CAST()</code> dùng để <strong>chuyển đổi một giá trị từ kiểu dữ liệu này sang kiểu dữ liệu khác</strong> (ví dụ: VARCHAR → INT, DATETIME → DATE, DECIMAL → INT, VARCHAR → DATE).</div>
+
+          <h3>Cú pháp</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CAST(expression AS target_data_type)</code></pre></div>
+          <p><code>expression</code>: giá trị hoặc biểu thức cần chuyển. <code>target_data_type</code>: kiểu dữ liệu muốn chuyển sang.</p>
+
+          <h3>Ví dụ cơ bản</h3>
+          <p>Chuyển chuỗi thành ngày giờ:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST('2025-04-10' AS DATETIME) AS Ngay;</code></pre></div>
+          <p>Kết quả: <code>2025-04-10 00:00:00.000</code></p>
+          <p>Chuyển số thực thành số nguyên:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST(123.456 AS INT) AS SoNguyen;</code></pre></div>
+          <p>Kết quả: <code>123</code></p>
+
+          <h3>Các kiểu dữ liệu thường gặp</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Kiểu</th><th>Ý nghĩa</th><th>Ví dụ</th></tr>
+            <tr><td><code>INT</code></td><td>Số nguyên</td><td><code>CAST(123 AS INT)</code></td></tr>
+            <tr><td><code>VARCHAR(n)</code></td><td>Chuỗi</td><td><code>CAST('Hello' AS VARCHAR(50))</code></td></tr>
+            <tr><td><code>DATE</code></td><td>Ngày</td><td><code>CAST('2024-11-14' AS DATE)</code></td></tr>
+            <tr><td><code>DATETIME</code></td><td>Ngày + giờ</td><td><code>CAST('2024-11-14 10:20:30' AS DATETIME)</code></td></tr>
+            <tr><td><code>DECIMAL(p,s)</code></td><td>Số thập phân</td><td><code>CAST(123.456 AS DECIMAL(10,2))</code></td></tr>
+            <tr><td><code>NUMERIC(p,s)</code></td><td>Số thập phân</td><td><code>CAST(123.456 AS NUMERIC(10,2))</code></td></tr>
+            <tr><td><code>FLOAT</code></td><td>Số thực</td><td><code>CAST(123.456 AS FLOAT)</code></td></tr>
+            <tr><td><code>CHAR(n)</code></td><td>Chuỗi cố định</td><td><code>CAST('Hello' AS CHAR(10))</code></td></tr>
+          </table></div>
+
+          <h3>CAST() trong bài toán thực tế</h3>
+          <p>Bảng <code>NhanVien(MaNV, HoTen, Luong)</code> với <code>Luong</code> lưu dạng <code>DECIMAL(12,2)</code>, muốn hiển thị dưới dạng số nguyên:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaNV,
+    HoTen,
+    CAST(Luong AS INT) AS Luong
+FROM NhanVien;</code></pre></div>
+
+          <h3>Làm tròn cần chú ý</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST(123.99 AS INT);</code></pre></div>
+          <p>Kết quả: <code>123</code></p>
+          <div class="inline-warning"><code>CAST(... AS INT)</code> <strong>không phải là hàm ROUND</strong> - nó cắt phần thập phân, không làm tròn. Đây là điểm rất dễ nhầm.</div>
+        </section>
+
+        <!-- 03 - GETDATE -->
+        <section class="lesson-section" id="getdate">
+          <p class="eyebrow">03 · HÀM GETDATE()</p>
+          <h2>GETDATE()</h2>
+          <div class="definition"><code>GETDATE()</code> trả về <strong>ngày và giờ hiện tại của hệ thống SQL Server</strong> tại thời điểm truy vấn được thực thi. Đây là hàm dành riêng cho SQL Server (T-SQL).</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT GETDATE() AS NgayGioHienTai;</code></pre></div>
+
+          <h3>Kết hợp GETDATE() và CAST()</h3>
+          <p>Nếu chỉ cần <strong>ngày hiện tại</strong>, không cần giờ:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST(GETDATE() AS DATE) AS NgayHienTai;</code></pre></div>
+          <div class="ascii-block">GETDATE() → Ngày + giờ → CAST(... AS DATE) → Chỉ còn ngày</div>
+
+          <h3>Ví dụ tính tuổi</h3>
+          <p>Giả sử <code>NgaySinh = '2000-08-15'</code>. Lấy ngày hiện tại bằng <code>SELECT GETDATE() AS HomNay;</code></p>
+          <div class="inline-warning"><strong>Lưu ý:</strong> không nên dùng phép trừ đơn giản giữa năm hiện tại và năm sinh để tính tuổi chính xác, vì còn phụ thuộc người đó đã qua sinh nhật trong năm hay chưa - đây là sự khác biệt giữa <strong>xử lý dữ liệu đơn giản</strong> và <strong>xử lý dữ liệu đúng về mặt nghiệp vụ</strong>.</div>
+        </section>
+
+        <!-- 04 - LEFT RIGHT -->
+        <section class="lesson-section" id="left-right">
+          <p class="eyebrow">04 · HÀM LEFT() VÀ RIGHT()</p>
+          <h2>LEFT() và RIGHT()</h2>
+          <p><code>LEFT()</code> lấy một số ký tự từ <strong>bên trái</strong> của chuỗi, <code>RIGHT()</code> lấy từ <strong>bên phải</strong>.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">LEFT(chuoi, so_ky_tu)
+RIGHT(chuoi, so_ky_tu)</code></pre></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT LEFT('abcdef', 3);   -- abc
+SELECT RIGHT('abcdef', 3);  -- def</code></pre></div>
+
+          <h3>Ví dụ với mã sinh viên</h3>
+          <p>Giả sử <code>MaSV = '22520001'</code>, bảng <code>SinhVien(MaSV, HoTen)</code>. Lấy 3 ký tự đầu (mã khóa):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaSV,
+    HoTen,
+    LEFT(MaSV, 3) AS Khoa
+FROM SinhVien;</code></pre></div>
+          <p>Lấy 3 ký tự cuối (số thứ tự):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaSV,
+    RIGHT(MaSV, 3) AS SoThuTu
+FROM SinhVien;</code></pre></div>
+          <p>Với <code>MaSV = 22520001</code>: <code>Khoa = 225</code>, <code>SoThuTu = 001</code>.</p>
+
+          <h3>So sánh nhanh</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Hàm</th><th>Lấy từ</th><th>Ví dụ</th><th>Kết quả</th></tr>
+            <tr><td><code>LEFT()</code></td><td>Bên trái</td><td><code>LEFT('abcdef',3)</code></td><td><code>abc</code></td></tr>
+            <tr><td><code>RIGHT()</code></td><td>Bên phải</td><td><code>RIGHT('abcdef',3)</code></td><td><code>def</code></td></tr>
+          </table></div>
+          <div class="ascii-block">LEFT  ← ← ←
+RIGHT → → →</div>
+        </section>
+
+        <!-- 05 - CASE -->
+        <section class="lesson-section" id="case">
+          <p class="eyebrow">05 · CASE...END</p>
+          <h2>CASE...END</h2>
+          <div class="definition"><code>CASE</code> là cấu trúc điều kiện trong SQL, có chức năng tương tự tư duy <code>IF / ELSE IF / ELSE</code> trong các ngôn ngữ lập trình.</div>
+
+          <h3>Cú pháp dạng điều kiện</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    ELSE result_other
+END</code></pre></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    HoTen,
+    Luong,
+    CASE
+        WHEN Luong >= 20000000 THEN N'Cao'
+        WHEN Luong >= 10000000 THEN N'Trung bình'
+        ELSE N'Thấp'
+    END AS MucLuong
+FROM NhanVien;</code></pre></div>
+
+          <h3>Ví dụ phân loại khách hàng</h3>
+          <p>Phân loại theo <code>TongChiTieu</code>: ≥ 10.000.000 → VIP, ≥ 5.000.000 → Thân thiết, còn lại → Thường.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaKH,
+    HoTen,
+    CASE
+        WHEN TongChiTieu >= 10000000 THEN N'VIP'
+        WHEN TongChiTieu >= 5000000 THEN N'Thân thiết'
+        ELSE N'Thường'
+    END AS PhanLoai
+FROM KhachHang;</code></pre></div>
+
+          <h3>Thứ tự điều kiện - rất quan trọng</h3>
+          <p>Câu sau <strong>sai về logic</strong>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE
+    WHEN TongChiTieu >= 5000000 THEN N'Thân thiết'
+    WHEN TongChiTieu >= 10000000 THEN N'VIP'
+    ELSE N'Thường'
+END</code></pre></div>
+          <div class="inline-warning">Vì <code>15.000.000 &gt;= 5.000.000</code> đã đúng ngay ở điều kiện đầu tiên, nên <code>15.000.000</code> sẽ bị phân loại "Thân thiết" thay vì "VIP". <strong>Quy tắc:</strong> điều kiện cụ thể/cao hơn nên đặt trước điều kiện rộng hơn (<code>&gt;=10M</code> → <code>&gt;=5M</code> → còn lại).</div>
+
+          <h3>CASE dạng so sánh giá trị</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE expression
+    WHEN value1 THEN result1
+    WHEN value2 THEN result2
+    ELSE result_other
+END</code></pre></div>
+          <p>Ví dụ phân loại giới tính:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaNV,
+    HoTen,
+    CASE GioiTinh
+        WHEN 1 THEN N'Nam'
+        WHEN 0 THEN N'Nữ'
+        ELSE N'Không xác định'
+    END AS PhanLoaiGioiTinh
+FROM NhanVien;</code></pre></div>
+
+          <h3>Hai dạng CASE</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Dạng</th><th>Khi nào dùng?</th></tr>
+            <tr><td><code>CASE WHEN điều kiện</code></td><td>Điều kiện phức tạp</td></tr>
+            <tr><td><code>CASE expression WHEN giá trị</code></td><td>So sánh một giá trị với nhiều giá trị</td></tr>
+          </table></div>
+
+          <h3>CASE không chỉ dùng trong SELECT</h3>
+          <p>Có thể dùng <code>CASE</code> trong <code>SELECT</code>, <code>ORDER BY</code>, và cả <code>WHERE</code>/<code>GROUP BY</code> khi cần:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ORDER BY
+    CASE
+        WHEN TrangThai = N'Ưu tiên' THEN 1
+        ELSE 2
+    END;</code></pre></div>
+
+          <div class="quick-check">
+            <p class="eyebrow">KIỂM TRA NHANH</p>
+            <p class="qc-question">Trong CASE WHEN nhiều điều kiện lồng theo mức (ví dụ phân loại lương), nên đặt điều kiện nào trước?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">Điều kiện rộng nhất (dễ đúng nhất)</button>
+              <button class="qc-option" type="button" data-correct="true">Điều kiện cụ thể/cao nhất</button>
+              <button class="qc-option" type="button" data-correct="false">Không quan trọng thứ tự</button>
+            </div>
+            <div class="qc-feedback correct">✓ Chính xác! <code>CASE</code> dừng lại ở điều kiện <strong>đầu tiên đúng</strong>, nên điều kiện cụ thể/cao hơn phải đặt trước, nếu không mọi dòng sẽ rơi vào nhánh rộng phía trên.</div>
+          </div>
+        </section>
+
+        <!-- 06 - Alias & Subquery co ban -->
+        <section class="lesson-section" id="alias-subquery">
+          <p class="eyebrow">06 · ALIAS VÀ SUBQUERY</p>
+          <h2>Alias và Subquery cơ bản</h2>
+          <div class="definition"><strong>Alias</strong> là tên tạm thời đặt cho bảng hoặc cột trong truy vấn, giúp câu SQL dễ đọc và dễ dùng hơn trong biểu thức phức tạp.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SV.MaSV, SV.HoTen
+FROM SinhVien SV;</code></pre></div>
+          <p>Alias cho cột:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    HoTen AS TenSinhVien
+FROM SinhVien;</code></pre></div>
+          <p>Alias cho bảng (có thể bỏ <code>AS</code>):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SV.MaSV,
+    SV.HoTen
+FROM SinhVien AS SV;</code></pre></div>
+
+          <h3>Subquery là gì?</h3>
+          <div class="definition"><strong>Subquery</strong> là một câu truy vấn nằm bên trong một câu truy vấn khác - có thể xuất hiện trong <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>HAVING</code>.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien
+WHERE Diem > (
+    SELECT AVG(Diem)
+    FROM SinhVien
+);</code></pre></div>
+          <p>Đọc: "Tìm sinh viên có điểm lớn hơn điểm trung bình của tất cả sinh viên." Tư duy: tính <code>AVG(Diem)</code> trước, rồi lấy những dòng có <code>Diem &gt; AVG</code>.</p>
+        </section>
+
+        <!-- 07 - Subquery nang cao -->
+        <section class="lesson-section" id="subquery-nang-cao">
+          <p class="eyebrow">07 · SUBQUERY TRONG FROM VÀ SELECT</p>
+          <h2>Subquery nâng cao</h2>
+          <p>Đây là nội dung trọng tâm mới của Tuần 4.</p>
+
+          <h3>Subquery trong FROM + Alias</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT Alias1.Cot1, Alias1.Cot2
+FROM
+(
+    SELECT ...
+    FROM ...
+    WHERE ...
+) AS Alias1
+WHERE ...;</code></pre></div>
+          <p>SQL tạo ra một <strong>bảng kết quả tạm thời</strong> từ subquery, sau đó truy vấn bên ngoài sử dụng bảng đó:</p>
+          <div class="ascii-block">Bảng gốc → Subquery → Bảng kết quả tạm thời → Alias → Query bên ngoài</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM
+(
+    SELECT
+        MaSV,
+        HoTen,
+        Diem
+    FROM SinhVien
+) AS SV
+WHERE SV.Diem >= 8;</code></pre></div>
+          <div class="inline-warning">SQL Server yêu cầu derived table/subquery trong <code>FROM</code> phải có tên - <code>FROM (SELECT ...)</code> không đủ, cần <code>FROM (SELECT ...) AS SV</code>.</div>
+
+          <h3>Subquery trong SELECT + Alias</h3>
+          <p>Đây là phần đặc biệt quan trọng của Tuần 4.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    &lt;cột chính&gt;,
+    (
+        SELECT &lt;biểu thức&gt;
+        FROM &lt;bảng liên quan&gt;
+        WHERE &lt;điều kiện liên kết&gt;
+    ) AS &lt;bí danh&gt;
+FROM &lt;bảng chính&gt;;</code></pre></div>
+
+          <h4>Ví dụ - đếm số lần bán của từng sản phẩm</h4>
+          <p>Bảng <code>SanPham(MaSP, TenSP)</code>, <code>CTHD(MaHD, MaSP, SoLuong)</code>. Đề bài: "với mỗi sản phẩm, cho biết sản phẩm đã xuất hiện bao nhiêu lần trong chi tiết hóa đơn."</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SP.TenSP,
+    (
+        SELECT COUNT(*)
+        FROM CTHD
+        WHERE CTHD.MaSP = SP.MaSP
+    ) AS SoLanBan
+FROM SanPham SP;</code></pre></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Sản phẩm</th><th>Số lần bán</th></tr>
+            <tr><td>Laptop</td><td>5</td></tr>
+            <tr><td>Chuột</td><td>12</td></tr>
+            <tr><td>Bàn phím</td><td>7</td></tr>
+          </table></div>
+
+          <h3>Correlated Subquery</h3>
+          <p>Trong ví dụ trên, <code>WHERE CTHD.MaSP = SP.MaSP</code> tham chiếu đến <code>SP.MaSP</code> của truy vấn bên ngoài - đây là <strong>correlated subquery (truy vấn con tương quan)</strong>: subquery được tính lại <strong>riêng cho từng dòng</strong> của truy vấn ngoài.</p>
+          <div class="ascii-block">Query ngoài → SP.MaSP → Subquery → tính riêng cho từng SP</div>
+
+          <h4>So sánh với subquery thường</h4>
+          <p>Subquery thường chạy <strong>độc lập</strong>, không phụ thuộc dòng ngoài:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SanPham
+WHERE Gia >
+(
+    SELECT AVG(Gia)
+    FROM SanPham
+);</code></pre></div>
+          <p>Correlated subquery <strong>phụ thuộc</strong> vào từng dòng ngoài (<code>SP.MaSP</code> ở ví dụ trên).</p>
+
+          <h4>Khi nào nên dùng Correlated Subquery?</h4>
+          <p>Rất phù hợp với câu hỏi dạng "với <strong>mỗi A</strong>, tính một giá trị liên quan đến A" - ví dụ: mỗi sản phẩm có bao nhiêu lần bán? mỗi sinh viên có bao nhiêu môn đã đăng ký? mỗi nhân viên tham gia bao nhiêu dự án? mỗi khách hàng có bao nhiêu hóa đơn? mỗi phòng ban có bao nhiêu nhân viên?</p>
+
+          <h4>Ví dụ - Quản lý giáo vụ</h4>
+          <p>Bảng <code>SINHVIEN(MaSV, HoTen)</code>, <code>DANGKY(MaSV, MaHP)</code>. Đề bài: "hiển thị mỗi sinh viên và số học phần đã đăng ký."</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SV.MaSV,
+    SV.HoTen,
+    (
+        SELECT COUNT(*)
+        FROM DangKy DK
+        WHERE DK.MaSV = SV.MaSV
+    ) AS SoHocPhan
+FROM SinhVien SV;</code></pre></div>
+
+          <h4>Kết hợp CASE + Subquery</h4>
+          <p>Đề bài: "phân loại sinh viên dựa trên số học phần đã đăng ký."</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SV.MaSV,
+    SV.HoTen,
+    CASE
+        WHEN
+        (
+            SELECT COUNT(*)
+            FROM DangKy DK
+            WHERE DK.MaSV = SV.MaSV
+        ) >= 20
+        THEN N'Đăng ký nhiều'
+
+        WHEN
+        (
+            SELECT COUNT(*)
+            FROM DangKy DK
+            WHERE DK.MaSV = SV.MaSV
+        ) >= 15
+        THEN N'Bình thường'
+
+        ELSE N'Đăng ký ít'
+    END AS PhanLoai
+FROM SinhVien SV;</code></pre></div>
+        </section>
+
+        <!-- 08 - Cheat sheet -->
+        <section class="lesson-section" id="cheat-sheet">
+          <p class="eyebrow">08 · TƯ DUY TỔNG HỢP</p>
+          <h2>Nhận diện từ khóa &amp; Cheat Sheet</h2>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Từ khóa đề bài</th><th>Kiến thức</th></tr>
+            <tr><td>Chuyển kiểu dữ liệu</td><td><code>CAST()</code></td></tr>
+            <tr><td>Ngày hiện tại</td><td><code>GETDATE()</code></td></tr>
+            <tr><td>Ký tự đầu / ký tự cuối</td><td><code>LEFT()</code> / <code>RIGHT()</code></td></tr>
+            <tr><td>Phân loại / "Nếu... thì..."</td><td><code>CASE WHEN</code></td></tr>
+            <tr><td>Tên tạm của bảng/cột</td><td>Alias</td></tr>
+            <tr><td>Truy vấn bên trong truy vấn</td><td>Subquery</td></tr>
+            <tr><td>Tính cho từng đối tượng</td><td>Correlated Subquery</td></tr>
+            <tr><td>Truy vấn con trong FROM</td><td>Derived Table + Alias</td></tr>
+            <tr><td>Truy vấn con trong SELECT</td><td>Scalar / Correlated Subquery</td></tr>
+          </table></div>
+
+          <div class="ascii-block">CAST()      → Chuyển kiểu dữ liệu
+GETDATE()   → Ngày + giờ hiện tại
+LEFT(x, n)  → n ký tự bên trái
+RIGHT(x, n) → n ký tự bên phải
+CASE ... END → Điều kiện / phân loại
+Alias       → Tên tạm cho bảng / cột
+Subquery    → Truy vấn bên trong truy vấn
+FROM (SELECT ...) AS T   → Derived Table
+SELECT (SELECT ...) AS X → Cột tính toán bằng Subquery</div>
+
+          <h3>Bốn tuần đầu của IT004</h3>
+          <p>Tuần 1: tạo &amp; thao tác dữ liệu. Tuần 2: truy vấn &amp; kết hợp dữ liệu. Tuần 3: truy vấn nâng cao ("tất cả" / nhóm / TOP). Tuần 4: <strong>biến đổi &amp; tính toán</strong> trên dữ liệu bằng CAST, CASE và Subquery.</p>
+        </section>
+
+        <!-- 09 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">09 · BÀI TẬP THỰC HÀNH</p>
+          <h2>Thực hành tổng hợp</h2>
+          <p>Theo tài liệu chính thức, phần thực hành Tuần 4 sử dụng Microsoft SQL Server và thực hiện: <strong>Quản lý giáo vụ - Phần I câu 1, 3-8, 11-14; Phần II câu 1-4; Phần III câu 1-24</strong>; và <strong>Quản lý bán hàng - Phần III câu 41-45</strong>.</p>
+
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
+            <h3>5 nhóm bài thực hành</h3>
+            <ol>
+              <li><strong>Practice 01 - Hàm mở rộng:</strong> CAST, GETDATE, LEFT, RIGHT</li>
+              <li><strong>Practice 02 - CASE:</strong> CASE WHEN, CASE expression, phân loại dữ liệu</li>
+              <li><strong>Practice 03 - Alias &amp; Subquery:</strong> Alias, Subquery trong FROM/SELECT, Correlated Subquery</li>
+              <li><strong>Practice 04 - Quản lý giáo vụ:</strong> Phần I câu 1, 3-8, 11-14 · Phần II câu 1-4 · Phần III câu 1-24</li>
+              <li><strong>Practice 05 - Quản lý bán hàng:</strong> Phần III câu 41-45</li>
+            </ol>
+          </div>
+          <p style="color:var(--muted);font-size:12px">Nội dung từng câu hỏi sẽ được cập nhật trực tiếp trên Moodle của môn học.</p>
+
+          <h3>Challenge - thử thách cuối tuần</h3>
+          <p>Sau Tuần 4, sinh viên đã có đủ kiến thức để giải những bài khá hay. Mỗi bài có gợi ý ẩn - bấm để mở.</p>
+
+          <h4>Challenge 01</h4>
+          <p>Hiển thị mã sinh viên, họ tên và 3 ký tự cuối của mã sinh viên.</p>
+          <details><summary>Gợi ý</summary><div class="ascii-block">RIGHT()</div></details>
+
+          <h4>Challenge 02</h4>
+          <p>Hiển thị ngày hiện tại chỉ dưới dạng DATE.</p>
+          <details><summary>Gợi ý</summary><div class="ascii-block">GETDATE() + CAST()</div></details>
+
+          <h4>Challenge 03</h4>
+          <p>Phân loại sinh viên theo điểm: ≥8.5 → Xuất sắc, ≥7.0 → Tốt, ≥5.0 → Đạt, &lt;5.0 → Không đạt.</p>
+          <details><summary>Gợi ý</summary><div class="ascii-block">CASE</div></details>
+
+          <h4>Challenge 04</h4>
+          <p>Hiển thị mỗi sinh viên và số học phần đã đăng ký.</p>
+          <details><summary>Gợi ý</summary><div class="ascii-block">Correlated Subquery</div></details>
+
+          <h4>Challenge 05 ⭐</h4>
+          <p>Hiển thị mỗi sinh viên, số học phần đã đăng ký và phân loại: ≥20 → Đăng ký nhiều, 15-19 → Bình thường, &lt;15 → Đăng ký ít.</p>
+          <details><summary>Gợi ý</summary><div class="ascii-block">CASE + Correlated Subquery</div></details>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần">
+          <a href="week-3.html"><span class="nav-dir">← TUẦN TRƯỚC</span><span class="nav-title">Tuần 3: Phép chia &amp; gom nhóm</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO →</span><span class="nav-title">Tuần 5: Trigger (sắp mở)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">TIẾN ĐỘ</span>
+          <strong>4<span>/6 tuần</span></strong>
+          <div class="mini-progress"><b style="width:67%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="tong-quan"><b>○</b> Tổng quan</li>
+            <li data-section="cast"><b>○</b> CAST()</li>
+            <li data-section="getdate"><b>○</b> GETDATE()</li>
+            <li data-section="left-right"><b>○</b> LEFT &amp; RIGHT</li>
+            <li data-section="case"><b>○</b> CASE...END</li>
+            <li data-section="alias-subquery"><b>○</b> Alias &amp; Subquery</li>
+            <li data-section="subquery-nang-cao"><b>○</b> Subquery nâng cao</li>
+            <li data-section="cheat-sheet"><b>○</b> Cheat sheet</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>CAST(...AS INT) cắt phần thập phân, không làm tròn như ROUND.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-top">
+      <div class="brand"><span class="brand-mark">⌁</span><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+    </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=6"></script>
+</body>
+</html>
+</content>

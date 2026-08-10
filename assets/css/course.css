@@ -57,17 +57,11 @@
 .roadmap-track{display:flex;position:relative;padding:0 4px}
 .roadmap-track:before{content:'';position:absolute;top:28px;left:56px;right:56px;height:2px;background:var(--line);z-index:0}
 .roadmap-step{flex:1;min-width:0;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 6px;text-align:center;text-decoration:none;color:inherit}
-.roadmap-node{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--surface);border:2px solid var(--line);color:var(--muted);font:700 16px var(--font-mono);margin-bottom:8px;transition:.2s}
-.roadmap-step.is-done .roadmap-node{background:var(--primary);border-color:var(--primary);color:#fff}
-.roadmap-step.is-current .roadmap-node{background:var(--tint);border-color:var(--primary);color:var(--primary-ink);box-shadow:0 0 0 4px var(--tint)}
-.roadmap-step:not([aria-disabled="true"]):hover .roadmap-node{transform:translateY(-2px)}
+.roadmap-node{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--tint);border:2px solid var(--primary);color:var(--primary-ink);font:700 16px var(--font-mono);margin-bottom:8px;transition:.2s}
+.roadmap-step:hover .roadmap-node{transform:translateY(-2px)}
 .roadmap-label{color:var(--muted);font:700 10px var(--font-mono);letter-spacing:.08em}
-.roadmap-step.is-current .roadmap-label{color:var(--primary-ink)}
 .roadmap-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.4;max-width:150px}
-.roadmap-step[aria-disabled="true"] .roadmap-title{color:var(--muted);font-weight:500}
-.roadmap-status{font-size:10px;color:var(--muted)}
-.roadmap-step.is-current .roadmap-status{color:var(--primary-ink);font-weight:600}
-.roadmap-step.is-done .roadmap-status{color:var(--primary)}
+.roadmap-topics{font-size:10px;color:var(--muted);line-height:1.5;max-width:150px}
 
 .week-status{display:inline-flex;padding:6px 11px;border-radius:99px;background:var(--line);color:var(--muted);font-size:10px;font-weight:700}
 .week-status.current{background:var(--tint);color:var(--primary-ink)}

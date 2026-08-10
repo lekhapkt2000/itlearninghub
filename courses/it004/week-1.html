@@ -82,20 +82,21 @@
           <div class="ascii-block">DATABASE: QuanLySinhVien
 
         ┌──────────────┐
-        │    SINHVIEN  │
+        │      LOP     │  (1)
+        ├──────────────┤
+        │ MaLop        │
+        │ TenLop       │
+        └──────┬───────┘
+               │ 1-N
+        ┌──────▼───────┐
+        │    SINHVIEN  │  (N)
         ├──────────────┤
         │ MaSV         │
         │ HoTen        │
         │ NgaySinh     │
-        │ MaLop        │
-        └──────┬───────┘
-               │
-        ┌──────▼───────┐
-        │      LOP     │
-        ├──────────────┤
-        │ MaLop        │
-        │ TenLop       │
+        │ MaLop (FK)   │
         └──────────────┘</div>
+          <div class="inline-warning">Lỗi hay gặp khi vẽ sơ đồ: đặt chiều mũi tên ngược, khiến người đọc hiểu nhầm là "1 Sinh viên có nhiều Lớp". Chiều đúng phải đi từ bảng cha xuống bảng con: <strong>LOP</strong> là bảng cha (giữ khóa chính <code>MaLop</code>), <strong>SINHVIEN</strong> là bảng con (giữ khóa ngoại <code>MaLop</code> tham chiếu đến LOP) - một Lớp có nhiều Sinh viên (1-N), không phải ngược lại.</div>
         </section>
 
         <!-- 02 - SSMS -->

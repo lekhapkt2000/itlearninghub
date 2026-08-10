@@ -186,13 +186,15 @@ BEGIN
         );
 
         ROLLBACK;
+        RETURN;
     END
 
 END;</code></pre></div>
 
           <h3>Phân tích</h3>
-          <div class="ascii-block">IF EXISTS → RAISERROR → ROLLBACK → Hủy thao tác sai</div>
+          <div class="ascii-block">IF EXISTS → RAISERROR → ROLLBACK → RETURN → Hủy thao tác sai</div>
           <p><code>IF EXISTS(...)</code> kiểm tra có tồn tại bản ghi vi phạm điều kiện hay không. <code>RAISERROR(N'...', 16, 1)</code> báo lỗi - mức độ <code>16</code> là mức thường dùng để biểu diễn lỗi do người dùng gây ra (dữ liệu nhập sai, vi phạm quy tắc). <code>ROLLBACK</code> hủy giao dịch đang thực hiện, đưa dữ liệu về trạng thái trước đó.</p>
+          <div class="inline-warning">Lỗi hay gặp: gọi <code>RAISERROR</code> và <code>ROLLBACK</code> nhưng <strong>quên <code>RETURN</code></strong> ngay sau đó. Nếu Trigger còn câu lệnh nào phía sau, chúng vẫn sẽ tiếp tục chạy dù giao dịch đã bị hủy, có thể gây lỗi hoặc hành vi không mong muốn. Nên tập thói quen luôn viết đủ bộ ba <code>RAISERROR → ROLLBACK → RETURN</code>, không chỉ dừng ở <code>ROLLBACK</code>.</div>
 
           <h3>PRINT và RAISERROR - phân biệt</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -307,6 +309,8 @@ END;</code></pre></div>
         <section class="lesson-section" id="ung-dung">
           <p class="eyebrow">06 · ỨNG DỤNG THỰC TẾ</p>
           <h2>Ứng dụng thực tế của Trigger</h2>
+
+          <div class="inline-warning">Lỗi hay gặp: dùng Trigger cho những ràng buộc <strong>đơn giản</strong> mà <code>CHECK CONSTRAINT</code> hoặc <code>FOREIGN KEY</code> đã làm được (ví dụ chỉ để chặn <code>SOLUONG &lt; 0</code>, hoặc đặt giá trị mặc định). Trigger chạy sau khi thao tác DML đã xảy ra nên tốn thêm chi phí xử lý; chỉ nên dùng Trigger khi logic <strong>vượt quá khả năng của Constraint</strong> - ví dụ cần tự động cập nhật dữ liệu ở bảng khác, hoặc kiểm tra điều kiện dựa trên dữ liệu ở nhiều bảng.</div>
 
           <h3>Kiểm tra tồn tại trước khi thêm</h3>
           <p>Không cho phép thêm hóa đơn nếu khách hàng chưa tồn tại:</p>

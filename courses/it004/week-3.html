@@ -308,6 +308,7 @@ WHERE NOT EXISTS
             <tr><td>Phép chia có điều kiện</td><td><code>WHERE</code> + <code>GROUP BY</code> + <code>HAVING COUNT</code></td></tr>
             <tr><td>Phép chia NOT EXISTS</td><td>Hai lớp <code>NOT EXISTS</code> lồng nhau</td></tr>
           </table></div>
+          <div class="inline-warning">Lỗi hay gặp: quên viết đủ <strong>hai lớp phủ định</strong>. Chỉ viết một lớp <code>NOT EXISTS</code> mà thiếu lớp bên trong sẽ cho ra kết quả sai hoàn toàn - luôn kiểm tra lại theo đúng mẫu "không tồn tại A mà chưa có B", gồm đúng hai <code>NOT EXISTS</code> lồng nhau như cấu trúc ở trên.</div>
         </section>
 
         <!-- 05 - Aggregate -->
@@ -367,6 +368,7 @@ FROM NhanVien;</code></pre></div>
     AVG(Luong) AS LuongTrungBinh
 FROM NhanVien
 GROUP BY Phong;</code></pre></div>
+          <div class="inline-warning">Lỗi hay gặp: đưa cột vào <code>SELECT</code> nhưng quên đưa vào <code>GROUP BY</code>. Quy tắc bắt buộc: mọi cột trong <code>SELECT</code> mà <strong>không nằm trong hàm gom nhóm</strong> (<code>SUM</code>, <code>COUNT</code>, <code>AVG</code>...) đều phải có mặt trong <code>GROUP BY</code>, nếu không SQL Server sẽ báo lỗi cú pháp.</div>
 
           <h3>Thống kê số nhân viên theo phòng</h3>
           <p><code>LEFT JOIN</code> giúp vẫn hiển thị phòng ban ngay cả khi phòng đó chưa có nhân viên:</p>
@@ -476,6 +478,7 @@ LEFT OUTER JOIN PHANCONG PC
     ON NV.MaNV = PC.MaNV
 WHERE PC.MaDA IS NULL;</code></pre></div>
           <div class="inline-ok">Pattern quan trọng cần nhớ: <code>LEFT JOIN</code> + <code>WHERE right_table.key IS NULL</code> → tìm những bản ghi <strong>không có bản ghi tương ứng</strong> ở bảng bên phải.</div>
+          <div class="inline-warning">Lỗi hay gặp: đặt điều kiện <code>WHERE</code> lên <strong>một cột khác (không phải kiểm tra NULL)</strong> của bảng bên phải sau <code>LEFT JOIN</code> - khi đó những dòng NULL sinh ra từ LEFT JOIN sẽ bị chính điều kiện đó loại bỏ, khiến câu lệnh vô tình hoạt động giống <code>INNER JOIN</code>. Nếu cần lọc thêm ở bảng bên phải mà vẫn muốn giữ hành vi LEFT JOIN, hãy đưa điều kiện đó vào mệnh đề <code>ON</code> thay vì <code>WHERE</code>.</div>
 
           <h3>Ba loại OUTER JOIN</h3>
           <div class="table-wrap"><table class="ref-table">

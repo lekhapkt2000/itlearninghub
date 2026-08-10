@@ -6,7 +6,7 @@
   <meta name="description" content="IT Learning Hub - Kho học liệu thực hành dành cho sinh viên Công nghệ Thông tin, bắt đầu với IT004 Cơ sở dữ liệu.">
   <title>IT Learning Hub · Kho học liệu CNTT</title>
   <link rel="stylesheet" href="assets/css/base.css?v=12">
-  <link rel="stylesheet" href="assets/css/home.css?v=13">
+  <link rel="stylesheet" href="assets/css/home.css?v=14">
 </head>
 <body>
   <header class="topbar">
@@ -60,27 +60,35 @@
       </div>
       <div class="instructor-card">
         <div class="instructor-content">
-          <div class="instructor-avatar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 17 7 10 11 3 7Z"/><path d="M3 11 10 15 17 11"/><path d="M3 14.5 10 18.5 17 14.5"/></svg></div>
-          <h3>Dự án học liệu phi lợi nhuận</h3>
+          <div class="instructor-heading">
+            <div class="instructor-avatar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3 17 7 10 11 3 7Z"/><path d="M3 11 10 15 17 11"/><path d="M3 14.5 10 18.5 17 14.5"/></svg></div>
+            <h3>Dự án học liệu phi lợi nhuận</h3>
+          </div>
           <p class="instructor-role">DÀNH CHO SINH VIÊN CÔNG NGHỆ THÔNG TIN</p>
           <p class="instructor-bio">IT Learning Hub được xây dựng để hỗ trợ sinh viên CNTT ôn tập và thực hành theo từng tuần học, bám sát nội dung giảng dạy trên lớp. Toàn bộ nội dung được biên soạn và cập nhật miễn phí, không nhằm mục đích thương mại.</p>
           <div class="instructor-stats">
-            <div><strong>Miễn phí</strong><span>Không thu phí truy cập</span></div>
+            <div><strong>100%</strong><span>Miễn phí truy cập</span></div>
             <div><strong id="hub-course-count-2">05</strong><span>Môn học trong lộ trình</span></div>
-            <div><strong>Theo tuần</strong><span>Nội dung bám sát lịch học</span></div>
+            <div><strong>06</strong><span>Tuần học thực hành</span></div>
           </div>
         </div>
-        <div class="instructor-visual" aria-hidden="true">
+        <div class="instructor-visual">
           <div class="mini-roadmap">
-            <div class="mini-roadmap-track">
-              <span class="mini-roadmap-node">1</span>
-              <span class="mini-roadmap-node">2</span>
-              <span class="mini-roadmap-node">3</span>
-              <span class="mini-roadmap-node">4</span>
-              <span class="mini-roadmap-node">5</span>
-              <span class="mini-roadmap-node">6</span>
+            <span class="side-label">LỘ TRÌNH IT004 · BẤM ĐỂ XEM</span>
+            <div class="mini-roadmap-track" id="mini-roadmap-track">
+              <button type="button" class="mini-roadmap-node is-active" data-week="1">1</button>
+              <button type="button" class="mini-roadmap-node" data-week="2">2</button>
+              <button type="button" class="mini-roadmap-node" data-week="3">3</button>
+              <button type="button" class="mini-roadmap-node" data-week="4">4</button>
+              <button type="button" class="mini-roadmap-node" data-week="5">5</button>
+              <button type="button" class="mini-roadmap-node" data-week="6">6</button>
             </div>
-            <span class="mini-roadmap-caption">Lộ trình học theo tuần</span>
+            <div class="mini-roadmap-preview">
+              <span class="mini-roadmap-preview-label">TUẦN <b data-preview-num>01</b></span>
+              <h4 data-preview-title>Nền tảng cơ sở dữ liệu</h4>
+              <p data-preview-topics>SSMS · Data Types · Table · Constraints · DML</p>
+              <a class="mini-roadmap-cta" data-preview-cta href="courses/it004/week-1.html">Học ngay <span>›</span></a>
+            </div>
           </div>
         </div>
       </div>
@@ -155,6 +163,47 @@
     if (hubCount) { hubCount.textContent = courseCountText; }
     var hubCount2 = document.getElementById('hub-course-count-2');
     if (hubCount2) { hubCount2.textContent = courseCountText; }
+
+    var IT004_WEEKS = [
+      { title: 'Nền tảng cơ sở dữ liệu', topics: 'SSMS · Data Types · Table · Constraints · DML', path: 'courses/it004/week-1.html' },
+      { title: 'Truy vấn dữ liệu với SQL', topics: 'Toán tử · Hàm · SELECT · JOIN · Subquery', path: 'courses/it004/week-2.html' },
+      { title: 'Phép chia & gom nhóm', topics: 'Phép chia · GROUP BY · TOP · Kết ngoài', path: 'courses/it004/week-3.html' },
+      { title: 'Hàm mở rộng, CASE & Subquery', topics: 'CAST · CASE · Alias · Subquery', path: 'courses/it004/week-4.html' },
+      { title: 'Trigger', topics: 'Cú pháp · AFTER · INSTEAD OF · Inserted/Deleted', path: 'courses/it004/week-5.html' },
+      { title: 'Ôn tập & thi thực hành', topics: 'Ôn tập · Thi thực hành', path: null }
+    ];
+    var roadmapNodes = document.querySelectorAll('#mini-roadmap-track .mini-roadmap-node');
+    var previewNum = document.querySelector('[data-preview-num]');
+    var previewTitle = document.querySelector('[data-preview-title]');
+    var previewTopics = document.querySelector('[data-preview-topics]');
+    var previewCta = document.querySelector('[data-preview-cta]');
+
+    function selectWeek(n) {
+      var w = IT004_WEEKS[n - 1];
+      if (!w) return;
+      roadmapNodes.forEach(function (btn) {
+        btn.classList.toggle('is-active', Number(btn.dataset.week) === n);
+      });
+      if (previewNum) previewNum.textContent = n < 10 ? '0' + n : String(n);
+      if (previewTitle) previewTitle.textContent = w.title;
+      if (previewTopics) previewTopics.textContent = w.topics;
+      if (previewCta) {
+        if (w.path) {
+          previewCta.setAttribute('href', w.path);
+          previewCta.classList.remove('is-disabled');
+          previewCta.innerHTML = 'Học ngay <span>›</span>';
+        } else {
+          previewCta.removeAttribute('href');
+          previewCta.classList.add('is-disabled');
+          previewCta.innerHTML = 'Sẽ cập nhật <span>›</span>';
+        }
+      }
+    }
+
+    roadmapNodes.forEach(function (btn) {
+      btn.addEventListener('click', function () { selectWeek(Number(btn.dataset.week)); });
+    });
+    if (roadmapNodes.length) selectWeek(1);
   </script>
 </body>
 </html>

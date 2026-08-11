@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Tuần 2 - Bảo mật Danh tính và An toàn Dữ liệu Tài chính: Cryptography, Digital Signature, ZKP, Smart Contract Event Logs & Access Control, AI phát hiện gian lận eKYC.">
+  <title>Tuần 2 · Bảo mật Danh tính & An toàn Dữ liệu Tài chính - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=18">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=29">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-2.html" class="active">VI</a><a href="../../en/courses/is355/week-2.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS355 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS355</a><span>/</span>Tuần 2</p>
+
+    <div class="week-header">
+      <span class="week-tag">TUẦN 02 · IDENTITY SECURITY &amp; DATA PROTECTION</span>
+      <h1>Bảo mật Danh tính &amp; An toàn Dữ liệu Tài chính</h1>
+      <div class="week-meta"><span>Cryptography</span><span>Digital Signature</span><span>ZKP</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hiểu các nền tảng mật mã học được sử dụng trong Blockchain, cơ chế chữ ký số và xác thực giao dịch; thực hành xây dựng Smart Contract có Event Logs và Access Control bằng Vyper/Ape Framework; đồng thời nghiên cứu ứng dụng Zero-Knowledge Proof (ZKP) và AI trong eKYC/bảo mật dữ liệu tài chính.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS355">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html" class="active">Tuần 2</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 3 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 4 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 5 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 7 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Project Lab <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 2">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#bao-mat-danh-tinh" data-toc><b>01</b> Bảo mật danh tính</a>
+        <a href="#cia-model" data-toc><b>02</b> CIA Model</a>
+        <a href="#ma-hoa" data-toc><b>03</b> Mã hóa đối xứng/bất đối xứng</a>
+        <a href="#khoa-dia-chi" data-toc><b>04</b> Khóa &amp; địa chỉ Blockchain</a>
+        <a href="#hash-vs-encryption" data-toc><b>05</b> Hash vs Encryption</a>
+        <a href="#chu-ky-so" data-toc><b>06</b> Chữ ký số</a>
+        <a href="#zkp" data-toc><b>07</b> Zero-Knowledge Proof</a>
+        <a href="#thuc-hanh-chu-ky" data-toc><b>08</b> Thực hành: Chữ ký số</a>
+        <a href="#thuc-hanh-smart-contract" data-toc><b>09</b> Thực hành: Smart Contract</a>
+        <a href="#thuc-hanh-deploy" data-toc><b>10</b> Thực hành: Deploy</a>
+        <a href="#data-research" data-toc><b>11</b> Data &amp; Research</a>
+        <a href="#bai-tap" data-toc><b>12</b> Bài tập</a>
+        <a href="#thao-luan" data-toc><b>13</b> Câu hỏi thảo luận</a>
+        <a href="#checklist" data-toc><b>14</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Bao mat danh tinh -->
+        <section class="lesson-section" id="bao-mat-danh-tinh">
+          <p class="eyebrow">01 · PHẦN A - LÝ THUYẾT &amp; NỀN TẢNG MẬT MÃ HỌC</p>
+          <h2>Bài toán bảo mật danh tính trong tài chính số</h2>
+          <p>Các hệ thống tài chính xử lý nhiều thông tin nhạy cảm (họ tên, CCCD, tài khoản, hồ sơ tín dụng). Quy trình eKYC thông thường:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Khách hàng</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Cung cấp thông tin</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">eKYC</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Xác minh</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Mở tài khoản / Giao dịch</span>
+          </div>
+          <div class="inline-warning">Nếu bị đánh cắp danh tính, kẻ gian có thể giả mạo hồ sơ, rửa tiền hoặc chiếm đoạt tài sản.</div>
+        </section>
+
+        <!-- 02 - CIA Model -->
+        <section class="lesson-section" id="cia-model">
+          <p class="eyebrow">02 · CIA MODEL</p>
+          <h2>Ba trụ cột bảo mật dữ liệu (CIA Model)</h2>
+          <ul>
+            <li><strong>Confidentiality (Tính bí mật):</strong> Chỉ người có quyền mới được xem (giải pháp: Encryption).</li>
+            <li><strong>Integrity (Tính toàn vẹn):</strong> Dữ liệu không bị chỉnh sửa trái phép (giải pháp: Hash).</li>
+            <li><strong>Authentication (Xác thực):</strong> Xác định danh tính người thực hiện hành động (giải pháp: Digital Signature).</li>
+          </ul>
+        </section>
+
+        <!-- 03 - Ma hoa doi xung/bat doi xung -->
+        <section class="lesson-section" id="ma-hoa">
+          <p class="eyebrow">03 · MÃ HÓA ĐỐI XỨNG &amp; BẤT ĐỐI XỨNG</p>
+          <h2>Mã hóa đối xứng vs Mã hóa bất đối xứng</h2>
+          <h3>Mã hóa đối xứng (Symmetric)</h3>
+          <p>Dùng chung 1 khóa để mã hóa và giải mã (ví dụ: AES). Tốc độ nhanh nhưng gặp bài toán khó khăn trong chia sẻ khóa an toàn.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Plaintext</span>
+            <span class="flow-arrow">↓ Encryption + Key</span>
+            <span class="flow-box">Ciphertext</span>
+            <span class="flow-arrow">↓ Decryption + Same Key</span>
+            <span class="flow-box">Plaintext</span>
+          </div>
+          <h3>Mã hóa bất đối xứng (Asymmetric)</h3>
+          <p>Dùng cặp khóa <strong>Public Key</strong> (chia sẻ công khai) và <strong>Private Key</strong> (giữ bí mật tuyệt đối).</p>
+        </section>
+
+        <!-- 04 - Khoa & dia chi Blockchain -->
+        <section class="lesson-section" id="khoa-dia-chi">
+          <p class="eyebrow">04 · KHÓA &amp; ĐỊA CHỈ TRONG BLOCKCHAIN</p>
+          <h2>Khóa &amp; Địa chỉ trong Blockchain</h2>
+          <div class="flow-diagram">
+            <span class="flow-box">Private Key</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Public Key</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Wallet Address</span>
+          </div>
+          <p><strong>Private Key</strong> chứng minh quyền sở hữu và dùng để ký giao dịch.</p>
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy tắc vàng</h3>
+            <p>Không commit Private Key lên GitHub, không dán vào source code công khai. Trong môn học chỉ dùng Testnet/Local node (Ganache/Geth).</p>
+          </div>
+        </section>
+
+        <!-- 05 - Hash vs Encryption -->
+        <section class="lesson-section" id="hash-vs-encryption">
+          <p class="eyebrow">05 · HASH VS ENCRYPTION</p>
+          <h2>Hàm Hash &amp; phân biệt Encryption vs Hash</h2>
+          <p>Hash là hàm một chiều biến dữ liệu thành chuỗi có độ dài cố định (ví dụ: SHA-256).</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Đặc điểm</th><th>Encryption</th><th>Hash</th></tr>
+            <tr><td>Mục đích</td><td>Bảo mật nội dung dữ liệu</td><td>Kiểm tra tính toàn vẹn (Integrity)</td></tr>
+            <tr><td>Giải mã ngược</td><td>Có (nếu có Key)</td><td>Không thể (hàm một chiều)</td></tr>
+            <tr><td>Sử dụng Key</td><td>Có</td><td>Không bắt buộc</td></tr>
+            <tr><td>Ứng dụng tiêu biểu</td><td>AES, RSA</td><td>SHA-256, Keccak-256</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 06 - Chu ky so -->
+        <section class="lesson-section" id="chu-ky-so">
+          <p class="eyebrow">06 · DIGITAL SIGNATURE</p>
+          <h2>Chữ ký số (Digital Signature)</h2>
+          <p>Chữ ký số dùng Private Key để ký lên Message Digest (Hash của dữ liệu). Người nhận dùng Public Key để xác minh (Verify).</p>
+          <div class="inline-ok"><strong>Khác biệt cốt lõi:</strong> Encryption để giấu thông tin; Digital Signature để xác minh người ký &amp; đảm bảo tính toàn vẹn.</div>
+          <p>Luồng giao dịch Blockchain:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Create Tx</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Sign with Private Key</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Broadcast</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Network Verifies Signature</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Accept / Reject</span>
+          </div>
+        </section>
+
+        <!-- 07 - ZKP -->
+        <section class="lesson-section" id="zkp">
+          <p class="eyebrow">07 · ZERO-KNOWLEDGE PROOF</p>
+          <h2>Zero-Knowledge Proof (ZKP)</h2>
+          <div class="definition">ZKP cho phép <strong>Prover</strong> chứng minh cho <strong>Verifier</strong> rằng một mệnh đề là đúng mà không tiết lộ thông tin bí mật đằng sau nó.</div>
+          <div class="flow-diagram">
+            <span class="flow-box">Prover</span>
+            <span class="flow-arrow">↓ Proof</span>
+            <span class="flow-box">Verifier</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Valid / Invalid</span>
+          </div>
+          <div class="inline-ok"><strong>Ứng dụng ZKP + ESG:</strong> Doanh nghiệp chứng minh đạt <code>ESG Score ≥ 80</code> cho ngân hàng/auditor mà không làm lộ báo cáo vận hành, chi phí, và dữ liệu sản xuất nội bộ.</div>
+        </section>
+
+        <!-- 08 - Thuc hanh: Chu ky so -->
+        <section class="lesson-section" id="thuc-hanh-chu-ky">
+          <p class="eyebrow">08 · PHẦN B - THỰC HÀNH LAB</p>
+          <h2>Thực hành 1: Tạo &amp; Xác thực chữ ký số (Python Cryptography)</h2>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives import hashes
+from cryptography.exceptions import InvalidSignature
+
+# 1. Tạo cặp khóa SECP256K1 (chuẩn Ethereum)
+private_key = ec.generate_private_key(ec.SECP256K1())
+public_key = private_key.public_key()
+
+# 2. Ký thông điệp (Sign)
+message = b"Transfer 100 ETH to Alice"
+signature = private_key.sign(message, ec.ECDSA(hashes.SHA256()))
+
+# 3. Xác minh chữ ký (Verify)
+try:
+    public_key.verify(signature, message, ec.ECDSA(hashes.SHA256()))
+    print("Signature Valid")
+except InvalidSignature:
+    print("Signature Invalid")
+
+# 4. Thử sửa đổi dữ liệu, chữ ký lập tức thất bại
+tampered_message = b"Transfer 1000 ETH to Alice"
+try:
+    public_key.verify(signature, tampered_message, ec.ECDSA(hashes.SHA256()))
+except InvalidSignature:
+    print("Alert: Message was tampered! Signature Invalid.")</code></pre></div>
+          <div class="inline-warning">Sinh viên cần giải thích: tại sao chỉ thay đổi nội dung <code>message</code> nhưng chữ ký cũ không còn hợp lệ? Đây chính là cách kết nối Hash → Digital Signature → Integrity.</div>
+        </section>
+
+        <!-- 09 - Thuc hanh: Smart Contract -->
+        <section class="lesson-section" id="thuc-hanh-smart-contract">
+          <p class="eyebrow">09 · THỰC HÀNH: SMART CONTRACT</p>
+          <h2>Thực hành 2: Smart Contract ESGCertificate với Event Logs &amp; Access Control (Vyper)</h2>
+          <p>Viết file <code>contracts/ESGCertificate.vy</code> hỗ trợ phân quyền Admin, Company, Auditor và phát ra Event:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.3.9
+
+event DataSubmitted:
+    company: indexed(address)
+    score: uint256
+
+event CertificateVerified:
+    company: indexed(address)
+    auditor: indexed(address)
+    approved: bool
+
+admin: public(address)
+auditors: public(HashMap[address, bool])
+esg_scores: public(HashMap[address, uint256])
+is_verified: public(HashMap[address, bool])
+
+@external
+def __init__():
+    self.admin = msg.sender
+
+@external
+def add_auditor(auditor_address: address):
+    assert msg.sender == self.admin, "Only Admin can add auditor"
+    self.auditors[auditor_address] = True
+
+@external
+def submit_esg_data(score: uint256):
+    self.esg_scores[msg.sender] = score
+    log DataSubmitted(msg.sender, score)
+
+@external
+def verify_certificate(company: address, approved: bool):
+    assert self.auditors[msg.sender] == True, "Only Auditor can verify"
+    self.is_verified[company] = approved
+    log CertificateVerified(company, msg.sender, approved)</code></pre></div>
+        </section>
+
+        <!-- 10 - Thuc hanh: Deploy -->
+        <section class="lesson-section" id="thuc-hanh-deploy">
+          <p class="eyebrow">10 · THỰC HÀNH: DEPLOY &amp; KIỂM THỬ</p>
+          <h2>Thực hành 3: Deploy &amp; kiểm thử với Ape Framework và Geth Local</h2>
+          <p>Bước 1 - Khởi động local node Geth:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">geth --dev --http --http.api eth,web3,net --ipcpath /tmp/geth.ipc</code></pre></div>
+          <p>Bước 2 - Biên dịch hợp đồng:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">ape compile</code></pre></div>
+          <p>Bước 3 - Script triển khai &amp; tương tác <code>scripts/deploy_esg.py</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from ape import accounts, project
+
+def main():
+    # Load account đã import sẵn trong Ape
+    dev = accounts.load("is355_")
+    dev.set_autosign(True, passphrase="your_passphrase")
+
+    # Deploy contract
+    esg_contract = dev.deploy(project.ESGCertificate)
+    print(f"Contract deployed at: {esg_contract.address}")
+
+    # Submit ESG Data
+    tx = esg_contract.submit_esg_data(85, sender=dev)
+    print(f"ESG Data submitted. Tx hash: {tx.tx_hash}")</code></pre></div>
+          <p>Bước 4 - Chạy script triển khai:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">ape run deploy_esg --network ethereum:local:http://127.0.0.1:8545</code></pre></div>
+        </section>
+
+        <!-- 11 - Data & Research -->
+        <section class="lesson-section" id="data-research">
+          <p class="eyebrow">11 · PHẦN C - DATA &amp; RESEARCH</p>
+          <h2>Hai hướng nghiên cứu của Tuần 2</h2>
+
+          <h3>Hướng 1 - ZKP trong xác thực tiêu chuẩn ESG</h3>
+          <p>Bài toán: chứng minh <code>ESG Score ≥ Threshold</code> mà không làm tiết lộ dữ liệu doanh thu, lượng phát thải thực tế.</p>
+          <ul>
+            <li><strong>RQ1:</strong> Làm sao thiết lập circuit ZKP (zk-SNARKs) để xác minh chỉ số ESG mà không lộ input?</li>
+            <li><strong>RQ2:</strong> Tốn bao nhiêu gas chi phí để Verify Proof trên Smart Contract Ethereum?</li>
+          </ul>
+
+          <h3>Hướng 2 - AI phát hiện gian lận eKYC (eKYC Fraud Detection)</h3>
+          <p>Dataset đặc trưng (Features):</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Feature</th><th>Kiểu dữ liệu</th><th>Ý nghĩa</th></tr>
+            <tr><td><code>Document_Match_Score</code></td><td>float</td><td>Độ khớp ảnh giấy tờ</td></tr>
+            <tr><td><code>Face_Match_Score</code></td><td>float</td><td>Độ khớp khuôn mặt</td></tr>
+            <tr><td><code>IP_Risk_Score</code></td><td>float</td><td>Mức độ rủi ro IP</td></tr>
+            <tr><td><code>Device_Count</code></td><td>int</td><td>Số tài khoản tạo trên cùng 1 thiết bị</td></tr>
+            <tr><td><code>Target (Fraud)</code></td><td>0 / 1</td><td>0 = Hợp lệ, 1 = Gian lận</td></tr>
+          </table></div>
+          <p>Pipeline &amp; đánh giá: mô hình đề xuất Random Forest / XGBoost. Metric chính: <strong>Recall</strong> (ưu tiên hạn chế tối đa việc bỏ sót gian lận) và <strong>PR-AUC</strong>.</p>
+          <div class="inline-warning"><strong>Mô hình AI + Blockchain Hybrid:</strong> Lưu trữ ảnh/dữ liệu eKYC nhạy cảm Off-chain (IPFS/Encrypted DB). Chỉ lưu <code>Hash(eKYC_Data)</code> và <code>Proof_Status</code> lên Blockchain để tránh vi phạm quyền riêng tư dữ liệu cá nhân.</div>
+        </section>
+
+        <!-- 12 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">12 · PHẦN D - BÀI TẬP VỀ NHÀ &amp; LÀM TẠI LỚP</p>
+          <h2>Bài tập về nhà</h2>
+
+          <h3>Bài 1 - Cryptography</h3>
+          <p>Phân biệt mã hóa đối xứng, bất đối xứng và Hash. Cho ví dụ thực tế trong ngân hàng.</p>
+
+          <h3>Bài 2 - Smart Contract Access Control</h3>
+          <p>Mở rộng contract <code>DebtBook.vy</code> từ bài Lab tuần trước:</p>
+          <ul>
+            <li>Thêm chức năng phân quyền <code>owner</code></li>
+            <li>Thêm Event <code>DebtAdded(debtor, amount)</code></li>
+            <li>Kiểm thử bằng script Python qua Ape Framework</li>
+          </ul>
+
+          <h3>Bài 3 - Research Proposal</h3>
+          <p>Chọn 1 trong 2 hướng nghiên cứu (ZKP + ESG hoặc AI + eKYC). Viết mô tả 1 trang bao gồm: Problem, Input/Output, Model/Algorithm, và Metric đánh giá.</p>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy định về bài làm</h3>
+            <p>Tuyệt đối không sao chép hoặc sử dụng bài làm của sinh viên khác để nộp bài. Sinh viên cần nghiêm túc thực hiện bài tập của mình.</p>
+          </div>
+        </section>
+
+        <!-- 13 - Cau hoi thao luan -->
+        <section class="lesson-section" id="thao-luan">
+          <p class="eyebrow">13 · CÂU HỎI THẢO LUẬN TRÊN LỚP</p>
+          <h2>Câu hỏi thảo luận</h2>
+          <ol>
+            <li>Tại sao không nên lưu trực tiếp ảnh chụp CCCD/Passport lên Public Blockchain?</li>
+            <li>Nếu kẻ gian đánh cắp được Private Key của một tài khoản Admin, hệ thống Smart Contract Access Control có bị vô hiệu hóa hoàn toàn không? Vì sao?</li>
+          </ol>
+        </section>
+
+        <!-- 14 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">14 · CHECKLIST HOÀN THÀNH TUẦN 2</p>
+          <h2>Tự kiểm tra</h2>
+          <ul class="lesson-checklist">
+            <li>Hiểu bản chất Chữ ký số và cặp khóa Public/Private Key</li>
+            <li>Thực hành thành công tạo và xác thực Digital Signature bằng Python</li>
+            <li>Viết, biên dịch và deploy Smart Contract chứa Event &amp; Access Control bằng Ape/Geth</li>
+            <li>Xây dựng bài toán nghiên cứu ứng dụng ZKP hoặc AI Fraud Detection trong eKYC</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần học">
+          <a href="week-1.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 1: Tổng quan Tài chính Xanh &amp; Cơ sở Blockchain</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 3 (sắp mở)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="bao-mat-danh-tinh"><b>○</b> Bảo mật danh tính</li>
+            <li data-section="cia-model"><b>○</b> CIA Model</li>
+            <li data-section="ma-hoa"><b>○</b> Mã hóa đối xứng/bất đối xứng</li>
+            <li data-section="khoa-dia-chi"><b>○</b> Khóa &amp; địa chỉ</li>
+            <li data-section="hash-vs-encryption"><b>○</b> Hash vs Encryption</li>
+            <li data-section="chu-ky-so"><b>○</b> Chữ ký số</li>
+            <li data-section="zkp"><b>○</b> Zero-Knowledge Proof</li>
+            <li data-section="thuc-hanh-chu-ky"><b>○</b> Thực hành: Chữ ký số</li>
+            <li data-section="thuc-hanh-smart-contract"><b>○</b> Thực hành: Smart Contract</li>
+            <li data-section="thuc-hanh-deploy"><b>○</b> Thực hành: Deploy</li>
+            <li data-section="data-research"><b>○</b> Data &amp; Research</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập</li>
+            <li data-section="thao-luan"><b>○</b> Thảo luận</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Không commit Private Key lên GitHub - Chỉ dùng Testnet/Local node để thực hành.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=12"></script>
+</body>
+</html>

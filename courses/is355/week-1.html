@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IS355 Tuần 1 - Blockchain Fundamentals: khái niệm, đặc điểm, thành phần cơ bản và cơ chế hoạt động của Blockchain.">
-  <title>Tuần 1 · Blockchain Fundamentals - IS355</title>
+  <meta name="description" content="IS355 Buổi 1 - Tổng quan Tài chính Xanh và Cơ sở Blockchain: ESG, Tín chỉ Carbon, kiến trúc Blockchain, mật mã học, PoW/PoS, thực hành Python/Web3.py, Smart Contract Vyper v0.4.3 và định hướng nghiên cứu Carbon Footprint.">
+  <title>Buổi 1 · Tổng quan Tài chính Xanh & Cơ sở Blockchain - IS355</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
   <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
@@ -23,157 +23,384 @@
   </header>
 
   <main class="course-shell">
-    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS355</a><span>/</span>Tuần 1</p>
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS355</a><span>/</span>Buổi 1</p>
 
     <div class="week-header">
-      <span class="week-tag">CHUYÊN ĐỀ 01 · BLOCKCHAIN FUNDAMENTALS</span>
-      <h1>Blockchain Fundamentals</h1>
-      <div class="week-meta"><span>Blockchain</span><span>Tài chính - Ngân hàng</span></div>
-      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hiểu khái niệm Blockchain, phân biệt Blockchain với cơ sở dữ liệu truyền thống, và nắm được các thành phần cùng cơ chế hoạt động cơ bản của Blockchain.</p>
+      <span class="week-tag">BUỔI 01 · GREEN FINANCE &amp; BLOCKCHAIN</span>
+      <h1>Tổng quan Tài chính Xanh &amp; Cơ sở Blockchain</h1>
+      <div class="week-meta"><span>ESG</span><span>Cryptography</span><span>Vyper v0.4.3</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hiểu rõ mối liên hệ giữa tài chính xanh, ESG, tín chỉ Carbon và công nghệ Blockchain; làm quen với kiến trúc Blockchain (PoW, PoS, Cryptography); thiết lập môi trường phát triển (Python, Web3.py, Vyper) và nhận diện nguồn dữ liệu On-chain phục vụ nghiên cứu Carbon Footprint.</p>
     </div>
 
     <nav class="course-nav" aria-label="Điều hướng IS355">
       <a href="index.html">Tổng quan</a>
-      <a href="week-1.html" class="active">Tuần 1</a>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 2 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 3 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 4 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 5 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <a href="week-1.html" class="active">Buổi 1</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Buổi 2 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Buổi 3 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Buổi 4 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Buổi 5 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Buổi 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Buổi 7 <small>Sắp mở</small></span>
       <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Project Lab <small>Sắp mở</small></span>
     </nav>
 
     <div class="lesson-layout">
-      <nav class="lesson-toc" aria-label="Mục lục Tuần 1">
-        <span class="side-label">TRONG TUẦN NÀY</span>
-        <a href="#blockchain-la-gi" data-toc><b>01</b> Blockchain là gì?</a>
-        <a href="#dac-diem" data-toc><b>02</b> Đặc điểm</a>
-        <a href="#thanh-phan" data-toc><b>03</b> Thành phần cơ bản</a>
-        <a href="#co-che" data-toc><b>04</b> Cơ chế hoạt động</a>
-        <a href="#bai-tap" data-toc><b>05</b> Bài tập</a>
-        <a href="#checklist" data-toc><b>06</b> Checklist</a>
+      <nav class="lesson-toc" aria-label="Mục lục Buổi 1">
+        <span class="side-label">TRONG BUỔI NÀY</span>
+        <a href="#boi-canh" data-toc><b>01</b> Bối cảnh &amp; ESG</a>
+        <a href="#tai-chinh-xanh" data-toc><b>02</b> Tài chính xanh &amp; Dữ liệu</a>
+        <a href="#carbon-credit" data-toc><b>03</b> Tín chỉ Carbon</a>
+        <a href="#blockchain-co-so" data-toc><b>04</b> Blockchain &amp; Mật mã học</a>
+        <a href="#thuc-hanh-moi-truong" data-toc><b>05</b> Thiết lập môi trường</a>
+        <a href="#demo-crypto" data-toc><b>06</b> Demo mật mã học</a>
+        <a href="#ket-noi-testnet" data-toc><b>07</b> Kết nối Testnet</a>
+        <a href="#vyper-co-ban" data-toc><b>08</b> Vyper: Cú pháp cơ bản</a>
+        <a href="#vyper-mutability" data-toc><b>09</b> Vyper: Mutability</a>
+        <a href="#vyper-event" data-toc><b>10</b> Vyper: Event Logging</a>
+        <a href="#data-research" data-toc><b>11</b> Data &amp; Research</a>
+        <a href="#bai-tap" data-toc><b>12</b> Bài tập về nhà</a>
+        <a href="#checklist" data-toc><b>13</b> Checklist</a>
       </nav>
 
       <div class="lesson-content">
 
-        <!-- 01 - Blockchain la gi -->
-        <section class="lesson-section" id="blockchain-la-gi">
-          <p class="eyebrow">01 · BLOCKCHAIN LÀ GÌ?</p>
-          <h2>Blockchain là gì?</h2>
-          <div class="definition"><strong>Blockchain</strong> là một cấu trúc dữ liệu dạng chuỗi các khối (block), được lưu trữ và đồng bộ trên nhiều máy tính (node) trong một mạng phân tán. Mỗi block chứa dữ liệu giao dịch và được liên kết với block trước bằng một giá trị hash, khiến dữ liệu đã ghi nhận rất khó bị thay đổi.</div>
-
-          <h3>Vì sao Blockchain xuất hiện?</h3>
-          <p>Trước Blockchain, các giao dịch (chuyển tiền, mua bán, xác nhận quyền sở hữu...) thường phải phụ thuộc vào một bên trung gian đáng tin cậy - Ví dụ ngân hàng - Để xác nhận và lưu trữ. Blockchain xuất hiện (khởi đầu với Bitcoin, giới thiệu năm 2008) nhằm giải quyết bài toán: làm sao hai bên không quen biết nhau (trustless) có thể giao dịch trực tiếp, mà không cần một bên trung gian duy nhất kiểm soát toàn bộ dữ liệu, trong khi giao dịch vẫn được xác thực và không thể giả mạo.</p>
-
-          <h3>Blockchain giải quyết vấn đề gì?</h3>
-          <p>Hai vấn đề cốt lõi: <strong>double-spending</strong> (chi tiêu hai lần cùng một tài sản số) và <strong>niềm tin giữa các bên không quen biết</strong>. Thay vì cần một trọng tài trung tâm, Blockchain dùng sự đồng thuận của nhiều node trong mạng để xác nhận giao dịch là hợp lệ và duy nhất.</p>
-
-          <h3>Blockchain khác gì với Database truyền thống?</h3>
-          <p>Sự khác biệt nằm ở nhiều khía cạnh: <strong>ai quản lý dữ liệu</strong> (một hệ thống trung tâm hay nhiều node phân tán), <strong>khả năng sửa/xóa dữ liệu</strong> đã ghi nhận, <strong>ai có quyền kiểm soát</strong> việc ghi dữ liệu mới, <strong>khả năng audit</strong> (lịch sử giao dịch có sẵn hay cần xây dựng thêm), và <strong>tốc độ xử lý</strong> (phụ thuộc cơ chế đồng thuận thay vì chỉ phụ thuộc phần cứng). Bài tập 1 cuối tuần sẽ yêu cầu tự lập bảng so sánh chi tiết.</p>
-        </section>
-
-        <!-- 02 - Dac diem -->
-        <section class="lesson-section" id="dac-diem">
-          <p class="eyebrow">02 · ĐẶC ĐIỂM CỦA BLOCKCHAIN</p>
-          <h2>Đặc điểm của Blockchain</h2>
-          <div class="ascii-block">Blockchain
-│
-├── Decentralization
-├── Transparency
-├── Immutability
-├── Security
-└── Traceability</div>
-
-          <h3>Decentralization - Phân tán</h3>
-          <p>Không có một điểm kiểm soát trung tâm duy nhất. Dữ liệu được sao chép và đồng bộ trên nhiều node, mỗi node đều giữ một bản sao đầy đủ (hoặc gần đầy đủ) của Blockchain.</p>
-
-          <h3>Transparency - Minh bạch</h3>
-          <p>Mọi giao dịch được ghi nhận công khai trong mạng (tùy loại Blockchain là public hay private) và có thể được các node kiểm tra, đối chiếu.</p>
-
-          <h3>Immutability - Bất biến</h3>
-          <p>Dữ liệu đã ghi vào block rất khó bị sửa đổi, vì mỗi block chứa hash của block trước nó. Chỉ cần thay đổi dữ liệu ở một block, hash của block đó sẽ thay đổi, khiến toàn bộ các block phía sau không còn khớp - Mạng sẽ phát hiện ra sự bất thường.</p>
-
-          <h3>Security - Bảo mật</h3>
-          <p>Sử dụng các kỹ thuật mã hóa - Hash function, chữ ký số (digital signature) - Để đảm bảo giao dịch là xác thực và không bị giả mạo trong quá trình truyền đi.</p>
-
-          <h3>Traceability - Có thể truy vết</h3>
-          <p>Toàn bộ lịch sử giao dịch được lưu lại đầy đủ trên chuỗi, cho phép truy lại nguồn gốc và đường đi của một tài sản hoặc giao dịch bất kỳ lúc nào.</p>
-        </section>
-
-        <!-- 03 - Thanh phan co ban -->
-        <section class="lesson-section" id="thanh-phan">
-          <p class="eyebrow">03 · THÀNH PHẦN CƠ BẢN</p>
-          <h2>Thành phần cơ bản</h2>
-          <div class="ascii-block">Transaction
-     ↓
-Block
-     ↓
-Hash
-     ↓
-Blockchain
-     ↓
-Network</div>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>Thành phần</th><th>Vai trò</th></tr>
-            <tr><td>Transaction</td><td>Đơn vị dữ liệu ghi nhận một hành động, ví dụ một lần chuyển tiền</td></tr>
-            <tr><td>Block</td><td>Tập hợp nhiều transaction cùng với metadata (thời gian, hash của block trước...)</td></tr>
-            <tr><td>Hash</td><td>Giá trị số hóa duy nhất đại diện cho nội dung một block, dùng để liên kết các block với nhau</td></tr>
-            <tr><td>Blockchain</td><td>Chuỗi các block được liên kết với nhau thông qua hash</td></tr>
-            <tr><td>Network</td><td>Tập hợp các node cùng duy trì, xác thực và đồng bộ toàn bộ Blockchain</td></tr>
-          </table></div>
-        </section>
-
-        <!-- 04 - Co che hoat dong -->
-        <section class="lesson-section" id="co-che">
-          <p class="eyebrow">04 · CƠ CHẾ HOẠT ĐỘNG</p>
-          <h2>Cơ chế hoạt động</h2>
-          <p>Một giao dịch đi qua các bước sau trước khi trở thành một phần cố định của Blockchain:</p>
-          <div class="flow-diagram">
-            <span class="flow-box">Người dùng tạo giao dịch</span>
-            <span class="flow-arrow">↓</span>
-            <span class="flow-box">Giao dịch được broadcast</span>
-            <span class="flow-arrow">↓</span>
-            <span class="flow-box">Network xác thực</span>
-            <span class="flow-arrow">↓</span>
-            <span class="flow-box">Giao dịch được đưa vào Block</span>
-            <span class="flow-arrow">↓</span>
-            <span class="flow-box">Block được xác nhận</span>
-            <span class="flow-arrow">↓</span>
-            <span class="flow-box">Block được thêm vào Blockchain</span>
-            <span class="flow-arrow">↓</span>
-            <span class="flow-box">Các node cập nhật dữ liệu</span>
-          </div>
-          <div class="inline-ok"><strong>Ghi nhớ:</strong> Một giao dịch chỉ được xem là hoàn tất khi block chứa nó đã được xác nhận và thêm vào Blockchain - Trước đó, giao dịch vẫn có thể bị loại bỏ nếu không đạt được đồng thuận của mạng.</div>
-        </section>
-
-        <!-- 05 - Bai tap -->
-        <section class="lesson-section" id="bai-tap">
-          <p class="eyebrow">05 · BÀI TẬP THỰC HÀNH</p>
-          <h2>Bài tập Tuần 1</h2>
-
-          <h3>Bài 1 - Blockchain vs Database</h3>
-          <p>Tự lập bảng so sánh Database truyền thống và Blockchain theo các tiêu chí sau (điền vào các ô còn trống):</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>Tiêu chí</th><th>Database</th><th>Blockchain</th></tr>
-            <tr><td>Quản lý</td><td></td><td></td></tr>
-            <tr><td>Dữ liệu</td><td></td><td></td></tr>
-            <tr><td>Quyền kiểm soát</td><td></td><td></td></tr>
-            <tr><td>Audit</td><td></td><td></td></tr>
-            <tr><td>Tốc độ</td><td></td><td></td></tr>
-          </table></div>
-
-          <h3>Bài 2 - Phân tích</h3>
-          <p>Trả lời: Tại sao ngân hàng vẫn sử dụng Database truyền thống cho phần lớn nghiệp vụ, nhưng có thể ứng dụng Blockchain trong một số nghiệp vụ cụ thể?</p>
-
-          <h3>Bài 3 - Tìm ứng dụng thực tế</h3>
-          <p>Tìm một ứng dụng Blockchain thực tế (ví dụ trong tài chính, chuỗi cung ứng, y tế...) và phân tích theo 5 yếu tố:</p>
+        <!-- 01 - Boi canh & ESG -->
+        <section class="lesson-section" id="boi-canh">
+          <p class="eyebrow">01 · PHẦN A - LÝ THUYẾT</p>
+          <h2>Bối cảnh: Tài chính hướng đến phát triển bền vững (ESG)</h2>
+          <p>Hoạt động tài chính hiện đại không chỉ tập trung vào lợi nhuận mà còn đánh giá tác động của doanh nghiệp đến môi trường, xã hội và quản trị.</p>
           <ul>
-            <li>Bài toán mà ứng dụng đó giải quyết</li>
-            <li>Người tham gia (actors)</li>
-            <li>Dữ liệu được lưu trên Blockchain</li>
-            <li>Lợi ích khi dùng Blockchain</li>
-            <li>Hạn chế còn tồn tại</li>
+            <li><strong>E (Environmental):</strong> Môi trường, phát thải Carbon, năng lượng, biến đổi khí hậu <em>(trọng tâm môn học IS355)</em>.</li>
+            <li><strong>S (Social):</strong> Người lao động, cộng đồng, quyền lợi khách hàng.</li>
+            <li><strong>G (Governance):</strong> Quản trị, minh bạch, đạo đức kinh doanh, kiểm soát rủi ro.</li>
           </ul>
+        </section>
+
+        <!-- 02 - Tai chinh xanh & Data -->
+        <section class="lesson-section" id="tai-chinh-xanh">
+          <p class="eyebrow">02 · TÀI CHÍNH XANH &amp; BÀI TOÁN DỮ LIỆU</p>
+          <h2>Tài chính xanh &amp; Bài toán Dữ liệu (ESG Data)</h2>
+          <div class="definition"><strong>Tài chính xanh (Green Finance)</strong> là việc sử dụng các nguồn lực tài chính để hỗ trợ những hoạt động có tác động tích cực hoặc giảm tác động tiêu cực đến môi trường (năng lượng tái tạo, giao thông xanh, giảm phát thải Carbon).</div>
+          <div class="flow-diagram">
+            <span class="flow-box">ESG Score / Dự án Xanh</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Đánh giá Rủi ro</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Quyết định Tín dụng</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Ưu đãi Lãi suất / Hạn mức</span>
+          </div>
+
+          <h3>Thách thức dữ liệu (Data Integrity &amp; Transparency)</h3>
+          <div class="inline-warning">Khi doanh nghiệp tuyên bố "Đã giảm 30% lượng phát thải Carbon", các ngân hàng và nhà đầu tư cần xác minh: dữ liệu lấy từ đâu? Có bị thay đổi không? Ai kiểm định? Blockchain đóng vai trò như một sổ cái không thể sửa đổi để giải quyết bài toán tính toàn vẹn của dữ liệu này.</div>
+        </section>
+
+        <!-- 03 - Tin chi Carbon -->
+        <section class="lesson-section" id="carbon-credit">
+          <p class="eyebrow">03 · TÍN CHỈ CARBON</p>
+          <h2>Tín chỉ Carbon (Carbon Credit)</h2>
+          <div class="definition">Tín chỉ Carbon là đơn vị đại diện cho quyền phát thải hoặc lượng khí nhà kính (1 tấn CO<sub>2</sub>) đã được giảm thiểu/loại bỏ.</div>
+          <div class="flow-diagram">
+            <span class="flow-box">Dự án Xanh</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Đo lường phát thải</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Xác minh (Audit)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Phát hành Carbon Credit</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Giao dịch / Bù trừ (Offset)</span>
+          </div>
+        </section>
+
+        <!-- 04 - Blockchain, crypto, consensus -->
+        <section class="lesson-section" id="blockchain-co-so">
+          <p class="eyebrow">04 · BLOCKCHAIN, MẬT MÃ HỌC &amp; ĐỒNG THUẬN</p>
+          <h2>Blockchain là gì? Mật mã học &amp; Cơ chế Đồng thuận</h2>
+          <div class="definition">Blockchain là một cơ sở dữ liệu chỉ cho phép ghi thêm (<strong>append-only database</strong>), bao gồm các khối (blocks) được liên kết chặt chẽ với nhau bằng các hàm băm mật mã (cryptographic hash).</div>
+          <p>Cấu trúc chuỗi khối được liên kết thông qua hash của khối trước đó (Parent Hash):</p>
+          <div class="er-side-by-side">
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th colspan="2">BLOCK 1</th></tr>
+              <tr><td>ID</td><td>1</td></tr>
+              <tr><td>Parent Hash</td><td>0x000...</td></tr>
+              <tr><td>Timestamp</td><td>1718000000</td></tr>
+              <tr><td>Transactions</td><td>[...]</td></tr>
+            </table></div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th colspan="2">BLOCK 2</th></tr>
+              <tr><td>ID</td><td>2</td></tr>
+              <tr><td>Parent Hash</td><td>Hash(B1)</td></tr>
+              <tr><td>Timestamp</td><td>1718000012</td></tr>
+              <tr><td>Transactions</td><td>[...]</td></tr>
+            </table></div>
+          </div>
+          <p class="er-relation">↓ Block 2 liên kết tới Block 1 thông qua Parent Hash = Hash(Block 1).</p>
+
+          <h3>So sánh Database truyền thống và Blockchain</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Tiêu chí</th><th>Database truyền thống</th><th>Blockchain</th></tr>
+            <tr><td>Mô hình</td><td>Tập trung (Centralized)</td><td>Phân tán (Distributed)</td></tr>
+            <tr><td>Quản lý</td><td>Một tổ chức / Admin</td><td>Mạng lưới nhiều Node</td></tr>
+            <tr><td>Sửa đổi dữ liệu</td><td>Có thể ghi đè/xóa (CRUD)</td><td>Chỉ cho phép ghi thêm (Append-only)</td></tr>
+            <tr><td>Đồng thuận (Consensus)</td><td>Không yêu cầu</td><td>Bắt buộc (PoW, PoS...)</td></tr>
+            <tr><td>Tính minh bạch &amp; Audit</td><td>Phụ thuộc vào Log hệ thống</td><td>Minh bạch, mã hóa công khai</td></tr>
+          </table></div>
+          <div class="inline-warning"><strong>Nguyên tắc thiết kế hệ thống:</strong> Không áp dụng Blockchain chỉ vì xu hướng. Phải xuất phát từ <code>Problem Statement</code> → <code>Requirement Analysis</code> → <code>Blockchain Suitability</code>.</div>
+
+          <h3>Mật mã khóa bất đối xứng &amp; Chữ ký số (Digital Signatures)</h3>
+          <p>Xác thực người dùng dựa trên cặp khóa: <strong>Private Key</strong> (giữ bí mật để ký giao dịch) và <strong>Public Key</strong> (công khai để mạng lưới xác thực).</p>
+          <div class="ascii-block">Message + Private Key → Digital Signature
+Signature + Message + Public Key → Verification (True / False)</div>
+
+          <h3>PoW vs PoS &amp; Tác động môi trường</h3>
+          <ul>
+            <li><strong>Proof of Work (PoW):</strong> Dùng năng lực tính toán (Mining) để giải bài toán mật mã. Độ an toàn cao nhưng tiêu thụ điện năng rất lớn.</li>
+            <li><strong>Proof of Stake (PoS):</strong> Dùng tài sản thế chấp (Stake) để chọn Validator tạo khối. Giảm thiểu hơn 99.9% lượng điện năng tiêu thụ so với PoW.</li>
+          </ul>
+          <p>Mô hình ước tính Carbon Footprint On-chain:</p>
+          <div class="ascii-block">Carbon Emission (tCO₂e)
+        =
+Energy Consumption (kWh) × Emission Factor (kgCO₂e/kWh)</div>
+        </section>
+
+        <!-- 05 - Thiet lap moi truong -->
+        <section class="lesson-section" id="thuc-hanh-moi-truong">
+          <p class="eyebrow">05 · PHẦN B - THỰC HÀNH</p>
+          <h2>Thiết lập môi trường Python, OpenSSL &amp; Web3.py</h2>
+
+          <h3>Bước 1: Khởi tạo môi trường ảo Python</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">python3 -m venv .venv
+# Trên Windows:
+.venv\Scripts\activate
+# Trên Linux/macOS:
+source .venv/bin/activate</code></pre></div>
+
+          <h3>Bước 2: Cài đặt các thư viện cần thiết</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">pip install web3 vyper cryptography</code></pre></div>
+        </section>
+
+        <!-- 06 - Demo crypto -->
+        <section class="lesson-section" id="demo-crypto">
+          <p class="eyebrow">06 · DEMO MẬT MÃ HỌC</p>
+          <h2>Demo Mật mã học: Tạo Block &amp; Chữ ký số trong Python</h2>
+
+          <h3>Ví dụ 1: Mô phỏng tạo chuỗi liên kết Hash (Blockchain cơ bản)</h3>
+          <p>Tạo file <code>simple_chain.py</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">import hashlib
+import json
+
+class Block:
+    def __init__(self, block_id, history, parent_hash="0"):
+        self.id = block_id
+        self.history = history
+        self.parent_hash = parent_hash
+
+    def compute_hash(self):
+        block_string = json.dumps(self.__dict__, sort_keys=True)
+        return hashlib.sha256(block_string.encode('utf-8')).hexdigest()
+
+# Tạo Genesis Block
+block_A = Block(1, "Ty likes cat")
+hash_A = block_A.compute_hash()
+
+# Tạo Block kế tiếp
+block_B = Block(2, "Teo likes dog", parent_hash=hash_A)
+hash_B = block_B.compute_hash()
+
+print(f"Block A Hash: {hash_A}")
+print(f"Block B Parent Hash: {block_B.parent_hash}")</code></pre></div>
+
+          <h3>Ví dụ 2: Tạo khóa &amp; Ký chữ ký số bằng thư viện <code>cryptography</code></h3>
+          <p>Tạo file <code>digital_signature_demo.py</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import hashes, serialization
+
+# 1. Tạo cặp khóa RSA
+private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+public_key = private_key.public_key()
+
+# 2. Tạo thông điệp và ký chữ ký số
+message = b"Ty likes cat"
+signature = private_key.sign(
+    message,
+    padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),
+    hashes.SHA256()
+)
+
+# 3. Xác thực chữ ký số thành công
+try:
+    public_key.verify(
+        signature,
+        message,
+        padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),
+        hashes.SHA256()
+    )
+    print("Xác thực chữ ký hợp lệ!")
+except Exception as e:
+    print("Chữ ký KHÔNG hợp lệ!", e)</code></pre></div>
+        </section>
+
+        <!-- 07 - Ket noi Testnet -->
+        <section class="lesson-section" id="ket-noi-testnet">
+          <p class="eyebrow">07 · KẾT NỐI TESTNET</p>
+          <h2>Tương tác mạng Testnet bằng Python (web3.py)</h2>
+          <p>Tạo file <code>connect_testnet.py</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from web3 import Web3
+
+# Kết nối RPC Node (Ví dụ: Sepolia Testnet)
+rpc_url = "https://rpc.sepolia.org"
+w3 = Web3(Web3.HTTPProvider(rpc_url))
+
+if w3.is_connected():
+    print("Kết nối thành công đến Testnet!")
+    print(f"Block mới nhất: {w3.eth.block_number}")
+else:
+    print("Kết nối thất bại!")</code></pre></div>
+        </section>
+
+        <!-- 08 - Vyper co ban -->
+        <section class="lesson-section" id="vyper-co-ban">
+          <p class="eyebrow">08 · PHẦN C - SMART CONTRACT VỚI VYPER (V0.4.3)</p>
+          <h2>Vyper: Cú pháp cơ bản &amp; Kiểu dữ liệu</h2>
+          <p>Vyper là ngôn ngữ lập trình thiết kế cho EVM hướng đến tính an toàn cao, cú pháp tương tự Python. Tạo file <code>DataType.vy</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+# Kiểu dữ liệu cơ bản
+is_active: bool
+var_int: int128
+var_uint: uint256
+owner_wallet: address
+data_hash: bytes32
+author_name: String[100]
+
+# Struct & Mapping
+struct Permission:
+    write: bool
+    execute: bool
+
+my_permission: Permission
+donations: HashMap[address, uint256]
+
+@deploy
+def __init__():
+    self.is_active = True
+    self.var_uint = 100
+    self.owner_wallet = msg.sender
+    self.author_name = "IS355 Student"
+    self.my_permission = Permission(write=True, execute=False)</code></pre></div>
+        </section>
+
+        <!-- 09 - Vyper mutability -->
+        <section class="lesson-section" id="vyper-mutability">
+          <p class="eyebrow">09 · VYPER: TẦM VỰC &amp; MUTABILITY</p>
+          <h2>Vyper: Tầm vực &amp; Khả năng biến đổi (Mutability Annotations)</h2>
+          <p>Tạo file <code>Annotations.vy</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+stored_data: uint256
+
+# @pure: Không đọc, không ghi dữ liệu trạng thái
+@external
+@pure
+def add(x: uint256, y: uint256) -> uint256:
+    return x + y
+
+# @view: Chỉ đọc dữ liệu trạng thái, không thay đổi trạng thái
+@external
+@view
+def read_data() -> uint256:
+    return self.stored_data
+
+# @nonpayable: Thay đổi trạng thái nhưng KHÔNG nhận ETH
+@external
+@nonpayable
+def set_data(new_value: uint256):
+    self.stored_data = new_value
+
+# @payable: Thay đổi trạng thái và CÓ THỂ nhận ETH
+@external
+@payable
+def deposit():
+    assert msg.value > 0, "So tien gui phai lon hon 0"</code></pre></div>
+        </section>
+
+        <!-- 10 - Vyper event logging -->
+        <section class="lesson-section" id="vyper-event">
+          <p class="eyebrow">10 · VYPER: EVENT LOGGING</p>
+          <h2>Vyper: Biến môi trường &amp; Event Logging</h2>
+          <p>Tạo file <code>EventLogging.vy</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+# Khai báo sự kiện
+event CarbonCreditIssued:
+    issuer: indexed(address)
+    amount: uint256
+    timestamp: uint256
+
+@external
+@nonpayable
+def issue_credit(amount: uint256):
+    # Sử dụng các biến môi trường: msg.sender, block.timestamp
+    log CarbonCreditIssued(msg.sender, amount, block.timestamp)</code></pre></div>
+        </section>
+
+        <!-- 11 - Data & Research -->
+        <section class="lesson-section" id="data-research">
+          <p class="eyebrow">11 · PHẦN D - DATA &amp; RESEARCH</p>
+          <h2>Mô hình hóa bài toán dự báo Carbon Footprint từ dữ liệu On-chain</h2>
+          <div class="flow-diagram">
+            <span class="flow-box">On-chain Data</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data Preprocessing</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">ML Model</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Carbon Emission Prediction</span>
+          </div>
+
+          <h3>Bộ dữ liệu đề xuất (Features &amp; Target)</h3>
+          <ul>
+            <li><strong>X (Features):</strong> <code>Transaction Count</code>, <code>Active Addresses</code>, <code>Gas Used</code>, <code>Network Hashrate / Active Validators</code>.</li>
+            <li><strong>Y (Target):</strong> <code>Estimated Carbon Emission (tCO₂e)</code>.</li>
+          </ul>
+
+          <h3>Quy trình nghiên cứu khuyến nghị</h3>
+          <ol>
+            <li>Khảo sát dữ liệu lịch sử từ các nguồn On-chain Explorer (Etherscan, Green Software Foundation API)</li>
+            <li>Xây dựng Baseline Model (Linear Regression)</li>
+            <li>Thử nghiệm Traditional ML Models (Random Forest, XGBoost)</li>
+            <li>Đánh giá qua các chỉ số: MAE, RMSE, R²</li>
+          </ol>
+        </section>
+
+        <!-- 12 - Bai tap ve nha -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">12 · PHẦN E - BÀI TẬP VỀ NHÀ</p>
+          <h2>Bài tập về nhà</h2>
+
+          <h3>Bài tập lý thuyết &amp; phân tích</h3>
+          <p><strong>Bài tập 01 (Essay):</strong> Phân tích bài toán "Blockchain có phải là công nghệ phù hợp cho mọi bài toán tài chính xanh hay không?". Lấy 1 ví dụ thực tế minh họa cho lập luận (độ dài 500-800 từ).</p>
+          <p><strong>Bài tập 02 (Chữ ký số Python):</strong> Viết chương trình Python minh họa kịch bản:</p>
+          <ul>
+            <li>Nhân vật Tý tạo chữ ký số cho thông điệp <code>"Ty likes cat"</code></li>
+            <li>Nhân vật Tèo cố tình sửa thông điệp thành <code>"Ty hates cat"</code></li>
+            <li>Chạy hàm xác thực chữ ký và giải thích tại sao hệ thống phát hiện được dữ liệu bị can thiệp</li>
+          </ul>
+
+          <h3>Bài tập thực hành Smart Contract (Vyper v0.4.3)</h3>
+          <p><strong>Bài tập 03 (Storage &amp; Payable):</strong> Viết smart contract quản lý quỹ cho phép người dùng gửi ETH vào (<code>deposit</code>), tra cứu số dư cá nhân (<code>HashMap[address, uint256]</code>) và rút tiền cá nhân (<code>withdraw</code>).</p>
+          <p><strong>Bài tập 04 (Nâng cao - Document Notary / Công chứng tài liệu):</strong> Viết Smart Contract công chứng tài liệu bằng Vyper đạt các yêu cầu:</p>
+          <ul>
+            <li>Hàm <code>register_document(doc_hash: bytes32)</code>: lưu thông tin Hash, Sender, Timestamp và phát sự kiện <code>DocumentRegistered</code></li>
+            <li>Hàm <code>add_signature(doc_hash: bytes32, sig: String[256])</code>: cho phép chỉ người đăng ký đính kèm chữ ký số cho tài liệu đó và phát sự kiện <code>SignatureAdded</code></li>
+            <li>Hàm <code>verify_document(doc_hash: bytes32)</code>: tra cứu tính tồn tại và hợp lệ của tài liệu</li>
+          </ul>
+
+          <h3>Bài tập đề xuất nghiên cứu</h3>
+          <p><strong>Bài tập 05 (Research Proposal):</strong> Lập đề xuất nghiên cứu nhóm ngắn (1-2 trang) về đề tài: "Dự báo Carbon Footprint của chuỗi khối Ethereum sau chuyển đổi PoS bằng thuật toán Machine Learning". Xác định rõ Bài toán (Research Problem), Nguồn dữ liệu (Dataset), Các đặc trưng (Features) và Mô hình dự kiến.</p>
 
           <div class="warning-box">
             <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy định về bài làm</h3>
@@ -181,41 +408,22 @@ Network</div>
           </div>
         </section>
 
-        <!-- 06 - Checklist -->
+        <!-- 13 - Checklist -->
         <section class="lesson-section" id="checklist">
-          <p class="eyebrow">06 · CHECKLIST CUỐI TUẦN 1</p>
-          <h2>Tự kiểm tra kiến thức</h2>
-          <p>Sau khi hoàn thành, sinh viên nên tự kiểm tra:</p>
+          <p class="eyebrow">13 · CHECKLIST HOÀN THÀNH BUỔI 1</p>
+          <h2>Tự kiểm tra</h2>
           <ul class="lesson-checklist">
-            <li>Biết khái niệm Blockchain</li>
-            <li>Hiểu vì sao Blockchain xuất hiện</li>
-            <li>Phân biệt được Blockchain với Database truyền thống</li>
-            <li>Hiểu Decentralization</li>
-            <li>Hiểu Transparency</li>
-            <li>Hiểu Immutability</li>
-            <li>Hiểu Security</li>
-            <li>Hiểu Traceability</li>
-            <li>Biết vai trò của Transaction, Block, Hash</li>
-            <li>Hiểu cơ chế hoạt động từ giao dịch đến khi được thêm vào Blockchain</li>
+            <li>Lý thuyết: Giải thích được ESG, Tài chính xanh, Tín chỉ Carbon, kiến trúc Block/Transaction, PoW vs PoS</li>
+            <li>Môi trường: Kích hoạt môi trường ảo Python, cài đặt thành công web3, vyper, cryptography</li>
+            <li>Mật mã học: Chạy thành công mã nguồn Python về Hash chain và xác thực Chữ ký số</li>
+            <li>Vyper Contract: Biên dịch và triển khai thành công hợp đồng Vyper đơn giản trên Remix IDE hoặc môi trường cục bộ</li>
+            <li>Nghiên cứu: Lựa chọn được Research Question và tập đặc trưng cho bài toán Carbon Footprint</li>
           </ul>
-
-          <h3>Kiến thức cốt lõi cần nhớ</h3>
-          <div class="flow-diagram">
-            <span class="flow-box">TRANSACTION</span>
-            <span class="flow-arrow">↓</span>
-            <span class="flow-box">BLOCK</span>
-            <span class="flow-arrow">↓</span>
-            <span class="flow-box">HASH</span>
-            <span class="flow-arrow">↓</span>
-            <span class="flow-box">BLOCKCHAIN</span>
-            <span class="flow-arrow">↓</span>
-            <span class="flow-box">NETWORK</span>
-          </div>
         </section>
 
-        <nav class="week-nav-links" aria-label="Điều hướng tuần">
-          <a href="index.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tổng quan môn học</span></a>
-          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 2: Architecture &amp; Consensus (sắp mở)</span></span>
+        <nav class="week-nav-links" aria-label="Điều hướng buổi học">
+          <a href="index.html"><span class="nav-dir">‹ TRƯỚC</span><span class="nav-title">Tổng quan môn học</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">BUỔI TIẾP THEO ›</span><span class="nav-title">Buổi 2 (sắp mở)</span></span>
         </nav>
       </div>
 
@@ -223,11 +431,18 @@ Network</div>
         <div class="panel-box">
           <span class="side-label">BẠN ĐANG HỌC</span>
           <ul class="checklist">
-            <li data-section="blockchain-la-gi"><b>○</b> Blockchain là gì?</li>
-            <li data-section="dac-diem"><b>○</b> Đặc điểm</li>
-            <li data-section="thanh-phan"><b>○</b> Thành phần cơ bản</li>
-            <li data-section="co-che"><b>○</b> Cơ chế hoạt động</li>
-            <li data-section="bai-tap"><b>○</b> Bài tập</li>
+            <li data-section="boi-canh"><b>○</b> Bối cảnh &amp; ESG</li>
+            <li data-section="tai-chinh-xanh"><b>○</b> Tài chính xanh &amp; Dữ liệu</li>
+            <li data-section="carbon-credit"><b>○</b> Tín chỉ Carbon</li>
+            <li data-section="blockchain-co-so"><b>○</b> Blockchain &amp; Mật mã học</li>
+            <li data-section="thuc-hanh-moi-truong"><b>○</b> Thiết lập môi trường</li>
+            <li data-section="demo-crypto"><b>○</b> Demo mật mã học</li>
+            <li data-section="ket-noi-testnet"><b>○</b> Kết nối Testnet</li>
+            <li data-section="vyper-co-ban"><b>○</b> Vyper: Cú pháp cơ bản</li>
+            <li data-section="vyper-mutability"><b>○</b> Vyper: Mutability</li>
+            <li data-section="vyper-event"><b>○</b> Vyper: Event Logging</li>
+            <li data-section="data-research"><b>○</b> Data &amp; Research</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập về nhà</li>
             <li data-section="checklist"><b>○</b> Checklist</li>
           </ul>
         </div>
@@ -240,7 +455,7 @@ Network</div>
         </div>
         <div class="panel-box note-box">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
-          <span>Hãy tự lập bảng so sánh ở Bài 1 trước khi xem lại phần lý thuyết.</span>
+          <span>Vyper v0.4.3: nhớ khai báo đúng mutability (@pure/@view/@nonpayable/@payable) cho từng hàm.</span>
         </div>
       </aside>
     </div>
@@ -257,6 +472,6 @@ Network</div>
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../assets/js/main.js?v=5"></script>
-  <script src="../../assets/js/course.js?v=11"></script>
+  <script src="../../assets/js/course.js?v=12"></script>
 </body>
 </html>

@@ -71,11 +71,11 @@ safeRun(function () {
 });
 
 safeRun(function () {
-  document.querySelectorAll('.lesson-checklist').forEach((list) => {
+  document.querySelectorAll('.lesson-checklist').forEach((list, listIndex) => {
     var items = list.querySelectorAll('li');
     if (!items.length) return;
 
-    var storageKey = 'checklist:' + location.pathname;
+    var storageKey = 'checklist:' + location.pathname + (listIndex > 0 ? ':' + listIndex : '');
     var saved = {};
     try {
       saved = JSON.parse(localStorage.getItem(storageKey) || '{}');

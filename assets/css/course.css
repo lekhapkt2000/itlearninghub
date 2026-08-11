@@ -20,10 +20,6 @@
 .progress-card>span{color:var(--muted);font-size:11px}
 .progress-percent{margin-left:6px;color:var(--primary);font-size:11px;font-weight:700}
 .mini-progress b{background:linear-gradient(90deg,var(--primary),#60a5fa)}
-.status-dot{position:relative}
-.status-dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;background:var(--primary);opacity:.55;animation:status-pulse 1.8s ease-out infinite}
-@media (prefers-reduced-motion:reduce){.status-dot::after{animation:none;display:none}}
-@keyframes status-pulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.4);opacity:0}}
 
 /* Horizontal course navigation - shared across overview + week pages */
 .course-nav{position:sticky;top:76px;z-index:5;display:flex;gap:4px;overflow-x:auto;margin-top:8px;padding-bottom:0;background:var(--bg);border-bottom:1px solid var(--line)}

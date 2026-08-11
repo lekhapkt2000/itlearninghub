@@ -21,7 +21,9 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .orbit-one{width:430px;height:110px;transform:rotate(-31deg)}
 .orbit-two{width:390px;height:170px;transform:rotate(50deg)}
 .float-label{color:var(--muted);font-size:8px;letter-spacing:.13em;font-weight:800}
-.status-dot{display:inline-block;width:6px;height:6px;margin-right:5px;border-radius:50%;background:var(--primary)}
+.status-dot{position:relative;display:inline-block;width:6px;height:6px;margin-right:5px;border-radius:50%;background:var(--primary)}
+.status-dot::after{content:'';position:absolute;inset:-4px;border-radius:50%;background:var(--primary);opacity:.55;animation:status-pulse 1.8s ease-out infinite}
+@keyframes status-pulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.4);opacity:0}}
 .mini-progress{height:8px;border-radius:99px;background:var(--line);margin:22px 0 8px;overflow:hidden}
 .mini-progress b{display:block;height:100%;border-radius:99px;background:var(--primary)}
 
@@ -46,7 +48,7 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .dark-button{padding:13px 17px;background:var(--ink);color:#fff}
 .ghost-button{padding:12px 17px;background:var(--tint);color:var(--primary-ink)}
 .outline-button:hover{border-color:var(--primary);color:var(--primary)}
-.primary-button:hover{background:var(--primary-ink)}
+.primary-button:hover{background:var(--primary-ink);transform:translateY(-2px);box-shadow:0 10px 20px -8px rgb(37 99 235 / .45)}
 .dark-button:hover,.ghost-button:hover{transform:translateY(-2px)}
 .outline-button[aria-disabled="true"],.ghost-button[aria-disabled="true"]{opacity:.45;cursor:not-allowed;transform:none!important}
 
@@ -69,5 +71,9 @@ footer .brand{color:var(--ink);font-size:16px}
   .footer-grid{flex-direction:column;align-items:center;text-align:center}
   .footer-tagline{max-width:none}
   .footer-links{flex-wrap:wrap;justify-content:center;gap:14px 20px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .status-dot::after{animation:none;display:none}
 }
 </content>

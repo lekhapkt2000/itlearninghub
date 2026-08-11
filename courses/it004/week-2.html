@@ -83,7 +83,7 @@ VALUES
 ('PB01', N'Phòng Kỹ thuật'),
 ('PB02', N'Phòng Kinh doanh'),
 ('PB03', N'Phòng Nhân sự');</code></pre></div>
-          <p>Các khái niệm cần nhớ: Database, Table, Column, Row, Primary Key, Foreign Key, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> - đảm bảo sinh viên có thể thao tác với dữ liệu trước khi chuyển sang truy vấn nâng cao hơn.</p>
+          <p>Các khái niệm cần nhớ: Database, Table, Column, Row, Primary Key, Foreign Key, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> - Đảm bảo sinh viên có thể thao tác với dữ liệu trước khi chuyển sang truy vấn nâng cao hơn.</p>
         </section>
 
         <!-- 02 - Toán tử -->
@@ -146,17 +146,17 @@ WHERE MaPB = 'PB01';</code></pre></div>
             <tr><td><code>OR</code></td><td>Chỉ cần một điều kiện đúng</td></tr>
             <tr><td><code>NOT</code></td><td>Phủ định điều kiện</td></tr>
           </table></div>
-          <p><code>AND</code> - nhân viên phải <strong>đồng thời</strong> thỏa cả hai điều kiện:</p>
+          <p><code>AND</code> - Nhân viên phải <strong>đồng thời</strong> thỏa cả hai điều kiện:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM NhanVien
 WHERE Luong > 5000000
   AND MaPB = 'PB01';</code></pre></div>
-          <p><code>OR</code> - chỉ cần thỏa một trong hai điều kiện:</p>
+          <p><code>OR</code> - Chỉ cần thỏa một trong hai điều kiện:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM NhanVien
 WHERE Luong > 15000000
    OR MaPB = 'PB01';</code></pre></div>
-          <p><code>NOT</code> - lấy nhân viên không thuộc PB01:</p>
+          <p><code>NOT</code> - Lấy nhân viên không thuộc PB01:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM NhanVien
 WHERE NOT MaPB = 'PB01';</code></pre></div>
@@ -191,7 +191,7 @@ WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
           <div class="definition">Hàm giúp xử lý và biến đổi dữ liệu: hàm xử lý số, hàm xử lý chuỗi, hàm xử lý ngày giờ và hàm tập hợp.</div>
 
           <div class="inline-warning">
-            <strong>Lưu ý quan trọng:</strong> Tài liệu gốc trình bày một số hàm theo cú pháp SQL tổng quát/MySQL (<code>NOW()</code>, <code>CURDATE()</code>, <code>LENGTH()</code>, <code>DATE_ADD()</code>, <code>CEIL()</code>...). Môn thực hành dùng <strong>Microsoft SQL Server</strong>, nên các hàm dưới đây đã được chuẩn hóa sang <strong>T-SQL</strong> - chạy được trực tiếp, không copy nguyên bản MySQL.
+            <strong>Lưu ý quan trọng:</strong> Tài liệu gốc trình bày một số hàm theo cú pháp SQL tổng quát/MySQL (<code>NOW()</code>, <code>CURDATE()</code>, <code>LENGTH()</code>, <code>DATE_ADD()</code>, <code>CEIL()</code>...). Môn thực hành dùng <strong>Microsoft SQL Server</strong>, nên các hàm dưới đây đã được chuẩn hóa sang <strong>T-SQL</strong> - Chạy được trực tiếp, không copy nguyên bản MySQL.
             <div class="table-wrap"><table class="ref-table">
             <tr><th>MySQL / tổng quát</th><th>T-SQL (SQL Server)</th></tr>
             <tr><td><code>NOW()</code></td><td><code>GETDATE()</code></td></tr>
@@ -199,7 +199,7 @@ WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
             <tr><td><code>LENGTH()</code></td><td><code>LEN()</code></td></tr>
             <tr><td><code>CEIL()</code></td><td><code>CEILING()</code></td></tr>
             <tr><td><code>DATE_ADD(date, INTERVAL n unit)</code></td><td><code>DATEADD(unit, n, date)</code></td></tr>
-            <tr><td><code>DATEDIFF(date1, date2)</code> - số ngày</td><td><code>DATEDIFF(DAY, date1, date2)</code> - cần chỉ rõ đơn vị</td></tr>
+            <tr><td><code>DATEDIFF(date1, date2)</code> - Số ngày</td><td><code>DATEDIFF(DAY, date1, date2)</code> - Cần chỉ rõ đơn vị</td></tr>
           </table></div>
           </div>
 
@@ -293,7 +293,7 @@ WHERE Luong > 10000000
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong
 FROM NhanVien
 ORDER BY Luong DESC;</code></pre></div>
-          <p><code>ASC</code> - tăng dần, <code>DESC</code> - giảm dần.</p>
+          <p><code>ASC</code> - Tăng dần, <code>DESC</code> - Giảm dần.</p>
 
           <h3>TOP</h3>
           <p>Ví dụ lấy nhân viên mới nhất:</p>
@@ -302,7 +302,7 @@ FROM NhanVien
 ORDER BY NgVL DESC;</code></pre></div>
 
           <h3>GROUP BY</h3>
-          <p>Dùng để gom các dòng có cùng giá trị thành nhóm. Ví dụ - số lượng nhân viên trong từng phòng ban:</p>
+          <p>Dùng để gom các dòng có cùng giá trị thành nhóm. Ví dụ - Số lượng nhân viên trong từng phòng ban:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     MaPB,
     COUNT(*) AS SoLuong
@@ -310,7 +310,7 @@ FROM NhanVien
 GROUP BY MaPB;</code></pre></div>
 
           <h3>HAVING</h3>
-          <p><code>WHERE</code> lọc <strong>dòng dữ liệu</strong>, còn <code>HAVING</code> lọc <strong>nhóm dữ liệu</strong> sau <code>GROUP BY</code>. Ví dụ - chỉ hiển thị mức lương có ít nhất 3 nhân viên:</p>
+          <p><code>WHERE</code> lọc <strong>dòng dữ liệu</strong>, còn <code>HAVING</code> lọc <strong>nhóm dữ liệu</strong> sau <code>GROUP BY</code>. Ví dụ - Chỉ hiển thị mức lương có ít nhất 3 nhân viên:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     Luong,
     COUNT(*) AS SoLuong
@@ -405,7 +405,7 @@ FULL OUTER JOIN PhongBan pb
     ON nv.MaPB = pb.MaPB;</code></pre></div>
 
           <h3>CROSS JOIN</h3>
-          <p>Tạo tích Cartesian - nếu <code>NhanVien</code> có 5 dòng, <code>PhongBan</code> có 3 dòng thì kết quả là <code>5 × 3 = 15</code> dòng:</p>
+          <p>Tạo tích Cartesian - Nếu <code>NhanVien</code> có 5 dòng, <code>PhongBan</code> có 3 dòng thì kết quả là <code>5 × 3 = 15</code> dòng:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     nv.HoTen,
     pb.TenPB
@@ -413,7 +413,7 @@ FROM NhanVien nv
 CROSS JOIN PhongBan pb;</code></pre></div>
 
           <h3>SELF JOIN</h3>
-          <p>Một bảng được sử dụng <strong>hai lần</strong> để thể hiện quan hệ giữa các dòng trong chính bảng đó - ví dụ nhân viên và người quản lý:</p>
+          <p>Một bảng được sử dụng <strong>hai lần</strong> để thể hiện quan hệ giữa các dòng trong chính bảng đó - Ví dụ nhân viên và người quản lý:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     nv.HoTen AS NhanVien,
     ql.HoTen AS QuanLy
@@ -441,7 +441,7 @@ INTERSECT
 EXCEPT</div>
 
           <h3>UNION</h3>
-          <p>Lấy tất cả kết quả và <strong>loại bỏ dòng trùng</strong>. Ví dụ - nhân viên thực hiện DA01 hoặc DA02:</p>
+          <p>Lấy tất cả kết quả và <strong>loại bỏ dòng trùng</strong>. Ví dụ - Nhân viên thực hiện DA01 hoặc DA02:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV
 FROM PhanCong
 WHERE MaDA = 'DA01'
@@ -453,7 +453,7 @@ FROM PhanCong
 WHERE MaDA = 'DA02';</code></pre></div>
 
           <h3>INTERSECT</h3>
-          <p>Lấy phần <strong>giao nhau</strong>. Ví dụ - nhân viên thực hiện cả DA01 và DA02:</p>
+          <p>Lấy phần <strong>giao nhau</strong>. Ví dụ - Nhân viên thực hiện cả DA01 và DA02:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV
 FROM PhanCong
 WHERE MaDA = 'DA01'
@@ -465,7 +465,7 @@ FROM PhanCong
 WHERE MaDA = 'DA02';</code></pre></div>
 
           <h3>EXCEPT</h3>
-          <p>Lấy kết quả có trong truy vấn thứ nhất nhưng <strong>không có</strong> trong truy vấn thứ hai. Ví dụ - nhân viên thực hiện DA01 nhưng không thực hiện DA02:</p>
+          <p>Lấy kết quả có trong truy vấn thứ nhất nhưng <strong>không có</strong> trong truy vấn thứ hai. Ví dụ - Nhân viên thực hiện DA01 nhưng không thực hiện DA02:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV
 FROM PhanCong
 WHERE MaDA = 'DA01'
@@ -494,7 +494,7 @@ WHERE MaSP IN
 );</code></pre></div>
 
           <h3>Non-Correlated Subquery</h3>
-          <p>Truy vấn con <strong>không phụ thuộc</strong> vào truy vấn cha. Ví dụ - tìm sản phẩm đã bán trong tháng 1/2024:</p>
+          <p>Truy vấn con <strong>không phụ thuộc</strong> vào truy vấn cha. Ví dụ - Tìm sản phẩm đã bán trong tháng 1/2024:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
 FROM SanPham
 WHERE MaSP IN
@@ -506,7 +506,7 @@ WHERE MaSP IN
 );</code></pre></div>
 
           <h3>IN / NOT IN</h3>
-          <p><code>IN</code> - kiểm tra một giá trị có nằm trong tập kết quả của truy vấn con hay không:</p>
+          <p><code>IN</code> - Kiểm tra một giá trị có nằm trong tập kết quả của truy vấn con hay không:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
 FROM SanPham
 WHERE MaSP IN
@@ -514,7 +514,7 @@ WHERE MaSP IN
     SELECT MaSP
     FROM HoaDon
 );</code></pre></div>
-          <p><code>NOT IN</code> - tìm sản phẩm chưa từng xuất hiện trong hóa đơn:</p>
+          <p><code>NOT IN</code> - Tìm sản phẩm chưa từng xuất hiện trong hóa đơn:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
 FROM SanPham
 WHERE MaSP NOT IN
@@ -524,7 +524,7 @@ WHERE MaSP NOT IN
 );</code></pre></div>
 
           <h3>ANY / ALL</h3>
-          <p><code>ANY</code> so sánh với <strong>ít nhất một giá trị</strong> trong kết quả truy vấn con. Ví dụ - lương lớn hơn bất kỳ nhân viên nào thuộc PB01, PB02 hoặc PB03:</p>
+          <p><code>ANY</code> so sánh với <strong>ít nhất một giá trị</strong> trong kết quả truy vấn con. Ví dụ - Lương lớn hơn bất kỳ nhân viên nào thuộc PB01, PB02 hoặc PB03:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong
 FROM NhanVien
 WHERE Luong > ANY
@@ -533,7 +533,7 @@ WHERE Luong > ANY
     FROM NhanVien
     WHERE MaPB IN ('PB01', 'PB02', 'PB03')
 );</code></pre></div>
-          <p><code>ALL</code> yêu cầu điều kiện đúng với <strong>tất cả giá trị</strong> trong truy vấn con. Ví dụ - sản phẩm có giá cao hơn tất cả sản phẩm thuộc danh mục Laptop:</p>
+          <p><code>ALL</code> yêu cầu điều kiện đúng với <strong>tất cả giá trị</strong> trong truy vấn con. Ví dụ - Sản phẩm có giá cao hơn tất cả sản phẩm thuộc danh mục Laptop:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaSP, TenSP, GiaBan
 FROM SanPham
 WHERE DanhMuc = 'Phu Kien'
@@ -547,7 +547,7 @@ WHERE DanhMuc = 'Phu Kien'
 > ALL → lớn hơn tất cả</div>
 
           <h3>EXISTS / NOT EXISTS</h3>
-          <p><code>EXISTS</code> kiểm tra truy vấn con có trả về <strong>ít nhất một dòng</strong> hay không. Ví dụ - nhân viên có ít nhất một đơn hàng:</p>
+          <p><code>EXISTS</code> kiểm tra truy vấn con có trả về <strong>ít nhất một dòng</strong> hay không. Ví dụ - Nhân viên có ít nhất một đơn hàng:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
 FROM NhanVien nv
 WHERE EXISTS
@@ -556,8 +556,8 @@ WHERE EXISTS
     FROM DonHang dh
     WHERE dh.MaNV = nv.MaNV
 );</code></pre></div>
-          <p>Truy vấn con ở đây <strong>tham chiếu đến dòng hiện tại của truy vấn cha</strong> (<code>nv.MaNV</code>) - đây gọi là <strong>Correlated Subquery</strong>.</p>
-          <p><code>NOT EXISTS</code> - tìm nhân viên không có bất kỳ đơn hàng nào:</p>
+          <p>Truy vấn con ở đây <strong>tham chiếu đến dòng hiện tại của truy vấn cha</strong> (<code>nv.MaNV</code>) - Đây gọi là <strong>Correlated Subquery</strong>.</p>
+          <p><code>NOT EXISTS</code> - Tìm nhân viên không có bất kỳ đơn hàng nào:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
 FROM NhanVien nv
 WHERE NOT EXISTS
@@ -600,7 +600,7 @@ WHERE NOT EXISTS
           <div class="practice-lab official-lab">
             <span class="official-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg> BÀI TẬP CHÍNH THỨC · BTTH2</span>
             <h3>Quản lý bán hàng - Câu 1 → 17</h3>
-            <p>Theo tài liệu hướng dẫn Tuần 2, sử dụng Microsoft SQL Server để thực hiện <strong>Phần III - câu 1 đến câu 17</strong>. Tự làm trước khi xem gợi ý/đáp án. Đề bài chi tiết trong file PDF bên dưới.</p>
+            <p>Theo tài liệu hướng dẫn Tuần 2, sử dụng Microsoft SQL Server để thực hiện <strong>Phần III - Câu 1 đến câu 17</strong>. Tự làm trước khi xem gợi ý/đáp án. Đề bài chi tiết trong file PDF bên dưới.</p>
           </div>
 
           <div class="download-card">
@@ -622,7 +622,7 @@ WHERE NOT EXISTS
             <tr><th>Câu</th><th>Trạng thái</th></tr>
             <tr><td>01 – 17</td><td>☐ Chưa hoàn thành</td></tr>
           </table></div>
-          <div class="inline-ok"><strong>Cách làm:</strong> Tự viết câu SQL trước, sau đó mới mở gợi ý hoặc đáp án tham khảo - không xem đáp án ngay để đảm bảo hiệu quả luyện tập.</div>
+          <div class="inline-ok"><strong>Cách làm:</strong> Tự viết câu SQL trước, sau đó mới mở gợi ý hoặc đáp án tham khảo - Không xem đáp án ngay để đảm bảo hiệu quả luyện tập.</div>
         </section>
 
         <nav class="week-nav-links" aria-label="Điều hướng tuần">
@@ -661,7 +661,7 @@ WHERE NOT EXISTS
         </div>
         <div class="panel-box note-box">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
-          <span>Dùng đúng T-SQL của SQL Server - tránh copy nguyên cú pháp MySQL trong tài liệu tham khảo.</span>
+          <span>Dùng đúng T-SQL của SQL Server - Tránh copy nguyên cú pháp MySQL trong tài liệu tham khảo.</span>
         </div>
       </aside>
     </div>

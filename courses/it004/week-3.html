@@ -67,7 +67,7 @@
           <div class="definition">Trong SQL, <strong>phép chia (Division)</strong> được dùng khi cần tìm những đối tượng trong một bảng <code>R</code> có quan hệ với <strong>tất cả</strong> các đối tượng trong một bảng <code>S</code>.</div>
 
           <h3>Từ khóa nhận diện</h3>
-          <p>Khi đề bài có những cụm như <strong>tất cả</strong>, <strong>mọi</strong>, <strong>toàn bộ</strong>, "đã mua tất cả sản phẩm", "đã tham gia tất cả dự án", "đã đăng ký tất cả môn học" - thì cần nghĩ ngay đến <strong>phép chia</strong>.</p>
+          <p>Khi đề bài có những cụm như <strong>tất cả</strong>, <strong>mọi</strong>, <strong>toàn bộ</strong>, "đã mua tất cả sản phẩm", "đã tham gia tất cả dự án", "đã đăng ký tất cả môn học" - Thì cần nghĩ ngay đến <strong>phép chia</strong>.</p>
 
           <h3>Ví dụ trực quan</h3>
           <p>Giả sử có 3 bảng:</p>
@@ -183,7 +183,7 @@ HAVING COUNT(DISTINCT TG.MaDA) =
           <p class="eyebrow">03 · PHÉP CHIA CÓ ĐIỀU KIỆN</p>
           <h2>Phép chia có điều kiện</h2>
           <div class="definition"><strong>Phép chia có điều kiện</strong> là phép chia cơ bản nhưng tập đối tượng cần xét được giới hạn bởi một điều kiện.</div>
-          <p>Ví dụ: "Tìm khách hàng đã mua <strong>tất cả sản phẩm thuộc danh mục Điện tử</strong>" - không còn là "tất cả sản phẩm" mà là "tất cả sản phẩm <code>WHERE DanhMuc = 'Điện tử'</code>".</p>
+          <p>Ví dụ: "Tìm khách hàng đã mua <strong>tất cả sản phẩm thuộc danh mục Điện tử</strong>" - Không còn là "tất cả sản phẩm" mà là "tất cả sản phẩm <code>WHERE DanhMuc = 'Điện tử'</code>".</p>
 
           <div class="table-wrap"><table class="ref-table">
             <tr><th colspan="3">SanPham</th></tr>
@@ -244,7 +244,7 @@ HAVING COUNT(DISTINCT DK.MaMH) =
         <section class="lesson-section" id="chia-not-exists">
           <p class="eyebrow">04 · PHÉP CHIA VỚI NOT EXISTS</p>
           <h2>Phép chia với NOT EXISTS</h2>
-          <p>Đây là <strong>cách thứ hai</strong> để giải bài toán "tất cả" - dùng điều kiện phủ định để kiểm tra xem có tồn tại giá trị nào <strong>không thỏa mãn</strong> hay không.</p>
+          <p>Đây là <strong>cách thứ hai</strong> để giải bài toán "tất cả" - Dùng điều kiện phủ định để kiểm tra xem có tồn tại giá trị nào <strong>không thỏa mãn</strong> hay không.</p>
 
           <h3>Tư duy "Tất cả" → "Không tồn tại trường hợp thiếu"</h3>
           <p>"Khách hàng đã mua tất cả sản phẩm điện tử" có thể chuyển thành "Không tồn tại sản phẩm điện tử nào mà khách hàng <strong>chưa mua</strong>".</p>
@@ -311,7 +311,7 @@ WHERE NOT EXISTS
             <tr><td>Phép chia có điều kiện</td><td><code>WHERE</code> + <code>GROUP BY</code> + <code>HAVING COUNT</code></td></tr>
             <tr><td>Phép chia NOT EXISTS</td><td>Hai lớp <code>NOT EXISTS</code> lồng nhau</td></tr>
           </table></div>
-          <div class="inline-warning">Lỗi hay gặp: quên viết đủ <strong>hai lớp phủ định</strong>. Chỉ viết một lớp <code>NOT EXISTS</code> mà thiếu lớp bên trong sẽ cho ra kết quả sai hoàn toàn - luôn kiểm tra lại theo đúng mẫu "không tồn tại A mà chưa có B", gồm đúng hai <code>NOT EXISTS</code> lồng nhau như cấu trúc ở trên.</div>
+          <div class="inline-warning">Lỗi hay gặp: quên viết đủ <strong>hai lớp phủ định</strong>. Chỉ viết một lớp <code>NOT EXISTS</code> mà thiếu lớp bên trong sẽ cho ra kết quả sai hoàn toàn - Luôn kiểm tra lại theo đúng mẫu "không tồn tại A mà chưa có B", gồm đúng hai <code>NOT EXISTS</code> lồng nhau như cấu trúc ở trên.</div>
         </section>
 
         <!-- 05 - Aggregate -->
@@ -386,7 +386,7 @@ GROUP BY
     PB.MaPH,
     PB.TenPH;</code></pre></div>
 
-          <h3>HAVING - lọc nhóm</h3>
+          <h3>HAVING - Lọc nhóm</h3>
           <p>Đề bài: "Tìm phòng ban có số lượng nhân viên lớn hơn 10, hiển thị mã phòng, tên phòng và số lượng nhân viên, sắp xếp giảm dần."</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     PB.MaPH,
@@ -402,7 +402,7 @@ HAVING COUNT(NV.MaNV) > 10
 ORDER BY
     COUNT(NV.MaNV) DESC;</code></pre></div>
 
-          <h3>WHERE và HAVING - phải phân biệt</h3>
+          <h3>WHERE và HAVING - Phải phân biệt</h3>
           <p><code>WHERE</code> lọc <strong>dòng trước khi gom nhóm</strong> (<code>WHERE Luong &gt; 10000000</code>). <code>HAVING</code> lọc <strong>nhóm sau khi gom nhóm</strong> (<code>HAVING COUNT(*) &gt; 10</code>).</p>
 
           <div class="quick-check">
@@ -434,7 +434,7 @@ FROM NhanVien;</code></pre></div>
     Luong
 FROM NhanVien
 ORDER BY Luong DESC;</code></pre></div>
-          <div class="inline-warning"><strong>Cực kỳ quan trọng:</strong> Không nên chỉ viết <code>SELECT TOP 4 * FROM NhanVien;</code> nếu đề bài yêu cầu "4 nhân viên có lương cao nhất" - phải có <code>ORDER BY Luong DESC</code>.</div>
+          <div class="inline-warning"><strong>Cực kỳ quan trọng:</strong> Không nên chỉ viết <code>SELECT TOP 4 * FROM NhanVien;</code> nếu đề bài yêu cầu "4 nhân viên có lương cao nhất" - Phải có <code>ORDER BY Luong DESC</code>.</div>
 
           <h3>TOP ... WITH TIES</h3>
           <p>Nếu người thứ 4 có mức lương 15 triệu và có thêm người khác cũng nhận 15 triệu, <code>WITH TIES</code> sẽ lấy cả những người đó:</p>
@@ -470,7 +470,7 @@ ORDER BY SUM(Luong) DESC;</code></pre></div>
         <section class="lesson-section" id="outer-join">
           <p class="eyebrow">07 · PHÉP KẾT NGOÀI</p>
           <h2>Phép kết ngoài</h2>
-          <p><code>INNER JOIN</code> chỉ trả về những dòng <strong>có dữ liệu khớp</strong>. Nhưng đôi khi cần biết cả những đối tượng <strong>không có dữ liệu liên quan</strong> - ví dụ "cho biết những nhân viên không tham gia đề án nào." Nếu dùng <code>INNER JOIN</code>, nhân viên không tham gia đề án sẽ <strong>bị loại</strong> vì không có bản ghi tương ứng. Do đó cần <code>LEFT JOIN</code>.</p>
+          <p><code>INNER JOIN</code> chỉ trả về những dòng <strong>có dữ liệu khớp</strong>. Nhưng đôi khi cần biết cả những đối tượng <strong>không có dữ liệu liên quan</strong> - Ví dụ "cho biết những nhân viên không tham gia đề án nào." Nếu dùng <code>INNER JOIN</code>, nhân viên không tham gia đề án sẽ <strong>bị loại</strong> vì không có bản ghi tương ứng. Do đó cần <code>LEFT JOIN</code>.</p>
 
           <h3>Tìm nhân viên không tham gia đề án</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
@@ -481,7 +481,7 @@ LEFT OUTER JOIN PHANCONG PC
     ON NV.MaNV = PC.MaNV
 WHERE PC.MaDA IS NULL;</code></pre></div>
           <div class="inline-ok">Pattern quan trọng cần nhớ: <code>LEFT JOIN</code> + <code>WHERE right_table.key IS NULL</code> → tìm những bản ghi <strong>không có bản ghi tương ứng</strong> ở bảng bên phải.</div>
-          <div class="inline-warning">Lỗi hay gặp: đặt điều kiện <code>WHERE</code> lên <strong>một cột khác (không phải kiểm tra NULL)</strong> của bảng bên phải sau <code>LEFT JOIN</code> - khi đó những dòng NULL sinh ra từ LEFT JOIN sẽ bị chính điều kiện đó loại bỏ, khiến câu lệnh vô tình hoạt động giống <code>INNER JOIN</code>. Nếu cần lọc thêm ở bảng bên phải mà vẫn muốn giữ hành vi LEFT JOIN, hãy đưa điều kiện đó vào mệnh đề <code>ON</code> thay vì <code>WHERE</code>.</div>
+          <div class="inline-warning">Lỗi hay gặp: đặt điều kiện <code>WHERE</code> lên <strong>một cột khác (không phải kiểm tra NULL)</strong> của bảng bên phải sau <code>LEFT JOIN</code> - Khi đó những dòng NULL sinh ra từ LEFT JOIN sẽ bị chính điều kiện đó loại bỏ, khiến câu lệnh vô tình hoạt động giống <code>INNER JOIN</code>. Nếu cần lọc thêm ở bảng bên phải mà vẫn muốn giữ hành vi LEFT JOIN, hãy đưa điều kiện đó vào mệnh đề <code>ON</code> thay vì <code>WHERE</code>.</div>
 
           <h3>Ba loại OUTER JOIN</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -534,7 +534,7 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
           <div class="practice-lab official-lab">
             <span class="official-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg> BÀI TẬP CHÍNH THỨC · BTTH3</span>
             <h3>Quản lý bán hàng - Câu 26 → 53</h3>
-            <p>Theo tài liệu hướng dẫn Tuần 3, sử dụng Microsoft SQL Server để thực hiện <strong>Phần III - câu 26 đến câu 53</strong>. Tự làm trước khi xem gợi ý/đáp án. Đề bài chi tiết trong file PDF bên dưới.</p>
+            <p>Theo tài liệu hướng dẫn Tuần 3, sử dụng Microsoft SQL Server để thực hiện <strong>Phần III - Câu 26 đến câu 53</strong>. Tự làm trước khi xem gợi ý/đáp án. Đề bài chi tiết trong file PDF bên dưới.</p>
           </div>
 
           <div class="download-card">
@@ -552,7 +552,7 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
           </div>
 
           <div class="extra-divider">LUYỆN THÊM · KHÔNG BẮT BUỘC</div>
-          <p class="extra-intro">Ngoài câu 26-53 theo tài liệu chính thức, đây là các bài tự luyện mở rộng để hiểu sâu hơn tư duy Tuần 3 - không thuộc bài nộp BTTH3. Mỗi bài có gợi ý ẩn - bấm để mở.</p>
+          <p class="extra-intro">Ngoài câu 26-53 theo tài liệu chính thức, đây là các bài tự luyện mở rộng để hiểu sâu hơn tư duy Tuần 3 - Không thuộc bài nộp BTTH3. Mỗi bài có gợi ý ẩn - Bấm để mở.</p>
 
           <div class="challenge-list">
             <article class="challenge-card">
@@ -625,7 +625,7 @@ Cách 2: NOT EXISTS + NOT EXISTS</div></details>
         </div>
         <div class="panel-box note-box">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
-          <span>Gặp đề có chữ "tất cả" - dừng lại và nghĩ ngay đến phép chia trước khi viết SQL.</span>
+          <span>Gặp đề có chữ "tất cả" - Dừng lại và nghĩ ngay đến phép chia trước khi viết SQL.</span>
         </div>
       </aside>
     </div>

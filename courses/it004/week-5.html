@@ -96,7 +96,7 @@
           <p class="eyebrow">02 · CÁC LOẠI TRIGGER</p>
           <h2>AFTER và INSTEAD OF</h2>
           <p>SQL Server hỗ trợ hai loại Trigger chính. <strong>SQL Server không hỗ trợ <code>BEFORE TRIGGER</code></strong> theo cách một số hệ quản trị CSDL khác có.</p>
-          <p><code>AFTER</code> - chạy <strong>sau khi</strong> thao tác DML hoàn tất thành công (<code>AFTER INSERT</code>, <code>AFTER UPDATE</code>, <code>AFTER DELETE</code>). <code>INSTEAD OF</code> - <strong>thay thế</strong> thao tác DML ban đầu bằng các câu lệnh định nghĩa bên trong Trigger.</p>
+          <p><code>AFTER</code> - Chạy <strong>sau khi</strong> thao tác DML hoàn tất thành công (<code>AFTER INSERT</code>, <code>AFTER UPDATE</code>, <code>AFTER DELETE</code>). <code>INSTEAD OF</code> - <strong>thay thế</strong> thao tác DML ban đầu bằng các câu lệnh định nghĩa bên trong Trigger.</p>
 
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Loại</th><th>Cách hoạt động</th><th>Ví dụ</th></tr>
@@ -196,10 +196,10 @@ END;</code></pre></div>
 
           <h3>Phân tích</h3>
           <div class="ascii-block">IF EXISTS → RAISERROR → ROLLBACK → RETURN → Hủy thao tác sai</div>
-          <p><code>IF EXISTS(...)</code> kiểm tra có tồn tại bản ghi vi phạm điều kiện hay không. <code>RAISERROR(N'...', 16, 1)</code> báo lỗi - mức độ <code>16</code> là mức thường dùng để biểu diễn lỗi do người dùng gây ra (dữ liệu nhập sai, vi phạm quy tắc). <code>ROLLBACK</code> hủy giao dịch đang thực hiện, đưa dữ liệu về trạng thái trước đó.</p>
+          <p><code>IF EXISTS(...)</code> kiểm tra có tồn tại bản ghi vi phạm điều kiện hay không. <code>RAISERROR(N'...', 16, 1)</code> báo lỗi - Mức độ <code>16</code> là mức thường dùng để biểu diễn lỗi do người dùng gây ra (dữ liệu nhập sai, vi phạm quy tắc). <code>ROLLBACK</code> hủy giao dịch đang thực hiện, đưa dữ liệu về trạng thái trước đó.</p>
           <div class="inline-warning">Lỗi hay gặp: gọi <code>RAISERROR</code> và <code>ROLLBACK</code> nhưng <strong>quên <code>RETURN</code></strong> ngay sau đó. Nếu Trigger còn câu lệnh nào phía sau, chúng vẫn sẽ tiếp tục chạy dù giao dịch đã bị hủy, có thể gây lỗi hoặc hành vi không mong muốn. Nên tập thói quen luôn viết đủ bộ ba <code>RAISERROR → ROLLBACK → RETURN</code>, không chỉ dừng ở <code>ROLLBACK</code>.</div>
 
-          <h3>PRINT và RAISERROR - phân biệt</h3>
+          <h3>PRINT và RAISERROR - Phân biệt</h3>
           <div class="table-wrap"><table class="ref-table">
             <tr><th></th><th>PRINT</th><th>RAISERROR</th></tr>
             <tr><td>Mục đích</td><td>Thông báo</td><td>Báo lỗi</td></tr>
@@ -261,7 +261,7 @@ VALUES ('KH01', N'Nguyễn Văn A');</code></pre>
             </div>
           </div>
 
-          <h3>Ví dụ - đọc INSERTED</h3>
+          <h3>Ví dụ - Đọc INSERTED</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterInsert_KhachHang
 ON KHACHHANG
 AFTER INSERT
@@ -276,7 +276,7 @@ BEGIN
         + CAST(@MAKH AS VARCHAR);
 END;</code></pre></div>
 
-          <h3>Ví dụ - đọc DELETED</h3>
+          <h3>Ví dụ - Đọc DELETED</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterDelete_KhachHang
 ON KHACHHANG
 AFTER DELETE
@@ -286,7 +286,7 @@ BEGIN
     FROM DELETED;
 END;</code></pre></div>
 
-          <h3>Ví dụ hoàn chỉnh - theo dõi thay đổi tên (UPDATE)</h3>
+          <h3>Ví dụ hoàn chỉnh - Theo dõi thay đổi tên (UPDATE)</h3>
           <p>Khi <code>UPDATE</code>, <code>DELETED</code> chứa giá trị cũ và <code>INSERTED</code> chứa giá trị mới, nên có thể so sánh "giá trị cũ → giá trị mới":</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterUpdate_KhachHang
 ON KHACHHANG
@@ -318,13 +318,13 @@ END;</code></pre></div>
           <p class="eyebrow">06 · ỨNG DỤNG THỰC TẾ</p>
           <h2>Ứng dụng thực tế của Trigger</h2>
 
-          <div class="inline-warning">Lỗi hay gặp: dùng Trigger cho những ràng buộc <strong>đơn giản</strong> mà <code>CHECK CONSTRAINT</code> hoặc <code>FOREIGN KEY</code> đã làm được (ví dụ chỉ để chặn <code>SOLUONG &lt; 0</code>, hoặc đặt giá trị mặc định). Trigger chạy sau khi thao tác DML đã xảy ra nên tốn thêm chi phí xử lý; chỉ nên dùng Trigger khi logic <strong>vượt quá khả năng của Constraint</strong> - ví dụ cần tự động cập nhật dữ liệu ở bảng khác, hoặc kiểm tra điều kiện dựa trên dữ liệu ở nhiều bảng.</div>
+          <div class="inline-warning">Lỗi hay gặp: dùng Trigger cho những ràng buộc <strong>đơn giản</strong> mà <code>CHECK CONSTRAINT</code> hoặc <code>FOREIGN KEY</code> đã làm được (ví dụ chỉ để chặn <code>SOLUONG &lt; 0</code>, hoặc đặt giá trị mặc định). Trigger chạy sau khi thao tác DML đã xảy ra nên tốn thêm chi phí xử lý; chỉ nên dùng Trigger khi logic <strong>vượt quá khả năng của Constraint</strong> - Ví dụ cần tự động cập nhật dữ liệu ở bảng khác, hoặc kiểm tra điều kiện dựa trên dữ liệu ở nhiều bảng.</div>
 
           <h3>Kiểm tra tồn tại trước khi thêm</h3>
           <p>Không cho phép thêm hóa đơn nếu khách hàng chưa tồn tại:</p>
           <div class="ascii-block">INSERT HOADON → Lấy MAKH từ INSERTED → Kiểm tra KHACHHANG
    → Có tồn tại? Có → Cho phép | Không → RAISERROR + ROLLBACK</div>
-          <p><code>IF EXISTS</code> kiểm tra có tồn tại dữ liệu thỏa điều kiện; <code>IF NOT EXISTS</code> kiểm tra ngược lại - không tồn tại dữ liệu thỏa điều kiện.</p>
+          <p><code>IF EXISTS</code> kiểm tra có tồn tại dữ liệu thỏa điều kiện; <code>IF NOT EXISTS</code> kiểm tra ngược lại - Không tồn tại dữ liệu thỏa điều kiện.</p>
 
           <h3>Trigger tự động cập nhật dữ liệu</h3>
           <p>Bảng <code>HOADON(MAHD, TRIGIA)</code> và <code>CTHD(MAHD, MASP, SOLUONG, DONGIA)</code>. Khi <code>INSERT INTO CTHD</code>, Trigger tự động tính lại <code>TRIGIA</code> và <code>UPDATE HOADON</code>.</p>
@@ -365,7 +365,7 @@ FROM INSERTED;</code></pre></div>
 ├── dòng 3
 ├── ...
 └── dòng n</div>
-          <div class="inline-warning">Trigger nên được tư duy theo <strong>tập hợp dữ liệu (set-based)</strong> thay vì mặc định chỉ có một dòng - đây là kỹ năng quan trọng khi bước từ bài thực hành sang SQL thực tế. Không nên chỉ tư duy "INSERTED → 1 dòng → 1 biến", mà cần xử lý <strong>toàn bộ tập dữ liệu</strong> trong INSERTED/DELETED.</div>
+          <div class="inline-warning">Trigger nên được tư duy theo <strong>tập hợp dữ liệu (set-based)</strong> thay vì mặc định chỉ có một dòng - Đây là kỹ năng quan trọng khi bước từ bài thực hành sang SQL thực tế. Không nên chỉ tư duy "INSERTED → 1 dòng → 1 biến", mà cần xử lý <strong>toàn bộ tập dữ liệu</strong> trong INSERTED/DELETED.</div>
         </section>
 
         <!-- 08 - Quy trinh + cheat sheet -->
@@ -436,7 +436,7 @@ ROLLBACK     → Hủy thao tác / giao dịch</div>
           </div>
 
           <div class="extra-divider">LUYỆN THÊM · KHÔNG BẮT BUỘC</div>
-          <p class="extra-intro">Các bài tự luyện thêm về Trigger - không thuộc bài nộp BTTH5. Mỗi bài có gợi ý ẩn - bấm để mở.</p>
+          <p class="extra-intro">Các bài tự luyện thêm về Trigger - Không thuộc bài nộp BTTH5. Mỗi bài có gợi ý ẩn - Bấm để mở.</p>
 
           <div class="challenge-list">
             <article class="challenge-card">

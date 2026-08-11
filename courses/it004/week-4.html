@@ -114,7 +114,7 @@ FROM NhanVien;</code></pre></div>
           <h3>Làm tròn cần chú ý</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST(123.99 AS INT);</code></pre></div>
           <p>Kết quả: <code>123</code></p>
-          <div class="inline-warning"><code>CAST(... AS INT)</code> <strong>không phải là hàm ROUND</strong> - nó cắt phần thập phân, không làm tròn. Đây là điểm rất dễ nhầm.</div>
+          <div class="inline-warning"><code>CAST(... AS INT)</code> <strong>không phải là hàm ROUND</strong> - Nó cắt phần thập phân, không làm tròn. Đây là điểm rất dễ nhầm.</div>
         </section>
 
         <!-- 03 - GETDATE -->
@@ -131,7 +131,7 @@ FROM NhanVien;</code></pre></div>
 
           <h3>Ví dụ tính tuổi</h3>
           <p>Giả sử <code>NgaySinh = '2000-08-15'</code>. Lấy ngày hiện tại bằng <code>SELECT GETDATE() AS HomNay;</code></p>
-          <div class="inline-warning"><strong>Lưu ý:</strong> Không nên dùng phép trừ đơn giản giữa năm hiện tại và năm sinh để tính tuổi chính xác, vì còn phụ thuộc người đó đã qua sinh nhật trong năm hay chưa - đây là sự khác biệt giữa <strong>xử lý dữ liệu đơn giản</strong> và <strong>xử lý dữ liệu đúng về mặt nghiệp vụ</strong>.</div>
+          <div class="inline-warning"><strong>Lưu ý:</strong> Không nên dùng phép trừ đơn giản giữa năm hiện tại và năm sinh để tính tuổi chính xác, vì còn phụ thuộc người đó đã qua sinh nhật trong năm hay chưa - Đây là sự khác biệt giữa <strong>xử lý dữ liệu đơn giản</strong> và <strong>xử lý dữ liệu đúng về mặt nghiệp vụ</strong>.</div>
         </section>
 
         <!-- 04 - LEFT RIGHT -->
@@ -202,7 +202,7 @@ FROM NhanVien;</code></pre></div>
     END AS PhanLoai
 FROM KhachHang;</code></pre></div>
 
-          <h3>Thứ tự điều kiện - rất quan trọng</h3>
+          <h3>Thứ tự điều kiện - Rất quan trọng</h3>
           <p>Câu sau <strong>sai về logic</strong>:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE
     WHEN TongChiTieu >= 5000000 THEN N'Thân thiết'
@@ -273,7 +273,7 @@ FROM SinhVien;</code></pre></div>
 FROM SinhVien AS SV;</code></pre></div>
 
           <h3>Subquery là gì?</h3>
-          <div class="definition"><strong>Subquery</strong> là một câu truy vấn nằm bên trong một câu truy vấn khác - có thể xuất hiện trong <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>HAVING</code>.</div>
+          <div class="definition"><strong>Subquery</strong> là một câu truy vấn nằm bên trong một câu truy vấn khác - Có thể xuất hiện trong <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>HAVING</code>.</div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM SinhVien
 WHERE Diem > (
@@ -323,7 +323,7 @@ WHERE SV.Diem >= 8;</code></pre></div>
     ) AS &lt;bí danh&gt;
 FROM &lt;bảng chính&gt;;</code></pre></div>
 
-          <h4>Ví dụ - đếm số lần bán của từng sản phẩm</h4>
+          <h4>Ví dụ - Đếm số lần bán của từng sản phẩm</h4>
           <p>Bảng <code>SanPham(MaSP, TenSP)</code>, <code>CTHD(MaHD, MaSP, SoLuong)</code>. Đề bài: "với mỗi sản phẩm, cho biết sản phẩm đã xuất hiện bao nhiêu lần trong chi tiết hóa đơn."</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     SP.TenSP,
@@ -341,7 +341,7 @@ FROM SanPham SP;</code></pre></div>
           </table></div>
 
           <h3>Correlated Subquery</h3>
-          <p>Trong ví dụ trên, <code>WHERE CTHD.MaSP = SP.MaSP</code> tham chiếu đến <code>SP.MaSP</code> của truy vấn bên ngoài - đây là <strong>correlated subquery (truy vấn con tương quan)</strong>: subquery được tính lại <strong>riêng cho từng dòng</strong> của truy vấn ngoài.</p>
+          <p>Trong ví dụ trên, <code>WHERE CTHD.MaSP = SP.MaSP</code> tham chiếu đến <code>SP.MaSP</code> của truy vấn bên ngoài - Đây là <strong>correlated subquery (truy vấn con tương quan)</strong>: subquery được tính lại <strong>riêng cho từng dòng</strong> của truy vấn ngoài.</p>
           <div class="ascii-block">Query ngoài → SP.MaSP → Subquery → tính riêng cho từng SP</div>
 
           <h4>So sánh với subquery thường</h4>
@@ -356,7 +356,7 @@ WHERE Gia >
           <p>Correlated subquery <strong>phụ thuộc</strong> vào từng dòng ngoài (<code>SP.MaSP</code> ở ví dụ trên).</p>
 
           <h4>Khi nào nên dùng Correlated Subquery?</h4>
-          <p>Rất phù hợp với câu hỏi dạng "với <strong>mỗi A</strong>, tính một giá trị liên quan đến A" - ví dụ: mỗi sản phẩm có bao nhiêu lần bán? mỗi sinh viên có bao nhiêu môn đã đăng ký? mỗi nhân viên tham gia bao nhiêu dự án? mỗi khách hàng có bao nhiêu hóa đơn? mỗi phòng ban có bao nhiêu nhân viên?</p>
+          <p>Rất phù hợp với câu hỏi dạng "với <strong>mỗi A</strong>, tính một giá trị liên quan đến A" - Ví dụ: mỗi sản phẩm có bao nhiêu lần bán? mỗi sinh viên có bao nhiêu môn đã đăng ký? mỗi nhân viên tham gia bao nhiêu dự án? mỗi khách hàng có bao nhiêu hóa đơn? mỗi phòng ban có bao nhiêu nhân viên?</p>
 
           <h4>Ví dụ - Quản lý giáo vụ</h4>
           <p>Bảng <code>SINHVIEN(MaSV, HoTen)</code>, <code>DANGKY(MaSV, MaHP)</code>. Đề bài: "hiển thị mỗi sinh viên và số học phần đã đăng ký."</p>
@@ -460,7 +460,7 @@ SELECT (SELECT ...) AS X → Cột tính toán bằng Subquery</div>
           </div>
 
           <div class="extra-divider">LUYỆN THÊM · KHÔNG BẮT BUỘC</div>
-          <p class="extra-intro">Sau Tuần 4, đây là các bài tự luyện thêm để rèn tư duy - không thuộc bài nộp BTTH4. Mỗi bài có gợi ý ẩn - bấm để mở.</p>
+          <p class="extra-intro">Sau Tuần 4, đây là các bài tự luyện thêm để rèn tư duy - Không thuộc bài nộp BTTH4. Mỗi bài có gợi ý ẩn - Bấm để mở.</p>
 
           <div class="challenge-list">
             <article class="challenge-card">

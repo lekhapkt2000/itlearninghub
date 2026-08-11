@@ -19,9 +19,10 @@
 .hub-course-dot.is-active{background:var(--primary)}
 .hub-course-code{color:var(--ink);font:700 13px var(--font-mono)}
 .hub-course-state{margin-left:auto;color:var(--muted);font-size:10px}
-.visual-note{position:absolute;right:10%;top:13%;color:var(--ink);font:600 12px/1.6 var(--font-mono)}
-.visual-note span{color:var(--primary)}
-.visual-note::after{content:'|';margin-left:1px;color:var(--primary);font-weight:400;animation:blink-caret 1s step-end infinite}
+.visual-note{position:absolute;right:6%;top:11%;z-index:2;padding:16px 20px 18px;border-radius:10px;background:#0f172a;box-shadow:0 18px 34px -12px rgb(15 23 42 / .4);color:#e2e8f0;font:600 12px/1.7 var(--font-mono);white-space:nowrap}
+.visual-note::before{content:'';display:block;width:7px;height:7px;margin-bottom:12px;border-radius:50%;background:#f87171;box-shadow:13px 0 0 #fbbf24,26px 0 0 #34d399}
+.visual-note span{color:#60a5fa}
+.visual-note::after{content:'|';margin-left:1px;color:#60a5fa;font-weight:400;animation:blink-caret 1s step-end infinite}
 @keyframes blink-caret{50%{opacity:0}}
 
 .orbit-one{animation:orbit-spin-1 90s linear infinite}
@@ -104,6 +105,7 @@
   .visual-grid{width:260px;height:260px}
   .orbit-one{width:330px}
   .orbit-two{width:300px}
+  .visual-note{right:0;top:4%;padding:13px 16px 15px;font-size:11px}
   .course-section{padding:60px 20px}
   .course-grid,.info-grid{grid-template-columns:1fr}
   .info-section,.instructor-section{padding:0 20px 70px}

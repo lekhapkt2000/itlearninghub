@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Tuần 1 - Blockchain Fundamentals: khái niệm, đặc điểm, thành phần cơ bản và cơ chế hoạt động của Blockchain.">
+  <title>Tuần 1 · Blockchain Fundamentals - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=18">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=29">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-1.html" class="active">VI</a><a href="../../en/courses/is355/week-1.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS355 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS355</a><span>/</span>Tuần 1</p>
+
+    <div class="week-header">
+      <span class="week-tag">CHUYÊN ĐỀ 01 · BLOCKCHAIN FUNDAMENTALS</span>
+      <h1>Blockchain Fundamentals</h1>
+      <div class="week-meta"><span>Blockchain</span><span>Tài chính - Ngân hàng</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hiểu khái niệm Blockchain, phân biệt Blockchain với cơ sở dữ liệu truyền thống, và nắm được các thành phần cùng cơ chế hoạt động cơ bản của Blockchain.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS355">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html" class="active">Tuần 1</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 2 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 3 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 4 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 5 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Project Lab <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 1">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#blockchain-la-gi" data-toc><b>01</b> Blockchain là gì?</a>
+        <a href="#dac-diem" data-toc><b>02</b> Đặc điểm</a>
+        <a href="#thanh-phan" data-toc><b>03</b> Thành phần cơ bản</a>
+        <a href="#co-che" data-toc><b>04</b> Cơ chế hoạt động</a>
+        <a href="#bai-tap" data-toc><b>05</b> Bài tập</a>
+        <a href="#checklist" data-toc><b>06</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Blockchain la gi -->
+        <section class="lesson-section" id="blockchain-la-gi">
+          <p class="eyebrow">01 · BLOCKCHAIN LÀ GÌ?</p>
+          <h2>Blockchain là gì?</h2>
+          <div class="definition"><strong>Blockchain</strong> là một cấu trúc dữ liệu dạng chuỗi các khối (block), được lưu trữ và đồng bộ trên nhiều máy tính (node) trong một mạng phân tán. Mỗi block chứa dữ liệu giao dịch và được liên kết với block trước bằng một giá trị hash, khiến dữ liệu đã ghi nhận rất khó bị thay đổi.</div>
+
+          <h3>Vì sao Blockchain xuất hiện?</h3>
+          <p>Trước Blockchain, các giao dịch (chuyển tiền, mua bán, xác nhận quyền sở hữu...) thường phải phụ thuộc vào một bên trung gian đáng tin cậy - Ví dụ ngân hàng - Để xác nhận và lưu trữ. Blockchain xuất hiện (khởi đầu với Bitcoin, giới thiệu năm 2008) nhằm giải quyết bài toán: làm sao hai bên không quen biết nhau (trustless) có thể giao dịch trực tiếp, mà không cần một bên trung gian duy nhất kiểm soát toàn bộ dữ liệu, trong khi giao dịch vẫn được xác thực và không thể giả mạo.</p>
+
+          <h3>Blockchain giải quyết vấn đề gì?</h3>
+          <p>Hai vấn đề cốt lõi: <strong>double-spending</strong> (chi tiêu hai lần cùng một tài sản số) và <strong>niềm tin giữa các bên không quen biết</strong>. Thay vì cần một trọng tài trung tâm, Blockchain dùng sự đồng thuận của nhiều node trong mạng để xác nhận giao dịch là hợp lệ và duy nhất.</p>
+
+          <h3>Blockchain khác gì với Database truyền thống?</h3>
+          <p>Sự khác biệt nằm ở nhiều khía cạnh: <strong>ai quản lý dữ liệu</strong> (một hệ thống trung tâm hay nhiều node phân tán), <strong>khả năng sửa/xóa dữ liệu</strong> đã ghi nhận, <strong>ai có quyền kiểm soát</strong> việc ghi dữ liệu mới, <strong>khả năng audit</strong> (lịch sử giao dịch có sẵn hay cần xây dựng thêm), và <strong>tốc độ xử lý</strong> (phụ thuộc cơ chế đồng thuận thay vì chỉ phụ thuộc phần cứng). Bài tập 1 cuối tuần sẽ yêu cầu tự lập bảng so sánh chi tiết.</p>
+        </section>
+
+        <!-- 02 - Dac diem -->
+        <section class="lesson-section" id="dac-diem">
+          <p class="eyebrow">02 · ĐẶC ĐIỂM CỦA BLOCKCHAIN</p>
+          <h2>Đặc điểm của Blockchain</h2>
+          <div class="ascii-block">Blockchain
+│
+├── Decentralization
+├── Transparency
+├── Immutability
+├── Security
+└── Traceability</div>
+
+          <h3>Decentralization - Phân tán</h3>
+          <p>Không có một điểm kiểm soát trung tâm duy nhất. Dữ liệu được sao chép và đồng bộ trên nhiều node, mỗi node đều giữ một bản sao đầy đủ (hoặc gần đầy đủ) của Blockchain.</p>
+
+          <h3>Transparency - Minh bạch</h3>
+          <p>Mọi giao dịch được ghi nhận công khai trong mạng (tùy loại Blockchain là public hay private) và có thể được các node kiểm tra, đối chiếu.</p>
+
+          <h3>Immutability - Bất biến</h3>
+          <p>Dữ liệu đã ghi vào block rất khó bị sửa đổi, vì mỗi block chứa hash của block trước nó. Chỉ cần thay đổi dữ liệu ở một block, hash của block đó sẽ thay đổi, khiến toàn bộ các block phía sau không còn khớp - Mạng sẽ phát hiện ra sự bất thường.</p>
+
+          <h3>Security - Bảo mật</h3>
+          <p>Sử dụng các kỹ thuật mã hóa - Hash function, chữ ký số (digital signature) - Để đảm bảo giao dịch là xác thực và không bị giả mạo trong quá trình truyền đi.</p>
+
+          <h3>Traceability - Có thể truy vết</h3>
+          <p>Toàn bộ lịch sử giao dịch được lưu lại đầy đủ trên chuỗi, cho phép truy lại nguồn gốc và đường đi của một tài sản hoặc giao dịch bất kỳ lúc nào.</p>
+        </section>
+
+        <!-- 03 - Thanh phan co ban -->
+        <section class="lesson-section" id="thanh-phan">
+          <p class="eyebrow">03 · THÀNH PHẦN CƠ BẢN</p>
+          <h2>Thành phần cơ bản</h2>
+          <div class="ascii-block">Transaction
+     ↓
+Block
+     ↓
+Hash
+     ↓
+Blockchain
+     ↓
+Network</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Thành phần</th><th>Vai trò</th></tr>
+            <tr><td>Transaction</td><td>Đơn vị dữ liệu ghi nhận một hành động, ví dụ một lần chuyển tiền</td></tr>
+            <tr><td>Block</td><td>Tập hợp nhiều transaction cùng với metadata (thời gian, hash của block trước...)</td></tr>
+            <tr><td>Hash</td><td>Giá trị số hóa duy nhất đại diện cho nội dung một block, dùng để liên kết các block với nhau</td></tr>
+            <tr><td>Blockchain</td><td>Chuỗi các block được liên kết với nhau thông qua hash</td></tr>
+            <tr><td>Network</td><td>Tập hợp các node cùng duy trì, xác thực và đồng bộ toàn bộ Blockchain</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 04 - Co che hoat dong -->
+        <section class="lesson-section" id="co-che">
+          <p class="eyebrow">04 · CƠ CHẾ HOẠT ĐỘNG</p>
+          <h2>Cơ chế hoạt động</h2>
+          <p>Một giao dịch đi qua các bước sau trước khi trở thành một phần cố định của Blockchain:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Người dùng tạo giao dịch</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Giao dịch được broadcast</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Network xác thực</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Giao dịch được đưa vào Block</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Block được xác nhận</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Block được thêm vào Blockchain</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Các node cập nhật dữ liệu</span>
+          </div>
+          <div class="inline-ok"><strong>Ghi nhớ:</strong> Một giao dịch chỉ được xem là hoàn tất khi block chứa nó đã được xác nhận và thêm vào Blockchain - Trước đó, giao dịch vẫn có thể bị loại bỏ nếu không đạt được đồng thuận của mạng.</div>
+        </section>
+
+        <!-- 05 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">05 · BÀI TẬP THỰC HÀNH</p>
+          <h2>Bài tập Tuần 1</h2>
+
+          <h3>Bài 1 - Blockchain vs Database</h3>
+          <p>Tự lập bảng so sánh Database truyền thống và Blockchain theo các tiêu chí sau (điền vào các ô còn trống):</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Tiêu chí</th><th>Database</th><th>Blockchain</th></tr>
+            <tr><td>Quản lý</td><td></td><td></td></tr>
+            <tr><td>Dữ liệu</td><td></td><td></td></tr>
+            <tr><td>Quyền kiểm soát</td><td></td><td></td></tr>
+            <tr><td>Audit</td><td></td><td></td></tr>
+            <tr><td>Tốc độ</td><td></td><td></td></tr>
+          </table></div>
+
+          <h3>Bài 2 - Phân tích</h3>
+          <p>Trả lời: Tại sao ngân hàng vẫn sử dụng Database truyền thống cho phần lớn nghiệp vụ, nhưng có thể ứng dụng Blockchain trong một số nghiệp vụ cụ thể?</p>
+
+          <h3>Bài 3 - Tìm ứng dụng thực tế</h3>
+          <p>Tìm một ứng dụng Blockchain thực tế (ví dụ trong tài chính, chuỗi cung ứng, y tế...) và phân tích theo 5 yếu tố:</p>
+          <ul>
+            <li>Bài toán mà ứng dụng đó giải quyết</li>
+            <li>Người tham gia (actors)</li>
+            <li>Dữ liệu được lưu trên Blockchain</li>
+            <li>Lợi ích khi dùng Blockchain</li>
+            <li>Hạn chế còn tồn tại</li>
+          </ul>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy định về bài làm</h3>
+            <p>Tuyệt đối không sao chép hoặc sử dụng bài làm của sinh viên khác để nộp bài. Sinh viên cần nghiêm túc thực hiện bài tập của mình.</p>
+          </div>
+        </section>
+
+        <!-- 06 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">06 · CHECKLIST CUỐI TUẦN 1</p>
+          <h2>Tự kiểm tra kiến thức</h2>
+          <p>Sau khi hoàn thành, sinh viên nên tự kiểm tra:</p>
+          <ul class="lesson-checklist">
+            <li>Biết khái niệm Blockchain</li>
+            <li>Hiểu vì sao Blockchain xuất hiện</li>
+            <li>Phân biệt được Blockchain với Database truyền thống</li>
+            <li>Hiểu Decentralization</li>
+            <li>Hiểu Transparency</li>
+            <li>Hiểu Immutability</li>
+            <li>Hiểu Security</li>
+            <li>Hiểu Traceability</li>
+            <li>Biết vai trò của Transaction, Block, Hash</li>
+            <li>Hiểu cơ chế hoạt động từ giao dịch đến khi được thêm vào Blockchain</li>
+          </ul>
+
+          <h3>Kiến thức cốt lõi cần nhớ</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">TRANSACTION</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">BLOCK</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">HASH</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">BLOCKCHAIN</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">NETWORK</span>
+          </div>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần">
+          <a href="index.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tổng quan môn học</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 2: Architecture &amp; Consensus (sắp mở)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="blockchain-la-gi"><b>○</b> Blockchain là gì?</li>
+            <li data-section="dac-diem"><b>○</b> Đặc điểm</li>
+            <li data-section="thanh-phan"><b>○</b> Thành phần cơ bản</li>
+            <li data-section="co-che"><b>○</b> Cơ chế hoạt động</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Hãy tự lập bảng so sánh ở Bài 1 trước khi xem lại phần lý thuyết.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=11"></script>
+</body>
+</html>

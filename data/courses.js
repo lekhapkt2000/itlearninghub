@@ -44,5 +44,14 @@ window.COURSES = [
     weeks: 6,
     path: 'courses/is208/index.html',
   },
+  {
+    code: 'IS355',
+    name: 'Công nghệ Blockchain',
+    englishName: 'Blockchain Technology',
+    category: 'Chuyên ngành',
+    status: 'active',
+    weeks: 6,
+    path: 'courses/is355/index.html',
+  },
 ];
 </content>

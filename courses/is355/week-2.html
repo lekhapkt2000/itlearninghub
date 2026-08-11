@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
   <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
   <link rel="stylesheet" href="../../assets/css/base.css?v=18">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=29">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=30">
 </head>
 <body>
   <header class="topbar">
@@ -93,6 +93,7 @@
             <li><strong>Integrity (Tính toàn vẹn):</strong> Dữ liệu không bị chỉnh sửa trái phép (giải pháp: Hash).</li>
             <li><strong>Authentication (Xác thực):</strong> Xác định danh tính người thực hiện hành động (giải pháp: Digital Signature).</li>
           </ul>
+          <div class="inline-ok"><strong>Ví dụ:</strong> Khi khách hàng chuyển 5 triệu đồng qua app ngân hàng - <strong>Confidentiality</strong> đảm bảo không ai ngoài ngân hàng và khách hàng đọc được nội dung lệnh chuyển; <strong>Integrity</strong> đảm bảo số tiền "5.000.000" không bị đổi thành "50.000.000" trên đường truyền; <strong>Authentication</strong> đảm bảo hệ thống biết chắc chính khách hàng đó (không phải kẻ giả mạo) đã ra lệnh chuyển tiền.</div>
         </section>
 
         <!-- 03 - Ma hoa doi xung/bat doi xung -->
@@ -103,13 +104,15 @@
           <p>Dùng chung 1 khóa để mã hóa và giải mã (ví dụ: AES). Tốc độ nhanh nhưng gặp bài toán khó khăn trong chia sẻ khóa an toàn.</p>
           <div class="flow-diagram">
             <span class="flow-box">Plaintext</span>
-            <span class="flow-arrow">↓ Encryption + Key</span>
+            <span class="flow-arrow has-label">↓ Encryption + Key</span>
             <span class="flow-box">Ciphertext</span>
-            <span class="flow-arrow">↓ Decryption + Same Key</span>
+            <span class="flow-arrow has-label">↓ Decryption + Same Key</span>
             <span class="flow-box">Plaintext</span>
           </div>
+          <p><strong>Ví dụ:</strong> Ngân hàng muốn gửi lệnh <code>"TRANSFER 100 USD"</code>. Dùng khóa AES để mã hóa, nội dung truyền đi trở thành một chuỗi vô nghĩa như <code>"8A91F2C4..."</code>. Chỉ bên nào có đúng khóa AES đó mới giải mã ngược lại được thành <code>"TRANSFER 100 USD"</code>. Vấn đề: hai bên phải tìm cách trao đổi khóa AES này một cách an toàn trước khi giao dịch - Nếu khóa bị lộ trên đường truyền, bất kỳ ai chặn được cũng đọc được nội dung.</p>
+
           <h3>Mã hóa bất đối xứng (Asymmetric)</h3>
-          <p>Dùng cặp khóa <strong>Public Key</strong> (chia sẻ công khai) và <strong>Private Key</strong> (giữ bí mật tuyệt đối).</p>
+          <p>Dùng cặp khóa <strong>Public Key</strong> (chia sẻ công khai) và <strong>Private Key</strong> (giữ bí mật tuyệt đối). Đây chính là cách mã hóa bất đối xứng giải quyết vấn đề "chia sẻ khóa an toàn" ở trên: Ngân hàng mã hóa lệnh chuyển tiền bằng Public Key của khách hàng, và chỉ khách hàng - Người duy nhất giữ Private Key tương ứng - Mới giải mã được, dù Public Key được công khai cho bất kỳ ai.</p>
         </section>
 
         <!-- 04 - Khoa & dia chi Blockchain -->
@@ -171,7 +174,7 @@
           <div class="definition">ZKP cho phép <strong>Prover</strong> chứng minh cho <strong>Verifier</strong> rằng một mệnh đề là đúng mà không tiết lộ thông tin bí mật đằng sau nó.</div>
           <div class="flow-diagram">
             <span class="flow-box">Prover</span>
-            <span class="flow-arrow">↓ Proof</span>
+            <span class="flow-arrow has-label">↓ Proof</span>
             <span class="flow-box">Verifier</span>
             <span class="flow-arrow">↓</span>
             <span class="flow-box">Valid / Invalid</span>

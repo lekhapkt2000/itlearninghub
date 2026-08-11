@@ -151,6 +151,7 @@
 .flow-diagram{display:flex;flex-direction:column;align-items:center;gap:6px;margin:22px 0;padding:32px 20px;background:var(--surface);border:1px solid var(--line)}
 .flow-diagram .flow-box{padding:12px 26px;background:var(--tint);color:var(--primary-ink);border-radius:8px;font-size:12px;font-weight:700;letter-spacing:.02em}
 .flow-diagram .flow-arrow{color:#cbd5e1;font-size:18px}
+.flow-diagram .flow-arrow.has-label{color:var(--muted);font-size:12px;font-weight:600}
 
 .example-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0}
 .example-card{padding:18px 16px;background:var(--surface);border:1px solid var(--line);text-align:center}

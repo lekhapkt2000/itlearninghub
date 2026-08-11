@@ -29,7 +29,7 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .topbar-inner{max-width:1320px;min-height:76px;padding:0 32px;margin:auto;display:flex;align-items:center;gap:32px}
 .brand{display:inline-flex;align-items:center;gap:10px;font-size:20px;font-weight:700;letter-spacing:-.04em}
 .brand>span:last-child>span{color:var(--primary)}
-.brand-mark{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--primary);color:#fff;font:26px Georgia}
+.brand-mark{height:32px;width:auto;display:block}
 .main-nav{display:flex;gap:32px;margin-left:auto;color:var(--muted);font-size:13px;font-weight:600}
 .main-nav a:hover{color:var(--primary)}
 .topbar-actions{display:flex;align-items:center;gap:16px}
@@ -48,11 +48,12 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 
 footer{max-width:1320px;margin:auto;padding:56px 32px 30px;border-top:1px solid var(--line)}
 footer .brand{color:var(--ink);font-size:16px}
-.footer-top{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
-.footer-tagline{margin:0;color:var(--muted);font-size:12px}
-.footer-links{display:flex;gap:24px;justify-content:center;margin:28px 0;color:var(--muted);font-size:12px;font-weight:600}
+.footer-grid{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer-brand{display:flex;flex-direction:column;gap:10px}
+.footer-tagline{margin:0;color:var(--muted);font-size:12px;max-width:280px}
+.footer-links{display:flex;gap:24px;color:var(--muted);font-size:12px;font-weight:600}
 .footer-links a:hover{color:var(--primary)}
-.footer-bottom{padding-top:22px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:10px}
+.footer-bottom{margin-top:32px;padding-top:22px;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:10px}
 
 @media(max-width:760px){
   .topbar-inner{min-height:64px;padding:0 20px}
@@ -61,6 +62,8 @@ footer .brand{color:var(--ink);font-size:16px}
   .mobile-toggle{display:block}
   .outline-button{display:none}
   footer{padding:40px 20px 24px}
-  .footer-links{flex-wrap:wrap;gap:14px 20px}
+  .footer-grid{flex-direction:column;align-items:center;text-align:center}
+  .footer-tagline{max-width:none}
+  .footer-links{flex-wrap:wrap;justify-content:center;gap:14px 20px}
 }
 </content>

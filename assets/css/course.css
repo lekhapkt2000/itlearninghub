@@ -30,6 +30,17 @@
 .panel h2{margin-bottom:6px;font-size:24px}
 .panel-lead{max-width:640px;color:var(--muted);font-size:13px;line-height:1.7}
 
+.intro-panel{display:flex;gap:24px;align-items:flex-start;position:relative;overflow:hidden;padding:32px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,var(--tint) 0%,var(--surface) 60%)}
+.intro-panel::before{content:'';position:absolute;top:-70px;right:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgb(37 99 235 / .12),transparent 70%)}
+.intro-panel+.panel{border-top:none}
+.intro-panel-icon{position:relative;z-index:1;flex-shrink:0;display:grid;place-items:center;width:56px;height:56px;border-radius:14px;background:var(--primary);color:#fff;box-shadow:0 12px 24px -8px rgb(37 99 235 / .4)}
+.intro-panel-icon svg{width:26px;height:26px}
+.intro-panel-body{position:relative;z-index:1;flex:1;min-width:0}
+.intro-panel .eyebrow{margin-bottom:10px}
+.intro-panel h2{margin-bottom:4px}
+.intro-subtitle{margin-bottom:14px;color:var(--muted);font-size:12px;font-weight:600;letter-spacing:.02em}
+@media(max-width:600px){.intro-panel{flex-direction:column;padding:26px}}
+
 .req-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
 .req-card{padding:22px;background:var(--surface);border:1px solid var(--line)}
 .req-card h3{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:12px}

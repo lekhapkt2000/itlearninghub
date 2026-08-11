@@ -61,8 +61,10 @@
 .download-card .dark-button{flex-shrink:0;padding:10px 16px;font-size:11px}
 @media(max-width:600px){.download-card{flex-wrap:wrap}}
 
-.official-lab .eyebrow{color:#93c5fd}
-.official-lab .eyebrow b{color:#fff;font-weight:800}
+.official-badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:16px;padding:6px 12px;border-radius:99px;background:#2563eb;color:#fff;font-size:10px;font-weight:800;letter-spacing:.05em}
+.official-badge svg{width:13px;height:13px;flex-shrink:0}
+.official-lab p{color:#e2e8f0}
+.official-lab p strong{color:#93c5fd}
 .extra-divider{display:flex;align-items:center;gap:12px;margin:40px 0 6px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.1em}
 .extra-divider::before,.extra-divider::after{content:'';flex:1;height:1px;background:var(--line)}
 .extra-intro{margin-bottom:18px;color:var(--muted);font-size:12px;line-height:1.7}

@@ -6,6 +6,8 @@ function safeRun(fn) {
   }
 }
 
+var IS_EN = document.documentElement.lang === 'en';
+
 safeRun(function () {
   document.querySelectorAll('.code-block .copy-btn').forEach((btn) => {
     btn.addEventListener('click', async () => {
@@ -21,7 +23,7 @@ safeRun(function () {
         area.remove();
       }
       const original = btn.textContent;
-      btn.textContent = 'Đã chép ✓';
+      btn.textContent = IS_EN ? 'Copied ✓' : 'Đã chép ✓';
       btn.classList.add('copied');
       setTimeout(() => {
         btn.textContent = original;
@@ -58,7 +60,7 @@ safeRun(function () {
           void opt.offsetWidth;
           opt.classList.add('is-shaking');
           if (feedback) {
-            feedback.textContent = 'Chưa đúng, thử lại nhé!';
+            feedback.textContent = IS_EN ? 'Not quite, try again!' : 'Chưa đúng, thử lại nhé!';
             feedback.classList.remove('correct');
             feedback.classList.add('show', 'wrong');
           }
@@ -93,7 +95,9 @@ safeRun(function () {
       var done = list.querySelectorAll('li.is-checked').length;
       var pct = total ? Math.round((done / total) * 100) : 0;
       barFill.style.width = pct + '%';
-      barLabel.textContent = 'Tiến độ: ' + done + '/' + total + ' mục (' + pct + '%)';
+      barLabel.textContent = IS_EN
+        ? 'Progress: ' + done + '/' + total + ' items (' + pct + '%)'
+        : 'Tiến độ: ' + done + '/' + total + ' mục (' + pct + '%)';
     }
 
     items.forEach(function (li, i) {
@@ -131,7 +135,23 @@ safeRun(function () {
 
 safeRun(function () {
   document.querySelectorAll('.trigger-demo').forEach((demo) => {
-    const scenarios = {
+    const scenarios = IS_EN ? {
+      insert: {
+        old: null,
+        new: "HOTEN = 'Nguyễn Văn A' (new record)",
+        sql: "INSERT INTO KHACHHANG (MAKH, HOTEN)\nVALUES ('KH01', N'Nguyễn Văn A');",
+      },
+      update: {
+        old: "HOTEN = 'Nguyễn Văn A'",
+        new: "HOTEN = 'Nguyễn Văn B'",
+        sql: "UPDATE KHACHHANG\nSET HOTEN = N'Nguyễn Văn B'\nWHERE MAKH = 'KH01';",
+      },
+      delete: {
+        old: "HOTEN = 'Nguyễn Văn A' (deleted)",
+        new: null,
+        sql: "DELETE FROM KHACHHANG\nWHERE MAKH = 'KH01';",
+      },
+    } : {
       insert: {
         old: null,
         new: "HOTEN = 'Nguyễn Văn A' (bản ghi mới)",
@@ -148,6 +168,7 @@ safeRun(function () {
         sql: "DELETE FROM KHACHHANG\nWHERE MAKH = 'KH01';",
       },
     };
+    const emptyLabel = IS_EN ? '(empty)' : '(trống)';
     const buttons = demo.querySelectorAll('[data-demo]');
     const deletedBox = demo.querySelector('[data-table="deleted"]');
     const insertedBox = demo.querySelector('[data-table="inserted"]');
@@ -158,8 +179,8 @@ safeRun(function () {
     function render(key) {
       const s = scenarios[key];
       buttons.forEach((b) => b.classList.toggle('active', b.dataset.demo === key));
-      deletedRow.textContent = s.old || '(trống)';
-      insertedRow.textContent = s.new || '(trống)';
+      deletedRow.textContent = s.old || emptyLabel;
+      insertedRow.textContent = s.new || emptyLabel;
       deletedBox.classList.toggle('is-active', !!s.old);
       insertedBox.classList.toggle('is-active', !!s.new);
       if (sqlCode) sqlCode.textContent = s.sql;

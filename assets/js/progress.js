@@ -2,6 +2,7 @@
   var TOTAL_WEEKS = 6;
   var AVAILABLE_WEEKS = 5;
   var STORAGE_KEY = 'it004-progress';
+  var IS_EN = document.documentElement.lang === 'en';
 
   function getProgress() {
     var v = parseInt(localStorage.getItem(STORAGE_KEY), 10);
@@ -30,13 +31,13 @@
     var ctaText, ctaHref;
 
     if (done === 0) {
-      ctaText = 'Vào học Tuần 1';
+      ctaText = IS_EN ? 'Start Week 1' : 'Vào học Tuần 1';
       ctaHref = 'week-1.html';
     } else if (nextWeek <= AVAILABLE_WEEKS) {
-      ctaText = 'Tiếp tục học Tuần ' + nextWeek;
+      ctaText = IS_EN ? 'Continue to Week ' + nextWeek : 'Tiếp tục học Tuần ' + nextWeek;
       ctaHref = 'week-' + nextWeek + '.html';
     } else {
-      ctaText = 'Ôn tập Tuần ' + AVAILABLE_WEEKS;
+      ctaText = IS_EN ? 'Review Week ' + AVAILABLE_WEEKS : 'Ôn tập Tuần ' + AVAILABLE_WEEKS;
       ctaHref = 'week-' + AVAILABLE_WEEKS + '.html';
     }
 

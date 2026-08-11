@@ -1,5 +1,4 @@
 (function () {
-  var TOTAL_WEEKS = 6;
   var AVAILABLE_WEEKS = 5;
   var STORAGE_KEY = 'it004-progress';
   var IS_EN = document.documentElement.lang === 'en';
@@ -21,11 +20,8 @@
   }
 
   var cta = document.querySelector('[data-progress-cta]');
-  var countEl = document.querySelector('[data-progress-count]');
-  var barEl = document.querySelector('[data-progress-bar]');
-  var percentEl = document.querySelector('[data-progress-percent]');
 
-  if (cta || countEl || barEl || percentEl) {
+  if (cta) {
     var done = Math.min(getProgress(), AVAILABLE_WEEKS);
     var nextWeek = done + 1;
     var ctaText, ctaHref;
@@ -41,19 +37,7 @@
       ctaHref = 'week-' + AVAILABLE_WEEKS + '.html';
     }
 
-    if (cta) {
-      cta.setAttribute('href', ctaHref);
-      cta.innerHTML = ctaText + ' <span>›</span>';
-    }
-    if (countEl) {
-      countEl.innerHTML = done + '<span>/' + TOTAL_WEEKS + '</span>';
-    }
-    var percent = Math.round((done / TOTAL_WEEKS) * 100);
-    if (barEl) {
-      barEl.style.width = percent + '%';
-    }
-    if (percentEl) {
-      percentEl.textContent = percent + '%';
-    }
+    cta.setAttribute('href', ctaHref);
+    cta.innerHTML = ctaText + ' <span>›</span>';
   }
 })();

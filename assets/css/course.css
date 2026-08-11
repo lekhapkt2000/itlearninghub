@@ -14,11 +14,6 @@
 .stat-card strong{display:block;color:var(--ink);font-size:22px;letter-spacing:-.03em}
 .stat-card span{color:var(--muted);font-size:10px;letter-spacing:.02em}
 
-.progress-card{width:190px;padding:18px 20px;background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 10px -6px rgb(15 23 42 / .12)}
-.progress-card strong{display:block;margin-top:14px;color:var(--ink);font-size:28px;letter-spacing:-.03em}
-.progress-card strong span{color:var(--muted);font-size:14px}
-.progress-card>span{color:var(--muted);font-size:11px}
-.progress-percent{margin-left:6px;color:var(--primary);font-size:11px;font-weight:700}
 .mini-progress b{background:linear-gradient(90deg,var(--primary),#60a5fa)}
 
 /* Horizontal course navigation - shared across overview + week pages */

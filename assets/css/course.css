@@ -86,8 +86,8 @@
 .lesson-toc a{display:flex;gap:8px;padding:7px 8px;border-left:3px solid transparent;border-radius:0 6px 6px 0;color:var(--muted);font-size:12px;font-weight:600;transition:background .2s,color .2s,border-color .2s,transform .2s}
 .lesson-toc a b{color:#cbd5e1;font:700 10px var(--font-mono)}
 .lesson-toc a:hover{background:var(--tint);color:var(--ink)}
-.lesson-toc a.active{background:#dbeafe;border-left-color:var(--primary);color:var(--primary-ink);font-weight:800;transform:translateX(2px)}
-.lesson-toc a.active b{color:var(--primary)}
+.lesson-toc a.active{background:var(--primary);border-left-color:var(--primary-ink);color:#fff;font-weight:800;box-shadow:0 4px 12px -4px rgb(37 99 235 / .5)}
+.lesson-toc a.active b{color:#fff}
 
 .lesson-content{min-width:0}
 .lesson-section{padding:44px 0;border-top:1px solid var(--line)}

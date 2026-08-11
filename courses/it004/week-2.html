@@ -8,8 +8,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
   <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
-  <link rel="stylesheet" href="../../assets/css/base.css?v=14">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=21">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=15">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=23">
 </head>
 <body>
   <header class="topbar">
@@ -92,13 +92,13 @@ VALUES
           <h2>Toán tử</h2>
           <div class="definition">Toán tử là các ký hiệu hoặc từ khóa dùng để thực hiện phép toán, so sánh hoặc kết hợp điều kiện trong câu truy vấn.</div>
           <p>Ví dụ dùng trong các mục dưới đây, giả sử có bảng:</p>
-          <div class="ascii-block">NhanVien
-────────────────────────────────
-MaNV | HoTen        | Luong
-────────────────────────────────
-NV01 | Nguyễn An    | 10000000
-NV02 | Trần Bình    | 15000000
-NV03 | Lê Cường     | 12000000</div>
+          <p class="ascii-label">NhanVien</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaNV</th><th>HoTen</th><th>Luong</th></tr>
+            <tr><td>NV01</td><td>Nguyễn An</td><td>10000000</td></tr>
+            <tr><td>NV02</td><td>Trần Bình</td><td>15000000</td></tr>
+            <tr><td>NV03</td><td>Lê Cường</td><td>12000000</td></tr>
+          </table></div>
 
           <h3>Toán tử số học</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -112,11 +112,12 @@ NV03 | Lê Cường     | 12000000</div>
           <p>Tính lương sau khi tăng 10%:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong, Luong * 1.1 AS LuongMoi
 FROM NhanVien;</code></pre></div>
-          <div class="ascii-block">HoTen          Luong       LuongMoi
-------------------------------------
-Nguyễn An      10000000    11000000
-Trần Bình      15000000    16500000
-Lê Cường       12000000    13200000</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>HoTen</th><th>Luong</th><th>LuongMoi</th></tr>
+            <tr><td>Nguyễn An</td><td>10000000</td><td>11000000</td></tr>
+            <tr><td>Trần Bình</td><td>15000000</td><td>16500000</td></tr>
+            <tr><td>Lê Cường</td><td>12000000</td><td>13200000</td></tr>
+          </table></div>
           <div class="inline-ok"><strong>Lưu ý:</strong> Toán tử số học có thể dùng trực tiếp trong <code>SELECT</code> để tạo giá trị tính toán mà không cần lưu thêm cột mới vào bảng.</div>
 
           <h3>Toán tử so sánh</h3>
@@ -346,12 +347,20 @@ lọc nhóm</div>
           <p class="eyebrow">05 · CÁC PHÉP KẾT JOIN</p>
           <h2>JOIN</h2>
           <div class="definition"><code>JOIN</code> dùng để kết hợp dữ liệu từ hai hoặc nhiều bảng dựa trên một điều kiện liên quan giữa các bảng.</div>
-          <div class="ascii-block">NhanVien                PhongBan
-┌─────────────┐         ┌─────────────┐
-│ MaNV        │         │ MaPB        │
-│ HoTen       │         │ TenPB       │
-│ MaPB ───────┼─────────┼─ MaPB       │
-└─────────────┘         └─────────────┘</div>
+          <div class="er-side-by-side">
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>NhanVien</th></tr>
+              <tr><td>MaNV</td></tr>
+              <tr><td>HoTen</td></tr>
+              <tr><td>MaPB</td></tr>
+            </table></div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>PhongBan</th></tr>
+              <tr><td>MaPB</td></tr>
+              <tr><td>TenPB</td></tr>
+            </table></div>
+          </div>
+          <p class="er-relation">NhanVien.MaPB = PhongBan.MaPB</p>
 
           <h3>INNER JOIN</h3>
           <p>Chỉ lấy những dòng <strong>có dữ liệu khớp ở cả hai bảng</strong>:</p>
@@ -370,11 +379,12 @@ INNER JOIN PhongBan pb
 FROM NhanVien nv
 LEFT JOIN PhongBan pb
     ON nv.MaPB = pb.MaPB;</code></pre></div>
-          <div class="ascii-block">HoTen          TenPB
-----------------------------
-Nguyễn An      Phòng KT
-Trần Bình      Phòng KD
-Lê Cường       NULL</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>HoTen</th><th>TenPB</th></tr>
+            <tr><td>Nguyễn An</td><td>Phòng KT</td></tr>
+            <tr><td>Trần Bình</td><td>Phòng KD</td></tr>
+            <tr><td>Lê Cường</td><td>NULL</td></tr>
+          </table></div>
 
           <h3>RIGHT JOIN</h3>
           <p>Ngược lại với <code>LEFT JOIN</code>: giữ toàn bộ dữ liệu của bảng bên phải:</p>

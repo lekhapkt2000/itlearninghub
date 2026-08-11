@@ -8,8 +8,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
   <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
-  <link rel="stylesheet" href="../../assets/css/base.css?v=14">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=21">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=15">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=23">
 </head>
 <body>
   <header class="topbar">
@@ -82,23 +82,20 @@
     ├── Ngày sinh
     └── Lớp</div>
           <p>Nếu có hàng chục nghìn sinh viên, việc lưu trữ bằng các file rời rạc sẽ khó quản lý. CSDL giúp tổ chức dữ liệu thành các bảng có quan hệ với nhau:</p>
-          <div class="ascii-block">DATABASE: QuanLySinhVien
-
-        ┌──────────────┐
-        │      LOP     │  (1)
-        ├──────────────┤
-        │ MaLop        │
-        │ TenLop       │
-        └──────┬───────┘
-               │ 1-N
-        ┌──────▼───────┐
-        │    SINHVIEN  │  (N)
-        ├──────────────┤
-        │ MaSV         │
-        │ HoTen        │
-        │ NgaySinh     │
-        │ MaLop (FK)   │
-        └──────────────┘</div>
+          <p class="ascii-label">DATABASE: QuanLySinhVien</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>LOP <span class="table-tag">(1) - bảng cha</span></th></tr>
+            <tr><td>MaLop</td></tr>
+            <tr><td>TenLop</td></tr>
+          </table></div>
+          <p class="er-relation">↓ Quan hệ 1-N: một LOP có nhiều SINHVIEN.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>SINHVIEN <span class="table-tag">(N) - bảng con</span></th></tr>
+            <tr><td>MaSV</td></tr>
+            <tr><td>HoTen</td></tr>
+            <tr><td>NgaySinh</td></tr>
+            <tr><td>MaLop <code>(FK)</code></td></tr>
+          </table></div>
           <div class="inline-warning">Lỗi hay gặp khi vẽ sơ đồ: đặt chiều mũi tên ngược, khiến người đọc hiểu nhầm là "1 Sinh viên có nhiều Lớp". Chiều đúng phải đi từ bảng cha xuống bảng con: <strong>LOP</strong> là bảng cha (giữ khóa chính <code>MaLop</code>), <strong>SINHVIEN</strong> là bảng con (giữ khóa ngoại <code>MaLop</code> tham chiếu đến LOP) - một Lớp có nhiều Sinh viên (1-N), không phải ngược lại.</div>
         </section>
 
@@ -246,15 +243,13 @@ NgayLap DATETIME</code></pre></div>
           <p class="eyebrow">05 · TABLE - BẢNG DỮ LIỆU</p>
           <h2>Table</h2>
           <p>Một Table bao gồm Column (thuộc tính của dữ liệu) và Row (một bản ghi). Table là tập hợp các bản ghi có cùng cấu trúc. Ví dụ:</p>
-          <div class="ascii-block">SINHVIEN
-
-┌────────┬─────────────────┬──────────────┐
-│ MaSV   │ HoTen           │ NgaySinh     │
-├────────┼─────────────────┼──────────────┤
-│ 1      │ Nguyễn Văn An   │ 2004-05-20   │
-│ 2      │ Trần Thị Bình   │ 2004-08-15   │
-│ 3      │ Lê Văn Cường    │ 2004-11-02   │
-└────────┴─────────────────┴──────────────┘</div>
+          <p class="ascii-label">SINHVIEN</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaSV</th><th>HoTen</th><th>NgaySinh</th></tr>
+            <tr><td>1</td><td>Nguyễn Văn An</td><td>2004-05-20</td></tr>
+            <tr><td>2</td><td>Trần Thị Bình</td><td>2004-08-15</td></tr>
+            <tr><td>3</td><td>Lê Văn Cường</td><td>2004-11-02</td></tr>
+          </table></div>
 
           <h3>Tạo Table</h3>
           <p>Cú pháp cơ bản:</p>
@@ -349,24 +344,20 @@ SV002 → kha@uit.edu.vn   ✗ trùng</div>
 
           <h3>FOREIGN KEY</h3>
           <p><code>FOREIGN KEY</code> dùng để tạo <strong>mối liên hệ giữa các bảng</strong>. Ví dụ có hai bảng:</p>
-          <div class="ascii-block">LOP
-┌────────┬─────────────┐
-│ MaLop  │ TenLop      │
-├────────┼─────────────┤
-│ 1      │ HTTT2022.1  │
-│ 2      │ HTTT2022.2  │
-└────────┴─────────────┘
-
-          ▲
-          │ MaLop
-SINHVIEN
-┌────────┬─────────────┐
-│ MaSV   │ MaLop       │
-├────────┼─────────────┤
-│ 101    │ 1           │
-│ 102    │ 1           │
-│ 103    │ 2           │
-└────────┴─────────────┘</div>
+          <p class="ascii-label">LOP</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaLop</th><th>TenLop</th></tr>
+            <tr><td>1</td><td>HTTT2022.1</td></tr>
+            <tr><td>2</td><td>HTTT2022.2</td></tr>
+          </table></div>
+          <p class="er-relation">↑ SINHVIEN.MaLop tham chiếu đến LOP.MaLop.</p>
+          <p class="ascii-label">SINHVIEN</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaSV</th><th>MaLop</th></tr>
+            <tr><td>101</td><td>1</td></tr>
+            <tr><td>102</td><td>1</td></tr>
+            <tr><td>103</td><td>2</td></tr>
+          </table></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE Lop
 (
     MaLop INT PRIMARY KEY,

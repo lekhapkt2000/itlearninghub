@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
   <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
   <link rel="stylesheet" href="../../assets/css/base.css?v=18">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=26">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=27">
 </head>
 <body>
   <header class="topbar">
@@ -570,6 +570,30 @@ WHERE MaSV = 103;</code></pre></div>
         <section class="lesson-section" id="bai-tap">
           <p class="eyebrow">08 · BÀI TẬP THỰC HÀNH VÀ HỎI ĐÁP</p>
           <h2>Thực hành tổng hợp</h2>
+
+          <div class="practice-lab official-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> <b>BÀI TẬP CHÍNH THỨC</b> · BTTH1</p>
+            <h3>Trung tâm Thể dục Thể thao (TrungTam_TDTT)</h3>
+            <p><strong>Yêu cầu 1:</strong> tạo CSDL <code style="background:#ffffff1a;color:#e2e8f0">TrungTam_TDTT</code> với 6 quan hệ (PHONGTAP, HUANLUYENVIEN, HOCVIEN, LOPTAP, DANGKY, LICHTAP), khóa chính/khóa ngoại và dữ liệu mẫu. <strong>Yêu cầu 2:</strong> theo đề bài giảng viên cung cấp. Nộp 2 file script riêng: <code style="background:#ffffff1a;color:#e2e8f0">&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC1.sql</code> và <code style="background:#ffffff1a;color:#e2e8f0">&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC2.sql</code>.</p>
+          </div>
+
+          <div class="download-card">
+            <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
+            <div class="download-card-body">
+              <strong>Đề bài đầy đủ - Bài tập thực hành Tuần 1 (BTTH1)</strong>
+              <span>File PDF · câu hỏi chi tiết và dữ liệu mẫu cho 6 quan hệ</span>
+            </div>
+            <a class="dark-button" href="../../assets/file/BTTH1-tuan1-co-so-du-lieu.pdf" download>Tải file <span>↓</span></a>
+          </div>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Về source code bài giải</h3>
+            <p>Source code/script giải bài tập chỉ được cung cấp riêng cho sinh viên đang học lớp thực hành môn IT004, không công khai trên website.</p>
+          </div>
+
+          <div class="extra-divider">LUYỆN THÊM · KHÔNG BẮT BUỘC</div>
+          <p class="extra-intro">Ví dụ minh họa thêm với cơ sở dữ liệu mẫu <code>QuanLyBanHang</code> để luyện lại toàn bộ nội dung DDL/Constraint của tuần này - không thuộc bài nộp BTTH1.</p>
+
           <div class="practice-lab">
             <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
             <h3>Quản lý bán hàng</h3>
@@ -594,33 +618,6 @@ VALUES (104, N'Sinh viên không có lớp', '2004-01-01', 999);</code></pre></d
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (105, N'Sinh viên lỗi ngày', '1800-01-01', 1);</code></pre></div>
           <p>→ Vi phạm <code>CHECK</code>.</p>
-
-          <div class="practice-lab">
-            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
-            <h3>Bài tập thực hành tuần 1 (BTTH1)</h3>
-            <p>Yêu cầu 1 - Bài làm lưu trên một file script tên <code style="background:#ffffff1a;color:#e2e8f0">&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC1.sql</code>. Sử dụng các câu lệnh SQL trong SQL Server Management Studio để thực hiện:</p>
-            <ol>
-              <li><strong>Câu 1:</strong> Tạo cơ sở dữ liệu đặt tên <code style="background:#ffffff1a;color:#e2e8f0">TrungTam_TDTT</code>, gồm 6 quan hệ <code style="background:#ffffff1a;color:#e2e8f0">PHONGTAP</code>, <code style="background:#ffffff1a;color:#e2e8f0">HUANLUYENVIEN</code>, <code style="background:#ffffff1a;color:#e2e8f0">HOCVIEN</code>, <code style="background:#ffffff1a;color:#e2e8f0">LOPTAP</code>, <code style="background:#ffffff1a;color:#e2e8f0">DANGKY</code>, <code style="background:#ffffff1a;color:#e2e8f0">LICHTAP</code>.</li>
-              <li><strong>Câu 2:</strong> Tạo khóa chính, khóa ngoại cho các quan hệ trên.</li>
-              <li><strong>Câu 3:</strong> Nhập dữ liệu cho 6 quan hệ theo dữ liệu đề bài đã cung cấp.</li>
-            </ol>
-            <p>Yêu cầu 2 - Bài làm lưu trên một file script tên <code style="background:#ffffff1a;color:#e2e8f0">&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC2.sql</code>. Sử dụng các câu lệnh SQL trong SQL Server Management Studio để thực hiện yêu cầu theo đề bài giảng viên cung cấp (dựa trên cơ sở dữ liệu <code style="background:#ffffff1a;color:#e2e8f0">TrungTam_TDTT</code> đã tạo ở Yêu cầu 1).</p>
-          </div>
-
-          <div class="download-card">
-            <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
-            <div class="download-card-body">
-              <strong>Đề bài đầy đủ - Bài tập thực hành Tuần 1 (BTTH1)</strong>
-              <span>File PDF · câu hỏi chi tiết và dữ liệu mẫu cho 6 quan hệ</span>
-            </div>
-            <a class="dark-button" href="../../assets/file/BTTH1-tuan1-co-so-du-lieu.pdf" download>Tải file <span>↓</span></a>
-          </div>
-
-          <div class="warning-box">
-            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy định nộp bài</h3>
-            <p>Nộp 2 file riêng biệt cho 2 yêu cầu, đặt tên đúng định dạng <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC1.sql</code> và <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC2.sql</code>.</p>
-            <p>Source code/script giải bài tập chỉ được cung cấp riêng cho sinh viên đang học lớp thực hành môn IT004, không công khai trên website.</p>
-          </div>
         </section>
 
         <!-- 09 - Checklist -->

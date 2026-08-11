@@ -1,0 +1,703 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT004 Week 1 - Database Fundamentals: database overview, SSMS, data types, Database, Table, Constraints, and Data Manipulation (DML).">
+  <title>Week 1 · Database Fundamentals - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=16">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=24">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions">
+        <div class="lang-switch"><a href="../../../courses/it004/week-1.html">VI</a><a href="index.html" class="active">EN</a></div>
+        <button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button>
+        <a class="outline-button" href="index.html">IT004 Overview <span>›</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IT004</a><span>/</span>Week 1</p>
+
+    <div class="week-header">
+      <span class="week-tag">PRACTICE 01 · BTHT1</span>
+      <h1>Database Fundamentals</h1>
+      <div class="week-meta"><span>5 periods</span><span>Database</span><span>SQL Server</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Objective:</strong> Get familiar with SQL Server, create databases, create tables, set up integrity constraints, and perform insert, update, and delete operations.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IT004 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html" class="active">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 6 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Review <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Exam <small>Coming Soon</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 1 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#tong-quan" data-toc><b>01</b> Overview</a>
+        <a href="#ssms" data-toc><b>02</b> SSMS</a>
+        <a href="#data-types" data-toc><b>03</b> Data Types</a>
+        <a href="#database" data-toc><b>04</b> Database</a>
+        <a href="#table" data-toc><b>05</b> Table</a>
+        <a href="#constraints" data-toc><b>06</b> Constraints</a>
+        <a href="#dml" data-toc><b>07</b> DML</a>
+        <a href="#bai-tap" data-toc><b>08</b> Exercises</a>
+        <a href="#checklist" data-toc><b>09</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Overview -->
+        <section class="lesson-section" id="tong-quan">
+          <p class="eyebrow">01 · DATABASE OVERVIEW</p>
+          <h2>What Is a Database?</h2>
+          <div class="definition"><strong>A Database</strong> is a collection of data organized and stored in a defined structure, making it easy to manage, retrieve, and process.</div>
+          <p>In practice, databases are used across many fields:</p>
+          <div class="example-grid">
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8.5 10 3 17.5 8.5"/><path d="M2.5 17h15"/><path d="M2.5 14.5h15"/><path d="M5 8.5v6"/><path d="M10 8.5v6"/><path d="M15 8.5v6"/></svg></span><strong>Banking</strong><span>Accounts, transactions, balances</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2.5" width="12" height="15"/><rect x="6.3" y="5" width="2" height="2"/><rect x="11.7" y="5" width="2" height="2"/><rect x="6.3" y="9" width="2" height="2"/><rect x="11.7" y="9" width="2" height="2"/><rect x="8.4" y="13.5" width="3.2" height="4"/></svg></span><strong>Hotels</strong><span>Guests, rooms, bookings</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 2.5 2.5 9l5.8 2.2L10.3 17l2.2-5.7 5-8.8z"/><path d="M8.3 11.2 17.5 2.5"/></svg></span><strong>Airlines</strong><span>Passengers, flights, schedules</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5.5 7.5 4.3 3.5 4.3 3.5 15.3 7.5 15.3 10 16.5"/><path d="M10 5.5 12.5 4.3 16.5 4.3 16.5 15.3 12.5 15.3 10 16.5"/><path d="M10 5.5v11"/></svg></span><strong>Libraries</strong><span>Books, readers, borrowing/returns</span></div>
+          </div>
+
+          <h3>Example</h3>
+          <p>A university might need to manage:</p>
+          <div class="ascii-block">Student
+    │
+    ├── Student ID
+    ├── Full Name
+    ├── Date of Birth
+    └── Class</div>
+          <p>With tens of thousands of students, storing everything in separate files becomes hard to manage. A database organizes the data into related tables:</p>
+          <p class="ascii-label">DATABASE: QuanLySinhVien</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>LOP <span class="table-tag">(1) - parent table</span></th></tr>
+            <tr><td>MaLop</td></tr>
+            <tr><td>TenLop</td></tr>
+          </table></div>
+          <p class="er-relation">↓ 1-N relationship: one LOP has many SINHVIEN.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>SINHVIEN <span class="table-tag">(N) - child table</span></th></tr>
+            <tr><td>MaSV</td></tr>
+            <tr><td>HoTen</td></tr>
+            <tr><td>NgaySinh</td></tr>
+            <tr><td>MaLop <code>(FK)</code></td></tr>
+          </table></div>
+          <div class="inline-warning">Common mistake when drawing this diagram: pointing the arrow the wrong way, which makes readers think "1 student has many classes." The correct direction goes from parent down to child: <strong>LOP</strong> is the parent table (holds the primary key <code>MaLop</code>), <strong>SINHVIEN</strong> is the child table (holds the foreign key <code>MaLop</code> referencing LOP) - one class has many students (1-N), not the other way around.</div>
+        </section>
+
+        <!-- 02 - SSMS -->
+        <section class="lesson-section" id="ssms">
+          <p class="eyebrow">02 · SQL SERVER MANAGEMENT STUDIO</p>
+          <h2>Installing SQL Server Management Studio</h2>
+          <p>In the practice sessions, students use <strong>SQL Server Management Studio (SSMS)</strong> to work with SQL Server. Make sure this tool is installed before class.</p>
+          <p>Once installed, the SSMS interface is typically used to:</p>
+          <ul>
+            <li>Connect to SQL Server</li>
+            <li>Create a Database</li>
+            <li>Create a Table</li>
+            <li>Write and execute SQL statements</li>
+            <li>View data</li>
+            <li>Manage objects within the Database</li>
+          </ul>
+
+          <h3>Basic Workflow</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Open SSMS</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Connect to SQL Server</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Select / create a Database</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Open a New Query</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Write the SQL statement</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Execute</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">View the results</span>
+          </div>
+
+          <h3>Example: Your First Statement</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT 'Hello SQL Server';</code></pre></div>
+          <p>Result:</p>
+          <div class="ascii-block">Hello SQL Server</div>
+        </section>
+
+        <!-- 03 - Data Types -->
+        <section class="lesson-section" id="data-types">
+          <p class="eyebrow">03 · DATA TYPES IN SQL</p>
+          <h2>Data Types in SQL</h2>
+          <div class="definition">When creating a table, every column must be assigned a <strong>data type</strong> - defining what kind of value it can store (numbers, text, dates...) and how much storage it uses. Choosing the right data type keeps data accurate, saves storage, and ensures later operations work correctly.</div>
+          <div class="ascii-block">SinhVien
+
+MaSV       → INT
+HoTen      → NVARCHAR(50)
+NgaySinh   → DATE
+DiemTB     → DECIMAL(4,2)
+DaTotNghiep → BIT</div>
+
+          <h3>Integer Types</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Type</th><th>Storage</th><th>Value Range</th></tr>
+            <tr><td><code>TINYINT</code></td><td>1 byte</td><td>0 → 255</td></tr>
+            <tr><td><code>SMALLINT</code></td><td>2 bytes</td><td>-32,768 → 32,767</td></tr>
+            <tr><td><code>INT</code></td><td>4 bytes</td><td>≈ -2.1 billion → 2.1 billion</td></tr>
+            <tr><td><code>BIGINT</code></td><td>8 bytes</td><td>Very large range</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">MaSV INT
+SoLuong INT
+Tuoi TINYINT</code></pre></div>
+          <div class="inline-ok"><strong>Selection principle:</strong> Prefer the smallest range that still fits your real-world data, to save storage. For example, <code>Tuoi</code> (age, 0-150) should use <code>TINYINT</code> instead of <code>INT</code>.</div>
+
+          <h3>Boolean Type - BIT</h3>
+          <p><code>BIT</code> stores true/false values, commonly used for "yes/no" columns:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DaTotNghiep BIT</code></pre></div>
+          <p>Stored values: <code>1</code> (true), <code>0</code> (false), or <code>NULL</code> (undefined).</p>
+
+          <h3>Decimal / Floating-Point Types</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECIMAL(p,s)
+NUMERIC(p,s)
+FLOAT
+REAL
+MONEY
+SMALLMONEY</code></pre></div>
+          <p><code>DECIMAL(p,s)</code> lets you define the total number of digits (<code>p</code>) and the number of digits after the decimal point (<code>s</code>). For example:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DiemTB DECIMAL(4,2)</code></pre></div>
+          <p>Can store: <code>8.50</code>, <code>9.25</code>, <code>10.00</code></p>
+          <p><code>MONEY</code> and <code>SMALLMONEY</code> are dedicated to currency values, more precise than <code>FLOAT</code>/<code>REAL</code> for calculations:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DonGia MONEY</code></pre></div>
+          <div class="inline-ok"><strong>Recommendation:</strong> For grades, unit prices, and money - prefer <code>DECIMAL(p,s)</code> or <code>MONEY</code> since they give exact results. <code>FLOAT</code>/<code>REAL</code> are approximate and can drift after repeated calculations.</div>
+
+          <h3>String Types</h3>
+          <p><code>CHAR(n)</code> - a <strong>fixed-length</strong> string (always occupies exactly n characters, padded with spaces):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">MaSV CHAR(8)</code></pre></div>
+          <p>Example value: <code>"23520001"</code></p>
+          <p><code>VARCHAR(n)</code> - a <strong>variable-length</strong> string (only uses as much storage as the actual number of characters):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">Email VARCHAR(100)</code></pre></div>
+          <p><code>NCHAR</code> and <code>NVARCHAR</code> - similar to <code>CHAR</code>/<code>VARCHAR</code> but store Unicode strings, suitable for storing accented Vietnamese text:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">HoTen NVARCHAR(50)
+DiaChi NVARCHAR(200)</code></pre></div>
+          <p>When text can be very long with no fixed length in advance (e.g. a product description), use <code>VARCHAR(MAX)</code> or <code>NVARCHAR(MAX)</code> instead of declaring a fixed size.</p>
+
+          <h4>Quick Comparison - Which String Type to Use?</h4>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Type</th><th>Length</th><th>Unicode (Vietnamese)</th><th>Use When</th></tr>
+            <tr><td><code>CHAR(n)</code></td><td>Fixed</td><td>No</td><td>Codes that are always the same length (e.g. an 8-character student ID)</td></tr>
+            <tr><td><code>VARCHAR(n)</code></td><td>Variable</td><td>No</td><td>English/numeric strings of variable length</td></tr>
+            <tr><td><code>NCHAR(n)</code></td><td>Fixed</td><td>Yes</td><td>Vietnamese codes that are always the same length</td></tr>
+            <tr><td><code>NVARCHAR(n)</code></td><td>Variable</td><td>Yes</td><td>Vietnamese names, addresses, descriptions - <strong>the most commonly used</strong></td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>Recommendation:</strong> When storing Vietnamese data in SQL Server, use <code>NVARCHAR</code> and prefix string literals with <code>N</code> when inserting values.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
+VALUES (1, N'Nguyễn Văn An', 'HTTT2022.1');</code></pre></div>
+
+          <h3>Date and Time Types</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Type</th><th>Stores</th><th>Example Value</th></tr>
+            <tr><td><code>DATE</code></td><td>Date only</td><td><code>'2004-05-20'</code></td></tr>
+            <tr><td><code>TIME</code></td><td>Time only</td><td><code>'14:30:00'</code></td></tr>
+            <tr><td><code>DATETIME</code></td><td>Date + time</td><td><code>'2004-05-20 14:30:00'</code></td></tr>
+            <tr><td><code>SMALLDATETIME</code></td><td>Date + time (lower precision)</td><td><code>'2004-05-20 14:30:00'</code></td></tr>
+            <tr><td><code>DATETIME2</code></td><td>Date + time (higher precision, recommended over <code>DATETIME</code> for new systems)</td><td><code>'2004-05-20 14:30:00.123'</code></td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">NgaySinh DATE
+NgayLap DATETIME</code></pre></div>
+        </section>
+
+        <!-- 04 - Database -->
+        <section class="lesson-section" id="database">
+          <p class="eyebrow">04 · DATABASE</p>
+          <h2>Database</h2>
+          <h3>Creating a Database</h3>
+          <p>Syntax:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE &lt;Database name&gt;;</code></pre></div>
+          <p>Example:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QuanLySinhVien;</code></pre></div>
+
+          <h3>Selecting a Database to Work With</h3>
+          <p>After creating a database, use <code>USE</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">USE QuanLySinhVien;</code></pre></div>
+          <p>From this point on, subsequent statements run against the <code>QuanLySinhVien</code> database. Always check which database is currently selected in SSMS before running commands.</p>
+
+          <h3>Dropping a Database</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DROP DATABASE QuanLySinhVien;</code></pre></div>
+          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Caution:</strong> This deletes the database and all data inside it. A database that is in use or has active connections cannot be dropped directly.</div>
+        </section>
+
+        <!-- 05 - Table -->
+        <section class="lesson-section" id="table">
+          <p class="eyebrow">05 · TABLE</p>
+          <h2>Table</h2>
+          <p>A Table consists of Columns (data attributes) and Rows (records). A Table is a collection of records sharing the same structure. Example:</p>
+          <p class="ascii-label">SINHVIEN</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaSV</th><th>HoTen</th><th>NgaySinh</th></tr>
+            <tr><td>1</td><td>Nguyễn Văn An</td><td>2004-05-20</td></tr>
+            <tr><td>2</td><td>Trần Thị Bình</td><td>2004-08-15</td></tr>
+            <tr><td>3</td><td>Lê Văn Cường</td><td>2004-11-02</td></tr>
+          </table></div>
+
+          <h3>Creating a Table</h3>
+          <p>Basic syntax:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE &lt;Table name&gt;
+(
+    &lt;Column 1&gt; &lt;Data type&gt;,
+    &lt;Column 2&gt; &lt;Data type&gt;,
+    ...
+);</code></pre></div>
+          <p>Example:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
+(
+    MaSV INT,
+    HoTen NVARCHAR(50),
+    NgaySinh DATE,
+    Lop NVARCHAR(20)
+);</code></pre></div>
+
+          <div class="quick-check">
+            <p class="eyebrow">QUICK CHECK</p>
+            <p class="qc-question">Which statement is used to create a Table?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">CREATE DATABASE</button>
+              <button class="qc-option" type="button" data-correct="true">CREATE TABLE</button>
+              <button class="qc-option" type="button" data-correct="false">ALTER DATABASE</button>
+              <button class="qc-option" type="button" data-correct="false">INSERT TABLE</button>
+            </div>
+            <div class="qc-feedback correct">✓ Correct! <strong>CREATE TABLE</strong> is used to create a table in the Database.</div>
+          </div>
+
+          <h3>Dropping a Table</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DROP TABLE SinhVien;</code></pre></div>
+          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>When a Table is dropped, the data inside it is also deleted. A Table cannot be dropped while another table's <strong>Foreign Key</strong> still references it.</div>
+
+          <h3>ALTER TABLE</h3>
+          <p><code>ALTER TABLE</code> is used to change a Table's structure after it has been created.</p>
+          <p><strong>Add a column</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SinhVien
+ADD Email NVARCHAR(100);</code></pre></div>
+          <p><strong>Drop a column</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SinhVien
+DROP COLUMN Email;</code></pre></div>
+          <p><strong>Change a column's data type</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SinhVien
+ALTER COLUMN NgaySinh DATE;</code></pre></div>
+        </section>
+
+        <!-- 06 - Constraints -->
+        <section class="lesson-section" id="constraints">
+          <p class="eyebrow">06 · INTEGRITY CONSTRAINTS</p>
+          <h2>Constraints</h2>
+          <div class="definition">A <strong>Constraint</strong> helps ensure that data in the Database follows certain rules.</div>
+          <p>The key constraints covered in Week 1:</p>
+          <div class="ascii-block">PRIMARY KEY
+FOREIGN KEY
+UNIQUE
+NOT NULL
+CHECK
+DEFAULT</div>
+
+          <h3>PRIMARY KEY</h3>
+          <p>The primary key <strong>uniquely identifies each record</strong> in a Table.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
+(
+    MaSV INT PRIMARY KEY,
+    HoTen NVARCHAR(50),
+    NgaySinh DATE
+);</code></pre></div>
+          <p>This means no two students can share the same <code>MaSV</code>.</p>
+
+          <h3>NOT NULL</h3>
+          <p><code>NOT NULL</code> requires a column to always have a value.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
+(
+    MaSV INT PRIMARY KEY,
+    HoTen NVARCHAR(50) NOT NULL,
+    NgaySinh DATE
+);</code></pre></div>
+          <p>The following statement is invalid because <code>HoTen</code> is declared <code>NOT NULL</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
+VALUES (1, NULL, '2004-05-20');</code></pre></div>
+
+          <h3>UNIQUE</h3>
+          <p>Ensures values in a column are never duplicated.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
+(
+    MaSV INT PRIMARY KEY,
+    Email NVARCHAR(100) UNIQUE
+);</code></pre></div>
+          <div class="ascii-block">SV001 → kha@uit.edu.vn
+SV002 → kha@uit.edu.vn   ✗ duplicate</div>
+
+          <h3>FOREIGN KEY</h3>
+          <p><code>FOREIGN KEY</code> is used to create a <strong>relationship between tables</strong>. For example, given two tables:</p>
+          <p class="ascii-label">LOP</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaLop</th><th>TenLop</th></tr>
+            <tr><td>1</td><td>HTTT2022.1</td></tr>
+            <tr><td>2</td><td>HTTT2022.2</td></tr>
+          </table></div>
+          <p class="er-relation">↑ SINHVIEN.MaLop references LOP.MaLop.</p>
+          <p class="ascii-label">SINHVIEN</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaSV</th><th>MaLop</th></tr>
+            <tr><td>101</td><td>1</td></tr>
+            <tr><td>102</td><td>1</td></tr>
+            <tr><td>103</td><td>2</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE Lop
+(
+    MaLop INT PRIMARY KEY,
+    TenLop NVARCHAR(50)
+);
+
+CREATE TABLE SinhVien
+(
+    MaSV INT PRIMARY KEY,
+    HoTen NVARCHAR(50),
+    MaLop INT,
+
+    FOREIGN KEY (MaLop)
+        REFERENCES Lop(MaLop)
+);</code></pre></div>
+          <p>In that case, the following statement is rejected if <code>999</code> doesn't exist in <code>Lop.MaLop</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
+VALUES (101, N'Nguyễn Văn An', 999);</code></pre></div>
+          <p>The foreign key must be defined on the table that holds it.</p>
+
+          <h3>CHECK</h3>
+          <p><code>CHECK</code> restricts data to satisfy a condition. For example, a student's grade must be between 0 and 10:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE KetQua
+(
+    MaSV INT,
+    Diem DECIMAL(4,2),
+
+    CHECK (Diem >= 0 AND Diem <= 10)
+);</code></pre></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO KetQua
+VALUES (101, 8.5);</code></pre></div>
+          <p>✓ Valid. But:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO KetQua
+VALUES (102, 15);</code></pre></div>
+          <p>✗ Invalid.</p>
+
+          <h3>DEFAULT</h3>
+          <p><code>DEFAULT</code> supplies a fallback value when the user doesn't provide one.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
+(
+    MaSV INT PRIMARY KEY,
+    HoTen NVARCHAR(50),
+    GioiTinh CHAR(1) DEFAULT 'M'
+);</code></pre></div>
+          <p>If:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien(MaSV, HoTen)
+VALUES (101, N'Nguyễn Văn An');</code></pre></div>
+          <p>then SQL Server automatically sets <code>GioiTinh = 'M'</code>.</p>
+
+          <h3>Declaring Multiple Constraints</h3>
+          <p>Multiple constraints can be combined - data types and constraints always go together when designing a Table:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
+(
+    MaSV INT PRIMARY KEY,
+
+    HoTen NVARCHAR(50) NOT NULL,
+
+    Email NVARCHAR(100) UNIQUE,
+
+    MaLop INT
+        FOREIGN KEY REFERENCES Lop(MaLop),
+
+    NgaySinh DATE
+        CHECK (NgaySinh >= '1900-01-01'),
+
+    GioiTinh CHAR(1)
+        DEFAULT 'M'
+);</code></pre></div>
+        </section>
+
+        <!-- 07 - DML -->
+        <section class="lesson-section" id="dml">
+          <p class="eyebrow">07 · DATA MANIPULATION - DML</p>
+          <h2>Data Manipulation Language</h2>
+          <div class="definition"><strong>DML (Data Manipulation Language)</strong> is the group of commands used to manipulate data within a Table.</div>
+          <p>In Week 1, students get familiar with:</p>
+          <div class="ascii-block">INSERT      → Add data
+DELETE      → Remove data
+UPDATE      → Modify data
+SELECT INTO → Copy data</div>
+
+          <h3>INSERT - Adding Data</h3>
+          <p><strong>Method 1:</strong> Without specifying column names</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
+VALUES (101, N'Nguyễn Văn An', '2004-05-20', N'HTTT2022.1');</code></pre></div>
+          <p><strong>Method 2:</strong> Specifying column names - <strong>this is the preferred method</strong>, since the statement is clearer and less dependent on column order.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
+(
+    MaSV,
+    HoTen,
+    NgaySinh,
+    Lop
+)
+VALUES
+(
+    101,
+    N'Nguyễn Văn An',
+    '2004-05-20',
+    N'HTTT2022.1'
+);</code></pre></div>
+          <p>Multiple records can be inserted in a single statement:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
+VALUES
+    (101, N'Nguyễn Văn An', '2004-05-20', N'HTTT2022.1'),
+    (102, N'Trần Thị Bình', '2004-08-15', N'HTTT2022.1'),
+    (103, N'Lê Văn Cường', '2004-11-02', N'HTTT2022.2');</code></pre></div>
+          <p>Then verify:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien;</code></pre></div>
+
+          <h3>DELETE - Removing Data</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM &lt;Table name&gt;
+WHERE &lt;Condition&gt;;</code></pre></div>
+          <p>Example - only the student with <code>MaSV = 101</code> is deleted:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien
+WHERE MaSV = 101;</code></pre></div>
+          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Extremely important:</strong> Without a <code>WHERE</code> clause -
+            <br><code>DELETE FROM SinhVien;</code>
+            <br>→ <strong>every row in the table gets deleted.</strong>
+          </div>
+
+          <h3>UPDATE - Modifying Data</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE &lt;Table name&gt;
+SET &lt;Column 1&gt; = &lt;New value&gt;
+WHERE &lt;Condition&gt;;</code></pre></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SinhVien
+SET HoTen = N'Nguyễn Văn Nam'
+WHERE MaSV = 101;</code></pre></div>
+          <p>Multiple columns can be updated at once:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SinhVien
+SET
+    HoTen = N'Nguyễn Văn Nam',
+    Lop = N'HTTT2022.2'
+WHERE MaSV = 101;</code></pre></div>
+
+          <h3>SELECT INTO - Copying Data</h3>
+          <p><code>SELECT INTO</code> creates a new Table from a query's result.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+INTO SinhVien_Backup
+FROM SinhVien;</code></pre></div>
+          <div class="ascii-block">SINHVIEN
+    ↓
+SELECT INTO
+    ↓
+SINHVIEN_BACKUP</div>
+          <p>To copy only part of the data:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+INTO SinhVien_HTTT
+FROM SinhVien
+WHERE Lop LIKE 'HTTT%';</code></pre></div>
+
+          <h3>Comprehensive Example - Student Management</h3>
+          <p><strong>Step 1 - Create the Database</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QuanLySinhVien;
+GO
+
+USE QuanLySinhVien;
+GO</code></pre></div>
+          <p><strong>Step 2 - Create the Class Table</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE Lop
+(
+    MaLop INT PRIMARY KEY,
+    TenLop NVARCHAR(50) NOT NULL
+);</code></pre></div>
+          <p><strong>Step 3 - Create the Student Table</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
+(
+    MaSV INT PRIMARY KEY,
+    HoTen NVARCHAR(50) NOT NULL,
+    NgaySinh DATE,
+    MaLop INT,
+
+    CONSTRAINT FK_SinhVien_Lop
+        FOREIGN KEY (MaLop)
+        REFERENCES Lop(MaLop),
+
+    CONSTRAINT CK_SinhVien_NgaySinh
+        CHECK (NgaySinh >= '1900-01-01')
+);</code></pre></div>
+          <p><strong>Step 4 - Insert Classes</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO Lop
+VALUES
+    (1, N'HTTT2022.1'),
+    (2, N'HTTT2022.2');</code></pre></div>
+          <p><strong>Step 5 - Insert Students</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
+VALUES
+    (101, N'Nguyễn Văn An', '2004-05-20', 1),
+    (102, N'Trần Thị Bình', '2004-08-15', 1),
+    (103, N'Lê Văn Cường', '2004-11-02', 2);</code></pre></div>
+          <p><strong>Step 6 - Verify</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien;</code></pre></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaSV</th><th>HoTen</th><th>NgaySinh</th><th>MaLop</th></tr>
+            <tr><td>101</td><td>Nguyễn Văn An</td><td>2004-05-20</td><td>1</td></tr>
+            <tr><td>102</td><td>Trần Thị Bình</td><td>2004-08-15</td><td>1</td></tr>
+            <tr><td>103</td><td>Lê Văn Cường</td><td>2004-11-02</td><td>2</td></tr>
+          </table></div>
+          <p><strong>Step 7 - Update</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SinhVien
+SET HoTen = N'Nguyễn Văn Nam'
+WHERE MaSV = 101;</code></pre></div>
+          <p><strong>Step 8 - Delete</strong></p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien
+WHERE MaSV = 103;</code></pre></div>
+        </section>
+
+        <!-- 08 - Exercises -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">08 · PRACTICE EXERCISES &amp; Q&amp;A</p>
+          <h2>Comprehensive Practice</h2>
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
+            <h3>Sales Management</h3>
+            <ol>
+              <li><strong>Exercise 1 - Create the Database:</strong> Create the <code style="background:#ffffff1a;color:#e2e8f0">QuanLyBanHang</code> database</li>
+              <li><strong>Exercise 2 - Create Tables:</strong> KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD</li>
+              <li><strong>Exercise 3 - Set Up Constraints:</strong> Primary Key, Foreign Key, NOT NULL, UNIQUE, CHECK, DEFAULT</li>
+              <li><strong>Exercise 4 - Insert Data:</strong> At least 5 customers, 5 employees, 10 products, 10 invoices</li>
+              <li><strong>Exercise 5 - Manipulate Data:</strong> Perform INSERT, UPDATE, DELETE, SELECT INTO</li>
+              <li><strong>Exercise 6 - Test Constraints:</strong> Try entering invalid data and observe SQL Server's error messages</li>
+            </ol>
+          </div>
+
+          <h3>Exercise 6 - Constraint Testing Example</h3>
+          <p>Try entering <strong>invalid</strong> data to observe SQL Server's error messages:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
+VALUES (101, N'Duplicate ID student', '2004-01-01', 1);</code></pre></div>
+          <p>→ Violates <code>PRIMARY KEY</code>.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
+VALUES (104, N'Student without a class', '2004-01-01', 999);</code></pre></div>
+          <p>→ Violates <code>FOREIGN KEY</code>.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
+VALUES (105, N'Student with invalid date', '1800-01-01', 1);</code></pre></div>
+          <p>→ Violates <code>CHECK</code>.</p>
+        </section>
+
+        <!-- 09 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">09 · END-OF-WEEK 1 CHECKLIST</p>
+          <h2>Self-Check</h2>
+          <p>After completing this week, students should check that they can:</p>
+          <ul class="lesson-checklist">
+            <li>Know what a Database is</li>
+            <li>Know how to use SQL Server Management Studio</li>
+            <li>Know the basic data types</li>
+            <li>Know CREATE DATABASE</li>
+            <li>Know USE DATABASE</li>
+            <li>Know CREATE TABLE</li>
+            <li>Know DROP TABLE</li>
+            <li>Know ALTER TABLE</li>
+            <li>Understand PRIMARY KEY</li>
+            <li>Understand FOREIGN KEY</li>
+            <li>Understand UNIQUE</li>
+            <li>Understand NOT NULL</li>
+            <li>Understand CHECK</li>
+            <li>Understand DEFAULT</li>
+            <li>Know INSERT</li>
+            <li>Know UPDATE</li>
+            <li>Know DELETE</li>
+            <li>Know SELECT INTO</li>
+            <li>Know how to verify data after an operation</li>
+          </ul>
+
+          <h3>Core Concepts to Remember</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">DATABASE</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">TABLE</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">COLUMN + DATA TYPE</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">CONSTRAINT</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">DATA</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">INSERT / UPDATE / DELETE</span>
+          </div>
+          <p>This is the foundation for all of IT004. In <strong>Week 2</strong>, students begin using this data to perform SELECT, operators, functions, JOIN, set operations, and Subqueries.</p>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="index.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Course Overview</span></a>
+          <a href="week-2.html" class="next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 2: Querying Data with SQL</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">PROGRESS</span>
+          <strong>1<span>/6 weeks</span></strong>
+          <div class="mini-progress"><b style="width:17%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">YOU ARE HERE</span>
+          <ul class="checklist">
+            <li data-section="tong-quan"><b>○</b> Overview</li>
+            <li data-section="ssms"><b>○</b> SSMS</li>
+            <li data-section="data-types"><b>○</b> Data Types</li>
+            <li data-section="database"><b>○</b> Database</li>
+            <li data-section="table"><b>○</b> Table</li>
+            <li data-section="constraints"><b>○</b> Constraints</li>
+            <li data-section="dml"><b>○</b> DML</li>
+            <li data-section="bai-tap"><b>○</b> Exercises</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Practice Materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Exercises</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Practice directly in SQL Server after each example.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/progress.js?v=3"></script>
+  <script src="../../../assets/js/course.js?v=10"></script>
+</body>
+</html>

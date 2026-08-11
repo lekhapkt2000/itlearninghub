@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT004 Week 5 - Triggers in SQL Server: AFTER, INSTEAD OF, the INSERTED and DELETED tables.">
+  <title>Week 5 · Trigger - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=16">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=24">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions">
+        <div class="lang-switch"><a href="../../../courses/it004/week-5.html">VI</a><a href="index.html" class="active">EN</a></div>
+        <button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button>
+        <a class="outline-button" href="index.html">IT004 Overview <span>›</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IT004</a><span>/</span>Week 5</p>
+
+    <div class="week-header">
+      <span class="week-tag">PRACTICE 05 · BTHT5</span>
+      <h1>Triggers in SQL Server</h1>
+      <div class="week-meta"><span>5 periods</span><span>Database</span><span>SQL Server</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Objective:</strong> Understand how SQL Server automatically runs a block of statements when data in a table undergoes an <code>INSERT</code>, <code>UPDATE</code>, or <code>DELETE</code> operation.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IT004 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html" class="active">Week 5</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 6 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Review <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Exam <small>Coming Soon</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 5 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#trigger-la-gi" data-toc><b>01</b> What Is a Trigger?</a>
+        <a href="#loai-trigger" data-toc><b>02</b> AFTER &amp; INSTEAD OF</a>
+        <a href="#cu-phap" data-toc><b>03</b> Trigger Syntax</a>
+        <a href="#kiem-tra-loi" data-toc><b>04</b> Error Handling</a>
+        <a href="#inserted-deleted" data-toc><b>05</b> INSERTED &amp; DELETED</a>
+        <a href="#ung-dung" data-toc><b>06</b> Real-World Uses</a>
+        <a href="#nhieu-dong" data-toc><b>07</b> Handling Multiple Rows</a>
+        <a href="#quy-trinh" data-toc><b>08</b> Workflow &amp; Cheat Sheet</a>
+        <a href="#bai-tap" data-toc><b>09</b> Exercises</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - What Is a Trigger -->
+        <section class="lesson-section" id="trigger-la-gi">
+          <p class="eyebrow">01 · WHAT IS A TRIGGER?</p>
+          <h2>What Is a Trigger?</h2>
+          <div class="definition">A <strong>Trigger</strong> is a piece of SQL code attached to a table or view, <strong>automatically fired by SQL Server</strong> when an <code>INSERT</code>, <code>UPDATE</code>, or <code>DELETE</code> operation occurs.</div>
+
+          <h3>Without a Trigger vs. With a Trigger</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">User</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">INSERT / UPDATE / DELETE</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Trigger fires</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Check / process / notify</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data is updated</span>
+          </div>
+          <p>Example: "don't allow a product's quantity to go below 0." When a user runs <code>UPDATE SANPHAM SET SOLUONG = -10 WHERE MASP = 'SP01';</code>, the Trigger detects <code>SOLUONG &lt; 0</code> → raises an error → <code>ROLLBACK</code> → cancels the operation.</p>
+
+          <h3>Why Do We Need Triggers?</h3>
+          <p>Triggers are typically used to <strong>automatically enforce rules right at the database layer</strong>:</p>
+          <ul>
+            <li><strong>Data validation:</strong> Product quantity ≥ 0</li>
+            <li><strong>Preventing invalid operations:</strong> Don't allow deleting a customer who has transactions</li>
+            <li><strong>Automatic updates:</strong> Adding an invoice line item → automatically update the invoice total</li>
+            <li><strong>Change tracking:</strong> Old customer name → new name</li>
+            <li><strong>Data synchronization:</strong> Invoice line changes → update invoice total → update customer's total spend</li>
+          </ul>
+        </section>
+
+        <!-- 02 - Trigger Types -->
+        <section class="lesson-section" id="loai-trigger">
+          <p class="eyebrow">02 · TYPES OF TRIGGER</p>
+          <h2>AFTER and INSTEAD OF</h2>
+          <p>SQL Server supports two main types of Trigger. <strong>SQL Server does not support <code>BEFORE TRIGGER</code></strong> the way some other database systems do.</p>
+          <p><code>AFTER</code> - runs <strong>after</strong> the DML operation completes successfully (<code>AFTER INSERT</code>, <code>AFTER UPDATE</code>, <code>AFTER DELETE</code>). <code>INSTEAD OF</code> - <strong>replaces</strong> the original DML operation with the statements defined inside the Trigger.</p>
+
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Type</th><th>How It Works</th><th>Example</th></tr>
+            <tr><td><code>AFTER</code></td><td>The original operation happens first, then the Trigger processes</td><td>Validate and update data</td></tr>
+            <tr><td><code>INSTEAD OF</code></td><td>The Trigger replaces the original operation</td><td>Prevent deletion</td></tr>
+            <tr><td><code>BEFORE</code></td><td>Not supported in SQL Server</td><td>-</td></tr>
+          </table></div>
+
+          <div class="ascii-block">AFTER:        DELETE → Data is deleted → Trigger → Further processing
+INSTEAD OF:   DELETE → Trigger → Original DELETE does NOT happen</div>
+        </section>
+
+        <!-- 03 - Syntax -->
+        <section class="lesson-section" id="cu-phap">
+          <p class="eyebrow">03 · TRIGGER SYNTAX</p>
+          <h2>CREATE TRIGGER Syntax</h2>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER &lt;Trigger_Name&gt;
+ON &lt;Table_Name&gt;
+AFTER | INSTEAD OF INSERT, UPDATE, DELETE
+AS
+BEGIN
+    -- Statements to run
+END;</code></pre></div>
+          <p><code>FOR</code> can also be used in place of <code>AFTER</code>.</p>
+
+          <h3>Breaking Down Each Part</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterInsert_KhachHang
+ON KHACHHANG
+AFTER INSERT
+AS
+BEGIN
+    -- processing
+END;</code></pre></div>
+          <p><code>CREATE TRIGGER</code> creates a new Trigger. The name should be descriptive, e.g. <code>trg_AfterInsert_KhachHang</code>, <code>trg_CheckQuantity_SanPham</code>, <code>trg_PreventDelete_NhanVien</code>. <code>ON KHACHHANG</code> attaches the Trigger to that table. <code>AFTER INSERT</code> runs after an <code>INSERT</code> occurs. <code>BEGIN...END</code> contains the statements to execute.</p>
+
+          <h3>Example - AFTER INSERT</h3>
+          <p>When a new customer is added, display a message:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterInsert_KhachHang
+ON KHACHHANG
+AFTER INSERT
+AS
+BEGIN
+    PRINT N'Khách hàng mới đã được thêm vào KHACHHANG.';
+END;</code></pre></div>
+          <p>Test it:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO KHACHHANG
+VALUES (
+    'KH99',
+    N'Nguyễn Văn A',
+    N'Hà Nội',
+    '0909000000',
+    '2026-08-11',
+    0
+);</code></pre></div>
+          <div class="inline-ok">The user <strong>does not need to call the Trigger manually</strong> - SQL Server automatically fires the Trigger right after the <code>INSERT</code> succeeds.</div>
+
+          <h3>Example - INSTEAD OF DELETE</h3>
+          <p>Prevent customers from being deleted:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_PreventDelete_KhachHang
+ON KHACHHANG
+INSTEAD OF DELETE
+AS
+BEGIN
+    PRINT N'Không được xóa khách hàng.';
+END;</code></pre></div>
+          <p>When running <code>DELETE FROM KHACHHANG WHERE MAKH = 'KH01';</code>, instead of deleting, the system just prints "Customers cannot be deleted."</p>
+        </section>
+
+        <!-- 04 - Error Handling -->
+        <section class="lesson-section" id="kiem-tra-loi">
+          <p class="eyebrow">04 · ERROR CHECKING AND HANDLING</p>
+          <h2>A Data-Validating Trigger</h2>
+          <p>Problem: the quantity in <code>SANPHAM</code> must not be less than 0.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_CheckQuantity_SanPham
+ON SANPHAM
+AFTER INSERT, UPDATE
+AS
+BEGIN
+
+    IF EXISTS (
+        SELECT *
+        FROM SANPHAM
+        WHERE SOLUONG < 0
+    )
+    BEGIN
+        RAISERROR (
+            N'Số lượng không thể âm.',
+            16,
+            1
+        );
+
+        ROLLBACK;
+        RETURN;
+    END
+
+END;</code></pre></div>
+
+          <h3>Breaking It Down</h3>
+          <div class="ascii-block">IF EXISTS → RAISERROR → ROLLBACK → RETURN → Cancel the invalid operation</div>
+          <p><code>IF EXISTS(...)</code> checks whether a record violating the condition exists. <code>RAISERROR(N'...', 16, 1)</code> raises an error - severity level <code>16</code> is the level typically used for user-caused errors (bad input, rule violations). <code>ROLLBACK</code> cancels the current transaction, returning the data to its previous state.</p>
+          <div class="inline-warning">Common mistake: calling <code>RAISERROR</code> and <code>ROLLBACK</code> but <strong>forgetting <code>RETURN</code></strong> right after. If the Trigger has any statements after that point, they'll still run even though the transaction was already cancelled, potentially causing errors or unintended behavior. Get in the habit of always writing the full trio <code>RAISERROR → ROLLBACK → RETURN</code>, not stopping at just <code>ROLLBACK</code>.</div>
+
+          <h3>PRINT vs. RAISERROR</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th></th><th>PRINT</th><th>RAISERROR</th></tr>
+            <tr><td>Purpose</td><td>Notification</td><td>Error reporting</td></tr>
+            <tr><td>Can stop the operation</td><td>No</td><td>Yes</td></tr>
+            <tr><td>Used with ROLLBACK</td><td>Possible, but not automatic</td><td>Usually paired together</td></tr>
+            <tr><td>Example</td><td>"Customer added"</td><td>"Quantity cannot be negative"</td></tr>
+          </table></div>
+
+          <div class="quick-check">
+            <p class="eyebrow">QUICK CHECK</p>
+            <p class="qc-question">To fully cancel an UPDATE operation when a Trigger detects invalid data, what command is needed besides RAISERROR?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">PRINT</button>
+              <button class="qc-option" type="button" data-correct="true">ROLLBACK</button>
+              <button class="qc-option" type="button" data-correct="false">SELECT</button>
+            </div>
+            <div class="qc-feedback correct">✓ Correct! <code>RAISERROR</code> only reports the error - <code>ROLLBACK</code> is what actually cancels the transaction and restores the data to its previous state.</div>
+          </div>
+        </section>
+
+        <!-- 05 - INSERTED DELETED -->
+        <section class="lesson-section" id="inserted-deleted">
+          <p class="eyebrow">05 · INSERTED AND DELETED</p>
+          <h2>INSERTED and DELETED</h2>
+          <div class="definition">Inside a Trigger, SQL Server provides two <strong>virtual tables</strong>: <code>INSERTED</code> and <code>DELETED</code>. They only exist within the scope of the Trigger, and hold data related to the DML operation currently taking place.</div>
+
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Operation</th><th>INSERTED</th><th>DELETED</th></tr>
+            <tr><td><code>INSERT</code></td><td>The new record</td><td>-</td></tr>
+            <tr><td><code>DELETE</code></td><td>-</td><td>The deleted record</td></tr>
+            <tr><td><code>UPDATE</code></td><td>The new value</td><td>The old value</td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>Memory trick:</strong> <code>INSERTED</code> = the <strong>new</strong> one. <code>DELETED</code> = the <strong>old / removed</strong> one.</div>
+
+          <h3>Try It Yourself</h3>
+          <p>Click a button to see what <code>INSERTED</code>/<code>DELETED</code> contain for each operation (example: renaming a customer from "Nguyễn Văn A" to "Nguyễn Văn B"):</p>
+          <div class="trigger-demo">
+            <p class="eyebrow">VISUAL DEMO</p>
+            <div class="trigger-demo-actions">
+              <button type="button" data-demo="insert" class="active">INSERT</button>
+              <button type="button" data-demo="update">UPDATE</button>
+              <button type="button" data-demo="delete">DELETE</button>
+            </div>
+            <div class="trigger-demo-tables">
+              <div class="trigger-demo-table" data-table="deleted">
+                <span class="side-label">DELETED (old data)</span>
+                <div class="trigger-demo-row">(empty)</div>
+              </div>
+              <div class="trigger-demo-table is-active" data-table="inserted">
+                <span class="side-label">INSERTED (new data)</span>
+                <div class="trigger-demo-row">HOTEN = 'Nguyễn Văn A' (new record)</div>
+              </div>
+            </div>
+            <p class="trigger-demo-caption">INSERT → only INSERTED has data · DELETE → only DELETED has data · UPDATE → both have data.</p>
+            <div class="trigger-demo-sql">
+              <span class="side-label">CORRESPONDING STATEMENT</span>
+              <pre><code class="language-sql" data-demo-sql>INSERT INTO KHACHHANG (MAKH, HOTEN)
+VALUES ('KH01', N'Nguyễn Văn A');</code></pre>
+            </div>
+          </div>
+
+          <h3>Example - Reading INSERTED</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterInsert_KhachHang
+ON KHACHHANG
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @MAKH CHAR(4);
+
+    SELECT @MAKH = MAKH
+    FROM INSERTED;
+
+    PRINT N'Khách hàng mới được thêm vào với MAKH: '
+        + CAST(@MAKH AS VARCHAR);
+END;</code></pre></div>
+
+          <h3>Example - Reading DELETED</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterDelete_KhachHang
+ON KHACHHANG
+AFTER DELETE
+AS
+BEGIN
+    SELECT *
+    FROM DELETED;
+END;</code></pre></div>
+
+          <h3>Full Example - Tracking a Name Change (UPDATE)</h3>
+          <p>On <code>UPDATE</code>, <code>DELETED</code> holds the old value and <code>INSERTED</code> holds the new value, so you can compare "old value → new value":</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterUpdate_KhachHang
+ON KHACHHANG
+AFTER UPDATE
+AS
+BEGIN
+
+    DECLARE
+        @OldName VARCHAR(40),
+        @NewName VARCHAR(40);
+
+    SELECT @OldName = HOTEN
+    FROM DELETED;
+
+    SELECT @NewName = HOTEN
+    FROM INSERTED;
+
+    PRINT N'Tên khách hàng đã thay đổi từ "'
+        + @OldName
+        + N'" sang "'
+        + @NewName
+        + N'".';
+
+END;</code></pre></div>
+        </section>
+
+        <!-- 06 - Real-World Uses -->
+        <section class="lesson-section" id="ung-dung">
+          <p class="eyebrow">06 · REAL-WORLD USES</p>
+          <h2>Real-World Applications of Triggers</h2>
+
+          <div class="inline-warning">Common mistake: using a Trigger for <strong>simple</strong> constraints that a <code>CHECK CONSTRAINT</code> or <code>FOREIGN KEY</code> already handles (e.g. just to block <code>SOLUONG &lt; 0</code>, or to set a default value). A Trigger runs after the DML operation has already happened, adding extra processing cost - only use a Trigger when the logic <strong>goes beyond what a Constraint can do</strong> - for example needing to automatically update data in another table, or checking a condition based on data across multiple tables.</div>
+
+          <h3>Checking Existence Before Insert</h3>
+          <p>Don't allow adding an invoice if the customer doesn't exist:</p>
+          <div class="ascii-block">INSERT HOADON → Get MAKH from INSERTED → Check KHACHHANG
+   → Exists? Yes → Allow | No → RAISERROR + ROLLBACK</div>
+          <p><code>IF EXISTS</code> checks whether data matching a condition exists; <code>IF NOT EXISTS</code> checks the opposite - that no matching data exists.</p>
+
+          <h3>A Trigger That Auto-Updates Data</h3>
+          <p>Tables <code>HOADON(MAHD, TRIGIA)</code> and <code>CTHD(MAHD, MASP, SOLUONG, DONGIA)</code>. When <code>INSERT INTO CTHD</code> happens, the Trigger recalculates <code>TRIGIA</code> and runs <code>UPDATE HOADON</code>.</p>
+
+          <h3>A Trigger That Updates Customer Sales Totals</h3>
+          <p>A more advanced problem: adding/editing an invoice → the Trigger computes the total value → updates <code>DOANHSO</code> in <code>KHACHHANG</code>.</p>
+
+          <h3>Preventing Deletion of Referenced Data</h3>
+          <p>Don't allow deleting an employee if they've already made sales:</p>
+          <div class="ascii-block">DELETE NHANVIEN → Check HOADON → Has invoices? Yes → ROLLBACK | No → Allow</div>
+
+          <h3>Automatically Setting the Registration Date</h3>
+          <p>When adding a new customer, if <code>NGDK</code> isn't provided, the system automatically uses the current date via <code>GETDATE()</code>.</p>
+
+          <h3>Some Extended Problems</h3>
+          <ul>
+            <li>A product can only be added to an invoice if it exists and has enough stock</li>
+            <li>The total value in CTHD must match HOADON</li>
+            <li>Invoices over 1,000,000,000 must switch to "Special Review" status</li>
+            <li>The total quantity of products sold in a single day must not exceed 10,000</li>
+            <li>An employee cannot become their own manager</li>
+          </ul>
+        </section>
+
+        <!-- 07 - Handling Multiple Rows -->
+        <section class="lesson-section" id="nhieu-dong">
+          <p class="eyebrow">07 · TRIGGERS THAT HANDLE MULTIPLE ROWS</p>
+          <h2>Triggers Should Think in Terms of Sets</h2>
+          <p>Students often write:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECLARE @MAKH CHAR(4);
+
+SELECT @MAKH = MAKH
+FROM INSERTED;</code></pre></div>
+          <p>This is easy to understand when illustrating <strong>a single record</strong>, but a single <code>INSERT INTO ... SELECT ...</code> statement can insert <strong>many rows at once</strong>.</p>
+          <div class="ascii-block">INSERTED
+├── row 1
+├── row 2
+├── row 3
+├── ...
+└── row n</div>
+          <div class="inline-warning">A Trigger should be designed with <strong>set-based thinking</strong> instead of assuming there's always just one row - this is an important skill when moving from classroom exercises to real-world SQL. Don't just think "INSERTED → 1 row → 1 variable" - you need to handle the <strong>entire set of data</strong> in INSERTED/DELETED.</div>
+        </section>
+
+        <!-- 08 - Workflow + Cheat Sheet -->
+        <section class="lesson-section" id="quy-trinh">
+          <p class="eyebrow">08 · BUILDING A TRIGGER, STEP BY STEP</p>
+          <h2>The 6-Step Process</h2>
+          <p>When facing a Trigger exercise, follow these 6 steps:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">1. Identify the event: INSERT / UPDATE / DELETE</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">2. Identify the table: ON ...</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">3. Identify the type: AFTER or INSTEAD OF</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">4. Identify the data to check: INSERTED / DELETED / other tables</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">5. Write the condition: IF EXISTS / IF NOT EXISTS</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">6. Handle it: PRINT / RAISERROR / ROLLBACK / INSERT / UPDATE / DELETE</span>
+          </div>
+
+          <h3>Managing Triggers</h3>
+          <p>Dropping a Trigger:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DROP TRIGGER trg_AfterInsert_KhachHang;</code></pre></div>
+          <p>Viewing Trigger information:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM INFORMATION_SCHEMA.TRIGGERS;</code></pre></div>
+
+          <h3>Week 5 Cheat Sheet</h3>
+          <div class="ascii-block">TRIGGER      → Runs automatically when DML happens
+INSERT/UPDATE/DELETE → The operations that fire a Trigger
+AFTER        → Runs after the DML operation
+INSTEAD OF   → Replaces the DML operation
+INSERTED     → The new data
+DELETED      → The old / removed data
+IF EXISTS    → Checks that matching data exists
+IF NOT EXISTS → Checks that no matching data exists
+PRINT        → A notification
+RAISERROR    → An error
+ROLLBACK     → Cancels the operation / transaction</div>
+
+          <h3>The First Five Weeks of IT004</h3>
+          <p>Week 1: creating a database. Week 2: querying. Week 3: advanced querying. Week 4: processing data (CAST/CASE/Subquery). Week 5: <strong>automation &amp; control</strong> with Triggers, INSERTED/DELETED, RAISERROR/ROLLBACK. Per the course outline, Week 6 will be review and a practical exam - the timing and format of the exam will be announced later.</p>
+        </section>
+
+        <!-- 09 - Exercises -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">09 · PRACTICE EXERCISES</p>
+          <h2>Comprehensive Practice</h2>
+          <p>Week 5's content covers: a data-validating trigger, a trigger that prevents invalid operations, a trigger that auto-updates data, and a trigger that tracks changes. Individual question content will be updated directly on the course Moodle.</p>
+
+          <h3>Challenge - End-of-Week Challenges</h3>
+          <p>Each has a hidden hint - click to reveal.</p>
+
+          <div class="challenge-list">
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">01</span><h4>No Negative Quantities</h4></div>
+              <p>Create a Trigger: don't allow <code>SOLUONG &lt; 0</code> in <code>SANPHAM</code>.</p>
+              <details><summary>Hint</summary><div class="ascii-block">AFTER INSERT, UPDATE + IF EXISTS + RAISERROR + ROLLBACK</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">02</span><h4>Change Tracking</h4></div>
+              <p>When a customer's name changes, display: 'Customer name changed from "..." to "..."'.</p>
+              <details><summary>Hint</summary><div class="ascii-block">INSERTED + DELETED + AFTER UPDATE</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">03</span><h4>Prevent Deletion</h4></div>
+              <p>Don't allow deleting an employee if they already have invoices.</p>
+              <details><summary>Hint</summary><div class="ascii-block">INSTEAD OF DELETE + DELETED + IF EXISTS</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">04</span><h4>Automatic Update</h4></div>
+              <p>When an invoice line item is added, automatically update the invoice total.</p>
+              <details><summary>Hint</summary><div class="ascii-block">AFTER INSERT + INSERTED + UPDATE</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">⭐⭐</span></div>
+              <p>When an invoice is added or updated, automatically update the customer's sales total.</p>
+              <details><summary>Hint</summary><div class="ascii-block">AFTER INSERT, UPDATE + INSERTED + UPDATE KHACHHANG.DOANHSO</div></details>
+            </article>
+          </div>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="week-4.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 4: Extended Functions, CASE &amp; Subquery</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 6: Review &amp; Practical Exam (coming soon)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">PROGRESS</span>
+          <strong>5<span>/6 weeks</span></strong>
+          <div class="mini-progress"><b style="width:83%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">YOU ARE HERE</span>
+          <ul class="checklist">
+            <li data-section="trigger-la-gi"><b>○</b> What Is a Trigger?</li>
+            <li data-section="loai-trigger"><b>○</b> AFTER &amp; INSTEAD OF</li>
+            <li data-section="cu-phap"><b>○</b> Trigger Syntax</li>
+            <li data-section="kiem-tra-loi"><b>○</b> Error Handling</li>
+            <li data-section="inserted-deleted"><b>○</b> INSERTED &amp; DELETED</li>
+            <li data-section="ung-dung"><b>○</b> Real-World Uses</li>
+            <li data-section="nhieu-dong"><b>○</b> Handling Multiple Rows</li>
+            <li data-section="quy-trinh"><b>○</b> Workflow &amp; Cheat Sheet</li>
+            <li data-section="bai-tap"><b>○</b> Exercises</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Practice Materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Exercises</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>INSERTED = new data. DELETED = old/removed data.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/progress.js?v=3"></script>
+  <script src="../../../assets/js/course.js?v=10"></script>
+</body>
+</html>

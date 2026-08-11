@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT004 Week 3 - Advanced querying: division, grouping, and outer joins in SQL Server.">
+  <title>Week 3 · Division, Grouping &amp; Outer Joins - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=16">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=24">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions">
+        <div class="lang-switch"><a href="../../../courses/it004/week-3.html">VI</a><a href="index.html" class="active">EN</a></div>
+        <button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button>
+        <a class="outline-button" href="index.html">IT004 Overview <span>›</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IT004</a><span>/</span>Week 3</p>
+
+    <div class="week-header">
+      <span class="week-tag">PRACTICE 03 · BTHT3</span>
+      <h1>Division, Grouping &amp; Outer Joins</h1>
+      <div class="week-meta"><span>5 periods</span><span>Database</span><span>SQL Server</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Objective:</strong> Understand the nature of division in SQL, recognize "all" style problems, write queries using GROUP BY + HAVING COUNT and double NOT EXISTS, use aggregate functions, combine TOP/ORDER BY/WITH TIES/DISTINCT, and use LEFT/RIGHT/FULL OUTER JOIN so no data is missed.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IT004 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html" class="active">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 6 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Review <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Exam <small>Coming Soon</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 3 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#phep-chia" data-toc><b>01</b> Division</a>
+        <a href="#chia-co-ban" data-toc><b>02</b> Basic Division</a>
+        <a href="#chia-dieu-kien" data-toc><b>03</b> Conditional Division</a>
+        <a href="#chia-not-exists" data-toc><b>04</b> Division with NOT EXISTS</a>
+        <a href="#aggregate" data-toc><b>05</b> Aggregate Functions</a>
+        <a href="#select-top" data-toc><b>06</b> SELECT TOP</a>
+        <a href="#outer-join" data-toc><b>07</b> Outer Joins</a>
+        <a href="#cheat-sheet" data-toc><b>08</b> Cheat Sheet</a>
+        <a href="#bai-tap" data-toc><b>09</b> Exercises</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Division -->
+        <section class="lesson-section" id="phep-chia">
+          <p class="eyebrow">01 · DIVISION IN SQL</p>
+          <h2>What Is Division?</h2>
+          <div class="definition">In SQL, <strong>division</strong> is used when you need to find objects in a table <code>R</code> that relate to <strong>all</strong> objects in a table <code>S</code>.</div>
+
+          <h3>Keywords to Watch For</h3>
+          <p>When a problem contains phrases like <strong>all</strong>, <strong>every</strong>, <strong>the entirety of</strong>, "bought all products", "participated in all projects", "registered for all courses" - think of <strong>division</strong> right away.</p>
+
+          <h3>A Visual Example</h3>
+          <p>Suppose we have 3 tables:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th colspan="2">KhachHang</th></tr>
+            <tr><th>MaKH</th><th>TenKH</th></tr>
+            <tr><td>KH01</td><td>Nguyễn An</td></tr>
+            <tr><td>KH02</td><td>Trần Bình</td></tr>
+            <tr><td>KH03</td><td>Lê Cường</td></tr>
+          </table></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th colspan="2">SanPham</th></tr>
+            <tr><th>MaSP</th><th>TenSP</th></tr>
+            <tr><td>SP01</td><td>Laptop</td></tr>
+            <tr><td>SP02</td><td>Chuột</td></tr>
+            <tr><td>SP03</td><td>Bàn phím</td></tr>
+          </table></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th colspan="2">MuaHang</th></tr>
+            <tr><th>MaKH</th><th>MaSP</th></tr>
+            <tr><td>KH01</td><td>SP01</td></tr>
+            <tr><td>KH01</td><td>SP02</td></tr>
+            <tr><td>KH01</td><td>SP03</td></tr>
+            <tr><td>KH02</td><td>SP01</td></tr>
+            <tr><td>KH02</td><td>SP02</td></tr>
+            <tr><td>KH03</td><td>SP01</td></tr>
+            <tr><td>KH03</td><td>SP03</td></tr>
+          </table></div>
+          <p>We need to find: <strong>customers who bought all products.</strong></p>
+          <div class="ascii-block">All products: SP01, SP02, SP03
+
+KH01: ✓SP01 ✓SP02 ✓SP03 → Passes
+KH02: ✓SP01 ✓SP02 ✗SP03 → Fails
+KH03: ✓SP01 ✗SP02 ✓SP03 → Fails</div>
+          <p>Result: <code>KH01</code>. This is exactly the way of thinking behind division.</p>
+
+          <h3>The Core Idea</h3>
+          <p>The problem "Find A that has done all of B" can be understood as:</p>
+          <div class="ascii-block">The number of B's that A has done = The total number of B's that need to be done
+
+Example: KH01 bought 3 distinct products, total products = 3 → KH01 passes</div>
+          <p>In SQL, this idea is typically implemented with <code>GROUP BY</code> + <code>HAVING COUNT(DISTINCT ...)</code>.</p>
+        </section>
+
+        <!-- 02 - Basic Division -->
+        <section class="lesson-section" id="chia-co-ban">
+          <p class="eyebrow">02 · BASIC DIVISION</p>
+          <h2>Basic Division</h2>
+          <p>Model: <code>R(A, B, C, D, E)</code> and <code>S(D, E)</code>. Division <code>R / S</code> finds the values <code>A, B, C</code> of <code>R</code> that relate to <strong>all</strong> values <code>D, E</code> in <code>S</code>.</p>
+
+          <h3>The GROUP BY + HAVING Formula</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT B1.&lt;Column 1&gt;, ...
+FROM &lt;Table 1&gt; B1
+JOIN &lt;Table 3&gt; B3
+    ON B1.&lt;Column 1&gt; = B3.&lt;Column 1&gt;
+GROUP BY B1.&lt;Column 1&gt;
+HAVING COUNT(DISTINCT B3.&lt;Column 2&gt;) =
+(
+    SELECT COUNT(DISTINCT B2.&lt;Column 2&gt;)
+    FROM &lt;Table 2&gt; B2
+);</code></pre></div>
+
+          <h3>Example 1 - Customers Who Bought All Products</h3>
+          <p>Tables: <code>KhachHang(MaKH, TenKH)</code>, <code>SanPham(MaSP, TenSP)</code>, <code>MuaHang(MaKH, MaSP)</code>.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT KH.MaKH
+FROM KhachHang KH
+JOIN MuaHang MH
+    ON KH.MaKH = MH.MaKH
+GROUP BY KH.MaKH
+HAVING COUNT(DISTINCT MH.MaSP) =
+(
+    SELECT COUNT(*)
+    FROM SanPham
+);</code></pre></div>
+
+          <h4>Breaking Down the SQL</h4>
+          <p><strong>Step 1</strong> - Join customers to their purchase history: <code>FROM KhachHang KH JOIN MuaHang MH ON KH.MaKH = MH.MaKH</code></p>
+          <p><strong>Step 2</strong> - Group by each customer with <code>GROUP BY KH.MaKH</code>: <code>KH01 → SP01,SP02,SP03</code>, <code>KH02 → SP01,SP02</code>, <code>KH03 → SP01,SP03</code>.</p>
+          <p><strong>Step 3</strong> - Count distinct products purchased with <code>COUNT(DISTINCT MH.MaSP)</code>: <code>KH01 → 3</code>, <code>KH02 → 2</code>, <code>KH03 → 2</code>.</p>
+          <p><strong>Step 4</strong> - Count the total number of products: <code>SELECT COUNT(*) FROM SanPham</code> → <code>3</code>.</p>
+          <p><strong>Step 5</strong> - Compare: number of products the customer bought = total number of products that exist → the customer bought <strong>all</strong> of them.</p>
+
+          <h3>Example 2 - Students Registered for All Required Courses</h3>
+          <p>Tables: <code>SinhVien(MaSV, TenSV)</code>, <code>MonHoc(MaMH, TenMH)</code>, <code>DangKy(MaSV, MaMH)</code>.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SV.MaSV
+FROM SinhVien SV
+JOIN DangKy DK
+    ON SV.MaSV = DK.MaSV
+GROUP BY SV.MaSV
+HAVING COUNT(DISTINCT DK.MaMH) =
+(
+    SELECT COUNT(*)
+    FROM MonHoc
+);</code></pre></div>
+          <p>Student A registered for 5 courses, total required courses = 5 → passes. Student B registered for 4 courses, total required courses = 5 → fails.</p>
+
+          <h3>Example 3 - Employees Who Participated in All Projects</h3>
+          <p>Tables: <code>NhanVien(MaNV, TenNV)</code>, <code>DuAn(MaDA, TenDA)</code>, <code>ThamGia(MaNV, MaDA)</code>.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT NV.MaNV
+FROM NhanVien NV
+JOIN ThamGia TG
+    ON NV.MaNV = TG.MaNV
+GROUP BY NV.MaNV
+HAVING COUNT(DISTINCT TG.MaDA) =
+(
+    SELECT COUNT(*)
+    FROM DuAn
+);</code></pre></div>
+        </section>
+
+        <!-- 03 - Conditional Division -->
+        <section class="lesson-section" id="chia-dieu-kien">
+          <p class="eyebrow">03 · CONDITIONAL DIVISION</p>
+          <h2>Conditional Division</h2>
+          <div class="definition"><strong>Conditional division</strong> is basic division, but the set of objects to check is limited by a condition.</div>
+          <p>Example: "Find customers who bought <strong>all products in the Electronics category</strong>" - this is no longer "all products," but "all products <code>WHERE DanhMuc = 'Điện tử'</code>".</p>
+
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th colspan="3">SanPham</th></tr>
+            <tr><th>Code</th><th>Name</th><th>Category</th></tr>
+            <tr><td>SP01</td><td>Laptop</td><td>Điện tử</td></tr>
+            <tr><td>SP02</td><td>Điện thoại</td><td>Điện tử</td></tr>
+            <tr><td>SP03</td><td>Bàn phím</td><td>Phụ kiện</td></tr>
+            <tr><td>SP04</td><td>Áo</td><td>Thời trang</td></tr>
+          </table></div>
+          <p>The set to check is only <code>SP01, SP02</code>, not all 4 products.</p>
+
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT KH.MaKH
+FROM KhachHang KH
+JOIN MuaHang MH
+    ON KH.MaKH = MH.MaKH
+JOIN SanPham SP
+    ON MH.MaSP = SP.MaSP
+WHERE SP.DanhMuc = N'Điện tử'
+GROUP BY KH.MaKH
+HAVING COUNT(DISTINCT MH.MaSP) =
+(
+    SELECT COUNT(*)
+    FROM SanPham
+    WHERE DanhMuc = N'Điện tử'
+);</code></pre></div>
+
+          <h3>The Thinking Formula</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Set to check</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">WHERE condition</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">GROUP BY + count elements</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">HAVING COUNT(...) = total elements matching the condition</span>
+          </div>
+
+          <h3>Example - Required Courses Worth More Than 3 Credits</h3>
+          <p>Problem: "Find students who registered for <strong>all required courses worth more than 3 credits</strong>." First determine the set of courses to check using <code>WHERE SoTinChi &gt; 3</code>, then check whether each student registered for the entire set.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SV.MaSV
+FROM SinhVien SV
+JOIN DangKy DK
+    ON SV.MaSV = DK.MaSV
+JOIN MonHoc MH
+    ON MH.MaMH = DK.MaMH
+WHERE MH.SoTinChi > 3
+GROUP BY SV.MaSV
+HAVING COUNT(DISTINCT DK.MaMH) =
+(
+    SELECT COUNT(*)
+    FROM MonHoc
+    WHERE SoTinChi > 3
+);</code></pre></div>
+          <div class="inline-warning"><strong>Note:</strong> In the original material, the subquery's condition is written with an alias reference that needs review. The query above is a standalone, clearer way to write it for SQL Server.</div>
+        </section>
+
+        <!-- 04 - Division with NOT EXISTS -->
+        <section class="lesson-section" id="chia-not-exists">
+          <p class="eyebrow">04 · DIVISION WITH NOT EXISTS</p>
+          <h2>Division with NOT EXISTS</h2>
+          <p>This is the <strong>second way</strong> to solve "all" problems - using negation to check whether any value <strong>fails to satisfy</strong> the condition.</p>
+
+          <h3>The Idea: "All" → "No Missing Case Exists"</h3>
+          <p>"The customer bought all electronics products" can be restated as "There does not exist an electronics product that the customer <strong>has not bought</strong>."</p>
+          <div class="definition">"All of A" is equivalent to "There does not exist an A that hasn't been done."</div>
+
+          <h3>The Double NOT EXISTS Structure</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ...
+FROM A
+WHERE NOT EXISTS
+(
+    SELECT *
+    FROM B
+    WHERE NOT EXISTS
+    (
+        SELECT *
+        FROM C
+        WHERE ...
+    )
+);</code></pre></div>
+
+          <h3>Customer Example</h3>
+          <p>Problem: "Find customers who bought all products in the Electronics category."</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT KH.MaKH
+FROM KhachHang KH
+WHERE NOT EXISTS
+(
+    SELECT *
+    FROM SanPham SP
+    WHERE SP.DanhMuc = N'Điện tử'
+      AND NOT EXISTS
+      (
+          SELECT *
+          FROM MuaHang MH
+          WHERE MH.MaKH = KH.MaKH
+            AND MH.MaSP = SP.MaSP
+      )
+);</code></pre></div>
+
+          <h4>Reading the SQL in Plain English</h4>
+          <p>Don't read SQL line by line. Instead, read: "Get customers <strong>for whom there does not exist any electronics product</strong> <strong>that the customer hasn't bought</strong>." If no such product exists → the customer has bought <strong>all</strong> of them.</p>
+
+          <h3>Student Example</h3>
+          <p>Problem: "Find students who registered for all required courses worth more than 3 credits."</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SV.MaSV
+FROM SinhVien SV
+WHERE NOT EXISTS
+(
+    SELECT *
+    FROM MonHoc MH
+    WHERE MH.SoTinChi > 3
+      AND NOT EXISTS
+      (
+          SELECT *
+          FROM DangKy DK
+          WHERE DK.MaMH = MH.MaMH
+            AND DK.MaSV = SV.MaSV
+      )
+);</code></pre></div>
+
+          <h3>Three Ways to Recognize Division</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Form</th><th>Signal</th></tr>
+            <tr><td>Basic division</td><td><code>GROUP BY</code> + <code>HAVING COUNT</code></td></tr>
+            <tr><td>Conditional division</td><td><code>WHERE</code> + <code>GROUP BY</code> + <code>HAVING COUNT</code></td></tr>
+            <tr><td>NOT EXISTS division</td><td>Two nested <code>NOT EXISTS</code> layers</td></tr>
+          </table></div>
+          <div class="inline-warning">Common mistake: forgetting to write both <strong>negation layers</strong>. Writing only one layer of <code>NOT EXISTS</code> without the inner layer produces a completely wrong result - always double-check against the pattern "no A exists that lacks B," made of exactly two nested <code>NOT EXISTS</code> as shown above.</div>
+        </section>
+
+        <!-- 05 - Aggregate Functions -->
+        <section class="lesson-section" id="aggregate">
+          <p class="eyebrow">05 · AGGREGATE FUNCTIONS &amp; GROUPING</p>
+          <h2>Aggregate Functions</h2>
+          <p>Aggregate functions let you perform calculations over <strong>a set of multiple rows</strong>.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Function</th><th>Meaning</th></tr>
+            <tr><td><code>COUNT(*)</code></td><td>Counts rows</td></tr>
+            <tr><td><code>COUNT(column)</code></td><td>Counts non-NULL values</td></tr>
+            <tr><td><code>COUNT(DISTINCT column)</code></td><td>Counts distinct, non-NULL values</td></tr>
+            <tr><td><code>SUM(x)</code></td><td>Sum</td></tr>
+            <tr><td><code>AVG(x)</code></td><td>Average</td></tr>
+            <tr><td><code>MAX(x)</code></td><td>Maximum</td></tr>
+            <tr><td><code>MIN(x)</code></td><td>Minimum</td></tr>
+          </table></div>
+
+          <h3>Distinguishing the 3 Kinds of COUNT</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaNV</th><th>Luong</th><th>ChucVu</th></tr>
+            <tr><td>NV01</td><td>10M</td><td>Dev</td></tr>
+            <tr><td>NV02</td><td>12M</td><td>Dev</td></tr>
+            <tr><td>NV03</td><td>NULL</td><td>Tester</td></tr>
+            <tr><td>NV04</td><td>15M</td><td>Dev</td></tr>
+            <tr><td>NV05</td><td>15M</td><td>NULL</td></tr>
+          </table></div>
+          <p><code>SELECT COUNT(*) FROM NhanVien;</code> → <code>5</code> (counts all rows)</p>
+          <p><code>SELECT COUNT(Luong) FROM NhanVien;</code> → <code>4</code> (NV03 has Luong = NULL)</p>
+          <p><code>SELECT COUNT(DISTINCT ChucVu) FROM NhanVien;</code> → <code>2</code> (Dev, Tester - NULL doesn't count)</p>
+
+          <h3>SUM, AVG, MAX, MIN</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SUM(Luong) AS TongLuong
+FROM NhanVien;</code></pre></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT AVG(Luong) AS LuongTrungBinh
+FROM NhanVien;</code></pre></div>
+          <p><strong>Note:</strong> <code>AVG</code> ignores <code>NULL</code> values.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MAX(Luong) AS LuongCaoNhat,
+    MIN(Luong) AS LuongThapNhat
+FROM NhanVien;</code></pre></div>
+
+          <h3>How Does GROUP BY Work?</h3>
+          <p>Example data:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaNV</th><th>Phong</th><th>Luong</th></tr>
+            <tr><td>NV01</td><td>P01</td><td>10M</td></tr>
+            <tr><td>NV02</td><td>P01</td><td>12M</td></tr>
+            <tr><td>NV03</td><td>P02</td><td>15M</td></tr>
+            <tr><td>NV04</td><td>P02</td><td>18M</td></tr>
+          </table></div>
+          <p><code>GROUP BY Phong</code> splits the data into groups <code>P01: NV01, NV02</code> and <code>P02: NV03, NV04</code>, and only then runs <code>MAX/MIN/AVG/SUM/COUNT</code> on each group.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    Phong,
+    MAX(Luong) AS LuongCaoNhat,
+    MIN(Luong) AS LuongThapNhat,
+    AVG(Luong) AS LuongTrungBinh
+FROM NhanVien
+GROUP BY Phong;</code></pre></div>
+          <div class="inline-warning">Common mistake: adding a column to <code>SELECT</code> but forgetting to add it to <code>GROUP BY</code>. The mandatory rule: every column in <code>SELECT</code> that is <strong>not inside an aggregate function</strong> (<code>SUM</code>, <code>COUNT</code>, <code>AVG</code>...) must also appear in <code>GROUP BY</code>, or SQL Server will raise a syntax error.</div>
+
+          <h3>Counting Employees per Department</h3>
+          <p><code>LEFT JOIN</code> keeps a department visible even when it has no employees yet:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    PB.MaPH,
+    PB.TenPH,
+    COUNT(NV.MaNV) AS SLNV
+FROM PHONGBAN PB
+LEFT JOIN NHANVIEN NV
+    ON NV.Phong = PB.MaPH
+GROUP BY
+    PB.MaPH,
+    PB.TenPH;</code></pre></div>
+
+          <h3>HAVING - Filtering Groups</h3>
+          <p>Problem: "Find departments with more than 10 employees, showing department code, name, and employee count, sorted in descending order."</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    PB.MaPH,
+    PB.TenPH,
+    COUNT(NV.MaNV) AS SLNV
+FROM PHONGBAN PB
+LEFT JOIN NHANVIEN NV
+    ON NV.Phong = PB.MaPH
+GROUP BY
+    PB.MaPH,
+    PB.TenPH
+HAVING COUNT(NV.MaNV) > 10
+ORDER BY
+    COUNT(NV.MaNV) DESC;</code></pre></div>
+
+          <h3>WHERE vs. HAVING - Know the Difference</h3>
+          <p><code>WHERE</code> filters <strong>rows before grouping</strong> (<code>WHERE Luong &gt; 10000000</code>). <code>HAVING</code> filters <strong>groups after grouping</strong> (<code>HAVING COUNT(*) &gt; 10</code>).</p>
+
+          <div class="quick-check">
+            <p class="eyebrow">QUICK CHECK</p>
+            <p class="qc-question">To keep only departments with more than 10 employees (after GROUP BY), which clause should you use?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">WHERE</button>
+              <button class="qc-option" type="button" data-correct="true">HAVING</button>
+              <button class="qc-option" type="button" data-correct="false">ORDER BY</button>
+            </div>
+            <div class="qc-feedback correct">✓ Correct! <strong>HAVING</strong> filters the already-grouped results, while <code>WHERE</code> can only filter individual rows before <code>GROUP BY</code>.</div>
+          </div>
+        </section>
+
+        <!-- 06 - SELECT TOP -->
+        <section class="lesson-section" id="select-top">
+          <p class="eyebrow">06 · SELECT TOP</p>
+          <h2>SELECT TOP</h2>
+          <p><code>TOP</code> is used to limit the number of rows returned.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 4
+    HoTen,
+    Luong
+FROM NhanVien;</code></pre></div>
+
+          <h3>TOP + ORDER BY</h3>
+          <p>To get the 4 highest-paid employees:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 4
+    HoTen,
+    Luong
+FROM NhanVien
+ORDER BY Luong DESC;</code></pre></div>
+          <div class="inline-warning"><strong>Extremely important:</strong> Don't just write <code>SELECT TOP 4 * FROM NhanVien;</code> if the problem asks for "the 4 highest-paid employees" - you must include <code>ORDER BY Luong DESC</code>.</div>
+
+          <h3>TOP ... WITH TIES</h3>
+          <p>If the 4th-highest salary is 15 million and someone else also earns 15 million, <code>WITH TIES</code> will include them too:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 4 WITH TIES
+    HoTen,
+    Luong
+FROM NhanVien
+ORDER BY Luong DESC;</code></pre></div>
+          <div class="ascii-block">1. Nam    20M    2. Tuấn   19M    3. Lộc    18M
+4. Linh   17M    5. Trung  17M
+
+TOP 4:            Nam, Tuấn, Lộc, Linh
+TOP 4 WITH TIES:  Nam, Tuấn, Lộc, Linh, Trung</div>
+
+          <h3>DISTINCT TOP</h3>
+          <p>Get the first 4 distinct job titles:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT TOP 4
+    ChucVu
+FROM NhanVien;</code></pre></div>
+
+          <h3>TOP + GROUP BY + HAVING</h3>
+          <p>Problem: "Get the 4 departments with the largest total payroll, considering only departments with a total salary above 5 million."</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 4
+    MaPB,
+    SUM(Luong) AS TongLuong
+FROM NhanVien
+GROUP BY MaPB
+HAVING SUM(Luong) > 5000000
+ORDER BY SUM(Luong) DESC;</code></pre></div>
+        </section>
+
+        <!-- 07 - Outer Joins -->
+        <section class="lesson-section" id="outer-join">
+          <p class="eyebrow">07 · OUTER JOINS</p>
+          <h2>Outer Joins</h2>
+          <p><code>INNER JOIN</code> only returns rows <strong>with matching data</strong>. But sometimes you need to know about objects <strong>with no related data</strong> - for example, "show employees who aren't assigned to any project." With <code>INNER JOIN</code>, employees with no project would be <strong>excluded</strong> since there's no corresponding record. That's why <code>LEFT JOIN</code> is needed.</p>
+
+          <h3>Finding Employees With No Project Assignment</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    NV.MaNV,
+    NV.HoTen
+FROM NHANVIEN NV
+LEFT OUTER JOIN PHANCONG PC
+    ON NV.MaNV = PC.MaNV
+WHERE PC.MaDA IS NULL;</code></pre></div>
+          <div class="inline-ok">Key pattern to remember: <code>LEFT JOIN</code> + <code>WHERE right_table.key IS NULL</code> → find records <strong>with no matching record</strong> in the right-hand table.</div>
+          <div class="inline-warning">Common mistake: putting a <code>WHERE</code> condition on <strong>a different column (not a NULL check)</strong> of the right table after <code>LEFT JOIN</code> - the NULL rows produced by the LEFT JOIN then get filtered out by that condition, making the statement accidentally behave like an <code>INNER JOIN</code>. If you need to filter the right table further while keeping LEFT JOIN behavior, put that condition in the <code>ON</code> clause instead of <code>WHERE</code>.</div>
+
+          <h3>The Three Types of OUTER JOIN</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Type</th><th>Keeps</th></tr>
+            <tr><td><code>LEFT JOIN</code></td><td>All of the left table</td></tr>
+            <tr><td><code>RIGHT JOIN</code></td><td>All of the right table</td></tr>
+            <tr><td><code>FULL OUTER JOIN</code></td><td>All of both sides</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 08 - Cheat Sheet -->
+        <section class="lesson-section" id="cheat-sheet">
+          <p class="eyebrow">08 · QUICK REFERENCE TABLE</p>
+          <h2>SQL Week 3 Cheat Sheet</h2>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Looking for...</th><th>Think of...</th></tr>
+            <tr><td>All</td><td>Division</td></tr>
+            <tr><td>All + a condition</td><td>Conditional division</td></tr>
+            <tr><td>All, via negation</td><td><code>NOT EXISTS</code> × 2</td></tr>
+            <tr><td>Total</td><td><code>SUM()</code></td></tr>
+            <tr><td>Average</td><td><code>AVG()</code></td></tr>
+            <tr><td>Max / min</td><td><code>MAX()</code> / <code>MIN()</code></td></tr>
+            <tr><td>Row count</td><td><code>COUNT(*)</code></td></tr>
+            <tr><td>Count values / distinct values</td><td><code>COUNT(column)</code> / <code>COUNT(DISTINCT column)</code></td></tr>
+            <tr><td>Top N</td><td><code>TOP</code></td></tr>
+            <tr><td>Top N including ties</td><td><code>TOP ... WITH TIES</code></td></tr>
+            <tr><td>Top N distinct values</td><td><code>DISTINCT TOP</code></td></tr>
+            <tr><td>Stats per group / filter groups</td><td><code>GROUP BY</code> / <code>HAVING</code></td></tr>
+            <tr><td>Records with no link</td><td><code>LEFT JOIN ... IS NULL</code></td></tr>
+          </table></div>
+
+          <h3>Reading a Problem → Recognizing the Pattern</h3>
+          <div class="ascii-block">"ALL"                         → DIVISION
+"ALL + A CONDITION"           → CONDITIONAL DIVISION
+"DOES NOT EXIST..."           → NOT EXISTS
+"HOW MANY / TOTAL / AVERAGE..." → AGGREGATE FUNCTIONS
+"TOP / HIGHEST / LOWEST"      → TOP + ORDER BY
+"EACH DEPARTMENT / EACH GROUP..." → GROUP BY
+"AT LEAST... / MORE THAN..."  → HAVING
+"NO RELATED DATA"             → LEFT JOIN + IS NULL</div>
+
+          <h3>Week 3 Summary</h3>
+          <p>Week 1 was about <strong>designing &amp; manipulating data</strong>, Week 2 was about <strong>querying &amp; combining data</strong>, and Week 3 is <strong>advanced querying</strong>: division ("all" → GROUP BY+HAVING COUNT or NOT EXISTS×2), grouping (Aggregates, TOP/HAVING), and outer joins ("none" → LEFT JOIN+IS NULL).</p>
+        </section>
+
+        <!-- 09 - Exercises -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">09 · PRACTICE EXERCISES</p>
+          <h2>Comprehensive Practice</h2>
+          <p>Following the Week 3 guide, students use Microsoft SQL Server to complete <strong>Part III - Sales Management exercises, questions 26 through 53</strong>.</p>
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
+            <h3>Sales Management - Questions 26 → 53</h3>
+            <p style="color:#cbd5e1;font-size:13px;margin-bottom:14px">Individual question content will be updated directly on the course Moodle. The table below is for tracking your own progress.</p>
+            <ol>
+              <li>Questions 26-53: complete them in order, and attempt each one yourself before checking hints/answers</li>
+            </ol>
+          </div>
+
+          <h3>Challenge - Bonus Problems</h3>
+          <p>Beyond the official questions 26-53, here are extra practice problems to deepen your understanding of Week 3's way of thinking. Each has a hidden hint - click to reveal.</p>
+
+          <div class="challenge-list">
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">01</span><h4>"Bought Everything"</h4></div>
+              <p>Find customers who bought all products in the <code>Điện tử</code> (Electronics) category.</p>
+              <details><summary>Hint</summary><div class="ascii-block">"all" → division → GROUP BY → HAVING COUNT</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">02</span><h4>"Nothing Left Out"</h4></div>
+              <p>Find departments that don't have any employees yet.</p>
+              <details><summary>Hint</summary><div class="ascii-block">LEFT JOIN + IS NULL</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">03</span><h4>"Top With Ties"</h4></div>
+              <p>Find the 3 highest salary levels and return every employee earning one of those salaries.</p>
+              <details><summary>Hint</summary><div class="ascii-block">TOP + WITH TIES + ORDER BY</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">04</span><h4>"All, But With a Condition"</h4></div>
+              <p>Find students who registered for all courses worth 3 or more credits.</p>
+              <details><summary>Hint</summary><div class="ascii-block">Conditional Division</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">05</span><h4>"Two Ways to Solve It"</h4></div>
+              <p>Find employees who participated in every project. Write <strong>2 different SQL queries</strong>: one using <code>GROUP BY</code> + <code>HAVING COUNT</code>, the other using double <code>NOT EXISTS</code>.</p>
+              <details><summary>Hint</summary><div class="ascii-block">Method 1: GROUP BY + HAVING COUNT
+Method 2: NOT EXISTS + NOT EXISTS</div></details>
+            </article>
+          </div>
+          <p style="margin-top:14px">This is a great exercise for understanding that <strong>a single SQL problem can have multiple valid solutions</strong>.</p>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="week-2.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 2: Querying Data with SQL</span></a>
+          <a href="week-4.html" class="next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 4: Extended Functions, CASE &amp; Subquery</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">PROGRESS</span>
+          <strong>3<span>/6 weeks</span></strong>
+          <div class="mini-progress"><b style="width:50%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">YOU ARE HERE</span>
+          <ul class="checklist">
+            <li data-section="phep-chia"><b>○</b> Division</li>
+            <li data-section="chia-co-ban"><b>○</b> Basic Division</li>
+            <li data-section="chia-dieu-kien"><b>○</b> Conditional Division</li>
+            <li data-section="chia-not-exists"><b>○</b> Division with NOT EXISTS</li>
+            <li data-section="aggregate"><b>○</b> Aggregate Functions</li>
+            <li data-section="select-top"><b>○</b> SELECT TOP</li>
+            <li data-section="outer-join"><b>○</b> Outer Joins</li>
+            <li data-section="cheat-sheet"><b>○</b> Cheat Sheet</li>
+            <li data-section="bai-tap"><b>○</b> Exercises</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Practice Materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Exercises</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>See the word "all" in a problem - stop and think of division before writing any SQL.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/progress.js?v=3"></script>
+  <script src="../../../assets/js/course.js?v=10"></script>
+</body>
+</html>

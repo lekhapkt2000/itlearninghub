@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT004 Week 2 - Querying Data with SQL: operators, functions, SELECT, JOIN, set operations, and Subquery.">
+  <title>Week 2 · Querying Data with SQL - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=16">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=24">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions">
+        <div class="lang-switch"><a href="../../../courses/it004/week-2.html">VI</a><a href="index.html" class="active">EN</a></div>
+        <button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button>
+        <a class="outline-button" href="index.html">IT004 Overview <span>›</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IT004</a><span>/</span>Week 2</p>
+
+    <div class="week-header">
+      <span class="week-tag">PRACTICE 02 · BTHT2</span>
+      <h1>Querying Data with SQL</h1>
+      <div class="week-meta"><span>5 periods</span><span>Database</span><span>SQL Server</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Objective:</strong> Use operators and functions to build query conditions; write <code>SELECT</code> to filter, sort, and group data; combine data from multiple tables with <code>JOIN</code>; use <code>UNION</code>/<code>INTERSECT</code>/<code>EXCEPT</code>; write nested queries with <code>IN</code>, <code>ANY</code>, <code>ALL</code>, <code>EXISTS</code>, <code>NOT EXISTS</code>.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IT004 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html" class="active">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 6 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Review <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Exam <small>Coming Soon</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 2 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#on-tap" data-toc><b>01</b> Week 1 Review</a>
+        <a href="#toan-tu" data-toc><b>02</b> Operators</a>
+        <a href="#ham" data-toc><b>03</b> Functions in SQL</a>
+        <a href="#select" data-toc><b>04</b> SELECT</a>
+        <a href="#join" data-toc><b>05</b> JOIN</a>
+        <a href="#set-operations" data-toc><b>06</b> Set Operations</a>
+        <a href="#subquery" data-toc><b>07</b> Subquery</a>
+        <a href="#tong-hop" data-toc><b>08</b> Which Tool to Use?</a>
+        <a href="#bai-tap" data-toc><b>09</b> Exercises</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Week 1 Review -->
+        <section class="lesson-section" id="on-tap">
+          <p class="eyebrow">01 · WEEK 1 REVIEW</p>
+          <h2>Review Before We Begin</h2>
+          <p>Before starting new content, students should review Database, Table, and the data manipulation commands learned in Week 1.</p>
+          <h3>Database</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QuanLyNhanVien;
+GO
+
+USE QuanLyNhanVien;
+GO</code></pre></div>
+          <h3>Table</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE PhongBan
+(
+    MaPB CHAR(4) PRIMARY KEY,
+    TenPB NVARCHAR(50)
+);</code></pre></div>
+          <h3>Insert</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO PhongBan
+VALUES
+('PB01', N'Phòng Kỹ thuật'),
+('PB02', N'Phòng Kinh doanh'),
+('PB03', N'Phòng Nhân sự');</code></pre></div>
+          <p>Concepts to remember: Database, Table, Column, Row, Primary Key, Foreign Key, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> - make sure you can manipulate data before moving on to more advanced querying.</p>
+        </section>
+
+        <!-- 02 - Operators -->
+        <section class="lesson-section" id="toan-tu">
+          <p class="eyebrow">02 · OPERATORS IN SQL</p>
+          <h2>Operators</h2>
+          <div class="definition">Operators are symbols or keywords used to perform calculations, comparisons, or combine conditions in a query.</div>
+          <p>The examples below assume the following table:</p>
+          <p class="ascii-label">NhanVien</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaNV</th><th>HoTen</th><th>Luong</th></tr>
+            <tr><td>NV01</td><td>Nguyễn An</td><td>10000000</td></tr>
+            <tr><td>NV02</td><td>Trần Bình</td><td>15000000</td></tr>
+            <tr><td>NV03</td><td>Lê Cường</td><td>12000000</td></tr>
+          </table></div>
+
+          <h3>Arithmetic Operators</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Operator</th><th>Meaning</th></tr>
+            <tr><td><code>+</code></td><td>Addition</td></tr>
+            <tr><td><code>-</code></td><td>Subtraction</td></tr>
+            <tr><td><code>*</code></td><td>Multiplication</td></tr>
+            <tr><td><code>/</code></td><td>Division</td></tr>
+            <tr><td><code>%</code></td><td>Modulo (remainder)</td></tr>
+          </table></div>
+          <p>Calculate salary after a 10% raise:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong, Luong * 1.1 AS LuongMoi
+FROM NhanVien;</code></pre></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>HoTen</th><th>Luong</th><th>LuongMoi</th></tr>
+            <tr><td>Nguyễn An</td><td>10000000</td><td>11000000</td></tr>
+            <tr><td>Trần Bình</td><td>15000000</td><td>16500000</td></tr>
+            <tr><td>Lê Cường</td><td>12000000</td><td>13200000</td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>Note:</strong> Arithmetic operators can be used directly inside <code>SELECT</code> to produce a computed value without saving a new column to the table.</div>
+
+          <h3>Comparison Operators</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Operator</th><th>Meaning</th></tr>
+            <tr><td><code>=</code></td><td>Equal to</td></tr>
+            <tr><td><code>&lt;&gt;</code> or <code>!=</code></td><td>Not equal to</td></tr>
+            <tr><td><code>&gt;</code></td><td>Greater than</td></tr>
+            <tr><td><code>&lt;</code></td><td>Less than</td></tr>
+            <tr><td><code>&gt;=</code></td><td>Greater than or equal to</td></tr>
+            <tr><td><code>&lt;=</code></td><td>Less than or equal to</td></tr>
+          </table></div>
+          <p>Find employees earning over 10 million:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong
+FROM NhanVien
+WHERE Luong > 10000000;</code></pre></div>
+          <p>Find employees in department <code>PB01</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE MaPB = 'PB01';</code></pre></div>
+
+          <h3>Logical Operators</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Operator</th><th>Meaning</th></tr>
+            <tr><td><code>AND</code></td><td>All conditions must be true</td></tr>
+            <tr><td><code>OR</code></td><td>Only one condition needs to be true</td></tr>
+            <tr><td><code>NOT</code></td><td>Negates a condition</td></tr>
+          </table></div>
+          <p><code>AND</code> - the employee must satisfy <strong>both</strong> conditions:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE Luong > 5000000
+  AND MaPB = 'PB01';</code></pre></div>
+          <p><code>OR</code> - only one of the two conditions needs to be true:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE Luong > 15000000
+   OR MaPB = 'PB01';</code></pre></div>
+          <p><code>NOT</code> - get employees not in PB01:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE NOT MaPB = 'PB01';</code></pre></div>
+
+          <h3>Special Operators</h3>
+          <div class="ascii-block">LIKE
+IN
+BETWEEN
+IS NULL
+IS NOT NULL
+ANY
+ALL</div>
+          <p><code>LIKE</code> - <code>%</code> represents any sequence of characters:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
+FROM NhanVien
+WHERE HoTen LIKE N'Nguyễn%';</code></pre></div>
+          <p>This would match: <code>Nguyễn An</code>, <code>Nguyễn Bình</code>, <code>Nguyễn Văn Nam</code>.</p>
+          <p><code>BETWEEN</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE Luong BETWEEN 10000000 AND 15000000;</code></pre></div>
+          <p><code>IN</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
+        </section>
+
+        <!-- 03 - Functions in SQL -->
+        <section class="lesson-section" id="ham">
+          <p class="eyebrow">03 · FUNCTIONS IN SQL</p>
+          <h2>Functions in SQL</h2>
+          <div class="definition">Functions process and transform data: numeric functions, string functions, date/time functions, and aggregate functions.</div>
+
+          <div class="inline-warning">
+            <strong>Important note:</strong> The original material presents some functions using generic SQL/MySQL syntax (<code>NOW()</code>, <code>CURDATE()</code>, <code>LENGTH()</code>, <code>DATE_ADD()</code>, <code>CEIL()</code>...). This practical course uses <strong>Microsoft SQL Server</strong>, so the functions below have been standardized to <strong>T-SQL</strong> - they run as-is, without copying the raw MySQL syntax.
+            <div class="table-wrap"><table class="ref-table">
+            <tr><th>MySQL / Generic</th><th>T-SQL (SQL Server)</th></tr>
+            <tr><td><code>NOW()</code></td><td><code>GETDATE()</code></td></tr>
+            <tr><td><code>CURDATE()</code></td><td><code>CAST(GETDATE() AS DATE)</code></td></tr>
+            <tr><td><code>LENGTH()</code></td><td><code>LEN()</code></td></tr>
+            <tr><td><code>CEIL()</code></td><td><code>CEILING()</code></td></tr>
+            <tr><td><code>DATE_ADD(date, INTERVAL n unit)</code></td><td><code>DATEADD(unit, n, date)</code></td></tr>
+            <tr><td><code>DATEDIFF(date1, date2)</code> - number of days</td><td><code>DATEDIFF(DAY, date1, date2)</code> - unit must be specified</td></tr>
+          </table></div>
+          </div>
+
+          <h3>Numeric Functions</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Function</th><th>Purpose</th></tr>
+            <tr><td><code>ABS()</code></td><td>Absolute value</td></tr>
+            <tr><td><code>ROUND()</code></td><td>Rounds a number</td></tr>
+            <tr><td><code>CEILING()</code></td><td>Rounds up</td></tr>
+            <tr><td><code>FLOOR()</code></td><td>Rounds down</td></tr>
+            <tr><td><code>SQRT()</code></td><td>Square root</td></tr>
+            <tr><td><code>POWER()</code></td><td>Exponent</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    ABS(-10) AS GiaTriTuyetDoi,
+    ROUND(3.14159, 2) AS LamTron,
+    SQRT(16) AS CanBacHai;</code></pre></div>
+
+          <h3>String Functions</h3>
+          <div class="ascii-block">CONCAT()
+LEN()
+SUBSTRING()
+TRIM()
+UPPER()
+LOWER()
+REPLACE()</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    HoTen,
+    UPPER(HoTen) AS HoTenInHoa
+FROM NhanVien;</code></pre></div>
+          <p>Concatenate employee ID and name:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    CONCAT(MaNV, ' - ', HoTen) AS ThongTinNhanVien
+FROM NhanVien;</code></pre></div>
+
+          <h3>Date and Time Functions</h3>
+          <div class="ascii-block">GETDATE()
+YEAR()
+MONTH()
+DAY()
+DATEADD()
+DATEDIFF()</div>
+          <p>Get the year an employee was hired:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    HoTen,
+    YEAR(NgVL) AS NamVaoLam
+FROM NhanVien;</code></pre></div>
+          <p>Find how many days an employee has worked (T-SQL's <code>DATEDIFF</code> requires the unit <code>DAY</code> to be specified):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    HoTen,
+    DATEDIFF(DAY, NgVL, GETDATE()) AS SoNgayLamViec
+FROM NhanVien;</code></pre></div>
+        </section>
+
+        <!-- 04 - SELECT -->
+        <section class="lesson-section" id="select">
+          <p class="eyebrow">04 · THE SELECT CLAUSE</p>
+          <h2>SELECT</h2>
+          <div class="definition"><code>SELECT</code> is one of the most important parts of SQL, used to retrieve data from one or more tables.</div>
+
+          <h3>General Syntax</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT [DISTINCT] &lt;ColumnList&gt;
+FROM &lt;TableName&gt;
+[WHERE &lt;Condition&gt;]
+[GROUP BY &lt;ColumnList&gt;]
+[HAVING &lt;GroupCondition&gt;]
+[ORDER BY &lt;ColumnList&gt; [ASC | DESC]];</code></pre></div>
+
+          <h3>Basic SELECT</h3>
+          <p>Get all data:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien;</code></pre></div>
+          <p>Get only specific columns:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV, HoTen, Luong
+FROM NhanVien;</code></pre></div>
+
+          <h3>DISTINCT</h3>
+          <p>Removes duplicate rows:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT MaPB
+FROM NhanVien;</code></pre></div>
+          <p>Data <code>PB01, PB01, PB02, PB02, PB03</code> → result becomes just <code>PB01, PB02, PB03</code>.</p>
+
+          <h3>WHERE</h3>
+          <p>Used to filter rows based on a condition:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE Luong > 10000000
+  AND MaPB = 'PB01';</code></pre></div>
+
+          <h3>ORDER BY</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong
+FROM NhanVien
+ORDER BY Luong DESC;</code></pre></div>
+          <p><code>ASC</code> - ascending, <code>DESC</code> - descending.</p>
+
+          <h3>TOP</h3>
+          <p>Example - get the most recently hired employee:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 HoTen, NgVL
+FROM NhanVien
+ORDER BY NgVL DESC;</code></pre></div>
+
+          <h3>GROUP BY</h3>
+          <p>Used to group rows sharing the same value. Example - number of employees in each department:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaPB,
+    COUNT(*) AS SoLuong
+FROM NhanVien
+GROUP BY MaPB;</code></pre></div>
+
+          <h3>HAVING</h3>
+          <p><code>WHERE</code> filters <strong>individual rows</strong>, while <code>HAVING</code> filters <strong>groups</strong> after <code>GROUP BY</code>. Example - only show salary levels shared by at least 3 employees:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    Luong,
+    COUNT(*) AS SoLuong
+FROM NhanVien
+GROUP BY Luong
+HAVING COUNT(*) >= 3;</code></pre></div>
+          <div class="ascii-block">WHERE
+  ↓
+filter each row
+  ↓
+GROUP BY
+  ↓
+form groups
+  ↓
+HAVING
+  ↓
+filter groups</div>
+
+          <div class="quick-check">
+            <p class="eyebrow">QUICK CHECK</p>
+            <p class="qc-question">Which clause is used to filter GROUPS of data after GROUP BY?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">WHERE</button>
+              <button class="qc-option" type="button" data-correct="true">HAVING</button>
+              <button class="qc-option" type="button" data-correct="false">ORDER BY</button>
+              <button class="qc-option" type="button" data-correct="false">DISTINCT</button>
+            </div>
+            <div class="qc-feedback correct">✓ Correct! <strong>HAVING</strong> filters groups after <code>GROUP BY</code>, while <code>WHERE</code> filters individual rows before grouping.</div>
+          </div>
+        </section>
+
+        <!-- 05 - JOIN -->
+        <section class="lesson-section" id="join">
+          <p class="eyebrow">05 · JOIN OPERATIONS</p>
+          <h2>JOIN</h2>
+          <div class="definition"><code>JOIN</code> is used to combine data from two or more tables based on a related condition between them.</div>
+          <div class="er-side-by-side">
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>NhanVien</th></tr>
+              <tr><td>MaNV</td></tr>
+              <tr><td>HoTen</td></tr>
+              <tr><td>MaPB</td></tr>
+            </table></div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>PhongBan</th></tr>
+              <tr><td>MaPB</td></tr>
+              <tr><td>TenPB</td></tr>
+            </table></div>
+          </div>
+          <p class="er-relation">NhanVien.MaPB = PhongBan.MaPB</p>
+
+          <h3>INNER JOIN</h3>
+          <p>Only returns rows that <strong>have matching data in both tables</strong>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen,
+    pb.TenPB
+FROM NhanVien nv
+INNER JOIN PhongBan pb
+    ON nv.MaPB = pb.MaPB;</code></pre></div>
+
+          <h3>LEFT JOIN</h3>
+          <p>Returns <strong>all data from the left table</strong>, even when there's no matching data in the right table:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen,
+    pb.TenPB
+FROM NhanVien nv
+LEFT JOIN PhongBan pb
+    ON nv.MaPB = pb.MaPB;</code></pre></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>HoTen</th><th>TenPB</th></tr>
+            <tr><td>Nguyễn An</td><td>Phòng KT</td></tr>
+            <tr><td>Trần Bình</td><td>Phòng KD</td></tr>
+            <tr><td>Lê Cường</td><td>NULL</td></tr>
+          </table></div>
+
+          <h3>RIGHT JOIN</h3>
+          <p>The opposite of <code>LEFT JOIN</code>: keeps all data from the right table:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen,
+    pb.TenPB
+FROM NhanVien nv
+RIGHT JOIN PhongBan pb
+    ON nv.MaPB = pb.MaPB;</code></pre></div>
+
+          <h3>FULL OUTER JOIN</h3>
+          <p>Keeps data from <strong>both tables</strong>, whether or not there's a match:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen,
+    pb.TenPB
+FROM NhanVien nv
+FULL OUTER JOIN PhongBan pb
+    ON nv.MaPB = pb.MaPB;</code></pre></div>
+
+          <h3>CROSS JOIN</h3>
+          <p>Produces a Cartesian product - if <code>NhanVien</code> has 5 rows and <code>PhongBan</code> has 3 rows, the result has <code>5 × 3 = 15</code> rows:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen,
+    pb.TenPB
+FROM NhanVien nv
+CROSS JOIN PhongBan pb;</code></pre></div>
+
+          <h3>SELF JOIN</h3>
+          <p>A table is used <strong>twice</strong> to express a relationship between rows within the same table - for example, employees and their managers:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    nv.HoTen AS NhanVien,
+    ql.HoTen AS QuanLy
+FROM NhanVien nv
+JOIN NhanVien ql
+    ON nv.MaQL = ql.MaNV;</code></pre></div>
+
+          <h3>EQUI JOIN &amp; Recommended Syntax</h3>
+          <p>An EQUI JOIN compares related columns with <code>=</code>. Prefer the <code>JOIN ... ON</code> syntax:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">FROM NhanVien nv
+INNER JOIN PhongBan pb
+    ON nv.MaPB = pb.MaPB</code></pre></div>
+          <p>instead of putting the join condition in <code>WHERE</code> (still works, but not recommended):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">FROM NhanVien nv, PhongBan pb
+WHERE nv.MaPB = pb.MaPB;</code></pre></div>
+        </section>
+
+        <!-- 06 - Set Operations -->
+        <section class="lesson-section" id="set-operations">
+          <p class="eyebrow">06 · SET OPERATIONS</p>
+          <h2>Set Operations</h2>
+          <p>There are 3 main operations used to combine the <strong>results of multiple queries</strong>:</p>
+          <div class="ascii-block">UNION
+INTERSECT
+EXCEPT</div>
+
+          <h3>UNION</h3>
+          <p>Takes all results and <strong>removes duplicate rows</strong>. Example - employees assigned to DA01 or DA02:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA01'
+
+UNION
+
+SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA02';</code></pre></div>
+
+          <h3>INTERSECT</h3>
+          <p>Takes the <strong>intersection</strong>. Example - employees assigned to both DA01 and DA02:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA01'
+
+INTERSECT
+
+SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA02';</code></pre></div>
+
+          <h3>EXCEPT</h3>
+          <p>Takes results from the first query that are <strong>not present</strong> in the second. Example - employees assigned to DA01 but not DA02:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA01'
+
+EXCEPT
+
+SELECT MaNV
+FROM PhanCong
+WHERE MaDA = 'DA02';</code></pre></div>
+          <div class="ascii-block">A UNION B      → A or B
+A INTERSECT B  → A and B
+A EXCEPT B     → A but not B</div>
+        </section>
+
+        <!-- 07 - Subquery -->
+        <section class="lesson-section" id="subquery">
+          <p class="eyebrow">07 · NESTED QUERIES - SUBQUERY</p>
+          <h2>Subquery</h2>
+          <div class="definition">A Subquery is a query placed <strong>inside</strong> another query. The inner query runs to provide a result for the outer query.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
+FROM SanPham
+WHERE MaSP IN
+(
+    SELECT MaSP
+    FROM HoaDon
+);</code></pre></div>
+
+          <h3>Non-Correlated Subquery</h3>
+          <p>An inner query that <strong>does not depend</strong> on the outer query. Example - find products sold in January 2024:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
+FROM SanPham
+WHERE MaSP IN
+(
+    SELECT MaSP
+    FROM HoaDon
+    WHERE MONTH(NgayBan) = 1
+      AND YEAR(NgayBan) = 2024
+);</code></pre></div>
+
+          <h3>IN / NOT IN</h3>
+          <p><code>IN</code> - checks whether a value is present in the subquery's result set:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
+FROM SanPham
+WHERE MaSP IN
+(
+    SELECT MaSP
+    FROM HoaDon
+);</code></pre></div>
+          <p><code>NOT IN</code> - find products that have never appeared on an invoice:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
+FROM SanPham
+WHERE MaSP NOT IN
+(
+    SELECT MaSP
+    FROM HoaDon
+);</code></pre></div>
+
+          <h3>ANY / ALL</h3>
+          <p><code>ANY</code> compares against <strong>at least one value</strong> in the subquery's result. Example - salary greater than any employee in PB01, PB02, or PB03:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, Luong
+FROM NhanVien
+WHERE Luong > ANY
+(
+    SELECT Luong
+    FROM NhanVien
+    WHERE MaPB IN ('PB01', 'PB02', 'PB03')
+);</code></pre></div>
+          <p><code>ALL</code> requires the condition to hold against <strong>every value</strong> in the subquery. Example - products priced higher than every product in the Laptop category:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaSP, TenSP, GiaBan
+FROM SanPham
+WHERE DanhMuc = 'Phu Kien'
+  AND GiaBan > ALL
+(
+    SELECT GiaBan
+    FROM SanPham
+    WHERE DanhMuc = 'Laptop'
+);</code></pre></div>
+          <div class="ascii-block">> ANY → greater than at least one
+> ALL → greater than all</div>
+
+          <h3>EXISTS / NOT EXISTS</h3>
+          <p><code>EXISTS</code> checks whether a subquery returns <strong>at least one row</strong>. Example - employees with at least one order:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
+FROM NhanVien nv
+WHERE EXISTS
+(
+    SELECT *
+    FROM DonHang dh
+    WHERE dh.MaNV = nv.MaNV
+);</code></pre></div>
+          <p>Here, the subquery <strong>references the current row of the outer query</strong> (<code>nv.MaNV</code>) - this is called a <strong>Correlated Subquery</strong>.</p>
+          <p><code>NOT EXISTS</code> - find employees with no orders at all:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
+FROM NhanVien nv
+WHERE NOT EXISTS
+(
+    SELECT *
+    FROM DonHang dh
+    WHERE dh.MaNV = nv.MaNV
+);</code></pre></div>
+        </section>
+
+        <!-- 08 - Which Tool to Use -->
+        <section class="lesson-section" id="tong-hop">
+          <p class="eyebrow">08 · SUMMARY - WHICH TOOL TO USE?</p>
+          <h2>Which Tool to Use?</h2>
+          <p>A quick-reference table: knowing the syntax is one thing, but knowing <strong>when to use what</strong> is what matters.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Task</th><th>Tool</th></tr>
+            <tr><td>Filter data</td><td><code>WHERE</code></td></tr>
+            <tr><td>Multiple conditions</td><td><code>AND</code>, <code>OR</code>, <code>NOT</code></td></tr>
+            <tr><td>Search by pattern</td><td><code>LIKE</code></td></tr>
+            <tr><td>Search within a list</td><td><code>IN</code></td></tr>
+            <tr><td>Sort results</td><td><code>ORDER BY</code></td></tr>
+            <tr><td>Remove duplicates</td><td><code>DISTINCT</code></td></tr>
+            <tr><td>Group rows</td><td><code>GROUP BY</code></td></tr>
+            <tr><td>Filter groups</td><td><code>HAVING</code></td></tr>
+            <tr><td>Combine tables</td><td><code>JOIN</code></td></tr>
+            <tr><td>Combine query results</td><td><code>UNION</code></td></tr>
+            <tr><td>Common part</td><td><code>INTERSECT</code></td></tr>
+            <tr><td>Has A but not B</td><td><code>EXCEPT</code></td></tr>
+            <tr><td>Compare against a result set</td><td><code>ANY</code>, <code>ALL</code></td></tr>
+            <tr><td>Check data exists</td><td><code>EXISTS</code></td></tr>
+            <tr><td>Check data doesn't exist</td><td><code>NOT EXISTS</code></td></tr>
+          </table></div>
+        </section>
+
+        <!-- 09 - Exercises -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">09 · PRACTICE EXERCISES</p>
+          <h2>Comprehensive Practice</h2>
+          <p>Following the Week 2 guide, students use Microsoft SQL Server to complete <strong>Part III - Sales Management Exercises, questions 1 through 17</strong>.</p>
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
+            <h3>Sales Management - Questions 1 → 17</h3>
+            <p style="color:#cbd5e1;font-size:13px;margin-bottom:14px">Individual question content will be updated directly on the course Moodle. The table below is for tracking your own progress.</p>
+            <ol>
+              <li>Questions 01-17: complete them in order, and attempt each one yourself before checking hints/answers</li>
+            </ol>
+          </div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Question</th><th>Status</th></tr>
+            <tr><td>01-17</td><td>☐ Not completed</td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>How to work through it:</strong> Write your own SQL first, then open the hint or reference answer - don't peek at the answer right away, to get the most out of practicing.</div>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="week-1.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 1: Database Fundamentals</span></a>
+          <a href="week-3.html" class="next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 3: Division &amp; Grouping</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">PROGRESS</span>
+          <strong>2<span>/6 weeks</span></strong>
+          <div class="mini-progress"><b style="width:33%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">YOU ARE HERE</span>
+          <ul class="checklist">
+            <li data-section="on-tap"><b>○</b> Week 1 Review</li>
+            <li data-section="toan-tu"><b>○</b> Operators</li>
+            <li data-section="ham"><b>○</b> Functions in SQL</li>
+            <li data-section="select"><b>○</b> SELECT</li>
+            <li data-section="join"><b>○</b> JOIN</li>
+            <li data-section="set-operations"><b>○</b> Set Operations</li>
+            <li data-section="subquery"><b>○</b> Subquery</li>
+            <li data-section="tong-hop"><b>○</b> Which Tool to Use?</li>
+            <li data-section="bai-tap"><b>○</b> Exercises</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Practice Materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Exercises</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Use SQL Server's actual T-SQL - avoid copying raw MySQL syntax from reference material.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/progress.js?v=3"></script>
+  <script src="../../../assets/js/course.js?v=10"></script>
+</body>
+</html>

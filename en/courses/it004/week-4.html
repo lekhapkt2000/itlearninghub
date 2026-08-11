@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT004 Week 4 - Extended functions (CAST, GETDATE, LEFT, RIGHT), CASE...END, Alias, and Subquery in SQL Server.">
+  <title>Week 4 · Extended Functions, CASE &amp; Subquery - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=16">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=24">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions">
+        <div class="lang-switch"><a href="../../../courses/it004/week-4.html">VI</a><a href="index.html" class="active">EN</a></div>
+        <button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button>
+        <a class="outline-button" href="index.html">IT004 Overview <span>›</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IT004</a><span>/</span>Week 4</p>
+
+    <div class="week-header">
+      <span class="week-tag">PRACTICE 04 · BTHT4</span>
+      <h1>Extended Functions, CASE &amp; Subquery</h1>
+      <div class="week-meta"><span>5 periods</span><span>Database</span><span>SQL Server</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Objective:</strong> After Week 4, students won't just know how to write queries to retrieve data, but will be able to <strong>transform data, classify data, and create computed columns from subqueries</strong>.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IT004 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html" class="active">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 6 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Review <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Exam <small>Coming Soon</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 4 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#tong-quan" data-toc><b>01</b> Overview</a>
+        <a href="#cast" data-toc><b>02</b> CAST()</a>
+        <a href="#getdate" data-toc><b>03</b> GETDATE()</a>
+        <a href="#left-right" data-toc><b>04</b> LEFT &amp; RIGHT</a>
+        <a href="#case" data-toc><b>05</b> CASE...END</a>
+        <a href="#alias-subquery" data-toc><b>06</b> Alias &amp; Subquery</a>
+        <a href="#subquery-nang-cao" data-toc><b>07</b> Advanced Subquery</a>
+        <a href="#cheat-sheet" data-toc><b>08</b> Cheat Sheet</a>
+        <a href="#bai-tap" data-toc><b>09</b> Exercises</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Overview -->
+        <section class="lesson-section" id="tong-quan">
+          <p class="eyebrow">01 · WEEK 4 OVERVIEW</p>
+          <h2>From Querying Data to Processing Data</h2>
+          <div class="ascii-block">WEEK 4
+├── Extended functions: CAST() · GETDATE() · LEFT() · RIGHT()
+├── CASE...END: by condition · by value · classifying data
+├── Alias + Subquery: table/column alias · subquery in FROM · subquery in SELECT
+└── Comprehensive exercises: Academic Affairs · Sales Management</div>
+          <p>This is the shift from <strong>querying data</strong> to <strong>processing data and turning it into information</strong>. By the end of this week, students will be able to convert data types, extract substrings, build conditional logic with <code>CASE</code>, and write subqueries in <code>FROM</code>/<code>SELECT</code> combined with aliases.</p>
+        </section>
+
+        <!-- 02 - CAST -->
+        <section class="lesson-section" id="cast">
+          <p class="eyebrow">02 · THE CAST() FUNCTION</p>
+          <h2>CAST()</h2>
+          <div class="definition"><code>CAST()</code> is used to <strong>convert a value from one data type to another</strong> (e.g. VARCHAR → INT, DATETIME → DATE, DECIMAL → INT, VARCHAR → DATE).</div>
+
+          <h3>Syntax</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CAST(expression AS target_data_type)</code></pre></div>
+          <p><code>expression</code>: the value or expression to convert. <code>target_data_type</code>: the data type to convert to.</p>
+
+          <h3>Basic Example</h3>
+          <p>Convert a string into a datetime:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST('2025-04-10' AS DATETIME) AS Ngay;</code></pre></div>
+          <p>Result: <code>2025-04-10 00:00:00.000</code></p>
+          <p>Convert a float into an integer:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST(123.456 AS INT) AS SoNguyen;</code></pre></div>
+          <p>Result: <code>123</code></p>
+
+          <h3>Common Data Types</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Type</th><th>Meaning</th><th>Example</th></tr>
+            <tr><td><code>INT</code></td><td>Integer</td><td><code>CAST(123 AS INT)</code></td></tr>
+            <tr><td><code>VARCHAR(n)</code></td><td>String</td><td><code>CAST('Hello' AS VARCHAR(50))</code></td></tr>
+            <tr><td><code>DATE</code></td><td>Date</td><td><code>CAST('2024-11-14' AS DATE)</code></td></tr>
+            <tr><td><code>DATETIME</code></td><td>Date + time</td><td><code>CAST('2024-11-14 10:20:30' AS DATETIME)</code></td></tr>
+            <tr><td><code>DECIMAL(p,s)</code></td><td>Decimal number</td><td><code>CAST(123.456 AS DECIMAL(10,2))</code></td></tr>
+            <tr><td><code>NUMERIC(p,s)</code></td><td>Decimal number</td><td><code>CAST(123.456 AS NUMERIC(10,2))</code></td></tr>
+            <tr><td><code>FLOAT</code></td><td>Floating-point number</td><td><code>CAST(123.456 AS FLOAT)</code></td></tr>
+            <tr><td><code>CHAR(n)</code></td><td>Fixed-length string</td><td><code>CAST('Hello' AS CHAR(10))</code></td></tr>
+          </table></div>
+
+          <h3>CAST() in a Real Scenario</h3>
+          <p>Table <code>NhanVien(MaNV, HoTen, Luong)</code> where <code>Luong</code> is stored as <code>DECIMAL(12,2)</code>, and we want to display it as a whole number:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaNV,
+    HoTen,
+    CAST(Luong AS INT) AS Luong
+FROM NhanVien;</code></pre></div>
+
+          <h3>Watch Out for Rounding</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST(123.99 AS INT);</code></pre></div>
+          <p>Result: <code>123</code></p>
+          <div class="inline-warning"><code>CAST(... AS INT)</code> <strong>is not the same as ROUND</strong> - it truncates the decimal part instead of rounding. This is a very easy mistake to make.</div>
+        </section>
+
+        <!-- 03 - GETDATE -->
+        <section class="lesson-section" id="getdate">
+          <p class="eyebrow">03 · THE GETDATE() FUNCTION</p>
+          <h2>GETDATE()</h2>
+          <div class="definition"><code>GETDATE()</code> returns the <strong>current date and time of the SQL Server system</strong> at the moment the query runs. This function is specific to SQL Server (T-SQL).</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT GETDATE() AS NgayGioHienTai;</code></pre></div>
+
+          <h3>Combining GETDATE() and CAST()</h3>
+          <p>If you only need <strong>today's date</strong>, without the time:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST(GETDATE() AS DATE) AS NgayHienTai;</code></pre></div>
+          <div class="ascii-block">GETDATE() → Date + time → CAST(... AS DATE) → Date only</div>
+
+          <h3>Example: Calculating Age</h3>
+          <p>Suppose <code>NgaySinh = '2000-08-15'</code>. Get today's date with <code>SELECT GETDATE() AS HomNay;</code></p>
+          <div class="inline-warning"><strong>Note:</strong> Don't use a simple subtraction between the current year and birth year to calculate exact age, since it also depends on whether the person has already had their birthday this year - this is the difference between <strong>naive data processing</strong> and <strong>processing data correctly from a business standpoint</strong>.</div>
+        </section>
+
+        <!-- 04 - LEFT RIGHT -->
+        <section class="lesson-section" id="left-right">
+          <p class="eyebrow">04 · THE LEFT() AND RIGHT() FUNCTIONS</p>
+          <h2>LEFT() and RIGHT()</h2>
+          <p><code>LEFT()</code> takes a number of characters from the <strong>left</strong> of a string, <code>RIGHT()</code> takes them from the <strong>right</strong>.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">LEFT(string, num_chars)
+RIGHT(string, num_chars)</code></pre></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT LEFT('abcdef', 3);   -- abc
+SELECT RIGHT('abcdef', 3);  -- def</code></pre></div>
+
+          <h3>Example with a Student ID</h3>
+          <p>Suppose <code>MaSV = '22520001'</code>, table <code>SinhVien(MaSV, HoTen)</code>. Get the first 3 characters (cohort code):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaSV,
+    HoTen,
+    LEFT(MaSV, 3) AS Khoa
+FROM SinhVien;</code></pre></div>
+          <p>Get the last 3 characters (sequence number):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaSV,
+    RIGHT(MaSV, 3) AS SoThuTu
+FROM SinhVien;</code></pre></div>
+          <p>For <code>MaSV = 22520001</code>: <code>Khoa = 225</code>, <code>SoThuTu = 001</code>.</p>
+
+          <h3>Quick Comparison</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Function</th><th>Takes From</th><th>Example</th><th>Result</th></tr>
+            <tr><td><code>LEFT()</code></td><td>The left</td><td><code>LEFT('abcdef',3)</code></td><td><code>abc</code></td></tr>
+            <tr><td><code>RIGHT()</code></td><td>The right</td><td><code>RIGHT('abcdef',3)</code></td><td><code>def</code></td></tr>
+          </table></div>
+          <div class="ascii-block">LEFT  ← ← ←
+RIGHT → → →</div>
+        </section>
+
+        <!-- 05 - CASE -->
+        <section class="lesson-section" id="case">
+          <p class="eyebrow">05 · CASE...END</p>
+          <h2>CASE...END</h2>
+          <div class="definition"><code>CASE</code> is SQL's conditional construct, functioning similarly to <code>IF / ELSE IF / ELSE</code> in programming languages.</div>
+
+          <h3>Condition-Based Syntax</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    ELSE result_other
+END</code></pre></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    HoTen,
+    Luong,
+    CASE
+        WHEN Luong >= 20000000 THEN N'Cao'
+        WHEN Luong >= 10000000 THEN N'Trung bình'
+        ELSE N'Thấp'
+    END AS MucLuong
+FROM NhanVien;</code></pre></div>
+
+          <h3>Example: Classifying Customers</h3>
+          <p>Classify by <code>TongChiTieu</code> (total spend): ≥ 10,000,000 → VIP, ≥ 5,000,000 → Loyal, otherwise → Regular.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaKH,
+    HoTen,
+    CASE
+        WHEN TongChiTieu >= 10000000 THEN N'VIP'
+        WHEN TongChiTieu >= 5000000 THEN N'Thân thiết'
+        ELSE N'Thường'
+    END AS PhanLoai
+FROM KhachHang;</code></pre></div>
+
+          <h3>Condition Order Matters - A Lot</h3>
+          <p>The following is <strong>logically wrong</strong>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE
+    WHEN TongChiTieu >= 5000000 THEN N'Thân thiết'
+    WHEN TongChiTieu >= 10000000 THEN N'VIP'
+    ELSE N'Thường'
+END</code></pre></div>
+          <div class="inline-warning">Since <code>15,000,000 &gt;= 5,000,000</code> is already true at the first condition, <code>15,000,000</code> gets classified as "Loyal" instead of "VIP". <strong>Rule:</strong> more specific/higher conditions should come before broader ones (<code>&gt;=10M</code> → <code>&gt;=5M</code> → the rest).</div>
+
+          <h3>CASE with Value Comparison</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE expression
+    WHEN value1 THEN result1
+    WHEN value2 THEN result2
+    ELSE result_other
+END</code></pre></div>
+          <p>Example: classifying gender:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaNV,
+    HoTen,
+    CASE GioiTinh
+        WHEN 1 THEN N'Nam'
+        WHEN 0 THEN N'Nữ'
+        ELSE N'Không xác định'
+    END AS PhanLoaiGioiTinh
+FROM NhanVien;</code></pre></div>
+
+          <h3>The Two Forms of CASE</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Form</th><th>When to Use?</th></tr>
+            <tr><td><code>CASE WHEN condition</code></td><td>Complex conditions</td></tr>
+            <tr><td><code>CASE expression WHEN value</code></td><td>Comparing one value against several values</td></tr>
+          </table></div>
+
+          <h3>CASE Isn't Just for SELECT</h3>
+          <p><code>CASE</code> can also be used in <code>ORDER BY</code>, and even <code>WHERE</code>/<code>GROUP BY</code> when needed:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ORDER BY
+    CASE
+        WHEN TrangThai = N'Ưu tiên' THEN 1
+        ELSE 2
+    END;</code></pre></div>
+
+          <div class="quick-check">
+            <p class="eyebrow">QUICK CHECK</p>
+            <p class="qc-question">In a CASE WHEN with multiple tiered conditions (e.g. classifying salary), which condition should come first?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">The broadest condition (easiest to satisfy)</button>
+              <button class="qc-option" type="button" data-correct="true">The most specific/highest condition</button>
+              <button class="qc-option" type="button" data-correct="false">Order doesn't matter</button>
+            </div>
+            <div class="qc-feedback correct">✓ Correct! <code>CASE</code> stops at the <strong>first true condition</strong>, so the more specific/higher condition must come first, or every row will fall into the broader branch above it.</div>
+          </div>
+        </section>
+
+        <!-- 06 - Alias & Subquery basics -->
+        <section class="lesson-section" id="alias-subquery">
+          <p class="eyebrow">06 · ALIAS AND SUBQUERY</p>
+          <h2>Alias and Basic Subquery</h2>
+          <div class="definition">An <strong>Alias</strong> is a temporary name given to a table or column in a query, making the SQL easier to read and easier to use in complex expressions.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SV.MaSV, SV.HoTen
+FROM SinhVien SV;</code></pre></div>
+          <p>Alias for a column:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    HoTen AS TenSinhVien
+FROM SinhVien;</code></pre></div>
+          <p>Alias for a table (<code>AS</code> can be omitted):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SV.MaSV,
+    SV.HoTen
+FROM SinhVien AS SV;</code></pre></div>
+
+          <h3>What Is a Subquery?</h3>
+          <div class="definition">A <strong>Subquery</strong> is a query nested inside another query - it can appear in <code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, or <code>HAVING</code>.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien
+WHERE Diem > (
+    SELECT AVG(Diem)
+    FROM SinhVien
+);</code></pre></div>
+          <p>Reads as: "Find students whose grade is higher than the average grade of all students." Logic: compute <code>AVG(Diem)</code> first, then take the rows where <code>Diem &gt; AVG</code>.</p>
+        </section>
+
+        <!-- 07 - Advanced Subquery -->
+        <section class="lesson-section" id="subquery-nang-cao">
+          <p class="eyebrow">07 · SUBQUERY IN FROM AND SELECT</p>
+          <h2>Advanced Subquery</h2>
+          <p>This is the new core topic for Week 4.</p>
+
+          <h3>Subquery in FROM + Alias</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT Alias1.Cot1, Alias1.Cot2
+FROM
+(
+    SELECT ...
+    FROM ...
+    WHERE ...
+) AS Alias1
+WHERE ...;</code></pre></div>
+          <p>SQL builds a <strong>temporary result table</strong> from the subquery, and the outer query then uses that table:</p>
+          <div class="ascii-block">Original table → Subquery → Temporary result table → Alias → Outer query</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM
+(
+    SELECT
+        MaSV,
+        HoTen,
+        Diem
+    FROM SinhVien
+) AS SV
+WHERE SV.Diem >= 8;</code></pre></div>
+          <div class="inline-warning">SQL Server requires a derived table/subquery in <code>FROM</code> to have a name - <code>FROM (SELECT ...)</code> alone isn't enough, you need <code>FROM (SELECT ...) AS SV</code>.</div>
+
+          <h3>Subquery in SELECT + Alias</h3>
+          <p>This is an especially important part of Week 4.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    &lt;main column&gt;,
+    (
+        SELECT &lt;expression&gt;
+        FROM &lt;related table&gt;
+        WHERE &lt;linking condition&gt;
+    ) AS &lt;alias&gt;
+FROM &lt;main table&gt;;</code></pre></div>
+
+          <h4>Example - Counting Sales per Product</h4>
+          <p>Tables <code>SanPham(MaSP, TenSP)</code>, <code>CTHD(MaHD, MaSP, SoLuong)</code>. Problem: "for each product, show how many times it appears in invoice details."</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SP.TenSP,
+    (
+        SELECT COUNT(*)
+        FROM CTHD
+        WHERE CTHD.MaSP = SP.MaSP
+    ) AS SoLanBan
+FROM SanPham SP;</code></pre></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Product</th><th>Times Sold</th></tr>
+            <tr><td>Laptop</td><td>5</td></tr>
+            <tr><td>Chuột</td><td>12</td></tr>
+            <tr><td>Bàn phím</td><td>7</td></tr>
+          </table></div>
+
+          <h3>Correlated Subquery</h3>
+          <p>In the example above, <code>WHERE CTHD.MaSP = SP.MaSP</code> references <code>SP.MaSP</code> from the outer query - this is a <strong>correlated subquery</strong>: the subquery is recomputed <strong>separately for each row</strong> of the outer query.</p>
+          <div class="ascii-block">Outer query → SP.MaSP → Subquery → computed separately for each SP</div>
+
+          <h4>Comparison with a Regular Subquery</h4>
+          <p>A regular subquery runs <strong>independently</strong>, with no dependency on the outer row:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SanPham
+WHERE Gia >
+(
+    SELECT AVG(Gia)
+    FROM SanPham
+);</code></pre></div>
+          <p>A correlated subquery <strong>depends</strong> on each outer row (<code>SP.MaSP</code> in the example above).</p>
+
+          <h4>When Should You Use a Correlated Subquery?</h4>
+          <p>It's a great fit for questions of the form "for <strong>each A</strong>, compute a value related to A" - for example: how many times has each product been sold? how many courses has each student registered for? how many projects has each employee participated in? how many invoices does each customer have? how many employees does each department have?</p>
+
+          <h4>Example - Academic Affairs</h4>
+          <p>Tables <code>SINHVIEN(MaSV, HoTen)</code>, <code>DANGKY(MaSV, MaHP)</code>. Problem: "show each student along with the number of courses they've registered for."</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SV.MaSV,
+    SV.HoTen,
+    (
+        SELECT COUNT(*)
+        FROM DangKy DK
+        WHERE DK.MaSV = SV.MaSV
+    ) AS SoHocPhan
+FROM SinhVien SV;</code></pre></div>
+
+          <h4>Combining CASE + Subquery</h4>
+          <p>Problem: "classify students based on the number of courses they've registered for."</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SV.MaSV,
+    SV.HoTen,
+    CASE
+        WHEN
+        (
+            SELECT COUNT(*)
+            FROM DangKy DK
+            WHERE DK.MaSV = SV.MaSV
+        ) >= 20
+        THEN N'Đăng ký nhiều'
+
+        WHEN
+        (
+            SELECT COUNT(*)
+            FROM DangKy DK
+            WHERE DK.MaSV = SV.MaSV
+        ) >= 15
+        THEN N'Bình thường'
+
+        ELSE N'Đăng ký ít'
+    END AS PhanLoai
+FROM SinhVien SV;</code></pre></div>
+        </section>
+
+        <!-- 08 - Cheat Sheet -->
+        <section class="lesson-section" id="cheat-sheet">
+          <p class="eyebrow">08 · PUTTING IT ALL TOGETHER</p>
+          <h2>Keyword Recognition &amp; Cheat Sheet</h2>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Keyword in the Problem</th><th>Concept</th></tr>
+            <tr><td>Convert data type</td><td><code>CAST()</code></td></tr>
+            <tr><td>Current date</td><td><code>GETDATE()</code></td></tr>
+            <tr><td>First / last characters</td><td><code>LEFT()</code> / <code>RIGHT()</code></td></tr>
+            <tr><td>Classify / "If... then..."</td><td><code>CASE WHEN</code></td></tr>
+            <tr><td>Temporary name for a table/column</td><td>Alias</td></tr>
+            <tr><td>A query inside a query</td><td>Subquery</td></tr>
+            <tr><td>Compute for each object</td><td>Correlated Subquery</td></tr>
+            <tr><td>Subquery inside FROM</td><td>Derived Table + Alias</td></tr>
+            <tr><td>Subquery inside SELECT</td><td>Scalar / Correlated Subquery</td></tr>
+          </table></div>
+
+          <div class="ascii-block">CAST()      → Convert data type
+GETDATE()   → Current date + time
+LEFT(x, n)  → n characters from the left
+RIGHT(x, n) → n characters from the right
+CASE ... END → Condition / classification
+Alias       → Temporary name for a table / column
+Subquery    → A query inside another query
+FROM (SELECT ...) AS T   → Derived Table
+SELECT (SELECT ...) AS X → Column computed via Subquery</div>
+
+          <h3>The First Four Weeks of IT004</h3>
+          <p>Week 1: creating &amp; manipulating data. Week 2: querying &amp; combining data. Week 3: advanced querying ("all" / grouping / TOP). Week 4: <strong>transforming &amp; computing</strong> over data with CAST, CASE, and Subquery.</p>
+        </section>
+
+        <!-- 09 - Exercises -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">09 · PRACTICE EXERCISES</p>
+          <h2>Comprehensive Practice</h2>
+          <p>Following the official material, Week 4's practice uses Microsoft SQL Server to complete: <strong>Academic Affairs - Part I questions 1, 3-8, 11-14; Part II questions 1-4; Part III questions 1-24</strong>; and <strong>Sales Management - Part III questions 41-45</strong>.</p>
+
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
+            <h3>5 Practice Groups</h3>
+            <ol>
+              <li><strong>Practice 01 - Extended Functions:</strong> CAST, GETDATE, LEFT, RIGHT</li>
+              <li><strong>Practice 02 - CASE:</strong> CASE WHEN, CASE expression, classifying data</li>
+              <li><strong>Practice 03 - Alias &amp; Subquery:</strong> Alias, Subquery in FROM/SELECT, Correlated Subquery</li>
+              <li><strong>Practice 04 - Academic Affairs:</strong> Part I questions 1, 3-8, 11-14 · Part II questions 1-4 · Part III questions 1-24</li>
+              <li><strong>Practice 05 - Sales Management:</strong> Part III questions 41-45</li>
+            </ol>
+          </div>
+          <p style="color:var(--muted);font-size:12px">Individual question content will be updated directly on the course Moodle.</p>
+
+          <h3>Challenge - End-of-Week Challenges</h3>
+          <p>After Week 4, students have enough knowledge to solve some pretty interesting problems. Each has a hidden hint - click to reveal.</p>
+
+          <div class="challenge-list">
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">01</span></div>
+              <p>Display the student ID, full name, and the last 3 characters of the student ID.</p>
+              <details><summary>Hint</summary><div class="ascii-block">RIGHT()</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">02</span></div>
+              <p>Display today's date as a DATE only.</p>
+              <details><summary>Hint</summary><div class="ascii-block">GETDATE() + CAST()</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">03</span></div>
+              <p>Classify students by grade: ≥8.5 → Excellent, ≥7.0 → Good, ≥5.0 → Pass, &lt;5.0 → Fail.</p>
+              <details><summary>Hint</summary><div class="ascii-block">CASE</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">04</span></div>
+              <p>Display each student along with the number of courses they've registered for.</p>
+              <details><summary>Hint</summary><div class="ascii-block">Correlated Subquery</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">⭐</span></div>
+              <p>Display each student, the number of courses they've registered for, and a classification: ≥20 → Heavy load, 15-19 → Normal, &lt;15 → Light load.</p>
+              <details><summary>Hint</summary><div class="ascii-block">CASE + Correlated Subquery</div></details>
+            </article>
+          </div>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="week-3.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 3: Division &amp; Grouping</span></a>
+          <a href="week-5.html" class="next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 5: Trigger</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">PROGRESS</span>
+          <strong>4<span>/6 weeks</span></strong>
+          <div class="mini-progress"><b style="width:67%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">YOU ARE HERE</span>
+          <ul class="checklist">
+            <li data-section="tong-quan"><b>○</b> Overview</li>
+            <li data-section="cast"><b>○</b> CAST()</li>
+            <li data-section="getdate"><b>○</b> GETDATE()</li>
+            <li data-section="left-right"><b>○</b> LEFT &amp; RIGHT</li>
+            <li data-section="case"><b>○</b> CASE...END</li>
+            <li data-section="alias-subquery"><b>○</b> Alias &amp; Subquery</li>
+            <li data-section="subquery-nang-cao"><b>○</b> Advanced Subquery</li>
+            <li data-section="cheat-sheet"><b>○</b> Cheat Sheet</li>
+            <li data-section="bai-tap"><b>○</b> Exercises</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Practice Materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Exercises</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>CAST(...AS INT) truncates the decimal part - it does not round like ROUND does.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/progress.js?v=3"></script>
+  <script src="../../../assets/js/course.js?v=10"></script>
+</body>
+</html>

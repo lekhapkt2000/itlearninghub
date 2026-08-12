@@ -39,10 +39,10 @@ var LOG_HEADERS = ['timestamp', 'course', 'resource', 'code_hash', 'name', 'clas
 
 function doGet(e) {
   var action = e.parameter.action;
-  if (action === 'validate') {
-    return respond(handleValidate(e.parameter));
-  }
-  return respond({ ok: false, message: 'Unknown action' });
+  var result = action === 'validate'
+    ? handleValidate(e.parameter)
+    : { ok: false, message: 'Unknown action' };
+  return respond(result, e.parameter.callback);
 }
 
 function handleValidate(params) {
@@ -89,7 +89,12 @@ function hashCode(code) {
   }).join('').slice(0, 12);
 }
 
-function respond(obj) {
+function respond(obj, callback) {
+  if (callback) {
+    return ContentService
+      .createTextOutput(callback + '(' + JSON.stringify(obj) + ')')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 

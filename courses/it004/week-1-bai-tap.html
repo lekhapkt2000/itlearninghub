@@ -50,61 +50,79 @@
           <p class="schema-def-head">PHONGTAP (<u>MAPH</u>, TENPHONG, DIACHI, SUCCHUA, TRANGTHAI)</p>
           <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin phòng tập: mã phòng, tên phòng, địa chỉ, sức chứa tối đa (số người) và trạng thái phòng (hoạt động, bảo trì, đóng cửa…).</p>
         </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAPH</code></td><td><code>char(5)</code></td><td>Mã phòng tập - khóa chính</td></tr>
+          <tr><td><code>TENPHONG</code></td><td><code>varchar(50)</code></td><td>Tên phòng tập</td></tr>
+          <tr><td><code>DIACHI</code></td><td><code>varchar(100)</code></td><td>Địa chỉ phòng tập</td></tr>
+          <tr><td><code>SUCCHUA</code></td><td><code>int</code></td><td>Sức chứa tối đa (số người)</td></tr>
+          <tr><td><code>TRANGTHAI</code></td><td><code>varchar(20)</code></td><td>Trạng thái phòng (hoạt động, bảo trì, đóng cửa…)</td></tr>
+        </table></div>
+
         <div class="schema-def">
           <p class="schema-def-head">HUANLUYENVIEN (<u>MAHLV</u>, HOTEN, CHUYENMON, SDT, EMAIL)</p>
           <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin huấn luyện viên: mã huấn luyện viên, họ tên, chuyên môn (Yoga, Gym,...), số điện thoại và email liên lạc.</p>
         </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAHLV</code></td><td><code>char(5)</code></td><td>Mã huấn luyện viên - khóa chính</td></tr>
+          <tr><td><code>HOTEN</code></td><td><code>varchar(50)</code></td><td>Họ tên</td></tr>
+          <tr><td><code>CHUYENMON</code></td><td><code>varchar(50)</code></td><td>Chuyên môn (Yoga, Gym,...)</td></tr>
+          <tr><td><code>SDT</code></td><td><code>varchar(15)</code></td><td>Số điện thoại</td></tr>
+          <tr><td><code>EMAIL</code></td><td><code>varchar(50)</code></td><td>Email để liên lạc</td></tr>
+        </table></div>
+
         <div class="schema-def">
           <p class="schema-def-head">HOCVIEN (<u>MAHV</u>, HOTEN, NGSINH, SDT, DIACHI, GIOITINH, NGTG)</p>
           <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin học viên: mã học viên, họ tên, ngày sinh, số điện thoại, địa chỉ, giới tính (Nam, Nữ) và ngày bắt đầu tham gia là học viên.</p>
         </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính</td></tr>
+          <tr><td><code>HOTEN</code></td><td><code>varchar(50)</code></td><td>Họ tên</td></tr>
+          <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Ngày sinh</td></tr>
+          <tr><td><code>SDT</code></td><td><code>varchar(15)</code></td><td>Số điện thoại</td></tr>
+          <tr><td><code>DIACHI</code></td><td><code>varchar(100)</code></td><td>Địa chỉ học viên</td></tr>
+          <tr><td><code>GIOITINH</code></td><td><code>varchar(10)</code></td><td>Giới tính học viên (Nam, Nữ)</td></tr>
+          <tr><td><code>NGTG</code></td><td><code>smalldatetime</code></td><td>Ngày bắt đầu tham gia là học viên</td></tr>
+        </table></div>
+
         <div class="schema-def">
           <p class="schema-def-head">LOPTAP (<u>MALOP</u>, MAPH, MAHLV, TENLOP, NGAYBD, NGAYKT, TRANGTHAI)</p>
           <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin lớp tập: mã lớp, phòng tập diễn ra, huấn luyện viên phụ trách, tên lớp, ngày bắt đầu, ngày kết thúc và trạng thái lớp (đang hoạt động, đã kết thúc, tạm dừng…).</p>
         </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính</td></tr>
+          <tr><td><code>MAPH</code></td><td><code>char(5)</code></td><td>Mã phòng tập - khóa ngoại đến PHONGTAP</td></tr>
+          <tr><td><code>MAHLV</code></td><td><code>char(5)</code></td><td>Mã huấn luyện viên - khóa ngoại đến HUANLUYENVIEN</td></tr>
+          <tr><td><code>TENLOP</code></td><td><code>varchar(50)</code></td><td>Tên lớp tập</td></tr>
+          <tr><td><code>NGAYBD</code></td><td><code>smalldatetime</code></td><td>Ngày bắt đầu lớp tập</td></tr>
+          <tr><td><code>NGAYKT</code></td><td><code>smalldatetime</code></td><td>Ngày kết thúc lớp tập</td></tr>
+          <tr><td><code>TRANGTHAI</code></td><td><code>varchar(20)</code></td><td>Trạng thái lớp (đang hoạt động, đã kết thúc, tạm dừng…)</td></tr>
+        </table></div>
+
         <div class="schema-def">
           <p class="schema-def-head">DANGKY (<u>MAHV, MALOP</u>, NGAYDK)</p>
           <p class="schema-def-body"><em>Tân từ:</em> Chi tiết đăng ký: học viên nào đăng ký lớp tập nào, vào ngày nào.</p>
         </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính, khóa ngoại đến HOCVIEN</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính, khóa ngoại đến LOPTAP</td></tr>
+          <tr><td><code>NGAYDK</code></td><td><code>smalldatetime</code></td><td>Ngày đăng ký</td></tr>
+        </table></div>
+
         <div class="schema-def">
           <p class="schema-def-head">LICHTAP (<u>MALOP, NGAYTAP</u>, GIOBATDAU, GIOKETTHUC)</p>
           <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ lịch tập của từng lớp: ngày diễn ra buổi tập, giờ bắt đầu và giờ kết thúc.</p>
         </div>
-
-        <p class="ascii-label">KIỂU DỮ LIỆU CHI TIẾT</p>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>PHONGTAP.MAPH</code></td><td><code>char(5)</code></td><td>Mã phòng tập - khóa chính</td></tr>
-          <tr><td><code>PHONGTAP.TENPHONG</code></td><td><code>varchar(50)</code></td><td>Tên phòng tập</td></tr>
-          <tr><td><code>PHONGTAP.DIACHI</code></td><td><code>varchar(100)</code></td><td>Địa chỉ phòng tập</td></tr>
-          <tr><td><code>PHONGTAP.SUCCHUA</code></td><td><code>int</code></td><td>Sức chứa tối đa (số người)</td></tr>
-          <tr><td><code>PHONGTAP.TRANGTHAI</code></td><td><code>varchar(20)</code></td><td>Trạng thái phòng (hoạt động, bảo trì, đóng cửa…)</td></tr>
-          <tr><td><code>HUANLUYENVIEN.MAHLV</code></td><td><code>char(5)</code></td><td>Mã huấn luyện viên - khóa chính</td></tr>
-          <tr><td><code>HUANLUYENVIEN.HOTEN</code></td><td><code>varchar(50)</code></td><td>Họ tên</td></tr>
-          <tr><td><code>HUANLUYENVIEN.CHUYENMON</code></td><td><code>varchar(50)</code></td><td>Chuyên môn (Yoga, Gym,...)</td></tr>
-          <tr><td><code>HUANLUYENVIEN.SDT</code></td><td><code>varchar(15)</code></td><td>Số điện thoại</td></tr>
-          <tr><td><code>HUANLUYENVIEN.EMAIL</code></td><td><code>varchar(50)</code></td><td>Email để liên lạc</td></tr>
-          <tr><td><code>HOCVIEN.MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính</td></tr>
-          <tr><td><code>HOCVIEN.HOTEN</code></td><td><code>varchar(50)</code></td><td>Họ tên</td></tr>
-          <tr><td><code>HOCVIEN.NGSINH</code></td><td><code>smalldatetime</code></td><td>Ngày sinh</td></tr>
-          <tr><td><code>HOCVIEN.SDT</code></td><td><code>varchar(15)</code></td><td>Số điện thoại</td></tr>
-          <tr><td><code>HOCVIEN.DIACHI</code></td><td><code>varchar(100)</code></td><td>Địa chỉ học viên</td></tr>
-          <tr><td><code>HOCVIEN.GIOITINH</code></td><td><code>varchar(10)</code></td><td>Giới tính học viên (Nam, Nữ)</td></tr>
-          <tr><td><code>HOCVIEN.NGTG</code></td><td><code>smalldatetime</code></td><td>Ngày bắt đầu tham gia là học viên</td></tr>
-          <tr><td><code>LOPTAP.MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính</td></tr>
-          <tr><td><code>LOPTAP.MAPH</code></td><td><code>char(5)</code></td><td>Mã phòng tập - khóa ngoại đến PHONGTAP</td></tr>
-          <tr><td><code>LOPTAP.MAHLV</code></td><td><code>char(5)</code></td><td>Mã huấn luyện viên - khóa ngoại đến HUANLUYENVIEN</td></tr>
-          <tr><td><code>LOPTAP.TENLOP</code></td><td><code>varchar(50)</code></td><td>Tên lớp tập</td></tr>
-          <tr><td><code>LOPTAP.NGAYBD</code></td><td><code>smalldatetime</code></td><td>Ngày bắt đầu lớp tập</td></tr>
-          <tr><td><code>LOPTAP.NGAYKT</code></td><td><code>smalldatetime</code></td><td>Ngày kết thúc lớp tập</td></tr>
-          <tr><td><code>LOPTAP.TRANGTHAI</code></td><td><code>varchar(20)</code></td><td>Trạng thái lớp (đang hoạt động, đã kết thúc, tạm dừng…)</td></tr>
-          <tr><td><code>DANGKY.MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính, khóa ngoại đến HOCVIEN</td></tr>
-          <tr><td><code>DANGKY.MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính, khóa ngoại đến LOPTAP</td></tr>
-          <tr><td><code>DANGKY.NGAYDK</code></td><td><code>smalldatetime</code></td><td>Ngày đăng ký</td></tr>
-          <tr><td><code>LICHTAP.MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính, khóa ngoại đến LOPTAP</td></tr>
-          <tr><td><code>LICHTAP.NGAYTAP</code></td><td><code>smalldatetime</code></td><td>Ngày diễn ra buổi tập - khóa chính</td></tr>
-          <tr><td><code>LICHTAP.GIOBATDAU</code></td><td><code>time</code></td><td>Giờ bắt đầu buổi tập</td></tr>
-          <tr><td><code>LICHTAP.GIOKETTHUC</code></td><td><code>time</code></td><td>Giờ kết thúc buổi tập</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính, khóa ngoại đến LOPTAP</td></tr>
+          <tr><td><code>NGAYTAP</code></td><td><code>smalldatetime</code></td><td>Ngày diễn ra buổi tập - khóa chính</td></tr>
+          <tr><td><code>GIOBATDAU</code></td><td><code>time</code></td><td>Giờ bắt đầu buổi tập</td></tr>
+          <tr><td><code>GIOKETTHUC</code></td><td><code>time</code></td><td>Giờ kết thúc buổi tập</td></tr>
         </table></div>
 
         <div class="download-card">

@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Tuần 5 - Tài chính Phi tập trung (DeFi) & Ngân hàng Xanh: Liquidity Pool, P2P Lending, tài sản thế chấp, ESG Score, Smart Contract GreenLending, unit test pytest và dự báo rủi ro tín dụng bằng Machine Learning.">
+  <title>Tuần 5 · Tài chính Phi tập trung (DeFi) & Ngân hàng Xanh - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=18">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=32">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-5.html" class="active">VI</a><a href="../../en/courses/is355/week-5.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS355 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS355</a><span>/</span>Tuần 5</p>
+
+    <div class="week-header">
+      <span class="week-tag">TUẦN 05 · DEFI &amp; GREEN BANKING</span>
+      <h1>Tài chính Phi tập trung (DeFi) &amp; Ngân hàng Xanh</h1>
+      <div class="week-meta"><span>DeFi Lending</span><span>ESG Score</span><span>Vyper v0.4.3</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Chủ đề:</strong> Liquidity Pool, P2P Lending, tài sản thế chấp, lãi suất, ESG Score và ứng dụng Blockchain trong tài chính - Ngân hàng xanh.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS355">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html">Tuần 4</a>
+      <a href="week-5.html" class="active">Tuần 5</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 7 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Project Lab <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 5">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#defi-la-gi" data-toc><b>01</b> DeFi là gì?</a>
+        <a href="#liquidity-pool" data-toc><b>02</b> Liquidity Pool</a>
+        <a href="#p2p-lending" data-toc><b>03</b> P2P Lending</a>
+        <a href="#collateral" data-toc><b>04</b> Tài sản thế chấp</a>
+        <a href="#liquidation" data-toc><b>05</b> Liquidation</a>
+        <a href="#green-banking" data-toc><b>06</b> Green Banking &amp; ESG</a>
+        <a href="#esg-lending" data-toc><b>07</b> ESG-based Lending &amp; Oracle</a>
+        <a href="#thuc-hanh-contract" data-toc><b>08</b> Smart Contract GreenLending</a>
+        <a href="#thuc-hanh-pytest" data-toc><b>09</b> Unit Test với pytest</a>
+        <a href="#bai-tap" data-toc><b>10</b> Bài tập về nhà</a>
+        <a href="#data-ml" data-toc><b>11</b> Data &amp; Machine Learning</a>
+        <a href="#mini-project" data-toc><b>12</b> Mini Project &amp; Dashboard</a>
+        <a href="#dinh-huong-do-an" data-toc><b>13</b> Định hướng đồ án</a>
+        <a href="#thao-luan" data-toc><b>14</b> Câu hỏi thảo luận</a>
+        <a href="#checklist" data-toc><b>15</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - DeFi la gi -->
+        <section class="lesson-section" id="defi-la-gi">
+          <p class="eyebrow">01 · PHẦN A - TỔNG QUAN VỀ DEFI</p>
+          <h2>DeFi là gì?</h2>
+          <div class="definition"><strong>DeFi - Decentralized Finance</strong> là hệ sinh thái các dịch vụ tài chính được triển khai bằng Smart Contract trên Blockchain, không nhất thiết cần một tổ chức trung gian trực tiếp thực hiện từng bước.</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Tiêu chí</th><th>Tài chính truyền thống</th><th>DeFi</th></tr>
+            <tr><td>Trung gian</td><td>Ngân hàng/tổ chức tài chính</td><td>Smart Contract</td></tr>
+            <tr><td>Tài khoản</td><td>Tài khoản ngân hàng</td><td>Blockchain Wallet</td></tr>
+            <tr><td>Giao dịch</td><td>Qua hệ thống trung gian</td><td>On-chain</td></tr>
+            <tr><td>Minh bạch</td><td>Phụ thuộc tổ chức</td><td>Dữ liệu On-chain có thể kiểm tra</td></tr>
+            <tr><td>Rủi ro</td><td>Bank/Credit Risk</td><td>Smart Contract/Oracle/Liquidity Risk</td></tr>
+          </table></div>
+          <div class="inline-warning"><strong>DeFi không có nghĩa là không có rủi ro</strong> - Nó chuyển một phần rủi ro từ trung gian tài chính sang code, thị trường và cơ chế Blockchain (Smart Contract Risk, Liquidity Risk, Default Risk, Liquidation Risk, Oracle Risk).</div>
+        </section>
+
+        <!-- 02 - Liquidity Pool -->
+        <section class="lesson-section" id="liquidity-pool">
+          <p class="eyebrow">02 · PHẦN B - LIQUIDITY POOL</p>
+          <h2>Liquidity Pool</h2>
+          <p>Thay vì chuyển trực tiếp giữa hai bên, DeFi có thể sử dụng một Pool chung: nhiều <strong>Liquidity Provider (LP)</strong> gửi tài sản vào Pool, người vay có thể vay từ Pool theo quy tắc của Smart Contract.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Alice, Bob, Carol (LP)</span>
+            <span class="flow-arrow">↓ Deposit</span>
+            <span class="flow-box">Liquidity Pool</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Borrowers</span>
+          </div>
+          <p>Người cung cấp thanh khoản có thể nhận Interest + Protocol Rewards, nhưng chịu rủi ro Smart Contract/Market/Liquidity/Protocol. Người vay tiếp cận vốn nhanh hơn nhưng phải chịu Interest, yêu cầu Collateral và nguy cơ Liquidation.</p>
+        </section>
+
+        <!-- 03 - P2P Lending -->
+        <section class="lesson-section" id="p2p-lending">
+          <p class="eyebrow">03 · DEFI LENDING &amp; P2P LENDING</p>
+          <h2>DeFi Lending &amp; P2P Lending</h2>
+          <p><strong>Peer-to-Peer Lending</strong> là mô hình cho vay trực tiếp giữa người cho vay và người vay, thông qua Smart Contract:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Lender (Alice)</span>
+            <span class="flow-arrow has-label">↓ Deposit</span>
+            <span class="flow-box">Smart Contract</span>
+            <span class="flow-arrow has-label">↓ Loan</span>
+            <span class="flow-box">Borrower (Bob)</span>
+            <span class="flow-arrow has-label">↓ Repayment + Interest</span>
+            <span class="flow-box">Smart Contract → Lender</span>
+          </div>
+        </section>
+
+        <!-- 04 - Collateral -->
+        <section class="lesson-section" id="collateral">
+          <p class="eyebrow">04 · TÀI SẢN THẾ CHẤP</p>
+          <h2>Tài sản thế chấp &amp; Collateral Ratio</h2>
+          <p>Nếu người vay không trả tiền thì sao? Rất nhiều mô hình DeFi sử dụng <strong>Overcollateralization</strong> (thế chấp vượt mức) để giải quyết vấn đề này.</p>
+          <div class="ascii-block">Collateral Ratio = (Collateral Value / Loan Value) × 100%</div>
+          <p><strong>Ví dụ:</strong> Collateral = $15,000, Loan = $10,000 → Collateral Ratio = 150%.</p>
+        </section>
+
+        <!-- 05 - Liquidation -->
+        <section class="lesson-section" id="liquidation">
+          <p class="eyebrow">05 · LIQUIDATION</p>
+          <h2>Liquidation</h2>
+          <p>Nếu giá tài sản thế chấp giảm, Collateral Ratio giảm theo. Khi tỷ lệ này xuống dưới mức quy định (<strong>Liquidation Threshold</strong>), Smart Contract có thể kích hoạt thanh lý (Liquidation).</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Kiểm tra Collateral Ratio</span>
+            <span class="flow-arrow has-label">↓ Ratio ≥ Threshold?</span>
+            <span class="flow-box">Có → Tiếp tục / Không → Liquidation</span>
+          </div>
+          <div class="inline-ok"><strong>Ví dụ:</strong> Collateral = $15,000, Loan = $10,000 → Ratio = 150%. Giá Collateral giảm còn $11,000 → Ratio = 110%. Nếu Liquidation Threshold = 120%, khoản vay bị thanh lý vì 110% &lt; 120%.</div>
+        </section>
+
+        <!-- 06 - Green Banking -->
+        <section class="lesson-section" id="green-banking">
+          <p class="eyebrow">06 · PHẦN C - GREEN BANKING</p>
+          <h2>Green Banking &amp; ESG Score</h2>
+          <p><strong>Green Banking</strong>, trong bối cảnh môn học này, là việc ứng dụng công nghệ tài chính để hỗ trợ dự án môi trường, năng lượng tái tạo, sản xuất sạch và đầu tư ESG (Environmental, Social, Governance).</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Tiêu chí</th><th>Ngân hàng truyền thống</th><th>DeFi Green Lending Protocol</th></tr>
+            <tr><td>Xác thực tín dụng</td><td>Báo cáo tài chính, thẩm định thủ công</td><td>Smart Contract + Data Oracle (ESG Score)</td></tr>
+            <tr><td>Thế chấp (Collateral)</td><td>Bất động sản, tài sản cố định</td><td>Mã hóa tài sản (Overcollateralization)</td></tr>
+            <tr><td>Định giá lãi suất</td><td>Biểu lãi suất cố định/thả nổi ngân hàng</td><td>Dynamic Interest Rate dựa trên ESG Score (ESG tăng → Rate giảm)</td></tr>
+            <tr><td>Xử lý vi phạm</td><td>Tố tụng, thu hồi nợ truyền thống</td><td>Tự động thanh lý On-chain khi Collateral Ratio &lt; Liquidation Threshold</td></tr>
+          </table></div>
+          <p>Ví dụ ESG Score tổng hợp từ 3 nhóm chỉ số:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Tiêu chí</th><th>Score</th></tr>
+            <tr><td>Environmental</td><td>90</td></tr>
+            <tr><td>Social</td><td>75</td></tr>
+            <tr><td>Governance</td><td>80</td></tr>
+            <tr><td><strong>ESG Score tổng hợp</strong></td><td><strong>82</strong></td></tr>
+          </table></div>
+        </section>
+
+        <!-- 07 - ESG-based Lending & Oracle -->
+        <section class="lesson-section" id="esg-lending">
+          <p class="eyebrow">07 · ESG-BASED LENDING &amp; ORACLE</p>
+          <h2>ESG-based Lending, tự động hóa &amp; vấn đề Oracle</h2>
+          <p>Ý tưởng: doanh nghiệp có ESG Score tốt được hưởng điều kiện vay tốt hơn. Đây chỉ là <strong>quy tắc mô phỏng cho bài thực hành</strong>, không phải khung định giá tín dụng thực tế:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>ESG Score</th><th>Lãi suất</th></tr>
+            <tr><td>90-100</td><td>5%</td></tr>
+            <tr><td>80-89</td><td>6%</td></tr>
+            <tr><td>70-79</td><td>7%</td></tr>
+            <tr><td>&lt;70</td><td>9%</td></tr>
+          </table></div>
+          <p>Smart Contract lấy ESG Score ở đâu? Blockchain không tự biết ESG Score - Dữ liệu nằm ở ESG Database, Company Report, IoT, Auditor hoặc External API, cần được đưa vào qua <strong>Oracle</strong>:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">ESG Data (Off-chain)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Oracle</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Smart Contract</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Loan Amount + Interest Rate</span>
+          </div>
+        </section>
+
+        <!-- 08 - Thuc hanh Smart Contract -->
+        <section class="lesson-section" id="thuc-hanh-contract">
+          <p class="eyebrow">08 · PHẦN D - THỰC HÀNH SMART CONTRACT</p>
+          <h2>Smart Contract <code>GreenLending.vy</code></h2>
+          <p>Contract mô phỏng một hệ thống cho vay xanh, quản lý người vay, khoản vay, tài sản thế chấp, ESG Score, lãi suất và trạng thái khoản vay:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+"""
+@title GreenLending
+@notice Smart Contract mô phỏng cho vay xanh với lãi suất điều chỉnh theo ESG Score
+"""
+
+enum LoanStatus:
+    ACTIVE
+    PAID
+    LIQUIDATED
+
+event LoanCreated:
+    loan_id: indexed(uint256)
+    borrower: indexed(address)
+    principal: uint256
+    collateral: uint256
+    esg_score: uint256
+    interest_rate: uint256
+
+event LoanRepaid:
+    loan_id: indexed(uint256)
+    total_paid: uint256
+
+event LoanLiquidated:
+    loan_id: indexed(uint256)
+    collateral_ratio: uint256
+
+event ESGUpdated:
+    loan_id: indexed(uint256)
+    old_score: uint256
+    new_score: uint256
+
+struct Loan:
+    borrower: address
+    principal: uint256
+    collateral: uint256
+    interest_rate: uint256
+    esg_score: uint256
+    start_time: uint256
+    status: LoanStatus
+
+LIQUIDATION_THRESHOLD: constant(uint256) = 120  # %
+
+admin: public(address)
+oracle: public(address)
+loan_count: public(uint256)
+loans: public(HashMap[uint256, Loan])
+
+@deploy
+def __init__():
+    self.admin = msg.sender
+    self.oracle = msg.sender
+    self.loan_count = 0
+
+@internal
+@pure
+def calculate_rate(esg_score: uint256) -> uint256:
+    if esg_score >= 90:
+        return 5  # 5% APY cho doanh nghiệp xanh xuất sắc
+    elif esg_score >= 80:
+        return 6  # 6% APY
+    elif esg_score >= 70:
+        return 7  # 7% APY
+    return 9      # 9% APY phạt doanh nghiệp có chỉ số ESG thấp
+
+@external
+def createLoan(borrower: address, principal: uint256, collateral: uint256, esg_score: uint256) -> uint256:
+    assert msg.sender == self.admin, "Only Admin can create loan"
+    assert collateral * 100 / principal >= LIQUIDATION_THRESHOLD, "Collateral below threshold"
+
+    rate: uint256 = self.calculate_rate(esg_score)
+    loan_id: uint256 = self.loan_count
+
+    self.loans[loan_id] = Loan(
+        borrower=borrower,
+        principal=principal,
+        collateral=collateral,
+        interest_rate=rate,
+        esg_score=esg_score,
+        start_time=block.timestamp,
+        status=LoanStatus.ACTIVE
+    )
+    self.loan_count += 1
+
+    log LoanCreated(loan_id, borrower, principal, collateral, esg_score, rate)
+    return loan_id
+
+@view
+@external
+def getCollateralRatio(loan_id: uint256) -> uint256:
+    loan: Loan = self.loans[loan_id]
+    return loan.collateral * 100 / loan.principal
+
+@external
+def updateESGScore(loan_id: uint256, new_score: uint256):
+    assert msg.sender == self.oracle, "Only Oracle can update ESG score"
+    loan: Loan = self.loans[loan_id]
+    assert loan.status == LoanStatus.ACTIVE, "Loan is not active"
+
+    old_score: uint256 = loan.esg_score
+    self.loans[loan_id].esg_score = new_score
+    self.loans[loan_id].interest_rate = self.calculate_rate(new_score)
+
+    log ESGUpdated(loan_id, old_score, new_score)
+
+@external
+def repayLoan(loan_id: uint256):
+    loan: Loan = self.loans[loan_id]
+    assert loan.status == LoanStatus.ACTIVE, "Loan is not active"
+    assert msg.sender == loan.borrower, "Only borrower can repay"
+
+    elapsed: uint256 = block.timestamp - Loan.start_time
+    interest: uint256 = loan.principal * loan.interest_rate * elapsed / (100 * 365 * 86400)
+    total_paid: uint256 = loan.principal + interest
+
+    self.loans[loan_id].status = LoanStatus.PAID
+    log LoanRepaid(loan_id, total_paid)
+
+@external
+def liquidateLoan(loan_id: uint256, current_collateral_value: uint256):
+    assert msg.sender == self.admin, "Only Admin can trigger liquidation"
+    loan: Loan = self.loans[loan_id]
+    assert loan.status == LoanStatus.ACTIVE, "Loan is not active"
+
+    ratio: uint256 = current_collateral_value * 100 / loan.principal
+    assert ratio < LIQUIDATION_THRESHOLD, "Collateral ratio still above threshold"
+
+    self.loans[loan_id].status = LoanStatus.LIQUIDATED
+    log LoanLiquidated(loan_id, ratio)</code></pre></div>
+          <div class="inline-warning"><strong>Lưu ý:</strong> Đây là logic minh họa cho Smart Contract nhằm mục đích giảng dạy, không phải mô hình tính lãi suất hoặc quy trình thanh lý của một ngân hàng/protocol thực tế.</div>
+        </section>
+
+        <!-- 09 - Unit Test pytest -->
+        <section class="lesson-section" id="thuc-hanh-pytest">
+          <p class="eyebrow">09 · UNIT TEST VỚI PYTEST</p>
+          <h2>Bộ khung kiểm thử <code>liquidateLoan</code> &amp; ESG Oracle bằng pytest</h2>
+          <p>Sử dụng Ape Framework kết hợp <code>pytest</code> để kiểm thử tự động các hàm quan trọng nhất của contract - Đặc biệt là <code>liquidateLoan()</code> và <code>updateESGScore()</code>. Tạo file <code>tests/test_green_lending.py</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">import pytest
+from ape import project
+
+@pytest.fixture
+def admin(accounts):
+    return accounts[0]
+
+@pytest.fixture
+def borrower(accounts):
+    return accounts[1]
+
+@pytest.fixture
+def green_lending(admin, project):
+    return admin.deploy(project.GreenLending)
+
+def test_create_loan_sets_rate_from_esg_score(green_lending, admin, borrower):
+    loan_id = green_lending.createLoan(borrower, 10_000, 15_000, 85, sender=admin)
+    loan = green_lending.loans(loan_id)
+    assert loan.interest_rate == 6
+
+def test_oracle_updates_esg_score_and_recalculates_rate(green_lending, admin, borrower):
+    loan_id = green_lending.createLoan(borrower, 10_000, 15_000, 85, sender=admin)
+
+    # Oracle cập nhật ESG Score mới (tăng) cho khoản vay
+    green_lending.updateESGScore(loan_id, 92, sender=admin)
+    loan = green_lending.loans(loan_id)
+
+    assert loan.esg_score == 92
+    assert loan.interest_rate == 5  # Lãi suất giảm khi ESG tăng
+
+def test_update_esg_score_rejects_non_oracle_caller(green_lending, admin, borrower):
+    loan_id = green_lending.createLoan(borrower, 10_000, 15_000, 85, sender=admin)
+
+    with pytest.raises(Exception):
+        green_lending.updateESGScore(loan_id, 95, sender=borrower)
+
+def test_liquidate_loan_when_ratio_drops_below_threshold(green_lending, admin, borrower):
+    loan_id = green_lending.createLoan(borrower, 10_000, 15_000, 85, sender=admin)
+
+    # Giá Collateral giảm xuống 11,000 -> Ratio = 110% < 120% threshold
+    green_lending.liquidateLoan(loan_id, 11_000, sender=admin)
+    loan = green_lending.loans(loan_id)
+
+    assert loan.status == 2  # LIQUIDATED
+
+def test_liquidate_loan_rejects_when_ratio_still_safe(green_lending, admin, borrower):
+    loan_id = green_lending.createLoan(borrower, 10_000, 15_000, 85, sender=admin)
+
+    # Collateral vẫn giữ 15,000 -> Ratio = 150% > 120% threshold, không đủ điều kiện thanh lý
+    with pytest.raises(Exception):
+        green_lending.liquidateLoan(loan_id, 15_000, sender=admin)</code></pre></div>
+          <p>Chạy toàn bộ bộ test bằng:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">ape test tests/test_green_lending.py -v</code></pre></div>
+          <div class="inline-ok">Sinh viên nên bổ sung thêm test case cho <code>repayLoan()</code> và trường hợp <code>createLoan()</code> bị từ chối khi Collateral Ratio khởi tạo đã dưới ngưỡng Liquidation Threshold.</div>
+        </section>
+
+        <!-- 10 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">10 · BÀI TẬP VỀ NHÀ</p>
+          <h2>Bài tập về nhà</h2>
+
+          <h3>Bài 1 - Tạo Green Loan</h3>
+          <p>Tạo Loan #001 với Principal = 10,000, Collateral = 15,000, ESG Score = 85. Xác định Interest Rate mà Smart Contract tính ra.</p>
+
+          <h3>Bài 2 - Khoản vay ESG thấp</h3>
+          <p>Tạo Loan #002 với Principal = 10,000, Collateral = 15,000, ESG Score = 65. Kết quả Interest Rate = 9% - Giải thích tại sao.</p>
+
+          <h3>Bài 3 - Repayment</h3>
+          <p>Cho Principal = 10,000, Rate = 6%, Time = 1 năm. Tính Interest và Total Repayment, sau đó gọi <code>repayLoan()</code> và kiểm tra Status = PAID.</p>
+
+          <h3>Bài 4 - Liquidation</h3>
+          <p>Tạo khoản vay với Collateral = 15,000, Loan = 10,000. Mô phỏng giá trị Collateral giảm xuống $11,000, kiểm tra Collateral Ratio và kích hoạt Liquidation.</p>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy định về bài làm</h3>
+            <p>Tuyệt đối không sao chép hoặc sử dụng bài làm của sinh viên khác để nộp bài. Sinh viên cần nghiêm túc thực hiện bài tập của mình.</p>
+          </div>
+        </section>
+
+        <!-- 11 - Data & ML -->
+        <section class="lesson-section" id="data-ml">
+          <p class="eyebrow">11 · PHẦN G - DATA &amp; MACHINE LEARNING</p>
+          <h2>Data &amp; Machine Learning</h2>
+          <p>Đây là phần quan trọng để nối Tuần 5 với <strong>Tuần 6 - AI &amp; On-chain Analytics</strong>.</p>
+
+          <h3>Default Risk Prediction</h3>
+          <p>Sử dụng thuật toán Random Forest hoặc XGBoost huấn luyện trên tập dữ liệu lịch sử (Lãi suất, Collateral Ratio, ESG Score, Thu nhập) để dự báo xác suất vỡ nợ (Default Probability).</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Historical Loan Data</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Machine Learning</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Default Probability</span>
+          </div>
+
+          <h3>Liquidation Risk Warning</h3>
+          <p>Thiết lập mô hình chuỗi thời gian (Time-series) dự báo biến động giá tài sản thế chấp nhằm cảnh báo sớm rủi ro thanh lý trước khi Collateral Ratio chạm ngưỡng Liquidation Threshold (ví dụ 120%).</p>
+
+          <h3>ESG Data Anomaly Detection</h3>
+          <p>Ứng dụng Unsupervised Learning kiểm tra tính bất thường của dữ liệu ESG trước khi Oracle ghi lên Blockchain, hạn chế rủi ro "Greenwashing".</p>
+
+          <h3>Green Investment Recommendation</h3>
+          <p>Hệ thống đề xuất danh mục đầu tư xanh dựa trên Risk Tolerance và ESG Preference của nhà đầu tư, gợi ý Green Bond, Carbon Credit, Renewable Energy hoặc Green Token phù hợp.</p>
+        </section>
+
+        <!-- 12 - Mini Project & Dashboard -->
+        <section class="lesson-section" id="mini-project">
+          <p class="eyebrow">12 · MINI PROJECT &amp; DASHBOARD</p>
+          <h2>Mini Project: Green Lending Protocol</h2>
+          <p>Sinh viên xây dựng prototype gồm Smart Contract (<code>createLoan</code>, <code>calculate_rate</code>, <code>repayLoan</code>, <code>getCollateralRatio</code>, <code>liquidateLoan</code>) và một Dashboard hiển thị:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loan ID</th><th>Borrower</th><th>ESG</th><th>Rate</th><th>Status</th></tr>
+            <tr><td>#001</td><td>0xABC</td><td>92</td><td>5%</td><td>ACTIVE</td></tr>
+            <tr><td>#002</td><td>0xDEF</td><td>85</td><td>6%</td><td>ACTIVE</td></tr>
+            <tr><td>#003</td><td>0x123</td><td>65</td><td>9%</td><td>PAID</td></tr>
+          </table></div>
+          <p>Kèm các chỉ số tổng quan: Total Loans, Total Value Locked, Average ESG Score, Average Interest Rate, Active/Defaulted/Liquidated Loans.</p>
+        </section>
+
+        <!-- 13 - Dinh huong do an -->
+        <section class="lesson-section" id="dinh-huong-do-an">
+          <p class="eyebrow">13 · ĐỊNH HƯỚNG ĐỒ ÁN</p>
+          <h2>Định hướng đồ án từ Tuần 5</h2>
+          <ul>
+            <li><strong>Đề tài 1 - Blockchain-based Green Lending Platform:</strong> Xây dựng nền tảng cho vay xanh bằng Smart Contract</li>
+            <li><strong>Đề tài 2 - ESG-based Credit Scoring:</strong> Ứng dụng Machine Learning để đánh giá rủi ro tín dụng dựa trên ESG</li>
+            <li><strong>Đề tài 3 - AI-based DeFi Liquidation Risk Prediction:</strong> Dự báo khả năng thanh lý khoản vay DeFi</li>
+            <li><strong>Đề tài 4 - Green Investment Recommendation System:</strong> Xây dựng hệ thống khuyến nghị danh mục đầu tư xanh</li>
+            <li><strong>Đề tài 5 - Blockchain-based Green Banking:</strong> Kết hợp Blockchain + ESG + Smart Contract + AI để xây dựng mô hình ngân hàng xanh</li>
+          </ul>
+        </section>
+
+        <!-- 14 - Cau hoi thao luan -->
+        <section class="lesson-section" id="thao-luan">
+          <p class="eyebrow">14 · CÂU HỎI THẢO LUẬN</p>
+          <h2>Câu hỏi thảo luận</h2>
+          <ol>
+            <li>Tại sao DeFi Lending thường yêu cầu tài sản thế chấp?</li>
+            <li>Nếu giá tài sản thế chấp giảm mạnh, Smart Contract cần xử lý như thế nào?</li>
+            <li>ESG Score có nên là yếu tố duy nhất quyết định lãi suất không?</li>
+            <li>Ai chịu trách nhiệm nếu ESG Score được cung cấp sai?</li>
+            <li>Oracle có thể trở thành điểm yếu của hệ thống DeFi như thế nào?</li>
+            <li>Blockchain có thực sự loại bỏ hoàn toàn ngân hàng khỏi hoạt động cho vay không?</li>
+            <li>Machine Learning có thể giúp giảm rủi ro Default và Liquidation như thế nào?</li>
+            <li>Nếu Oracle cung cấp sai ESG Score (do bị tấn công hoặc thao túng dữ liệu ngoài chuỗi), hệ thống Smart Contract sẽ gánh chịu rủi ro ra sao và làm thế nào để khắc phục bằng Decentralized Oracle (ví dụ Chainlink)?</li>
+            <li>Cơ chế Overcollateralization giúp giải quyết triệt để rủi ro tín dụng ẩn danh, nhưng tại sao nó lại làm giảm hiệu quả sử dụng vốn (Capital Efficiency) của các doanh nghiệp xanh?</li>
+          </ol>
+        </section>
+
+        <!-- 15 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">15 · CHECKLIST HOÀN THÀNH TUẦN 5</p>
+          <h2>Tự kiểm tra</h2>
+
+          <h3>Lý thuyết</h3>
+          <ul class="lesson-checklist">
+            <li>Hiểu DeFi và điểm khác biệt với tài chính truyền thống</li>
+            <li>Hiểu Liquidity Pool và vai trò của Liquidity Provider</li>
+            <li>Hiểu P2P Lending và Collateral Ratio</li>
+            <li>Hiểu cơ chế Liquidation</li>
+            <li>Hiểu ESG Score và Green Banking</li>
+            <li>Hiểu vai trò và rủi ro của Oracle</li>
+          </ul>
+
+          <h3>Thực hành</h3>
+          <ul class="lesson-checklist">
+            <li>Đọc hiểu được contract GreenLending.vy</li>
+            <li>Hiểu luồng createLoan(), repayLoan(), liquidateLoan()</li>
+            <li>Hiểu cơ chế updateESGScore() qua Oracle</li>
+            <li>Viết được unit test pytest cho liquidateLoan() và updateESGScore()</li>
+          </ul>
+
+          <h3>Data &amp; Research</h3>
+          <ul class="lesson-checklist">
+            <li>Biết pipeline dự báo Default Risk bằng Machine Learning</li>
+            <li>Hiểu ý tưởng Liquidation Risk Warning bằng Time-series</li>
+            <li>Hiểu ý tưởng ESG Data Anomaly Detection</li>
+            <li>Chọn được một hướng đề tài phù hợp cho đồ án</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần học">
+          <a href="week-4.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 4: Real-World Assets (RWA) &amp; NFT Chuỗi Cung Ứng</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 6 (sắp mở)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="defi-la-gi"><b>○</b> DeFi là gì?</li>
+            <li data-section="liquidity-pool"><b>○</b> Liquidity Pool</li>
+            <li data-section="p2p-lending"><b>○</b> P2P Lending</li>
+            <li data-section="collateral"><b>○</b> Tài sản thế chấp</li>
+            <li data-section="liquidation"><b>○</b> Liquidation</li>
+            <li data-section="green-banking"><b>○</b> Green Banking &amp; ESG</li>
+            <li data-section="esg-lending"><b>○</b> ESG-based Lending</li>
+            <li data-section="thuc-hanh-contract"><b>○</b> Smart Contract</li>
+            <li data-section="thuc-hanh-pytest"><b>○</b> Unit Test pytest</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập</li>
+            <li data-section="data-ml"><b>○</b> Data &amp; ML</li>
+            <li data-section="mini-project"><b>○</b> Mini Project</li>
+            <li data-section="dinh-huong-do-an"><b>○</b> Định hướng đồ án</li>
+            <li data-section="thao-luan"><b>○</b> Thảo luận</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Đây là logic minh họa cho giảng dạy, không phải mô hình tín dụng ngân hàng thực tế.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=12"></script>
+</body>
+</html>

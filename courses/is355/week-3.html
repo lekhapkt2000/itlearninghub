@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Tuần 3 - Số hóa Tài sản Xanh: ERC-20, Carbon Credit, Tokenomics, cơ chế mint/burn/retire, Smart Contract GreenCarbonToken bằng Vyper, dự báo giá Carbon và Adaptive Token Issuance.">
+  <title>Tuần 3 · Số hóa Tài sản Xanh - ERC-20 & Carbon Credit - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=18">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=32">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-3.html" class="active">VI</a><a href="../../en/courses/is355/week-3.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS355 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS355</a><span>/</span>Tuần 3</p>
+
+    <div class="week-header">
+      <span class="week-tag">TUẦN 03 · TOKENIZATION &amp; CARBON CREDIT</span>
+      <h1>Số hóa Tài sản Xanh - ERC-20 &amp; Carbon Credit</h1>
+      <div class="week-meta"><span>Tokenomics</span><span>ERC-20</span><span>Vyper v0.4.0</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Chủ đề:</strong> Tokenomics cho tài chính bền vững, Token Carbon và cơ chế phát hành - Chuyển nhượng - Tiêu hủy token.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS355">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html" class="active">Tuần 3</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 4 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 5 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 7 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Project Lab <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 3">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#tokenization" data-toc><b>01</b> Tokenization</a>
+        <a href="#coin-vs-token" data-toc><b>02</b> Coin vs Token</a>
+        <a href="#carbon-credit-vs-token" data-toc><b>03</b> Carbon Credit vs Token</a>
+        <a href="#erc20" data-toc><b>04</b> Chuẩn ERC-20</a>
+        <a href="#mint-burn-retire" data-toc><b>05</b> Mint, Burn &amp; Retire</a>
+        <a href="#thuc-hanh-contract" data-toc><b>06</b> Smart Contract GCT</a>
+        <a href="#thuc-hanh-ape" data-toc><b>07</b> Kiểm thử với Ape</a>
+        <a href="#carbon-price-forecast" data-toc><b>08</b> Dự báo giá Carbon</a>
+        <a href="#adaptive-issuance" data-toc><b>09</b> Adaptive Issuance</a>
+        <a href="#bai-tap" data-toc><b>10</b> Bài tập về nhà</a>
+        <a href="#thao-luan" data-toc><b>11</b> Câu hỏi thảo luận</a>
+        <a href="#checklist" data-toc><b>12</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Tokenization -->
+        <section class="lesson-section" id="tokenization">
+          <p class="eyebrow">01 · PHẦN A - LÝ THUYẾT GIẢNG DẠY</p>
+          <h2>Từ tài sản thực đến tài sản số (Tokenization)</h2>
+          <p>Trong tài chính truyền thống, tài sản tồn tại dưới dạng cổ phiếu, trái phiếu, chứng chỉ hay Tín chỉ Carbon (Carbon Credit). Blockchain cho phép chuẩn hóa và số hóa các quyền sở hữu/sử dụng này.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Tài sản thực / Tín chỉ</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Xác minh (Verification)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Tokenization</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Blockchain Token</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Giao dịch / Chuyển nhượng</span>
+          </div>
+          <div class="inline-ok"><strong>Ví dụ:</strong> 1 Tín chỉ Carbon đã qua xác minh (1 tCO₂e) → mã hóa thành 1 Carbon Token trên Blockchain.</div>
+        </section>
+
+        <!-- 02 - Coin vs Token -->
+        <section class="lesson-section" id="coin-vs-token">
+          <p class="eyebrow">02 · PHÂN BIỆT COIN VS TOKEN</p>
+          <h2>Phân biệt Coin vs Token</h2>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Đặc tính</th><th>Coin (Mạng lưới gốc)</th><th>Token (Tài sản Smart Contract)</th></tr>
+            <tr><td>Bản chất</td><td>Đồng tiền cơ sở của một Blockchain riêng</td><td>Được tạo ra dựa trên Smart Contract chạy trên nền tảng có sẵn</td></tr>
+            <tr><td>Ví dụ</td><td>Ethereum (ETH), Bitcoin (BTC)</td><td>USDT, USDC, Green Carbon Token (GCT)</td></tr>
+            <tr><td>Quy tắc</td><td>Tuân theo Consensus Layer của Blockchain</td><td>Tuân theo logic lập trình trong Smart Contract (ví dụ chuẩn ERC-20)</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 03 - Carbon Credit vs Carbon Token -->
+        <section class="lesson-section" id="carbon-credit-vs-token">
+          <p class="eyebrow">03 · CARBON CREDIT VS CARBON TOKEN</p>
+          <h2>Carbon Credit vs Carbon Token &amp; "Garbage In, Garbage Out"</h2>
+          <div class="definition"><strong>Carbon Credit ≠ Carbon Token:</strong> Carbon Credit là chứng chỉ pháp lý/môi trường gắn liền với tiêu chuẩn xác minh off-chain. Carbon Token chỉ là phương tiện biểu diễn tài sản đó trên Blockchain.</div>
+          <div class="inline-warning"><strong>Rủi ro "Garbage In, Garbage Out":</strong> Blockchain đảm bảo dữ liệu không thể bị sửa đổi sau khi ghi, nhưng không tự kiểm chứng độ đúng đắn của dữ liệu đầu vào. Nếu doanh nghiệp khai khống lượng giảm phát thải, Blockchain sẽ lưu trữ một con số giả mạo một cách vô cùng chính xác.</div>
+          <p><strong>Giải pháp:</strong> Phải kết hợp quy trình kiểm toán độc lập (Auditor), chứng nhận (Certification) và hạ tầng Oracle để xác minh dữ liệu trước khi thực hiện mint Token.</p>
+        </section>
+
+        <!-- 04 - ERC-20 -->
+        <section class="lesson-section" id="erc20">
+          <p class="eyebrow">04 · CHUẨN ERC-20</p>
+          <h2>Chuẩn ERC-20 và các hàm cốt lõi</h2>
+          <p>Chuẩn ERC-20 định nghĩa các giao diện bắt buộc cho một Fungible Token (Token thay thế được):</p>
+          <ul>
+            <li><code>balanceOf(account)</code>: Tra cứu số dư của địa chỉ <code>account</code></li>
+            <li><code>transfer(to, amount)</code>: Chuyển <code>amount</code> token từ người gọi hàm (<code>msg.sender</code>) tới <code>to</code></li>
+            <li><code>approve(spender, amount)</code> &amp; <code>transferFrom(sender, recipient, amount)</code>: Cơ chế ủy quyền, cho phép ví A duyệt cho hợp đồng B được chi tiêu tối đa một số Token nhất định - Nền tảng cho các ứng dụng DeFi, DEX, Staking và cổng thanh toán Carbon</li>
+          </ul>
+        </section>
+
+        <!-- 05 - Mint, Burn, Retire -->
+        <section class="lesson-section" id="mint-burn-retire">
+          <p class="eyebrow">05 · MINT, BURN &amp; CARBON RETIREMENT</p>
+          <h2>Cơ chế Mint, Burn và Bù trừ Carbon (Carbon Retirement)</h2>
+          <ul>
+            <li><strong>Mint (Phát hành):</strong> Tạo mới Token khi dự án bổ sung Tín chỉ Carbon đã xác thực (Total Supply tăng)</li>
+            <li><strong>Burn / Retire (Tiêu hủy / Bù trừ):</strong> Khi doanh nghiệp dùng Carbon Token để thực hiện bù trừ phát thải (Offset), Token đó phải bị tiêu hủy (burn) khỏi lưu thông (Total Supply giảm)</li>
+          </ul>
+          <div class="inline-ok"><strong>Tầm quan trọng:</strong> Loại bỏ hoàn toàn rủi ro Double Counting/Double Use - Một tín chỉ bị sử dụng bù trừ cho nhiều bên khác nhau.</div>
+        </section>
+
+        <!-- 06 - Thuc hanh Smart Contract -->
+        <section class="lesson-section" id="thuc-hanh-contract">
+          <p class="eyebrow">06 · PHẦN B - THỰC HÀNH LẬP TRÌNH SMART CONTRACT (VYPER)</p>
+          <h2>Cấu trúc Smart Contract <code>GreenCarbonToken.vy</code></h2>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.0
+
+"""
+@title Green Carbon Token (GCT) - ERC-20 Implementation
+@notice Smart Contract quản lý Token Carbon phục vụ tài chính bền vững
+"""
+
+# Các sự kiện (Events)
+event Transfer:
+    sender: indexed(address)
+    receiver: indexed(address)
+    value: uint256
+
+event Approval:
+    owner: indexed(address)
+    spender: indexed(address)
+    value: uint256
+
+event CarbonRetired:
+    owner: indexed(address)
+    amount: uint256
+    carbon_offset_reason: String[100]
+
+# Biến trạng thái (State Variables)
+name: public(String[32])
+symbol: public(String[8])
+decimals: public(uint8)
+total_supply: public(uint256)
+
+balances: public(HashMap[address, uint256])
+allowances: public(HashMap[address, HashMap[address, uint256]])
+
+admin: public(address)
+
+@deploy
+def __init__():
+    self.name = "Green Carbon Token"
+    self.symbol = "GCT"
+    self.decimals = 18
+    self.total_supply = 0
+    self.admin = msg.sender
+
+@view
+@external
+def balanceOf(account: address) -> uint256:
+    return self.balances[account]
+
+@external
+def transfer(to: address, amount: uint256) -> bool:
+    assert to != empty(address), "Invalid receiver"
+    assert self.balances[msg.sender] >= amount, "Insufficient balance"
+
+    self.balances[msg.sender] -= amount
+    self.balances[to] += amount
+
+    log Transfer(msg.sender, to, amount)
+    return True
+
+@external
+def approve(spender: address, amount: uint256) -> bool:
+    assert spender != empty(address), "Invalid spender"
+
+    self.allowances[msg.sender][spender] = amount
+    log Approval(msg.sender, spender, amount)
+    return True
+
+@external
+def transferFrom(sender: address, recipient: address, amount: uint256) -> bool:
+    assert recipient != empty(address), "Invalid recipient"
+    assert self.balances[sender] >= amount, "Insufficient balance"
+    assert self.allowances[sender][msg.sender] >= amount, "Insufficient allowance"
+
+    self.allowances[sender][msg.sender] -= amount
+    self.balances[sender] -= amount
+    self.balances[recipient] += amount
+
+    log Transfer(sender, recipient, amount)
+    return True
+
+@external
+def mint(to: address, amount: uint256):
+    # Access Control: Chỉ Admin/Issuer mới được phát hành
+    assert msg.sender == self.admin, "Access Denied: Only Admin can mint"
+    assert to != empty(address), "Invalid address"
+
+    self.total_supply += amount
+    self.balances[to] += amount
+
+    log Transfer(empty(address), to, amount)
+
+@external
+def burn(amount: uint256):
+    assert self.balances[msg.sender] >= amount, "Insufficient balance to burn"
+
+    self.balances[msg.sender] -= amount
+    self.total_supply -= amount
+
+    log Transfer(msg.sender, empty(address), amount)
+
+@external
+def retireCarbon(amount: uint256, reason: String[100]):
+    """
+    @notice Tiêu hủy Token để thực hiện Offset phát thải và cấp chứng nhận
+    """
+    assert self.balances[msg.sender] >= amount, "Insufficient balance to retire"
+
+    self.balances[msg.sender] -= amount
+    self.total_supply -= amount
+
+    log Transfer(msg.sender, empty(address), amount)
+    log CarbonRetired(msg.sender, amount, reason)</code></pre></div>
+          <div class="inline-warning"><strong>Vì sao Access Control quan trọng?</strong> Nếu bỏ dòng <code>assert msg.sender == self.admin</code>, bất kỳ ai cũng có thể gọi <code>mint()</code> với số lượng tùy ý, khiến Total Supply tăng vô hạn và Tokenomics bị phá vỡ. Smart Contract không chỉ là code - Quyền thực thi hàm cũng là một phần của thiết kế tài chính.</div>
+        </section>
+
+        <!-- 07 - Thuc hanh Ape -->
+        <section class="lesson-section" id="thuc-hanh-ape">
+          <p class="eyebrow">07 · KIỂM THỬ VỚI APE FRAMEWORK</p>
+          <h2>Kịch bản kiểm thử &amp; tương tác (Ape Framework Script)</h2>
+          <p>Tạo file <code>scripts/interact_gct.py</code> để kiểm thử quy trình:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from ape import accounts, project
+
+def main():
+    # Load tài khoản đại diện
+    admin = accounts.test_accounts[0]
+    alice = accounts.test_accounts[1]
+    bob = accounts.test_accounts[2]
+
+    # 1. Triển khai Contract
+    gct = admin.deploy(project.GreenCarbonToken)
+    print(f"Contract Deployed at: {gct.address}")
+
+    # 2. Mint Token cho Alice (Admin thực hiện)
+    gct.mint(alice.address, 1000 * 10**18, sender=admin)
+    print(f"Alice Balance after Mint: {gct.balanceOf(alice.address) / 10**18} GCT")
+
+    # 3. Alice chuyển Token cho Bob
+    gct.transfer(bob.address, 200 * 10**18, sender=alice)
+    print(f"Bob Balance: {gct.balanceOf(bob.address) / 10**18} GCT")
+
+    # 4. Alice retire 300 GCT để offset phát thải nhà máy
+    gct.retireCarbon(300 * 10**18, "Offset emissions for Q3 2026", sender=alice)
+    print(f"Alice Balance after Retirement: {gct.balanceOf(alice.address) / 10**18} GCT")
+    print(f"Total Supply after Retirement: {gct.total_supply() / 10**18} GCT")
+
+    # 5. Thử nghiệm Access Control: Bob gọi mint (kỳ vọng fail/revert)
+    try:
+        gct.mint(bob.address, 500 * 10**18, sender=bob)
+    except Exception as e:
+        print("Access Control Verified: Bob cannot mint Token!")</code></pre></div>
+        </section>
+
+        <!-- 08 - Carbon Price Forecast -->
+        <section class="lesson-section" id="carbon-price-forecast">
+          <p class="eyebrow">08 · PHẦN C - DATA &amp; RESEARCH</p>
+          <h2>Nghiên cứu 1: Dự báo giá Tín chỉ Carbon</h2>
+          <p><strong>Đặt bài toán:</strong> Dự báo biến động giá Carbon Credit trong tương lai dựa trên dữ liệu giao dịch lịch sử, giá năng lượng và chính sách phát thải.</p>
+          <h3>Quy trình thực hiện (Data Pipeline)</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Data Collection</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Preprocessing</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Model Selection</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Evaluation</span>
+          </div>
+          <ul>
+            <li><strong>Data Collection:</strong> Thu thập dữ liệu Time Series giá Tín chỉ Carbon, giá than/khí đốt, chỉ số sản xuất công nghiệp</li>
+            <li><strong>Preprocessing:</strong> Xử lý giá trị khuyết (missing values), chuẩn hóa dữ liệu (MinMax Scaling)</li>
+            <li><strong>Feature Engineering:</strong> Tạo các chỉ số kỹ thuật (Moving Average, RSI, Volatility Index)</li>
+            <li><strong>Model Selection:</strong> Baseline (Moving Average/ARIMA) → Machine Learning (XGBoost, Random Forest Regressor) → Deep Learning (LSTM)</li>
+            <li><strong>Evaluation:</strong> Đánh giá bằng chỉ số MAE, RMSE và MAPE</li>
+          </ul>
+        </section>
+
+        <!-- 09 - Adaptive Issuance -->
+        <section class="lesson-section" id="adaptive-issuance">
+          <p class="eyebrow">09 · ADAPTIVE TOKEN ISSUANCE</p>
+          <h2>Nghiên cứu 2: Adaptive Carbon Token Issuance</h2>
+          <p>Phát hành Token dựa trên điểm rủi ro dữ liệu off-chain, thay vì quy đổi cố định 1 Carbon Credit = 1 Token.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Dữ liệu khảo sát Carbon</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Machine Learning Risk Model</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk Score (0-100%)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Chainlink Oracle Node</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Chainlink Oracle Callback</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Smart Contract Mint Limit</span>
+          </div>
+          <p><strong>Ý tưởng kiến trúc:</strong> Không phát hành 100% Token nếu dữ liệu Carbon chưa được kiểm chứng đầy đủ. Cơ chế:</p>
+          <ol>
+            <li>Mô hình ML off-chain phân tích hình ảnh vệ tinh/cảm biến IoT của dự án rừng/năng lượng xanh</li>
+            <li>Tính toán độ tin cậy dữ liệu (ví dụ: độ tin cậy đạt 85%)</li>
+            <li>Thông qua Oracle, truyền điểm rủi ro vào Smart Contract</li>
+            <li>Smart Contract áp dụng công thức mint linh hoạt</li>
+          </ol>
+          <div class="ascii-block">Mint Limit = Verified Credits × Confidence Score</div>
+        </section>
+
+        <!-- 10 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">10 · PHẦN D - BÀI TẬP VỀ NHÀ</p>
+          <h2>Bài tập về nhà</h2>
+
+          <h3>Bài tập lý thuyết &amp; code</h3>
+          <p><strong>Bài tập Smart Contract:</strong> Mở rộng contract <code>GreenCarbonToken.vy</code>, bổ sung tính năng <code>pause()</code> và <code>unpause()</code> cho phép Admin tạm dừng mọi giao dịch chuyển token khi phát hiện sự cố bảo mật.</p>
+          <p><strong>Kịch bản tấn công (Attack Scenario):</strong> Phân tích rủi ro hệ thống nếu hàm <code>mint()</code> không được bảo vệ bởi Access Control. Hậu quả đối với Tokenomics của dự án là gì?</p>
+
+          <h3>Bài tập nghiên cứu dữ liệu</h3>
+          <p>Chọn 1 trong 2 đề tài sau và nộp báo cáo ngắn (2-3 trang PDF):</p>
+          <ul>
+            <li><strong>Đề tài A:</strong> Xây dựng notebook Python dự báo giá Carbon Credit sử dụng thư viện <code>scikit-learn</code>/<code>XGBoost</code>. Tính chỉ số RMSE trên tập test</li>
+            <li><strong>Đề tài B:</strong> Thiết kế sơ đồ kiến trúc hệ thống kết nối dữ liệu cảm biến IoT phát thải nhà máy → Oracle → Smart Contract tự động burn Carbon Token</li>
+          </ul>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy định về bài làm</h3>
+            <p>Tuyệt đối không sao chép hoặc sử dụng bài làm của sinh viên khác để nộp bài. Sinh viên cần nghiêm túc thực hiện bài tập của mình.</p>
+          </div>
+        </section>
+
+        <!-- 11 - Cau hoi thao luan -->
+        <section class="lesson-section" id="thao-luan">
+          <p class="eyebrow">11 · CÂU HỎI THẢO LUẬN TRÊN LỚP</p>
+          <h2>Câu hỏi thảo luận</h2>
+          <ol>
+            <li>Blockchain có tự đảm bảo được một Carbon Token thực sự đại diện cho Tín chỉ Carbon hợp lệ không? Vì sao?</li>
+            <li>Tại sao việc burn/retire Token lại quan trọng hơn việc chỉ chuyển Token vào một địa chỉ rác (Zero Address)?</li>
+            <li>Làm thế nào để giải quyết mâu thuẫn giữa tính bảo mật dữ liệu kinh doanh của doanh nghiệp và tính minh bạch công khai của Blockchain khi đưa dữ liệu Carbon lên On-chain?</li>
+          </ol>
+        </section>
+
+        <!-- 12 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">12 · CHECKLIST HOÀN THÀNH TUẦN 3</p>
+          <h2>Tự kiểm tra</h2>
+
+          <h3>Kiến thức</h3>
+          <ul class="lesson-checklist">
+            <li>Hiểu Tokenization và mối liên hệ với tài sản thực</li>
+            <li>Phân biệt Coin và Token</li>
+            <li>Hiểu chuẩn ERC-20 và các hàm cốt lõi</li>
+            <li>Hiểu Tokenomics và vai trò trong Carbon Offset</li>
+            <li>Phân biệt Carbon Credit và Carbon Token</li>
+            <li>Hiểu vì sao cần cơ chế Mint và Burn/Retire</li>
+          </ul>
+
+          <h3>Thực hành</h3>
+          <ul class="lesson-checklist">
+            <li>Đọc hiểu được cấu trúc contract GreenCarbonToken.vy</li>
+            <li>Hiểu cơ chế Access Control trong mint()</li>
+            <li>Hiểu luồng transfer(), approve(), transferFrom()</li>
+            <li>Hiểu luồng burn() và retireCarbon()</li>
+            <li>Đọc hiểu được script kiểm thử bằng Ape Framework</li>
+          </ul>
+
+          <h3>Research</h3>
+          <ul class="lesson-checklist">
+            <li>Biết các bước trong pipeline dự báo giá Carbon</li>
+            <li>Biết chọn metric đánh giá phù hợp (MAE/RMSE/MAPE)</li>
+            <li>Hiểu ý tưởng Adaptive Token Issuance</li>
+            <li>Phân biệt được xử lý On-chain và Off-chain trong kiến trúc AI + Blockchain</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần học">
+          <a href="week-2.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 2: Bảo mật Danh tính &amp; An toàn Dữ liệu Tài chính</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 4 (sắp mở)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="tokenization"><b>○</b> Tokenization</li>
+            <li data-section="coin-vs-token"><b>○</b> Coin vs Token</li>
+            <li data-section="carbon-credit-vs-token"><b>○</b> Carbon Credit vs Token</li>
+            <li data-section="erc20"><b>○</b> Chuẩn ERC-20</li>
+            <li data-section="mint-burn-retire"><b>○</b> Mint, Burn &amp; Retire</li>
+            <li data-section="thuc-hanh-contract"><b>○</b> Smart Contract GCT</li>
+            <li data-section="thuc-hanh-ape"><b>○</b> Kiểm thử với Ape</li>
+            <li data-section="carbon-price-forecast"><b>○</b> Dự báo giá Carbon</li>
+            <li data-section="adaptive-issuance"><b>○</b> Adaptive Issuance</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập</li>
+            <li data-section="thao-luan"><b>○</b> Thảo luận</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Không quên Access Control cho mint() - Thiếu dòng assert là Tokenomics vỡ ngay.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=12"></script>
+</body>
+</html>

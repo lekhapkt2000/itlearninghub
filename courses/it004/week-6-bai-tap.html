@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="IT004 Tuần 6 - Bài tập ôn tập tổng hợp: đề bài và đáp án chi tiết dành cho sinh viên đang học lớp thực hành.">
+  <title>Bài tập · Tuần 6 - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=39">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="week-6.html">‹ Quay lại Tuần 6</a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IT004</a><span>/</span><a href="week-6.html">Tuần 6</a><span>/</span>Bài tập</p>
+
+    <div class="week-header">
+      <span class="week-tag">TUẦN 6 · BÀI TẬP THỰC HÀNH</span>
+      <h1>Bài tập &amp; đáp án</h1>
+      <div class="week-meta"><span>IT004</span><span>Ôn tập tổng hợp</span><span>QuanLyDaoTao</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px">Đề bài đọc tự do. Phần đáp án và giải thích chi tiết chỉ dành cho sinh viên đang học lớp thực hành IT004, cần mã truy cập từ giảng viên.</p>
+    </div>
+
+    <div class="lesson-content" style="max-width:1000px;margin:0 auto">
+
+      <section class="lesson-section" style="padding-top:0;border-top:0" id="de-bai">
+        <p class="eyebrow">ĐỀ BÀI</p>
+        <h2>Yêu cầu thực hành - 15 câu</h2>
+        <p>Dựa trên bài toán quản lý đào tạo, sinh viên thực hiện lần lượt 15 câu sau:</p>
+        <ol>
+          <li>Tạo CSDL <code>QuanLyDaoTao</code></li>
+          <li>Tạo 4 bảng <code>LOP</code>, <code>SINHVIEN</code>, <code>MONHOC</code>, <code>KETQUA</code> và thiết lập đầy đủ Primary Key, Foreign Key, NOT NULL, UNIQUE nếu cần, CHECK nếu cần</li>
+          <li>Nhập dữ liệu mẫu</li>
+          <li>Hiển thị toàn bộ sinh viên</li>
+          <li>Hiển thị sinh viên thuộc lớp <code>HTTT01</code></li>
+          <li>Hiển thị các môn học có 4 tín chỉ</li>
+          <li>Hiển thị danh sách Mã SV, Họ tên, Tên lớp</li>
+          <li>Hiển thị Mã SV, Họ tên, Tên môn, Điểm bằng <code>JOIN</code></li>
+          <li>Tính điểm trung bình của từng sinh viên (gợi ý: <code>GROUP BY MaSV</code>)</li>
+          <li>Tìm sinh viên có điểm trung bình từ 8.0 trở lên</li>
+          <li>Tìm điểm cao nhất của môn <code>IT004</code></li>
+          <li>Đếm số sinh viên của từng lớp</li>
+          <li>Tìm môn học có điểm trung bình cao nhất</li>
+          <li>Tìm sinh viên có điểm <code>IT004</code> cao nhất</li>
+          <li>Hiển thị tất cả sinh viên, kể cả sinh viên chưa có kết quả học tập (gợi ý: <code>LEFT JOIN</code>)</li>
+        </ol>
+      </section>
+
+      <section class="lesson-section" id="dap-an">
+        <p class="eyebrow">ĐÁP ÁN</p>
+        <h2>Xem đáp án</h2>
+
+        <div class="access-gate" data-access-course="IT004" data-access-week="6" data-access-resource="week6-bai-tap">
+          <div class="access-locked">
+            <div class="access-locked-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg></div>
+            <h3>Nội dung được bảo vệ</h3>
+            <p>Nhập mã truy cập để xem đáp án Tuần 6.</p>
+            <form class="access-form">
+              <input type="text" class="access-input" placeholder="Nhập mã truy cập..." autocomplete="off" spellcheck="false" required>
+              <button type="submit" class="primary-button access-submit">Xác nhận mã <span>›</span></button>
+            </form>
+            <p class="access-error" role="alert"></p>
+            <p class="access-hint">Mã truy cập được cung cấp bởi giảng viên.</p>
+          </div>
+
+          <div class="access-unlocked" hidden>
+            <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 6.</div>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Bên dưới là câu hỏi mẫu để minh họa cách trình bày đáp án - sẽ được thay bằng lời giải thật của bài ôn tập tổng hợp.</p>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 1 (MẪU) · JOIN + GROUP BY + ORDER BY</p>
+              <h3>Lớp học có nhiều học viên đăng ký nhất</h3>
+              <p><strong>Đề bài:</strong> Tìm tên lớp học có số lượng học viên đăng ký nhiều nhất.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 lt.TenLop, COUNT(*) AS SoHocVien
+FROM LopTap lt
+JOIN DangKy dk ON lt.MaLop = dk.MaLop
+GROUP BY lt.TenLop
+ORDER BY COUNT(*) DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Kết hợp <code>JOIN</code> (lấy tên lớp), <code>GROUP BY</code> (đếm theo từng lớp) và <code>ORDER BY ... DESC</code> + <code>TOP 1</code> (lấy lớp đông nhất).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là ví dụ điển hình của việc ghép nhiều kỹ thuật đã học: phải <code>JOIN</code> trước để có tên lớp, <code>GROUP BY</code> để đếm theo từng lớp, rồi mới sắp xếp và lấy dòng đầu tiên - làm sai thứ tự sẽ ra kết quả sai hoặc lỗi cú pháp.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 2 (MẪU) · CREATE TABLE + CONSTRAINT + DML</p>
+              <h3>Bài tổng hợp: tạo bảng và thao tác dữ liệu</h3>
+              <p><strong>Đề bài:</strong> Tạo bảng <code>THANHVIEN(MaTV, HoTen, Email)</code> với <code>Email</code> là duy nhất, sau đó thêm 1 dòng dữ liệu mẫu.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE ThanhVien
+(
+    MaTV INT PRIMARY KEY,
+    HoTen NVARCHAR(50) NOT NULL,
+    Email NVARCHAR(100) UNIQUE
+);
+
+INSERT INTO ThanhVien (MaTV, HoTen, Email)
+VALUES (1, N'Nguyễn Văn An', 'an@uit.edu.vn');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>UNIQUE</code> đảm bảo không có 2 dòng nào trùng giá trị <code>Email</code>; đây là ràng buộc khác với <code>PRIMARY KEY</code> (1 bảng chỉ có 1 khóa chính nhưng có thể có nhiều cột <code>UNIQUE</code>).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>MaTV</code> đã là khóa chính để định danh bản ghi, nhưng đề còn yêu cầu <code>Email</code> không trùng - đây là 1 ràng buộc nghiệp vụ riêng, nên cần thêm <code>UNIQUE</code> chứ không dùng lại <code>PRIMARY KEY</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="download-card">
+              <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span>
+              <div class="download-card-body">
+                <strong>Script đáp án đầy đủ (thử nghiệm)</strong>
+                <span>File .sql - Sẽ được cập nhật bằng script thật của bài ôn tập</span>
+              </div>
+              <a class="dark-button" href="#" onclick="return false">Tải script <span>↓</span></a>
+            </div>
+
+            <button type="button" class="ghost-button access-logout">Đăng xuất khỏi khu vực này</button>
+          </div>
+        </div>
+      </section>
+
+      <nav class="week-nav-links" aria-label="Điều hướng">
+        <a href="week-6.html"><span class="nav-dir">‹ QUAY LẠI</span><span class="nav-title">Tuần 6: Ôn tập thực hành</span></a>
+        <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Thi thử (sắp mở)</span></span>
+      </nav>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=12"></script>
+  <script src="../../assets/js/access-gate.js?v=1"></script>
+</body>
+</html>

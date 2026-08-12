@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tạo mã truy cập - IT Learning Hub</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css?v=19">
+  <style>
+    .admin-shell{max-width:480px;margin:64px auto;padding:0 20px}
+    .admin-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:32px}
+    .admin-card h1{font-size:20px;margin-bottom:6px}
+    .admin-card p.hint{color:var(--muted);font-size:12px;margin-bottom:24px}
+    .field{margin-bottom:16px}
+    .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+    .field input,.field select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:14px;background:var(--bg);color:var(--ink)}
+    .field input:focus,.field select:focus{outline:2px solid var(--primary);outline-offset:1px}
+    .admin-card button{width:100%;padding:13px;margin-top:6px}
+    .result{margin-top:20px;padding:16px;border-radius:10px;background:var(--tint);display:none}
+    .result.show{display:block}
+    .result code{display:block;font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--primary-ink);padding:8px 0;text-align:center;user-select:all}
+    .result-actions{display:flex;gap:8px;justify-content:center;margin-top:6px}
+    .msg{margin-top:14px;font-size:13px;font-weight:600}
+    .msg.error{color:#dc2626}
+    .msg.ok{color:#16a34a}
+  </style>
+</head>
+<body>
+  <div class="admin-shell">
+    <div class="admin-card">
+      <h1>Tạo mã truy cập</h1>
+      <p class="hint">Trang nội bộ cho giảng viên - không chia sẻ link hoặc mật khẩu quản trị này.</p>
+
+      <form id="generate-form">
+        <div class="field">
+          <label for="key">Mật khẩu quản trị</label>
+          <input type="password" id="key" autocomplete="off" required>
+        </div>
+        <div class="field">
+          <label for="course">Môn học</label>
+          <select id="course" required>
+            <option value="IT004">IT004</option>
+            <option value="IS201">IS201</option>
+            <option value="IS208">IS208</option>
+            <option value="IS210">IS210</option>
+            <option value="IS336">IS336</option>
+            <option value="IS355">IS355</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="note">Ghi chú (tùy chọn)</label>
+          <input type="text" id="note" placeholder="Ví dụ: Lớp thực hành thứ Ba - Tuần 2">
+        </div>
+        <button type="submit" class="primary-button" id="submit-btn">Tạo mã <span>›</span></button>
+      </form>
+
+      <div class="result" id="result">
+        <code id="result-code"></code>
+        <div class="result-actions">
+          <button type="button" class="outline-button" id="copy-btn">Sao chép</button>
+        </div>
+      </div>
+      <p class="msg" id="msg"></p>
+    </div>
+  </div>
+
+  <script>
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzl_MDfTRkxNExa--NscWG4HPI7ioAN0QImDGLDyk66UFuXaUo1Zrwi_qvwoIjrS5Vu/exec';
+
+    function jsonp(url) {
+      return new Promise(function (resolve, reject) {
+        var callbackName = '__adminCb' + Date.now() + Math.floor(Math.random() * 1e6);
+        var script = document.createElement('script');
+        var timer = setTimeout(function () { cleanup(); reject(new Error('timeout')); }, 10000);
+
+        function cleanup() {
+          clearTimeout(timer);
+          delete window[callbackName];
+          if (script.parentNode) script.parentNode.removeChild(script);
+        }
+
+        window[callbackName] = function (data) { cleanup(); resolve(data); };
+        script.src = url + '&callback=' + callbackName;
+        script.onerror = function () { cleanup(); reject(new Error('script load error')); };
+        document.body.appendChild(script);
+      });
+    }
+
+    var form = document.getElementById('generate-form');
+    var keyInput = document.getElementById('key');
+    var submitBtn = document.getElementById('submit-btn');
+    var resultBox = document.getElementById('result');
+    var resultCode = document.getElementById('result-code');
+    var copyBtn = document.getElementById('copy-btn');
+    var msgEl = document.getElementById('msg');
+
+    try {
+      var savedKey = localStorage.getItem('admin:key');
+      if (savedKey) keyInput.value = savedKey;
+    } catch (e) {}
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var key = keyInput.value.trim();
+      var course = document.getElementById('course').value;
+      var note = document.getElementById('note').value.trim();
+
+      msgEl.textContent = '';
+      msgEl.className = 'msg';
+      resultBox.classList.remove('show');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Đang tạo...';
+
+      var url = APPS_SCRIPT_URL + '?action=generate' +
+        '&key=' + encodeURIComponent(key) +
+        '&course=' + encodeURIComponent(course) +
+        '&note=' + encodeURIComponent(note);
+
+      jsonp(url)
+        .then(function (data) {
+          if (data.ok) {
+            try { localStorage.setItem('admin:key', key); } catch (e) {}
+            resultCode.textContent = data.code;
+            resultBox.classList.add('show');
+          } else {
+            msgEl.textContent = data.message || 'Không tạo được mã.';
+            msgEl.className = 'msg error';
+          }
+        })
+        .catch(function () {
+          msgEl.textContent = 'Không thể kết nối máy chủ. Vui lòng thử lại.';
+          msgEl.className = 'msg error';
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Tạo mã <span>›</span>';
+        });
+    });
+
+    copyBtn.addEventListener('click', function () {
+      var text = resultCode.textContent;
+      if (!text) return;
+      navigator.clipboard.writeText(text).then(function () {
+        msgEl.textContent = 'Đã sao chép mã vào clipboard.';
+        msgEl.className = 'msg ok';
+      });
+    });
+  </script>
+</body>
+</html>

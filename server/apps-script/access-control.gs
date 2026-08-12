@@ -18,11 +18,15 @@
  * 7. To revoke a code later, just edit its `status` cell in ACCESS_CODES
  *    to "Revoked" - no code change needed.
  * 8. To issue a new code, run generateCode('IT004', 'note here') from
- *    the Apps Script editor and read the code from the Execution log.
- *
- * This intentionally has no web-based admin UI yet (out of scope for
- * the pilot) - code issuing/revoking happens directly in the Sheet or
- * via the Apps Script editor's Run button.
+ *    the Apps Script editor and read the code from the Execution log, OR
+ *    use the web form at admin/generate-code.html.
+ * 9. For the web form to work, set an admin password: Project Settings
+ *    (gear icon, left sidebar) > Script Properties > Add script property.
+ *    Name: ADMIN_KEY. Value: any secret string you choose. This keeps the
+ *    password out of the source file (and out of git). Whoever knows this
+ *    value can mint codes from admin/generate-code.html, so treat it like
+ *    a real password - don't post it publicly, rotate it (just change the
+ *    Script Property, no redeploy needed) if it ever leaks.
  *
  * Gotcha this file avoids: SpreadsheetApp.getActiveSpreadsheet() returns
  * null when a Web App's doGet/doPost actually runs (no active UI in
@@ -39,10 +43,33 @@ var LOG_HEADERS = ['timestamp', 'course', 'resource', 'code_hash', 'name', 'clas
 
 function doGet(e) {
   var action = e.parameter.action;
-  var result = action === 'validate'
-    ? handleValidate(e.parameter)
-    : { ok: false, message: 'Unknown action' };
+  var result;
+  if (action === 'validate') {
+    result = handleValidate(e.parameter);
+  } else if (action === 'generate') {
+    result = handleGenerate(e.parameter);
+  } else {
+    result = { ok: false, message: 'Unknown action' };
+  }
   return respond(result, e.parameter.callback);
+}
+
+function handleGenerate(params) {
+  var adminKey = PropertiesService.getScriptProperties().getProperty('ADMIN_KEY');
+  if (!adminKey) {
+    return { ok: false, message: 'Chưa cấu hình ADMIN_KEY - xem hướng dẫn ở đầu file.' };
+  }
+  if (String(params.key || '') !== adminKey) {
+    return { ok: false, message: 'Sai mật khẩu quản trị.' };
+  }
+
+  var course = String(params.course || '').trim().toUpperCase();
+  if (!course) {
+    return { ok: false, message: 'Thiếu mã môn học.' };
+  }
+
+  var code = generateCode(course, String(params.note || ''));
+  return { ok: true, code: code };
 }
 
 function handleValidate(params) {

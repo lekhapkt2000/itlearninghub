@@ -194,40 +194,268 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 1.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Bên dưới là câu hỏi mẫu để minh họa cách trình bày đáp án - sẽ được thay bằng lời giải thật của BTTH1.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án đầy đủ cho Yêu cầu 1 (3 câu) và Yêu cầu 2 (10 câu Phần I, 4 câu Phần II). Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - nút Copy ở đây chỉ mang tính hình thức thôi.</p>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 1 (MẪU) · KHÓA CHÍNH</p>
-              <h3>Tạo bảng PHONGTAP với khóa chính</h3>
-              <p><strong>Đề bài:</strong> Tạo bảng <code>PHONGTAP(MaPhong, TenPhong, SucChua)</code>, trong đó <code>MaPhong</code> là khóa chính.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE PhongTap
+              <p class="eyebrow">CÂU 1 (YC1) · CREATE DATABASE</p>
+              <h3>Tạo CSDL và 6 quan hệ</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE TrungTam_TDTT;
+GO
+USE TrungTam_TDTT;
+GO
+
+CREATE TABLE PHONGTAP
 (
-    MaPhong INT PRIMARY KEY,
-    TenPhong NVARCHAR(50) NOT NULL,
-    SucChua INT
+    MAPH CHAR(5),
+    TENPHONG VARCHAR(50),
+    DIACHI VARCHAR(100),
+    SUCCHUA INT,
+    TRANGTHAI VARCHAR(20)
+);
+
+CREATE TABLE HUANLUYENVIEN
+(
+    MAHLV CHAR(5),
+    HOTEN VARCHAR(50),
+    CHUYENMON VARCHAR(50),
+    SDT VARCHAR(15),
+    EMAIL VARCHAR(50)
+);
+
+CREATE TABLE HOCVIEN
+(
+    MAHV CHAR(5),
+    HOTEN VARCHAR(50),
+    NGSINH SMALLDATETIME,
+    SDT VARCHAR(15),
+    DIACHI VARCHAR(100),
+    GIOITINH VARCHAR(10),
+    NGTG SMALLDATETIME
+);
+
+CREATE TABLE LOPTAP
+(
+    MALOP CHAR(5),
+    MAPH CHAR(5),
+    MAHLV CHAR(5),
+    TENLOP VARCHAR(50),
+    NGAYBD SMALLDATETIME,
+    NGAYKT SMALLDATETIME,
+    TRANGTHAI VARCHAR(20)
+);
+
+CREATE TABLE DANGKY
+(
+    MAHV CHAR(5),
+    MALOP CHAR(5),
+    NGAYDK SMALLDATETIME
+);
+
+CREATE TABLE LICHTAP
+(
+    MALOP CHAR(5),
+    NGAYTAP SMALLDATETIME,
+    GIOBATDAU TIME,
+    GIOKETTHUC TIME
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>PRIMARY KEY</code> đảm bảo <code>MaPhong</code> không trùng và không <code>NULL</code>, dùng để định danh duy nhất một phòng tập.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Các bảng khác (LOPTAP, LICHTAP...) sẽ cần tham chiếu đúng 1 phòng tập cụ thể - nếu không có khóa chính, hệ thống không có gì đảm bảo mỗi mã phòng là duy nhất.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CREATE DATABASE</code> tạo 1 CSDL rỗng, sau đó phải <code>USE</code> để chuyển ngữ cảnh làm việc sang CSDL đó trước khi tạo bảng. 6 câu lệnh <code>CREATE TABLE</code> tương ứng với 6 quan hệ trong lược đồ.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Tách "tạo cấu trúc" và "tạo ràng buộc" thành 2 bước riêng (Câu 1 và Câu 2) giúp dễ kiểm soát - nếu đặt sai khóa ngoại, chỉ cần sửa lại <code>ALTER TABLE</code> ở Câu 2 mà không phải xóa và tạo lại toàn bộ bảng.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 2 (MẪU) · KHÓA NGOẠI</p>
-              <h3>Tạo bảng LOPTAP tham chiếu đến PHONGTAP</h3>
-              <p><strong>Đề bài:</strong> Tạo bảng <code>LOPTAP(MaLop, TenLop, MaPhong)</code>, trong đó <code>MaPhong</code> tham chiếu đến <code>PHONGTAP(MaPhong)</code>.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE LopTap
-(
-    MaLop INT PRIMARY KEY,
-    TenLop NVARCHAR(50) NOT NULL,
-    MaPhong INT,
+              <p class="eyebrow">CÂU 2 (YC1) · PRIMARY KEY &amp; FOREIGN KEY</p>
+              <h3>Tạo khóa chính, khóa ngoại cho 6 quan hệ</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE PHONGTAP ADD CONSTRAINT PK_PHONGTAP PRIMARY KEY (MAPH);
+ALTER TABLE HUANLUYENVIEN ADD CONSTRAINT PK_HUANLUYENVIEN PRIMARY KEY (MAHLV);
+ALTER TABLE HOCVIEN ADD CONSTRAINT PK_HOCVIEN PRIMARY KEY (MAHV);
+ALTER TABLE LOPTAP ADD CONSTRAINT PK_LOPTAP PRIMARY KEY (MALOP);
+ALTER TABLE DANGKY ADD CONSTRAINT PK_DANGKY PRIMARY KEY (MAHV, MALOP);
+ALTER TABLE LICHTAP ADD CONSTRAINT PK_LICHTAP PRIMARY KEY (MALOP, NGAYTAP);
 
-    FOREIGN KEY (MaPhong)
-        REFERENCES PhongTap(MaPhong)
-);</code></pre></div>
+ALTER TABLE LOPTAP ADD CONSTRAINT FK_LOPTAP_PHONGTAP
+    FOREIGN KEY (MAPH) REFERENCES PHONGTAP(MAPH);
+ALTER TABLE LOPTAP ADD CONSTRAINT FK_LOPTAP_HLV
+    FOREIGN KEY (MAHLV) REFERENCES HUANLUYENVIEN(MAHLV);
+ALTER TABLE DANGKY ADD CONSTRAINT FK_DANGKY_HOCVIEN
+    FOREIGN KEY (MAHV) REFERENCES HOCVIEN(MAHV);
+ALTER TABLE DANGKY ADD CONSTRAINT FK_DANGKY_LOPTAP
+    FOREIGN KEY (MALOP) REFERENCES LOPTAP(MALOP);
+ALTER TABLE LICHTAP ADD CONSTRAINT FK_LICHTAP_LOPTAP
+    FOREIGN KEY (MALOP) REFERENCES LOPTAP(MALOP);</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>FOREIGN KEY</code> buộc giá trị <code>MaPhong</code> ở bảng con phải tồn tại trong <code>PHONGTAP</code>.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Mỗi lớp tập luôn diễn ra ở 1 phòng có thật. Không có khóa ngoại, hệ thống có thể lưu 1 lớp gắn với mã phòng không tồn tại, gây sai lệch dữ liệu khi truy vấn.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>DANGKY</code> và <code>LICHTAP</code> có khóa chính gồm nhiều cột (khóa phức hợp) vì từng cột riêng lẻ không đủ định danh duy nhất 1 dòng - ví dụ 1 học viên đăng ký nhiều lớp, nên phải gộp <code>(MAHV, MALOP)</code> mới ra 1 lượt đăng ký duy nhất.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Thứ tự quan trọng: <code>LOPTAP</code> phải có khóa chính trước khi <code>DANGKY</code>/<code>LICHTAP</code> tham chiếu tới nó, nên các lệnh tạo <code>PRIMARY KEY</code> luôn phải chạy trước các lệnh tạo <code>FOREIGN KEY</code> liên quan.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 3 (YC1) · INSERT</p>
+              <h3>Nhập dữ liệu mẫu cho 6 quan hệ</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO PHONGTAP (MAPH, TENPHONG, DIACHI, SUCCHUA, TRANGTHAI)
+VALUES
+    ('PH001', N'Yoga Linh Dam', N'Ha Noi', 25, N'Hoat dong'),
+    ('PH002', N'Gym Nguyen Van Cu', N'TP. HCM', 60, N'Hoat dong');
+
+-- Áp dụng đúng cú pháp INSERT INTO ... VALUES (...) này cho 5 quan hệ
+-- còn lại (HUANLUYENVIEN, HOCVIEN, LOPTAP, DANGKY, LICHTAP), lấy dữ liệu
+-- mẫu đầy đủ trong file PDF đính kèm ở phần Đề bài.</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>INSERT INTO ... VALUES (...)</code> thêm từng dòng dữ liệu vào bảng; nhiều dòng có thể gộp trong 1 câu lệnh bằng cách liệt kê nhiều nhóm giá trị, ngăn cách bởi dấu phẩy.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải nhập <code>PHONGTAP</code> và <code>HUANLUYENVIEN</code> trước <code>LOPTAP</code>, và <code>LOPTAP</code> trước <code>DANGKY</code>/<code>LICHTAP</code> - vì khóa ngoại đã tạo ở Câu 2 sẽ chặn <code>INSERT</code> nếu dòng cha (phòng, huấn luyện viên, lớp) chưa tồn tại.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 1 (YC2 - PHẦN I) · ADD COLUMN</p>
+              <h3>Thêm thuộc tính GHICHU cho SANPHAM</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD GHICHU VARCHAR(20);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>ALTER TABLE ... ADD</code> thêm 1 cột mới vào bảng đã tồn tại; các dòng dữ liệu cũ sẽ nhận giá trị <code>NULL</code> ở cột mới này.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>SANPHAM</code> đã có dữ liệu từ trước, không thể <code>CREATE TABLE</code> lại - phải dùng <code>ALTER TABLE</code> để bổ sung cột mà không mất dữ liệu hiện có.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 2 (YC2 - PHẦN I) · ADD COLUMN</p>
+              <h3>Thêm thuộc tính LOAIKH cho KHACHHANG</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD LOAIKH TINYINT;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>TINYINT</code> lưu số nguyên nhỏ (0-255), phù hợp khi <code>LOAIKH</code> chỉ cần vài mã số cố định.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề chỉ yêu cầu thêm cột, chưa yêu cầu ràng buộc giá trị - việc giới hạn <code>LOAIKH</code> chỉ được lưu vài nhãn cụ thể sẽ làm ở Câu 5.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 3 (YC2 - PHẦN I) · ALTER COLUMN</p>
+              <h3>Sửa kiểu dữ liệu GHICHU thành varchar(100)</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ALTER COLUMN GHICHU VARCHAR(100);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>ALTER COLUMN</code> thay đổi kiểu dữ liệu (hoặc độ dài) của 1 cột đã tồn tại.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>varchar(20)</code> ở Câu 1 có thể không đủ chỗ lưu ghi chú dài hơn, nên phải mở rộng độ dài thay vì xóa cột rồi tạo lại.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 4 (YC2 - PHẦN I) · DROP COLUMN</p>
+              <h3>Xóa thuộc tính GHICHU</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM DROP COLUMN GHICHU;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>DROP COLUMN</code> xóa vĩnh viễn 1 cột cùng toàn bộ dữ liệu đã lưu trong cột đó.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không còn dùng đến <code>GHICHU</code> nữa thì nên xóa hẳn để tránh cột thừa gây rối khi <code>SELECT *</code> sau này.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 5 (YC2 - PHẦN I) · CHECK ... IN</p>
+              <h3>Giới hạn LOAIKH chỉ nhận vài giá trị cố định</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ALTER COLUMN LOAIKH VARCHAR(20);
+
+ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
+    CHECK (LOAIKH IN (N'Vang lai', N'Thuong xuyen', N'Vip'));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LOAIKH</code> cần lưu chuỗi ký tự ("Vang lai", "Thuong xuyen", "Vip") nên phải đổi kiểu dữ liệu từ <code>TINYINT</code> (ở Câu 2) sang <code>VARCHAR</code>, sau đó thêm <code>CHECK ... IN (...)</code> để chỉ chấp nhận đúng 3 giá trị này.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>CHECK</code> là cách chuẩn để giới hạn miền giá trị của 1 cột ngay tại CSDL - dù ứng dụng có lỗi và cố ghi giá trị khác, CSDL vẫn từ chối câu lệnh.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 6 (YC2 - PHẦN I) · CHECK ... IN</p>
+              <h3>Giới hạn đơn vị tính của sản phẩm</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD CONSTRAINT CK_SANPHAM_DVT
+    CHECK (DVT IN (N'cay', N'hop', N'cai', N'quyen', N'chuc'));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cùng kỹ thuật <code>CHECK ... IN</code> như Câu 5, áp dụng cho cột <code>DVT</code> (đơn vị tính) của <code>SANPHAM</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đơn vị tính là dữ liệu dạng danh mục cố định, không phải nhập tự do - ràng buộc bằng danh sách giá trị hợp lệ giúp tránh nhập sai chính tả.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 7 (YC2 - PHẦN I) · CHECK</p>
+              <h3>Giá bán tối thiểu 500 đồng</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD CONSTRAINT CK_SANPHAM_GIA CHECK (GIA >= 500);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CHECK</code> với biểu thức so sánh (khác <code>IN</code>) dùng khi ràng buộc là 1 khoảng giá trị chứ không phải danh sách liệt kê.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Từ 500 đồng trở lên" là điều kiện <code>&gt;=</code>, không thể liệt kê hết giá trị hợp lệ như Câu 6, nên phải dùng phép so sánh trực tiếp.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 8 (YC2 - PHẦN I) · CHECK ... LIKE</p>
+              <h3>Số điện thoại nhân viên bắt đầu bằng số 0</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE NHANVIEN ADD CONSTRAINT CK_NHANVIEN_SODT CHECK (SODT LIKE '0%');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LIKE '0%'</code> khớp mọi chuỗi bắt đầu bằng ký tự "0", dấu <code>%</code> đại diện cho phần còn lại (độ dài bất kỳ).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Ràng buộc "bắt đầu bằng" là ràng buộc về định dạng chuỗi, không phải giá trị cụ thể hay khoảng số - <code>CHECK ... LIKE</code> là công cụ đúng cho trường hợp này.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 9 (YC2 - PHẦN I) · CHECK</p>
+              <h3>Mỗi lần mua hàng phải có ít nhất 1 sản phẩm</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE CTHD ADD CONSTRAINT CK_CTHD_SL CHECK (SL >= 1);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Ràng buộc đặt trên cột <code>SL</code> (số lượng) của <code>CTHD</code> - mỗi dòng chi tiết hóa đơn phải có số lượng mua từ 1 trở lên.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Mua ít nhất 1 sản phẩm" thực chất là ràng buộc số lượng của từng dòng <code>CTHD</code>, không phải trên <code>HOADON</code> - vì <code>HOADON</code> không lưu trực tiếp thông tin sản phẩm.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 10 (YC2 - PHẦN I) · CHECK</p>
+              <h3>Ngày đăng ký thành viên phải sau ngày sinh</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_NGDK CHECK (NGDK > NGSINH);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CHECK</code> có thể so sánh 2 cột trong cùng 1 bảng với nhau, không chỉ so sánh với 1 giá trị cố định.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Về mặt logic, 1 người không thể đăng ký làm thành viên trước khi họ được sinh ra - ràng buộc này giữ dữ liệu luôn hợp lý theo đúng ý nghĩa thực tế.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 1 (YC2 - PHẦN II) · SELECT INTO</p>
+              <h3>Tạo bản sao SANPHAM1, KHACHHANG1</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT * INTO SANPHAM1 FROM SANPHAM;
+SELECT * INTO KHACHHANG1 FROM KHACHHANG;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>SELECT * INTO &lt;bảng mới&gt; FROM &lt;bảng nguồn&gt;</code> vừa tạo bảng mới vừa sao chép toàn bộ dữ liệu, không cần <code>CREATE TABLE</code> riêng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Các câu sau đều là <code>UPDATE</code> có thể làm sai lệch dữ liệu gốc - tạo bản sao trước giúp thao tác thử nghiệm trên <code>SANPHAM1</code>/<code>KHACHHANG1</code> mà không ảnh hưởng đến <code>SANPHAM</code>/<code>KHACHHANG</code> thật.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 2 (YC2 - PHẦN II) · UPDATE</p>
+              <h3>Tăng giá 5% sản phẩm Thái Lan</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SANPHAM1
+SET GIA = GIA * 1.05
+WHERE NUOCSX = N'Thai Lan';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GIA * 1.05</code> nghĩa là giữ nguyên 100% giá cũ và cộng thêm 5%, tương đương tăng 5%.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không dùng <code>GIA = GIA + 5</code> vì 5% không phải 1 con số cố định mà phụ thuộc vào giá của từng sản phẩm - phải nhân với hệ số 1.05 để tỷ lệ tăng đúng cho mọi mức giá khác nhau.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 3 (YC2 - PHẦN II) · UPDATE</p>
+              <h3>Giảm giá 5% sản phẩm Trung Quốc giá thấp</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SANPHAM1
+SET GIA = GIA * 0.95
+WHERE NUOCSX = N'Trung Quoc' AND GIA <= 10000;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GIA * 0.95</code> tương đương giảm 5% (giữ lại 95% giá cũ); mệnh đề <code>WHERE</code> kết hợp 2 điều kiện bằng <code>AND</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải lọc đúng 2 điều kiện cùng lúc (nước sản xuất và mức giá) - thiếu 1 trong 2 sẽ giảm giá nhầm cả những sản phẩm không thuộc diện áp dụng.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 4 (YC2 - PHẦN II) · UPDATE</p>
+              <h3>Gắn hạng Vip cho khách hàng đủ điều kiện</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE KHACHHANG1
+SET LOAIKH = N'Vip'
+WHERE (NGDK < '1/1/2007' AND DOANHSO >= 10000000)
+   OR (NGDK >= '1/1/2007' AND DOANHSO >= 2000000);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Điều kiện gồm 2 nhóm độc lập nối bằng <code>OR</code>, mỗi nhóm lại gồm 2 điều kiện nối bằng <code>AND</code> - dùng dấu ngoặc để phân nhóm rõ ràng, tránh sai thứ tự ưu tiên <code>AND</code>/<code>OR</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Ngưỡng doanh số để đạt Vip khác nhau tùy thời điểm đăng ký (10 triệu nếu đăng ký trước 1/1/2007, chỉ cần 2 triệu nếu đăng ký từ 1/1/2007 trở đi) - phải tách 2 trường hợp bằng <code>OR</code> thay vì gộp chung 1 điều kiện.</p></div>
               </div>
             </div>
 

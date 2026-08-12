@@ -70,6 +70,17 @@
 .download-card .dark-button{flex-shrink:0;padding:10px 16px;font-size:11px}
 @media(max-width:600px){.download-card{flex-wrap:wrap}}
 
+.answer-cta{position:relative;overflow:hidden;display:flex;align-items:center;gap:24px;margin-top:20px;padding:28px 32px;background:linear-gradient(135deg,var(--ink) 0%,#1e293b 100%);border-radius:14px;color:#fff}
+.answer-cta::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgb(37 99 235 / .35),transparent 70%)}
+.answer-cta-icon{position:relative;z-index:1;flex-shrink:0;display:grid;place-items:center;width:52px;height:52px;border-radius:12px;background:rgb(255 255 255 / .12);color:#93c5fd}
+.answer-cta-icon svg{width:24px;height:24px}
+.answer-cta-body{position:relative;z-index:1;flex:1;min-width:0}
+.answer-cta-body .eyebrow{color:#93c5fd;margin-bottom:6px}
+.answer-cta-body h3{margin:0 0 6px;font-size:18px;color:#fff}
+.answer-cta-body p{margin:0;color:#cbd5e1;font-size:12.5px;line-height:1.7;max-width:480px}
+.answer-cta .primary-button{position:relative;z-index:1;flex-shrink:0;white-space:nowrap}
+@media(max-width:680px){.answer-cta{flex-direction:column;align-items:flex-start}}
+
 .official-badge{display:inline-flex;align-items:center;gap:6px;margin-bottom:16px;padding:6px 12px;border-radius:99px;background:#2563eb;color:#fff;font-size:10px;font-weight:800;letter-spacing:.05em}
 .official-badge svg{width:13px;height:13px;flex-shrink:0}
 .practice-lab.official-lab p{color:#e2e8f0;font-size:14px;line-height:1.8}

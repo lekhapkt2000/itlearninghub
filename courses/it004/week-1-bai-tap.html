@@ -198,7 +198,6 @@
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 1 (YC1) · CREATE DATABASE</p>
-              <h3>Tạo CSDL và 6 quan hệ</h3>
               <p><strong>Đề bài:</strong> Tạo cơ sở dữ liệu <code>TrungTam_TDTT</code>, gồm 6 quan hệ <code>PHONGTAP</code>, <code>HUANLUYENVIEN</code>, <code>HOCVIEN</code>, <code>LOPTAP</code>, <code>DANGKY</code>, <code>LICHTAP</code>.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE TrungTam_TDTT;
 GO
@@ -267,7 +266,6 @@ CREATE TABLE LICHTAP
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 2 (YC1) · PRIMARY KEY &amp; FOREIGN KEY</p>
-              <h3>Tạo khóa chính, khóa ngoại cho 6 quan hệ</h3>
               <p><strong>Đề bài:</strong> Tạo khóa chính, khóa ngoại cho các quan hệ trên.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE PHONGTAP ADD CONSTRAINT PK_PHONGTAP PRIMARY KEY (MAPH);
 ALTER TABLE HUANLUYENVIEN ADD CONSTRAINT PK_HUANLUYENVIEN PRIMARY KEY (MAHLV);
@@ -294,7 +292,6 @@ ALTER TABLE LICHTAP ADD CONSTRAINT FK_LICHTAP_LOPTAP
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 3 (YC1) · INSERT</p>
-              <h3>Nhập dữ liệu mẫu cho 6 quan hệ</h3>
               <p><strong>Đề bài:</strong> Nhập dữ liệu cho 6 quan hệ theo như dữ liệu mẫu trong file đề bài đã cung cấp.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO PHONGTAP (MAPH, TENPHONG, DIACHI, SUCCHUA, TRANGTHAI)
 VALUES
@@ -312,7 +309,6 @@ VALUES
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 1 (YC2 - PHẦN I) · ADD COLUMN</p>
-              <h3>Thêm thuộc tính GHICHU cho SANPHAM</h3>
               <p><strong>Đề bài:</strong> Thêm vào thuộc tính <code>GHICHU</code> có kiểu dữ liệu <code>varchar(20)</code> cho quan hệ <code>SANPHAM</code>.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD GHICHU VARCHAR(20);</code></pre></div>
               <div class="qa-explain">
@@ -323,7 +319,6 @@ VALUES
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 2 (YC2 - PHẦN I) · ADD COLUMN</p>
-              <h3>Thêm thuộc tính LOAIKH cho KHACHHANG</h3>
               <p><strong>Đề bài:</strong> Thêm vào thuộc tính <code>LOAIKH</code> có kiểu dữ liệu là <code>tinyint</code> cho quan hệ <code>KHACHHANG</code>.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD LOAIKH TINYINT;</code></pre></div>
               <div class="qa-explain">
@@ -334,7 +329,6 @@ VALUES
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 3 (YC2 - PHẦN I) · ALTER COLUMN</p>
-              <h3>Sửa kiểu dữ liệu GHICHU thành varchar(100)</h3>
               <p><strong>Đề bài:</strong> Sửa kiểu dữ liệu của thuộc tính <code>GHICHU</code> trong quan hệ <code>SANPHAM</code> thành <code>varchar(100)</code>.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ALTER COLUMN GHICHU VARCHAR(100);</code></pre></div>
               <div class="qa-explain">
@@ -345,7 +339,6 @@ VALUES
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 4 (YC2 - PHẦN I) · DROP COLUMN</p>
-              <h3>Xóa thuộc tính GHICHU</h3>
               <p><strong>Đề bài:</strong> Xóa thuộc tính <code>GHICHU</code> trong quan hệ <code>SANPHAM</code>.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM DROP COLUMN GHICHU;</code></pre></div>
               <div class="qa-explain">
@@ -356,7 +349,6 @@ VALUES
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 5 (YC2 - PHẦN I) · CHECK ... IN</p>
-              <h3>Giới hạn LOAIKH chỉ nhận vài giá trị cố định</h3>
               <p><strong>Đề bài:</strong> Làm thế nào để thuộc tính <code>LOAIKH</code> trong quan hệ <code>KHACHHANG</code> có thể lưu các giá trị là: "Vang lai", "Thuong xuyen", "Vip", …</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ALTER COLUMN LOAIKH VARCHAR(20);
 
@@ -370,7 +362,6 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 6 (YC2 - PHẦN I) · CHECK ... IN</p>
-              <h3>Giới hạn đơn vị tính của sản phẩm</h3>
               <p><strong>Đề bài:</strong> Đơn vị tính của sản phẩm chỉ có thể là ("cay", "hop", "cai", "quyen", "chuc").</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD CONSTRAINT CK_SANPHAM_DVT
     CHECK (DVT IN (N'cay', N'hop', N'cai', N'quyen', N'chuc'));</code></pre></div>
@@ -382,7 +373,6 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 7 (YC2 - PHẦN I) · CHECK</p>
-              <h3>Giá bán tối thiểu 500 đồng</h3>
               <p><strong>Đề bài:</strong> Giá bán của sản phẩm từ 500 đồng trở lên.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD CONSTRAINT CK_SANPHAM_GIA CHECK (GIA >= 500);</code></pre></div>
               <div class="qa-explain">
@@ -393,7 +383,6 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 8 (YC2 - PHẦN I) · CHECK ... LIKE</p>
-              <h3>Số điện thoại nhân viên bắt đầu bằng số 0</h3>
               <p><strong>Đề bài:</strong> Số điện thoại của nhân viên phải bắt đầu bằng chữ số "0".</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE NHANVIEN ADD CONSTRAINT CK_NHANVIEN_SODT CHECK (SODT LIKE '0%');</code></pre></div>
               <div class="qa-explain">
@@ -404,7 +393,6 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 9 (YC2 - PHẦN I) · CHECK</p>
-              <h3>Mỗi lần mua hàng phải có ít nhất 1 sản phẩm</h3>
               <p><strong>Đề bài:</strong> Mỗi lần mua hàng, khách hàng phải mua ít nhất 1 sản phẩm.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE CTHD ADD CONSTRAINT CK_CTHD_SL CHECK (SL >= 1);</code></pre></div>
               <div class="qa-explain">
@@ -415,7 +403,6 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 10 (YC2 - PHẦN I) · CHECK</p>
-              <h3>Ngày đăng ký thành viên phải sau ngày sinh</h3>
               <p><strong>Đề bài:</strong> Ngày khách hàng đăng ký là khách hàng thành viên phải lớn hơn ngày sinh của người đó.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_NGDK CHECK (NGDK > NGSINH);</code></pre></div>
               <div class="qa-explain">
@@ -426,7 +413,6 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 1 (YC2 - PHẦN II) · SELECT INTO</p>
-              <h3>Tạo bản sao SANPHAM1, KHACHHANG1</h3>
               <p><strong>Đề bài:</strong> Tạo quan hệ <code>SANPHAM1</code> chứa toàn bộ dữ liệu của quan hệ <code>SANPHAM</code>. Tạo quan hệ <code>KHACHHANG1</code> chứa toàn bộ dữ liệu của quan hệ <code>KHACHHANG</code>.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT * INTO SANPHAM1 FROM SANPHAM;
 SELECT * INTO KHACHHANG1 FROM KHACHHANG;</code></pre></div>
@@ -438,7 +424,6 @@ SELECT * INTO KHACHHANG1 FROM KHACHHANG;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 2 (YC2 - PHẦN II) · UPDATE</p>
-              <h3>Tăng giá 5% sản phẩm Thái Lan</h3>
               <p><strong>Đề bài:</strong> Cập nhật giá tăng 5% đối với những sản phẩm do "Thai Lan" sản xuất (cho quan hệ <code>SANPHAM1</code>).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SANPHAM1
 SET GIA = GIA * 1.05
@@ -451,7 +436,6 @@ WHERE NUOCSX = N'Thai Lan';</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 3 (YC2 - PHẦN II) · UPDATE</p>
-              <h3>Giảm giá 5% sản phẩm Trung Quốc giá thấp</h3>
               <p><strong>Đề bài:</strong> Cập nhật giá giảm 5% đối với những sản phẩm do "Trung Quoc" sản xuất có giá từ 10.000 trở xuống (cho quan hệ <code>SANPHAM1</code>).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SANPHAM1
 SET GIA = GIA * 0.95
@@ -464,7 +448,6 @@ WHERE NUOCSX = N'Trung Quoc' AND GIA <= 10000;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 4 (YC2 - PHẦN II) · UPDATE</p>
-              <h3>Gắn hạng Vip cho khách hàng đủ điều kiện</h3>
               <p><strong>Đề bài:</strong> Cập nhật giá trị <code>LOAIKH</code> là "Vip" đối với những khách hàng đăng ký thành viên trước ngày 1/1/2007 có doanh số từ 10.000.000 trở lên, hoặc khách hàng đăng ký thành viên từ 1/1/2007 trở về sau có doanh số từ 2.000.000 trở lên (cho quan hệ <code>KHACHHANG1</code>).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE KHACHHANG1
 SET LOAIKH = N'Vip'

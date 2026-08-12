@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Tuần 6 - AI, Phân tích giao dịch On-chain & Tích hợp DApp Xanh: Blockchain Analytics, Fraud/Anomaly Detection, Graph Analytics, AML, Smart Contract Security và xây dựng Green Finance Analytics DApp với Web3.py, Scikit-learn, Streamlit.">
+  <title>Tuần 6 · AI, Phân tích Giao dịch & Tích hợp DApp Xanh - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=18">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=32">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-6.html" class="active">VI</a><a href="../../en/courses/is355/week-6.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS355 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS355</a><span>/</span>Tuần 6</p>
+
+    <div class="week-header">
+      <span class="week-tag">TUẦN 06 · INTEGRATION WEEK</span>
+      <h1>AI, Phân tích Giao dịch &amp; Tích hợp DApp Xanh</h1>
+      <div class="week-meta"><span>On-chain Analytics</span><span>Machine Learning</span><span>Web3.py + Streamlit</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Chủ đề:</strong> On-chain Analytics, AI/ML, phát hiện bất thường (AML, Fraud, Anomaly) và xây dựng DApp tài chính xanh - Buổi tích hợp toàn bộ kiến thức Tuần 1-5 thành một hệ thống hoàn chỉnh.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS355">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html">Tuần 4</a>
+      <a href="week-5.html">Tuần 5</a>
+      <a href="week-6.html" class="active">Tuần 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 7 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Project Lab <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 6">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#on-chain-data" data-toc><b>01</b> On-chain Data</a>
+        <a href="#event-logs" data-toc><b>02</b> Event Logs</a>
+        <a href="#blockchain-analytics" data-toc><b>03</b> Blockchain Analytics</a>
+        <a href="#ket-noi-web3py" data-toc><b>04</b> Kết nối Blockchain bằng Web3.py</a>
+        <a href="#machine-learning" data-toc><b>05</b> Machine Learning cho Blockchain</a>
+        <a href="#graph-aml" data-toc><b>06</b> Graph Analytics &amp; AML</a>
+        <a href="#smart-contract-security" data-toc><b>07</b> Smart Contract Security</a>
+        <a href="#kien-truc-dapp" data-toc><b>08</b> Kiến trúc DApp</a>
+        <a href="#thuc-hanh-dapp" data-toc><b>09</b> Thực hành: Green Finance Analytics DApp</a>
+        <a href="#mini-project" data-toc><b>10</b> Mini Project</a>
+        <a href="#bai-tap" data-toc><b>11</b> Bài tập nâng cao</a>
+        <a href="#dinh-huong-do-an" data-toc><b>12</b> Định hướng đồ án</a>
+        <a href="#thao-luan" data-toc><b>13</b> Câu hỏi thảo luận</a>
+        <a href="#checklist" data-toc><b>14</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - On-chain Data -->
+        <section class="lesson-section" id="on-chain-data">
+          <p class="eyebrow">01 · PHẦN A - ON-CHAIN DATA</p>
+          <h2>On-chain Data là gì?</h2>
+          <p>Tuần 6 là <strong>buổi tích hợp (Integration Week)</strong> của toàn bộ môn IS355. Nếu các tuần trước tập trung vào từng thành phần riêng lẻ như Smart Contract, Token, NFT, DeFi và ESG, thì ở tuần này sinh viên kết nối chúng thành một hệ thống hoàn chỉnh:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Blockchain</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">On-chain Data</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data Processing</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">AI / Machine Learning</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk / Fraud Prediction</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">DApp Dashboard</span>
+          </div>
+          <div class="definition"><strong>On-chain Data</strong> là dữ liệu được ghi nhận và xác thực trên Blockchain: Transaction Hash, From/To Address, Value, Gas, Timestamp, Block Number, Contract Address.</div>
+          <p>Sinh viên cần phân biệt các thành phần dữ liệu cơ bản trên Blockchain:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Thành phần</th><th>Vai trò</th></tr>
+            <tr><td>Transaction</td><td>Một lần chuyển giá trị/gọi hàm giữa hai địa chỉ, có Hash định danh riêng</td></tr>
+            <tr><td>Block</td><td>Tập hợp các Transaction được đóng gói và nối tiếp nhau theo thời gian</td></tr>
+            <tr><td>Address</td><td>Định danh của người dùng (EOA) hoặc Smart Contract trên Blockchain</td></tr>
+            <tr><td>Smart Contract</td><td>Chương trình lưu trạng thái (State) và xử lý logic on-chain</td></tr>
+            <tr><td>Event</td><td>Bản ghi Smart Contract phát ra khi có thay đổi trạng thái quan trọng</td></tr>
+            <tr><td>Token Transfer</td><td>Sự kiện chuyển Token (ERC-20/ERC-721) giữa hai địa chỉ</td></tr>
+          </table></div>
+          <p>Một Transaction có cấu trúc dữ liệu điển hình:</p>
+          <div class="ascii-block">Transaction
+├── Hash
+├── From
+├── To
+├── Value
+├── Gas
+├── Gas Price
+├── Nonce
+├── Block Number
+└── Timestamp</div>
+          <p>Các Block nối tiếp nhau tạo thành chuỗi, mỗi Block chứa nhiều Transaction - Đây là cơ sở để phân tích số lượng giao dịch, giá trị giao dịch, hoạt động theo thời gian và hoạt động của từng địa chỉ theo trục thời gian.</p>
+        </section>
+
+        <!-- 02 - Event Logs -->
+        <section class="lesson-section" id="event-logs">
+          <p class="eyebrow">02 · PHẦN B - EVENT LOGS</p>
+          <h2>Event Logs</h2>
+          <p>Ngoài Transaction thông thường, Smart Contract còn tạo ra dữ liệu riêng thông qua <strong>State</strong>, <strong>Transaction</strong> và <strong>Event Logs</strong>. Với contract <code>GreenLending.vy</code> đã xây dựng ở Tuần 5, các Event như <code>LoanCreated</code>, <code>LoanRepaid</code>, <code>LoanLiquidated</code> chính là nguồn dữ liệu rất tốt cho Analytics.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper">event LoanCreated:
+    loan_id: indexed(uint256)
+    borrower: indexed(address)
+    amount: uint256</code></pre></div>
+          <p>Khi tạo khoản vay #001 với Borrower = 0xABC, Amount = 10,000, Blockchain ghi lại Event:</p>
+          <div class="ascii-block">LoanCreated
+├── loan_id = 001
+├── borrower = 0xABC
+└── amount = 10,000</div>
+          <p>DApp có thể sử dụng Event để xây dựng cả một dòng chảy phân tích:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Transaction History</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Analytics</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Dashboard</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">AI Dataset</span>
+          </div>
+          <p>Từ một chuỗi Event <code>LoanCreated → LoanCreated → LoanRepaid → LoanCreated → LoanLiquidated → LoanCreated</code>, có thể thống kê ngay: Total Loans, Active Loans, Repaid Loans, Liquidated Loans, Default Rate.</p>
+        </section>
+
+        <!-- 03 - Blockchain Analytics -->
+        <section class="lesson-section" id="blockchain-analytics">
+          <p class="eyebrow">03 · PHẦN C - BLOCKCHAIN ANALYTICS</p>
+          <h2>Blockchain Analytics</h2>
+          <div class="definition"><strong>Blockchain Analytics</strong> là quá trình thu thập, xử lý và phân tích dữ liệu Blockchain để tìm ra thông tin có ý nghĩa.</div>
+          <div class="flow-diagram">
+            <span class="flow-box">Blockchain</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data Collection</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data Cleaning</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Analysis / AI</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Visualization</span>
+          </div>
+          <p>Với dữ liệu Green Lending, có thể phân tích ba nhóm chỉ số chính:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Nhóm chỉ số</th><th>Ví dụ</th></tr>
+            <tr><td>Transaction Metrics</td><td>Transaction Count, Transaction Volume, Gas Used, Average Gas, Active Addresses</td></tr>
+            <tr><td>Lending Metrics</td><td>Total Loans, Total Loan Value, Average Loan, Average Interest, Default Rate, Liquidation Rate</td></tr>
+            <tr><td>ESG Metrics</td><td>Average ESG Score, ESG Distribution, ESG vs Default Rate, ESG vs Interest Rate</td></tr>
+          </table></div>
+          <p>Ví dụ một tập dữ liệu Green Lending thu nhỏ:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loan</th><th>ESG</th><th>Loan Amount</th><th>Collateral</th><th>Status</th></tr>
+            <tr><td>001</td><td>92</td><td>10,000</td><td>18,000</td><td>PAID</td></tr>
+            <tr><td>002</td><td>87</td><td>8,000</td><td>14,000</td><td>PAID</td></tr>
+            <tr><td>003</td><td>65</td><td>12,000</td><td>13,000</td><td>LIQUIDATED</td></tr>
+            <tr><td>004</td><td>72</td><td>15,000</td><td>18,000</td><td>DEFAULT</td></tr>
+          </table></div>
+          <div class="inline-ok">Từ bảng trên, sinh viên có thể đặt câu hỏi nghiên cứu: <strong>ESG Score thấp có liên quan đến Default/Liquidation hay không?</strong> - Đây chính là câu hỏi trung tâm nối sang phần Machine Learning.</div>
+        </section>
+
+        <!-- 04 - Ket noi Web3.py -->
+        <section class="lesson-section" id="ket-noi-web3py">
+          <p class="eyebrow">04 · PHẦN D - KẾT NỐI BLOCKCHAIN BẰNG WEB3.PY</p>
+          <h2>Data Pipeline: Kết nối Blockchain bằng Web3.py</h2>
+          <p>Kiến trúc dữ liệu đầy đủ của một hệ thống Analytics:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Blockchain</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">RPC / API (Alchemy, Infura)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data Extraction (Web3.py)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Pandas DataFrame</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">ML Model</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">DApp Dashboard</span>
+          </div>
+          <p>Kết nối RPC và kiểm tra trạng thái kết nối:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from web3 import Web3
+
+w3 = Web3(Web3.HTTPProvider("YOUR_RPC_URL"))
+
+print(w3.is_connected())  # True</code></pre></div>
+          <p>Đọc một Block cụ thể:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">block = w3.eth.get_block(100)
+print(block)
+# Block Number, Timestamp, Transactions, Gas Used, Gas Limit</code></pre></div>
+          <p>Đọc một Transaction cụ thể:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">tx = w3.eth.get_transaction("TRANSACTION_HASH")
+print(tx)
+# from, to, value, gas, gasPrice, nonce, blockNumber</code></pre></div>
+          <p>Truy vấn toàn bộ Event <code>LoanCreated</code> từ Smart Contract Green Lending (ABI được biên dịch từ Vyper ở Tuần 5) và chuyển thành <code>pandas.DataFrame</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from web3 import Web3
+import pandas as pd
+
+# 1. Kết nối RPC và khởi tạo Contract
+w3 = Web3(Web3.HTTPProvider("https://eth-sepolia.g.alchemy.com/v2/YOUR_API_KEY"))
+contract_address = "0xYourGreenLendingContractAddress"
+contract_abi = [...]  # ABI được biên dịch từ Vyper ở Tuần 5
+
+contract = w3.eth.contract(address=contract_address, abi=contract_abi)
+
+# 2. Truy vấn Event "LoanCreated" từ Block quá khứ
+event_filter = contract.events.LoanCreated.create_filter(fromBlock=1000000, toBlock='latest')
+events = event_filter.get_all_entries()
+
+# 3. Chuyển đổi dữ liệu Event thành Pandas DataFrame
+loans_data = []
+for event in events:
+    args = event['args']
+    loans_data.append({
+        'loan_id': args['loan_id'],
+        'borrower': args['borrower'],
+        'amount': args['amount'] / 10**18,       # Convert Wei to ETH
+        'collateral': args['collateral'] / 10**18,
+        'esg_score': args['esg_score']
+    })
+
+df = pd.DataFrame(loans_data)
+df['collateral_ratio'] = (df['collateral'] / df['amount']) * 100</code></pre></div>
+        </section>
+
+        <!-- 05 - Machine Learning -->
+        <section class="lesson-section" id="machine-learning">
+          <p class="eyebrow">05 · PHẦN E - MACHINE LEARNING CHO BLOCKCHAIN</p>
+          <h2>Machine Learning cho Blockchain</h2>
+          <p>Blockchain lưu trữ rất nhiều dữ liệu, nhưng dữ liệu nhiều không đồng nghĩa với việc con người có thể phát hiện tất cả hành vi bất thường. AI có thể hỗ trợ:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Transaction Data</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Machine Learning</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk Score</span>
+          </div>
+
+          <h3>Fraud Detection</h3>
+          <p>So sánh hành vi giữa một địa chỉ bình thường và một địa chỉ bất thường:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Địa chỉ</th><th>Tần suất giao dịch</th><th>Giá trị trung bình</th></tr>
+            <tr><td>Bình thường</td><td>10 transactions/day</td><td>$500</td></tr>
+            <tr><td>Bất thường</td><td>1,000 transactions/hour</td><td>$50,000</td></tr>
+          </table></div>
+          <p>Khi phát hiện lệch chuẩn, hệ thống có thể gắn cờ <strong>⚠ Suspicious Activity</strong>.</p>
+
+          <h3>Anomaly Detection</h3>
+          <p>Một số đặc trưng (Feature) thường dùng: Transaction Frequency, Transaction Value, Unique Addresses, Gas Usage, Time Interval, Token Transfer.</p>
+          <div class="ascii-block">Normal:
+10 → 20 → 15 → 18 transactions
+
+Abnormal:
+10 → 12 → 15 → 1,500</div>
+
+          <h3>Thuật toán</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Nhóm</th><th>Thuật toán tiêu biểu</th></tr>
+            <tr><td>Unsupervised Learning</td><td>Isolation Forest, One-Class SVM, DBSCAN</td></tr>
+            <tr><td>Supervised Learning</td><td>Logistic Regression, Random Forest, XGBoost</td></tr>
+          </table></div>
+
+          <h3>Feature Engineering</h3>
+          <p>Từ dữ liệu giao dịch thô, tổng hợp thành một Feature Vector theo từng địa chỉ:</p>
+          <div class="ascii-block">Address A
+
+Tx Count = 150
+Avg Value = 850
+Unique Addresses = 37
+Avg Interval = 2.5h</div>
+        </section>
+
+        <!-- 06 - Graph Analytics & AML -->
+        <section class="lesson-section" id="graph-aml">
+          <p class="eyebrow">06 · PHẦN F - GRAPH ANALYTICS &amp; AML</p>
+          <h2>Graph Analytics &amp; AML</h2>
+          <p>Blockchain có thể biểu diễn dưới dạng đồ thị: <strong>Address = Node</strong>, <strong>Transaction = Edge</strong>. Một giao dịch riêng lẻ có thể không cho thấy điều gì bất thường, nhưng toàn bộ mạng lưới lại có thể tiết lộ những cấu trúc ẩn.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">A → B</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">B → C</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">C → D</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">D → A (Circular Transaction)</span>
+          </div>
+          <div class="inline-warning">Circular Transaction không tự động đồng nghĩa với rửa tiền - Nó chỉ là một tín hiệu cần phân tích thêm.</div>
+          <p>Graph Analytics giúp phát hiện các cấu trúc mà phân tích giao dịch đơn lẻ khó nhìn thấy: <strong>Hub Address</strong> (ví gom tiền), <strong>Transaction Cluster</strong>, <strong>Circular Transactions</strong> (vòng lặp dòng tiền), <strong>Peeling Chains</strong>, <strong>Fund Flow</strong> bất thường.</p>
+
+          <div class="definition"><strong>AML - Anti-Money Laundering</strong> là hệ thống và quy trình nhằm phát hiện, ngăn chặn và báo cáo các hoạt động liên quan đến rửa tiền.</div>
+          <div class="flow-diagram">
+            <span class="flow-box">Transactions</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk Engine</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk Score</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Alert</span>
+          </div>
+          <p>Risk Score được thiết kế dựa trên: Transaction Value, Transaction Frequency, Address History, Counterparty Risk, Transaction Pattern.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Risk Score</th><th>Mức độ</th></tr>
+            <tr><td>0 - 0.3</td><td>LOW</td></tr>
+            <tr><td>0.3 - 0.7</td><td>MEDIUM</td></tr>
+            <tr><td>0.7 - 1.0</td><td>HIGH</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 07 - Smart Contract Security -->
+        <section class="lesson-section" id="smart-contract-security">
+          <p class="eyebrow">07 · PHẦN G - SMART CONTRACT SECURITY</p>
+          <h2>Smart Contract Security</h2>
+          <p>Smart Contract có thể quản lý trực tiếp Money, Token, Collateral, Loan, NFT - Nếu có lỗi, tài sản có thể bị mất hoặc hệ thống hoạt động sai. Một số lỗi phổ biến sinh viên cần biết:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Lỗ hổng</th><th>Mô tả</th></tr>
+            <tr><td>Reentrancy</td><td>Contract gọi External Call, bên nhận gọi ngược lại contract trước khi State được cập nhật xong</td></tr>
+            <tr><td>Access Control</td><td>Người không có quyền vẫn gọi được function quan trọng (ví dụ <code>mint()</code>)</td></tr>
+            <tr><td>Integer/Arithmetic Issues</td><td>Lỗi liên quan đến phép tính số học (overflow, underflow, chia làm tròn)</td></tr>
+            <tr><td>Oracle Manipulation</td><td>Dữ liệu bên ngoài (giá tài sản, ESG Score...) bị thao túng trước khi đưa vào Smart Contract</td></tr>
+            <tr><td>Logic Errors</td><td>Smart Contract chạy đúng code nhưng sai logic nghiệp vụ</td></tr>
+          </table></div>
+          <p>Ví dụ một hàm <code>mint()</code> thiếu kiểm soát quyền - Alice, Bob, Carol và cả Attacker đều có thể gọi được:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper">@external
+def mint(amount: uint256):
+    ...</code></pre></div>
+          <p>Do đó Smart Contract cần cơ chế phân quyền rõ ràng: <code>onlyOwner</code>, <code>onlyAdmin</code>, hoặc role-based access - Đúng như cách <code>GreenLending.vy</code> ở Tuần 5 giới hạn <code>createLoan()</code> cho <code>admin</code> và <code>updateESGScore()</code> cho <code>oracle</code>.</p>
+        </section>
+
+        <!-- 08 - Kien truc DApp -->
+        <section class="lesson-section" id="kien-truc-dapp">
+          <p class="eyebrow">08 · PHẦN H - KIẾN TRÚC DAPP</p>
+          <h2>Kiến trúc DApp</h2>
+          <div class="definition"><strong>DApp - Decentralized Application</strong> là ứng dụng có một phần logic hoặc dữ liệu được triển khai trên Blockchain.</div>
+          <p>Một DApp thông thường:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Frontend</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Web3 Provider</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Smart Contract</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Blockchain</span>
+          </div>
+          <p>Nếu tích hợp AI, kiến trúc có thêm nhánh xử lý Off-chain:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Frontend</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Backend / AI API</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">ML Model</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Blockchain</span>
+          </div>
+          <p>Kiến trúc đề xuất cho <strong>Green Finance DApp</strong> của môn IS355:</p>
+          <div class="ascii-block">┌──────────────────────────────┐
+│           FRONTEND           │
+│        Streamlit / Web       │
+└──────────────┬───────────────┘
+               │
+               ↓
+┌──────────────────────────────┐
+│        WEB3 / API LAYER      │
+└───────┬──────────────┬───────┘
+        │              │
+        ↓              ↓
+┌──────────────┐  ┌─────────────┐
+│  Blockchain  │  │  AI Engine  │
+│ Smart Contract│  │  ML Model   │
+└──────────────┘  └─────────────┘
+        │              │
+        └──────┬───────┘
+               ↓
+        Analytics Dashboard</div>
+          <p>Về mặt Tech Stack, bài thực hành Tuần 6 khuyến nghị:</p>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3>Blockchain &amp; Indexing</h3>
+              <p>Web3.py / Ethers.js, Alchemy hoặc Infura RPC, The Graph (truy vấn GraphQL cho Event Logs)</p>
+            </div>
+            <div class="req-card">
+              <h3>Data Processing &amp; ML</h3>
+              <p>Pandas, Scikit-learn (RandomForestClassifier, IsolationForest), NetworkX / PyTorch Geometric</p>
+            </div>
+            <div class="req-card">
+              <h3>DApp Frontend &amp; Dashboard</h3>
+              <p>Streamlit (khuyên dùng cho prototype nhanh) hoặc Next.js + Wagmi + Recharts</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 09 - Thuc hanh DApp -->
+        <section class="lesson-section" id="thuc-hanh-dapp">
+          <p class="eyebrow">09 · PHẦN I - THỰC HÀNH XÂY DỰNG DAPP</p>
+          <h2>Thực hành: Green Finance Analytics DApp</h2>
+
+          <h3>Bước 1 - Kết nối Blockchain</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python"># app.py
+from web3 import Web3
+
+w3 = Web3(Web3.HTTPProvider("YOUR_RPC_URL"))
+
+if w3.is_connected():
+    print("Connected")</code></pre></div>
+
+          <h3>Bước 2 - Đọc Smart Contract &amp; Event</h3>
+          <p>Cần có Contract Address, ABI và RPC URL, sau đó đọc dữ liệu qua hàm <code>call()</code> hoặc truy vấn Event như ở phần 04 (<code>LoanCreated</code>, <code>LoanRepaid</code>, <code>LoanLiquidated</code>) để xây dựng Loan History.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">contract = w3.eth.contract(address=CONTRACT_ADDRESS, abi=ABI)
+
+loan = contract.functions.getLoan(1).call()
+print(loan)</code></pre></div>
+
+          <h3>Bước 3 - Đánh giá rủi ro vỡ nợ bằng Scikit-learn &amp; hiển thị trên Streamlit</h3>
+          <p>Với dữ liệu mẫu <code>loan_data.csv</code>:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>ESG</th><th>Loan</th><th>Collateral</th><th>Interest</th><th>Default</th></tr>
+            <tr><td>92</td><td>10,000</td><td>18,000</td><td>5</td><td>0</td></tr>
+            <tr><td>85</td><td>8,000</td><td>14,000</td><td>6</td><td>0</td></tr>
+            <tr><td>65</td><td>12,000</td><td>13,000</td><td>9</td><td>1</td></tr>
+            <tr><td>72</td><td>15,000</td><td>18,000</td><td>7</td><td>1</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">import streamlit as st
+from sklearn.ensemble import RandomForestClassifier
+
+# Giả định mô hình đã được huấn luyện trước đó
+# X: [esg_score, collateral_ratio, amount], y: default_status (0: Paid, 1: Default)
+model = RandomForestClassifier()
+
+st.title("🌱 Green Finance Analytics & AI Risk Engine")
+
+# Trực quan hóa chỉ số chính
+col1, col2, col3 = st.columns(3)
+col1.metric("Total Loans Executed", len(df))
+col2.metric("Average ESG Score", f"{df['esg_score'].mean():.1f}")
+col3.metric("Avg Collateral Ratio", f"{df['collateral_ratio'].mean():.1f}%")
+
+# AI Prediction Panel cho khoản vay mới
+st.subheader("🤖 AI Loan Risk Assessor")
+input_esg = st.slider("ESG Score", 0, 100, 75)
+input_collateral_ratio = st.number_input("Collateral Ratio (%)", value=130.0)
+input_amount = st.number_input("Loan Amount (ETH)", value=5.0)
+
+if st.button("Analyze Risk"):
+    # Giả lập dự đoán xác suất vỡ nợ từ Model
+    risk_prob = model.predict_proba([[input_esg, input_collateral_ratio, input_amount]])[0][1]
+
+    if risk_prob > 0.7:
+        st.error(f"🔴 HIGH RISK (Default Probability: {risk_prob*100:.1f}%)")
+    elif risk_prob > 0.3:
+        st.warning(f"🟡 MEDIUM RISK (Default Probability: {risk_prob*100:.1f}%)")
+    else:
+        st.success(f"🟢 LOW RISK (Default Probability: {risk_prob*100:.1f}%)")</code></pre></div>
+          <p>Bố cục Dashboard tối thiểu cho prototype:</p>
+          <div class="ascii-block">GREEN FINANCE ANALYTICS
+────────────────────────────
+
+Total Transactions       1,254
+Total Loans              327
+TVL                      $2.4M
+Average ESG              82.5
+Default Rate             4.1%
+
+────────────────────────────
+
+[Transaction Chart]
+
+[ESG Distribution]
+
+[Risk Distribution]
+
+────────────────────────────
+
+Recent Transactions</div>
+          <div class="inline-warning"><strong>AI không nên ghi trực tiếp toàn bộ Model lên Blockchain</strong> - Chi phí Gas cực cao cho phép toán ma trận/lặp, EVM không hỗ trợ số thực (floating-point) phức tạp. Giải pháp: chạy ML <strong>Off-chain</strong> (Backend/Cloud), chỉ đẩy kết quả dự báo hoặc bằng chứng zkML <strong>On-chain</strong> qua Oracle nếu cần.</div>
+        </section>
+
+        <!-- 10 - Mini Project -->
+        <section class="lesson-section" id="mini-project">
+          <p class="eyebrow">10 · MINI PROJECT</p>
+          <h2>Mini Project: Green Finance Analytics DApp</h2>
+          <p>Sinh viên xây dựng một DApp có tối thiểu bốn thành phần:</p>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3>1. Blockchain</h3>
+              <p>Kết nối Testnet, đọc Smart Contract, đọc Event</p>
+            </div>
+            <div class="req-card">
+              <h3>2. Data</h3>
+              <p>Thu thập Transaction, Loan, ESG, Collateral, Repayment, Liquidation</p>
+            </div>
+            <div class="req-card">
+              <h3>3. AI</h3>
+              <p>Xây dựng ít nhất một mô hình: Default Prediction, Liquidation Prediction, Fraud Detection hoặc Anomaly Detection</p>
+            </div>
+            <div class="req-card">
+              <h3>4. Dashboard</h3>
+              <p>Hiển thị Total Transactions, Total Loan, TVL, Average ESG, Default Rate, Risk Distribution</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 11 - Bai tap nang cao -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">11 · BÀI TẬP NÂNG CAO</p>
+          <h2>Bài tập nâng cao</h2>
+
+          <h3>Bài 1 - Transaction Anomaly Detection</h3>
+          <p>Xây dựng model phát hiện giao dịch bất thường. Input: Transaction Frequency, Transaction Value, Gas, Time, Counterparties. Output: Normal / Suspicious.</p>
+
+          <h3>Bài 2 - Liquidation Prediction</h3>
+          <p>Dựa trên Collateral Ratio, Loan Amount, ESG Score, Interest Rate, Market Volatility, dự báo Probability of Liquidation.</p>
+
+          <h3>Bài 3 - AML Graph</h3>
+          <p>Xây dựng graph với Address = Node, Transaction = Edge. Tìm Node có degree cao, Cluster, Circular Flow, Suspicious Pattern.</p>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy định về bài làm</h3>
+            <p>Tuyệt đối không sao chép hoặc sử dụng bài làm của sinh viên khác để nộp bài. Sinh viên cần nghiêm túc thực hiện bài tập của mình.</p>
+          </div>
+        </section>
+
+        <!-- 12 - Dinh huong do an -->
+        <section class="lesson-section" id="dinh-huong-do-an">
+          <p class="eyebrow">12 · ĐỊNH HƯỚNG ĐỒ ÁN</p>
+          <h2>Định hướng đồ án từ Tuần 6</h2>
+          <p>Tuần 6 nên là điểm chuyển tiếp trực tiếp sang Tuần 7 - Báo cáo đồ án. Sinh viên cần hoàn thiện tối thiểu ba trụ cột Blockchain, AI và DApp hội tụ vào một sản phẩm Green Finance:</p>
+          <ul>
+            <li><strong>Nhóm 1 - Green Lending:</strong> Blockchain-based Green Lending Platform with ESG Credit Scoring (ESG → Credit Score → Loan → Smart Contract)</li>
+            <li><strong>Nhóm 2 - DeFi Risk:</strong> AI-based DeFi Liquidation Risk Prediction (On-chain Data → Feature Engineering → ML → Liquidation Risk)</li>
+            <li><strong>Nhóm 3 - AML:</strong> Blockchain Graph Analytics for Suspicious Transaction Detection (Transactions → Graph → Graph Analytics → Suspicious Address)</li>
+            <li><strong>Nhóm 4 - Green Investment:</strong> AI-powered Green Investment Recommendation System (Investor → Risk Profile → ESG Preference → AI → Green Portfolio)</li>
+            <li><strong>Nhóm 5 - Green Finance DApp:</strong> Decentralized Green Finance Analytics Platform, tích hợp Smart Contract + ESG + Blockchain Analytics + AI + DApp - Hướng tổng hợp nhất, phù hợp nhóm muốn làm đồ án lớn</li>
+          </ul>
+        </section>
+
+        <!-- 13 - Cau hoi thao luan -->
+        <section class="lesson-section" id="thao-luan">
+          <p class="eyebrow">13 · CÂU HỎI THẢO LUẬN</p>
+          <h2>Câu hỏi thảo luận</h2>
+          <ol>
+            <li>Blockchain Analytics khác gì so với phân tích dữ liệu truyền thống?</li>
+            <li>Tại sao Blockchain minh bạch nhưng vẫn khó phát hiện rửa tiền?</li>
+            <li>Có thể xác định danh tính người dùng chỉ dựa vào Blockchain Address không?</li>
+            <li>AI có thể phát hiện chính xác mọi giao dịch gian lận không?</li>
+            <li>Oracle tạo ra những rủi ro gì cho một hệ thống AI on-chain?</li>
+            <li>Tại sao không nên chạy Machine Learning trực tiếp trên Blockchain?</li>
+            <li>Dữ liệu On-chain và Off-chain khác nhau như thế nào?</li>
+            <li>Graph Analytics có ưu điểm gì so với phân tích từng transaction riêng lẻ?</li>
+            <li>Smart Contract có thể tự động quyết định khoản vay dựa trên AI Prediction không?</li>
+            <li>Nếu AI dự đoán sai, ai chịu trách nhiệm trong một hệ thống tài chính phi tập trung?</li>
+          </ol>
+        </section>
+
+        <!-- 14 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">14 · CHECKLIST HOÀN THÀNH TUẦN 6</p>
+          <h2>Tự kiểm tra</h2>
+
+          <h3>Lý thuyết</h3>
+          <ul class="lesson-checklist">
+            <li>Hiểu On-chain Data, Transaction, Block, Smart Contract Event</li>
+            <li>Hiểu khái niệm Blockchain Analytics và pipeline xử lý</li>
+            <li>Hiểu AML, Fraud Detection, Anomaly Detection</li>
+            <li>Hiểu Graph Analytics và các mẫu hình đáng chú ý (Circular Transaction, Hub Address)</li>
+            <li>Hiểu các lỗ hổng Smart Contract phổ biến</li>
+            <li>Hiểu kiến trúc một DApp hoàn chỉnh</li>
+          </ul>
+
+          <h3>Thực hành</h3>
+          <ul class="lesson-checklist">
+            <li>Kết nối Blockchain bằng Web3.py, đọc Block và Transaction</li>
+            <li>Đọc Smart Contract và truy vấn Event (LoanCreated/LoanRepaid/LoanLiquidated)</li>
+            <li>Trích xuất dữ liệu Event thành Pandas DataFrame</li>
+            <li>Huấn luyện một model Random Forest/Isolation Forest cơ bản</li>
+            <li>Xây dựng Dashboard bằng Streamlit hiển thị Risk Score</li>
+          </ul>
+
+          <h3>Nghiên cứu</h3>
+          <ul class="lesson-checklist">
+            <li>Chọn được một hướng: Default/Liquidation Prediction, Fraud Detection, AML hoặc Green Investment Recommendation</li>
+            <li>Xác định được kiến trúc tổng thể cho đồ án cuối kỳ</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần học">
+          <a href="week-5.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 5: Tài chính Phi tập trung (DeFi) &amp; Ngân hàng Xanh</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 7 (sắp mở)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="on-chain-data"><b>○</b> On-chain Data</li>
+            <li data-section="event-logs"><b>○</b> Event Logs</li>
+            <li data-section="blockchain-analytics"><b>○</b> Blockchain Analytics</li>
+            <li data-section="ket-noi-web3py"><b>○</b> Kết nối Web3.py</li>
+            <li data-section="machine-learning"><b>○</b> Machine Learning</li>
+            <li data-section="graph-aml"><b>○</b> Graph Analytics &amp; AML</li>
+            <li data-section="smart-contract-security"><b>○</b> Smart Contract Security</li>
+            <li data-section="kien-truc-dapp"><b>○</b> Kiến trúc DApp</li>
+            <li data-section="thuc-hanh-dapp"><b>○</b> Thực hành DApp</li>
+            <li data-section="mini-project"><b>○</b> Mini Project</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập</li>
+            <li data-section="dinh-huong-do-an"><b>○</b> Định hướng đồ án</li>
+            <li data-section="thao-luan"><b>○</b> Thảo luận</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Tuần 6 là buổi tích hợp - Đến Tuần 7, sinh viên không bắt đầu đồ án mới mà chỉ hoàn thiện, kiểm thử, đánh giá và bảo vệ sản phẩm.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=12"></script>
+</body>
+</html>

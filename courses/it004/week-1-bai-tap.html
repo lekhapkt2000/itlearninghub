@@ -206,7 +206,7 @@ GO
 
 CREATE TABLE PHONGTAP
 (
-    MAPH CHAR(5),
+    MAPH CHAR(5) PRIMARY KEY,
     TENPHONG VARCHAR(50),
     DIACHI VARCHAR(100),
     SUCCHUA INT,
@@ -215,7 +215,7 @@ CREATE TABLE PHONGTAP
 
 CREATE TABLE HUANLUYENVIEN
 (
-    MAHLV CHAR(5),
+    MAHLV CHAR(5) PRIMARY KEY,
     HOTEN VARCHAR(50),
     CHUYENMON VARCHAR(50),
     SDT VARCHAR(15),
@@ -224,7 +224,7 @@ CREATE TABLE HUANLUYENVIEN
 
 CREATE TABLE HOCVIEN
 (
-    MAHV CHAR(5),
+    MAHV CHAR(5) PRIMARY KEY,
     HOTEN VARCHAR(50),
     NGSINH SMALLDATETIME,
     SDT VARCHAR(15),
@@ -235,7 +235,7 @@ CREATE TABLE HOCVIEN
 
 CREATE TABLE LOPTAP
 (
-    MALOP CHAR(5),
+    MALOP CHAR(5) PRIMARY KEY,
     MAPH CHAR(5),
     MAHLV CHAR(5),
     TENLOP VARCHAR(50),
@@ -248,7 +248,9 @@ CREATE TABLE DANGKY
 (
     MAHV CHAR(5),
     MALOP CHAR(5),
-    NGAYDK SMALLDATETIME
+    NGAYDK SMALLDATETIME,
+
+    PRIMARY KEY (MAHV, MALOP)
 );
 
 CREATE TABLE LICHTAP
@@ -256,25 +258,20 @@ CREATE TABLE LICHTAP
     MALOP CHAR(5),
     NGAYTAP SMALLDATETIME,
     GIOBATDAU TIME,
-    GIOKETTHUC TIME
+    GIOKETTHUC TIME,
+
+    PRIMARY KEY (MALOP, NGAYTAP)
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CREATE DATABASE</code> tạo 1 CSDL rỗng, sau đó phải <code>USE</code> để chuyển ngữ cảnh làm việc sang CSDL đó trước khi tạo bảng. 6 câu lệnh <code>CREATE TABLE</code> tương ứng với 6 quan hệ trong lược đồ.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Tách "tạo cấu trúc" và "tạo ràng buộc" thành 2 bước riêng (Câu 1 và Câu 2) giúp dễ kiểm soát - nếu đặt sai khóa ngoại, chỉ cần sửa lại <code>ALTER TABLE</code> ở Câu 2 mà không phải xóa và tạo lại toàn bộ bảng.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CREATE DATABASE</code> tạo 1 CSDL rỗng, sau đó phải <code>USE</code> để chuyển ngữ cảnh làm việc sang CSDL đó trước khi tạo bảng. Khóa chính được khai báo ngay lúc tạo bảng: khóa đơn dùng <code>PRIMARY KEY</code> ngay sau cột, khóa phức hợp (<code>DANGKY</code>, <code>LICHTAP</code>) dùng dòng <code>PRIMARY KEY (...)</code> riêng ở cuối.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khóa chính là ràng buộc nội tại của chính bảng đó nên khai báo ngay khi tạo bảng là hợp lý nhất. Khóa ngoại thì khác - nó tham chiếu sang bảng khác, nên phải đợi bảng được tham chiếu tồn tại trước, do đó để dành sang Câu 2.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 2 (YC1) · PRIMARY KEY &amp; FOREIGN KEY</p>
+              <p class="eyebrow">CÂU 2 (YC1) · FOREIGN KEY</p>
               <p><strong>Đề bài:</strong> Tạo khóa chính, khóa ngoại cho các quan hệ trên.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE PHONGTAP ADD CONSTRAINT PK_PHONGTAP PRIMARY KEY (MAPH);
-ALTER TABLE HUANLUYENVIEN ADD CONSTRAINT PK_HUANLUYENVIEN PRIMARY KEY (MAHLV);
-ALTER TABLE HOCVIEN ADD CONSTRAINT PK_HOCVIEN PRIMARY KEY (MAHV);
-ALTER TABLE LOPTAP ADD CONSTRAINT PK_LOPTAP PRIMARY KEY (MALOP);
-ALTER TABLE DANGKY ADD CONSTRAINT PK_DANGKY PRIMARY KEY (MAHV, MALOP);
-ALTER TABLE LICHTAP ADD CONSTRAINT PK_LICHTAP PRIMARY KEY (MALOP, NGAYTAP);
-
-ALTER TABLE LOPTAP ADD CONSTRAINT FK_LOPTAP_PHONGTAP
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE LOPTAP ADD CONSTRAINT FK_LOPTAP_PHONGTAP
     FOREIGN KEY (MAPH) REFERENCES PHONGTAP(MAPH);
 ALTER TABLE LOPTAP ADD CONSTRAINT FK_LOPTAP_HLV
     FOREIGN KEY (MAHLV) REFERENCES HUANLUYENVIEN(MAHLV);
@@ -285,8 +282,8 @@ ALTER TABLE DANGKY ADD CONSTRAINT FK_DANGKY_LOPTAP
 ALTER TABLE LICHTAP ADD CONSTRAINT FK_LICHTAP_LOPTAP
     FOREIGN KEY (MALOP) REFERENCES LOPTAP(MALOP);</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>DANGKY</code> và <code>LICHTAP</code> có khóa chính gồm nhiều cột (khóa phức hợp) vì từng cột riêng lẻ không đủ định danh duy nhất 1 dòng - ví dụ 1 học viên đăng ký nhiều lớp, nên phải gộp <code>(MAHV, MALOP)</code> mới ra 1 lượt đăng ký duy nhất.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Thứ tự quan trọng: <code>LOPTAP</code> phải có khóa chính trước khi <code>DANGKY</code>/<code>LICHTAP</code> tham chiếu tới nó, nên các lệnh tạo <code>PRIMARY KEY</code> luôn phải chạy trước các lệnh tạo <code>FOREIGN KEY</code> liên quan.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Khóa chính đã được tạo sẵn ở Câu 1, nên Câu 2 chỉ còn thêm khóa ngoại bằng <code>ALTER TABLE ... ADD CONSTRAINT ... FOREIGN KEY (...) REFERENCES ...(...)</code> cho từng cặp bảng có liên kết.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>LOPTAP</code> phải đã tồn tại (với khóa chính <code>MAPH</code> ở <code>PHONGTAP</code>, <code>MAHLV</code> ở <code>HUANLUYENVIEN</code>) trước khi tạo được khóa ngoại trỏ tới nó - đây chính là lý do khóa ngoại luôn phải đợi đến sau khi các bảng liên quan đã hình thành xong.</p></div>
               </div>
             </div>
 

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="IT004 - Lược đồ cơ sở dữ liệu Quản lý bán hàng dùng chung cho BTTH2, BTTH3, BTTH4 và BTTH5: các quan hệ, thuộc tính và dữ liệu mẫu.">
+  <title>Lược đồ Quản lý bán hàng - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=39">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IT004</a><span>/</span>Lược đồ Quản lý bán hàng</p>
+
+    <div class="week-header">
+      <span class="week-tag">LƯỢC ĐỒ DÙNG CHUNG · IT004</span>
+      <h1>Cơ sở dữ liệu Quản lý bán hàng</h1>
+      <div class="week-meta"><span>5 quan hệ</span><span>BTTH2 · BTTH3 · BTTH4 · BTTH5</span></div>
+      <p style="max-width:720px;color:var(--muted);font-size:13px;margin-top:10px">Lược đồ này được dùng chung cho nhiều bài tập thực hành từ Tuần 2 đến Tuần 5. Đọc kỹ phần tân từ và bảng thuộc tính trước khi làm bài - nắm đúng ý nghĩa dữ liệu giúp viết truy vấn chính xác hơn nhiều so với chỉ nhớ tên cột.</p>
+    </div>
+
+    <div class="lesson-content" style="max-width:1000px;margin:0 auto">
+
+      <section class="lesson-section" style="padding-top:0;border-top:0" id="tong-quan">
+        <p class="eyebrow">TỔNG QUAN</p>
+        <h2>Bài toán quản lý bán hàng</h2>
+        <div class="definition">Cửa hàng cần quản lý <strong>khách hàng thành viên</strong>, <strong>nhân viên bán hàng</strong>, <strong>sản phẩm</strong> và các <strong>hóa đơn bán hàng</strong> kèm chi tiết từng hóa đơn.</div>
+        <p>Cơ sở dữ liệu gồm 5 quan hệ:</p>
+        <div class="ascii-block">KHACHHANG   - Khách hàng thành viên
+NHANVIEN    - Nhân viên bán hàng
+SANPHAM     - Sản phẩm đang kinh doanh
+HOADON      - Hóa đơn bán hàng
+CTHD        - Chi tiết hóa đơn (sản phẩm nào, số lượng bao nhiêu)</div>
+
+        <h3>Quan hệ giữa các bảng</h3>
+        <p class="er-relation">KHACHHANG (1) → HOADON (N): một khách hàng thành viên có thể có nhiều hóa đơn.</p>
+        <p class="er-relation">NHANVIEN (1) → HOADON (N): một nhân viên bán nhiều hóa đơn.</p>
+        <p class="er-relation">HOADON (1) → CTHD (N): một hóa đơn có nhiều dòng chi tiết.</p>
+        <p class="er-relation">SANPHAM (1) → CTHD (N): một sản phẩm xuất hiện trong nhiều dòng chi tiết, ở nhiều hóa đơn khác nhau.</p>
+        <div class="inline-warning"><strong>Lưu ý dễ nhầm:</strong> <code>HOADON.MAKH</code> có thể để trống (<code>NULL</code>) - không phải khách mua hàng nào cũng là khách hàng thành viên. Xem hóa đơn <code>1022</code> và <code>1023</code> trong dữ liệu mẫu, cả hai đều không gắn <code>MAKH</code>.</div>
+      </section>
+
+      <section class="lesson-section" id="khachhang">
+        <p class="eyebrow">QUAN HỆ 1 · KHACHHANG</p>
+        <h2>KHACHHANG</h2>
+        <div class="definition">Lưu thông tin khách hàng <strong>thành viên</strong>: mã khách hàng, họ tên, địa chỉ, số điện thoại, ngày sinh, ngày đăng ký thành viên và <strong>doanh số</strong> (tổng trị giá các hóa đơn mà khách hàng thành viên này đã mua).</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAKH</code></td><td><code>char(4)</code></td><td>Mã khách hàng - khóa chính</td></tr>
+          <tr><td><code>HOTEN</code></td><td><code>varchar(40)</code></td><td>Họ tên</td></tr>
+          <tr><td><code>DCHI</code></td><td><code>varchar(50)</code></td><td>Địa chỉ</td></tr>
+          <tr><td><code>SODT</code></td><td><code>varchar(20)</code></td><td>Số điện thoại</td></tr>
+          <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Ngày sinh</td></tr>
+          <tr><td><code>NGDK</code></td><td><code>smalldatetime</code></td><td>Ngày đăng ký thành viên</td></tr>
+          <tr><td><code>DOANHSO</code></td><td><code>money</code></td><td>Tổng trị giá các hóa đơn đã mua</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (trích)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>MAKH</th><th>HOTEN</th><th>NGSINH</th><th>DOANHSO</th><th>NGDK</th></tr>
+          <tr><td>KH01</td><td>Nguyen Van A</td><td>22/10/1960</td><td>13.060.000</td><td>22/07/2006</td></tr>
+          <tr><td>KH02</td><td>Tran Ngoc Han</td><td>03/04/1974</td><td>280.000</td><td>30/07/2006</td></tr>
+          <tr><td>KH03</td><td>Tran Ngoc Linh</td><td>12/06/1980</td><td>3.860.000</td><td>08/05/2006</td></tr>
+        </table></div>
+        <p style="color:var(--muted);font-size:11px">Đầy đủ 10 khách hàng (KH01 → KH10) trong file script SQL bên dưới.</p>
+      </section>
+
+      <section class="lesson-section" id="nhanvien">
+        <p class="eyebrow">QUAN HỆ 2 · NHANVIEN</p>
+        <h2>NHANVIEN</h2>
+        <div class="definition">Mỗi nhân viên bán hàng được ghi nhận: mã nhân viên, họ tên, ngày vào làm và số điện thoại liên lạc.</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MANV</code></td><td><code>char(4)</code></td><td>Mã nhân viên - khóa chính</td></tr>
+          <tr><td><code>HOTEN</code></td><td><code>varchar(40)</code></td><td>Họ tên</td></tr>
+          <tr><td><code>SODT</code></td><td><code>varchar(20)</code></td><td>Số điện thoại</td></tr>
+          <tr><td><code>NGVL</code></td><td><code>smalldatetime</code></td><td>Ngày vào làm</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ - chỉ có 5 nhân viên)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>MANV</th><th>HOTEN</th><th>SODT</th><th>NGVL</th></tr>
+          <tr><td>NV01</td><td>Nguyen Nhu Nhut</td><td>0927345678</td><td>13/04/2006</td></tr>
+          <tr><td>NV02</td><td>Le Thi Phi Yen</td><td>0987567390</td><td>21/04/2006</td></tr>
+          <tr><td>NV03</td><td>Nguyen Van B</td><td>0997047382</td><td>27/04/2006</td></tr>
+          <tr><td>NV04</td><td>Ngo Thanh Tuan</td><td>0913758498</td><td>24/06/2006</td></tr>
+          <tr><td>NV05</td><td>Nguyen Thi Truc Thanh</td><td>0918590387</td><td>20/07/2006</td></tr>
+        </table></div>
+      </section>
+
+      <section class="lesson-section" id="sanpham">
+        <p class="eyebrow">QUAN HỆ 3 · SANPHAM</p>
+        <h2>SANPHAM</h2>
+        <div class="definition">Mỗi sản phẩm có mã số, tên gọi, đơn vị tính, nước sản xuất và giá bán.</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MASP</code></td><td><code>char(4)</code></td><td>Mã sản phẩm - khóa chính</td></tr>
+          <tr><td><code>TENSP</code></td><td><code>varchar(40)</code></td><td>Tên sản phẩm</td></tr>
+          <tr><td><code>DVT</code></td><td><code>varchar(20)</code></td><td>Đơn vị tính (cây, hộp, quyển, cái...)</td></tr>
+          <tr><td><code>NUOCSX</code></td><td><code>varchar(40)</code></td><td>Nước sản xuất</td></tr>
+          <tr><td><code>GIA</code></td><td><code>money</code></td><td>Giá bán</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (trích - đầy đủ 24 sản phẩm trong file SQL)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>MASP</th><th>TENSP</th><th>DVT</th><th>NUOCSX</th><th>GIA</th></tr>
+          <tr><td>BC01</td><td>But chi</td><td>cay</td><td>Singapore</td><td>3.000</td></tr>
+          <tr><td>BB03</td><td>But bi</td><td>hop</td><td>Thai Lan</td><td>100.000</td></tr>
+          <tr><td>TV02</td><td>Tap 200 giay mong</td><td>quyen</td><td>Trung Quoc</td><td>4.500</td></tr>
+          <tr><td>ST01</td><td>So tay 500 trang</td><td>quyen</td><td>Trung Quoc</td><td>40.000</td></tr>
+        </table></div>
+      </section>
+
+      <section class="lesson-section" id="hoadon">
+        <p class="eyebrow">QUAN HỆ 4 · HOADON</p>
+        <h2>HOADON</h2>
+        <div class="definition">Khi mua hàng, khách nhận một hóa đơn: số hóa đơn, ngày mua, nhân viên bán, trị giá hóa đơn và mã khách hàng (nếu người mua là khách hàng thành viên).</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>SOHD</code></td><td><code>int</code></td><td>Số hóa đơn - khóa chính</td></tr>
+          <tr><td><code>NGHD</code></td><td><code>smalldatetime</code></td><td>Ngày lập hóa đơn</td></tr>
+          <tr><td><code>MAKH</code></td><td><code>char(4)</code></td><td>Khách hàng nào mua - khóa ngoại đến KHACHHANG, <strong>có thể NULL</strong></td></tr>
+          <tr><td><code>MANV</code></td><td><code>char(4)</code></td><td>Nhân viên nào bán - khóa ngoại đến NHANVIEN</td></tr>
+          <tr><td><code>TRIGIA</code></td><td><code>money</code></td><td>Trị giá hóa đơn</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (trích)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>SOHD</th><th>NGHD</th><th>MAKH</th><th>MANV</th><th>TRIGIA</th></tr>
+          <tr><td>1001</td><td>23/07/2006</td><td>KH01</td><td>NV01</td><td>320.000</td></tr>
+          <tr><td>1010</td><td>01/11/2006</td><td>KH01</td><td>NV01</td><td>5.200.000</td></tr>
+          <tr><td>1022</td><td>16/01/2007</td><td><em>NULL</em></td><td>NV03</td><td>7.000</td></tr>
+          <tr><td>1023</td><td>17/01/2007</td><td><em>NULL</em></td><td>NV01</td><td>330.000</td></tr>
+        </table></div>
+        <p style="color:var(--muted);font-size:11px">Đầy đủ 23 hóa đơn (1001 → 1023) trong file script SQL bên dưới.</p>
+      </section>
+
+      <section class="lesson-section" id="cthd">
+        <p class="eyebrow">QUAN HỆ 5 · CTHD</p>
+        <h2>CTHD (Chi tiết hóa đơn)</h2>
+        <div class="definition">Diễn giải chi tiết trong mỗi hóa đơn: hóa đơn đó gồm những sản phẩm nào, với số lượng bao nhiêu. Khóa chính là cặp <code>(SOHD, MASP)</code> - vì trong 1 hóa đơn, 1 sản phẩm chỉ xuất hiện tối đa 1 dòng.</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>SOHD</code></td><td><code>int</code></td><td>Số hóa đơn - khóa chính, khóa ngoại đến HOADON</td></tr>
+          <tr><td><code>MASP</code></td><td><code>char(4)</code></td><td>Mã sản phẩm - khóa chính, khóa ngoại đến SANPHAM</td></tr>
+          <tr><td><code>SL</code></td><td><code>int</code></td><td>Số lượng mua</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (trích - hóa đơn 1001)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>SOHD</th><th>MASP</th><th>SL</th></tr>
+          <tr><td>1001</td><td>TV02</td><td>10</td></tr>
+          <tr><td>1001</td><td>ST01</td><td>5</td></tr>
+          <tr><td>1001</td><td>BC01</td><td>5</td></tr>
+          <tr><td>1001</td><td>BC02</td><td>10</td></tr>
+          <tr><td>1001</td><td>ST08</td><td>10</td></tr>
+        </table></div>
+      </section>
+
+      <section class="lesson-section" id="script">
+        <p class="eyebrow">SCRIPT ĐẦY ĐỦ</p>
+        <h2>Tạo CSDL và nạp dữ liệu mẫu</h2>
+        <p>Script tạo database <code>QLBH_2025</code>, tạo 5 bảng kèm khóa chính/khóa ngoại, và nạp toàn bộ dữ liệu mẫu (10 khách hàng, 5 nhân viên, 24 sản phẩm, 23 hóa đơn, 47 dòng chi tiết). Chạy trực tiếp trong SSMS trước khi bắt đầu làm bài.</p>
+        <div class="download-card">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
+          <div class="download-card-body">
+            <strong>Script CSDL Quản lý bán hàng (QLBH_2025)</strong>
+            <span>File .sql · tạo bảng, ràng buộc và dữ liệu mẫu đầy đủ</span>
+          </div>
+          <a class="dark-button" href="../../assets/file/luoc-do-quan-ly-ban-hang.sql" download>Tải file <span>↓</span></a>
+        </div>
+        <div class="inline-ok"><strong>Áp dụng cho:</strong> BTTH2 (Tuần 2), BTTH3 (Tuần 3), một phần BTTH4 (Tuần 4) và các ví dụ Trigger ở BTTH5 (Tuần 5) đều dùng chung lược đồ này - chỉ cần chạy script 1 lần.</div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=12"></script>
+</body>
+</html>

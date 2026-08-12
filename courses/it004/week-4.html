@@ -78,7 +78,7 @@
         <section class="lesson-section" id="cast">
           <p class="eyebrow">02 · HÀM CAST()</p>
           <h2>CAST()</h2>
-          <div class="definition"><code>CAST()</code> dùng để <strong>chuyển đổi một giá trị từ kiểu dữ liệu này sang kiểu dữ liệu khác</strong> (ví dụ: VARCHAR -> INT, DATETIME -> DATE, DECIMAL -> INT, VARCHAR -> DATE).</div>
+          <div class="definition"><code>CAST()</code> dùng để <strong>chuyển đổi một giá trị từ kiểu dữ liệu này sang kiểu dữ liệu khác</strong> (ví dụ: VARCHAR ➜ INT, DATETIME ➜ DATE, DECIMAL ➜ INT, VARCHAR ➜ DATE).</div>
 
           <h3>Cú pháp</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CAST(expression AS target_data_type)</code></pre></div>
@@ -129,7 +129,7 @@ FROM NhanVien;</code></pre></div>
           <h3>Kết hợp GETDATE() và CAST()</h3>
           <p>Nếu chỉ cần <strong>ngày hiện tại</strong>, không cần giờ:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST(GETDATE() AS DATE) AS NgayHienTai;</code></pre></div>
-          <div class="ascii-block">GETDATE() -> Ngày + giờ -> CAST(... AS DATE) -> Chỉ còn ngày</div>
+          <div class="ascii-block">GETDATE() ➜ Ngày + giờ ➜ CAST(... AS DATE) ➜ Chỉ còn ngày</div>
 
           <h3>Ví dụ tính tuổi</h3>
           <p>Giả sử <code>NgaySinh = '2000-08-15'</code>. Lấy ngày hiện tại bằng <code>SELECT GETDATE() AS HomNay;</code></p>
@@ -167,7 +167,7 @@ FROM SinhVien;</code></pre></div>
             <tr><td><code>RIGHT()</code></td><td>Bên phải</td><td><code>RIGHT('abcdef',3)</code></td><td><code>def</code></td></tr>
           </table></div>
           <div class="ascii-block">LEFT  ← ← ←
-RIGHT -> -> -></div>
+RIGHT ➜ ➜ ➜</div>
         </section>
 
         <!-- 05 - CASE -->
@@ -193,7 +193,7 @@ END</code></pre></div>
 FROM NhanVien;</code></pre></div>
 
           <h3>Ví dụ phân loại khách hàng</h3>
-          <p>Phân loại theo <code>TongChiTieu</code>: ≥ 10.000.000 -> VIP, ≥ 5.000.000 -> Thân thiết, còn lại -> Thường.</p>
+          <p>Phân loại theo <code>TongChiTieu</code>: ≥ 10.000.000 ➜ VIP, ≥ 5.000.000 ➜ Thân thiết, còn lại ➜ Thường.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     MaKH,
     HoTen,
@@ -211,7 +211,7 @@ FROM KhachHang;</code></pre></div>
     WHEN TongChiTieu >= 10000000 THEN N'VIP'
     ELSE N'Thường'
 END</code></pre></div>
-          <div class="inline-warning">Vì <code>15.000.000 &gt;= 5.000.000</code> đã đúng ngay ở điều kiện đầu tiên, nên <code>15.000.000</code> sẽ bị phân loại "Thân thiết" thay vì "VIP". <strong>Quy tắc:</strong> Điều kiện cụ thể/cao hơn nên đặt trước điều kiện rộng hơn (<code>&gt;=10M</code> -> <code>&gt;=5M</code> -> còn lại).</div>
+          <div class="inline-warning">Vì <code>15.000.000 &gt;= 5.000.000</code> đã đúng ngay ở điều kiện đầu tiên, nên <code>15.000.000</code> sẽ bị phân loại "Thân thiết" thay vì "VIP". <strong>Quy tắc:</strong> Điều kiện cụ thể/cao hơn nên đặt trước điều kiện rộng hơn (<code>&gt;=10M</code> ➜ <code>&gt;=5M</code> ➜ còn lại).</div>
 
           <h3>CASE dạng so sánh giá trị</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE expression
@@ -301,7 +301,7 @@ FROM
 ) AS Alias1
 WHERE ...;</code></pre></div>
           <p>SQL tạo ra một <strong>bảng kết quả tạm thời</strong> từ subquery, sau đó truy vấn bên ngoài sử dụng bảng đó:</p>
-          <div class="ascii-block">Bảng gốc -> Subquery -> Bảng kết quả tạm thời -> Alias -> Query bên ngoài</div>
+          <div class="ascii-block">Bảng gốc ➜ Subquery ➜ Bảng kết quả tạm thời ➜ Alias ➜ Query bên ngoài</div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM
 (
@@ -344,7 +344,7 @@ FROM SanPham SP;</code></pre></div>
 
           <h3>Correlated Subquery</h3>
           <p>Trong ví dụ trên, <code>WHERE CTHD.MaSP = SP.MaSP</code> tham chiếu đến <code>SP.MaSP</code> của truy vấn bên ngoài - Đây là <strong>correlated subquery (truy vấn con tương quan)</strong>: subquery được tính lại <strong>riêng cho từng dòng</strong> của truy vấn ngoài.</p>
-          <div class="ascii-block">Query ngoài -> SP.MaSP -> Subquery -> tính riêng cho từng SP</div>
+          <div class="ascii-block">Query ngoài ➜ SP.MaSP ➜ Subquery ➜ tính riêng cho từng SP</div>
 
           <h4>So sánh với subquery thường</h4>
           <p>Subquery thường chạy <strong>độc lập</strong>, không phụ thuộc dòng ngoài:</p>
@@ -416,15 +416,15 @@ FROM SinhVien SV;</code></pre></div>
             <tr><td>Truy vấn con trong SELECT</td><td>Scalar / Correlated Subquery</td></tr>
           </table></div>
 
-          <div class="ascii-block">CAST()      -> Chuyển kiểu dữ liệu
-GETDATE()   -> Ngày + giờ hiện tại
-LEFT(x, n)  -> n ký tự bên trái
-RIGHT(x, n) -> n ký tự bên phải
-CASE ... END -> Điều kiện / phân loại
-Alias       -> Tên tạm cho bảng / cột
-Subquery    -> Truy vấn bên trong truy vấn
-FROM (SELECT ...) AS T   -> Derived Table
-SELECT (SELECT ...) AS X -> Cột tính toán bằng Subquery</div>
+          <div class="ascii-block">CAST()      ➜ Chuyển kiểu dữ liệu
+GETDATE()   ➜ Ngày + giờ hiện tại
+LEFT(x, n)  ➜ n ký tự bên trái
+RIGHT(x, n) ➜ n ký tự bên phải
+CASE ... END ➜ Điều kiện / phân loại
+Alias       ➜ Tên tạm cho bảng / cột
+Subquery    ➜ Truy vấn bên trong truy vấn
+FROM (SELECT ...) AS T   ➜ Derived Table
+SELECT (SELECT ...) AS X ➜ Cột tính toán bằng Subquery</div>
 
           <h3>Bốn tuần đầu của IT004</h3>
           <p>Tuần 1: tạo &amp; thao tác dữ liệu. Tuần 2: truy vấn &amp; kết hợp dữ liệu. Tuần 3: truy vấn nâng cao ("tất cả" / nhóm / TOP). Tuần 4: <strong>biến đổi &amp; tính toán</strong> trên dữ liệu bằng CAST, CASE và Subquery.</p>
@@ -462,7 +462,7 @@ SELECT (SELECT ...) AS X -> Cột tính toán bằng Subquery</div>
 
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">03</span></div>
-              <p>Phân loại sinh viên theo điểm: ≥8.5 -> Xuất sắc, ≥7.0 -> Tốt, ≥5.0 -> Đạt, &lt;5.0 -> Không đạt.</p>
+              <p>Phân loại sinh viên theo điểm: ≥8.5 ➜ Xuất sắc, ≥7.0 ➜ Tốt, ≥5.0 ➜ Đạt, &lt;5.0 ➜ Không đạt.</p>
               <details><summary>Gợi ý</summary><div class="ascii-block">CASE</div></details>
             </article>
 
@@ -474,7 +474,7 @@ SELECT (SELECT ...) AS X -> Cột tính toán bằng Subquery</div>
 
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">★</span></div>
-              <p>Hiển thị mỗi sinh viên, số học phần đã đăng ký và phân loại: ≥20 -> Đăng ký nhiều, 15-19 -> Bình thường, &lt;15 -> Đăng ký ít.</p>
+              <p>Hiển thị mỗi sinh viên, số học phần đã đăng ký và phân loại: ≥20 ➜ Đăng ký nhiều, 15-19 ➜ Bình thường, &lt;15 ➜ Đăng ký ít.</p>
               <details><summary>Gợi ý</summary><div class="ascii-block">CASE + Correlated Subquery</div></details>
             </article>
           </div>

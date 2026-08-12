@@ -146,18 +146,18 @@
           <div class="definition">Khi tạo một bảng, mỗi cột phải được xác định <strong>kiểu dữ liệu</strong> - Quy định loại giá trị cột có thể lưu (số, chữ, ngày...) và dung lượng lưu trữ. Chọn đúng kiểu dữ liệu giúp dữ liệu chính xác, tiết kiệm dung lượng và các phép xử lý sau này hoạt động đúng.</div>
           <div class="ascii-block">SinhVien
 
-MaSV       -> INT
-HoTen      -> NVARCHAR(50)
-NgaySinh   -> DATE
-DiemTB     -> DECIMAL(4,2)
-DaTotNghiep -> BIT</div>
+MaSV       ➜ INT
+HoTen      ➜ NVARCHAR(50)
+NgaySinh   ➜ DATE
+DiemTB     ➜ DECIMAL(4,2)
+DaTotNghiep ➜ BIT</div>
 
           <h3>Kiểu số nguyên</h3>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Kiểu</th><th>Dung lượng</th><th>Phạm vi giá trị</th></tr>
-            <tr><td><code>TINYINT</code></td><td>1 byte</td><td>0 -> 255</td></tr>
-            <tr><td><code>SMALLINT</code></td><td>2 byte</td><td>-32.768 -> 32.767</td></tr>
-            <tr><td><code>INT</code></td><td>4 byte</td><td>≈ -2,1 tỷ -> 2,1 tỷ</td></tr>
+            <tr><td><code>TINYINT</code></td><td>1 byte</td><td>0 ➜ 255</td></tr>
+            <tr><td><code>SMALLINT</code></td><td>2 byte</td><td>-32.768 ➜ 32.767</td></tr>
+            <tr><td><code>INT</code></td><td>4 byte</td><td>≈ -2,1 tỷ ➜ 2,1 tỷ</td></tr>
             <tr><td><code>BIGINT</code></td><td>8 byte</td><td>Phạm vi rất lớn</td></tr>
           </table></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">MaSV INT
@@ -341,8 +341,8 @@ VALUES (1, NULL, '2004-05-20');</code></pre></div>
     MaSV INT PRIMARY KEY,
     Email NVARCHAR(100) UNIQUE
 );</code></pre></div>
-          <div class="ascii-block">SV001 -> kha@uit.edu.vn
-SV002 -> kha@uit.edu.vn   ✗ trùng</div>
+          <div class="ascii-block">SV001 ➜ kha@uit.edu.vn
+SV002 ➜ kha@uit.edu.vn   ✗ trùng</div>
 
           <h3>FOREIGN KEY</h3>
           <p><code>FOREIGN KEY</code> dùng để tạo <strong>mối liên hệ giữa các bảng</strong>. Ví dụ có hai bảng:</p>
@@ -436,10 +436,10 @@ VALUES (101, N'Nguyễn Văn An');</code></pre></div>
           <h2>Data Manipulation Language</h2>
           <div class="definition"><strong>DML (Data Manipulation Language)</strong> là nhóm lệnh dùng để thao tác với dữ liệu trong Table.</div>
           <p>Trong Tuần 1, sinh viên làm quen với:</p>
-          <div class="ascii-block">INSERT      -> Thêm dữ liệu
-DELETE      -> Xóa dữ liệu
-UPDATE      -> Cập nhật dữ liệu
-SELECT INTO -> Sao chép dữ liệu</div>
+          <div class="ascii-block">INSERT      ➜ Thêm dữ liệu
+DELETE      ➜ Xóa dữ liệu
+UPDATE      ➜ Cập nhật dữ liệu
+SELECT INTO ➜ Sao chép dữ liệu</div>
 
           <h3>INSERT - Thêm dữ liệu</h3>
           <p><strong>Cách 1:</strong> Không chỉ định tên cột</p>
@@ -478,7 +478,7 @@ WHERE &lt;Điều kiện&gt;;</code></pre></div>
 WHERE MaSV = 101;</code></pre></div>
           <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cực kỳ quan trọng:</strong> Nếu không có <code>WHERE</code> -
             <br><code>DELETE FROM SinhVien;</code>
-            <br>-> <strong>tất cả các dòng trong bảng sẽ bị xóa.</strong>
+            <br>➜ <strong>tất cả các dòng trong bảng sẽ bị xóa.</strong>
           </div>
 
           <h3>UPDATE - Cập nhật dữ liệu</h3>
@@ -603,13 +603,13 @@ WHERE MaSV = 103;</code></pre></div>
           <p>Thử nhập dữ liệu <strong>sai</strong> để quan sát SQL Server báo lỗi:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (101, N'Sinh viên trùng mã', '2004-01-01', 1);</code></pre></div>
-          <p>-> Vi phạm <code>PRIMARY KEY</code>.</p>
+          <p>➜ Vi phạm <code>PRIMARY KEY</code>.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (104, N'Sinh viên không có lớp', '2004-01-01', 999);</code></pre></div>
-          <p>-> Vi phạm <code>FOREIGN KEY</code>.</p>
+          <p>➜ Vi phạm <code>FOREIGN KEY</code>.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (105, N'Sinh viên lỗi ngày', '1800-01-01', 1);</code></pre></div>
-          <p>-> Vi phạm <code>CHECK</code>.</p>
+          <p>➜ Vi phạm <code>CHECK</code>.</p>
         </section>
 
         <!-- 09 - Checklist -->

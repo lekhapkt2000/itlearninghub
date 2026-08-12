@@ -40,7 +40,7 @@
 
       <section class="lesson-section" style="padding-top:0;border-top:0" id="de-bai">
         <p class="eyebrow">ĐỀ BÀI · PHẦN III - NGÔN NGỮ TRUY VẤN DỮ LIỆU</p>
-        <h2>Quản lý bán hàng - Câu 1 -> 25</h2>
+        <h2>Quản lý bán hàng - Câu 1 ➜ 25</h2>
         <p>Sử dụng các câu lệnh SQL trong SQL Server Management Studio để thực hiện 25 câu truy vấn dưới đây trên lược đồ <strong>Quản lý bán hàng</strong>. Tự làm trước khi xem đáp án.</p>
 
         <div class="inline-warning"><strong>Yêu cầu nộp bài:</strong> Lưu bài làm trong 1 file script tên <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH2.sql</code> (MSSV là mã số sinh viên, HoVaTen là họ và tên).</div>
@@ -107,7 +107,7 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 2.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án cho Câu 1 -> 23. Câu 24 và Câu 25 sẽ được bổ sung sau. Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - nút Copy ở đây chỉ mang tính hình thức thôi.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án cho Câu 1 ➜ 23. Câu 24 và Câu 25 sẽ được bổ sung sau. Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - nút Copy ở đây chỉ mang tính hình thức thôi.</p>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 1 · WHERE</p>
@@ -243,7 +243,7 @@ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
                 JOIN KHACHHANG kh ON kh.MAKH = hd.MAKH
 WHERE HOTEN = 'Nguyen Van A' AND YEAR(NGHD) = 2006 AND MONTH(NGHD) = 10;</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Nối liên tiếp 4 bảng (<code>SANPHAM -> CTHD -> HOADON -> KHACHHANG</code>) theo đúng chuỗi khóa ngoại để đi từ "tên khách hàng" tới "sản phẩm đã mua".</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Nối liên tiếp 4 bảng (<code>SANPHAM ➜ CTHD ➜ HOADON ➜ KHACHHANG</code>) theo đúng chuỗi khóa ngoại để đi từ "tên khách hàng" tới "sản phẩm đã mua".</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Không có khóa ngoại trực tiếp giữa <code>KHACHHANG</code> và <code>SANPHAM</code> - phải đi qua <code>HOADON</code> và <code>CTHD</code> (bảng trung gian) mới liên kết được 2 bảng cách nhau 2 lớp quan hệ.</p></div>
               </div>
               <details><summary>Cách khác (subquery lồng)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP

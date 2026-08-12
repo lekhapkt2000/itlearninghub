@@ -94,10 +94,10 @@
         </div>
 
         <h3>Diễn giải quan hệ</h3>
-        <p class="er-relation">KHACHHANG (1) -> HOADON (N): một khách hàng thành viên có thể có nhiều hóa đơn.</p>
-        <p class="er-relation">NHANVIEN (1) -> HOADON (N): một nhân viên bán nhiều hóa đơn.</p>
-        <p class="er-relation">HOADON (1) -> CTHD (N): một hóa đơn có nhiều dòng chi tiết.</p>
-        <p class="er-relation">SANPHAM (1) -> CTHD (N): một sản phẩm xuất hiện trong nhiều dòng chi tiết, ở nhiều hóa đơn khác nhau.</p>
+        <p class="er-relation">KHACHHANG (1) ➜ HOADON (N): một khách hàng thành viên có thể có nhiều hóa đơn.</p>
+        <p class="er-relation">NHANVIEN (1) ➜ HOADON (N): một nhân viên bán nhiều hóa đơn.</p>
+        <p class="er-relation">HOADON (1) ➜ CTHD (N): một hóa đơn có nhiều dòng chi tiết.</p>
+        <p class="er-relation">SANPHAM (1) ➜ CTHD (N): một sản phẩm xuất hiện trong nhiều dòng chi tiết, ở nhiều hóa đơn khác nhau.</p>
         <div class="inline-warning"><strong>Lưu ý dễ nhầm:</strong> <code>HOADON.MAKH</code> có thể để trống (<code>NULL</code>) - không phải khách mua hàng nào cũng là khách hàng thành viên. Xem hóa đơn <code>1022</code> và <code>1023</code> trong dữ liệu mẫu, cả hai đều không gắn <code>MAKH</code>.</div>
       </section>
 

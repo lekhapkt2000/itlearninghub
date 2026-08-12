@@ -101,16 +101,16 @@
           <p>Ta cần tìm: <strong>khách hàng đã mua tất cả sản phẩm.</strong></p>
           <div class="ascii-block">Tất cả sản phẩm: SP01, SP02, SP03
 
-KH01: ✓SP01 ✓SP02 ✓SP03 -> Đạt
-KH02: ✓SP01 ✓SP02 ✗SP03 -> Không đạt
-KH03: ✓SP01 ✗SP02 ✓SP03 -> Không đạt</div>
+KH01: ✓SP01 ✓SP02 ✓SP03 ➜ Đạt
+KH02: ✓SP01 ✓SP02 ✗SP03 ➜ Không đạt
+KH03: ✓SP01 ✗SP02 ✓SP03 ➜ Không đạt</div>
           <p>Kết quả: <code>KH01</code>. Đây chính là tư duy của phép chia.</p>
 
           <h3>Tư duy cốt lõi</h3>
           <p>Bài toán "Tìm A đã thực hiện tất cả B" có thể hiểu thành:</p>
           <div class="ascii-block">Số lượng B mà A đã thực hiện = Tổng số lượng B cần thực hiện
 
-Ví dụ: KH01 đã mua 3 sản phẩm khác nhau, tổng số sản phẩm = 3 -> KH01 đạt</div>
+Ví dụ: KH01 đã mua 3 sản phẩm khác nhau, tổng số sản phẩm = 3 ➜ KH01 đạt</div>
           <p>Trong SQL, tư duy này thường được triển khai bằng <code>GROUP BY</code> + <code>HAVING COUNT(DISTINCT ...)</code>.</p>
         </section>
 
@@ -147,10 +147,10 @@ HAVING COUNT(DISTINCT MH.MaSP) =
 
           <h4>Phân tích câu SQL</h4>
           <p><strong>Bước 1</strong> - Kết nối khách hàng với lịch sử mua hàng: <code>FROM KhachHang KH JOIN MuaHang MH ON KH.MaKH = MH.MaKH</code></p>
-          <p><strong>Bước 2</strong> - Gom theo từng khách hàng bằng <code>GROUP BY KH.MaKH</code>: <code>KH01 -> SP01,SP02,SP03</code>, <code>KH02 -> SP01,SP02</code>, <code>KH03 -> SP01,SP03</code>.</p>
-          <p><strong>Bước 3</strong> - Đếm số sản phẩm khác nhau đã mua bằng <code>COUNT(DISTINCT MH.MaSP)</code>: <code>KH01 -> 3</code>, <code>KH02 -> 2</code>, <code>KH03 -> 2</code>.</p>
-          <p><strong>Bước 4</strong> - Đếm tổng số sản phẩm: <code>SELECT COUNT(*) FROM SanPham</code> -> <code>3</code>.</p>
-          <p><strong>Bước 5</strong> - So sánh: số SP khách hàng đã mua = tổng số SP tồn tại -> khách hàng đã mua <strong>tất cả</strong>.</p>
+          <p><strong>Bước 2</strong> - Gom theo từng khách hàng bằng <code>GROUP BY KH.MaKH</code>: <code>KH01 ➜ SP01,SP02,SP03</code>, <code>KH02 ➜ SP01,SP02</code>, <code>KH03 ➜ SP01,SP03</code>.</p>
+          <p><strong>Bước 3</strong> - Đếm số sản phẩm khác nhau đã mua bằng <code>COUNT(DISTINCT MH.MaSP)</code>: <code>KH01 ➜ 3</code>, <code>KH02 ➜ 2</code>, <code>KH03 ➜ 2</code>.</p>
+          <p><strong>Bước 4</strong> - Đếm tổng số sản phẩm: <code>SELECT COUNT(*) FROM SanPham</code> ➜ <code>3</code>.</p>
+          <p><strong>Bước 5</strong> - So sánh: số SP khách hàng đã mua = tổng số SP tồn tại ➜ khách hàng đã mua <strong>tất cả</strong>.</p>
 
           <h3>Ví dụ 2 - Sinh viên đăng ký tất cả môn bắt buộc</h3>
           <p>Bảng: <code>SinhVien(MaSV, TenSV)</code>, <code>MonHoc(MaMH, TenMH)</code>, <code>DangKy(MaSV, MaMH)</code>.</p>
@@ -164,7 +164,7 @@ HAVING COUNT(DISTINCT DK.MaMH) =
     SELECT COUNT(*)
     FROM MonHoc
 );</code></pre></div>
-          <p>Sinh viên A đăng ký 5 môn, tổng môn bắt buộc = 5 -> đạt. Sinh viên B đăng ký 4 môn, tổng môn bắt buộc = 5 -> không đạt.</p>
+          <p>Sinh viên A đăng ký 5 môn, tổng môn bắt buộc = 5 ➜ đạt. Sinh viên B đăng ký 4 môn, tổng môn bắt buộc = 5 ➜ không đạt.</p>
 
           <h3>Ví dụ 3 - Nhân viên tham gia tất cả dự án</h3>
           <p>Bảng: <code>NhanVien(MaNV, TenNV)</code>, <code>DuAn(MaDA, TenDA)</code>, <code>ThamGia(MaNV, MaDA)</code>.</p>
@@ -248,7 +248,7 @@ HAVING COUNT(DISTINCT DK.MaMH) =
           <h2>Phép chia với NOT EXISTS</h2>
           <p>Đây là <strong>cách thứ hai</strong> để giải bài toán "tất cả" - Dùng điều kiện phủ định để kiểm tra xem có tồn tại giá trị nào <strong>không thỏa mãn</strong> hay không.</p>
 
-          <h3>Tư duy "Tất cả" -> "Không tồn tại trường hợp thiếu"</h3>
+          <h3>Tư duy "Tất cả" ➜ "Không tồn tại trường hợp thiếu"</h3>
           <p>"Khách hàng đã mua tất cả sản phẩm điện tử" có thể chuyển thành "Không tồn tại sản phẩm điện tử nào mà khách hàng <strong>chưa mua</strong>".</p>
           <div class="definition">"Tất cả A" tương đương "Không tồn tại A mà chưa được thực hiện".</div>
 
@@ -286,7 +286,7 @@ WHERE NOT EXISTS
 );</code></pre></div>
 
           <h4>Đọc câu SQL bằng tiếng Việt</h4>
-          <p>Đừng đọc SQL theo từng dòng. Hãy đọc: "Lấy những khách hàng <strong>mà không tồn tại sản phẩm điện tử nào</strong> <strong>mà khách hàng đó chưa mua</strong>." Nếu không có sản phẩm nào như vậy -> khách hàng đã mua <strong>tất cả</strong>.</p>
+          <p>Đừng đọc SQL theo từng dòng. Hãy đọc: "Lấy những khách hàng <strong>mà không tồn tại sản phẩm điện tử nào</strong> <strong>mà khách hàng đó chưa mua</strong>." Nếu không có sản phẩm nào như vậy ➜ khách hàng đã mua <strong>tất cả</strong>.</p>
 
           <h3>Ví dụ sinh viên</h3>
           <p>Đề bài: "Tìm sinh viên đã đăng ký tất cả môn học bắt buộc có số tín chỉ > 3."</p>
@@ -341,9 +341,9 @@ WHERE NOT EXISTS
             <tr><td>NV04</td><td>15M</td><td>Dev</td></tr>
             <tr><td>NV05</td><td>15M</td><td>NULL</td></tr>
           </table></div>
-          <p><code>SELECT COUNT(*) FROM NhanVien;</code> -> <code>5</code> (đếm tất cả dòng)</p>
-          <p><code>SELECT COUNT(Luong) FROM NhanVien;</code> -> <code>4</code> (NV03 có Luong = NULL)</p>
-          <p><code>SELECT COUNT(DISTINCT ChucVu) FROM NhanVien;</code> -> <code>2</code> (Dev, Tester - NULL không được tính)</p>
+          <p><code>SELECT COUNT(*) FROM NhanVien;</code> ➜ <code>5</code> (đếm tất cả dòng)</p>
+          <p><code>SELECT COUNT(Luong) FROM NhanVien;</code> ➜ <code>4</code> (NV03 có Luong = NULL)</p>
+          <p><code>SELECT COUNT(DISTINCT ChucVu) FROM NhanVien;</code> ➜ <code>2</code> (Dev, Tester - NULL không được tính)</p>
 
           <h3>SUM, AVG, MAX, MIN</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SUM(Luong) AS TongLuong
@@ -482,7 +482,7 @@ FROM NHANVIEN NV
 LEFT OUTER JOIN PHANCONG PC
     ON NV.MaNV = PC.MaNV
 WHERE PC.MaDA IS NULL;</code></pre></div>
-          <div class="inline-ok">Pattern quan trọng cần nhớ: <code>LEFT JOIN</code> + <code>WHERE right_table.key IS NULL</code> -> tìm những bản ghi <strong>không có bản ghi tương ứng</strong> ở bảng bên phải.</div>
+          <div class="inline-ok">Pattern quan trọng cần nhớ: <code>LEFT JOIN</code> + <code>WHERE right_table.key IS NULL</code> ➜ tìm những bản ghi <strong>không có bản ghi tương ứng</strong> ở bảng bên phải.</div>
           <div class="inline-warning">Lỗi hay gặp: đặt điều kiện <code>WHERE</code> lên <strong>một cột khác (không phải kiểm tra NULL)</strong> của bảng bên phải sau <code>LEFT JOIN</code> - Khi đó những dòng NULL sinh ra từ LEFT JOIN sẽ bị chính điều kiện đó loại bỏ, khiến câu lệnh vô tình hoạt động giống <code>INNER JOIN</code>. Nếu cần lọc thêm ở bảng bên phải mà vẫn muốn giữ hành vi LEFT JOIN, hãy đưa điều kiện đó vào mệnh đề <code>ON</code> thay vì <code>WHERE</code>.</div>
 
           <h3>Ba loại OUTER JOIN</h3>
@@ -515,18 +515,18 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
             <tr><td>Tìm bản ghi không có liên kết</td><td><code>LEFT JOIN ... IS NULL</code></td></tr>
           </table></div>
 
-          <h3>Đọc đề -> nhận diện</h3>
-          <div class="ascii-block">"TẤT CẢ"                      -> PHÉP CHIA
-"TẤT CẢ + ĐIỀU KIỆN"          -> PHÉP CHIA CÓ ĐIỀU KIỆN
-"KHÔNG TỒN TẠI..."            -> NOT EXISTS
-"BAO NHIÊU / TỔNG / TB..."    -> AGGREGATE FUNCTIONS
-"TOP / CAO NHẤT / THẤP NHẤT"  -> TOP + ORDER BY
-"MỖI PHÒNG / MỖI NHÓM..."     -> GROUP BY
-"CÓ ÍT NHẤT... / NHIỀU HƠN..." -> HAVING
-"KHÔNG CÓ DỮ LIỆU LIÊN QUAN"  -> LEFT JOIN + IS NULL</div>
+          <h3>Đọc đề ➜ nhận diện</h3>
+          <div class="ascii-block">"TẤT CẢ"                      ➜ PHÉP CHIA
+"TẤT CẢ + ĐIỀU KIỆN"          ➜ PHÉP CHIA CÓ ĐIỀU KIỆN
+"KHÔNG TỒN TẠI..."            ➜ NOT EXISTS
+"BAO NHIÊU / TỔNG / TB..."    ➜ AGGREGATE FUNCTIONS
+"TOP / CAO NHẤT / THẤP NHẤT"  ➜ TOP + ORDER BY
+"MỖI PHÒNG / MỖI NHÓM..."     ➜ GROUP BY
+"CÓ ÍT NHẤT... / NHIỀU HƠN..." ➜ HAVING
+"KHÔNG CÓ DỮ LIỆU LIÊN QUAN"  ➜ LEFT JOIN + IS NULL</div>
 
           <h3>Tổng kết Tuần 3</h3>
-          <p>Tuần 1 là <strong>thiết kế &amp; thao tác dữ liệu</strong>, Tuần 2 là <strong>truy vấn &amp; kết hợp dữ liệu</strong>, Tuần 3 là <strong>truy vấn nâng cao</strong>: phép chia ("tất cả" -> GROUP BY+HAVING COUNT hoặc NOT EXISTS×2), gom nhóm (Aggregate, TOP/HAVING), và kết ngoài ("không có" -> LEFT JOIN+IS NULL).</p>
+          <p>Tuần 1 là <strong>thiết kế &amp; thao tác dữ liệu</strong>, Tuần 2 là <strong>truy vấn &amp; kết hợp dữ liệu</strong>, Tuần 3 là <strong>truy vấn nâng cao</strong>: phép chia ("tất cả" ➜ GROUP BY+HAVING COUNT hoặc NOT EXISTS×2), gom nhóm (Aggregate, TOP/HAVING), và kết ngoài ("không có" ➜ LEFT JOIN+IS NULL).</p>
         </section>
 
         <!-- 09 - Bai tap -->
@@ -537,7 +537,7 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
             <div class="answer-cta-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></div>
             <div class="answer-cta-body">
               <span class="eyebrow">BÀI TẬP CHÍNH THỨC · BTTH3</span>
-              <h3>Quản lý bán hàng - Câu 26 -> 53</h3>
+              <h3>Quản lý bán hàng - Câu 26 ➜ 53</h3>
               <p>Xem đề bài đầy đủ, file đính kèm và đáp án chi tiết (cần mã truy cập) của BTTH3.</p>
             </div>
             <a class="primary-button" href="week-3-bai-tap.html">Xem bài tập &amp; đáp án <span>›</span></a>
@@ -550,7 +550,7 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">01</span><h4>"Mua tất cả"</h4></div>
               <p>Tìm những khách hàng đã mua tất cả sản phẩm thuộc danh mục <code>Điện tử</code>.</p>
-              <details><summary>Gợi ý</summary><div class="ascii-block">"tất cả" -> phép chia -> GROUP BY -> HAVING COUNT</div></details>
+              <details><summary>Gợi ý</summary><div class="ascii-block">"tất cả" ➜ phép chia ➜ GROUP BY ➜ HAVING COUNT</div></details>
             </article>
 
             <article class="challenge-card">

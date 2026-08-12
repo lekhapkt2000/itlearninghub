@@ -135,7 +135,7 @@
             <span class="flow-arrow">↓</span>
             <span class="flow-box">AI Dataset</span>
           </div>
-          <p>Từ một chuỗi Event <code>LoanCreated -> LoanCreated -> LoanRepaid -> LoanCreated -> LoanLiquidated -> LoanCreated</code>, có thể thống kê ngay: Total Loans, Active Loans, Repaid Loans, Liquidated Loans, Default Rate.</p>
+          <p>Từ một chuỗi Event <code>LoanCreated ➜ LoanCreated ➜ LoanRepaid ➜ LoanCreated ➜ LoanLiquidated ➜ LoanCreated</code>, có thể thống kê ngay: Total Loans, Active Loans, Repaid Loans, Liquidated Loans, Default Rate.</p>
         </section>
 
         <!-- 03 - Blockchain Analytics -->
@@ -264,10 +264,10 @@ df['collateral_ratio'] = (df['collateral'] / df['amount']) * 100</code></pre></d
           <h3>Anomaly Detection</h3>
           <p>Một số đặc trưng (Feature) thường dùng: Transaction Frequency, Transaction Value, Unique Addresses, Gas Usage, Time Interval, Token Transfer.</p>
           <div class="ascii-block">Normal:
-10 -> 20 -> 15 -> 18 transactions
+10 ➜ 20 ➜ 15 ➜ 18 transactions
 
 Abnormal:
-10 -> 12 -> 15 -> 1,500</div>
+10 ➜ 12 ➜ 15 ➜ 1,500</div>
 
           <h3>Thuật toán</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -292,13 +292,13 @@ Avg Interval = 2.5h</div>
           <h2>Graph Analytics &amp; AML</h2>
           <p>Blockchain có thể biểu diễn dưới dạng đồ thị: <strong>Address = Node</strong>, <strong>Transaction = Edge</strong>. Một giao dịch riêng lẻ có thể không cho thấy điều gì bất thường, nhưng toàn bộ mạng lưới lại có thể tiết lộ những cấu trúc ẩn.</p>
           <div class="flow-diagram">
-            <span class="flow-box">A -> B</span>
+            <span class="flow-box">A ➜ B</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">B -> C</span>
+            <span class="flow-box">B ➜ C</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">C -> D</span>
+            <span class="flow-box">C ➜ D</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">D -> A (Circular Transaction)</span>
+            <span class="flow-box">D ➜ A (Circular Transaction)</span>
           </div>
           <div class="inline-warning">Circular Transaction không tự động đồng nghĩa với rửa tiền - Nó chỉ là một tín hiệu cần phân tích thêm.</div>
           <p>Graph Analytics giúp phát hiện các cấu trúc mà phân tích giao dịch đơn lẻ khó nhìn thấy: <strong>Hub Address</strong> (ví gom tiền), <strong>Transaction Cluster</strong>, <strong>Circular Transactions</strong> (vòng lặp dòng tiền), <strong>Peeling Chains</strong>, <strong>Fund Flow</strong> bất thường.</p>
@@ -540,10 +540,10 @@ Recent Transactions</div>
           <h2>Định hướng đồ án từ Tuần 6</h2>
           <p>Tuần 6 nên là điểm chuyển tiếp trực tiếp sang Tuần 7 - Báo cáo đồ án. Sinh viên cần hoàn thiện tối thiểu ba trụ cột Blockchain, AI và DApp hội tụ vào một sản phẩm Green Finance:</p>
           <ul>
-            <li><strong>Nhóm 1 - Green Lending:</strong> Blockchain-based Green Lending Platform with ESG Credit Scoring (ESG -> Credit Score -> Loan -> Smart Contract)</li>
-            <li><strong>Nhóm 2 - DeFi Risk:</strong> AI-based DeFi Liquidation Risk Prediction (On-chain Data -> Feature Engineering -> ML -> Liquidation Risk)</li>
-            <li><strong>Nhóm 3 - AML:</strong> Blockchain Graph Analytics for Suspicious Transaction Detection (Transactions -> Graph -> Graph Analytics -> Suspicious Address)</li>
-            <li><strong>Nhóm 4 - Green Investment:</strong> AI-powered Green Investment Recommendation System (Investor -> Risk Profile -> ESG Preference -> AI -> Green Portfolio)</li>
+            <li><strong>Nhóm 1 - Green Lending:</strong> Blockchain-based Green Lending Platform with ESG Credit Scoring (ESG ➜ Credit Score ➜ Loan ➜ Smart Contract)</li>
+            <li><strong>Nhóm 2 - DeFi Risk:</strong> AI-based DeFi Liquidation Risk Prediction (On-chain Data ➜ Feature Engineering ➜ ML ➜ Liquidation Risk)</li>
+            <li><strong>Nhóm 3 - AML:</strong> Blockchain Graph Analytics for Suspicious Transaction Detection (Transactions ➜ Graph ➜ Graph Analytics ➜ Suspicious Address)</li>
+            <li><strong>Nhóm 4 - Green Investment:</strong> AI-powered Green Investment Recommendation System (Investor ➜ Risk Profile ➜ ESG Preference ➜ AI ➜ Green Portfolio)</li>
             <li><strong>Nhóm 5 - Green Finance DApp:</strong> Decentralized Green Finance Analytics Platform, tích hợp Smart Contract + ESG + Blockchain Analytics + AI + DApp - Hướng tổng hợp nhất, phù hợp nhóm muốn làm đồ án lớn</li>
           </ul>
         </section>

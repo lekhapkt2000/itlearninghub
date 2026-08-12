@@ -112,7 +112,7 @@
             <span class="flow-arrow has-label">↓ Loan</span>
             <span class="flow-box">Borrower (Bob)</span>
             <span class="flow-arrow has-label">↓ Repayment + Interest</span>
-            <span class="flow-box">Smart Contract -> Lender</span>
+            <span class="flow-box">Smart Contract ➜ Lender</span>
           </div>
         </section>
 
@@ -122,7 +122,7 @@
           <h2>Tài sản thế chấp &amp; Collateral Ratio</h2>
           <p>Nếu người vay không trả tiền thì sao? Rất nhiều mô hình DeFi sử dụng <strong>Overcollateralization</strong> (thế chấp vượt mức) để giải quyết vấn đề này.</p>
           <div class="ascii-block">Collateral Ratio = (Collateral Value / Loan Value) × 100%</div>
-          <p><strong>Ví dụ:</strong> Collateral = $15,000, Loan = $10,000 -> Collateral Ratio = 150%.</p>
+          <p><strong>Ví dụ:</strong> Collateral = $15,000, Loan = $10,000 ➜ Collateral Ratio = 150%.</p>
         </section>
 
         <!-- 05 - Liquidation -->
@@ -133,9 +133,9 @@
           <div class="flow-diagram">
             <span class="flow-box">Kiểm tra Collateral Ratio</span>
             <span class="flow-arrow has-label">↓ Ratio ≥ Threshold?</span>
-            <span class="flow-box">Có -> Tiếp tục / Không -> Liquidation</span>
+            <span class="flow-box">Có ➜ Tiếp tục / Không ➜ Liquidation</span>
           </div>
-          <div class="inline-ok"><strong>Ví dụ:</strong> Collateral = $15,000, Loan = $10,000 -> Ratio = 150%. Giá Collateral giảm còn $11,000 -> Ratio = 110%. Nếu Liquidation Threshold = 120%, khoản vay bị thanh lý vì 110% &lt; 120%.</div>
+          <div class="inline-ok"><strong>Ví dụ:</strong> Collateral = $15,000, Loan = $10,000 ➜ Ratio = 150%. Giá Collateral giảm còn $11,000 ➜ Ratio = 110%. Nếu Liquidation Threshold = 120%, khoản vay bị thanh lý vì 110% &lt; 120%.</div>
         </section>
 
         <!-- 06 - Green Banking -->
@@ -147,7 +147,7 @@
             <tr><th>Tiêu chí</th><th>Ngân hàng truyền thống</th><th>DeFi Green Lending Protocol</th></tr>
             <tr><td>Xác thực tín dụng</td><td>Báo cáo tài chính, thẩm định thủ công</td><td>Smart Contract + Data Oracle (ESG Score)</td></tr>
             <tr><td>Thế chấp (Collateral)</td><td>Bất động sản, tài sản cố định</td><td>Mã hóa tài sản (Overcollateralization)</td></tr>
-            <tr><td>Định giá lãi suất</td><td>Biểu lãi suất cố định/thả nổi ngân hàng</td><td>Dynamic Interest Rate dựa trên ESG Score (ESG tăng -> Rate giảm)</td></tr>
+            <tr><td>Định giá lãi suất</td><td>Biểu lãi suất cố định/thả nổi ngân hàng</td><td>Dynamic Interest Rate dựa trên ESG Score (ESG tăng ➜ Rate giảm)</td></tr>
             <tr><td>Xử lý vi phạm</td><td>Tố tụng, thu hồi nợ truyền thống</td><td>Tự động thanh lý On-chain khi Collateral Ratio &lt; Liquidation Threshold</td></tr>
           </table></div>
           <p>Ví dụ ESG Score tổng hợp từ 3 nhóm chỉ số:</p>

@@ -105,16 +105,16 @@
           <p>We need to find: <strong>customers who bought all products.</strong></p>
           <div class="ascii-block">All products: SP01, SP02, SP03
 
-KH01: ✓SP01 ✓SP02 ✓SP03 -> Passes
-KH02: ✓SP01 ✓SP02 ✗SP03 -> Fails
-KH03: ✓SP01 ✗SP02 ✓SP03 -> Fails</div>
+KH01: ✓SP01 ✓SP02 ✓SP03 ➜ Passes
+KH02: ✓SP01 ✓SP02 ✗SP03 ➜ Fails
+KH03: ✓SP01 ✗SP02 ✓SP03 ➜ Fails</div>
           <p>Result: <code>KH01</code>. This is exactly the way of thinking behind division.</p>
 
           <h3>The Core Idea</h3>
           <p>The problem "Find A that has done all of B" can be understood as:</p>
           <div class="ascii-block">The number of B's that A has done = The total number of B's that need to be done
 
-Example: KH01 bought 3 distinct products, total products = 3 -> KH01 passes</div>
+Example: KH01 bought 3 distinct products, total products = 3 ➜ KH01 passes</div>
           <p>In SQL, this idea is typically implemented with <code>GROUP BY</code> + <code>HAVING COUNT(DISTINCT ...)</code>.</p>
         </section>
 
@@ -151,10 +151,10 @@ HAVING COUNT(DISTINCT MH.MaSP) =
 
           <h4>Breaking Down the SQL</h4>
           <p><strong>Step 1</strong> - Join customers to their purchase history: <code>FROM KhachHang KH JOIN MuaHang MH ON KH.MaKH = MH.MaKH</code></p>
-          <p><strong>Step 2</strong> - Group by each customer with <code>GROUP BY KH.MaKH</code>: <code>KH01 -> SP01,SP02,SP03</code>, <code>KH02 -> SP01,SP02</code>, <code>KH03 -> SP01,SP03</code>.</p>
-          <p><strong>Step 3</strong> - Count distinct products purchased with <code>COUNT(DISTINCT MH.MaSP)</code>: <code>KH01 -> 3</code>, <code>KH02 -> 2</code>, <code>KH03 -> 2</code>.</p>
-          <p><strong>Step 4</strong> - Count the total number of products: <code>SELECT COUNT(*) FROM SanPham</code> -> <code>3</code>.</p>
-          <p><strong>Step 5</strong> - Compare: number of products the customer bought = total number of products that exist -> the customer bought <strong>all</strong> of them.</p>
+          <p><strong>Step 2</strong> - Group by each customer with <code>GROUP BY KH.MaKH</code>: <code>KH01 ➜ SP01,SP02,SP03</code>, <code>KH02 ➜ SP01,SP02</code>, <code>KH03 ➜ SP01,SP03</code>.</p>
+          <p><strong>Step 3</strong> - Count distinct products purchased with <code>COUNT(DISTINCT MH.MaSP)</code>: <code>KH01 ➜ 3</code>, <code>KH02 ➜ 2</code>, <code>KH03 ➜ 2</code>.</p>
+          <p><strong>Step 4</strong> - Count the total number of products: <code>SELECT COUNT(*) FROM SanPham</code> ➜ <code>3</code>.</p>
+          <p><strong>Step 5</strong> - Compare: number of products the customer bought = total number of products that exist ➜ the customer bought <strong>all</strong> of them.</p>
 
           <h3>Example 2 - Students Registered for All Required Courses</h3>
           <p>Tables: <code>SinhVien(MaSV, TenSV)</code>, <code>MonHoc(MaMH, TenMH)</code>, <code>DangKy(MaSV, MaMH)</code>.</p>
@@ -168,7 +168,7 @@ HAVING COUNT(DISTINCT DK.MaMH) =
     SELECT COUNT(*)
     FROM MonHoc
 );</code></pre></div>
-          <p>Student A registered for 5 courses, total required courses = 5 -> passes. Student B registered for 4 courses, total required courses = 5 -> fails.</p>
+          <p>Student A registered for 5 courses, total required courses = 5 ➜ passes. Student B registered for 4 courses, total required courses = 5 ➜ fails.</p>
 
           <h3>Example 3 - Employees Who Participated in All Projects</h3>
           <p>Tables: <code>NhanVien(MaNV, TenNV)</code>, <code>DuAn(MaDA, TenDA)</code>, <code>ThamGia(MaNV, MaDA)</code>.</p>
@@ -252,7 +252,7 @@ HAVING COUNT(DISTINCT DK.MaMH) =
           <h2>Division with NOT EXISTS</h2>
           <p>This is the <strong>second way</strong> to solve "all" problems - using negation to check whether any value <strong>fails to satisfy</strong> the condition.</p>
 
-          <h3>The Idea: "All" -> "No Missing Case Exists"</h3>
+          <h3>The Idea: "All" ➜ "No Missing Case Exists"</h3>
           <p>"The customer bought all electronics products" can be restated as "There does not exist an electronics product that the customer <strong>has not bought</strong>."</p>
           <div class="definition">"All of A" is equivalent to "There does not exist an A that hasn't been done."</div>
 
@@ -290,7 +290,7 @@ WHERE NOT EXISTS
 );</code></pre></div>
 
           <h4>Reading the SQL in Plain English</h4>
-          <p>Don't read SQL line by line. Instead, read: "Get customers <strong>for whom there does not exist any electronics product</strong> <strong>that the customer hasn't bought</strong>." If no such product exists -> the customer has bought <strong>all</strong> of them.</p>
+          <p>Don't read SQL line by line. Instead, read: "Get customers <strong>for whom there does not exist any electronics product</strong> <strong>that the customer hasn't bought</strong>." If no such product exists ➜ the customer has bought <strong>all</strong> of them.</p>
 
           <h3>Student Example</h3>
           <p>Problem: "Find students who registered for all required courses worth more than 3 credits."</p>
@@ -345,9 +345,9 @@ WHERE NOT EXISTS
             <tr><td>NV04</td><td>15M</td><td>Dev</td></tr>
             <tr><td>NV05</td><td>15M</td><td>NULL</td></tr>
           </table></div>
-          <p><code>SELECT COUNT(*) FROM NhanVien;</code> -> <code>5</code> (counts all rows)</p>
-          <p><code>SELECT COUNT(Luong) FROM NhanVien;</code> -> <code>4</code> (NV03 has Luong = NULL)</p>
-          <p><code>SELECT COUNT(DISTINCT ChucVu) FROM NhanVien;</code> -> <code>2</code> (Dev, Tester - NULL doesn't count)</p>
+          <p><code>SELECT COUNT(*) FROM NhanVien;</code> ➜ <code>5</code> (counts all rows)</p>
+          <p><code>SELECT COUNT(Luong) FROM NhanVien;</code> ➜ <code>4</code> (NV03 has Luong = NULL)</p>
+          <p><code>SELECT COUNT(DISTINCT ChucVu) FROM NhanVien;</code> ➜ <code>2</code> (Dev, Tester - NULL doesn't count)</p>
 
           <h3>SUM, AVG, MAX, MIN</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SUM(Luong) AS TongLuong
@@ -486,7 +486,7 @@ FROM NHANVIEN NV
 LEFT OUTER JOIN PHANCONG PC
     ON NV.MaNV = PC.MaNV
 WHERE PC.MaDA IS NULL;</code></pre></div>
-          <div class="inline-ok">Key pattern to remember: <code>LEFT JOIN</code> + <code>WHERE right_table.key IS NULL</code> -> find records <strong>with no matching record</strong> in the right-hand table.</div>
+          <div class="inline-ok">Key pattern to remember: <code>LEFT JOIN</code> + <code>WHERE right_table.key IS NULL</code> ➜ find records <strong>with no matching record</strong> in the right-hand table.</div>
           <div class="inline-warning">Common mistake: putting a <code>WHERE</code> condition on <strong>a different column (not a NULL check)</strong> of the right table after <code>LEFT JOIN</code> - the NULL rows produced by the LEFT JOIN then get filtered out by that condition, making the statement accidentally behave like an <code>INNER JOIN</code>. If you need to filter the right table further while keeping LEFT JOIN behavior, put that condition in the <code>ON</code> clause instead of <code>WHERE</code>.</div>
 
           <h3>The Three Types of OUTER JOIN</h3>
@@ -519,18 +519,18 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
             <tr><td>Records with no link</td><td><code>LEFT JOIN ... IS NULL</code></td></tr>
           </table></div>
 
-          <h3>Reading a Problem -> Recognizing the Pattern</h3>
-          <div class="ascii-block">"ALL"                         -> DIVISION
-"ALL + A CONDITION"           -> CONDITIONAL DIVISION
-"DOES NOT EXIST..."           -> NOT EXISTS
-"HOW MANY / TOTAL / AVERAGE..." -> AGGREGATE FUNCTIONS
-"TOP / HIGHEST / LOWEST"      -> TOP + ORDER BY
-"EACH DEPARTMENT / EACH GROUP..." -> GROUP BY
-"AT LEAST... / MORE THAN..."  -> HAVING
-"NO RELATED DATA"             -> LEFT JOIN + IS NULL</div>
+          <h3>Reading a Problem ➜ Recognizing the Pattern</h3>
+          <div class="ascii-block">"ALL"                         ➜ DIVISION
+"ALL + A CONDITION"           ➜ CONDITIONAL DIVISION
+"DOES NOT EXIST..."           ➜ NOT EXISTS
+"HOW MANY / TOTAL / AVERAGE..." ➜ AGGREGATE FUNCTIONS
+"TOP / HIGHEST / LOWEST"      ➜ TOP + ORDER BY
+"EACH DEPARTMENT / EACH GROUP..." ➜ GROUP BY
+"AT LEAST... / MORE THAN..."  ➜ HAVING
+"NO RELATED DATA"             ➜ LEFT JOIN + IS NULL</div>
 
           <h3>Week 3 Summary</h3>
-          <p>Week 1 was about <strong>designing &amp; manipulating data</strong>, Week 2 was about <strong>querying &amp; combining data</strong>, and Week 3 is <strong>advanced querying</strong>: division ("all" -> GROUP BY+HAVING COUNT or NOT EXISTS×2), grouping (Aggregates, TOP/HAVING), and outer joins ("none" -> LEFT JOIN+IS NULL).</p>
+          <p>Week 1 was about <strong>designing &amp; manipulating data</strong>, Week 2 was about <strong>querying &amp; combining data</strong>, and Week 3 is <strong>advanced querying</strong>: division ("all" ➜ GROUP BY+HAVING COUNT or NOT EXISTS×2), grouping (Aggregates, TOP/HAVING), and outer joins ("none" ➜ LEFT JOIN+IS NULL).</p>
         </section>
 
         <!-- 09 - Exercises -->
@@ -539,7 +539,7 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
           <h2>Comprehensive Practice</h2>
           <div class="practice-lab official-lab">
             <span class="official-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg> OFFICIAL ASSIGNMENT · BTTH3</span>
-            <h3>Sales Management - Questions 26 -> 53</h3>
+            <h3>Sales Management - Questions 26 ➜ 53</h3>
             <p>Following the Week 3 guide, use Microsoft SQL Server to complete <strong>Part III - questions 26 through 53</strong>. Attempt each one yourself before checking hints/answers. Full question details are in the PDF below.</p>
           </div>
 
@@ -564,7 +564,7 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">01</span><h4>"Bought Everything"</h4></div>
               <p>Find customers who bought all products in the <code>Điện tử</code> (Electronics) category.</p>
-              <details><summary>Hint</summary><div class="ascii-block">"all" -> division -> GROUP BY -> HAVING COUNT</div></details>
+              <details><summary>Hint</summary><div class="ascii-block">"all" ➜ division ➜ GROUP BY ➜ HAVING COUNT</div></details>
             </article>
 
             <article class="challenge-card">

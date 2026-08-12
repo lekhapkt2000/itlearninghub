@@ -80,16 +80,16 @@
             <span class="flow-arrow">↓</span>
             <span class="flow-box">Dữ liệu được cập nhật</span>
           </div>
-          <p>Ví dụ: "không cho phép số lượng sản phẩm nhỏ hơn 0." Khi người dùng chạy <code>UPDATE SANPHAM SET SOLUONG = -10 WHERE MASP = 'SP01';</code>, Trigger phát hiện <code>SOLUONG &lt; 0</code> -> báo lỗi -> <code>ROLLBACK</code> -> hủy thao tác.</p>
+          <p>Ví dụ: "không cho phép số lượng sản phẩm nhỏ hơn 0." Khi người dùng chạy <code>UPDATE SANPHAM SET SOLUONG = -10 WHERE MASP = 'SP01';</code>, Trigger phát hiện <code>SOLUONG &lt; 0</code> ➜ báo lỗi ➜ <code>ROLLBACK</code> ➜ hủy thao tác.</p>
 
           <h3>Tại sao cần Trigger?</h3>
           <p>Trigger thường dùng để <strong>tự động kiểm soát dữ liệu ngay tại tầng cơ sở dữ liệu</strong>:</p>
           <ul>
             <li><strong>Kiểm tra dữ liệu:</strong> Số lượng sản phẩm ≥ 0</li>
             <li><strong>Ngăn thao tác không hợp lệ:</strong> Không cho xóa khách hàng đã phát sinh giao dịch</li>
-            <li><strong>Tự động cập nhật:</strong> Thêm CTHD -> tự động cập nhật trị giá hóa đơn</li>
-            <li><strong>Theo dõi thay đổi:</strong> Tên khách hàng cũ -> mới</li>
-            <li><strong>Đồng bộ dữ liệu:</strong> CTHD thay đổi -> cập nhật tổng tiền hóa đơn -> cập nhật doanh số khách hàng</li>
+            <li><strong>Tự động cập nhật:</strong> Thêm CTHD ➜ tự động cập nhật trị giá hóa đơn</li>
+            <li><strong>Theo dõi thay đổi:</strong> Tên khách hàng cũ ➜ mới</li>
+            <li><strong>Đồng bộ dữ liệu:</strong> CTHD thay đổi ➜ cập nhật tổng tiền hóa đơn ➜ cập nhật doanh số khách hàng</li>
           </ul>
         </section>
 
@@ -107,8 +107,8 @@
             <tr><td><code>BEFORE</code></td><td>Không hỗ trợ trong SQL Server</td><td>-</td></tr>
           </table></div>
 
-          <div class="ascii-block">AFTER:        DELETE -> Xóa dữ liệu -> Trigger -> Xử lý tiếp
-INSTEAD OF:   DELETE -> Trigger -> KHÔNG thực hiện DELETE gốc</div>
+          <div class="ascii-block">AFTER:        DELETE ➜ Xóa dữ liệu ➜ Trigger ➜ Xử lý tiếp
+INSTEAD OF:   DELETE ➜ Trigger ➜ KHÔNG thực hiện DELETE gốc</div>
         </section>
 
         <!-- 03 - Cu phap -->
@@ -197,9 +197,9 @@ BEGIN
 END;</code></pre></div>
 
           <h3>Phân tích</h3>
-          <div class="ascii-block">IF EXISTS -> RAISERROR -> ROLLBACK -> RETURN -> Hủy thao tác sai</div>
+          <div class="ascii-block">IF EXISTS ➜ RAISERROR ➜ ROLLBACK ➜ RETURN ➜ Hủy thao tác sai</div>
           <p><code>IF EXISTS(...)</code> kiểm tra có tồn tại bản ghi vi phạm điều kiện hay không. <code>RAISERROR(N'...', 16, 1)</code> báo lỗi - Mức độ <code>16</code> là mức thường dùng để biểu diễn lỗi do người dùng gây ra (dữ liệu nhập sai, vi phạm quy tắc). <code>ROLLBACK</code> hủy giao dịch đang thực hiện, đưa dữ liệu về trạng thái trước đó.</p>
-          <div class="inline-warning">Lỗi hay gặp: gọi <code>RAISERROR</code> và <code>ROLLBACK</code> nhưng <strong>quên <code>RETURN</code></strong> ngay sau đó. Nếu Trigger còn câu lệnh nào phía sau, chúng vẫn sẽ tiếp tục chạy dù giao dịch đã bị hủy, có thể gây lỗi hoặc hành vi không mong muốn. Nên tập thói quen luôn viết đủ bộ ba <code>RAISERROR -> ROLLBACK -> RETURN</code>, không chỉ dừng ở <code>ROLLBACK</code>.</div>
+          <div class="inline-warning">Lỗi hay gặp: gọi <code>RAISERROR</code> và <code>ROLLBACK</code> nhưng <strong>quên <code>RETURN</code></strong> ngay sau đó. Nếu Trigger còn câu lệnh nào phía sau, chúng vẫn sẽ tiếp tục chạy dù giao dịch đã bị hủy, có thể gây lỗi hoặc hành vi không mong muốn. Nên tập thói quen luôn viết đủ bộ ba <code>RAISERROR ➜ ROLLBACK ➜ RETURN</code>, không chỉ dừng ở <code>ROLLBACK</code>.</div>
 
           <h3>PRINT và RAISERROR - Phân biệt</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -255,7 +255,7 @@ END;</code></pre></div>
                 <div class="trigger-demo-row">HOTEN = 'Nguyễn Văn A' (bản ghi mới)</div>
               </div>
             </div>
-            <p class="trigger-demo-caption">INSERT -> chỉ INSERTED có dữ liệu · DELETE -> chỉ DELETED có dữ liệu · UPDATE -> cả hai đều có dữ liệu.</p>
+            <p class="trigger-demo-caption">INSERT ➜ chỉ INSERTED có dữ liệu · DELETE ➜ chỉ DELETED có dữ liệu · UPDATE ➜ cả hai đều có dữ liệu.</p>
             <div class="trigger-demo-sql">
               <span class="side-label">CÂU LỆNH TƯƠNG ỨNG</span>
               <pre><code class="language-sql" data-demo-sql>INSERT INTO KHACHHANG (MAKH, HOTEN)
@@ -289,7 +289,7 @@ BEGIN
 END;</code></pre></div>
 
           <h3>Ví dụ hoàn chỉnh - Theo dõi thay đổi tên (UPDATE)</h3>
-          <p>Khi <code>UPDATE</code>, <code>DELETED</code> chứa giá trị cũ và <code>INSERTED</code> chứa giá trị mới, nên có thể so sánh "giá trị cũ -> giá trị mới":</p>
+          <p>Khi <code>UPDATE</code>, <code>DELETED</code> chứa giá trị cũ và <code>INSERTED</code> chứa giá trị mới, nên có thể so sánh "giá trị cũ ➜ giá trị mới":</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterUpdate_KhachHang
 ON KHACHHANG
 AFTER UPDATE
@@ -324,19 +324,19 @@ END;</code></pre></div>
 
           <h3>Kiểm tra tồn tại trước khi thêm</h3>
           <p>Không cho phép thêm hóa đơn nếu khách hàng chưa tồn tại:</p>
-          <div class="ascii-block">INSERT HOADON -> Lấy MAKH từ INSERTED -> Kiểm tra KHACHHANG
-   -> Có tồn tại? Có -> Cho phép | Không -> RAISERROR + ROLLBACK</div>
+          <div class="ascii-block">INSERT HOADON ➜ Lấy MAKH từ INSERTED ➜ Kiểm tra KHACHHANG
+   ➜ Có tồn tại? Có ➜ Cho phép | Không ➜ RAISERROR + ROLLBACK</div>
           <p><code>IF EXISTS</code> kiểm tra có tồn tại dữ liệu thỏa điều kiện; <code>IF NOT EXISTS</code> kiểm tra ngược lại - Không tồn tại dữ liệu thỏa điều kiện.</p>
 
           <h3>Trigger tự động cập nhật dữ liệu</h3>
           <p>Bảng <code>HOADON(MAHD, TRIGIA)</code> và <code>CTHD(MAHD, MASP, SOLUONG, DONGIA)</code>. Khi <code>INSERT INTO CTHD</code>, Trigger tự động tính lại <code>TRIGIA</code> và <code>UPDATE HOADON</code>.</p>
 
           <h3>Trigger cập nhật doanh số khách hàng</h3>
-          <p>Bài toán nâng cao hơn: thêm/sửa hóa đơn -> Trigger tính tổng trị giá -> cập nhật <code>DOANHSO</code> trong <code>KHACHHANG</code>.</p>
+          <p>Bài toán nâng cao hơn: thêm/sửa hóa đơn ➜ Trigger tính tổng trị giá ➜ cập nhật <code>DOANHSO</code> trong <code>KHACHHANG</code>.</p>
 
           <h3>Không cho xóa dữ liệu đang được tham chiếu</h3>
           <p>Không cho phép xóa nhân viên nếu nhân viên đã tham gia bán hàng:</p>
-          <div class="ascii-block">DELETE NHANVIEN -> Kiểm tra HOADON -> Có hóa đơn? Có -> ROLLBACK | Không -> Cho phép</div>
+          <div class="ascii-block">DELETE NHANVIEN ➜ Kiểm tra HOADON ➜ Có hóa đơn? Có ➜ ROLLBACK | Không ➜ Cho phép</div>
 
           <h3>Tự động cập nhật ngày đăng ký</h3>
           <p>Khi thêm khách hàng mới, nếu không nhập <code>NGDK</code>, hệ thống tự động lấy ngày hiện tại bằng <code>GETDATE()</code>.</p>
@@ -367,7 +367,7 @@ FROM INSERTED;</code></pre></div>
 ├── dòng 3
 ├── ...
 └── dòng n</div>
-          <div class="inline-warning">Trigger nên được tư duy theo <strong>tập hợp dữ liệu (set-based)</strong> thay vì mặc định chỉ có một dòng - Đây là kỹ năng quan trọng khi bước từ bài thực hành sang SQL thực tế. Không nên chỉ tư duy "INSERTED -> 1 dòng -> 1 biến", mà cần xử lý <strong>toàn bộ tập dữ liệu</strong> trong INSERTED/DELETED.</div>
+          <div class="inline-warning">Trigger nên được tư duy theo <strong>tập hợp dữ liệu (set-based)</strong> thay vì mặc định chỉ có một dòng - Đây là kỹ năng quan trọng khi bước từ bài thực hành sang SQL thực tế. Không nên chỉ tư duy "INSERTED ➜ 1 dòng ➜ 1 biến", mà cần xử lý <strong>toàn bộ tập dữ liệu</strong> trong INSERTED/DELETED.</div>
         </section>
 
         <!-- 08 - Quy trinh + cheat sheet -->
@@ -397,17 +397,17 @@ FROM INSERTED;</code></pre></div>
 FROM INFORMATION_SCHEMA.TRIGGERS;</code></pre></div>
 
           <h3>Cheat Sheet Tuần 5</h3>
-          <div class="ascii-block">TRIGGER      -> Tự động chạy khi DML xảy ra
-INSERT/UPDATE/DELETE -> Các thao tác kích hoạt Trigger
-AFTER        -> Chạy sau thao tác DML
-INSTEAD OF   -> Thay thế thao tác DML
-INSERTED     -> Dữ liệu mới
-DELETED      -> Dữ liệu cũ / bị xóa
-IF EXISTS    -> Kiểm tra có dữ liệu thỏa điều kiện
-IF NOT EXISTS -> Kiểm tra không tồn tại dữ liệu
-PRINT        -> Thông báo
-RAISERROR    -> Báo lỗi
-ROLLBACK     -> Hủy thao tác / giao dịch</div>
+          <div class="ascii-block">TRIGGER      ➜ Tự động chạy khi DML xảy ra
+INSERT/UPDATE/DELETE ➜ Các thao tác kích hoạt Trigger
+AFTER        ➜ Chạy sau thao tác DML
+INSTEAD OF   ➜ Thay thế thao tác DML
+INSERTED     ➜ Dữ liệu mới
+DELETED      ➜ Dữ liệu cũ / bị xóa
+IF EXISTS    ➜ Kiểm tra có dữ liệu thỏa điều kiện
+IF NOT EXISTS ➜ Kiểm tra không tồn tại dữ liệu
+PRINT        ➜ Thông báo
+RAISERROR    ➜ Báo lỗi
+ROLLBACK     ➜ Hủy thao tác / giao dịch</div>
 
           <h3>Năm tuần đầu của IT004</h3>
           <p>Tuần 1: tạo CSDL. Tuần 2: truy vấn. Tuần 3: truy vấn nâng cao. Tuần 4: xử lý dữ liệu (CAST/CASE/Subquery). Tuần 5: <strong>tự động hóa &amp; kiểm soát</strong> bằng Trigger, INSERTED/DELETED, RAISERROR/ROLLBACK. Tuần 6 theo khung môn học sẽ là ôn tập và thi thực hành, thời gian và hình thức thi được thông báo sau.</p>

@@ -11,113 +11,219 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../assets/css/base.css?v=19">
   <style>
-    .admin-shell{max-width:680px;margin:64px auto;padding:0 20px}
-    .admin-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:32px;margin-bottom:24px}
-    .admin-card h1{font-size:20px;margin-bottom:6px}
-    .admin-card h2{font-size:15px;margin-bottom:16px}
-    .admin-card p.hint{color:var(--muted);font-size:12px;margin-bottom:24px}
+    body{background:radial-gradient(1100px 520px at 50% -12%,#eff6ff 0%,var(--bg) 60%)}
+
+    .admin-topbar{position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);background:#f8fafcea;backdrop-filter:blur(14px)}
+    .admin-topbar-inner{max-width:1080px;min-height:68px;padding:0 24px;margin:auto;display:flex;align-items:center;gap:14px}
+    .admin-pill{padding:5px 11px;border-radius:99px;background:var(--tint);color:var(--primary-ink);font-size:10px;font-weight:800;letter-spacing:.08em}
+    .admin-topbar #logout-btn{margin-left:auto;padding:10px 16px;font-size:11px}
+
+    .admin-main{max-width:1080px;margin:auto;padding:0 24px 80px}
+
+    /* Login */
+    .login-wrap{min-height:calc(100vh - 68px);display:flex;align-items:center;justify-content:center;padding:40px 0}
+    .login-card{position:relative;overflow:hidden;width:100%;max-width:400px;padding:40px 36px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 48px -24px rgb(15 23 42 / .16);text-align:center}
+    .login-card::before{content:'';position:absolute;top:-80px;right:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgb(37 99 235 / .12),transparent 70%)}
+    .login-icon{position:relative;z-index:1;display:grid;place-items:center;width:52px;height:52px;margin:0 auto 18px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#1d4ed8);color:#fff;box-shadow:0 12px 24px -8px rgb(37 99 235 / .45)}
+    .login-icon svg{width:24px;height:24px}
+    .login-card .eyebrow{position:relative;z-index:1;text-align:center}
+    .login-card h1{position:relative;z-index:1;font-size:21px;margin-bottom:8px}
+    .login-card p.hint{position:relative;z-index:1;color:var(--muted);font-size:12.5px;line-height:1.7;margin-bottom:26px}
+    .login-card form{position:relative;z-index:1;text-align:left}
+
+    /* Shared field/panel styles */
     .field{margin-bottom:16px}
     .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
-    .field input,.field select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:14px;background:var(--bg);color:var(--ink)}
-    .field input:focus,.field select:focus{outline:2px solid var(--primary);outline-offset:1px}
-    .admin-card button[type="submit"]{width:100%;padding:13px;margin-top:6px}
-    .result{margin-top:20px;padding:16px;border-radius:10px;background:var(--tint);display:none}
+    .field input,.field select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font:inherit;font-size:14px;background:var(--bg);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+    .field input:focus,.field select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgb(37 99 235 / .12)}
+    button[type="submit"]{width:100%;padding:13px;margin-top:6px}
+    .result{margin-top:20px;padding:16px;border-radius:12px;background:var(--tint);display:none}
     .result.show{display:block}
-    .result code{display:block;font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--primary-ink);padding:8px 0;text-align:center;user-select:all}
-    .result-actions{display:flex;gap:8px;justify-content:center;margin-top:6px}
-    .msg{margin-top:14px;font-size:13px;font-weight:600}
+    .result code{display:block;font-family:var(--font-mono);font-size:19px;font-weight:700;color:var(--primary-ink);padding:6px 0;text-align:center;letter-spacing:.02em;user-select:all}
+    .result-actions{display:flex;gap:8px;justify-content:center;margin-top:8px}
+    .msg{margin-top:14px;font-size:12.5px;font-weight:600}
     .msg.error{color:#dc2626}
     .msg.ok{color:#16a34a}
 
-    #login-card{max-width:420px;margin:64px auto 0}
+    /* Dashboard */
+    .dash-head{padding:40px 0 28px}
+    .dash-head h1{font-size:clamp(24px,3vw,30px);margin-top:8px}
 
-    .dashboard-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-    .dashboard-header h1{margin:0}
-    .dashboard-header button{width:auto;padding:10px 16px;font-size:12px}
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+    .stat-card{display:flex;align-items:center;gap:12px;padding:18px 20px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 3px 10px -6px rgb(15 23 42 / .1);transition:transform .2s,box-shadow .2s}
+    .stat-card:hover{transform:translateY(-2px);box-shadow:0 12px 22px -12px rgb(15 23 42 / .2)}
+    .stat-card .icon-box{flex-shrink:0;display:grid;place-items:center;width:38px;height:38px;border-radius:10px}
+    .stat-card .icon-box svg{width:19px;height:19px}
+    .stat-total .icon-box{background:var(--tint);color:var(--primary-ink)}
+    .stat-active .icon-box{background:#dcfce7;color:#15803d}
+    .stat-revoked .icon-box{background:#f1f5f9;color:var(--muted)}
+    .stat-card strong{display:block;font-size:24px;letter-spacing:-.03em;color:var(--ink)}
+    .stat-card span{color:var(--muted);font-size:11px;font-weight:600}
 
-    .list-card{padding:24px 24px 8px}
-    .list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-    .list-header h2{margin:0}
-    .list-header button{width:auto;margin:0;padding:9px 14px;font-size:11px}
-    .list-empty{color:var(--muted);font-size:13px;padding-bottom:24px}
-    .table-wrap{overflow-x:auto;margin:0 -24px;padding:0 24px}
+    .dash-grid{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+    @media(max-width:820px){.dash-grid{grid-template-columns:1fr}.stat-row{grid-template-columns:1fr}}
+
+    .panel-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px}
+    .panel-card h2{display:flex;align-items:center;gap:9px;font-size:15px;margin-bottom:18px}
+    .panel-card h2 .icon-box{width:28px;height:28px;border-radius:8px;background:var(--tint);color:var(--primary-ink);display:grid;place-items:center;flex-shrink:0}
+    .panel-card h2 .icon-box svg{width:15px;height:15px}
+
+    .list-panel{padding:26px 26px 10px}
+    .list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .list-head h2{margin:0}
+    .list-head button{display:inline-flex;align-items:center;gap:6px;width:auto;margin:0;padding:9px 14px;font-size:11px}
+    .list-head button svg{width:13px;height:13px}
+    .list-empty{color:var(--muted);font-size:13px;padding-bottom:26px;text-align:center}
+    .table-wrap{overflow-x:auto;margin:0 -26px;padding:0 26px}
     table{width:100%;border-collapse:collapse;font-size:13px}
-    th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
-    th{color:var(--muted);font-size:10px;letter-spacing:.06em;font-weight:700}
-    .badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:10px;font-weight:700}
+    th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+    tbody tr:hover{background:var(--tint)}
+    th{color:var(--muted);font-size:10px;letter-spacing:.06em;font-weight:700;text-transform:uppercase}
+    td code{background:none;padding:0;font-weight:700;color:var(--ink)}
+    .badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-size:10px;font-weight:700}
+    .badge::before{content:'';width:6px;height:6px;border-radius:50%}
     .badge-active{background:#dcfce7;color:#15803d}
-    .badge-revoked{background:var(--line);color:var(--muted)}
-    .revoke-btn{width:auto;margin:0;padding:6px 12px;font-size:11px}
+    .badge-active::before{background:#22c55e}
+    .badge-revoked{background:#f1f5f9;color:var(--muted)}
+    .badge-revoked::before{background:#94a3b8}
+    .row-actions{display:flex;gap:6px}
+    .row-actions button{width:auto;margin:0;padding:6px 13px;font-size:11px}
+    .delete-btn{color:#dc2626;border-color:#fecaca}
+    .delete-btn:hover{border-color:#dc2626;background:#fef2f2;color:#dc2626}
+
+    /* Confirm modal */
+    .modal-overlay{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:rgb(15 23 42 / .45);backdrop-filter:blur(2px);padding:20px}
+    .modal-overlay.show{display:flex}
+    .modal-card{width:100%;max-width:380px;background:var(--surface);border-radius:16px;padding:28px;box-shadow:0 30px 60px -20px rgb(15 23 42 / .35)}
+    .modal-card h3{font-size:16px;margin-bottom:10px}
+    .modal-card p{color:var(--muted);font-size:13px;line-height:1.65;margin-bottom:24px}
+    .modal-card p code{font-weight:700;color:var(--ink)}
+    .modal-actions{display:flex;gap:10px;justify-content:flex-end}
+    .modal-actions button{width:auto;margin:0;padding:10px 18px;font-size:12px}
+    .btn-danger{background:linear-gradient(135deg,#ef4444,#dc2626)!important;box-shadow:0 8px 20px -8px rgb(220 38 38 / .45)!important}
+
+    /* Toast */
+    .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(16px);z-index:60;display:flex;align-items:center;gap:8px;padding:13px 20px;border-radius:11px;font-size:13px;font-weight:600;color:#fff;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 14px 30px -10px rgb(15 23 42 / .35)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .toast.ok{background:#16a34a}
+    .toast.error{background:#dc2626}
   </style>
 </head>
 <body>
-  <div class="admin-shell">
-
-    <div class="admin-card" id="login-card">
-      <h1>Đăng nhập quản trị</h1>
-      <p class="hint">Nhập mật khẩu quản trị để vào trang quản lý mã truy cập. Không chia sẻ mật khẩu này.</p>
-      <form id="login-form">
-        <div class="field">
-          <label for="login-key">Mật khẩu quản trị</label>
-          <input type="password" id="login-key" autocomplete="off" required>
-        </div>
-        <button type="submit" class="primary-button" id="login-btn">Đăng nhập <span>›</span></button>
-      </form>
-      <p class="msg" id="login-msg"></p>
+  <header class="admin-topbar">
+    <div class="admin-topbar-inner">
+      <span class="brand" style="font-size:16px"><img class="brand-mark" style="height:26px" src="../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></span>
+      <span class="admin-pill">QUẢN TRỊ</span>
+      <button type="button" class="outline-button" id="logout-btn" style="display:none">Đăng xuất</button>
     </div>
+  </header>
 
-    <div id="dashboard" style="display:none">
-      <div class="dashboard-header">
-        <h1>Quản lý mã truy cập</h1>
-        <button type="button" class="outline-button" id="logout-btn">Đăng xuất</button>
-      </div>
+  <main class="admin-main">
 
-      <div class="admin-card">
-        <h2>Tạo mã mới</h2>
-        <form id="generate-form">
+    <section class="login-wrap" id="login-view">
+      <div class="login-card">
+        <div class="login-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </div>
+        <span class="eyebrow">KHU VỰC NỘI BỘ</span>
+        <h1>Đăng nhập quản trị</h1>
+        <p class="hint">Nhập mật khẩu quản trị để vào trang quản lý mã truy cập. Không chia sẻ mật khẩu này với người khác.</p>
+        <form id="login-form">
           <div class="field">
-            <label for="course">Môn học</label>
-            <select id="course" required>
-              <option value="IT004">IT004</option>
-              <option value="IS201">IS201</option>
-              <option value="IS208">IS208</option>
-              <option value="IS210">IS210</option>
-              <option value="IS336">IS336</option>
-              <option value="IS355">IS355</option>
-            </select>
+            <label for="login-key">Mật khẩu quản trị</label>
+            <input type="password" id="login-key" autocomplete="off" required>
           </div>
-          <div class="field">
-            <label for="note">Ghi chú (tùy chọn)</label>
-            <input type="text" id="note" placeholder="Ví dụ: Lớp thực hành thứ Ba - Tuần 2">
-          </div>
-          <button type="submit" class="primary-button" id="submit-btn">Tạo mã <span>›</span></button>
+          <button type="submit" class="primary-button" id="login-btn">Đăng nhập <span>›</span></button>
         </form>
+        <p class="msg" id="login-msg"></p>
+      </div>
+    </section>
 
-        <div class="result" id="result">
-          <code id="result-code"></code>
-          <div class="result-actions">
-            <button type="button" class="outline-button" id="copy-btn">Sao chép</button>
+    <section id="dashboard" style="display:none">
+      <div class="dash-head">
+        <span class="eyebrow">QUẢN LÝ MÃ TRUY CẬP</span>
+        <h1>Access Code Dashboard</h1>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card stat-total">
+          <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+          <div><strong id="stat-total">0</strong><span>Tổng số mã</span></div>
+        </div>
+        <div class="stat-card stat-active">
+          <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.5 2.5 5-5"/></svg></div>
+          <div><strong id="stat-active">0</strong><span>Đang hoạt động</span></div>
+        </div>
+        <div class="stat-card stat-revoked">
+          <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5l5 5M14.5 9.5l-5 5"/></svg></div>
+          <div><strong id="stat-revoked">0</strong><span>Đã vô hiệu hóa</span></div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="panel-card">
+          <h2><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></span>Tạo mã mới</h2>
+          <form id="generate-form">
+            <div class="field">
+              <label for="course">Môn học</label>
+              <select id="course" required>
+                <option value="IT004">IT004</option>
+                <option value="IS201">IS201</option>
+                <option value="IS208">IS208</option>
+                <option value="IS210">IS210</option>
+                <option value="IS336">IS336</option>
+                <option value="IS355">IS355</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="note">Ghi chú (tùy chọn)</label>
+              <input type="text" id="note" placeholder="Ví dụ: Lớp thực hành thứ Ba - Tuần 2">
+            </div>
+            <button type="submit" class="primary-button" id="submit-btn">Tạo mã <span>›</span></button>
+          </form>
+
+          <div class="result" id="result">
+            <code id="result-code"></code>
+            <div class="result-actions">
+              <button type="button" class="outline-button" id="copy-btn">Sao chép</button>
+            </div>
+          </div>
+          <p class="msg" id="msg"></p>
+        </div>
+
+        <div class="panel-card list-panel">
+          <div class="list-head">
+            <h2 style="margin:0"><span class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></span>Danh sách mã</h2>
+            <button type="button" class="outline-button" id="refresh-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>
+              Làm mới
+            </button>
+          </div>
+          <p class="list-empty" id="list-empty">Chưa có mã nào.</p>
+          <div class="table-wrap">
+            <table id="codes-table" style="display:none">
+              <thead><tr><th>Mã</th><th>Môn</th><th>Trạng thái</th><th>Ghi chú</th><th></th></tr></thead>
+              <tbody id="codes-tbody"></tbody>
+            </table>
           </div>
         </div>
-        <p class="msg" id="msg"></p>
       </div>
+    </section>
 
-      <div class="admin-card list-card">
-        <div class="list-header">
-          <h2>Mã đã tạo</h2>
-          <button type="button" class="outline-button" id="refresh-btn">Làm mới</button>
-        </div>
-        <p class="list-empty" id="list-empty">Chưa có mã nào.</p>
-        <div class="table-wrap">
-          <table id="codes-table" style="display:none">
-            <thead><tr><th>Mã</th><th>Môn</th><th>Trạng thái</th><th>Ghi chú</th><th></th></tr></thead>
-            <tbody id="codes-tbody"></tbody>
-          </table>
-        </div>
+  </main>
+
+  <div class="modal-overlay" id="confirm-overlay">
+    <div class="modal-card">
+      <h3 id="confirm-title">Xác nhận</h3>
+      <p id="confirm-message"></p>
+      <div class="modal-actions">
+        <button type="button" class="outline-button" id="confirm-cancel">Hủy</button>
+        <button type="button" class="primary-button" id="confirm-ok">Xác nhận</button>
       </div>
     </div>
-
   </div>
+
+  <div class="toast" id="toast"></div>
 
   <script>
     var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzl_MDfTRkxNExa--NscWG4HPI7ioAN0QImDGLDyk66UFuXaUo1Zrwi_qvwoIjrS5Vu/exec';
@@ -148,7 +254,62 @@
       });
     }
 
-    var loginCard = document.getElementById('login-card');
+    var confirmOverlay = document.getElementById('confirm-overlay');
+    var confirmTitle = document.getElementById('confirm-title');
+    var confirmMessage = document.getElementById('confirm-message');
+    var confirmOkBtn = document.getElementById('confirm-ok');
+    var confirmCancelBtn = document.getElementById('confirm-cancel');
+    var toastEl = document.getElementById('toast');
+    var toastTimer;
+
+    function showConfirm(opts) {
+      confirmTitle.textContent = opts.title || 'Xác nhận';
+      confirmMessage.innerHTML = opts.message || '';
+      confirmOkBtn.textContent = opts.okLabel || 'Xác nhận';
+      confirmOkBtn.className = opts.danger ? 'primary-button btn-danger' : 'primary-button';
+      confirmOverlay.classList.add('show');
+
+      return new Promise(function (resolve) {
+        function cleanup(result) {
+          confirmOverlay.classList.remove('show');
+          confirmOkBtn.removeEventListener('click', onOk);
+          confirmCancelBtn.removeEventListener('click', onCancel);
+          confirmOverlay.removeEventListener('click', onOverlayClick);
+          resolve(result);
+        }
+        function onOk() { cleanup(true); }
+        function onCancel() { cleanup(false); }
+        function onOverlayClick(e) { if (e.target === confirmOverlay) cleanup(false); }
+        confirmOkBtn.addEventListener('click', onOk);
+        confirmCancelBtn.addEventListener('click', onCancel);
+        confirmOverlay.addEventListener('click', onOverlayClick);
+      });
+    }
+
+    function showToast(message, type) {
+      clearTimeout(toastTimer);
+      toastEl.textContent = message;
+      toastEl.className = 'toast show ' + (type || 'ok');
+      toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 3200);
+    }
+
+    function callCodeAction(action, code, successMsg, failMsg) {
+      var url = APPS_SCRIPT_URL + '?action=' + action +
+        '&key=' + encodeURIComponent(currentKey) +
+        '&code=' + encodeURIComponent(code);
+      jsonp(url).then(function (data) {
+        if (data.ok) {
+          showToast(successMsg, 'ok');
+          loadList();
+        } else {
+          showToast(data.message || failMsg, 'error');
+        }
+      }).catch(function () {
+        showToast('Không thể kết nối máy chủ. Vui lòng thử lại.', 'error');
+      });
+    }
+
+    var loginView = document.getElementById('login-view');
     var loginForm = document.getElementById('login-form');
     var loginKeyInput = document.getElementById('login-key');
     var loginBtn = document.getElementById('login-btn');
@@ -166,17 +327,22 @@
     var listEmpty = document.getElementById('list-empty');
     var codesTable = document.getElementById('codes-table');
     var codesTbody = document.getElementById('codes-tbody');
+    var statTotal = document.getElementById('stat-total');
+    var statActive = document.getElementById('stat-active');
+    var statRevoked = document.getElementById('stat-revoked');
 
     function showDashboard(key) {
       currentKey = key;
-      loginCard.style.display = 'none';
+      loginView.style.display = 'none';
       dashboard.style.display = 'block';
+      logoutBtn.style.display = 'inline-flex';
     }
 
     function showLogin(message) {
       currentKey = '';
       dashboard.style.display = 'none';
-      loginCard.style.display = 'block';
+      loginView.style.display = 'flex';
+      logoutBtn.style.display = 'none';
       loginMsg.textContent = message || '';
       loginMsg.className = message ? 'msg error' : 'msg';
     }
@@ -224,6 +390,10 @@
     } catch (e) {}
 
     function renderList(codes) {
+      statTotal.textContent = codes.length;
+      statActive.textContent = codes.filter(function (c) { return String(c.status).toLowerCase() === 'active'; }).length;
+      statRevoked.textContent = codes.filter(function (c) { return String(c.status).toLowerCase() !== 'active'; }).length;
+
       codesTbody.innerHTML = '';
       if (!codes.length) {
         codesTable.style.display = 'none';
@@ -242,15 +412,29 @@
           '<td><span class="badge ' + (isActive ? 'badge-active' : 'badge-revoked') + '">' +
             (isActive ? 'Active' : 'Revoked') + '</span></td>' +
           '<td>' + escapeHtml(c.note) + '</td>' +
-          '<td></td>';
+          '<td><div class="row-actions"></div></td>';
+
+        var actions = tr.querySelector('.row-actions');
+
+        var toggleBtn = document.createElement('button');
+        toggleBtn.type = 'button';
+        toggleBtn.className = 'outline-button';
         if (isActive) {
-          var btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'outline-button revoke-btn';
-          btn.textContent = 'Vô hiệu hóa';
-          btn.addEventListener('click', function () { revokeCode(c.code); });
-          tr.lastElementChild.appendChild(btn);
+          toggleBtn.textContent = 'Vô hiệu hóa';
+          toggleBtn.addEventListener('click', function () { revokeCode(c.code); });
+        } else {
+          toggleBtn.textContent = 'Khôi phục';
+          toggleBtn.addEventListener('click', function () { restoreCode(c.code); });
         }
+        actions.appendChild(toggleBtn);
+
+        var deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'outline-button delete-btn';
+        deleteBtn.textContent = 'Xóa';
+        deleteBtn.addEventListener('click', function () { deleteCode(c.code); });
+        actions.appendChild(deleteBtn);
+
         codesTbody.appendChild(tr);
       });
     }
@@ -272,18 +456,45 @@
     }
 
     function revokeCode(code) {
-      if (!confirm('Vô hiệu hóa mã ' + code + '?')) return;
-      jsonp(APPS_SCRIPT_URL + '?action=revoke&key=' + encodeURIComponent(currentKey) + '&code=' + encodeURIComponent(code))
-        .then(function (data) {
-          if (data.ok) {
-            loadList();
-          } else {
-            alert(data.message || 'Không vô hiệu hóa được mã.');
-          }
-        })
-        .catch(function () {
-          alert('Không thể kết nối máy chủ. Vui lòng thử lại.');
+      showConfirm({
+        title: 'Vô hiệu hóa mã',
+        message: 'Vô hiệu hóa mã <code>' + escapeHtml(code) + '</code>? Mã sẽ không dùng được nữa, nhưng bạn có thể khôi phục lại sau.',
+        okLabel: 'Vô hiệu hóa'
+      }).then(function (confirmed) {
+        if (!confirmed) return;
+        callCodeAction('revoke', code, 'Đã vô hiệu hóa mã ' + code + '.', 'Không vô hiệu hóa được mã.');
+      });
+    }
+
+    function restoreCode(code) {
+      showConfirm({
+        title: 'Khôi phục mã',
+        message: 'Khôi phục mã <code>' + escapeHtml(code) + '</code> về trạng thái hoạt động?',
+        okLabel: 'Khôi phục'
+      }).then(function (confirmed) {
+        if (!confirmed) return;
+        callCodeAction('restore', code, 'Đã khôi phục mã ' + code + '.', 'Không khôi phục được mã.');
+      });
+    }
+
+    function deleteCode(code) {
+      showConfirm({
+        title: 'Xóa vĩnh viễn mã',
+        message: 'Xóa hẳn mã <code>' + escapeHtml(code) + '</code> khỏi hệ thống? Hành động này không thể hoàn tác.',
+        okLabel: 'Tiếp tục xóa',
+        danger: true
+      }).then(function (confirmed) {
+        if (!confirmed) return;
+        showConfirm({
+          title: 'Xác nhận lần cuối',
+          message: 'Bạn có chắc chắn muốn xóa vĩnh viễn mã <code>' + escapeHtml(code) + '</code>? Không thể khôi phục sau khi xóa.',
+          okLabel: 'Xóa vĩnh viễn',
+          danger: true
+        }).then(function (confirmedAgain) {
+          if (!confirmedAgain) return;
+          callCodeAction('delete', code, 'Đã xóa mã ' + code + '.', 'Không xóa được mã.');
         });
+      });
     }
 
     refreshBtn.addEventListener('click', loadList);

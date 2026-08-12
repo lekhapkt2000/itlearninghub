@@ -52,6 +52,10 @@ function doGet(e) {
     result = handleList(e.parameter);
   } else if (action === 'revoke') {
     result = handleRevoke(e.parameter);
+  } else if (action === 'restore') {
+    result = handleRestore(e.parameter);
+  } else if (action === 'delete') {
+    result = handleDelete(e.parameter);
   } else {
     result = { ok: false, message: 'Unknown action' };
   }
@@ -108,11 +112,19 @@ function handleList(params) {
 }
 
 function handleRevoke(params) {
+  return setCodeStatus(params, 'Revoked', 'Thiếu mã cần vô hiệu hóa.');
+}
+
+function handleRestore(params) {
+  return setCodeStatus(params, 'Active', 'Thiếu mã cần khôi phục.');
+}
+
+function setCodeStatus(params, status, missingCodeMessage) {
   var keyError = checkAdminKey(params);
   if (keyError) return { ok: false, message: keyError };
 
   var code = String(params.code || '').trim().toUpperCase();
-  if (!code) return { ok: false, message: 'Thiếu mã cần thu hồi.' };
+  if (!code) return { ok: false, message: missingCodeMessage };
 
   var sheet = getSheet(CODES_SHEET);
   var rows = sheet.getDataRange().getValues();
@@ -122,7 +134,28 @@ function handleRevoke(params) {
 
   for (var i = 1; i < rows.length; i++) {
     if (String(rows[i][idxCode]).trim().toUpperCase() === code) {
-      sheet.getRange(i + 1, idxStatus + 1).setValue('Revoked');
+      sheet.getRange(i + 1, idxStatus + 1).setValue(status);
+      return { ok: true };
+    }
+  }
+  return { ok: false, message: 'Không tìm thấy mã.' };
+}
+
+function handleDelete(params) {
+  var keyError = checkAdminKey(params);
+  if (keyError) return { ok: false, message: keyError };
+
+  var code = String(params.code || '').trim().toUpperCase();
+  if (!code) return { ok: false, message: 'Thiếu mã cần xóa.' };
+
+  var sheet = getSheet(CODES_SHEET);
+  var rows = sheet.getDataRange().getValues();
+  var header = rows[0];
+  var idxCode = header.indexOf('code');
+
+  for (var i = 1; i < rows.length; i++) {
+    if (String(rows[i][idxCode]).trim().toUpperCase() === code) {
+      sheet.deleteRow(i + 1);
       return { ok: true };
     }
   }

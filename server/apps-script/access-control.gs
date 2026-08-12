@@ -30,7 +30,7 @@
  * below opens the sheet explicitly by ID instead.
  */
 
-var SPREADSHEET_ID = 'PASTE_YOUR_SPREADSHEET_ID_HERE';
+var SPREADSHEET_ID = '1yGco2Xf0SfFASmlxwFj2ZdoqtvDPCfvQsrypv04vsDM';
 
 var CODES_SHEET = 'ACCESS_CODES';
 var CODES_HEADERS = ['code', 'course', 'status', 'created_at', 'created_by', 'note'];

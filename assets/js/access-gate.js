@@ -2,7 +2,7 @@
   // TODO: replace with your deployed Google Apps Script Web App URL
   // (script.google.com > Deploy > New deployment > Web app >
   //  Execute as: Me, Who has access: Anyone > copy the /exec URL here)
-  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/REPLACE_WITH_YOUR_DEPLOYMENT_ID/exec';
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzl_MDfTRkxNExa--NscWG4HPI7ioAN0QImDGLDyk66UFuXaUo1Zrwi_qvwoIjrS5Vu/exec';
 
   document.querySelectorAll('.access-gate').forEach(function (gate) {
     var course = gate.dataset.accessCourse || '';

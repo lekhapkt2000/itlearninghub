@@ -39,15 +39,45 @@
     <div class="lesson-content" style="max-width:1000px;margin:0 auto">
 
       <section class="lesson-section" style="padding-top:0;border-top:0" id="de-bai">
-        <p class="eyebrow">ĐỀ BÀI</p>
-        <h2>Quản lý bán hàng - Câu 1 → 17</h2>
-        <p>Theo tài liệu hướng dẫn Tuần 2, sử dụng Microsoft SQL Server để thực hiện <strong>Phần III - Câu 1 đến câu 17</strong>. Tự làm trước khi xem gợi ý/đáp án. Đề bài chi tiết trong file PDF bên dưới.</p>
+        <p class="eyebrow">ĐỀ BÀI · PHẦN III - NGÔN NGỮ TRUY VẤN DỮ LIỆU</p>
+        <h2>Quản lý bán hàng - Câu 1 → 25</h2>
+        <p>Sử dụng các câu lệnh SQL trong SQL Server Management Studio để thực hiện 25 câu truy vấn dưới đây trên lược đồ <strong>Quản lý bán hàng</strong>. Tự làm trước khi xem đáp án.</p>
+
+        <div class="inline-warning"><strong>Yêu cầu nộp bài:</strong> Lưu bài làm trong 1 file script tên <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH2.sql</code> (MSSV là mã số sinh viên, HoVaTen là họ và tên).</div>
+
+        <ol>
+          <li>In ra danh sách các sản phẩm (MASP, TENSP) do "Trung Quoc" sản xuất.</li>
+          <li>In ra danh sách các sản phẩm (MASP, TENSP) có đơn vị tính là "cay", "quyen".</li>
+          <li>In ra danh sách các sản phẩm (MASP, TENSP) có mã sản phẩm bắt đầu là "B" và kết thúc là "01".</li>
+          <li>In ra danh sách các sản phẩm (MASP, TENSP) do "Trung Quoc" sản xuất có giá từ 30.000 đến 40.000.</li>
+          <li>In ra danh sách các sản phẩm (MASP, TENSP) do "Trung Quoc" hoặc "Thai Lan" sản xuất có giá từ 30.000 đến 40.000.</li>
+          <li>In ra các số hóa đơn, trị giá hóa đơn bán ra trong ngày 1/1/2007 và ngày 2/1/2007.</li>
+          <li>In ra các số hóa đơn, trị giá hóa đơn trong tháng 1/2007, sắp xếp theo ngày (tăng dần) và trị giá của hóa đơn (giảm dần).</li>
+          <li>In ra danh sách các khách hàng (MAKH, HOTEN) đã mua hàng trong ngày 1/1/2007.</li>
+          <li>In ra số hóa đơn, trị giá các hóa đơn do nhân viên có tên "Nguyen Van B" lập trong ngày 28/10/2006.</li>
+          <li>In ra danh sách các sản phẩm (MASP, TENSP) được khách hàng có tên "Nguyen Van A" mua trong tháng 10/2006.</li>
+          <li>Tìm các số hóa đơn đã mua sản phẩm có mã số "BB01" hoặc "BB02".</li>
+          <li>Tìm các số hóa đơn đã mua sản phẩm có mã số "BB01" hoặc "BB02", mỗi sản phẩm mua với số lượng từ 10 đến 20.</li>
+          <li>Tìm các số hóa đơn mua cùng lúc 2 sản phẩm có mã số "BB01" và "BB02", mỗi sản phẩm mua với số lượng từ 10 đến 20.</li>
+          <li>In ra danh sách các sản phẩm (MASP, TENSP) do "Trung Quoc" sản xuất hoặc các sản phẩm được bán ra trong ngày 1/1/2007.</li>
+          <li>In ra danh sách các sản phẩm (MASP, TENSP) không bán được.</li>
+          <li>In ra danh sách các sản phẩm (MASP, TENSP) không bán được trong năm 2006.</li>
+          <li>In ra danh sách các sản phẩm (MASP, TENSP) do "Trung Quoc" sản xuất không bán được trong năm 2006.</li>
+          <li>Thống kê số lượng hóa đơn do mỗi nhân viên lập trong năm 2006, hiển thị (MANV, HOTEN, SoLuongHD).</li>
+          <li>In ra danh sách nhân viên và tổng số khách hàng khác nhau mà họ đã bán hàng cho trong năm 2006.</li>
+          <li>Liệt kê sản phẩm (MASP, TENSP) có tổng số lượng bán ra nhiều nhất trong năm 2006.</li>
+          <li>Tìm nhân viên có doanh số bán hàng cao nhất trong tháng 10/2006.</li>
+          <li>In ra danh sách sản phẩm không bán được trong năm 2007 nhưng có bán trong năm 2006.</li>
+          <li>Liệt kê danh sách sản phẩm (MASP, TENSP) được bán bởi ít nhất 2 nhân viên khác nhau.</li>
+          <li>In ra danh sách khách hàng không mua sản phẩm nào do Thái Lan sản xuất.</li>
+          <li>Tìm hóa đơn có trị giá lớn nhất trong năm 2006, in ra (SOHD, NGHD, TRIGIA).</li>
+        </ol>
 
         <div class="download-card">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
           <div class="download-card-body">
             <strong>Đề bài đầy đủ - Bài tập thực hành Tuần 2 (BTTH2)</strong>
-            <span>File PDF · câu 1 đến câu 17, Phần III Quản lý bán hàng</span>
+            <span>File PDF · câu 1 đến câu 25, Phần III Quản lý bán hàng</span>
           </div>
           <a class="dark-button" href="../../assets/file/BTTH2-tuan2-co-so-du-lieu.pdf" download>Tải file <span>↓</span></a>
         </div>
@@ -60,9 +90,9 @@
         <div class="extra-divider">TỰ THEO DÕI TIẾN ĐỘ</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Câu</th><th>Trạng thái</th></tr>
-          <tr><td>01 – 17</td><td>☐ Chưa hoàn thành</td></tr>
+          <tr><td>01 – 25</td><td>☐ Chưa hoàn thành</td></tr>
         </table></div>
-        <div class="inline-ok"><strong>Cách làm:</strong> Tự viết câu SQL trước, sau đó mới mở gợi ý hoặc đáp án tham khảo - Không xem đáp án ngay để đảm bảo hiệu quả luyện tập.</div>
+        <div class="inline-ok"><strong>Cách làm:</strong> Tự viết câu SQL trước, sau đó mới mở đáp án tham khảo - Không xem đáp án ngay để đảm bảo hiệu quả luyện tập.</div>
       </section>
 
       <section class="lesson-section" id="dap-an">
@@ -84,43 +114,363 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 2.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Bên dưới là câu hỏi mẫu để minh họa cách trình bày đáp án - sẽ được thay bằng lời giải thật của BTTH2.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án cho Câu 1 → 23. Câu 24 và Câu 25 sẽ được bổ sung sau.</p>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 1 (MẪU) · WHERE &amp; ORDER BY</p>
-              <h3>Lọc và sắp xếp học viên theo số buổi tập</h3>
-              <p><strong>Đề bài:</strong> Liệt kê họ tên và số buổi tập của các học viên có <code>SoBuoiTap &gt; 10</code>, sắp xếp giảm dần theo số buổi tập.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, SoBuoiTap
-FROM HocVien
-WHERE SoBuoiTap > 10
-ORDER BY SoBuoiTap DESC;</code></pre></div>
+              <p class="eyebrow">CÂU 1 · WHERE</p>
+              <h3>Sản phẩm do Trung Quoc sản xuất</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX = 'Trung Quoc';</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>WHERE</code> lọc ra các dòng thỏa điều kiện trước khi trả kết quả; <code>ORDER BY ... DESC</code> sắp xếp kết quả theo thứ tự giảm dần.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Lọc trước bằng <code>WHERE</code> giúp giảm số dòng cần sắp xếp. Dùng <code>DESC</code> vì đề yêu cầu "giảm dần" - học viên tập nhiều nhất hiện lên đầu.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>WHERE</code> lọc theo đúng 1 điều kiện so sánh bằng trên cột <code>NUOCSX</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề chỉ yêu cầu 1 điều kiện duy nhất nên so sánh bằng là đủ, không cần kỹ thuật phức tạp hơn.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 2 (MẪU) · LEFT JOIN</p>
-              <h3>Lấy học viên kèm lớp đang đăng ký (kể cả chưa đăng ký)</h3>
-              <p><strong>Đề bài:</strong> Liệt kê họ tên học viên kèm tên lớp đang đăng ký, <strong>kể cả</strong> những học viên chưa đăng ký lớp nào.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.HoTen, lt.TenLop
-FROM HocVien hv
-LEFT JOIN DangKy dk ON hv.MaHV = dk.MaHV
-LEFT JOIN LopTap lt ON dk.MaLop = lt.MaLop;</code></pre></div>
+              <p class="eyebrow">CÂU 2 · IN</p>
+              <h3>Sản phẩm có đơn vị tính "cay" hoặc "quyen"</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE DVT IN ('cay', 'quyen');</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LEFT JOIN</code> giữ lại toàn bộ dòng ở bảng bên trái (<code>HocVien</code>) kể cả khi không khớp được dòng nào ở bảng bên phải.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề yêu cầu "kể cả chưa đăng ký" nên phải dùng <code>LEFT JOIN</code> - nếu dùng <code>INNER JOIN</code>, các học viên chưa đăng ký lớp nào sẽ bị loại khỏi kết quả.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>IN</code> kiểm tra giá trị có nằm trong một danh sách cho trước hay không.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Dùng <code>IN</code> gọn hơn khi so sánh 1 cột với nhiều giá trị rời rạc - tương đương nhưng dễ đọc hơn chuỗi <code>OR</code> liên tiếp.</p></div>
+              </div>
+              <details><summary>Cách khác</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE DVT = 'cay' OR DVT = 'quyen';</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 3 · LIKE</p>
+              <h3>Mã sản phẩm bắt đầu "B", kết thúc "01"</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE MASP LIKE 'B%01';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LIKE</code> khớp mẫu chuỗi; <code>%</code> đại diện cho bất kỳ chuỗi ký tự nào (kể cả rỗng) nằm giữa "B" và "01".</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề yêu cầu điều kiện vị trí ký tự đầu/cuối, không phải so sánh bằng chính xác, nên phải dùng <code>LIKE</code> thay vì <code>=</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 4 · BETWEEN</p>
+              <h3>Sản phẩm Trung Quoc, giá 30.000 - 40.000</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX = 'Trung Quoc' AND (GIA BETWEEN 30000 AND 40000);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>BETWEEN a AND b</code> tương đương <code>&gt;= a AND &lt;= b</code>, kiểm tra giá trị nằm trong khoảng đóng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>BETWEEN</code> ngắn gọn hơn khi cần lọc khoảng giá trị liên tục như <code>GIA</code> từ 30.000 đến 40.000.</p></div>
+              </div>
+              <details><summary>Cách khác</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX = 'Trung Quoc' AND (GIA >= 30000 AND GIA <= 40000);</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 5 · IN + BETWEEN</p>
+              <h3>Sản phẩm Trung Quoc hoặc Thai Lan, giá 30.000 - 40.000</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX IN ('Trung Quoc', 'Thai Lan') AND (GIA BETWEEN 30000 AND 40000);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Kết hợp <code>IN</code> (nhiều giá trị nước sản xuất) và <code>BETWEEN</code> (khoảng giá) bằng <code>AND</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>2 điều kiện độc lập (nước SX và khoảng giá) đều phải đúng cùng lúc nên nối bằng <code>AND</code>; mỗi điều kiện lại rút gọn bằng <code>IN</code>/<code>BETWEEN</code> thay vì <code>OR</code>/so sánh dài dòng.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 6 · IN theo ngày</p>
+              <h3>Hóa đơn bán ngày 1/1/2007 và 2/1/2007</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, TRIGIA
+FROM HOADON
+WHERE NGHD IN ('1/1/2007', '2/1/2007');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>So sánh cột <code>NGHD</code> (kiểu ngày) với danh sách 2 giá trị ngày cụ thể.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>IN</code> thay thế <code>OR</code> khi so sánh cùng 1 cột với nhiều giá trị rời rạc - áp dụng được cho cả cột kiểu ngày, không chỉ chuỗi hay số.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 7 · YEAR/MONTH + ORDER BY nhiều cột</p>
+              <h3>Hóa đơn tháng 1/2007, sắp xếp ngày tăng - trị giá giảm</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, NGHD, TRIGIA
+FROM HOADON
+WHERE YEAR(NGHD) = 2007 AND MONTH(NGHD) = 1
+ORDER BY NGHD ASC, TRIGIA DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>YEAR()</code>/<code>MONTH()</code> trích xuất năm/tháng từ giá trị ngày; <code>ORDER BY</code> có thể sắp theo nhiều cột, mỗi cột 1 chiều tăng/giảm riêng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Lọc "tháng 1/2007" cần tách năm và tháng vì <code>NGHD</code> lưu ngày đầy đủ. Sắp xếp 2 tiêu chí khác chiều (ngày tăng, trị giá giảm) nên phải khai báo <code>ASC</code>/<code>DESC</code> riêng cho từng cột trong cùng <code>ORDER BY</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 8 · JOIN</p>
+              <h3>Khách hàng đã mua ngày 1/1/2007</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.MAKH, HOTEN
+FROM KHACHHANG kh JOIN HOADON hd ON kh.MAKH = hd.MAKH
+WHERE NGHD = '1/1/2007';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN</code> kết hợp <code>KHACHHANG</code> với <code>HOADON</code> qua <code>MAKH</code> để lấy được <code>HOTEN</code> của khách đã có hóa đơn đúng ngày.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Thông tin cần lấy (<code>HOTEN</code>) nằm ở <code>KHACHHANG</code> còn điều kiện lọc (<code>NGHD</code>) nằm ở <code>HOADON</code> - phải <code>JOIN</code> 2 bảng mới truy vấn được cùng lúc.</p></div>
+              </div>
+              <details><summary>Cách khác</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAKH, HOTEN
+FROM KHACHHANG
+WHERE MAKH IN (SELECT MAKH
+                FROM HOADON
+                WHERE NGHD = '1/1/2007');</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 9 · JOIN lọc theo tên nhân viên</p>
+              <h3>Hóa đơn do "Nguyen Van B" lập ngày 28/10/2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, TRIGIA
+FROM HOADON hd JOIN NHANVIEN nv ON hd.MANV = nv.MANV
+WHERE HOTEN = 'Nguyen Van B' AND NGHD = '28/10/2006';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN HOADON</code> với <code>NHANVIEN</code> qua <code>MANV</code> để lọc theo họ tên nhân viên.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>HOADON</code> chỉ lưu <code>MANV</code> (mã), không lưu tên nhân viên - phải <code>JOIN</code> sang <code>NHANVIEN</code> mới lọc được theo tên "Nguyen Van B".</p></div>
+              </div>
+              <details><summary>Cách khác</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, TRIGIA
+FROM HOADON
+WHERE NGHD = '28/10/2006' AND MANV IN (SELECT MANV
+                                        FROM NHANVIEN
+                                        WHERE HOTEN = 'Nguyen Van B');</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 10 · JOIN 4 bảng</p>
+              <h3>Sản phẩm "Nguyen Van A" mua trong tháng 10/2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT sp.MASP, TENSP
+FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                JOIN HOADON hd ON hd.SOHD = ct.SOHD
+                JOIN KHACHHANG kh ON kh.MAKH = hd.MAKH
+WHERE HOTEN = 'Nguyen Van A' AND YEAR(NGHD) = 2006 AND MONTH(NGHD) = 10;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Nối liên tiếp 4 bảng (<code>SANPHAM → CTHD → HOADON → KHACHHANG</code>) theo đúng chuỗi khóa ngoại để đi từ "tên khách hàng" tới "sản phẩm đã mua".</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không có khóa ngoại trực tiếp giữa <code>KHACHHANG</code> và <code>SANPHAM</code> - phải đi qua <code>HOADON</code> và <code>CTHD</code> (bảng trung gian) mới liên kết được 2 bảng cách nhau 2 lớp quan hệ.</p></div>
+              </div>
+              <details><summary>Cách khác (subquery lồng)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE MASP IN (SELECT MASP
+                FROM CTHD
+                WHERE SOHD IN (SELECT SOHD
+                                FROM HOADON
+                                WHERE YEAR(NGHD) = 2006 AND MONTH(NGHD) = 10
+                                  AND MAKH IN (SELECT MAKH
+                                               FROM KHACHHANG
+                                               WHERE HOTEN = 'Nguyen Van A')));</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 11 · DISTINCT + IN</p>
+              <h3>Hóa đơn mua "BB01" hoặc "BB02"</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT SOHD
+FROM CTHD
+WHERE MASP IN ('BB01', 'BB02');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>DISTINCT</code> loại bỏ <code>SOHD</code> trùng lặp trong kết quả trả về.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>1 hóa đơn có thể mua cả BB01 và BB02 (2 dòng CTHD) - nếu không <code>DISTINCT</code>, hóa đơn đó sẽ lặp lại trong kết quả.</p></div>
+              </div>
+              <details><summary>Cách khác (UNION)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT SOHD FROM CTHD WHERE MASP = 'BB01')
+UNION
+(SELECT SOHD FROM CTHD WHERE MASP = 'BB02');</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 12 · thêm điều kiện số lượng</p>
+              <h3>Hóa đơn mua "BB01"/"BB02", số lượng 10-20</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT SOHD
+FROM CTHD
+WHERE MASP IN ('BB01', 'BB02') AND (SL BETWEEN 10 AND 20);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Thêm điều kiện <code>AND (SL BETWEEN 10 AND 20)</code> áp dụng cho từng dòng CTHD thỏa <code>MASP</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Điều kiện số lượng áp dụng riêng cho dòng chi tiết đang xét (không phải tổng số lượng), nên chỉ cần thêm <code>AND</code> vào cùng <code>WHERE</code>, không cần <code>GROUP BY</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 13 · INTERSECT</p>
+              <h3>Hóa đơn mua ĐỒNG THỜI cả "BB01" và "BB02", SL 10-20</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT SOHD FROM CTHD WHERE MASP = 'BB01' AND (SL BETWEEN 10 AND 20))
+INTERSECT
+(SELECT SOHD FROM CTHD WHERE MASP = 'BB02' AND (SL BETWEEN 10 AND 20));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>INTERSECT</code> trả về các dòng xuất hiện ở <strong>cả hai</strong> tập kết quả (phần giao của 2 tập <code>SOHD</code>).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Câu 11/12 dùng "hoặc" (<code>IN</code>) vì chỉ cần 1 trong 2 sản phẩm; câu này yêu cầu "đồng thời cả 2" nên phải lấy phần giao bằng <code>INTERSECT</code> - <code>IN</code>/<code>OR</code> không diễn tả được yêu cầu này.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 14 · UNION</p>
+              <h3>Sản phẩm Trung Quoc HOẶC bán ra ngày 1/1/2007</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT MASP, TENSP
+ FROM SANPHAM
+ WHERE NUOCSX = 'Trung Quoc')
+UNION
+(SELECT sp.MASP, TENSP
+ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                 JOIN HOADON hd ON hd.SOHD = ct.SOHD
+ WHERE NGHD = '1/1/2007');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>UNION</code> gộp 2 tập kết quả độc lập (sản phẩm theo nước SX, sản phẩm theo ngày bán) và tự loại trùng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>2 điều kiện thuộc 2 nhánh logic khác nhau (1 chỉ cần <code>SANPHAM</code>, 1 cần <code>JOIN</code> thêm <code>CTHD</code>/<code>HOADON</code>) nên tách thành 2 <code>SELECT</code> riêng rồi <code>UNION</code>, thay vì gộp chung 1 câu.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 15 · NOT IN</p>
+              <h3>Sản phẩm không bán được</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE MASP NOT IN (SELECT DISTINCT MASP FROM CTHD);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>NOT IN</code> loại các <code>MASP</code> đã từng xuất hiện trong <code>CTHD</code> (đã từng được bán).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Không bán được" nghĩa là <code>MASP</code> không tồn tại trong <code>CTHD</code> - phủ định của <code>IN</code> là <code>NOT IN</code>.</p></div>
+              </div>
+              <details><summary>Cách khác (EXCEPT)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT MASP, TENSP FROM SANPHAM)
+EXCEPT
+(SELECT DISTINCT ct.MASP, TENSP
+ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP);</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 16 · NOT IN lồng qua HOADON</p>
+              <h3>Sản phẩm không bán được trong năm 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE MASP NOT IN (SELECT DISTINCT MASP
+                    FROM CTHD
+                    WHERE SOHD IN (SELECT SOHD
+                                   FROM HOADON
+                                   WHERE YEAR(NGHD) = 2006));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery lồng 2 lớp: lớp trong lọc <code>SOHD</code> theo năm 2006, lớp ngoài lọc <code>MASP</code> theo các <code>SOHD</code> đó.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>CTHD</code> không có cột năm - phải lồng qua <code>HOADON</code> (nơi có <code>NGHD</code>) trước mới xác định được dòng <code>CTHD</code> nào thuộc năm 2006.</p></div>
+              </div>
+              <details><summary>Cách khác (EXCEPT)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT MASP, TENSP FROM SANPHAM)
+EXCEPT
+(SELECT DISTINCT ct.MASP, TENSP
+ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                 JOIN HOADON hd ON ct.SOHD = hd.SOHD
+ WHERE YEAR(NGHD) = 2006);</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 17 · kết hợp điều kiện với câu 16</p>
+              <h3>Sản phẩm Trung Quoc, không bán được năm 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX = 'Trung Quoc'
+  AND MASP NOT IN (SELECT DISTINCT MASP
+                    FROM CTHD
+                    WHERE SOHD IN (SELECT SOHD
+                                   FROM HOADON
+                                   WHERE YEAR(NGHD) = 2006));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Kết hợp điều kiện <code>NUOCSX</code> (trên <code>SANPHAM</code>) với điều kiện <code>NOT IN</code> subquery giống câu 16.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là câu 16 thu hẹp thêm 1 điều kiện (nước sản xuất) bằng <code>AND</code> - tái sử dụng đúng logic subquery đã có, không cần viết lại từ đầu.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 18 · GROUP BY + COUNT</p>
+              <h3>Số lượng hóa đơn mỗi nhân viên lập năm 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT nv.MANV, HOTEN, COUNT(*) AS SoLuongHD
+FROM NHANVIEN nv JOIN HOADON hd ON nv.MANV = hd.MANV
+WHERE YEAR(NGHD) = 2006
+GROUP BY nv.MANV, HOTEN;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY</code> gom các hóa đơn theo từng nhân viên; <code>COUNT(*)</code> đếm số dòng (số hóa đơn) trong mỗi nhóm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề yêu cầu số liệu "theo từng nhân viên" (không phải tổng toàn bộ) nên bắt buộc <code>GROUP BY</code> theo <code>MANV</code> (kèm <code>HOTEN</code> vì phụ thuộc hàm vào <code>MANV</code>).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 19 · COUNT DISTINCT</p>
+              <h3>Tổng số khách hàng khác nhau mỗi nhân viên đã bán năm 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT nv.MANV, nv.HOTEN, COUNT(DISTINCT hd.MAKH) AS TongSoKH
+FROM NHANVIEN nv JOIN HOADON hd ON nv.MANV = hd.MANV
+                 JOIN KHACHHANG kh ON kh.MAKH = hd.MAKH
+WHERE YEAR(NGHD) = 2006
+GROUP BY nv.MANV, nv.HOTEN;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>COUNT(DISTINCT ...)</code> đếm số giá trị <strong>khác nhau</strong>, bỏ qua trùng lặp.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>1 nhân viên có thể bán nhiều hóa đơn cho cùng 1 khách hàng - nếu <code>COUNT(*)</code> thường sẽ đếm trùng khách hàng đó nhiều lần, phải dùng <code>DISTINCT</code> để chỉ đếm mỗi khách 1 lần.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 20 · SUM + TOP WITH TIES</p>
+              <h3>Sản phẩm có tổng số lượng bán nhiều nhất năm 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES sp.MASP, TENSP, SUM(SL) AS TongSoLuong
+FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                JOIN HOADON hd ON hd.SOHD = ct.SOHD
+WHERE YEAR(NGHD) = 2006
+GROUP BY sp.MASP, TENSP
+ORDER BY TongSoLuong DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>SUM(SL)</code> cộng dồn số lượng theo từng sản phẩm; <code>TOP 1 WITH TIES</code> lấy dòng cao nhất và giữ luôn các dòng đồng hạng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải <code>SUM</code> vì đề hỏi "tổng số lượng bán", không phải số lần bán. Dùng <code>WITH TIES</code> để không bỏ sót trường hợp nhiều sản phẩm cùng bán nhiều nhất bằng nhau.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 21 · SUM trị giá</p>
+              <h3>Nhân viên có doanh số cao nhất tháng 10/2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES nv.MANV, HOTEN, SUM(TRIGIA) AS TongDoanhSo
+FROM NHANVIEN nv JOIN HOADON hd ON nv.MANV = hd.MANV
+WHERE MONTH(NGHD) = 10 AND YEAR(NGHD) = 2006
+GROUP BY nv.MANV, HOTEN
+ORDER BY TongDoanhSo DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>SUM(TRIGIA)</code> cộng tổng trị giá các hóa đơn theo từng nhân viên trong tháng 10/2006.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Doanh số" là tổng trị giá hóa đơn nhân viên đó lập, khác với câu 18 (đếm số lượng hóa đơn) - phải <code>SUM</code> cột tiền chứ không <code>COUNT</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 22 · EXCEPT</p>
+              <h3>Sản phẩm không bán 2007 nhưng có bán 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT sp.MASP, TENSP
+ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                 JOIN HOADON hd ON hd.SOHD = ct.SOHD
+ WHERE YEAR(NGHD) = 2006)
+EXCEPT
+(SELECT sp.MASP, TENSP
+ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                 JOIN HOADON hd ON hd.SOHD = ct.SOHD
+ WHERE YEAR(NGHD) = 2007);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>EXCEPT</code> lấy các dòng có trong tập thứ nhất nhưng <strong>không</strong> có trong tập thứ hai.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Yêu cầu "có ở 2006 nhưng không có ở 2007" đúng nghĩa phép trừ tập hợp - <code>EXCEPT</code> diễn đạt trực tiếp đúng ý này hơn viết bằng <code>NOT IN</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 23 · HAVING</p>
+              <h3>Sản phẩm được bán bởi ít nhất 2 nhân viên khác nhau</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT sp.MASP, TENSP, COUNT(DISTINCT MANV) AS SLNVBan
+FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                JOIN HOADON hd ON hd.SOHD = ct.SOHD
+GROUP BY sp.MASP, TENSP
+HAVING COUNT(DISTINCT MANV) >= 2;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>HAVING</code> lọc trên kết quả đã <code>GROUP BY</code> (khác <code>WHERE</code> - lọc trước khi gom nhóm).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Điều kiện "ít nhất 2 nhân viên khác nhau" chỉ tính được sau khi đã đếm <code>DISTINCT MANV</code> theo từng sản phẩm - nên phải lọc bằng <code>HAVING</code>, không thể dùng <code>WHERE</code>.</p></div>
               </div>
             </div>
 
             <div class="download-card">
               <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span>
               <div class="download-card-body">
-                <strong>Script đáp án đầy đủ (thử nghiệm)</strong>
-                <span>File .sql - Sẽ được cập nhật bằng script thật của BTTH2</span>
+                <strong>Script đáp án Câu 1 → 23</strong>
+                <span>File .sql - Câu 24, 25 sẽ được cập nhật sau</span>
               </div>
-              <a class="dark-button" href="#" onclick="return false">Tải script <span>↓</span></a>
+              <a class="dark-button" href="../../assets/file/BTTH2-dap-an-cau1-23.sql" download>Tải script <span>↓</span></a>
             </div>
 
             <button type="button" class="ghost-button access-logout">Đăng xuất khỏi khu vực này</button>

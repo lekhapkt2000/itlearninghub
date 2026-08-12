@@ -41,18 +41,120 @@
       <section class="lesson-section" style="padding-top:0;border-top:0" id="de-bai">
         <p class="eyebrow">ĐỀ BÀI</p>
         <h2>Trung tâm Thể dục Thể thao (TrungTam_TDTT)</h2>
-        <p><strong>Yêu cầu 1:</strong> Tạo CSDL <code>TrungTam_TDTT</code> với 6 quan hệ (PHONGTAP, HUANLUYENVIEN, HOCVIEN, LOPTAP, DANGKY, LICHTAP), khóa chính/khóa ngoại và dữ liệu mẫu.</p>
-        <p><strong>Yêu cầu 2:</strong> Theo đề bài giảng viên cung cấp.</p>
-        <p>Nộp 2 file script riêng: <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC1.sql</code> và <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC2.sql</code>.</p>
+        <p>Bài tập Tuần 1 gồm 2 yêu cầu độc lập, sử dụng SQL Server Management Studio để thực hiện. Mỗi yêu cầu nộp thành 1 file script riêng.</p>
+
+        <h3>Yêu cầu bài tập 1 - Thiết kế và nhập dữ liệu</h3>
+        <p>Cho lược đồ cơ sở dữ liệu "Quản lý Trung tâm Thể dục Thể thao" gồm 6 quan hệ sau:</p>
+
+        <div class="schema-def">
+          <p class="schema-def-head">PHONGTAP (<u>MAPH</u>, TENPHONG, DIACHI, SUCCHUA, TRANGTHAI)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin phòng tập: mã phòng, tên phòng, địa chỉ, sức chứa tối đa (số người) và trạng thái phòng (hoạt động, bảo trì, đóng cửa…).</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">HUANLUYENVIEN (<u>MAHLV</u>, HOTEN, CHUYENMON, SDT, EMAIL)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin huấn luyện viên: mã huấn luyện viên, họ tên, chuyên môn (Yoga, Gym,...), số điện thoại và email liên lạc.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">HOCVIEN (<u>MAHV</u>, HOTEN, NGSINH, SDT, DIACHI, GIOITINH, NGTG)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin học viên: mã học viên, họ tên, ngày sinh, số điện thoại, địa chỉ, giới tính (Nam, Nữ) và ngày bắt đầu tham gia là học viên.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">LOPTAP (<u>MALOP</u>, MAPH, MAHLV, TENLOP, NGAYBD, NGAYKT, TRANGTHAI)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin lớp tập: mã lớp, phòng tập diễn ra, huấn luyện viên phụ trách, tên lớp, ngày bắt đầu, ngày kết thúc và trạng thái lớp (đang hoạt động, đã kết thúc, tạm dừng…).</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">DANGKY (<u>MAHV, MALOP</u>, NGAYDK)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Chi tiết đăng ký: học viên nào đăng ký lớp tập nào, vào ngày nào.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">LICHTAP (<u>MALOP, NGAYTAP</u>, GIOBATDAU, GIOKETTHUC)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ lịch tập của từng lớp: ngày diễn ra buổi tập, giờ bắt đầu và giờ kết thúc.</p>
+        </div>
+
+        <p class="ascii-label">KIỂU DỮ LIỆU CHI TIẾT</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>PHONGTAP.MAPH</code></td><td><code>char(5)</code></td><td>Mã phòng tập - khóa chính</td></tr>
+          <tr><td><code>PHONGTAP.TENPHONG</code></td><td><code>varchar(50)</code></td><td>Tên phòng tập</td></tr>
+          <tr><td><code>PHONGTAP.DIACHI</code></td><td><code>varchar(100)</code></td><td>Địa chỉ phòng tập</td></tr>
+          <tr><td><code>PHONGTAP.SUCCHUA</code></td><td><code>int</code></td><td>Sức chứa tối đa (số người)</td></tr>
+          <tr><td><code>PHONGTAP.TRANGTHAI</code></td><td><code>varchar(20)</code></td><td>Trạng thái phòng (hoạt động, bảo trì, đóng cửa…)</td></tr>
+          <tr><td><code>HUANLUYENVIEN.MAHLV</code></td><td><code>char(5)</code></td><td>Mã huấn luyện viên - khóa chính</td></tr>
+          <tr><td><code>HUANLUYENVIEN.HOTEN</code></td><td><code>varchar(50)</code></td><td>Họ tên</td></tr>
+          <tr><td><code>HUANLUYENVIEN.CHUYENMON</code></td><td><code>varchar(50)</code></td><td>Chuyên môn (Yoga, Gym,...)</td></tr>
+          <tr><td><code>HUANLUYENVIEN.SDT</code></td><td><code>varchar(15)</code></td><td>Số điện thoại</td></tr>
+          <tr><td><code>HUANLUYENVIEN.EMAIL</code></td><td><code>varchar(50)</code></td><td>Email để liên lạc</td></tr>
+          <tr><td><code>HOCVIEN.MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính</td></tr>
+          <tr><td><code>HOCVIEN.HOTEN</code></td><td><code>varchar(50)</code></td><td>Họ tên</td></tr>
+          <tr><td><code>HOCVIEN.NGSINH</code></td><td><code>smalldatetime</code></td><td>Ngày sinh</td></tr>
+          <tr><td><code>HOCVIEN.SDT</code></td><td><code>varchar(15)</code></td><td>Số điện thoại</td></tr>
+          <tr><td><code>HOCVIEN.DIACHI</code></td><td><code>varchar(100)</code></td><td>Địa chỉ học viên</td></tr>
+          <tr><td><code>HOCVIEN.GIOITINH</code></td><td><code>varchar(10)</code></td><td>Giới tính học viên (Nam, Nữ)</td></tr>
+          <tr><td><code>HOCVIEN.NGTG</code></td><td><code>smalldatetime</code></td><td>Ngày bắt đầu tham gia là học viên</td></tr>
+          <tr><td><code>LOPTAP.MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính</td></tr>
+          <tr><td><code>LOPTAP.MAPH</code></td><td><code>char(5)</code></td><td>Mã phòng tập - khóa ngoại đến PHONGTAP</td></tr>
+          <tr><td><code>LOPTAP.MAHLV</code></td><td><code>char(5)</code></td><td>Mã huấn luyện viên - khóa ngoại đến HUANLUYENVIEN</td></tr>
+          <tr><td><code>LOPTAP.TENLOP</code></td><td><code>varchar(50)</code></td><td>Tên lớp tập</td></tr>
+          <tr><td><code>LOPTAP.NGAYBD</code></td><td><code>smalldatetime</code></td><td>Ngày bắt đầu lớp tập</td></tr>
+          <tr><td><code>LOPTAP.NGAYKT</code></td><td><code>smalldatetime</code></td><td>Ngày kết thúc lớp tập</td></tr>
+          <tr><td><code>LOPTAP.TRANGTHAI</code></td><td><code>varchar(20)</code></td><td>Trạng thái lớp (đang hoạt động, đã kết thúc, tạm dừng…)</td></tr>
+          <tr><td><code>DANGKY.MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính, khóa ngoại đến HOCVIEN</td></tr>
+          <tr><td><code>DANGKY.MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính, khóa ngoại đến LOPTAP</td></tr>
+          <tr><td><code>DANGKY.NGAYDK</code></td><td><code>smalldatetime</code></td><td>Ngày đăng ký</td></tr>
+          <tr><td><code>LICHTAP.MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính, khóa ngoại đến LOPTAP</td></tr>
+          <tr><td><code>LICHTAP.NGAYTAP</code></td><td><code>smalldatetime</code></td><td>Ngày diễn ra buổi tập - khóa chính</td></tr>
+          <tr><td><code>LICHTAP.GIOBATDAU</code></td><td><code>time</code></td><td>Giờ bắt đầu buổi tập</td></tr>
+          <tr><td><code>LICHTAP.GIOKETTHUC</code></td><td><code>time</code></td><td>Giờ kết thúc buổi tập</td></tr>
+        </table></div>
 
         <div class="download-card">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
           <div class="download-card-body">
             <strong>Đề bài đầy đủ - Bài tập thực hành Tuần 1 (BTTH1)</strong>
-            <span>File PDF · câu hỏi chi tiết và dữ liệu mẫu cho 6 quan hệ</span>
+            <span>File PDF · dữ liệu mẫu đầy đủ cho 6 quan hệ</span>
           </div>
           <a class="dark-button" href="../../assets/file/BTTH1-tuan1-co-so-du-lieu.pdf" download>Tải file <span>↓</span></a>
         </div>
+
+        <div class="inline-warning"><strong>Yêu cầu nộp bài (Yêu cầu 1):</strong> Lưu bài làm trong file script <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC1.sql</code> (MSSV là mã số sinh viên, HoVaTen là họ và tên).</div>
+
+        <ol class="question-list">
+          <li>Tạo cơ sở dữ liệu <code>TrungTam_TDTT</code>, gồm 6 quan hệ <code>PHONGTAP</code>, <code>HUANLUYENVIEN</code>, <code>HOCVIEN</code>, <code>LOPTAP</code>, <code>DANGKY</code>, <code>LICHTAP</code>.</li>
+          <li>Tạo khóa chính, khóa ngoại cho các quan hệ trên.</li>
+          <li>Nhập dữ liệu cho 6 quan hệ theo như dữ liệu mẫu trong file đề bài đã cung cấp.</li>
+        </ol>
+
+        <h3>Yêu cầu bài tập 2 - Định nghĩa và thao tác dữ liệu</h3>
+        <p>Từ đây trở đi, đề bài chuyển sang dùng lược đồ dùng chung <strong>Quản lý bán hàng</strong> (KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD).</p>
+
+        <div class="inline-ok" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+          <span>Xem đầy đủ thuộc tính, dữ liệu mẫu và script CSDL của lược đồ <strong>Quản lý bán hàng</strong> trước khi làm.</span>
+          <a class="outline-button" href="schema-quan-ly-ban-hang.html">Xem lược đồ <span>›</span></a>
+        </div>
+
+        <div class="inline-warning"><strong>Yêu cầu nộp bài (Yêu cầu 2):</strong> Lưu bài làm trong file script <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC2.sql</code> (MSSV là mã số sinh viên, HoVaTen là họ và tên).</div>
+
+        <p><strong>Phần I - Ngôn ngữ định nghĩa dữ liệu (Data Definition Language)</strong></p>
+        <ol class="question-list">
+          <li>Thêm vào thuộc tính <code>GHICHU</code> có kiểu dữ liệu <code>varchar(20)</code> cho quan hệ <code>SANPHAM</code>.</li>
+          <li>Thêm vào thuộc tính <code>LOAIKH</code> có kiểu dữ liệu là <code>tinyint</code> cho quan hệ <code>KHACHHANG</code>.</li>
+          <li>Sửa kiểu dữ liệu của thuộc tính <code>GHICHU</code> trong quan hệ <code>SANPHAM</code> thành <code>varchar(100)</code>.</li>
+          <li>Xóa thuộc tính <code>GHICHU</code> trong quan hệ <code>SANPHAM</code>.</li>
+          <li>Làm thế nào để thuộc tính <code>LOAIKH</code> trong quan hệ <code>KHACHHANG</code> có thể lưu các giá trị là: "Vang lai", "Thuong xuyen", "Vip", …</li>
+          <li>Đơn vị tính của sản phẩm chỉ có thể là ("cay", "hop", "cai", "quyen", "chuc").</li>
+          <li>Giá bán của sản phẩm từ 500 đồng trở lên.</li>
+          <li>Số điện thoại của nhân viên phải bắt đầu bằng chữ số "0".</li>
+          <li>Mỗi lần mua hàng, khách hàng phải mua ít nhất 1 sản phẩm.</li>
+          <li>Ngày khách hàng đăng ký là khách hàng thành viên phải lớn hơn ngày sinh của người đó.</li>
+        </ol>
+
+        <p><strong>Phần II - Ngôn ngữ thao tác dữ liệu (Data Manipulation Language)</strong></p>
+        <ol class="question-list">
+          <li>Tạo quan hệ <code>SANPHAM1</code> chứa toàn bộ dữ liệu của quan hệ <code>SANPHAM</code>. Tạo quan hệ <code>KHACHHANG1</code> chứa toàn bộ dữ liệu của quan hệ <code>KHACHHANG</code>.</li>
+          <li>Cập nhật giá tăng 5% đối với những sản phẩm do "Thai Lan" sản xuất (cho quan hệ <code>SANPHAM1</code>).</li>
+          <li>Cập nhật giá giảm 5% đối với những sản phẩm do "Trung Quoc" sản xuất có giá từ 10.000 trở xuống (cho quan hệ <code>SANPHAM1</code>).</li>
+          <li>Cập nhật giá trị <code>LOAIKH</code> là "Vip" đối với những khách hàng đăng ký thành viên trước ngày 1/1/2007 có doanh số từ 10.000.000 trở lên, hoặc khách hàng đăng ký thành viên từ 1/1/2007 trở về sau có doanh số từ 2.000.000 trở lên (cho quan hệ <code>KHACHHANG1</code>).</li>
+        </ol>
       </section>
 
       <section class="lesson-section" id="dap-an">

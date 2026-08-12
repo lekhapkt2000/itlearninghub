@@ -8,9 +8,50 @@ function safeRun(fn) {
 
 var IS_EN = document.documentElement.lang === 'en';
 
+// Answer code (inside .qa-block, ie. the gated đáp án on *-bai-tap.html pages)
+// is meant to be typed out by hand, not copy-pasted - the copy button stays
+// visible but just teases the student instead of actually copying.
+var COPY_TEASE_MESSAGES = IS_EN ? [
+  'Type it out yourself - copy-paste memory lasts about 5 minutes.',
+  'No copying here, just typing practice.',
+  'This one is for reading and remembering, not copying.',
+  'Nice try. Retype it and it might actually stick this time.',
+  'Copy is disabled on purpose - your fingers need the practice, not your clipboard.'
+] : [
+  'Gõ tay lại đi bạn ơi, copy vô là quên liền đó!',
+  'Đáp án này để đọc và ngẫm, không phải để chép nha.',
+  'Chép code thì nhớ được 5 phút, tự gõ thì nhớ tới ngày thi.',
+  'Bấm nhiều cũng không copy được đâu, gõ lại cho chắc kiến thức nhé.',
+  'Không có copy ở đây đâu, chỉ có luyện tay thôi.'
+];
+
+function showCopyToast(message) {
+  var toast = document.getElementById('copy-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'copy-toast';
+    toast.className = 'copy-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.remove('show');
+  void toast.offsetWidth;
+  toast.classList.add('show');
+  clearTimeout(showCopyToast._t);
+  showCopyToast._t = setTimeout(() => toast.classList.remove('show'), 2600);
+}
+
 safeRun(function () {
   document.querySelectorAll('.code-block .copy-btn').forEach((btn) => {
+    var isAnswerCode = !!btn.closest('.qa-block');
+
     btn.addEventListener('click', async () => {
+      if (isAnswerCode) {
+        var msg = COPY_TEASE_MESSAGES[Math.floor(Math.random() * COPY_TEASE_MESSAGES.length)];
+        showCopyToast(msg);
+        return;
+      }
+
       const code = btn.parentElement.querySelector('pre').textContent;
       try {
         await navigator.clipboard.writeText(code);

@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../assets/css/base.css?v=20">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=40">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=41">
 </head>
 <body>
   <header class="topbar">
@@ -45,7 +45,7 @@
 
         <div class="inline-warning"><strong>Yêu cầu nộp bài:</strong> Lưu bài làm trong 1 file script tên <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH2.sql</code> (MSSV là mã số sinh viên, HoVaTen là họ và tên).</div>
 
-        <ol>
+        <ol class="question-list">
           <li>In ra danh sách các sản phẩm (MASP, TENSP) do "Trung Quoc" sản xuất.</li>
           <li>In ra danh sách các sản phẩm (MASP, TENSP) có đơn vị tính là "cay", "quyen".</li>
           <li>In ra danh sách các sản phẩm (MASP, TENSP) có mã sản phẩm bắt đầu là "B" và kết thúc là "01".</li>
@@ -86,13 +86,6 @@
           <span>Bài này dùng lược đồ dùng chung <strong>Quản lý bán hàng</strong> (KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD) - xem đầy đủ thuộc tính, dữ liệu mẫu và script CSDL.</span>
           <a class="outline-button" href="schema-quan-ly-ban-hang.html">Xem lược đồ <span>›</span></a>
         </div>
-
-        <div class="extra-divider">TỰ THEO DÕI TIẾN ĐỘ</div>
-        <div class="table-wrap"><table class="ref-table">
-          <tr><th>Câu</th><th>Trạng thái</th></tr>
-          <tr><td>01 – 25</td><td>☐ Chưa hoàn thành</td></tr>
-        </table></div>
-        <div class="inline-ok"><strong>Cách làm:</strong> Tự viết câu SQL trước, sau đó mới mở đáp án tham khảo - Không xem đáp án ngay để đảm bảo hiệu quả luyện tập.</div>
       </section>
 
       <section class="lesson-section" id="dap-an">
@@ -114,7 +107,7 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 2.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án cho Câu 1 → 23. Câu 24 và Câu 25 sẽ được bổ sung sau.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án cho Câu 1 → 23. Câu 24 và Câu 25 sẽ được bổ sung sau. Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - nút Copy ở đây chỉ mang tính hình thức thôi.</p>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 1 · WHERE</p>
@@ -464,15 +457,6 @@ HAVING COUNT(DISTINCT MANV) >= 2;</code></pre></div>
               </div>
             </div>
 
-            <div class="download-card">
-              <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span>
-              <div class="download-card-body">
-                <strong>Script đáp án Câu 1 → 23</strong>
-                <span>File .sql - Câu 24, 25 sẽ được cập nhật sau</span>
-              </div>
-              <a class="dark-button" href="../../assets/file/BTTH2-dap-an-cau1-23.sql" download>Tải script <span>↓</span></a>
-            </div>
-
             <button type="button" class="ghost-button access-logout">Đăng xuất khỏi khu vực này</button>
           </div>
         </div>
@@ -496,7 +480,7 @@ HAVING COUNT(DISTINCT MANV) >= 2;</code></pre></div>
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../assets/js/main.js?v=5"></script>
-  <script src="../../assets/js/course.js?v=12"></script>
+  <script src="../../assets/js/course.js?v=13"></script>
   <script src="../../assets/js/access-gate.js?v=1"></script>
 </body>
 </html>

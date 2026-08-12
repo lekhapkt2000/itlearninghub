@@ -4,22 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Tạo mã truy cập - IT Learning Hub</title>
+  <title>Quản trị mã truy cập - IT Learning Hub</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../assets/css/base.css?v=19">
   <style>
-    .admin-shell{max-width:640px;margin:64px auto;padding:0 20px}
+    .admin-shell{max-width:680px;margin:64px auto;padding:0 20px}
     .admin-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:32px;margin-bottom:24px}
     .admin-card h1{font-size:20px;margin-bottom:6px}
+    .admin-card h2{font-size:15px;margin-bottom:16px}
     .admin-card p.hint{color:var(--muted);font-size:12px;margin-bottom:24px}
     .field{margin-bottom:16px}
     .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
     .field input,.field select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:14px;background:var(--bg);color:var(--ink)}
     .field input:focus,.field select:focus{outline:2px solid var(--primary);outline-offset:1px}
-    .admin-card button{width:100%;padding:13px;margin-top:6px}
+    .admin-card button[type="submit"]{width:100%;padding:13px;margin-top:6px}
     .result{margin-top:20px;padding:16px;border-radius:10px;background:var(--tint);display:none}
     .result.show{display:block}
     .result code{display:block;font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--primary-ink);padding:8px 0;text-align:center;user-select:all}
@@ -28,16 +29,21 @@
     .msg.error{color:#dc2626}
     .msg.ok{color:#16a34a}
 
+    #login-card{max-width:420px;margin:64px auto 0}
+
+    .dashboard-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+    .dashboard-header h1{margin:0}
+    .dashboard-header button{width:auto;padding:10px 16px;font-size:12px}
+
     .list-card{padding:24px 24px 8px}
     .list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-    .list-header h2{font-size:16px;margin:0}
+    .list-header h2{margin:0}
     .list-header button{width:auto;margin:0;padding:9px 14px;font-size:11px}
     .list-empty{color:var(--muted);font-size:13px;padding-bottom:24px}
     .table-wrap{overflow-x:auto;margin:0 -24px;padding:0 24px}
     table{width:100%;border-collapse:collapse;font-size:13px}
     th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
     th{color:var(--muted);font-size:10px;letter-spacing:.06em;font-weight:700}
-    td code{white-space:nowrap}
     .badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:10px;font-weight:700}
     .badge-active{background:#dcfce7;color:#15803d}
     .badge-revoked{background:var(--line);color:var(--muted)}
@@ -46,59 +52,76 @@
 </head>
 <body>
   <div class="admin-shell">
-    <div class="admin-card">
-      <h1>Tạo mã truy cập</h1>
-      <p class="hint">Trang nội bộ cho giảng viên - không chia sẻ link hoặc mật khẩu quản trị này.</p>
 
-      <form id="generate-form">
+    <div class="admin-card" id="login-card">
+      <h1>Đăng nhập quản trị</h1>
+      <p class="hint">Nhập mật khẩu quản trị để vào trang quản lý mã truy cập. Không chia sẻ mật khẩu này.</p>
+      <form id="login-form">
         <div class="field">
-          <label for="key">Mật khẩu quản trị</label>
-          <input type="password" id="key" autocomplete="off" required>
+          <label for="login-key">Mật khẩu quản trị</label>
+          <input type="password" id="login-key" autocomplete="off" required>
         </div>
-        <div class="field">
-          <label for="course">Môn học</label>
-          <select id="course" required>
-            <option value="IT004">IT004</option>
-            <option value="IS201">IS201</option>
-            <option value="IS208">IS208</option>
-            <option value="IS210">IS210</option>
-            <option value="IS336">IS336</option>
-            <option value="IS355">IS355</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="note">Ghi chú (tùy chọn)</label>
-          <input type="text" id="note" placeholder="Ví dụ: Lớp thực hành thứ Ba - Tuần 2">
-        </div>
-        <button type="submit" class="primary-button" id="submit-btn">Tạo mã <span>›</span></button>
+        <button type="submit" class="primary-button" id="login-btn">Đăng nhập <span>›</span></button>
       </form>
+      <p class="msg" id="login-msg"></p>
+    </div>
 
-      <div class="result" id="result">
-        <code id="result-code"></code>
-        <div class="result-actions">
-          <button type="button" class="outline-button" id="copy-btn">Sao chép</button>
+    <div id="dashboard" style="display:none">
+      <div class="dashboard-header">
+        <h1>Quản lý mã truy cập</h1>
+        <button type="button" class="outline-button" id="logout-btn">Đăng xuất</button>
+      </div>
+
+      <div class="admin-card">
+        <h2>Tạo mã mới</h2>
+        <form id="generate-form">
+          <div class="field">
+            <label for="course">Môn học</label>
+            <select id="course" required>
+              <option value="IT004">IT004</option>
+              <option value="IS201">IS201</option>
+              <option value="IS208">IS208</option>
+              <option value="IS210">IS210</option>
+              <option value="IS336">IS336</option>
+              <option value="IS355">IS355</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="note">Ghi chú (tùy chọn)</label>
+            <input type="text" id="note" placeholder="Ví dụ: Lớp thực hành thứ Ba - Tuần 2">
+          </div>
+          <button type="submit" class="primary-button" id="submit-btn">Tạo mã <span>›</span></button>
+        </form>
+
+        <div class="result" id="result">
+          <code id="result-code"></code>
+          <div class="result-actions">
+            <button type="button" class="outline-button" id="copy-btn">Sao chép</button>
+          </div>
+        </div>
+        <p class="msg" id="msg"></p>
+      </div>
+
+      <div class="admin-card list-card">
+        <div class="list-header">
+          <h2>Mã đã tạo</h2>
+          <button type="button" class="outline-button" id="refresh-btn">Làm mới</button>
+        </div>
+        <p class="list-empty" id="list-empty">Chưa có mã nào.</p>
+        <div class="table-wrap">
+          <table id="codes-table" style="display:none">
+            <thead><tr><th>Mã</th><th>Môn</th><th>Trạng thái</th><th>Ghi chú</th><th></th></tr></thead>
+            <tbody id="codes-tbody"></tbody>
+          </table>
         </div>
       </div>
-      <p class="msg" id="msg"></p>
     </div>
 
-    <div class="admin-card list-card">
-      <div class="list-header">
-        <h2>Mã đã tạo</h2>
-        <button type="button" class="outline-button" id="refresh-btn">Làm mới</button>
-      </div>
-      <p class="list-empty" id="list-empty">Nhập mật khẩu và bấm Làm mới để xem danh sách.</p>
-      <div class="table-wrap">
-        <table id="codes-table" style="display:none">
-          <thead><tr><th>Mã</th><th>Môn</th><th>Trạng thái</th><th>Ghi chú</th><th></th></tr></thead>
-          <tbody id="codes-tbody"></tbody>
-        </table>
-      </div>
-    </div>
   </div>
 
   <script>
     var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzl_MDfTRkxNExa--NscWG4HPI7ioAN0QImDGLDyk66UFuXaUo1Zrwi_qvwoIjrS5Vu/exec';
+    var currentKey = '';
 
     function jsonp(url) {
       return new Promise(function (resolve, reject) {
@@ -119,8 +142,21 @@
       });
     }
 
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    var loginCard = document.getElementById('login-card');
+    var loginForm = document.getElementById('login-form');
+    var loginKeyInput = document.getElementById('login-key');
+    var loginBtn = document.getElementById('login-btn');
+    var loginMsg = document.getElementById('login-msg');
+    var dashboard = document.getElementById('dashboard');
+    var logoutBtn = document.getElementById('logout-btn');
+
     var form = document.getElementById('generate-form');
-    var keyInput = document.getElementById('key');
     var submitBtn = document.getElementById('submit-btn');
     var resultBox = document.getElementById('result');
     var resultCode = document.getElementById('result-code');
@@ -131,19 +167,61 @@
     var codesTable = document.getElementById('codes-table');
     var codesTbody = document.getElementById('codes-tbody');
 
+    function showDashboard(key) {
+      currentKey = key;
+      loginCard.style.display = 'none';
+      dashboard.style.display = 'block';
+    }
+
+    function showLogin(message) {
+      currentKey = '';
+      dashboard.style.display = 'none';
+      loginCard.style.display = 'block';
+      loginMsg.textContent = message || '';
+      loginMsg.className = message ? 'msg error' : 'msg';
+    }
+
+    function attemptLogin(key) {
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Đang kiểm tra...';
+      return jsonp(APPS_SCRIPT_URL + '?action=list&key=' + encodeURIComponent(key))
+        .then(function (data) {
+          if (data.ok) {
+            try { localStorage.setItem('admin:key', key); } catch (e) {}
+            showDashboard(key);
+            renderList(data.codes);
+          } else {
+            showLogin(data.message || 'Sai mật khẩu quản trị.');
+          }
+        })
+        .catch(function () {
+          showLogin('Không thể kết nối máy chủ. Vui lòng thử lại.');
+        })
+        .finally(function () {
+          loginBtn.disabled = false;
+          loginBtn.innerHTML = 'Đăng nhập <span>›</span>';
+        });
+    }
+
+    loginForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var key = loginKeyInput.value.trim();
+      if (key) attemptLogin(key);
+    });
+
+    logoutBtn.addEventListener('click', function () {
+      try { localStorage.removeItem('admin:key'); } catch (e) {}
+      loginKeyInput.value = '';
+      showLogin();
+    });
+
     try {
       var savedKey = localStorage.getItem('admin:key');
       if (savedKey) {
-        keyInput.value = savedKey;
-        loadList(savedKey);
+        loginKeyInput.value = savedKey;
+        attemptLogin(savedKey);
       }
     } catch (e) {}
-
-    function escapeHtml(s) {
-      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-      });
-    }
 
     function renderList(codes) {
       codesTbody.innerHTML = '';
@@ -169,7 +247,7 @@
           var btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'outline-button revoke-btn';
-          btn.textContent = 'Thu hồi';
+          btn.textContent = 'Vô hiệu hóa';
           btn.addEventListener('click', function () { revokeCode(c.code); });
           tr.lastElementChild.appendChild(btn);
         }
@@ -177,46 +255,41 @@
       });
     }
 
-    function loadList(key) {
-      if (!key) return;
-      var url = APPS_SCRIPT_URL + '?action=list&key=' + encodeURIComponent(key);
-      jsonp(url).then(function (data) {
-        if (data.ok) {
-          renderList(data.codes);
-        } else {
-          msgEl.textContent = data.message || 'Không tải được danh sách.';
+    function loadList() {
+      jsonp(APPS_SCRIPT_URL + '?action=list&key=' + encodeURIComponent(currentKey))
+        .then(function (data) {
+          if (data.ok) {
+            renderList(data.codes);
+          } else {
+            msgEl.textContent = data.message || 'Không tải được danh sách.';
+            msgEl.className = 'msg error';
+          }
+        })
+        .catch(function () {
+          msgEl.textContent = 'Không thể kết nối máy chủ. Vui lòng thử lại.';
           msgEl.className = 'msg error';
-        }
-      }).catch(function () {
-        msgEl.textContent = 'Không thể kết nối máy chủ. Vui lòng thử lại.';
-        msgEl.className = 'msg error';
-      });
+        });
     }
 
     function revokeCode(code) {
-      if (!confirm('Thu hồi mã ' + code + '?')) return;
-      var key = keyInput.value.trim();
-      var url = APPS_SCRIPT_URL + '?action=revoke' +
-        '&key=' + encodeURIComponent(key) +
-        '&code=' + encodeURIComponent(code);
-      jsonp(url).then(function (data) {
-        if (data.ok) {
-          loadList(key);
-        } else {
-          alert(data.message || 'Không thu hồi được mã.');
-        }
-      }).catch(function () {
-        alert('Không thể kết nối máy chủ. Vui lòng thử lại.');
-      });
+      if (!confirm('Vô hiệu hóa mã ' + code + '?')) return;
+      jsonp(APPS_SCRIPT_URL + '?action=revoke&key=' + encodeURIComponent(currentKey) + '&code=' + encodeURIComponent(code))
+        .then(function (data) {
+          if (data.ok) {
+            loadList();
+          } else {
+            alert(data.message || 'Không vô hiệu hóa được mã.');
+          }
+        })
+        .catch(function () {
+          alert('Không thể kết nối máy chủ. Vui lòng thử lại.');
+        });
     }
 
-    refreshBtn.addEventListener('click', function () {
-      loadList(keyInput.value.trim());
-    });
+    refreshBtn.addEventListener('click', loadList);
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var key = keyInput.value.trim();
       var course = document.getElementById('course').value;
       var note = document.getElementById('note').value.trim();
 
@@ -227,17 +300,16 @@
       submitBtn.textContent = 'Đang tạo...';
 
       var url = APPS_SCRIPT_URL + '?action=generate' +
-        '&key=' + encodeURIComponent(key) +
+        '&key=' + encodeURIComponent(currentKey) +
         '&course=' + encodeURIComponent(course) +
         '&note=' + encodeURIComponent(note);
 
       jsonp(url)
         .then(function (data) {
           if (data.ok) {
-            try { localStorage.setItem('admin:key', key); } catch (e) {}
             resultCode.textContent = data.code;
             resultBox.classList.add('show');
-            loadList(key);
+            loadList();
           } else {
             msgEl.textContent = data.message || 'Không tạo được mã.';
             msgEl.className = 'msg error';

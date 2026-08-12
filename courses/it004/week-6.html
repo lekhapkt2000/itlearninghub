@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/css/base.css?v=19">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=36">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=37">
 </head>
 <body>
   <header class="topbar">
@@ -475,20 +475,20 @@ WHERE MaSV = 'SV001';</code></pre></div>
             </article>
 
             <article class="challenge-card">
-              <div class="challenge-card-head"><span class="challenge-num">03</span><span class="challenge-stars">⭐⭐</span></div>
+              <div class="challenge-card-head"><span class="challenge-num">03</span><span class="challenge-stars">★★</span></div>
               <p>Tìm sinh viên có điểm trung bình cao nhất.</p>
               <details><summary>Gợi ý</summary><div class="ascii-block">GROUP BY MaSV + ORDER BY AVG(Diem) DESC + TOP 1</div></details>
             </article>
 
             <article class="challenge-card">
-              <div class="challenge-card-head"><span class="challenge-num">04</span><span class="challenge-stars">⭐⭐</span></div>
+              <div class="challenge-card-head"><span class="challenge-num">04</span><span class="challenge-stars">★★</span></div>
               <p>Xếp hạng sinh viên theo điểm trung bình.</p>
               <details><summary>Gợi ý</summary><div class="ascii-block">ORDER BY AVG(Diem) DESC
 (Có thể tìm hiểu thêm hàm RANK() OVER (...) để xếp hạng có thứ tự)</div></details>
             </article>
 
             <article class="challenge-card">
-              <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">⭐⭐</span></div>
+              <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">★★</span></div>
               <p>Tìm môn học có nhiều sinh viên đạt điểm dưới 5 nhất.</p>
               <details><summary>Gợi ý</summary><div class="ascii-block">WHERE Diem < 5 + GROUP BY MaMH + ORDER BY COUNT(*) DESC</div></details>
             </article>

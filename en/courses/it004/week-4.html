@@ -82,7 +82,7 @@
         <section class="lesson-section" id="cast">
           <p class="eyebrow">02 · THE CAST() FUNCTION</p>
           <h2>CAST()</h2>
-          <div class="definition"><code>CAST()</code> is used to <strong>convert a value from one data type to another</strong> (e.g. VARCHAR → INT, DATETIME → DATE, DECIMAL → INT, VARCHAR → DATE).</div>
+          <div class="definition"><code>CAST()</code> is used to <strong>convert a value from one data type to another</strong> (e.g. VARCHAR -> INT, DATETIME -> DATE, DECIMAL -> INT, VARCHAR -> DATE).</div>
 
           <h3>Syntax</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CAST(expression AS target_data_type)</code></pre></div>
@@ -133,7 +133,7 @@ FROM NhanVien;</code></pre></div>
           <h3>Combining GETDATE() and CAST()</h3>
           <p>If you only need <strong>today's date</strong>, without the time:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT CAST(GETDATE() AS DATE) AS NgayHienTai;</code></pre></div>
-          <div class="ascii-block">GETDATE() → Date + time → CAST(... AS DATE) → Date only</div>
+          <div class="ascii-block">GETDATE() -> Date + time -> CAST(... AS DATE) -> Date only</div>
 
           <h3>Example: Calculating Age</h3>
           <p>Suppose <code>NgaySinh = '2000-08-15'</code>. Get today's date with <code>SELECT GETDATE() AS HomNay;</code></p>
@@ -171,7 +171,7 @@ FROM SinhVien;</code></pre></div>
             <tr><td><code>RIGHT()</code></td><td>The right</td><td><code>RIGHT('abcdef',3)</code></td><td><code>def</code></td></tr>
           </table></div>
           <div class="ascii-block">LEFT  ← ← ←
-RIGHT → → →</div>
+RIGHT -> -> -></div>
         </section>
 
         <!-- 05 - CASE -->
@@ -197,7 +197,7 @@ END</code></pre></div>
 FROM NhanVien;</code></pre></div>
 
           <h3>Example: Classifying Customers</h3>
-          <p>Classify by <code>TongChiTieu</code> (total spend): ≥ 10,000,000 → VIP, ≥ 5,000,000 → Loyal, otherwise → Regular.</p>
+          <p>Classify by <code>TongChiTieu</code> (total spend): ≥ 10,000,000 -> VIP, ≥ 5,000,000 -> Loyal, otherwise -> Regular.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     MaKH,
     HoTen,
@@ -215,7 +215,7 @@ FROM KhachHang;</code></pre></div>
     WHEN TongChiTieu >= 10000000 THEN N'VIP'
     ELSE N'Thường'
 END</code></pre></div>
-          <div class="inline-warning">Since <code>15,000,000 &gt;= 5,000,000</code> is already true at the first condition, <code>15,000,000</code> gets classified as "Loyal" instead of "VIP". <strong>Rule:</strong> more specific/higher conditions should come before broader ones (<code>&gt;=10M</code> → <code>&gt;=5M</code> → the rest).</div>
+          <div class="inline-warning">Since <code>15,000,000 &gt;= 5,000,000</code> is already true at the first condition, <code>15,000,000</code> gets classified as "Loyal" instead of "VIP". <strong>Rule:</strong> more specific/higher conditions should come before broader ones (<code>&gt;=10M</code> -> <code>&gt;=5M</code> -> the rest).</div>
 
           <h3>CASE with Value Comparison</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE expression
@@ -305,7 +305,7 @@ FROM
 ) AS Alias1
 WHERE ...;</code></pre></div>
           <p>SQL builds a <strong>temporary result table</strong> from the subquery, and the outer query then uses that table:</p>
-          <div class="ascii-block">Original table → Subquery → Temporary result table → Alias → Outer query</div>
+          <div class="ascii-block">Original table -> Subquery -> Temporary result table -> Alias -> Outer query</div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM
 (
@@ -348,7 +348,7 @@ FROM SanPham SP;</code></pre></div>
 
           <h3>Correlated Subquery</h3>
           <p>In the example above, <code>WHERE CTHD.MaSP = SP.MaSP</code> references <code>SP.MaSP</code> from the outer query - this is a <strong>correlated subquery</strong>: the subquery is recomputed <strong>separately for each row</strong> of the outer query.</p>
-          <div class="ascii-block">Outer query → SP.MaSP → Subquery → computed separately for each SP</div>
+          <div class="ascii-block">Outer query -> SP.MaSP -> Subquery -> computed separately for each SP</div>
 
           <h4>Comparison with a Regular Subquery</h4>
           <p>A regular subquery runs <strong>independently</strong>, with no dependency on the outer row:</p>
@@ -420,15 +420,15 @@ FROM SinhVien SV;</code></pre></div>
             <tr><td>Subquery inside SELECT</td><td>Scalar / Correlated Subquery</td></tr>
           </table></div>
 
-          <div class="ascii-block">CAST()      → Convert data type
-GETDATE()   → Current date + time
-LEFT(x, n)  → n characters from the left
-RIGHT(x, n) → n characters from the right
-CASE ... END → Condition / classification
-Alias       → Temporary name for a table / column
-Subquery    → A query inside another query
-FROM (SELECT ...) AS T   → Derived Table
-SELECT (SELECT ...) AS X → Column computed via Subquery</div>
+          <div class="ascii-block">CAST()      -> Convert data type
+GETDATE()   -> Current date + time
+LEFT(x, n)  -> n characters from the left
+RIGHT(x, n) -> n characters from the right
+CASE ... END -> Condition / classification
+Alias       -> Temporary name for a table / column
+Subquery    -> A query inside another query
+FROM (SELECT ...) AS T   -> Derived Table
+SELECT (SELECT ...) AS X -> Column computed via Subquery</div>
 
           <h3>The First Four Weeks of IT004</h3>
           <p>Week 1: creating &amp; manipulating data. Week 2: querying &amp; combining data. Week 3: advanced querying ("all" / grouping / TOP). Week 4: <strong>transforming &amp; computing</strong> over data with CAST, CASE, and Subquery.</p>
@@ -483,7 +483,7 @@ SELECT (SELECT ...) AS X → Column computed via Subquery</div>
 
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">03</span></div>
-              <p>Classify students by grade: ≥8.5 → Excellent, ≥7.0 → Good, ≥5.0 → Pass, &lt;5.0 → Fail.</p>
+              <p>Classify students by grade: ≥8.5 -> Excellent, ≥7.0 -> Good, ≥5.0 -> Pass, &lt;5.0 -> Fail.</p>
               <details><summary>Hint</summary><div class="ascii-block">CASE</div></details>
             </article>
 
@@ -495,7 +495,7 @@ SELECT (SELECT ...) AS X → Column computed via Subquery</div>
 
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">★</span></div>
-              <p>Display each student, the number of courses they've registered for, and a classification: ≥20 → Heavy load, 15-19 → Normal, &lt;15 → Light load.</p>
+              <p>Display each student, the number of courses they've registered for, and a classification: ≥20 -> Heavy load, 15-19 -> Normal, &lt;15 -> Light load.</p>
               <details><summary>Hint</summary><div class="ascii-block">CASE + Correlated Subquery</div></details>
             </article>
           </div>

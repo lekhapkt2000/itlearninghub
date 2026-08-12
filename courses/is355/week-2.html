@@ -214,7 +214,7 @@ try:
     public_key.verify(signature, tampered_message, ec.ECDSA(hashes.SHA256()))
 except InvalidSignature:
     print("Alert: Message was tampered! Signature Invalid.")</code></pre></div>
-          <div class="inline-warning">Sinh viên cần giải thích: tại sao chỉ thay đổi nội dung <code>message</code> nhưng chữ ký cũ không còn hợp lệ? Đây chính là cách kết nối Hash → Digital Signature → Integrity.</div>
+          <div class="inline-warning">Sinh viên cần giải thích: tại sao chỉ thay đổi nội dung <code>message</code> nhưng chữ ký cũ không còn hợp lệ? Đây chính là cách kết nối Hash -> Digital Signature -> Integrity.</div>
         </section>
 
         <!-- 09 - Thuc hanh: Smart Contract -->

@@ -150,18 +150,18 @@
           <div class="definition">When creating a table, every column must be assigned a <strong>data type</strong> - defining what kind of value it can store (numbers, text, dates...) and how much storage it uses. Choosing the right data type keeps data accurate, saves storage, and ensures later operations work correctly.</div>
           <div class="ascii-block">SinhVien
 
-MaSV       → INT
-HoTen      → NVARCHAR(50)
-NgaySinh   → DATE
-DiemTB     → DECIMAL(4,2)
-DaTotNghiep → BIT</div>
+MaSV       -> INT
+HoTen      -> NVARCHAR(50)
+NgaySinh   -> DATE
+DiemTB     -> DECIMAL(4,2)
+DaTotNghiep -> BIT</div>
 
           <h3>Integer Types</h3>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Type</th><th>Storage</th><th>Value Range</th></tr>
-            <tr><td><code>TINYINT</code></td><td>1 byte</td><td>0 → 255</td></tr>
-            <tr><td><code>SMALLINT</code></td><td>2 bytes</td><td>-32,768 → 32,767</td></tr>
-            <tr><td><code>INT</code></td><td>4 bytes</td><td>≈ -2.1 billion → 2.1 billion</td></tr>
+            <tr><td><code>TINYINT</code></td><td>1 byte</td><td>0 -> 255</td></tr>
+            <tr><td><code>SMALLINT</code></td><td>2 bytes</td><td>-32,768 -> 32,767</td></tr>
+            <tr><td><code>INT</code></td><td>4 bytes</td><td>≈ -2.1 billion -> 2.1 billion</td></tr>
             <tr><td><code>BIGINT</code></td><td>8 bytes</td><td>Very large range</td></tr>
           </table></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">MaSV INT
@@ -345,8 +345,8 @@ VALUES (1, NULL, '2004-05-20');</code></pre></div>
     MaSV INT PRIMARY KEY,
     Email NVARCHAR(100) UNIQUE
 );</code></pre></div>
-          <div class="ascii-block">SV001 → kha@uit.edu.vn
-SV002 → kha@uit.edu.vn   ✗ duplicate</div>
+          <div class="ascii-block">SV001 -> kha@uit.edu.vn
+SV002 -> kha@uit.edu.vn   ✗ duplicate</div>
 
           <h3>FOREIGN KEY</h3>
           <p><code>FOREIGN KEY</code> is used to create a <strong>relationship between tables</strong>. For example, given two tables:</p>
@@ -440,10 +440,10 @@ VALUES (101, N'Nguyễn Văn An');</code></pre></div>
           <h2>Data Manipulation Language</h2>
           <div class="definition"><strong>DML (Data Manipulation Language)</strong> is the group of commands used to manipulate data within a Table.</div>
           <p>In Week 1, students get familiar with:</p>
-          <div class="ascii-block">INSERT      → Add data
-DELETE      → Remove data
-UPDATE      → Modify data
-SELECT INTO → Copy data</div>
+          <div class="ascii-block">INSERT      -> Add data
+DELETE      -> Remove data
+UPDATE      -> Modify data
+SELECT INTO -> Copy data</div>
 
           <h3>INSERT - Adding Data</h3>
           <p><strong>Method 1:</strong> Without specifying column names</p>
@@ -482,7 +482,7 @@ WHERE &lt;Condition&gt;;</code></pre></div>
 WHERE MaSV = 101;</code></pre></div>
           <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Extremely important:</strong> Without a <code>WHERE</code> clause -
             <br><code>DELETE FROM SinhVien;</code>
-            <br>→ <strong>every row in the table gets deleted.</strong>
+            <br>-> <strong>every row in the table gets deleted.</strong>
           </div>
 
           <h3>UPDATE - Modifying Data</h3>
@@ -618,13 +618,13 @@ WHERE MaSV = 103;</code></pre></div>
           <p>Try entering <strong>invalid</strong> data to observe SQL Server's error messages:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (101, N'Duplicate ID student', '2004-01-01', 1);</code></pre></div>
-          <p>→ Violates <code>PRIMARY KEY</code>.</p>
+          <p>-> Violates <code>PRIMARY KEY</code>.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (104, N'Student without a class', '2004-01-01', 999);</code></pre></div>
-          <p>→ Violates <code>FOREIGN KEY</code>.</p>
+          <p>-> Violates <code>FOREIGN KEY</code>.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (105, N'Student with invalid date', '1800-01-01', 1);</code></pre></div>
-          <p>→ Violates <code>CHECK</code>.</p>
+          <p>-> Violates <code>CHECK</code>.</p>
         </section>
 
         <!-- 09 - Checklist -->

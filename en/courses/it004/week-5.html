@@ -84,16 +84,16 @@
             <span class="flow-arrow">↓</span>
             <span class="flow-box">Data is updated</span>
           </div>
-          <p>Example: "don't allow a product's quantity to go below 0." When a user runs <code>UPDATE SANPHAM SET SOLUONG = -10 WHERE MASP = 'SP01';</code>, the Trigger detects <code>SOLUONG &lt; 0</code> → raises an error → <code>ROLLBACK</code> → cancels the operation.</p>
+          <p>Example: "don't allow a product's quantity to go below 0." When a user runs <code>UPDATE SANPHAM SET SOLUONG = -10 WHERE MASP = 'SP01';</code>, the Trigger detects <code>SOLUONG &lt; 0</code> -> raises an error -> <code>ROLLBACK</code> -> cancels the operation.</p>
 
           <h3>Why Do We Need Triggers?</h3>
           <p>Triggers are typically used to <strong>automatically enforce rules right at the database layer</strong>:</p>
           <ul>
             <li><strong>Data validation:</strong> Product quantity ≥ 0</li>
             <li><strong>Preventing invalid operations:</strong> Don't allow deleting a customer who has transactions</li>
-            <li><strong>Automatic updates:</strong> Adding an invoice line item → automatically update the invoice total</li>
-            <li><strong>Change tracking:</strong> Old customer name → new name</li>
-            <li><strong>Data synchronization:</strong> Invoice line changes → update invoice total → update customer's total spend</li>
+            <li><strong>Automatic updates:</strong> Adding an invoice line item -> automatically update the invoice total</li>
+            <li><strong>Change tracking:</strong> Old customer name -> new name</li>
+            <li><strong>Data synchronization:</strong> Invoice line changes -> update invoice total -> update customer's total spend</li>
           </ul>
         </section>
 
@@ -111,8 +111,8 @@
             <tr><td><code>BEFORE</code></td><td>Not supported in SQL Server</td><td>-</td></tr>
           </table></div>
 
-          <div class="ascii-block">AFTER:        DELETE → Data is deleted → Trigger → Further processing
-INSTEAD OF:   DELETE → Trigger → Original DELETE does NOT happen</div>
+          <div class="ascii-block">AFTER:        DELETE -> Data is deleted -> Trigger -> Further processing
+INSTEAD OF:   DELETE -> Trigger -> Original DELETE does NOT happen</div>
         </section>
 
         <!-- 03 - Syntax -->
@@ -201,9 +201,9 @@ BEGIN
 END;</code></pre></div>
 
           <h3>Breaking It Down</h3>
-          <div class="ascii-block">IF EXISTS → RAISERROR → ROLLBACK → RETURN → Cancel the invalid operation</div>
+          <div class="ascii-block">IF EXISTS -> RAISERROR -> ROLLBACK -> RETURN -> Cancel the invalid operation</div>
           <p><code>IF EXISTS(...)</code> checks whether a record violating the condition exists. <code>RAISERROR(N'...', 16, 1)</code> raises an error - severity level <code>16</code> is the level typically used for user-caused errors (bad input, rule violations). <code>ROLLBACK</code> cancels the current transaction, returning the data to its previous state.</p>
-          <div class="inline-warning">Common mistake: calling <code>RAISERROR</code> and <code>ROLLBACK</code> but <strong>forgetting <code>RETURN</code></strong> right after. If the Trigger has any statements after that point, they'll still run even though the transaction was already cancelled, potentially causing errors or unintended behavior. Get in the habit of always writing the full trio <code>RAISERROR → ROLLBACK → RETURN</code>, not stopping at just <code>ROLLBACK</code>.</div>
+          <div class="inline-warning">Common mistake: calling <code>RAISERROR</code> and <code>ROLLBACK</code> but <strong>forgetting <code>RETURN</code></strong> right after. If the Trigger has any statements after that point, they'll still run even though the transaction was already cancelled, potentially causing errors or unintended behavior. Get in the habit of always writing the full trio <code>RAISERROR -> ROLLBACK -> RETURN</code>, not stopping at just <code>ROLLBACK</code>.</div>
 
           <h3>PRINT vs. RAISERROR</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -259,7 +259,7 @@ END;</code></pre></div>
                 <div class="trigger-demo-row">HOTEN = 'Nguyễn Văn A' (new record)</div>
               </div>
             </div>
-            <p class="trigger-demo-caption">INSERT → only INSERTED has data · DELETE → only DELETED has data · UPDATE → both have data.</p>
+            <p class="trigger-demo-caption">INSERT -> only INSERTED has data · DELETE -> only DELETED has data · UPDATE -> both have data.</p>
             <div class="trigger-demo-sql">
               <span class="side-label">CORRESPONDING STATEMENT</span>
               <pre><code class="language-sql" data-demo-sql>INSERT INTO KHACHHANG (MAKH, HOTEN)
@@ -293,7 +293,7 @@ BEGIN
 END;</code></pre></div>
 
           <h3>Full Example - Tracking a Name Change (UPDATE)</h3>
-          <p>On <code>UPDATE</code>, <code>DELETED</code> holds the old value and <code>INSERTED</code> holds the new value, so you can compare "old value → new value":</p>
+          <p>On <code>UPDATE</code>, <code>DELETED</code> holds the old value and <code>INSERTED</code> holds the new value, so you can compare "old value -> new value":</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_AfterUpdate_KhachHang
 ON KHACHHANG
 AFTER UPDATE
@@ -328,19 +328,19 @@ END;</code></pre></div>
 
           <h3>Checking Existence Before Insert</h3>
           <p>Don't allow adding an invoice if the customer doesn't exist:</p>
-          <div class="ascii-block">INSERT HOADON → Get MAKH from INSERTED → Check KHACHHANG
-   → Exists? Yes → Allow | No → RAISERROR + ROLLBACK</div>
+          <div class="ascii-block">INSERT HOADON -> Get MAKH from INSERTED -> Check KHACHHANG
+   -> Exists? Yes -> Allow | No -> RAISERROR + ROLLBACK</div>
           <p><code>IF EXISTS</code> checks whether data matching a condition exists; <code>IF NOT EXISTS</code> checks the opposite - that no matching data exists.</p>
 
           <h3>A Trigger That Auto-Updates Data</h3>
           <p>Tables <code>HOADON(MAHD, TRIGIA)</code> and <code>CTHD(MAHD, MASP, SOLUONG, DONGIA)</code>. When <code>INSERT INTO CTHD</code> happens, the Trigger recalculates <code>TRIGIA</code> and runs <code>UPDATE HOADON</code>.</p>
 
           <h3>A Trigger That Updates Customer Sales Totals</h3>
-          <p>A more advanced problem: adding/editing an invoice → the Trigger computes the total value → updates <code>DOANHSO</code> in <code>KHACHHANG</code>.</p>
+          <p>A more advanced problem: adding/editing an invoice -> the Trigger computes the total value -> updates <code>DOANHSO</code> in <code>KHACHHANG</code>.</p>
 
           <h3>Preventing Deletion of Referenced Data</h3>
           <p>Don't allow deleting an employee if they've already made sales:</p>
-          <div class="ascii-block">DELETE NHANVIEN → Check HOADON → Has invoices? Yes → ROLLBACK | No → Allow</div>
+          <div class="ascii-block">DELETE NHANVIEN -> Check HOADON -> Has invoices? Yes -> ROLLBACK | No -> Allow</div>
 
           <h3>Automatically Setting the Registration Date</h3>
           <p>When adding a new customer, if <code>NGDK</code> isn't provided, the system automatically uses the current date via <code>GETDATE()</code>.</p>
@@ -371,7 +371,7 @@ FROM INSERTED;</code></pre></div>
 ├── row 3
 ├── ...
 └── row n</div>
-          <div class="inline-warning">A Trigger should be designed with <strong>set-based thinking</strong> instead of assuming there's always just one row - this is an important skill when moving from classroom exercises to real-world SQL. Don't just think "INSERTED → 1 row → 1 variable" - you need to handle the <strong>entire set of data</strong> in INSERTED/DELETED.</div>
+          <div class="inline-warning">A Trigger should be designed with <strong>set-based thinking</strong> instead of assuming there's always just one row - this is an important skill when moving from classroom exercises to real-world SQL. Don't just think "INSERTED -> 1 row -> 1 variable" - you need to handle the <strong>entire set of data</strong> in INSERTED/DELETED.</div>
         </section>
 
         <!-- 08 - Workflow + Cheat Sheet -->
@@ -401,17 +401,17 @@ FROM INSERTED;</code></pre></div>
 FROM INFORMATION_SCHEMA.TRIGGERS;</code></pre></div>
 
           <h3>Week 5 Cheat Sheet</h3>
-          <div class="ascii-block">TRIGGER      → Runs automatically when DML happens
-INSERT/UPDATE/DELETE → The operations that fire a Trigger
-AFTER        → Runs after the DML operation
-INSTEAD OF   → Replaces the DML operation
-INSERTED     → The new data
-DELETED      → The old / removed data
-IF EXISTS    → Checks that matching data exists
-IF NOT EXISTS → Checks that no matching data exists
-PRINT        → A notification
-RAISERROR    → An error
-ROLLBACK     → Cancels the operation / transaction</div>
+          <div class="ascii-block">TRIGGER      -> Runs automatically when DML happens
+INSERT/UPDATE/DELETE -> The operations that fire a Trigger
+AFTER        -> Runs after the DML operation
+INSTEAD OF   -> Replaces the DML operation
+INSERTED     -> The new data
+DELETED      -> The old / removed data
+IF EXISTS    -> Checks that matching data exists
+IF NOT EXISTS -> Checks that no matching data exists
+PRINT        -> A notification
+RAISERROR    -> An error
+ROLLBACK     -> Cancels the operation / transaction</div>
 
           <h3>The First Five Weeks of IT004</h3>
           <p>Week 1: creating a database. Week 2: querying. Week 3: advanced querying. Week 4: processing data (CAST/CASE/Subquery). Week 5: <strong>automation &amp; control</strong> with Triggers, INSERTED/DELETED, RAISERROR/ROLLBACK. Per the course outline, Week 6 will be review and a practical exam - the timing and format of the exam will be announced later.</p>

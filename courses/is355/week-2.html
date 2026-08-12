@@ -219,7 +219,7 @@ except InvalidSignature:
           <p class="eyebrow">09 · THỰC HÀNH: SMART CONTRACT</p>
           <h2>Thực hành 2: Smart Contract ESGCertificate với Event Logs &amp; Access Control (Vyper)</h2>
           <p>Viết file <code>contracts/ESGCertificate.vy</code> hỗ trợ phân quyền Admin, Company, Auditor và phát ra Event:</p>
-          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.3.9
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
 
 event DataSubmitted:
     company: indexed(address)
@@ -235,7 +235,7 @@ auditors: public(HashMap[address, bool])
 esg_scores: public(HashMap[address, uint256])
 is_verified: public(HashMap[address, bool])
 
-@external
+@deploy
 def __init__():
     self.admin = msg.sender
 

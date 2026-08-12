@@ -123,6 +123,14 @@
 .week-header h1{margin:10px 0 8px;font-size:clamp(28px,4vw,40px)}
 .week-header .week-meta{display:flex;flex-wrap:wrap;gap:14px;color:var(--muted);font-size:13px}
 
+.answer-header{position:relative;overflow:hidden;margin-top:8px;padding:32px 36px;background:linear-gradient(135deg,var(--tint) 0%,var(--surface) 65%);border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:14px}
+.answer-header::before{content:'';position:absolute;top:-70px;right:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgb(37 99 235 / .12),transparent 70%)}
+.answer-header .week-tag,.answer-header h1,.answer-header .week-meta,.answer-header>p{position:relative;z-index:1}
+.answer-header .week-tag{display:inline-flex;align-items:center;gap:7px}
+.answer-header .week-meta{margin-top:2px}
+.answer-header .week-meta span{padding:4px 11px;background:var(--surface);border:1px solid var(--line);border-radius:99px;font-weight:700;font-size:11px;color:var(--ink)}
+@media(max-width:600px){.answer-header{padding:26px 22px}}
+
 /* 3-column lesson layout: TOC | content | learning panel */
 .lesson-layout{display:grid;grid-template-columns:190px minmax(0,760px) 220px;gap:40px;align-items:start;padding-top:8px}
 .lesson-toc{position:sticky;top:128px;display:flex;flex-direction:column;gap:2px}

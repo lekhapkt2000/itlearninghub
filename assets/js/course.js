@@ -25,20 +25,45 @@ var COPY_TEASE_MESSAGES = IS_EN ? [
   'Không có copy ở đây đâu, chỉ có luyện tay thôi.'
 ];
 
-function showCopyToast(message) {
-  var toast = document.getElementById('copy-toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'copy-toast';
-    toast.className = 'copy-toast';
-    document.body.appendChild(toast);
-  }
-  toast.textContent = message;
-  toast.classList.remove('show');
-  void toast.offsetWidth;
-  toast.classList.add('show');
-  clearTimeout(showCopyToast._t);
-  showCopyToast._t = setTimeout(() => toast.classList.remove('show'), 2600);
+function getCopyGuard() {
+  var guard = document.getElementById('copy-guard');
+  if (guard) return guard;
+
+  guard = document.createElement('div');
+  guard.id = 'copy-guard';
+  guard.className = 'copy-guard';
+  guard.innerHTML =
+    '<div class="copy-guard-card">' +
+    '<div class="copy-guard-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="9" height="9" rx="1.5"/><path d="M7 13v1.5A1.5 1.5 0 0 0 8.5 16H15a1.5 1.5 0 0 0 1.5-1.5V8A1.5 1.5 0 0 0 15 6.5h-1.5"/><path d="M3 3l14 14" stroke="currentColor"/></svg></div>' +
+    '<p></p>' +
+    '</div>';
+  document.body.appendChild(guard);
+
+  guard.addEventListener('click', function () {
+    hideCopyGuard();
+  });
+
+  return guard;
+}
+
+function hideCopyGuard() {
+  var guard = document.getElementById('copy-guard');
+  if (guard) guard.classList.remove('show');
+  clearTimeout(hideCopyGuard._t);
+}
+
+function showCopyGuard(message) {
+  var guard = getCopyGuard();
+  guard.querySelector('p').textContent = message;
+  guard.classList.remove('show');
+  void guard.offsetWidth;
+  guard.classList.add('show');
+  clearTimeout(hideCopyGuard._t);
+  hideCopyGuard._t = setTimeout(hideCopyGuard, 2400);
+}
+
+function randomTeaseMessage() {
+  return COPY_TEASE_MESSAGES[Math.floor(Math.random() * COPY_TEASE_MESSAGES.length)];
 }
 
 safeRun(function () {
@@ -47,8 +72,7 @@ safeRun(function () {
 
     btn.addEventListener('click', async () => {
       if (isAnswerCode) {
-        var msg = COPY_TEASE_MESSAGES[Math.floor(Math.random() * COPY_TEASE_MESSAGES.length)];
-        showCopyToast(msg);
+        showCopyGuard(randomTeaseMessage());
         return;
       }
 
@@ -71,6 +95,24 @@ safeRun(function () {
         btn.classList.remove('copied');
       }, 1600);
     });
+  });
+});
+
+// Selecting the answer code by hand and copying it (Ctrl+C, right-click
+// Copy, mobile long-press) is blocked too, not just the Copy button -
+// .qa-block code has user-select:none in CSS, and this catches any copy
+// attempt that still slips through (eg. Ctrl+A then Ctrl+C).
+safeRun(function () {
+  document.addEventListener('copy', function (e) {
+    var sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return;
+    var node = sel.anchorNode;
+    var el = node && node.nodeType === 3 ? node.parentElement : node;
+    if (!el || !el.closest || !el.closest('.qa-block .code-block')) return;
+
+    e.preventDefault();
+    if (e.clipboardData) e.clipboardData.setData('text/plain', '');
+    showCopyGuard(randomTeaseMessage());
   });
 });
 

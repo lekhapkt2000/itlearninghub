@@ -39,7 +39,7 @@
       <a href="week-3.html">Tuần 3</a>
       <a href="week-4.html">Tuần 4</a>
       <a href="week-5.html">Tuần 5</a>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 · Ôn tập <small>Sắp mở</small></span>
+      <a href="week-6.html">Tuần 6</a>
       <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Thi thử <small>Sắp mở</small></span>
     </nav>
 
@@ -168,11 +168,30 @@ IS NULL
 IS NOT NULL
 ANY
 ALL</div>
-          <p><code>LIKE</code> - <code>%</code> đại diện cho chuỗi ký tự bất kỳ:</p>
+          <p><code>LIKE</code> dùng để tìm theo mẫu (pattern), kết hợp với hai ký tự đại diện (wildcard):</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Ký tự đại diện</th><th>Ý nghĩa</th></tr>
+            <tr><td><code>%</code></td><td>Đại diện cho một chuỗi ký tự bất kỳ, kể cả chuỗi rỗng (0, 1 hoặc nhiều ký tự)</td></tr>
+            <tr><td><code>_</code></td><td>Đại diện cho đúng một ký tự bất kỳ</td></tr>
+          </table></div>
+          <p>Bắt đầu bằng "Nguyễn" - dùng <code>%</code> ở cuối:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
 FROM NhanVien
 WHERE HoTen LIKE N'Nguyễn%';</code></pre></div>
           <p>Đều có thể được tìm thấy: <code>Nguyễn An</code>, <code>Nguyễn Bình</code>, <code>Nguyễn Văn Nam</code>.</p>
+          <p>Kết thúc bằng "An" - dùng <code>%</code> ở đầu:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
+FROM NhanVien
+WHERE HoTen LIKE N'%An';</code></pre></div>
+          <p>Có chứa "Văn" - dùng <code>%</code> ở cả hai đầu:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
+FROM NhanVien
+WHERE HoTen LIKE N'%Văn%';</code></pre></div>
+          <p><code>_</code> chỉ thay thế đúng <strong>một</strong> ký tự - ví dụ tìm mã phòng ban dạng <code>PB0</code> kèm đúng một chữ số theo sau:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE MaPB LIKE 'PB0_';</code></pre></div>
+          <p>Khớp <code>PB01</code>, <code>PB02</code>,... nhưng không khớp <code>PB010</code> vì mẫu <code>PB0_</code> chỉ chấp nhận đúng 4 ký tự.</p>
           <p><code>BETWEEN</code>:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM NhanVien

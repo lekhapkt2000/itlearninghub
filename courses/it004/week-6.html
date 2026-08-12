@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT004 Tuần 6 - Ôn tập thực hành Cơ sở dữ liệu: mô hình dữ liệu, khóa, SELECT/WHERE/LIKE, ORDER BY, hàm tổng hợp, GROUP BY/HAVING, JOIN, Subquery, UPDATE/DELETE, lỗi thường gặp, bài tập tổng hợp và bài kiểm tra thực hành mô phỏng.">
+  <title>Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=18">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=32">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-6.html" class="active">VI</a><a href="../../en/courses/it004/week-6.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IT004</a><span>/</span>Tuần 6</p>
+
+    <div class="week-header">
+      <span class="week-tag">ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH</span>
+      <h1>Ôn tập thực hành Cơ sở dữ liệu</h1>
+      <div class="week-meta"><span>5 tiết</span><span>Database</span><span>SQL Server</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hệ thống lại toàn bộ kiến thức Tuần 1-5, đọc và phân tích bài toán quản lý thực tế, xác định Entity/Attribute/Relationship, chuyển từ ER/EER sang mô hình quan hệ, và kết hợp nhiều kỹ thuật SQL để giải quyết một bài toán hoàn chỉnh.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IT004">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html">Tuần 4</a>
+      <a href="week-5.html">Tuần 5</a>
+      <a href="week-6.html" class="active">Tuần 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Thi thử <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 6">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#tong-quan" data-toc><b>01</b> Mục tiêu &amp; Bức tranh tổng quan</a>
+        <a href="#mo-hinh-du-lieu" data-toc><b>02</b> Mô hình dữ liệu</a>
+        <a href="#khoa" data-toc><b>03</b> Khóa trong CSDL</a>
+        <a href="#tao-csdl-insert" data-toc><b>04</b> Tạo CSDL &amp; INSERT</a>
+        <a href="#select-where-like" data-toc><b>05</b> SELECT, WHERE &amp; LIKE</a>
+        <a href="#order-ham" data-toc><b>06</b> ORDER BY &amp; hàm tổng hợp</a>
+        <a href="#group-having" data-toc><b>07</b> GROUP BY &amp; HAVING</a>
+        <a href="#join" data-toc><b>08</b> JOIN</a>
+        <a href="#subquery" data-toc><b>09</b> Subquery</a>
+        <a href="#update-delete" data-toc><b>10</b> UPDATE &amp; DELETE</a>
+        <a href="#bai-toan-tong-hop" data-toc><b>11</b> Bài thực hành tổng hợp</a>
+        <a href="#yeu-cau-thuc-hanh" data-toc><b>12</b> Yêu cầu thực hành</a>
+        <a href="#bai-tap-thach-thuc" data-toc><b>13</b> Bài tập thách thức</a>
+        <a href="#loi-thuong-gap" data-toc><b>14</b> Lỗi thường gặp</a>
+        <a href="#checklist" data-toc><b>15</b> Checklist ôn tập</a>
+        <a href="#kiem-tra-mo-phong" data-toc><b>16</b> Bài kiểm tra mô phỏng</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Muc tieu & Buc tranh tong quan -->
+        <section class="lesson-section" id="tong-quan">
+          <p class="eyebrow">01 · MỤC TIÊU &amp; BỨC TRANH TỔNG QUAN</p>
+          <h2>Mục tiêu</h2>
+          <p>Sau Tuần 6, sinh viên có thể:</p>
+          <ul>
+            <li>Hệ thống lại toàn bộ kiến thức thực hành đã học</li>
+            <li>Đọc và phân tích một bài toán quản lý thực tế</li>
+            <li>Xác định được các Entity, Attribute, Relationship</li>
+            <li>Chuyển từ mô hình ER/EER sang mô hình quan hệ</li>
+            <li>Xác định Primary Key, Foreign Key, Candidate Key</li>
+            <li>Tạo CSDL và các bảng bằng SQL, thiết lập các ràng buộc toàn vẹn</li>
+            <li>Thực hiện <code>SELECT</code>, <code>WHERE</code>, <code>ORDER BY</code>, <code>GROUP BY</code>, <code>HAVING</code>, <code>JOIN</code>, Subquery, hàm tổng hợp, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></li>
+            <li>Kết hợp nhiều kỹ thuật SQL để giải quyết một bài toán hoàn chỉnh</li>
+            <li>Phát hiện và sửa các lỗi thường gặp khi viết truy vấn</li>
+          </ul>
+
+          <h3>Bức tranh tổng quan</h3>
+          <p>Sinh viên cần nhìn lại toàn bộ quy trình xây dựng một CSDL:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Bài toán thực tế</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Phân tích yêu cầu</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Xác định Entity / Attribute / Relationship</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">ERD</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Mô hình quan hệ</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Primary Key / Foreign Key</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">CREATE DATABASE / CREATE TABLE</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">INSERT DATA</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">SELECT / JOIN / GROUP BY</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Phân tích dữ liệu</span>
+          </div>
+          <div class="inline-warning"><strong>Điểm quan trọng:</strong> SQL không phải là phần bắt đầu của bài toán. Trước khi viết SQL, sinh viên cần hiểu dữ liệu được tổ chức như thế nào và các bảng liên hệ với nhau ra sao.</div>
+        </section>
+
+        <!-- 02 - Mo hinh du lieu -->
+        <section class="lesson-section" id="mo-hinh-du-lieu">
+          <p class="eyebrow">02 · ÔN TẬP MÔ HÌNH CƠ SỞ DỮ LIỆU</p>
+          <h2>Mô hình dữ liệu</h2>
+
+          <h3>Entity</h3>
+          <p>Entity là đối tượng cần quản lý trong hệ thống. Ví dụ hệ thống quản lý sinh viên:</p>
+          <div class="ascii-block">SINHVIEN
+MONHOC
+LOPHOC
+GIANGVIEN</div>
+
+          <h3>Attribute</h3>
+          <p>Ví dụ Entity <code>SINHVIEN</code>:</p>
+          <div class="ascii-block">SINHVIEN
+├── MaSV
+├── HoTen
+├── NgaySinh
+├── GioiTinh
+└── MaLop</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Attribute</th><th>Ý nghĩa</th></tr>
+            <tr><td>MaSV</td><td>Định danh sinh viên</td></tr>
+            <tr><td>HoTen</td><td>Tên sinh viên</td></tr>
+            <tr><td>NgaySinh</td><td>Ngày sinh</td></tr>
+            <tr><td>GioiTinh</td><td>Giới tính</td></tr>
+            <tr><td>MaLop</td><td>Lớp sinh viên</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 03 - Khoa trong CSDL -->
+        <section class="lesson-section" id="khoa">
+          <p class="eyebrow">03 · KHÓA TRONG CƠ SỞ DỮ LIỆU</p>
+          <h2>Khóa trong CSDL</h2>
+
+          <h3>Primary Key</h3>
+          <p>Primary Key dùng để định danh duy nhất một bản ghi:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien (
+    MaSV VARCHAR(10) PRIMARY KEY,
+    HoTen NVARCHAR(100),
+    NgaySinh DATE
+);</code></pre></div>
+          <p><code>MaSV</code> không được trùng và không được <code>NULL</code>.</p>
+
+          <h3>Foreign Key</h3>
+          <p>Foreign Key dùng để tạo mối quan hệ giữa các bảng:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien (
+    MaSV VARCHAR(10) PRIMARY KEY,
+    HoTen NVARCHAR(100),
+    MaLop VARCHAR(10),
+
+    FOREIGN KEY (MaLop)
+        REFERENCES Lop(MaLop)
+);</code></pre></div>
+          <p>Quan hệ - Một lớp có nhiều sinh viên:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">LOP (1)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">SINHVIEN (N)</span>
+          </div>
+        </section>
+
+        <!-- 04 - Tao CSDL & INSERT -->
+        <section class="lesson-section" id="tao-csdl-insert">
+          <p class="eyebrow">04 · ÔN TẬP TẠO CƠ SỞ DỮ LIỆU &amp; INSERT</p>
+          <h2>Tạo CSDL &amp; INSERT</h2>
+          <p>Ví dụ xây dựng CSDL <strong>Quản lý sinh viên và kết quả học tập</strong>, gồm 4 bảng <code>LOP</code>, <code>SINHVIEN</code>, <code>MONHOC</code>, <code>KETQUA</code> với quan hệ:</p>
+          <div class="ascii-block">LOP 1 ─────── N SINHVIEN
+
+SINHVIEN 1 ─────── N KETQUA
+
+MONHOC 1 ─────── N KETQUA</div>
+
+          <h3>Tạo bảng</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE Lop (
+    MaLop VARCHAR(10) PRIMARY KEY,
+    TenLop NVARCHAR(100)
+);
+
+CREATE TABLE MonHoc (
+    MaMH VARCHAR(10) PRIMARY KEY,
+    TenMH NVARCHAR(100),
+    SoTinChi INT
+);
+
+CREATE TABLE SinhVien (
+    MaSV VARCHAR(10) PRIMARY KEY,
+    HoTen NVARCHAR(100),
+    MaLop VARCHAR(10),
+
+    FOREIGN KEY (MaLop)
+        REFERENCES Lop(MaLop)
+);</code></pre></div>
+
+          <h3>INSERT</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO Lop
+VALUES
+('HTTT01', N'Hệ thống thông tin 01'),
+('HTTT02', N'Hệ thống thông tin 02');
+
+INSERT INTO SinhVien
+VALUES
+('SV001', N'Nguyễn Văn An', 'HTTT01'),
+('SV002', N'Trần Văn Bình', 'HTTT01'),
+('SV003', N'Lê Văn Cường', 'HTTT02');</code></pre></div>
+          <div class="inline-warning">Nếu bảng <code>SinhVien</code> có Foreign Key đến <code>Lop</code>, phải tồn tại <code>HTTT01</code>, <code>HTTT02</code> trong bảng <code>Lop</code> trước khi thêm sinh viên.</div>
+        </section>
+
+        <!-- 05 - SELECT, WHERE & LIKE -->
+        <section class="lesson-section" id="select-where-like">
+          <p class="eyebrow">05 · ÔN TẬP SELECT, WHERE &amp; LIKE</p>
+          <h2>SELECT, WHERE &amp; LIKE</h2>
+
+          <h3>SELECT</h3>
+          <p>Lấy toàn bộ dữ liệu:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien;</code></pre></div>
+          <p>Chọn một số cột và đặt bí danh:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaSV AS [Mã sinh viên],
+    HoTen AS [Họ tên]
+FROM SinhVien;</code></pre></div>
+
+          <h3>WHERE</h3>
+          <p>Tìm các sinh viên thuộc lớp <code>HTTT01</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien
+WHERE MaLop = 'HTTT01';</code></pre></div>
+          <p>Nhiều điều kiện:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien
+WHERE MaLop = 'HTTT01'
+AND HoTen LIKE N'Nguyễn%';</code></pre></div>
+
+          <h3>LIKE - <code>%</code> và <code>_</code></h3>
+          <p>Xem chi tiết đầy đủ về hai ký tự đại diện ở <a href="week-2.html#toan-tu">Tuần 2 - Toán tử đặc biệt</a>. Ôn tập nhanh:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Ký tự đại diện</th><th>Ý nghĩa</th></tr>
+            <tr><td><code>%</code></td><td>Đại diện cho một chuỗi ký tự bất kỳ, kể cả chuỗi rỗng (0, 1 hoặc nhiều ký tự)</td></tr>
+            <tr><td><code>_</code></td><td>Đại diện cho đúng một ký tự bất kỳ</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- Bắt đầu bằng "Nguyễn"
+WHERE HoTen LIKE N'Nguyễn%'
+
+-- Kết thúc bằng "An"
+WHERE HoTen LIKE N'%An'
+
+-- Có chứa "Văn"
+WHERE HoTen LIKE N'%Văn%'
+
+-- Đúng 4 ký tự, bắt đầu "PB0" + 1 ký tự bất kỳ
+WHERE MaPB LIKE 'PB0_'</code></pre></div>
+        </section>
+
+        <!-- 06 - ORDER BY & Ham tong hop -->
+        <section class="lesson-section" id="order-ham">
+          <p class="eyebrow">06 · ORDER BY &amp; HÀM TỔNG HỢP</p>
+          <h2>ORDER BY &amp; hàm tổng hợp</h2>
+
+          <h3>ORDER BY</h3>
+          <p>Sắp xếp sinh viên theo tên:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien
+ORDER BY HoTen ASC;   -- Đổi thành DESC để sắp xếp giảm dần</code></pre></div>
+
+          <h3>Hàm tổng hợp</h3>
+          <p>Các hàm cần nhớ: <code>COUNT()</code>, <code>SUM()</code>, <code>AVG()</code>, <code>MIN()</code>, <code>MAX()</code>. Ví dụ có bao nhiêu sinh viên:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SoLuongSinhVien
+FROM SinhVien;</code></pre></div>
+        </section>
+
+        <!-- 07 - GROUP BY & HAVING -->
+        <section class="lesson-section" id="group-having">
+          <p class="eyebrow">07 · GROUP BY &amp; HAVING</p>
+          <h2>GROUP BY &amp; HAVING</h2>
+
+          <h3>GROUP BY</h3>
+          <p>Đếm số sinh viên của từng lớp:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaLop,
+    COUNT(*) AS SoLuong
+FROM SinhVien
+GROUP BY MaLop;</code></pre></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaLop</th><th>SoLuong</th></tr>
+            <tr><td>HTTT01</td><td>2</td></tr>
+            <tr><td>HTTT02</td><td>1</td></tr>
+          </table></div>
+
+          <h3>HAVING</h3>
+          <div class="ascii-block">WHERE   → Lọc từng dòng
+HAVING  → Lọc nhóm sau GROUP BY</div>
+          <p>Chỉ lấy những lớp có từ 2 sinh viên trở lên:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaLop,
+    COUNT(*) AS SoLuong
+FROM SinhVien
+GROUP BY MaLop
+HAVING COUNT(*) >= 2;</code></pre></div>
+        </section>
+
+        <!-- 08 - JOIN -->
+        <section class="lesson-section" id="join">
+          <p class="eyebrow">08 · ÔN TẬP JOIN</p>
+          <h2>JOIN</h2>
+          <p>Đây là nội dung trọng tâm của tuần ôn tập. Muốn hiển thị Mã SV, Họ tên, Tên lớp:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SV.MaSV,
+    SV.HoTen,
+    L.TenLop
+FROM SinhVien SV
+JOIN Lop L
+    ON SV.MaLop = L.MaLop;</code></pre></div>
+
+          <h3>INNER JOIN</h3>
+          <p>Chỉ lấy những bản ghi có quan hệ ở cả hai bảng - Nếu một lớp chưa có sinh viên, lớp đó không xuất hiện trong kết quả.</p>
+
+          <h3>LEFT JOIN</h3>
+          <p>Hiển thị tất cả các lớp, kể cả lớp chưa có sinh viên - Đây là dạng câu hỏi sinh viên rất dễ gặp trong bài thực hành:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    L.MaLop,
+    L.TenLop,
+    SV.MaSV,
+    SV.HoTen
+FROM Lop L
+LEFT JOIN SinhVien SV
+    ON L.MaLop = SV.MaLop;</code></pre></div>
+
+          <h3>JOIN nhiều bảng</h3>
+          <p>Ví dụ có <code>LOP → SINHVIEN → KETQUA → MONHOC</code>. Truy vấn sinh viên nào học môn nào và đạt bao nhiêu điểm:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SV.MaSV,
+    SV.HoTen,
+    MH.TenMH,
+    KQ.Diem
+FROM SinhVien SV
+JOIN KetQua KQ
+    ON SV.MaSV = KQ.MaSV
+JOIN MonHoc MH
+    ON KQ.MaMH = MH.MaMH;</code></pre></div>
+          <p>Đây là dạng truy vấn tổng hợp mà sinh viên cần thành thạo trước khi kết thúc phần thực hành.</p>
+        </section>
+
+        <!-- 09 - Subquery -->
+        <section class="lesson-section" id="subquery">
+          <p class="eyebrow">09 · ÔN TẬP SUBQUERY</p>
+          <h2>Subquery</h2>
+          <p>Tìm sinh viên có điểm lớn hơn điểm trung bình:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM KetQua
+WHERE Diem > (
+    SELECT AVG(Diem)
+    FROM KetQua
+);</code></pre></div>
+          <p>Tư duy:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Bước 1: Tính điểm trung bình</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Bước 2: Tìm các sinh viên có điểm &gt; trung bình</span>
+          </div>
+        </section>
+
+        <!-- 10 - UPDATE & DELETE -->
+        <section class="lesson-section" id="update-delete">
+          <p class="eyebrow">10 · ÔN TẬP UPDATE &amp; DELETE</p>
+          <h2>UPDATE &amp; DELETE</h2>
+
+          <h3>UPDATE</h3>
+          <p>Sửa tên sinh viên:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SinhVien
+SET HoTen = N'Nguyễn Văn Nam'
+WHERE MaSV = 'SV001';</code></pre></div>
+          <div class="inline-warning"><strong>Cực kỳ quan trọng:</strong> Không nên viết <code>UPDATE SinhVien SET HoTen = N'Nguyễn Văn Nam';</code> vì câu lệnh này sẽ cập nhật toàn bộ sinh viên.</div>
+
+          <h3>DELETE</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien
+WHERE MaSV = 'SV001';</code></pre></div>
+          <p>Tương tự - Luôn kiểm tra <code>WHERE</code> trước khi <code>DELETE</code>.</p>
+        </section>
+
+        <!-- 11 - Bai thuc hanh tong hop -->
+        <section class="lesson-section" id="bai-toan-tong-hop">
+          <p class="eyebrow">11 · BÀI THỰC HÀNH TỔNG HỢP</p>
+          <h2>Bài toán: Quản lý đào tạo</h2>
+          <p>Cho hệ thống gồm 4 bảng dữ liệu mẫu dưới đây:</p>
+
+          <p class="ascii-label">LOP</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaLop</th><th>TenLop</th></tr>
+            <tr><td>HTTT01</td><td>HTTT K18.1</td></tr>
+            <tr><td>HTTT02</td><td>HTTT K18.2</td></tr>
+          </table></div>
+
+          <p class="ascii-label">SINHVIEN</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaSV</th><th>HoTen</th><th>MaLop</th></tr>
+            <tr><td>SV001</td><td>Nguyễn Văn An</td><td>HTTT01</td></tr>
+            <tr><td>SV002</td><td>Trần Văn Bình</td><td>HTTT01</td></tr>
+            <tr><td>SV003</td><td>Lê Văn Cường</td><td>HTTT02</td></tr>
+          </table></div>
+
+          <p class="ascii-label">MONHOC</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaMH</th><th>TenMH</th><th>SoTinChi</th></tr>
+            <tr><td>IT004</td><td>Cơ sở dữ liệu</td><td>4</td></tr>
+            <tr><td>IS201</td><td>Phân tích thiết kế HTTT</td><td>4</td></tr>
+            <tr><td>IS210</td><td>Hệ quản trị CSDL</td><td>4</td></tr>
+          </table></div>
+
+          <p class="ascii-label">KETQUA</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaSV</th><th>MaMH</th><th>Diem</th></tr>
+            <tr><td>SV001</td><td>IT004</td><td>8.5</td></tr>
+            <tr><td>SV001</td><td>IS201</td><td>7.5</td></tr>
+            <tr><td>SV002</td><td>IT004</td><td>6.5</td></tr>
+            <tr><td>SV002</td><td>IS201</td><td>8.0</td></tr>
+            <tr><td>SV003</td><td>IT004</td><td>9.0</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 12 - Yeu cau thuc hanh -->
+        <section class="lesson-section" id="yeu-cau-thuc-hanh">
+          <p class="eyebrow">12 · YÊU CẦU THỰC HÀNH</p>
+          <h2>Yêu cầu thực hành</h2>
+          <p>Dựa trên bài toán ở Mục 11, sinh viên thực hiện lần lượt 15 câu sau:</p>
+          <ol>
+            <li>Tạo CSDL <code>QuanLyDaoTao</code></li>
+            <li>Tạo 4 bảng <code>LOP</code>, <code>SINHVIEN</code>, <code>MONHOC</code>, <code>KETQUA</code> và thiết lập đầy đủ Primary Key, Foreign Key, NOT NULL, UNIQUE nếu cần, CHECK nếu cần</li>
+            <li>Nhập dữ liệu mẫu</li>
+            <li>Hiển thị toàn bộ sinh viên</li>
+            <li>Hiển thị sinh viên thuộc lớp <code>HTTT01</code></li>
+            <li>Hiển thị các môn học có 4 tín chỉ</li>
+            <li>Hiển thị danh sách Mã SV, Họ tên, Tên lớp</li>
+            <li>Hiển thị Mã SV, Họ tên, Tên môn, Điểm bằng <code>JOIN</code></li>
+            <li>Tính điểm trung bình của từng sinh viên (gợi ý: <code>GROUP BY MaSV</code>)</li>
+            <li>Tìm sinh viên có điểm trung bình từ 8.0 trở lên</li>
+            <li>Tìm điểm cao nhất của môn <code>IT004</code></li>
+            <li>Đếm số sinh viên của từng lớp</li>
+            <li>Tìm môn học có điểm trung bình cao nhất</li>
+            <li>Tìm sinh viên có điểm <code>IT004</code> cao nhất</li>
+            <li>Hiển thị tất cả sinh viên, kể cả sinh viên chưa có kết quả học tập (gợi ý: <code>LEFT JOIN</code>)</li>
+          </ol>
+        </section>
+
+        <!-- 13 - Bai tap thach thuc -->
+        <section class="lesson-section" id="bai-tap-thach-thuc">
+          <p class="eyebrow">13 · BÀI TẬP THÁCH THỨC</p>
+          <h2>Bài tập thách thức</h2>
+          <p class="extra-intro">Sinh viên khá/giỏi thực hiện thêm - Mỗi bài có gợi ý ẩn, bấm để mở.</p>
+          <div class="challenge-list">
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">01</span><h4>Chưa học môn</h4></div>
+              <p>Tìm sinh viên chưa học môn <code>IS210</code>.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">NOT IN (SELECT MaSV FROM KetQua WHERE MaMH = 'IS210')</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">02</span><h4>Đạt tất cả các môn</h4></div>
+              <p>Tìm những sinh viên có điểm tất cả các môn đều từ 5 trở lên.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">GROUP BY MaSV + HAVING MIN(Diem) >= 5</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">03</span><span class="challenge-stars">⭐⭐</span></div>
+              <p>Tìm sinh viên có điểm trung bình cao nhất.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">GROUP BY MaSV + ORDER BY AVG(Diem) DESC + TOP 1</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">04</span><span class="challenge-stars">⭐⭐</span></div>
+              <p>Xếp hạng sinh viên theo điểm trung bình.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">ORDER BY AVG(Diem) DESC
+(Có thể tìm hiểu thêm hàm RANK() OVER (...) để xếp hạng có thứ tự)</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">⭐⭐</span></div>
+              <p>Tìm môn học có nhiều sinh viên đạt điểm dưới 5 nhất.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">WHERE Diem < 5 + GROUP BY MaMH + ORDER BY COUNT(*) DESC</div></details>
+            </article>
+          </div>
+        </section>
+
+        <!-- 14 - Loi thuong gap -->
+        <section class="lesson-section" id="loi-thuong-gap">
+          <p class="eyebrow">14 · CÁC LỖI THƯỜNG GẶP</p>
+          <h2>Các lỗi thường gặp</h2>
+
+          <h3>Lỗi 1 - JOIN sai điều kiện</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- Sai
+JOIN Lop L ON SV.MaSV = L.MaLop
+
+-- Đúng
+JOIN Lop L ON SV.MaLop = L.MaLop</code></pre></div>
+
+          <h3>Lỗi 2 - Dùng WHERE thay cho HAVING</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- Sai tư duy
+WHERE COUNT(*) > 2
+
+-- Đúng
+GROUP BY MaLop
+HAVING COUNT(*) > 2</code></pre></div>
+
+          <h3>Lỗi 3 - Quên GROUP BY</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- Sai
+SELECT MaLop, COUNT(*)
+FROM SinhVien;
+
+-- Phải có GROUP BY
+SELECT MaLop, COUNT(*)
+FROM SinhVien
+GROUP BY MaLop;</code></pre></div>
+
+          <h3>Lỗi 4 - UPDATE/DELETE không có WHERE</h3>
+          <p>Luôn kiểm tra bằng <code>SELECT</code> trước khi chạy <code>UPDATE</code> hoặc <code>DELETE</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien
+WHERE MaSV = 'SV001';</code></pre></div>
+        </section>
+
+        <!-- 15 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">15 · CHECKLIST ÔN TẬP</p>
+          <h2>Checklist ôn tập</h2>
+          <p>Sinh viên tự đánh giá trước khi thi thực hành:</p>
+
+          <h3>Cơ sở dữ liệu</h3>
+          <ul class="lesson-checklist">
+            <li>Hiểu Entity, Attribute, Relationship</li>
+            <li>Vẽ được ERD</li>
+            <li>Xác định Primary Key, Foreign Key</li>
+          </ul>
+
+          <h3>SQL cơ bản</h3>
+          <ul class="lesson-checklist">
+            <li>CREATE DATABASE, CREATE TABLE</li>
+            <li>INSERT, SELECT, WHERE, ORDER BY, LIKE</li>
+          </ul>
+
+          <h3>SQL nâng cao</h3>
+          <ul class="lesson-checklist">
+            <li>GROUP BY, HAVING</li>
+            <li>COUNT, SUM, AVG, MIN, MAX</li>
+            <li>INNER JOIN, LEFT JOIN, Subquery</li>
+          </ul>
+
+          <h3>Thao tác dữ liệu &amp; tổng hợp</h3>
+          <ul class="lesson-checklist">
+            <li>UPDATE, DELETE có kiểm tra WHERE trước khi chạy</li>
+            <li>Đọc đề, xác định bảng, quan hệ và khóa trước khi viết SQL</li>
+            <li>Giải thích được câu SQL của mình</li>
+          </ul>
+        </section>
+
+        <!-- 16 - Bai kiem tra mo phong -->
+        <section class="lesson-section" id="kiem-tra-mo-phong">
+          <p class="eyebrow">16 · BÀI KIỂM TRA THỰC HÀNH MÔ PHỎNG</p>
+          <h2>Bài kiểm tra thực hành mô phỏng</h2>
+          <p>Cuối tuần, sinh viên thực hiện một bài tổng hợp trong khoảng <strong>60-90 phút</strong> để tự đánh giá mức độ sẵn sàng trước khi thi thực hành.</p>
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
+            <h3>Quản lý thư viện</h3>
+            <p style="color:#cbd5e1;font-size:13px;margin-bottom:14px">Xây dựng CSDL quản lý thư viện gồm <code style="background:#ffffff1a;color:#e2e8f0">DOCGIA</code>, <code style="background:#ffffff1a;color:#e2e8f0">SACH</code>, <code style="background:#ffffff1a;color:#e2e8f0">THELOAI</code>, <code style="background:#ffffff1a;color:#e2e8f0">MUONTRA</code>.</p>
+            <ol>
+              <li><strong>Bài 1 - Phân tích bài toán:</strong> Xác định Entity, Attribute và Relationship</li>
+              <li><strong>Bài 2 - Xác định khóa:</strong> Primary Key và Foreign Key cho từng bảng</li>
+              <li><strong>Bài 3 - Tạo bảng:</strong> Tạo đủ 4 bảng theo thiết kế</li>
+              <li><strong>Bài 4 - Thiết lập quan hệ:</strong> Ràng buộc Foreign Key giữa các bảng liên quan</li>
+              <li><strong>Bài 5 - Nhập dữ liệu:</strong> Nhập dữ liệu mẫu cho cả 4 bảng</li>
+              <li><strong>Bài 6 - Viết truy vấn:</strong> Viết tối thiểu 10 truy vấn, trong đó có ít nhất 2 câu <code style="background:#ffffff1a;color:#e2e8f0">JOIN</code>, 2 câu <code style="background:#ffffff1a;color:#e2e8f0">GROUP BY</code>, 1 câu <code style="background:#ffffff1a;color:#e2e8f0">HAVING</code>, 1 câu Subquery và 1 câu dùng hàm tổng hợp</li>
+              <li><strong>Bài 7 - Cập nhật dữ liệu:</strong> Thực hiện ít nhất một <code style="background:#ffffff1a;color:#e2e8f0">UPDATE</code></li>
+              <li><strong>Bài 8 - Xóa dữ liệu:</strong> Thực hiện ít nhất một <code style="background:#ffffff1a;color:#e2e8f0">DELETE</code></li>
+              <li><strong>Bài 9 - Giải thích kết quả:</strong> Giải thích được kết quả của các truy vấn đã viết</li>
+            </ol>
+          </div>
+          <div class="definition"><strong>Kết quả cần đạt sau Tuần 6:</strong> Sinh viên không chỉ nhớ cú pháp SQL, mà phải hình thành được quy trình <strong>đọc đề → phân tích dữ liệu → xác định quan hệ → thiết kế bảng → viết SQL → kiểm tra kết quả → giải thích truy vấn.</strong> Đây là tuần tổng kết thực hành IT004, đồng thời là bước chuẩn bị trực tiếp cho phần ôn tập/thi thực hành.</div>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần">
+          <a href="week-5.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 5: Trigger trong SQL Server</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Thi thử (sắp mở)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">TIẾN ĐỘ</span>
+          <strong>6<span>/6 tuần</span></strong>
+          <div class="mini-progress"><b style="width:100%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="tong-quan"><b>○</b> Mục tiêu &amp; tổng quan</li>
+            <li data-section="mo-hinh-du-lieu"><b>○</b> Mô hình dữ liệu</li>
+            <li data-section="khoa"><b>○</b> Khóa trong CSDL</li>
+            <li data-section="tao-csdl-insert"><b>○</b> Tạo CSDL &amp; INSERT</li>
+            <li data-section="select-where-like"><b>○</b> SELECT, WHERE &amp; LIKE</li>
+            <li data-section="order-ham"><b>○</b> ORDER BY &amp; hàm tổng hợp</li>
+            <li data-section="group-having"><b>○</b> GROUP BY &amp; HAVING</li>
+            <li data-section="join"><b>○</b> JOIN</li>
+            <li data-section="subquery"><b>○</b> Subquery</li>
+            <li data-section="update-delete"><b>○</b> UPDATE &amp; DELETE</li>
+            <li data-section="bai-toan-tong-hop"><b>○</b> Bài thực hành tổng hợp</li>
+            <li data-section="yeu-cau-thuc-hanh"><b>○</b> Yêu cầu thực hành</li>
+            <li data-section="bai-tap-thach-thuc"><b>○</b> Bài tập thách thức</li>
+            <li data-section="loi-thuong-gap"><b>○</b> Lỗi thường gặp</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+            <li data-section="kiem-tra-mo-phong"><b>○</b> Kiểm tra mô phỏng</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành Tuần 1-5</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#yeu-cau-thuc-hanh">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>WHERE lọc từng dòng, HAVING lọc nhóm sau GROUP BY - Luôn kiểm tra bằng SELECT trước khi UPDATE/DELETE.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/progress.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=12"></script>
+</body>
+</html>

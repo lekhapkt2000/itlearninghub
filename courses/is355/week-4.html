@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Tuần 4 - Real-World Assets (RWA) & NFT Chuỗi Cung Ứng Bền Vững: ERC-721, Metadata, IPFS, chống Greenwashing, Chain of Custody, Graph Analytics và tích hợp IoT/Oracle.">
+  <title>Tuần 4 · Real-World Assets (RWA) & NFT Chuỗi Cung Ứng Bền Vững - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=18">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=32">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-4.html" class="active">VI</a><a href="../../en/courses/is355/week-4.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS355 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS355</a><span>/</span>Tuần 4</p>
+
+    <div class="week-header">
+      <span class="week-tag">TUẦN 04 · RWA &amp; NFT SUPPLY CHAIN</span>
+      <h1>Real-World Assets (RWA) &amp; NFT Chuỗi Cung Ứng Bền Vững</h1>
+      <div class="week-meta"><span>ERC-721</span><span>IPFS</span><span>Vyper v0.4.3</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Chủ đề:</strong> Số hóa tài sản thực, NFT chứng nhận nguồn gốc xanh, Metadata, IPFS và truy xuất chuỗi cung ứng bằng Blockchain.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS355">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html" class="active">Tuần 4</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 5 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 7 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Project Lab <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 4">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#erc20-den-erc721" data-toc><b>01</b> Từ ERC-20 đến ERC-721</a>
+        <a href="#rwa" data-toc><b>02</b> Real-World Assets</a>
+        <a href="#metadata-ipfs" data-toc><b>03</b> Metadata &amp; IPFS</a>
+        <a href="#greenwashing" data-toc><b>04</b> Greenwashing &amp; Chain of Custody</a>
+        <a href="#thuc-hanh-contract" data-toc><b>05</b> Smart Contract NFT</a>
+        <a href="#thuc-hanh-ape" data-toc><b>06</b> Kiểm thử với Ape</a>
+        <a href="#thuc-hanh-ipfs" data-toc><b>07</b> Metadata &amp; IPFS thực hành</a>
+        <a href="#graph-analytics" data-toc><b>08</b> Graph Analytics</a>
+        <a href="#iot-oracle" data-toc><b>09</b> IoT &amp; Oracle</a>
+        <a href="#bai-tap" data-toc><b>10</b> Bài tập về nhà</a>
+        <a href="#thao-luan" data-toc><b>11</b> Câu hỏi thảo luận</a>
+        <a href="#checklist" data-toc><b>12</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - ERC-20 den ERC-721 -->
+        <section class="lesson-section" id="erc20-den-erc721">
+          <p class="eyebrow">01 · PHẦN A - LÝ THUYẾT GIẢNG DẠY</p>
+          <h2>Từ ERC-20 (Tuần 3) đến ERC-721 (Tuần 4)</h2>
+          <p>Ở Tuần 3, sinh viên đã làm việc với chuẩn <strong>ERC-20 (Fungible Token)</strong>: các token đồng nhất và có thể thay thế hoàn toàn cho nhau (1 GCT ≈ 1 GCT) - Thích hợp cho tiền tệ, Carbon Credit đồng nhất, điểm thưởng.</p>
+          <p>Khi mỗi tài sản là <strong>duy nhất và không thể thay thế</strong>, ta cần chuẩn <strong>ERC-721 (Non-Fungible Token - NFT)</strong>: mỗi Token gắn liền với một <code>tokenId</code> độc nhất - Thích hợp cho chứng nhận dự án Solar Farm, chứng thư quyền sử dụng đất, lô hàng nông sản hữu cơ.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Tiêu chí</th><th>ERC-20</th><th>ERC-721</th></tr>
+            <tr><td>Tính chất (Fungibility)</td><td>Đồng nhất (Fungible)</td><td>Duy nhất (Non-Fungible)</td></tr>
+            <tr><td>Định danh (<code>tokenId</code>)</td><td>Không có</td><td>Bắt buộc có (<code>uint256</code>)</td></tr>
+            <tr><td>Khả năng chia nhỏ</td><td>Có (thông qua <code>decimals</code>)</td><td>Không (nguyên khối 1 Token ID)</td></tr>
+            <tr><td>Ứng dụng tiêu biểu</td><td>Carbon Credit, Stablecoin, Payment</td><td>Green Certificate, RWA, Supply Chain Batch</td></tr>
+            <tr><td>Quản lý dữ liệu</td><td><code>balanceOf[address]</code></td><td><code>ownerOf[tokenId]</code>, <code>tokenURI[tokenId]</code></td></tr>
+          </table></div>
+        </section>
+
+        <!-- 02 - RWA -->
+        <section class="lesson-section" id="rwa">
+          <p class="eyebrow">02 · REAL-WORLD ASSETS</p>
+          <h2>Real-World Assets (RWA) và ranh giới "Token ≠ Tài sản thực"</h2>
+          <div class="definition"><strong>Real-World Assets (RWA)</strong> là quá trình số hóa các tài sản có thực trong đời sống (bất động sản, trái phiếu xanh, chứng nhận năng lượng, nông sản) thành Token trên Blockchain.</div>
+          <div class="flow-diagram">
+            <span class="flow-box">Tài sản thực (Off-chain)</span>
+            <span class="flow-arrow has-label">↓ Xác minh / Pháp lý</span>
+            <span class="flow-box">Oracle / Issuer</span>
+            <span class="flow-arrow has-label">↓ Mint NFT</span>
+            <span class="flow-box">Blockchain Record</span>
+          </div>
+          <div class="inline-warning"><strong>Lưu ý nguyên tắc:</strong> Token hóa không nghiễm nhiên mang lại giá trị pháp lý off-chain nếu thiếu hành lang pháp luật và đơn vị xác minh độc lập. Cần có cơ chế pháp lý, quy định quyền sở hữu, đơn vị xác minh, Smart Contract và quy trình quản lý tài sản off-chain đi kèm. Tokenization là bài toán <strong>công nghệ + pháp lý + quản trị + xác minh</strong>, không phải chỉ là bài toán công nghệ.</div>
+        </section>
+
+        <!-- 03 - Metadata & IPFS -->
+        <section class="lesson-section" id="metadata-ipfs">
+          <p class="eyebrow">03 · METADATA &amp; IPFS</p>
+          <h2>Cấu trúc Metadata, IPFS &amp; Kiến trúc Bất biến</h2>
+          <p>Do chi phí Gas trên Blockchain rất đắt, toàn bộ tài liệu, hình ảnh, văn bản pháp lý không được lưu trực tiếp on-chain mà được đưa lên <strong>IPFS (InterPlanetary File System)</strong> - Một hệ thống lưu trữ và phân phối dữ liệu theo mô hình phi tập trung.</p>
+          <div class="er-side-by-side">
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th colspan="2">BLOCKCHAIN NETWORK</th></tr>
+              <tr><td>tokenId</td><td>1001</td></tr>
+              <tr><td>owner</td><td>0xAlice...</td></tr>
+              <tr><td>status</td><td>ACTIVE</td></tr>
+            </table></div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th colspan="2">IPFS STORAGE</th></tr>
+              <tr><td>Metadata JSON</td><td></td></tr>
+              <tr><td>High-res PDF Doc</td><td></td></tr>
+              <tr><td>Sensor Image Data</td><td></td></tr>
+            </table></div>
+          </div>
+          <p class="er-relation">↓ <code>tokenURI(tokenId)</code> trên Blockchain trả về đường dẫn <code>ipfs://QmXyz.../metadata.json</code> trỏ tới dữ liệu lưu trên IPFS.</p>
+          <div class="inline-ok"><strong>Content Identifier (CID):</strong> Dữ liệu trên IPFS được truy xuất bằng hash nội dung (<code>ipfs://Qm...</code>). Nếu file bị chỉnh sửa 1 byte, CID sẽ thay đổi hoàn toàn - Chống gian lận nội dung Metadata.</div>
+        </section>
+
+        <!-- 04 - Greenwashing -->
+        <section class="lesson-section" id="greenwashing">
+          <p class="eyebrow">04 · GREENWASHING &amp; CHAIN OF CUSTODY</p>
+          <h2>Vấn đề Greenwashing &amp; Chain of Custody trong chuỗi cung ứng</h2>
+          <p><strong>Greenwashing</strong> là việc doanh nghiệp đưa ra tuyên bố "xanh" nhưng không có chứng nhận hoặc dữ liệu sai lệch.</p>
+          <div class="inline-warning"><strong>Vai trò của Blockchain:</strong> Blockchain không tự kiểm tra dữ liệu thật/giả ở đầu vào ("Garbage In, Garbage Out"), nhưng đảm bảo tính minh bạch, không thể đảo ngược và vết lịch sử giao dịch (<strong>Chain of Custody</strong>) từ Trang trại → Nhà chế biến → Đơn vị vận chuyển → Người tiêu dùng.</div>
+        </section>
+
+        <!-- 05 - Thuc hanh Smart Contract -->
+        <section class="lesson-section" id="thuc-hanh-contract">
+          <p class="eyebrow">05 · PHẦN B - THỰC HÀNH SMART CONTRACT (VYPER)</p>
+          <h2>Smart Contract <code>GreenCertificateNFT.vy</code></h2>
+          <p>Mã nguồn triển khai chuẩn ERC-721 đơn giản hóa cho chứng nhận xanh:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+"""
+@title GreenCertificateNFT
+@notice Smart Contract quản lý NFT Chứng nhận Dự án Xanh / Lô hàng Chuỗi cung ứng
+"""
+
+# Khai báo Event
+event Transfer:
+    sender: indexed(address)
+    receiver: indexed(address)
+    tokenId: indexed(uint256)
+
+event Approval:
+    owner: indexed(address)
+    approved: indexed(address)
+    tokenId: indexed(uint256)
+
+event CertificateIssued:
+    tokenId: indexed(uint256)
+    owner: indexed(address)
+    metadataURI: String[256]
+
+event CertificateRevoked:
+    tokenId: indexed(uint256)
+    reason: String[100]
+
+# Trạng thái Chứng nhận
+enum CertStatus:
+    ACTIVE
+    EXPIRED
+    REVOKED
+
+# State Variables
+name: public(String[32])
+symbol: public(String[8])
+
+admin: public(address)
+total_supply: public(uint256)
+
+# Mappings
+ownerOf: public(HashMap[uint256, address])
+balanceOf: public(HashMap[address, uint256])
+getApproved: public(HashMap[uint256, address])
+tokenURI: public(HashMap[uint256, String[256]])
+statusOf: public(HashMap[uint256, CertStatus])
+
+@deploy
+def __init__():
+    self.name = "Green Certificate NFT"
+    self.symbol = "GCNFT"
+    self.admin = msg.sender
+    self.total_supply = 0
+
+@external
+def mint(to: address, tokenId: uint256, uri: String[256]):
+    """
+    @notice Phát hành NFT Chứng nhận Xanh mới
+    """
+    assert msg.sender == self.admin, "Only Admin can mint"
+    assert to != empty(address), "Invalid recipient"
+    assert self.ownerOf[tokenId] == empty(address), "Token ID already exists"
+
+    self.ownerOf[tokenId] = to
+    self.balanceOf[to] += 1
+    self.tokenURI[tokenId] = uri
+    self.statusOf[tokenId] = CertStatus.ACTIVE
+    self.total_supply += 1
+
+    log Transfer(empty(address), to, tokenId)
+    log CertificateIssued(tokenId, to, uri)
+
+@external
+def approve(approved: address, tokenId: uint256):
+    owner: address = self.ownerOf[tokenId]
+    assert owner != empty(address), "Token does not exist"
+    assert msg.sender == owner, "Not the token owner"
+
+    self.getApproved[tokenId] = approved
+    log Approval(owner, approved, tokenId)
+
+@external
+def transferFrom(sender: address, recipient: address, tokenId: uint256):
+    """
+    @notice Chuyển nhượng NFT Chứng nhận giữa các bên trong chuỗi cung ứng
+    """
+    assert self.ownerOf[tokenId] == sender, "Sender is not owner"
+    assert recipient != empty(address), "Invalid recipient"
+    assert msg.sender == sender or msg.sender == self.getApproved[tokenId], "Not authorized"
+    assert self.statusOf[tokenId] == CertStatus.ACTIVE, "Cannot transfer revoked certificate"
+
+    # Reset approval
+    self.getApproved[tokenId] = empty(address)
+
+    # Update Balances & Ownership
+    self.balanceOf[sender] -= 1
+    self.balanceOf[recipient] += 1
+    self.ownerOf[tokenId] = recipient
+
+    log Transfer(sender, recipient, tokenId)
+
+@external
+def revokeCertificate(tokenId: uint256, reason: String[100]):
+    """
+    @notice Tác vụ thu hồi chứng nhận khi phát hiện sai phạm / Greenwashing
+    """
+    assert msg.sender == self.admin, "Only Admin/Auditor can revoke"
+    assert self.ownerOf[tokenId] != empty(address), "Token does not exist"
+    assert self.statusOf[tokenId] == CertStatus.ACTIVE, "Certificate not active"
+
+    self.statusOf[tokenId] = CertStatus.REVOKED
+    log CertificateRevoked(tokenId, reason)</code></pre></div>
+          <div class="inline-ok"><strong>Vì sao không xóa NFT khi revoke?</strong> Blockchain có tính chất lưu trữ lịch sử. Thay vì xóa NFT, hệ thống chỉ đổi <code>statusOf[tokenId]</code> từ <code>ACTIVE</code> sang <code>REVOKED</code> - Giữ lại toàn bộ lịch sử phát hành/chuyển nhượng/thu hồi, đây chính là giá trị của Blockchain đối với truy xuất nguồn gốc.</div>
+        </section>
+
+        <!-- 06 - Thuc hanh Ape -->
+        <section class="lesson-section" id="thuc-hanh-ape">
+          <p class="eyebrow">06 · KIỂM THỬ VỚI APE FRAMEWORK</p>
+          <h2>Kịch bản kiểm thử tương tác (Ape Framework)</h2>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from ape import accounts, project
+
+def main():
+    admin = accounts.test_accounts[0]
+    farm = accounts.test_accounts[1]
+    distributor = accounts.test_accounts[2]
+
+    # 1. Deploy Contract
+    nft = admin.deploy(project.GreenCertificateNFT)
+
+    # 2. Mint NFT Chứng nhận cho Cà phê Hữu cơ (Batch #1001)
+    metadata_ipfs = "ipfs://QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/metadata.json"
+    nft.mint(farm.address, 1001, metadata_ipfs, sender=admin)
+
+    print(f"Owner of Token 1001: {nft.ownerOf(1001)}")
+    print(f"Token URI: {nft.tokenURI(1001)}")
+
+    # 3. Nông trại chuyển nhượng lô hàng (và NFT đính kèm) cho Nhà phân phối
+    nft.transferFrom(farm.address, distributor.address, 1001, sender=farm)
+    print(f"New Owner after transfer: {nft.ownerOf(1001)}")
+
+    # 4. Kiểm toán viên (Admin) phát hiện vi phạm, thu hồi chứng nhận
+    nft.revokeCertificate(1001, "Failed organic residue test on-site", sender=admin)
+    print(f"Certificate Status (2 = REVOKED): {nft.statusOf(1001)}")</code></pre></div>
+        </section>
+
+        <!-- 07 - Thuc hanh IPFS -->
+        <section class="lesson-section" id="thuc-hanh-ipfs">
+          <p class="eyebrow">07 · PHẦN C - IPFS THỰC HÀNH</p>
+          <h2>Tạo Metadata &amp; upload lên IPFS</h2>
+          <p>Sinh viên khởi tạo tệp <code>metadata.json</code> đại diện cho 1 lô hàng/chứng nhận xanh:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-json">{
+  "name": "Organic Coffee Batch #2026-001",
+  "description": "Chứng nhận Cà phê Hữu cơ xuất khẩu - Lâm Đồng",
+  "image": "ipfs://QmZ4tDuvesSSp1D2C2A1k5UvG8wF3eH4k1xP9L/coffee.jpg",
+  "attributes": [
+    { "trait_type": "Project", "value": "Lam Dong Organic Farm" },
+    { "trait_type": "Capacity/Quantity", "value": "2000 kg" },
+    { "trait_type": "Harvest Date", "value": "2026-08-10" },
+    { "trait_type": "Certification Standard", "value": "USDA Organic" },
+    { "trait_type": "Auditor", "value": "Global Green Verification Corp" }
+  ]
+}</code></pre></div>
+          <h3>Quy trình upload và liên kết</h3>
+          <ol>
+            <li>Sử dụng IPFS CLI hoặc dịch vụ Pinning (Pinata/Infura)</li>
+            <li>Upload file hình ảnh → nhận <code>image_cid</code></li>
+            <li>Điền <code>image_cid</code> vào <code>metadata.json</code> → upload <code>metadata.json</code> → nhận <code>metadata_cid</code></li>
+            <li>Truyền <code>ipfs://&lt;metadata_cid&gt;</code> vào hàm <code>mint()</code> trên Smart Contract</li>
+          </ol>
+        </section>
+
+        <!-- 08 - Graph Analytics -->
+        <section class="lesson-section" id="graph-analytics">
+          <p class="eyebrow">08 · PHẦN D - DATA &amp; RESEARCH</p>
+          <h2>Graph Analytics trong chuỗi cung ứng On-chain</h2>
+          <p>Xây dựng mô hình đồ thị <code>G = (V, E)</code> từ các sự kiện <code>Transfer</code> on-chain: <strong>Node (V)</strong> là ví đại diện cho Farm, Factory, Logistics, Distributor, Retailer; <strong>Edge (E)</strong> là giao dịch chuyển nhượng NFT (<code>transferFrom</code>) kèm thông tin <code>timestamp</code>, <code>tokenId</code>.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">import networkx as nx
+import matplotlib.pyplot as plt
+
+# Khởi tạo đồ thị chuỗi cung ứng
+G = nx.DiGraph()
+
+# Thêm các giao dịch chuyển nhượng từ Event Logs
+events = [
+    ("Farm_A", "Processing_B", 1001),
+    ("Processing_B", "Distributor_C", 1001),
+    ("Distributor_C", "Retailer_D", 1001),
+    ("Farm_A", "Company_X", 1002),  # Luồng bất thường
+    ("Company_X", "Retailer_D", 1002)
+]
+
+for sender, receiver, token_id in events:
+    G.add_edge(sender, receiver, label=f"NFT #{token_id}")
+
+# Tính toán các chỉ số Graph Analytics
+degree_centrality = nx.degree_centrality(G)
+print("Degree Centrality:", degree_centrality)
+
+# Phát hiện điểm bất thường (ví dụ: luồng đi qua node trung gian không có chứng chỉ)
+print("Shortest Path (1001):", nx.shortest_path(G, "Farm_A", "Retailer_D"))</code></pre></div>
+        </section>
+
+        <!-- 09 - IoT + Oracle -->
+        <section class="lesson-section" id="iot-oracle">
+          <p class="eyebrow">09 · IOT + ORACLE ARCHITECTURE</p>
+          <h2>Kết hợp IoT Sensors + Oracle + Smart Contract</h2>
+          <p>Để giảm thiểu Greenwashing ngay tại nguồn, dữ liệu cảm biến (nhiệt độ, CO₂, điện năng tiêu thụ) được tự động hóa truyền lên Blockchain:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">IoT Cảm biến</span>
+            <span class="flow-arrow has-label">↓ Data Hash</span>
+            <span class="flow-box">Chainlink Oracle</span>
+            <span class="flow-arrow has-label">↓ Xác minh ngưỡng</span>
+            <span class="flow-box">Smart Contract (Update Status / Auto-Revoke)</span>
+          </div>
+          <h3>Định hướng nghiên cứu cho đồ án</h3>
+          <ul>
+            <li><strong>Hướng 1 - Green Certificate NFT:</strong> Xây dựng hệ thống NFT quản lý chứng nhận dự án xanh</li>
+            <li><strong>Hướng 2 - Blockchain Supply Chain:</strong> Xây dựng hệ thống truy xuất nguồn gốc sản phẩm xanh</li>
+            <li><strong>Hướng 3 - Greenwashing Detection:</strong> Kết hợp Blockchain + AI để phát hiện bất thường trong tuyên bố môi trường</li>
+            <li><strong>Hướng 4 - IoT + Blockchain:</strong> Kết hợp dữ liệu cảm biến môi trường → Oracle → Smart Contract → NFT/Carbon Token</li>
+          </ul>
+        </section>
+
+        <!-- 10 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">10 · PHẦN E - BÀI TẬP VỀ NHÀ</p>
+          <h2>Bài tập về nhà</h2>
+
+          <h3>Bài tập thực hành</h3>
+          <p><strong>Hoàn thiện Contract:</strong> Bổ sung hàm <code>burn(tokenId)</code> vào <code>GreenCertificateNFT.vy</code> cho phép người sở hữu tự tiêu hủy NFT khi lô hàng đã kết thúc vòng đời tiêu dùng.</p>
+          <p><strong>IPFS Metadata Task:</strong> Khởi tạo 1 file <code>metadata.json</code> cho dự án Điện mặt trời (Solar Farm) 50MW tại Ninh Thuận, upload lên IPFS và ghi nhận CID thu được.</p>
+          <p><strong>Graph Analysis:</strong> Sử dụng thư viện <code>networkx</code> trong Python, viết script đọc log giao dịch từ 20 NFT lô hàng, vẽ đồ thị mạng lưới và xác định 2 node có chỉ số <code>Betweenness Centrality</code> cao nhất.</p>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy định về bài làm</h3>
+            <p>Tuyệt đối không sao chép hoặc sử dụng bài làm của sinh viên khác để nộp bài. Sinh viên cần nghiêm túc thực hiện bài tập của mình.</p>
+          </div>
+        </section>
+
+        <!-- 11 - Cau hoi thao luan -->
+        <section class="lesson-section" id="thao-luan">
+          <p class="eyebrow">11 · CÂU HỎI THẢO LUẬN TRÊN LỚP</p>
+          <h2>Câu hỏi thảo luận</h2>
+          <ol>
+            <li><strong>Sự khác biệt cốt lõi:</strong> Tại sao Carbon Credit ở Tuần 3 nên dùng ERC-20, nhưng chứng nhận nguồn gốc lô hàng ở Tuần 4 bắt buộc phải dùng ERC-721?</li>
+            <li><strong>Xử lý dữ liệu sai:</strong> Nếu kiểm toán viên phát hiện dữ liệu môi trường bị khai khống sau khi NFT đã mint, cơ chế <code>revokeCertificate</code> giải quyết vấn đề này trên Blockchain như thế nào mà không làm vi phạm tính "bất biến" (Immutability)?</li>
+            <li><strong>Quyền riêng tư:</strong> Doanh nghiệp có nên đưa toàn bộ thông tin chi phí và đối tác cung ứng lên Blockchain công khai không? Giải pháp lai (Hybrid/Private Metadata) được áp dụng ra sao?</li>
+          </ol>
+        </section>
+
+        <!-- 12 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">12 · CHECKLIST HOÀN THÀNH TUẦN 4</p>
+          <h2>Tự kiểm tra</h2>
+
+          <h3>Lý thuyết</h3>
+          <ul class="lesson-checklist">
+            <li>Hiểu khái niệm Real-World Assets (RWA)</li>
+            <li>Phân biệt ERC-20 và ERC-721</li>
+            <li>Hiểu cấu trúc và vai trò của Metadata</li>
+            <li>Hiểu IPFS và Content Identifier (CID)</li>
+            <li>Hiểu Greenwashing và Chain of Custody</li>
+          </ul>
+
+          <h3>Thực hành</h3>
+          <ul class="lesson-checklist">
+            <li>Đọc hiểu được contract GreenCertificateNFT.vy</li>
+            <li>Hiểu luồng mint(), transferFrom(), revokeCertificate()</li>
+            <li>Tạo được file metadata.json chuẩn</li>
+            <li>Hiểu quy trình upload IPFS và gán tokenURI</li>
+          </ul>
+
+          <h3>Research</h3>
+          <ul class="lesson-checklist">
+            <li>Biết biểu diễn dữ liệu chuỗi cung ứng thành Graph (Node &amp; Edge)</li>
+            <li>Biết dùng networkx để phân tích Degree Centrality/Shortest Path</li>
+            <li>Hiểu kiến trúc kết hợp IoT + Oracle + Smart Contract</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần học">
+          <a href="week-3.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 3: Số hóa Tài sản Xanh - ERC-20 &amp; Carbon Credit</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 5 (sắp mở)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="erc20-den-erc721"><b>○</b> Từ ERC-20 đến ERC-721</li>
+            <li data-section="rwa"><b>○</b> Real-World Assets</li>
+            <li data-section="metadata-ipfs"><b>○</b> Metadata &amp; IPFS</li>
+            <li data-section="greenwashing"><b>○</b> Greenwashing</li>
+            <li data-section="thuc-hanh-contract"><b>○</b> Smart Contract NFT</li>
+            <li data-section="thuc-hanh-ape"><b>○</b> Kiểm thử với Ape</li>
+            <li data-section="thuc-hanh-ipfs"><b>○</b> Metadata &amp; IPFS thực hành</li>
+            <li data-section="graph-analytics"><b>○</b> Graph Analytics</li>
+            <li data-section="iot-oracle"><b>○</b> IoT &amp; Oracle</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập</li>
+            <li data-section="thao-luan"><b>○</b> Thảo luận</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Token ≠ tài sản thực - Luôn cần cơ chế xác minh off-chain đi kèm.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=12"></script>
+</body>
+</html>

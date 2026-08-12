@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="IT004 - Lược đồ cơ sở dữ liệu Quản lý giáo vụ dùng cho BTTH4: các quan hệ, thuộc tính và dữ liệu mẫu.">
+  <title>Lược đồ Quản lý giáo vụ - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=42">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IT004</a><span>/</span>Lược đồ Quản lý giáo vụ</p>
+
+    <div class="week-header">
+      <span class="week-tag">LƯỢC ĐỒ DÙNG CHUNG · IT004</span>
+      <h1>Cơ sở dữ liệu Quản lý giáo vụ</h1>
+      <div class="week-meta"><span>8 quan hệ</span><span>BTTH4</span></div>
+      <p style="max-width:720px;color:var(--muted);font-size:13px;margin-top:10px">Lược đồ quản lý lớp học, giáo viên, môn học và kết quả thi của một trung tâm đào tạo. Đọc kỹ phần tân từ và bảng thuộc tính trước khi làm bài - nắm đúng ý nghĩa dữ liệu giúp viết truy vấn chính xác hơn nhiều so với chỉ nhớ tên cột.</p>
+    </div>
+
+    <div class="lesson-content" style="max-width:1000px;margin:0 auto">
+
+      <section class="lesson-section" style="padding-top:0;border-top:0" id="tong-quan">
+        <p class="eyebrow">TỔNG QUAN</p>
+        <h2>Cho cơ sở dữ liệu quản lý giáo vụ gồm có các quan hệ sau</h2>
+
+        <div class="schema-def">
+          <p class="schema-def-head">HOCVIEN (<u>MAHV</u>, HO, TEN, NGSINH, GIOITINH, NOISINH, MALOP)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Mỗi học viên phân biệt với nhau bằng mã học viên, lưu trữ họ tên, ngày sinh, giới tính, nơi sinh, thuộc lớp nào.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">LOP (<u>MALOP</u>, TENLOP, TRGLOP, SISO, MAGVCN)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Mỗi lớp gồm có mã lớp, tên lớp, học viên làm lớp trưởng của lớp, sỉ số lớp và giáo viên chủ nhiệm.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">KHOA (<u>MAKHOA</u>, TENKHOA, NGTLAP, TRGKHOA)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Mỗi khoa cần lưu trữ mã khoa, tên khoa, ngày thành lập khoa và trưởng khoa (cũng là một giáo viên thuộc khoa).</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">MONHOC (<u>MAMH</u>, TENMH, TCLT, TCTH, MAKHOA)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Mỗi môn học cần lưu trữ tên môn học, số tín chỉ lý thuyết, số tín chỉ thực hành và khoa nào phụ trách.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">DIEUKIEN (<u>MAMH, MAMH_TRUOC</u>)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Có những môn học học viên phải có kiến thức từ một số môn học trước.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">GIAOVIEN (<u>MAGV</u>, HOTEN, HOCVI, HOCHAM, GIOITINH, NGSINH, NGVL, HESO, MUCLUONG, MAKHOA)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Mã giáo viên để phân biệt giữa các giáo viên, cần lưu trữ họ tên, học vị, học hàm, giới tính, ngày sinh, ngày vào làm, hệ số, mức lương và thuộc một khoa.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">GIANGDAY (<u>MALOP, MAMH</u>, MAGV, HOCKY, NAM, TUNGAY, DENNGAY)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Mỗi học kỳ của năm học sẽ phân công giảng dạy: lớp nào học môn gì do giáo viên nào phụ trách.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">KETQUATHI (<u>MAHV, MAMH, LANTHI</u>, NGTHI, DIEM, KQUA)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ kết quả thi của học viên: học viên nào thi môn học gì, lần thi thứ mấy, ngày thi là ngày nào, điểm thi bao nhiêu và kết quả là đạt hay không đạt.</p>
+        </div>
+
+        <h3>Sơ đồ quan hệ</h3>
+        <div class="er-diagram">
+          <svg viewBox="0 0 620 270" role="img" aria-label="Sơ đồ 8 quan hệ: KHOA, GIAOVIEN, MONHOC, LOP, HOCVIEN, DIEUKIEN, GIANGDAY, KETQUATHI với các khóa ngoại liên kết">
+            <defs>
+              <marker id="erArrowGV" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10Z" style="fill:var(--primary)"/>
+              </marker>
+            </defs>
+
+            <line x1="290" y1="80" x2="290" y2="46" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+            <line x1="330" y1="46" x2="330" y2="80" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+            <line x1="470" y1="80" x2="390" y2="46" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+
+            <line x1="70" y1="116" x2="70" y2="150" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+            <line x1="110" y1="150" x2="110" y2="116" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+            <line x1="160" y1="98" x2="240" y2="98" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+
+            <line x1="250" y1="150" x2="150" y2="116" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+            <line x1="370" y1="150" x2="470" y2="116" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+            <line x1="310" y1="150" x2="310" y2="116" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+
+            <line x1="510" y1="150" x2="510" y2="116" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+            <line x1="550" y1="150" x2="550" y2="116" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+
+            <line x1="250" y1="220" x2="150" y2="186" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+            <line x1="370" y1="220" x2="460" y2="116" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowGV)"/>
+
+            <rect x="240" y="10" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="310" y="33" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">KHOA</text>
+
+            <rect x="20" y="80" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="90" y="103" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">LOP</text>
+
+            <rect x="240" y="80" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="310" y="103" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">GIAOVIEN</text>
+
+            <rect x="460" y="80" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="530" y="103" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">MONHOC</text>
+
+            <rect x="20" y="150" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="90" y="173" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">HOCVIEN</text>
+
+            <rect x="240" y="150" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="310" y="173" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">GIANGDAY</text>
+
+            <rect x="460" y="150" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="530" y="173" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">DIEUKIEN</text>
+
+            <rect x="240" y="220" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="310" y="243" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">KETQUATHI</text>
+          </svg>
+        </div>
+
+        <h3>Diễn giải quan hệ</h3>
+        <p class="er-relation">KHOA ➜ GIAOVIEN (qua <code>TRGKHOA</code>): mỗi khoa có 1 trưởng khoa, là một giáo viên.</p>
+        <p class="er-relation">GIAOVIEN ➜ KHOA (qua <code>MAKHOA</code>): mỗi giáo viên thuộc về 1 khoa duy nhất.</p>
+        <p class="er-relation">MONHOC ➜ KHOA (qua <code>MAKHOA</code>): mỗi môn học do 1 khoa phụ trách.</p>
+        <p class="er-relation">DIEUKIEN ➜ MONHOC (qua <code>MAMH</code> và <code>MAMH_TRUOC</code>): mỗi dòng điều kiện tiên quyết nối 2 môn học với nhau - môn học và môn phải học trước.</p>
+        <p class="er-relation">LOP ➜ HOCVIEN (qua <code>TRGLOP</code>): mỗi lớp có 1 lớp trưởng, là một học viên của chính lớp đó.</p>
+        <p class="er-relation">HOCVIEN ➜ LOP (qua <code>MALOP</code>): mỗi học viên thuộc về 1 lớp duy nhất.</p>
+        <p class="er-relation">LOP ➜ GIAOVIEN (qua <code>MAGVCN</code>): mỗi lớp có 1 giáo viên chủ nhiệm.</p>
+        <p class="er-relation">GIANGDAY ➜ LOP, MONHOC, GIAOVIEN: mỗi lượt phân công ghi rõ lớp nào học môn gì, do giáo viên nào dạy.</p>
+        <p class="er-relation">KETQUATHI ➜ HOCVIEN, MONHOC: mỗi kết quả thi gắn với 1 học viên và 1 môn học cụ thể.</p>
+        <div class="inline-warning"><strong>Lưu ý dễ nhầm:</strong> <code>KHOA.TRGKHOA</code> và <code>GIAOVIEN.MAKHOA</code> tham chiếu qua lại lẫn nhau (khoa có 1 trưởng khoa, giáo viên thuộc 1 khoa) - tương tự với <code>LOP.TRGLOP</code> và <code>HOCVIEN.MALOP</code>. Khoa <code>KTMT</code> trong dữ liệu mẫu chưa có trưởng khoa (<code>TRGKHOA</code> để <code>NULL</code>).</div>
+      </section>
+
+      <section class="lesson-section" id="hocvien">
+        <p class="eyebrow">QUAN HỆ 1 · HOCVIEN</p>
+        <h2>HOCVIEN</h2>
+        <div class="definition">Mỗi học viên phân biệt với nhau bằng mã học viên, lưu trữ họ tên, ngày sinh, giới tính, nơi sinh và thuộc lớp nào.</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính</td></tr>
+          <tr><td><code>HO</code></td><td><code>varchar(40)</code></td><td>Họ và tên lót</td></tr>
+          <tr><td><code>TEN</code></td><td><code>varchar(10)</code></td><td>Tên</td></tr>
+          <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Ngày sinh</td></tr>
+          <tr><td><code>GIOITINH</code></td><td><code>varchar(3)</code></td><td>Giới tính</td></tr>
+          <tr><td><code>NOISINH</code></td><td><code>varchar(40)</code></td><td>Nơi sinh</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - khóa ngoại đến LOP</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 35 học viên)</p>
+        <div class="er-side-by-side">
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MAHV</th><th>HO</th><th>TEN</th><th>NGSINH</th><th>GIOITINH</th><th>NOISINH</th><th>MALOP</th></tr>
+            <tr><td>K1101</td><td>Nguyen Van</td><td>A</td><td>27/1/1986</td><td>Nam</td><td>TpHCM</td><td>K11</td></tr>
+            <tr><td>K1102</td><td>Tran Ngoc</td><td>Han</td><td>14/3/1986</td><td>Nu</td><td>Kien Giang</td><td>K11</td></tr>
+            <tr><td>K1103</td><td>Ha Duy</td><td>Lap</td><td>18/4/1986</td><td>Nam</td><td>Nghe An</td><td>K11</td></tr>
+            <tr><td>K1104</td><td>Tran Ngoc</td><td>Linh</td><td>30/3/1986</td><td>Nu</td><td>Tay Ninh</td><td>K11</td></tr>
+            <tr><td>K1105</td><td>Tran Minh</td><td>Long</td><td>27/2/1986</td><td>Nam</td><td>TpHCM</td><td>K11</td></tr>
+            <tr><td>K1106</td><td>Le Nhat</td><td>Minh</td><td>24/1/1986</td><td>Nam</td><td>TpHCM</td><td>K11</td></tr>
+            <tr><td>K1107</td><td>Nguyen Nhu</td><td>Nhut</td><td>27/1/1986</td><td>Nam</td><td>Ha Noi</td><td>K11</td></tr>
+            <tr><td>K1108</td><td>Nguyen Manh</td><td>Tam</td><td>27/2/1986</td><td>Nam</td><td>Kien Giang</td><td>K11</td></tr>
+            <tr><td>K1109</td><td>Phan Thi Thanh</td><td>Tam</td><td>27/1/1986</td><td>Nu</td><td>Vinh Long</td><td>K11</td></tr>
+            <tr><td>K1110</td><td>Le Hoai</td><td>Thuong</td><td>02/05/1986</td><td>Nu</td><td>Can Tho</td><td>K11</td></tr>
+            <tr><td>K1111</td><td>Le Ha</td><td>Vinh</td><td>25/12/1986</td><td>Nam</td><td>Vinh Long</td><td>K11</td></tr>
+            <tr><td>K1201</td><td>Nguyen Van</td><td>B</td><td>02/11/1986</td><td>Nam</td><td>TpHCM</td><td>K12</td></tr>
+            <tr><td>K1202</td><td>Nguyen Thi Kim</td><td>Duyen</td><td>18/1/1986</td><td>Nu</td><td>TpHCM</td><td>K12</td></tr>
+            <tr><td>K1203</td><td>Tran Thi Kim</td><td>Duyen</td><td>17/9/1986</td><td>Nu</td><td>TpHCM</td><td>K12</td></tr>
+            <tr><td>K1204</td><td>Truong My</td><td>Hanh</td><td>19/5/1986</td><td>Nu</td><td>Dong Nai</td><td>K12</td></tr>
+            <tr><td>K1205</td><td>Nguyen Thanh</td><td>Nam</td><td>17/4/1986</td><td>Nam</td><td>TpHCM</td><td>K12</td></tr>
+            <tr><td>K1206</td><td>Nguyen Thi Truc</td><td>Thanh</td><td>03/04/1986</td><td>Nu</td><td>Kien Giang</td><td>K12</td></tr>
+            <tr><td>K1207</td><td>Tran Thi Bich</td><td>Thuy</td><td>02/08/1986</td><td>Nu</td><td>Nghe An</td><td>K12</td></tr>
+          </table></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MAHV</th><th>HO</th><th>TEN</th><th>NGSINH</th><th>GIOITINH</th><th>NOISINH</th><th>MALOP</th></tr>
+            <tr><td>K1208</td><td>Huynh Thi Kim</td><td>Trieu</td><td>04/08/1986</td><td>Nu</td><td>Tay Ninh</td><td>K12</td></tr>
+            <tr><td>K1209</td><td>Pham Thanh</td><td>Trieu</td><td>23/2/1986</td><td>Nam</td><td>TpHCM</td><td>K12</td></tr>
+            <tr><td>K1210</td><td>Ngo Thanh</td><td>Tuan</td><td>14/2/1986</td><td>Nam</td><td>TpHCM</td><td>K12</td></tr>
+            <tr><td>K1211</td><td>Do Thi</td><td>Xuan</td><td>03/09/1986</td><td>Nu</td><td>Ha Noi</td><td>K12</td></tr>
+            <tr><td>K1212</td><td>Le Thi Phi</td><td>Yen</td><td>03/12/1986</td><td>Nu</td><td>TpHCM</td><td>K12</td></tr>
+            <tr><td>K1301</td><td>Nguyen Thi Kim</td><td>Cuc</td><td>06/09/1986</td><td>Nu</td><td>Kien Giang</td><td>K13</td></tr>
+            <tr><td>K1302</td><td>Truong Thi My</td><td>Hien</td><td>18/3/1986</td><td>Nu</td><td>Nghe An</td><td>K13</td></tr>
+            <tr><td>K1303</td><td>Le Duc</td><td>Hien</td><td>21/3/1986</td><td>Nam</td><td>Tay Ninh</td><td>K13</td></tr>
+            <tr><td>K1304</td><td>Le Quang</td><td>Hien</td><td>18/4/1986</td><td>Nam</td><td>TpHCM</td><td>K13</td></tr>
+            <tr><td>K1305</td><td>Le Thi</td><td>Huong</td><td>27/3/1986</td><td>Nu</td><td>TpHCM</td><td>K13</td></tr>
+            <tr><td>K1306</td><td>Nguyen Thai</td><td>Huu</td><td>30/3/1986</td><td>Nam</td><td>Ha Noi</td><td>K13</td></tr>
+            <tr><td>K1307</td><td>Tran Minh</td><td>Man</td><td>28/5/1986</td><td>Nam</td><td>TpHCM</td><td>K13</td></tr>
+            <tr><td>K1308</td><td>Nguyen Hieu</td><td>Nghia</td><td>04/08/1986</td><td>Nam</td><td>Kien Giang</td><td>K13</td></tr>
+            <tr><td>K1309</td><td>Nguyen Trung</td><td>Nghia</td><td>18/1/1987</td><td>Nam</td><td>Nghe An</td><td>K13</td></tr>
+            <tr><td>K1310</td><td>Tran Thi Hong</td><td>Tham</td><td>22/4/1986</td><td>Nu</td><td>Tay Ninh</td><td>K13</td></tr>
+            <tr><td>K1311</td><td>Tran Minh</td><td>Thuc</td><td>04/04/1986</td><td>Nam</td><td>TpHCM</td><td>K13</td></tr>
+            <tr><td>K1312</td><td>Nguyen Thi Kim</td><td>Yen</td><td>09/07/1986</td><td>Nu</td><td>TpHCM</td><td>K13</td></tr>
+          </table></div>
+        </div>
+      </section>
+
+      <section class="lesson-section" id="lop">
+        <p class="eyebrow">QUAN HỆ 2 · LOP</p>
+        <h2>LOP</h2>
+        <div class="definition">Mỗi lớp gồm có mã lớp, tên lớp, học viên làm lớp trưởng của lớp, sỉ số lớp và giáo viên chủ nhiệm.</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - khóa chính</td></tr>
+          <tr><td><code>TENLOP</code></td><td><code>varchar(40)</code></td><td>Tên lớp</td></tr>
+          <tr><td><code>TRGLOP</code></td><td><code>char(5)</code></td><td>Lớp trưởng - khóa ngoại đến HOCVIEN</td></tr>
+          <tr><td><code>SISO</code></td><td><code>tinyint</code></td><td>Sỉ số lớp</td></tr>
+          <tr><td><code>MAGVCN</code></td><td><code>char(4)</code></td><td>Giáo viên chủ nhiệm - khóa ngoại đến GIAOVIEN</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 3 lớp)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>MALOP</th><th>TENLOP</th><th>TRGLOP</th><th>SISO</th><th>MAGVCN</th></tr>
+          <tr><td>K11</td><td>Lop 1 khoa 1</td><td>K1108</td><td>11</td><td>GV07</td></tr>
+          <tr><td>K12</td><td>Lop 2 khoa 1</td><td>K1205</td><td>12</td><td>GV09</td></tr>
+          <tr><td>K13</td><td>Lop 3 khoa 1</td><td>K1305</td><td>12</td><td>GV14</td></tr>
+        </table></div>
+      </section>
+
+      <section class="lesson-section" id="khoa">
+        <p class="eyebrow">QUAN HỆ 3 · KHOA</p>
+        <h2>KHOA</h2>
+        <div class="definition">Mỗi khoa cần lưu trữ mã khoa, tên khoa, ngày thành lập khoa và trưởng khoa (cũng là một giáo viên thuộc khoa).</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Mã khoa - khóa chính</td></tr>
+          <tr><td><code>TENKHOA</code></td><td><code>varchar(40)</code></td><td>Tên khoa</td></tr>
+          <tr><td><code>NGTLAP</code></td><td><code>smalldatetime</code></td><td>Ngày thành lập khoa</td></tr>
+          <tr><td><code>TRGKHOA</code></td><td><code>char(4)</code></td><td>Trưởng khoa - khóa ngoại đến GIAOVIEN, <strong>có thể NULL</strong></td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 5 khoa)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>MAKHOA</th><th>TENKHOA</th><th>NGTLAP</th><th>TRGKHOA</th></tr>
+          <tr><td>KHMT</td><td>Khoa hoc may tinh</td><td>06/07/2005</td><td>GV01</td></tr>
+          <tr><td>HTTT</td><td>He thong thong tin</td><td>06/07/2005</td><td>GV02</td></tr>
+          <tr><td>CNPM</td><td>Cong nghe phan mem</td><td>06/07/2005</td><td>GV04</td></tr>
+          <tr><td>MTT</td><td>Mang va truyen thong</td><td>20/10/2005</td><td>GV03</td></tr>
+          <tr><td>KTMT</td><td>Ky thuat may tinh</td><td>20/12/2005</td><td><em>NULL</em></td></tr>
+        </table></div>
+      </section>
+
+      <section class="lesson-section" id="monhoc">
+        <p class="eyebrow">QUAN HỆ 4 · MONHOC</p>
+        <h2>MONHOC</h2>
+        <div class="definition">Mỗi môn học cần lưu trữ tên môn học, số tín chỉ lý thuyết, số tín chỉ thực hành và khoa nào phụ trách.</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính</td></tr>
+          <tr><td><code>TENMH</code></td><td><code>varchar(40)</code></td><td>Tên môn học</td></tr>
+          <tr><td><code>TCLT</code></td><td><code>tinyint</code></td><td>Số tín chỉ lý thuyết</td></tr>
+          <tr><td><code>TCTH</code></td><td><code>tinyint</code></td><td>Số tín chỉ thực hành</td></tr>
+          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Môn học thuộc khoa nào - khóa ngoại đến KHOA</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 13 môn học)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>MAMH</th><th>TENMH</th><th>TCLT</th><th>TCTH</th><th>MAKHOA</th></tr>
+          <tr><td>THDC</td><td>Tin hoc dai cuong</td><td>4</td><td>1</td><td>KHMT</td></tr>
+          <tr><td>CTRR</td><td>Cau truc roi rac</td><td>5</td><td>0</td><td>KHMT</td></tr>
+          <tr><td>CSDL</td><td>Co so du lieu</td><td>3</td><td>1</td><td>HTTT</td></tr>
+          <tr><td>CTDLGT</td><td>Cau truc du lieu va giai thuat</td><td>3</td><td>1</td><td>KHMT</td></tr>
+          <tr><td>PTTKTT</td><td>Phan tich thiet ke thuat toan</td><td>3</td><td>0</td><td>KHMT</td></tr>
+          <tr><td>DHMT</td><td>Do hoa may tinh</td><td>3</td><td>1</td><td>KHMT</td></tr>
+          <tr><td>KTMT</td><td>Kien truc may tinh</td><td>3</td><td>0</td><td>KTMT</td></tr>
+          <tr><td>TKCSDL</td><td>Thiet ke co so du lieu</td><td>3</td><td>1</td><td>HTTT</td></tr>
+          <tr><td>PTTKHTTT</td><td>Phan tich thiet ke he thong thong tin</td><td>4</td><td>1</td><td>HTTT</td></tr>
+          <tr><td>HDH</td><td>He dieu hanh</td><td>4</td><td>0</td><td>KTMT</td></tr>
+          <tr><td>NMCNPM</td><td>Nhap mon cong nghe phan mem</td><td>3</td><td>0</td><td>CNPM</td></tr>
+          <tr><td>LTCFW</td><td>Lap trinh C for win</td><td>3</td><td>1</td><td>CNPM</td></tr>
+          <tr><td>LTHDT</td><td>Lap trinh huong doi tuong</td><td>3</td><td>1</td><td>CNPM</td></tr>
+        </table></div>
+      </section>
+
+      <section class="lesson-section" id="dieukien">
+        <p class="eyebrow">QUAN HỆ 5 · DIEUKIEN</p>
+        <h2>DIEUKIEN</h2>
+        <div class="definition">Có những môn học học viên phải có kiến thức từ một số môn học trước. Khóa chính là cặp <code>(MAMH, MAMH_TRUOC)</code>.</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính, khóa ngoại đến MONHOC</td></tr>
+          <tr><td><code>MAMH_TRUOC</code></td><td><code>char(10)</code></td><td>Mã môn học phải học trước - khóa chính, khóa ngoại đến MONHOC</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 8 dòng)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>MAMH</th><th>MAMH_TRUOC</th></tr>
+          <tr><td>CSDL</td><td>CTRR</td></tr>
+          <tr><td>CSDL</td><td>CTDLGT</td></tr>
+          <tr><td>CTDLGT</td><td>THDC</td></tr>
+          <tr><td>PTTKTT</td><td>THDC</td></tr>
+          <tr><td>PTTKTT</td><td>CTDLGT</td></tr>
+          <tr><td>DHMT</td><td>THDC</td></tr>
+          <tr><td>LTHDT</td><td>THDC</td></tr>
+          <tr><td>PTTKHTTT</td><td>CSDL</td></tr>
+        </table></div>
+      </section>
+
+      <section class="lesson-section" id="giaovien">
+        <p class="eyebrow">QUAN HỆ 6 · GIAOVIEN</p>
+        <h2>GIAOVIEN</h2>
+        <div class="definition">Mã giáo viên để phân biệt giữa các giáo viên, cần lưu trữ họ tên, học vị, học hàm, giới tính, ngày sinh, ngày vào làm, hệ số, mức lương và thuộc một khoa.</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAGV</code></td><td><code>char(4)</code></td><td>Mã giáo viên - khóa chính</td></tr>
+          <tr><td><code>HOTEN</code></td><td><code>varchar(40)</code></td><td>Họ tên</td></tr>
+          <tr><td><code>HOCVI</code></td><td><code>varchar(10)</code></td><td>Học vị (CN, KS, ThS, TS, PTS...)</td></tr>
+          <tr><td><code>HOCHAM</code></td><td><code>varchar(10)</code></td><td>Học hàm (GV, PGS, GS...), <strong>có thể NULL</strong></td></tr>
+          <tr><td><code>GIOITINH</code></td><td><code>varchar(3)</code></td><td>Giới tính</td></tr>
+          <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Ngày sinh</td></tr>
+          <tr><td><code>NGVL</code></td><td><code>smalldatetime</code></td><td>Ngày vào làm việc</td></tr>
+          <tr><td><code>HESO</code></td><td><code>numeric(4,2)</code></td><td>Hệ số lương</td></tr>
+          <tr><td><code>MUCLUONG</code></td><td><code>money</code></td><td>Mức lương</td></tr>
+          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Thuộc khoa nào - khóa ngoại đến KHOA</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 15 giáo viên)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>MAGV</th><th>HOTEN</th><th>HOCVI</th><th>HOCHAM</th><th>GIOITINH</th><th>NGSINH</th><th>NGVL</th><th>HESO</th><th>MUCLUONG</th><th>MAKHOA</th></tr>
+          <tr><td>GV01</td><td>Ho Thanh Son</td><td>PTS</td><td>GS</td><td>Nam</td><td>05/02/1950</td><td>01/11/2004</td><td>5</td><td>2.250.000</td><td>KHMT</td></tr>
+          <tr><td>GV02</td><td>Tran Tam Thanh</td><td>TS</td><td>PGS</td><td>Nam</td><td>17/12/1965</td><td>20/4/2004</td><td>4.5</td><td>2.025.000</td><td>HTTT</td></tr>
+          <tr><td>GV03</td><td>Do Nghiem Phung</td><td>TS</td><td>GS</td><td>Nu</td><td>08/01/1950</td><td>23/9/2004</td><td>4</td><td>1.800.000</td><td>CNPM</td></tr>
+          <tr><td>GV04</td><td>Tran Nam Son</td><td>TS</td><td>PGS</td><td>Nam</td><td>22/2/1961</td><td>01/12/2005</td><td>4.5</td><td>2.025.000</td><td>KTMT</td></tr>
+          <tr><td>GV05</td><td>Mai Thanh Danh</td><td>ThS</td><td>GV</td><td>Nam</td><td>03/12/1958</td><td>01/12/2005</td><td>3</td><td>1.350.000</td><td>HTTT</td></tr>
+          <tr><td>GV06</td><td>Tran Doan Hung</td><td>TS</td><td>GV</td><td>Nam</td><td>03/11/1953</td><td>01/12/2005</td><td>4.5</td><td>2.025.000</td><td>KHMT</td></tr>
+          <tr><td>GV07</td><td>Nguyen Minh Tien</td><td>ThS</td><td>GV</td><td>Nam</td><td>23/11/1971</td><td>03/01/2005</td><td>4</td><td>1.800.000</td><td>KHMT</td></tr>
+          <tr><td>GV08</td><td>Le Thi Tran</td><td>KS</td><td><em>NULL</em></td><td>Nu</td><td>26/3/1974</td><td>03/01/2005</td><td>1.69</td><td>760.500</td><td>KHMT</td></tr>
+          <tr><td>GV09</td><td>Nguyen To Lan</td><td>ThS</td><td>GV</td><td>Nu</td><td>31/12/1966</td><td>03/01/2005</td><td>4</td><td>1.800.000</td><td>HTTT</td></tr>
+          <tr><td>GV10</td><td>Le Tran Anh Loan</td><td>KS</td><td><em>NULL</em></td><td>Nu</td><td>17/7/1972</td><td>03/01/2005</td><td>1.86</td><td>837.000</td><td>CNPM</td></tr>
+          <tr><td>GV11</td><td>Ho Thanh Tung</td><td>CN</td><td>GV</td><td>Nam</td><td>01/12/1980</td><td>15/5/2005</td><td>2.67</td><td>1.201.500</td><td>MTT</td></tr>
+          <tr><td>GV12</td><td>Tran Van Anh</td><td>CN</td><td><em>NULL</em></td><td>Nu</td><td>29/3/1981</td><td>15/5/2005</td><td>1.69</td><td>760.500</td><td>CNPM</td></tr>
+          <tr><td>GV13</td><td>Nguyen Linh Dan</td><td>CN</td><td><em>NULL</em></td><td>Nu</td><td>23/5/1980</td><td>15/5/2005</td><td>1.69</td><td>760.500</td><td>KTMT</td></tr>
+          <tr><td>GV14</td><td>Truong Minh Chau</td><td>ThS</td><td>GV</td><td>Nu</td><td>30/11/1976</td><td>15/5/2005</td><td>3</td><td>1.350.000</td><td>MTT</td></tr>
+          <tr><td>GV15</td><td>Le Ha Thanh</td><td>ThS</td><td>GV</td><td>Nam</td><td>05/04/1978</td><td>15/5/2005</td><td>3</td><td>1.350.000</td><td>KHMT</td></tr>
+        </table></div>
+      </section>
+
+      <section class="lesson-section" id="giangday">
+        <p class="eyebrow">QUAN HỆ 7 · GIANGDAY</p>
+        <h2>GIANGDAY</h2>
+        <div class="definition">Mỗi học kỳ của năm học sẽ phân công giảng dạy: lớp nào học môn gì do giáo viên nào phụ trách. Khóa chính là cặp <code>(MALOP, MAMH)</code>.</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - khóa chính, khóa ngoại đến LOP</td></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính, khóa ngoại đến MONHOC</td></tr>
+          <tr><td><code>MAGV</code></td><td><code>char(4)</code></td><td>Giáo viên phụ trách - khóa ngoại đến GIAOVIEN</td></tr>
+          <tr><td><code>HOCKY</code></td><td><code>tinyint</code></td><td>Học kỳ</td></tr>
+          <tr><td><code>NAM</code></td><td><code>smallint</code></td><td>Năm học</td></tr>
+          <tr><td><code>TUNGAY</code></td><td><code>smalldatetime</code></td><td>Ngày bắt đầu môn học</td></tr>
+          <tr><td><code>DENNGAY</code></td><td><code>smalldatetime</code></td><td>Ngày kết thúc môn học</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 16 dòng)</p>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>MALOP</th><th>MAMH</th><th>MAGV</th><th>HOCKY</th><th>NAM</th><th>TUNGAY</th><th>DENNGAY</th></tr>
+          <tr><td>K11</td><td>THDC</td><td>GV07</td><td>1</td><td>2006</td><td>01/02/2006</td><td>05/12/2006</td></tr>
+          <tr><td>K12</td><td>THDC</td><td>GV06</td><td>1</td><td>2006</td><td>01/02/2006</td><td>05/12/2006</td></tr>
+          <tr><td>K13</td><td>THDC</td><td>GV15</td><td>1</td><td>2006</td><td>01/02/2006</td><td>05/12/2006</td></tr>
+          <tr><td>K11</td><td>CTRR</td><td>GV02</td><td>1</td><td>2006</td><td>09/01/2006</td><td>17/5/2006</td></tr>
+          <tr><td>K12</td><td>CTRR</td><td>GV02</td><td>1</td><td>2006</td><td>09/01/2006</td><td>17/5/2006</td></tr>
+          <tr><td>K13</td><td>CTRR</td><td>GV08</td><td>1</td><td>2006</td><td>09/01/2006</td><td>17/5/2006</td></tr>
+          <tr><td>K11</td><td>CSDL</td><td>GV05</td><td>2</td><td>2006</td><td>06/01/2006</td><td>15/7/2006</td></tr>
+          <tr><td>K12</td><td>CSDL</td><td>GV09</td><td>2</td><td>2006</td><td>06/01/2006</td><td>15/7/2006</td></tr>
+          <tr><td>K13</td><td>CTDLGT</td><td>GV15</td><td>2</td><td>2006</td><td>06/01/2006</td><td>15/7/2006</td></tr>
+          <tr><td>K13</td><td>CSDL</td><td>GV05</td><td>3</td><td>2006</td><td>08/01/2006</td><td>15/12/2006</td></tr>
+          <tr><td>K13</td><td>DHMT</td><td>GV07</td><td>3</td><td>2006</td><td>08/01/2006</td><td>15/12/2006</td></tr>
+          <tr><td>K11</td><td>CTDLGT</td><td>GV15</td><td>3</td><td>2006</td><td>08/01/2006</td><td>15/12/2006</td></tr>
+          <tr><td>K12</td><td>CTDLGT</td><td>GV15</td><td>3</td><td>2006</td><td>08/01/2006</td><td>15/12/2006</td></tr>
+          <tr><td>K11</td><td>HDH</td><td>GV04</td><td>1</td><td>2007</td><td>01/02/2007</td><td>18/2/2007</td></tr>
+          <tr><td>K12</td><td>HDH</td><td>GV04</td><td>1</td><td>2007</td><td>01/02/2007</td><td>20/3/2007</td></tr>
+          <tr><td>K11</td><td>DHMT</td><td>GV07</td><td>1</td><td>2007</td><td>18/2/2007</td><td>20/3/2007</td></tr>
+        </table></div>
+      </section>
+
+      <section class="lesson-section" id="ketquathi">
+        <p class="eyebrow">QUAN HỆ 8 · KETQUATHI</p>
+        <h2>KETQUATHI</h2>
+        <div class="definition">Lưu trữ kết quả thi của học viên: học viên nào thi môn học gì, lần thi thứ mấy, ngày thi là ngày nào, điểm thi bao nhiêu và kết quả là đạt hay không đạt. Khóa chính là bộ ba <code>(MAHV, MAMH, LANTHI)</code>.</div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính, khóa ngoại đến HOCVIEN</td></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính, khóa ngoại đến MONHOC</td></tr>
+          <tr><td><code>LANTHI</code></td><td><code>tinyint</code></td><td>Lần thi - khóa chính</td></tr>
+          <tr><td><code>NGTHI</code></td><td><code>smalldatetime</code></td><td>Ngày thi</td></tr>
+          <tr><td><code>DIEM</code></td><td><code>numeric(4,2)</code></td><td>Điểm thi</td></tr>
+          <tr><td><code>KQUA</code></td><td><code>varchar(10)</code></td><td>Kết quả thi (Dat / Khong Dat)</td></tr>
+        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 66 dòng)</p>
+        <div class="er-side-by-side">
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MAHV</th><th>MAMH</th><th>LANTHI</th><th>NGTHI</th><th>DIEM</th><th>KQUA</th></tr>
+            <tr><td>K1101</td><td>CSDL</td><td>1</td><td>20/7/2006</td><td>10</td><td>Dat</td></tr>
+            <tr><td>K1101</td><td>CTDLGT</td><td>1</td><td>28/12/2006</td><td>9</td><td>Dat</td></tr>
+            <tr><td>K1101</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>9</td><td>Dat</td></tr>
+            <tr><td>K1101</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>9.5</td><td>Dat</td></tr>
+            <tr><td>K1102</td><td>CSDL</td><td>1</td><td>20/7/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1102</td><td>CSDL</td><td>2</td><td>27/7/2006</td><td>4.25</td><td>Khong Dat</td></tr>
+            <tr><td>K1102</td><td>CSDL</td><td>3</td><td>08/10/2006</td><td>4.5</td><td>Khong Dat</td></tr>
+            <tr><td>K1102</td><td>CTDLGT</td><td>1</td><td>28/12/2006</td><td>4.5</td><td>Khong Dat</td></tr>
+            <tr><td>K1102</td><td>CTDLGT</td><td>2</td><td>01/05/2007</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1102</td><td>CTDLGT</td><td>3</td><td>15/1/2007</td><td>6</td><td>Dat</td></tr>
+            <tr><td>K1102</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>5</td><td>Dat</td></tr>
+            <tr><td>K1102</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>7</td><td>Dat</td></tr>
+            <tr><td>K1103</td><td>CSDL</td><td>1</td><td>20/7/2006</td><td>3.5</td><td>Khong Dat</td></tr>
+            <tr><td>K1103</td><td>CSDL</td><td>2</td><td>27/7/2006</td><td>8.25</td><td>Dat</td></tr>
+            <tr><td>K1103</td><td>CTDLGT</td><td>1</td><td>28/12/2006</td><td>7</td><td>Dat</td></tr>
+            <tr><td>K1103</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>8</td><td>Dat</td></tr>
+            <tr><td>K1103</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>6.5</td><td>Dat</td></tr>
+            <tr><td>K1104</td><td>CSDL</td><td>1</td><td>20/7/2006</td><td>3.75</td><td>Khong Dat</td></tr>
+            <tr><td>K1104</td><td>CTDLGT</td><td>1</td><td>28/12/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1104</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1104</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1104</td><td>CTRR</td><td>2</td><td>20/5/2006</td><td>3.5</td><td>Khong Dat</td></tr>
+          </table></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MAHV</th><th>MAMH</th><th>LANTHI</th><th>NGTHI</th><th>DIEM</th><th>KQUA</th></tr>
+            <tr><td>K1104</td><td>CTRR</td><td>3</td><td>30/6/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1201</td><td>CSDL</td><td>1</td><td>20/7/2006</td><td>6</td><td>Dat</td></tr>
+            <tr><td>K1201</td><td>CTDLGT</td><td>1</td><td>28/12/2006</td><td>5</td><td>Dat</td></tr>
+            <tr><td>K1201</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>8.5</td><td>Dat</td></tr>
+            <tr><td>K1201</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>9</td><td>Dat</td></tr>
+            <tr><td>K1202</td><td>CSDL</td><td>1</td><td>20/7/2006</td><td>8</td><td>Dat</td></tr>
+            <tr><td>K1202</td><td>CTDLGT</td><td>1</td><td>28/12/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1202</td><td>CTDLGT</td><td>2</td><td>01/05/2007</td><td>5</td><td>Dat</td></tr>
+            <tr><td>K1202</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1202</td><td>THDC</td><td>2</td><td>27/5/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1202</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>3</td><td>Khong Dat</td></tr>
+            <tr><td>K1202</td><td>CTRR</td><td>2</td><td>20/5/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1202</td><td>CTRR</td><td>3</td><td>30/6/2006</td><td>6.25</td><td>Dat</td></tr>
+            <tr><td>K1203</td><td>CSDL</td><td>1</td><td>20/7/2006</td><td>9.25</td><td>Dat</td></tr>
+            <tr><td>K1203</td><td>CTDLGT</td><td>1</td><td>28/12/2006</td><td>9.5</td><td>Dat</td></tr>
+            <tr><td>K1203</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>10</td><td>Dat</td></tr>
+            <tr><td>K1203</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>10</td><td>Dat</td></tr>
+            <tr><td>K1204</td><td>CSDL</td><td>1</td><td>20/7/2006</td><td>8.5</td><td>Dat</td></tr>
+            <tr><td>K1204</td><td>CTDLGT</td><td>1</td><td>28/12/2006</td><td>6.75</td><td>Dat</td></tr>
+            <tr><td>K1204</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1204</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>6</td><td>Dat</td></tr>
+            <tr><td>K1301</td><td>CSDL</td><td>1</td><td>20/12/2006</td><td>4.25</td><td>Khong Dat</td></tr>
+          </table></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MAHV</th><th>MAMH</th><th>LANTHI</th><th>NGTHI</th><th>DIEM</th><th>KQUA</th></tr>
+            <tr><td>K1301</td><td>CTDLGT</td><td>1</td><td>25/7/2006</td><td>8</td><td>Dat</td></tr>
+            <tr><td>K1301</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>7.75</td><td>Dat</td></tr>
+            <tr><td>K1301</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>8</td><td>Dat</td></tr>
+            <tr><td>K1302</td><td>CSDL</td><td>1</td><td>20/12/2006</td><td>6.75</td><td>Dat</td></tr>
+            <tr><td>K1302</td><td>CTDLGT</td><td>1</td><td>25/7/2006</td><td>5</td><td>Dat</td></tr>
+            <tr><td>K1302</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>8</td><td>Dat</td></tr>
+            <tr><td>K1302</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>8.5</td><td>Dat</td></tr>
+            <tr><td>K1303</td><td>CSDL</td><td>1</td><td>20/12/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1303</td><td>CTDLGT</td><td>1</td><td>25/7/2006</td><td>4.5</td><td>Khong Dat</td></tr>
+            <tr><td>K1303</td><td>CTDLGT</td><td>2</td><td>08/07/2006</td><td>4</td><td>Khong Dat</td></tr>
+            <tr><td>K1303</td><td>CTDLGT</td><td>3</td><td>15/8/2006</td><td>4.25</td><td>Khong Dat</td></tr>
+            <tr><td>K1303</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>4.5</td><td>Khong Dat</td></tr>
+            <tr><td>K1303</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>3.25</td><td>Khong Dat</td></tr>
+            <tr><td>K1303</td><td>CTRR</td><td>2</td><td>20/5/2006</td><td>5</td><td>Dat</td></tr>
+            <tr><td>K1304</td><td>CSDL</td><td>1</td><td>20/12/2006</td><td>7.75</td><td>Dat</td></tr>
+            <tr><td>K1304</td><td>CTDLGT</td><td>1</td><td>25/7/2006</td><td>9.75</td><td>Dat</td></tr>
+            <tr><td>K1304</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>5.5</td><td>Dat</td></tr>
+            <tr><td>K1304</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>5</td><td>Dat</td></tr>
+            <tr><td>K1305</td><td>CSDL</td><td>1</td><td>20/12/2006</td><td>9.25</td><td>Dat</td></tr>
+            <tr><td>K1305</td><td>CTDLGT</td><td>1</td><td>25/7/2006</td><td>10</td><td>Dat</td></tr>
+            <tr><td>K1305</td><td>THDC</td><td>1</td><td>20/5/2006</td><td>8</td><td>Dat</td></tr>
+            <tr><td>K1305</td><td>CTRR</td><td>1</td><td>13/5/2006</td><td>10</td><td>Dat</td></tr>
+          </table></div>
+        </div>
+      </section>
+
+      <section class="lesson-section" id="script">
+        <p class="eyebrow">SCRIPT ĐẦY ĐỦ</p>
+        <h2>Tạo CSDL và nạp dữ liệu mẫu</h2>
+        <p>Script tạo database <code>QUANLIGIAOVU_2026</code>, tạo 8 bảng kèm khóa chính/khóa ngoại, và nạp toàn bộ dữ liệu mẫu (5 khoa, 3 lớp, 13 môn học, 8 điều kiện tiên quyết, 15 giáo viên, 35 học viên, 16 phân công giảng dạy, 66 kết quả thi). Chạy trực tiếp trong SSMS trước khi bắt đầu làm bài.</p>
+        <div class="download-card">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
+          <div class="download-card-body">
+            <strong>Script CSDL Quản lý giáo vụ (QUANLIGIAOVU_2026)</strong>
+            <span>File .sql · tạo bảng, ràng buộc và dữ liệu mẫu đầy đủ</span>
+          </div>
+          <a class="dark-button" href="../../assets/file/luoc-do-quan-ly-giao-vu.sql" download>Tải file <span>↓</span></a>
+        </div>
+        <div class="inline-ok"><strong>Áp dụng cho:</strong> BTTH4 (Tuần 4) - Phần I câu 1, 3-8, 11-14 · Phần II câu 1-4 · Phần III câu 1-24 đều dùng chung lược đồ này, chỉ cần chạy script 1 lần.</div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=14"></script>
+</body>
+</html>

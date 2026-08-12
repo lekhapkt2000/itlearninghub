@@ -11,8 +11,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../assets/css/base.css?v=19">
   <style>
-    .admin-shell{max-width:480px;margin:64px auto;padding:0 20px}
-    .admin-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:32px}
+    .admin-shell{max-width:640px;margin:64px auto;padding:0 20px}
+    .admin-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:32px;margin-bottom:24px}
     .admin-card h1{font-size:20px;margin-bottom:6px}
     .admin-card p.hint{color:var(--muted);font-size:12px;margin-bottom:24px}
     .field{margin-bottom:16px}
@@ -27,6 +27,21 @@
     .msg{margin-top:14px;font-size:13px;font-weight:600}
     .msg.error{color:#dc2626}
     .msg.ok{color:#16a34a}
+
+    .list-card{padding:24px 24px 8px}
+    .list-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .list-header h2{font-size:16px;margin:0}
+    .list-header button{width:auto;margin:0;padding:9px 14px;font-size:11px}
+    .list-empty{color:var(--muted);font-size:13px;padding-bottom:24px}
+    .table-wrap{overflow-x:auto;margin:0 -24px;padding:0 24px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+    th{color:var(--muted);font-size:10px;letter-spacing:.06em;font-weight:700}
+    td code{white-space:nowrap}
+    .badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:10px;font-weight:700}
+    .badge-active{background:#dcfce7;color:#15803d}
+    .badge-revoked{background:var(--line);color:var(--muted)}
+    .revoke-btn{width:auto;margin:0;padding:6px 12px;font-size:11px}
   </style>
 </head>
 <body>
@@ -66,6 +81,20 @@
       </div>
       <p class="msg" id="msg"></p>
     </div>
+
+    <div class="admin-card list-card">
+      <div class="list-header">
+        <h2>Mã đã tạo</h2>
+        <button type="button" class="outline-button" id="refresh-btn">Làm mới</button>
+      </div>
+      <p class="list-empty" id="list-empty">Nhập mật khẩu và bấm Làm mới để xem danh sách.</p>
+      <div class="table-wrap">
+        <table id="codes-table" style="display:none">
+          <thead><tr><th>Mã</th><th>Môn</th><th>Trạng thái</th><th>Ghi chú</th><th></th></tr></thead>
+          <tbody id="codes-tbody"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -97,11 +126,93 @@
     var resultCode = document.getElementById('result-code');
     var copyBtn = document.getElementById('copy-btn');
     var msgEl = document.getElementById('msg');
+    var refreshBtn = document.getElementById('refresh-btn');
+    var listEmpty = document.getElementById('list-empty');
+    var codesTable = document.getElementById('codes-table');
+    var codesTbody = document.getElementById('codes-tbody');
 
     try {
       var savedKey = localStorage.getItem('admin:key');
-      if (savedKey) keyInput.value = savedKey;
+      if (savedKey) {
+        keyInput.value = savedKey;
+        loadList(savedKey);
+      }
     } catch (e) {}
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    function renderList(codes) {
+      codesTbody.innerHTML = '';
+      if (!codes.length) {
+        codesTable.style.display = 'none';
+        listEmpty.style.display = 'block';
+        listEmpty.textContent = 'Chưa có mã nào.';
+        return;
+      }
+      listEmpty.style.display = 'none';
+      codesTable.style.display = 'table';
+      codes.forEach(function (c) {
+        var isActive = String(c.status).toLowerCase() === 'active';
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td><code>' + escapeHtml(c.code) + '</code></td>' +
+          '<td>' + escapeHtml(c.course) + '</td>' +
+          '<td><span class="badge ' + (isActive ? 'badge-active' : 'badge-revoked') + '">' +
+            (isActive ? 'Active' : 'Revoked') + '</span></td>' +
+          '<td>' + escapeHtml(c.note) + '</td>' +
+          '<td></td>';
+        if (isActive) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'outline-button revoke-btn';
+          btn.textContent = 'Thu hồi';
+          btn.addEventListener('click', function () { revokeCode(c.code); });
+          tr.lastElementChild.appendChild(btn);
+        }
+        codesTbody.appendChild(tr);
+      });
+    }
+
+    function loadList(key) {
+      if (!key) return;
+      var url = APPS_SCRIPT_URL + '?action=list&key=' + encodeURIComponent(key);
+      jsonp(url).then(function (data) {
+        if (data.ok) {
+          renderList(data.codes);
+        } else {
+          msgEl.textContent = data.message || 'Không tải được danh sách.';
+          msgEl.className = 'msg error';
+        }
+      }).catch(function () {
+        msgEl.textContent = 'Không thể kết nối máy chủ. Vui lòng thử lại.';
+        msgEl.className = 'msg error';
+      });
+    }
+
+    function revokeCode(code) {
+      if (!confirm('Thu hồi mã ' + code + '?')) return;
+      var key = keyInput.value.trim();
+      var url = APPS_SCRIPT_URL + '?action=revoke' +
+        '&key=' + encodeURIComponent(key) +
+        '&code=' + encodeURIComponent(code);
+      jsonp(url).then(function (data) {
+        if (data.ok) {
+          loadList(key);
+        } else {
+          alert(data.message || 'Không thu hồi được mã.');
+        }
+      }).catch(function () {
+        alert('Không thể kết nối máy chủ. Vui lòng thử lại.');
+      });
+    }
+
+    refreshBtn.addEventListener('click', function () {
+      loadList(keyInput.value.trim());
+    });
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -126,6 +237,7 @@
             try { localStorage.setItem('admin:key', key); } catch (e) {}
             resultCode.textContent = data.code;
             resultBox.classList.add('show');
+            loadList(key);
           } else {
             msgEl.textContent = data.message || 'Không tạo được mã.';
             msgEl.className = 'msg error';

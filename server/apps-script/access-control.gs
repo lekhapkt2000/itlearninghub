@@ -48,20 +48,27 @@ function doGet(e) {
     result = handleValidate(e.parameter);
   } else if (action === 'generate') {
     result = handleGenerate(e.parameter);
+  } else if (action === 'list') {
+    result = handleList(e.parameter);
+  } else if (action === 'revoke') {
+    result = handleRevoke(e.parameter);
   } else {
     result = { ok: false, message: 'Unknown action' };
   }
   return respond(result, e.parameter.callback);
 }
 
-function handleGenerate(params) {
+/** Returns an error message string if the admin key is missing/wrong, otherwise null. */
+function checkAdminKey(params) {
   var adminKey = PropertiesService.getScriptProperties().getProperty('ADMIN_KEY');
-  if (!adminKey) {
-    return { ok: false, message: 'Chưa cấu hình ADMIN_KEY - xem hướng dẫn ở đầu file.' };
-  }
-  if (String(params.key || '') !== adminKey) {
-    return { ok: false, message: 'Sai mật khẩu quản trị.' };
-  }
+  if (!adminKey) return 'Chưa cấu hình ADMIN_KEY - xem hướng dẫn ở đầu file.';
+  if (String(params.key || '') !== adminKey) return 'Sai mật khẩu quản trị.';
+  return null;
+}
+
+function handleGenerate(params) {
+  var keyError = checkAdminKey(params);
+  if (keyError) return { ok: false, message: keyError };
 
   var course = String(params.course || '').trim().toUpperCase();
   if (!course) {
@@ -70,6 +77,56 @@ function handleGenerate(params) {
 
   var code = generateCode(course, String(params.note || ''));
   return { ok: true, code: code };
+}
+
+function handleList(params) {
+  var keyError = checkAdminKey(params);
+  if (keyError) return { ok: false, message: keyError };
+
+  var sheet = getSheet(CODES_SHEET);
+  var rows = sheet.getDataRange().getValues();
+  var header = rows[0];
+  var idxCode = header.indexOf('code');
+  var idxCourse = header.indexOf('course');
+  var idxStatus = header.indexOf('status');
+  var idxCreatedAt = header.indexOf('created_at');
+  var idxNote = header.indexOf('note');
+
+  var codes = [];
+  for (var i = rows.length - 1; i >= 1; i--) {
+    var row = rows[i];
+    var createdAt = row[idxCreatedAt];
+    codes.push({
+      code: row[idxCode],
+      course: row[idxCourse],
+      status: row[idxStatus],
+      createdAt: createdAt instanceof Date ? createdAt.toISOString() : String(createdAt),
+      note: row[idxNote]
+    });
+  }
+  return { ok: true, codes: codes };
+}
+
+function handleRevoke(params) {
+  var keyError = checkAdminKey(params);
+  if (keyError) return { ok: false, message: keyError };
+
+  var code = String(params.code || '').trim().toUpperCase();
+  if (!code) return { ok: false, message: 'Thiếu mã cần thu hồi.' };
+
+  var sheet = getSheet(CODES_SHEET);
+  var rows = sheet.getDataRange().getValues();
+  var header = rows[0];
+  var idxCode = header.indexOf('code');
+  var idxStatus = header.indexOf('status');
+
+  for (var i = 1; i < rows.length; i++) {
+    if (String(rows[i][idxCode]).trim().toUpperCase() === code) {
+      sheet.getRange(i + 1, idxStatus + 1).setValue('Revoked');
+      return { ok: true };
+    }
+  }
+  return { ok: false, message: 'Không tìm thấy mã.' };
 }
 
 function handleValidate(params) {

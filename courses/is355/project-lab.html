@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Project Lab - Đồ án cuối kỳ học phần Thực hành Công nghệ Blockchain: chủ đề Green Finance/DeFi/AML/RWA/AI, yêu cầu 5 thành phần bắt buộc, quy trình thực hiện, kiểm thử, bảo mật, cấu trúc báo cáo, tiêu chí đánh giá và yêu cầu bảo vệ đồ án.">
+  <title>Project Lab · Đồ án cuối kỳ - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=18">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=32">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="project-lab.html" class="active">VI</a><a href="../../en/courses/is355/project-lab.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS355 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS355</a><span>/</span>Project Lab</p>
+
+    <div class="week-header">
+      <span class="week-tag">PROJECT LAB · ĐỒ ÁN CUỐI KỲ</span>
+      <h1>Đồ án cuối kỳ - Thực hành Công nghệ Blockchain</h1>
+      <div class="week-meta"><span>Green Finance</span><span>DeFi / AML / RWA / AI</span><span>Mini Project có tính nghiên cứu</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Định hướng:</strong> Đồ án không chỉ là "làm một Smart Contract", mà là một mini project có tính nghiên cứu và phát triển hệ thống, bám theo mạch Blockchain → Smart Contract → Financial/Banking → ESG/Green Finance → Data/AI → DApp → Demo &amp; Evaluation.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS355">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html">Tuần 4</a>
+      <a href="week-5.html">Tuần 5</a>
+      <a href="week-6.html">Tuần 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 7 <small>Sắp mở</small></span>
+      <a href="project-lab.html" class="active">Project Lab</a>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Project Lab">
+        <span class="side-label">TRONG PROJECT LAB</span>
+        <a href="#gioi-thieu" data-toc><b>01</b> Giới thiệu &amp; Mục tiêu</a>
+        <a href="#chu-de" data-toc><b>02</b> Chủ đề đồ án</a>
+        <a href="#dang-ky-de-tai" data-toc><b>03</b> Đăng ký đề tài</a>
+        <a href="#thanh-phan-bat-buoc" data-toc><b>04</b> 5 thành phần bắt buộc</a>
+        <a href="#yeu-cau-du-lieu" data-toc><b>05</b> Yêu cầu về dữ liệu</a>
+        <a href="#kien-truc" data-toc><b>06</b> Kiến trúc hệ thống</a>
+        <a href="#quy-trinh" data-toc><b>07</b> Quy trình thực hiện</a>
+        <a href="#kiem-thu" data-toc><b>08</b> Kiểm thử Smart Contract</a>
+        <a href="#hieu-nang" data-toc><b>09</b> Đánh giá hiệu năng</a>
+        <a href="#bao-mat" data-toc><b>10</b> Yêu cầu bảo mật</a>
+        <a href="#san-pham-nop" data-toc><b>11</b> Sản phẩm phải nộp</a>
+        <a href="#cau-truc-bao-cao" data-toc><b>12</b> Cấu trúc báo cáo</a>
+        <a href="#demo" data-toc><b>13</b> Yêu cầu demo</a>
+        <a href="#cau-hoi-bao-ve" data-toc><b>14</b> Câu hỏi bảo vệ</a>
+        <a href="#tieu-chi" data-toc><b>15</b> Tiêu chí đánh giá</a>
+        <a href="#muc-do" data-toc><b>16</b> Mức độ đồ án</a>
+        <a href="#toi-thieu" data-toc><b>17</b> Yêu cầu tối thiểu</a>
+        <a href="#dev-stack" data-toc><b>18</b> Dev Stack khuyến nghị</a>
+        <a href="#dinh-huong-cuoi" data-toc><b>19</b> Định hướng sản phẩm cuối cùng</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Gioi thieu & Muc tieu -->
+        <section class="lesson-section" id="gioi-thieu">
+          <p class="eyebrow">01 · GIỚI THIỆU &amp; MỤC TIÊU</p>
+          <h2>Giới thiệu</h2>
+          <p>Đồ án cuối kỳ là hoạt động tổng hợp nhằm giúp sinh viên vận dụng các kiến thức và kỹ năng đã được thực hành trong học phần Công nghệ Blockchain để xây dựng một sản phẩm hoặc prototype ứng dụng Blockchain trong lĩnh vực <strong>tài chính, ngân hàng và tài chính xanh</strong>.</p>
+          <p>Sinh viên không chỉ triển khai Smart Contract mà cần thể hiện được khả năng:</p>
+          <ul>
+            <li>Phân tích một bài toán thực tế</li>
+            <li>Xác định vai trò của Blockchain trong bài toán</li>
+            <li>Thiết kế kiến trúc hệ thống</li>
+            <li>Xây dựng Smart Contract</li>
+            <li>Xử lý và phân tích dữ liệu</li>
+            <li>Ứng dụng AI/Machine Learning nếu phù hợp</li>
+            <li>Xây dựng giao diện DApp hoặc Dashboard</li>
+            <li>Đánh giá tính đúng đắn, hiệu năng và tính an toàn của hệ thống</li>
+            <li>Trình bày kết quả nghiên cứu và sản phẩm</li>
+          </ul>
+
+          <h3>Mục tiêu đồ án</h3>
+          <p><strong>Về Blockchain</strong> - Hiểu và lựa chọn được mô hình Blockchain phù hợp; thiết kế và triển khai Smart Contract trên mạng thử nghiệm; tương tác với Smart Contract qua Web3; sử dụng Event Logs để ghi nhận và truy xuất dữ liệu.</p>
+          <p><strong>Về tài chính - Ngân hàng</strong> - Có khả năng mô hình hóa một nghiệp vụ như Cho vay, Chấm điểm tín dụng, Quản lý tài sản, Token hóa tài sản, Carbon Credit, Green Bond, DeFi, Thanh toán, Quản lý giao dịch, Phát hiện giao dịch bất thường, AML, Quản lý danh mục đầu tư.</p>
+          <p><strong>Về dữ liệu và AI</strong> - Thu thập, làm sạch dữ liệu, xây dựng feature, phân tích dữ liệu, xây dựng và đánh giá mô hình Machine Learning, đưa kết quả dự đoán vào hệ thống.</p>
+          <div class="inline-ok">AI/ML không bắt buộc đối với mọi đề tài, nhưng được khuyến khích đối với những đề tài có bài toán dự báo, phân loại, phát hiện bất thường hoặc khuyến nghị.</div>
+          <p><strong>Về phát triển ứng dụng</strong> - Sinh viên xây dựng được một prototype có luồng vận hành hoàn chỉnh:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">User</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">DApp / Dashboard</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Web3 / Backend</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Smart Contract</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Blockchain</span>
+          </div>
+        </section>
+
+        <!-- 02 - Chu de do an -->
+        <section class="lesson-section" id="chu-de">
+          <p class="eyebrow">02 · CHỦ ĐỀ ĐỒ ÁN</p>
+          <h2>Chủ đề đồ án</h2>
+          <p>Đồ án phải thuộc một trong các hướng sau:</p>
+
+          <h3>Nhóm A - Green Finance</h3>
+          <p><strong>A1. Green Lending</strong> - Xây dựng nền tảng cho vay xanh dựa trên ESG Score, Credit Score, Smart Contract, Collateral, Interest Rate. Ví dụ: <em>Blockchain-based Green Lending Platform with ESG Credit Scoring</em>.</p>
+          <p><strong>A2. Carbon Credit</strong> - Xây dựng hệ thống token hóa và quản lý Carbon Credit, có thể mở rộng với dự báo giá Carbon Credit:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Carbon Credit</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">ERC-20</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Mint</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Transfer</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Retire / Burn</span>
+          </div>
+          <p><strong>A3. Green Bond</strong> - Xây dựng mô hình phát hành và quản lý Green Bond trên Blockchain, có thể nghiên cứu Tokenization, Investor, Issuer, Interest, Maturity, Redemption.</p>
+
+          <h3>Nhóm B - DeFi &amp; Banking</h3>
+          <p><strong>B1. Decentralized Lending</strong> - Xây dựng hệ thống cho vay phi tập trung với các chức năng: Deposit, Borrow, Repay, Withdraw, Liquidate.</p>
+          <p><strong>B2. ESG Credit Scoring</strong> - Xây dựng hệ thống đánh giá tín dụng dựa trên ESG:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Financial Data + ESG Data + Transaction History</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Credit Score</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Loan Decision</span>
+          </div>
+          <p><strong>B3. AI-based Default Prediction</strong> - Xây dựng mô hình dự báo khả năng vỡ nợ (ví dụ Default Probability = 82%) và đưa kết quả vào Dashboard.</p>
+
+          <h3>Nhóm C - Blockchain Analytics &amp; AML</h3>
+          <p><strong>C1. Fraud Detection</strong> - Phát hiện giao dịch bất thường, có thể dùng Isolation Forest, Random Forest, XGBoost, Autoencoder.</p>
+          <p><strong>C2. AML Analytics</strong> - Phân tích dòng tiền trên Blockchain để phát hiện các mẫu giao dịch đáng ngờ (ví dụ vòng lặp <code>A → B → C → D → A</code> hoặc cấu trúc phân nhánh từ một Hub Address), ứng dụng Graph Analytics để phân tích mạng lưới giao dịch.</p>
+
+          <h3>Nhóm D - RWA &amp; Tokenization</h3>
+          <p>Token hóa tài sản, NFT chứng nhận tài sản, Digital Certificate, Green Asset, Supply Chain Asset. Ví dụ: <em>Blockchain-based Green Asset Certification Platform</em>.</p>
+
+          <h3>Nhóm E - AI + Blockchain</h3>
+          <p>Hướng nâng cao, kết hợp Blockchain + Data Analytics + AI. Một số đề tài: AI dự báo rủi ro DeFi, AI phát hiện gian lận, AI phát hiện giao dịch bất thường, AI khuyến nghị đầu tư xanh, AI dự báo giá Carbon Credit, AI đánh giá rủi ro tín dụng.</p>
+        </section>
+
+        <!-- 03 - Dang ky de tai -->
+        <section class="lesson-section" id="dang-ky-de-tai">
+          <p class="eyebrow">03 · ĐĂNG KÝ ĐỀ TÀI</p>
+          <h2>Đăng ký đề tài</h2>
+          <p>Sinh viên nộp bản đăng ký đề tài ở cuối <strong>Tuần 3</strong> hoặc đầu <strong>Tuần 4</strong>, theo mẫu rút gọn dưới đây, để giảng viên xác nhận đề tài phù hợp với một trong 5 nhóm chủ đề và mức độ đồ án trước khi bắt tay xây dựng:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-markdown">1. Tên đề tài: [Tên tiếng Việt + tiếng Anh]
+2. Phân loại: [Nhóm A/B/C/D/E] - [Mức độ 1/2/3/4]
+3. Bài toán thực tế & Lý do cần Blockchain: [Mô tả trong 3-4 câu]
+4. Kiến trúc đề xuất: [Sơ đồ khối đơn giản]
+5. Dự kiến Công nghệ (Stack):
+   - Smart Contract: Vyper / Solidity
+   - AI/Data: Python / Scikit-Learn / NetworkX
+   - DApp: Streamlit / React</code></pre></div>
+          <div class="inline-ok">Đăng ký sớm giúp nhóm tránh chọn trùng đề tài, đồng thời xác định ngay từ đầu Track đánh giá phù hợp (có AI/ML hay không) theo Mục 15.</div>
+        </section>
+
+        <!-- 04 - 5 thanh phan bat buoc -->
+        <section class="lesson-section" id="thanh-phan-bat-buoc">
+          <p class="eyebrow">04 · YÊU CẦU BẮT BUỘC CỦA ĐỒ ÁN</p>
+          <h2>5 thành phần chính</h2>
+          <p>Mỗi nhóm phải đáp ứng đủ 5 thành phần dưới đây - Đề tài chỉ mô phỏng Blockchain bằng database thông thường sẽ không được chấp nhận.</p>
+
+          <h3>Thành phần 1 - Blockchain</h3>
+          <p>Phải có ít nhất một thành phần Blockchain thực tế: Smart Contract, Testnet, Transaction, Event, Token hoặc NFT.</p>
+
+          <h3>Thành phần 2 - Smart Contract</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Yêu cầu</th><th>Ví dụ</th></tr>
+            <tr><td>Business Logic</td><td><code>createLoan()</code>, <code>approveLoan()</code>, <code>repayLoan()</code>, <code>liquidateLoan()</code></td></tr>
+            <tr><td>Access Control</td><td>Phân quyền tối thiểu Admin/User, hoặc Issuer/Investor/Borrower/Lender</td></tr>
+            <tr><td>Event</td><td><code>LoanCreated</code>, <code>LoanApproved</code>, <code>LoanRepaid</code>, <code>LoanLiquidated</code></td></tr>
+            <tr><td>Validation</td><td>Kiểm tra Input, Permission, Balance, trạng thái nghiệp vụ</td></tr>
+          </table></div>
+
+          <h3>Thành phần 3 - Data / Analytics</h3>
+          <p>Sinh viên phải có ít nhất một hoạt động phân tích dữ liệu:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Nhóm chỉ số</th><th>Ví dụ</th></tr>
+            <tr><td>Transaction Analytics</td><td>Total Transactions, Transaction Volume, Average Transaction, Active Addresses</td></tr>
+            <tr><td>Financial Analytics</td><td>Loan Volume, Default Rate, Liquidation Rate, Interest Rate</td></tr>
+            <tr><td>ESG Analytics</td><td>Average ESG Score, ESG Distribution, ESG vs Default</td></tr>
+          </table></div>
+
+          <h3>Thành phần 4 - AI/ML <small style="color:var(--muted);font-weight:500">(khuyến khích, không bắt buộc)</small></h3>
+          <p>Nếu sử dụng AI/ML, nhóm phải trình bày rõ:</p>
+          <ul>
+            <li><strong>Dataset:</strong> nguồn dữ liệu, số lượng mẫu, các thuộc tính, cách tiền xử lý</li>
+            <li><strong>Model:</strong> ví dụ Random Forest, XGBoost, LightGBM, LSTM, Isolation Forest</li>
+            <li><strong>Evaluation:</strong> không chỉ đưa ra kết quả dự đoán mà phải có metric phù hợp - Accuracy, Precision, Recall, F1-score, ROC-AUC, MAE, RMSE tùy bài toán</li>
+          </ul>
+
+          <h3>Thành phần 5 - DApp / Dashboard</h3>
+          <p>Sản phẩm phải có giao diện để người dùng tương tác: HTML/CSS/JavaScript, React, Streamlit, PySide hoặc framework khác phù hợp. Dashboard tối thiểu nên có:</p>
+          <div class="ascii-block">┌─────────────────────────────┐
+│      GREEN FINANCE DApp     │
+├─────────┬─────────┬─────────┤
+│ Users   │ Loans   │ Volume  │
+├─────────┴─────────┴─────────┤
+│                             │
+│       Analytics Chart       │
+│                             │
+├─────────────────────────────┤
+│ Transaction History         │
+├─────────────────────────────┤
+│ AI Risk Prediction          │
+└─────────────────────────────┘</div>
+        </section>
+
+        <!-- 04 - Yeu cau du lieu -->
+        <section class="lesson-section" id="yeu-cau-du-lieu">
+          <p class="eyebrow">05 · YÊU CẦU VỀ DỮ LIỆU</p>
+          <h2>Yêu cầu về dữ liệu</h2>
+          <p>Sinh viên có thể sử dụng:</p>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3>Dữ liệu Blockchain</h3>
+              <p>Testnet, Public Blockchain Data, Transaction Data, Event Logs</p>
+            </div>
+            <div class="req-card">
+              <h3>Dữ liệu tài chính</h3>
+              <p>Dataset công khai, Dataset mô phỏng, Dataset do nhóm xây dựng</p>
+            </div>
+            <div class="req-card">
+              <h3>Dữ liệu ESG</h3>
+              <p>ESG Score, Carbon Emission, Environmental Indicators, Sustainability Indicators</p>
+            </div>
+          </div>
+          <div class="inline-warning">Nếu sử dụng dữ liệu mô phỏng, nhóm phải nêu rõ đây là dữ liệu mô phỏng và giải thích cách tạo dữ liệu.</div>
+        </section>
+
+        <!-- 05 - Kien truc he thong -->
+        <section class="lesson-section" id="kien-truc">
+          <p class="eyebrow">06 · YÊU CẦU VỀ KIẾN TRÚC HỆ THỐNG</p>
+          <h2>Kiến trúc hệ thống</h2>
+          <p>Báo cáo phải có sơ đồ kiến trúc, ví dụ:</p>
+          <div class="ascii-block">                 USER
+                   │
+                   ▼
+          ┌────────────────┐
+          │   DApp / UI    │
+          └───────┬────────┘
+                  │
+          ┌───────▼────────┐
+          │ Web3 / Backend │
+          └───┬────────┬───┘
+              │        │
+              ▼        ▼
+      ┌────────────┐ ┌──────────┐
+      │ Blockchain │ │ AI Model │
+      │            │ │          │
+      │ Smart      │ │ Risk     │
+      │ Contract   │ │ Score    │
+      └────────────┘ └──────────┘</div>
+          <div class="inline-warning"><strong>Lưu ý kiến trúc:</strong> Nếu mô hình AI hoặc ESG Score được dùng để đưa ra quyết định trực tiếp cho Smart Contract (ví dụ tự động duyệt vay, tính lãi suất), sinh viên cần giải thích rõ cơ chế chuyển tiếp dữ liệu từ Off-chain vào On-chain (sử dụng Oracle pattern, Signer Key/ECDSA Verification, hoặc Chainlink Functions) - Tránh để hệ thống rơi vào tình trạng "tập trung núp bóng Decentralized".</div>
+        </section>
+
+        <!-- 07 - Quy trinh thuc hien -->
+        <section class="lesson-section" id="quy-trinh">
+          <p class="eyebrow">07 · QUY TRÌNH THỰC HIỆN ĐỒ ÁN</p>
+          <h2>Quy trình thực hiện đồ án</h2>
+
+          <h3>Giai đoạn 1 - Xác định vấn đề</h3>
+          <p>Nhóm trả lời: Vấn đề thực tế là gì? Tại sao cần Blockchain? Blockchain giải quyết vấn đề gì?</p>
+
+          <h3>Giai đoạn 2 - Nghiên cứu</h3>
+          <p>Tìm hiểu các giải pháp hiện có, công nghệ liên quan, các nghiên cứu trước đây, hạn chế của giải pháp hiện tại.</p>
+
+          <h3>Giai đoạn 3 - Phân tích &amp; thiết kế</h3>
+          <p>Xây dựng Use Case, User Flow, System Architecture, Database/Data Model nếu có, Smart Contract Architecture.</p>
+
+          <h3>Giai đoạn 4 - Smart Contract</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Design</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Code</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Compile</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Test</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Deploy</span>
+          </div>
+
+          <h3>Giai đoạn 5 - Data &amp; AI</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Collect</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Clean</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Train</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Evaluate</span>
+          </div>
+
+          <h3>Giai đoạn 6 - DApp</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Frontend</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Web3</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Smart Contract</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Blockchain</span>
+          </div>
+
+          <h3>Giai đoạn 7 - Integration</h3>
+          <p>Tích hợp Blockchain + Smart Contract + AI + Dashboard thành một hệ thống thống nhất.</p>
+
+          <h3>Giai đoạn 8 - Testing</h3>
+          <p>Phải kiểm thử: Smart Contract, Business Logic, Access Control, Transaction, DApp, AI Model.</p>
+        </section>
+
+        <!-- 07 - Kiem thu Smart Contract -->
+        <section class="lesson-section" id="kiem-thu">
+          <p class="eyebrow">08 · YÊU CẦU KIỂM THỬ SMART CONTRACT</p>
+          <h2>Kiểm thử Smart Contract</h2>
+          <p>Nhóm phải có test case, tương tự bộ khung pytest đã thực hành ở Tuần 5 cho <code>liquidateLoan()</code>:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Test Case</th><th>Input</th><th>Expected</th></tr>
+            <tr><td>Create Loan</td><td>Valid</td><td>Success</td></tr>
+            <tr><td>Create Loan</td><td>Invalid amount</td><td>Reject</td></tr>
+            <tr><td>Repay Loan</td><td>Valid</td><td>Success</td></tr>
+            <tr><td>Repay Loan</td><td>Unauthorized</td><td>Reject</td></tr>
+            <tr><td>Liquidate</td><td>Valid condition</td><td>Success</td></tr>
+            <tr><td>Liquidate</td><td>Invalid condition</td><td>Reject</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 08 - Danh gia hieu nang -->
+        <section class="lesson-section" id="hieu-nang">
+          <p class="eyebrow">09 · ĐÁNH GIÁ HIỆU NĂNG</p>
+          <h2>Đánh giá hiệu năng</h2>
+          <p>Tùy đề tài, nhóm nên đánh giá:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Nhóm</th><th>Chỉ số</th></tr>
+            <tr><td>Blockchain</td><td>Gas Used, Gas Cost, Transaction Time</td></tr>
+            <tr><td>AI</td><td>Accuracy, F1, Recall, ROC-AUC</td></tr>
+            <tr><td>DApp</td><td>Response Time, Transaction Success Rate</td></tr>
+          </table></div>
+          <div class="inline-ok">Không bắt buộc tất cả các chỉ số - Nhóm lựa chọn các chỉ số phù hợp với đề tài.</div>
+        </section>
+
+        <!-- 09 - Yeu cau bao mat -->
+        <section class="lesson-section" id="bao-mat">
+          <p class="eyebrow">10 · YÊU CẦU BẢO MẬT</p>
+          <h2>Yêu cầu bảo mật</h2>
+          <p>Nhóm phải phân tích ít nhất <strong>3 rủi ro bảo mật</strong> liên quan đến hệ thống, ví dụ: Reentrancy, Access Control, Integer/Arithmetic Issues, Oracle Manipulation, Front-running, Private Key Security, Input Validation.</p>
+          <div class="definition">Với mỗi rủi ro, nhóm phải giải thích theo đúng ba bước: <strong>Rủi ro là gì → Có thể xảy ra như thế nào → Giải pháp giảm thiểu.</strong></div>
+        </section>
+
+        <!-- 10 - San pham phai nop -->
+        <section class="lesson-section" id="san-pham-nop">
+          <p class="eyebrow">11 · SẢN PHẨM PHẢI NỘP</p>
+          <h2>Sản phẩm phải nộp</h2>
+          <p>Mỗi nhóm nộp 5 thành phần:</p>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3>1. Source Code</h3>
+              <p>Smart Contract, Frontend, Backend, AI/ML, Scripts</p>
+            </div>
+            <div class="req-card">
+              <h3>2. Báo cáo đồ án</h3>
+              <p>Định dạng PDF</p>
+            </div>
+            <div class="req-card">
+              <h3>3. Slide thuyết trình</h3>
+              <p>Dùng để bảo vệ đồ án</p>
+            </div>
+            <div class="req-card">
+              <h3>4. Video Demo</h3>
+              <p>Khoảng 5-10 phút, thể hiện Problem → Solution → Smart Contract → DApp → AI → Demo</p>
+            </div>
+            <div class="req-card">
+              <h3>5. README</h3>
+              <p>Hướng dẫn cài đặt, cấu hình, deploy, chạy DApp, chạy AI, demo</p>
+            </div>
+          </div>
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy định về bài làm</h3>
+            <p>Tuyệt đối không sao chép hoặc sử dụng bài làm của sinh viên khác để nộp bài. Sinh viên cần nghiêm túc thực hiện bài tập của mình.</p>
+          </div>
+        </section>
+
+        <!-- 11 - Cau truc bao cao -->
+        <section class="lesson-section" id="cau-truc-bao-cao">
+          <p class="eyebrow">12 · CẤU TRÚC BÁO CÁO</p>
+          <h2>Cấu trúc báo cáo</h2>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Chương</th><th>Nội dung</th></tr>
+            <tr><td>1. Giới thiệu</td><td>Đặt vấn đề, lý do chọn đề tài, mục tiêu, phạm vi, đối tượng sử dụng</td></tr>
+            <tr><td>2. Cơ sở lý thuyết</td><td>Blockchain, Smart Contract, Web3, Token/NFT nếu có, DeFi nếu có, ESG nếu có, AI/ML nếu có</td></tr>
+            <tr><td>3. Phân tích bài toán</td><td>Problem Statement, Business Process, User Roles, Use Case, Functional/Non-functional Requirements</td></tr>
+            <tr><td>4. Thiết kế hệ thống</td><td>System Architecture, Smart Contract Architecture, Data Architecture, DApp Architecture, AI Architecture</td></tr>
+            <tr><td>5. Xây dựng hệ thống</td><td>Smart Contract, Blockchain Deployment, Backend/Web3, Data Processing, AI Model, DApp</td></tr>
+            <tr><td>6. Thực nghiệm &amp; đánh giá</td><td>Test Case, Transaction, Gas Cost, AI Metrics, System Performance, Security Analysis</td></tr>
+            <tr><td>7. Kết luận &amp; hướng phát triển</td><td>Kết quả đạt được, hạn chế, hướng phát triển</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 12 - Yeu cau demo -->
+        <section class="lesson-section" id="demo">
+          <p class="eyebrow">13 · YÊU CẦU VỀ DEMO</p>
+          <h2>Yêu cầu về demo</h2>
+          <p>Khi bảo vệ, nhóm phải demo trực tiếp sản phẩm - Không nên chỉ trình chiếu screenshot. Trình tự đề xuất:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">1. Giới thiệu bài toán</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">2. Giới thiệu kiến trúc</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">3. Demo Smart Contract</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">4. Demo DApp</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">5. Thực hiện Transaction</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">6. Kiểm tra Blockchain</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">7. Demo AI</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">8. Hiển thị kết quả</span>
+          </div>
+        </section>
+
+        <!-- 13 - Cau hoi bao ve -->
+        <section class="lesson-section" id="cau-hoi-bao-ve">
+          <p class="eyebrow">14 · CÂU HỎI BẢO VỆ</p>
+          <h2>Câu hỏi bảo vệ</h2>
+          <p>Giảng viên có thể hỏi theo 5 nhóm chủ đề:</p>
+
+          <h3>Blockchain</h3>
+          <ul>
+            <li>Tại sao đề tài cần Blockchain?</li>
+            <li>Nếu bỏ Blockchain thì hệ thống còn hoạt động được không?</li>
+            <li>Smart Contract của nhóm làm gì?</li>
+            <li>Dữ liệu nào được lưu on-chain?</li>
+          </ul>
+
+          <h3>Smart Contract</h3>
+          <ul>
+            <li>Tại sao thiết kế function như vậy?</li>
+            <li>Ai có quyền gọi function?</li>
+            <li>Nhóm xử lý access control thế nào?</li>
+            <li>Có những rủi ro bảo mật nào?</li>
+          </ul>
+
+          <h3>AI</h3>
+          <ul>
+            <li>Dataset lấy từ đâu?</li>
+            <li>Vì sao chọn thuật toán này?</li>
+            <li>Metric nào quan trọng nhất?</li>
+            <li>Model có bị overfitting không?</li>
+          </ul>
+
+          <h3>System</h3>
+          <ul>
+            <li>Kiến trúc hệ thống hoạt động thế nào?</li>
+            <li>AI nằm on-chain hay off-chain?</li>
+            <li>Nếu Blockchain không hoạt động thì hệ thống xử lý thế nào?</li>
+            <li>Nếu transaction thất bại thì DApp xử lý ra sao?</li>
+          </ul>
+
+          <h3>Research</h3>
+          <ul>
+            <li>Điểm mới của đề tài là gì?</li>
+            <li>So với giải pháp hiện tại, hệ thống tốt hơn ở đâu?</li>
+            <li>Hạn chế lớn nhất của đề tài là gì?</li>
+          </ul>
+        </section>
+
+        <!-- 14 - Tieu chi danh gia -->
+        <section class="lesson-section" id="tieu-chi">
+          <p class="eyebrow">15 · TIÊU CHÍ ĐÁNH GIÁ</p>
+          <h2>Tiêu chí đánh giá</h2>
+          <p>Để tránh mập mờ trong đánh giá, biểu điểm 100 được phân tách thành <strong>2 Track</strong> tùy đề tài có sử dụng AI/ML hay không:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Hạng mục</th><th>Track A - Có AI/ML<br><small style="color:var(--muted);font-weight:500">Mức độ ⭐⭐⭐ &amp; ⭐⭐⭐⭐</small></th><th>Track B - Không AI/ML<br><small style="color:var(--muted);font-weight:500">Mức độ ⭐ &amp; ⭐⭐</small></th></tr>
+            <tr><td>Phân tích bài toán &amp; ý tưởng</td><td>10</td><td>10</td></tr>
+            <tr><td>Cơ sở lý thuyết &amp; nghiên cứu</td><td>10</td><td>10</td></tr>
+            <tr><td>Smart Contract &amp; Blockchain / Advanced Business Logic</td><td>20</td><td>25</td></tr>
+            <tr><td>Data &amp; AI/ML / On-chain Data Analytics</td><td>15</td><td>10</td></tr>
+            <tr><td>DApp &amp; giao diện tương tác</td><td>15</td><td>20</td></tr>
+            <tr><td>Kiểm thử &amp; bảo mật</td><td>10</td><td>10</td></tr>
+            <tr><td>Báo cáo</td><td>10</td><td>10</td></tr>
+            <tr><td>Demo &amp; thuyết trình</td><td>10</td><td>10</td></tr>
+            <tr><td><strong>Tổng</strong></td><td><strong>100</strong></td><td><strong>105</strong></td></tr>
+          </table></div>
+          <p><strong>Track B</strong> dành cho các đề tài chuyên sâu về DeFi Logic/Tokenomics/Security, không sử dụng AI/ML: Smart Contract &amp; Advanced Business Logic được tăng 5 điểm cho độ phức tạp của contract, DApp &amp; giao diện tương tác được tăng 5 điểm cho trải nghiệm người dùng Web3, đổi lại On-chain Data Analytics (Chart/Metrics/Event Indexing) chỉ còn 10 điểm.</p>
+          <div class="inline-warning">Nhóm đăng ký Track nào ở Mục 03 (Đăng ký đề tài) sẽ được chấm theo đúng biểu điểm của Track đó - Không cộng dồn cả hai Track cho cùng một đề tài.</div>
+        </section>
+
+        <!-- 15 - Muc do do an -->
+        <section class="lesson-section" id="muc-do">
+          <p class="eyebrow">16 · MỨC ĐỘ ĐỒ ÁN</p>
+          <h2>Mức độ đồ án</h2>
+          <p>Để tránh việc tất cả nhóm làm cùng một mức độ, có thể chia thành 4 mức:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Mức</th><th>Thành phần</th></tr>
+            <tr><td>⭐ Mức 1 - Basic</td><td>Smart Contract + Blockchain + DApp</td></tr>
+            <tr><td>⭐⭐ Mức 2 - Intermediate</td><td>Smart Contract + Blockchain + DApp + Data Analytics</td></tr>
+            <tr><td>⭐⭐⭐ Mức 3 - Advanced</td><td>Smart Contract + Blockchain + DApp + Data + AI/ML</td></tr>
+            <tr><td>⭐⭐⭐⭐ Mức 4 - Research</td><td>Blockchain + AI + Graph Analytics + Security + Experimental Evaluation</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 16 - Yeu cau toi thieu -->
+        <section class="lesson-section" id="toi-thieu">
+          <p class="eyebrow">17 · YÊU CẦU TỐI THIỂU ĐỂ HOÀN THÀNH</p>
+          <h2>Yêu cầu tối thiểu để được xem là hoàn thành đồ án</h2>
+          <div class="definition">Một đồ án đạt yêu cầu phải chứng minh được: <strong>Có bài toán thực tế → Có giải pháp Blockchain → Có Smart Contract → Có triển khai/thử nghiệm thực tế → Có giao diện hoặc phương thức tương tác → Có dữ liệu/thực nghiệm → Có đánh giá kết quả.</strong></div>
+          <p>Không nên đánh giá cao một đồ án chỉ có:</p>
+          <div class="inline-warning">
+            ❌ Giao diện đẹp nhưng không có Blockchain thật.<br>
+            ❌ Smart Contract đơn giản nhưng không có bài toán nghiệp vụ.<br>
+            ❌ Chạy AI trên dataset nhưng Blockchain chỉ được đưa vào phần lý thuyết.
+          </div>
+        </section>
+
+        <!-- 18 - Dev Stack khuyen nghi -->
+        <section class="lesson-section" id="dev-stack">
+          <p class="eyebrow">18 · DEV STACK KHUYẾN NGHỊ</p>
+          <h2>Dev Stack khuyến nghị</h2>
+          <p>Để sinh viên không bị "ngợp" trong việc lựa chọn công cụ, phụ lục dưới đây gợi ý một bộ Dev Stack tối giản, đủ dùng cho hầu hết đề tài:</p>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3>Smart Contract Execution</h3>
+              <p>Vyper / Solidity, Remix IDE, Ape Framework / Hardhat, Sepolia Testnet / Anvil (Localhost)</p>
+            </div>
+            <div class="req-card">
+              <h3>Indexing &amp; Data Engine</h3>
+              <p>Web3.py, Pandas, NetworkX (Graph Analytics), The Graph (GraphQL)</p>
+            </div>
+            <div class="req-card">
+              <h3>AI Engine</h3>
+              <p>Scikit-Learn, XGBoost, Isolation Forest</p>
+            </div>
+            <div class="req-card">
+              <h3>Frontend &amp; Web3 Integration</h3>
+              <p>Streamlit (nhanh nhất cho Data App), Next.js + Wagmi / Ethers.js</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 19 - Dinh huong san pham cuoi cung -->
+        <section class="lesson-section" id="dinh-huong-cuoi">
+          <p class="eyebrow">19 · ĐỊNH HƯỚNG SẢN PHẨM CUỐI CÙNG</p>
+          <h2>Định hướng sản phẩm cuối cùng</h2>
+          <p>Toàn bộ đồ án IS355 nên hướng tới mô hình tổng thể sau:</p>
+          <div class="ascii-block">                    ┌──────────────────┐
+                    │       USER       │
+                    └────────┬─────────┘
+                             ↓
+                    ┌──────────────────┐
+                    │  DApp / Web UI   │
+                    └────────┬─────────┘
+                             ↓
+              ┌──────────────┴──────────────┐
+              ↓                             ↓
+      ┌─────────────────┐          ┌─────────────────┐
+      │   BLOCKCHAIN    │          │   AI / DATA     │
+      │                 │          │                 │
+      │ Smart Contract  │          │ Analytics       │
+      │ Token / NFT     │          │ ML Prediction   │
+      │ Transaction     │          │ Risk Score      │
+      └────────┬────────┘          └────────┬────────┘
+               │                            │
+               └──────────────┬─────────────┘
+                              ↓
+                    ┌──────────────────┐
+                    │ GREEN FINANCE /  │
+                    │ BANKING SOLUTION │
+                    └──────────────────┘</div>
+          <p>Như vậy 7 tuần thực hành sẽ dẫn rất tự nhiên tới đồ án:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Tuần 1: Green Finance &amp; Blockchain nền tảng</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Tuần 2: Bảo mật &amp; Danh tính</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Tuần 3: Token/Carbon Credit</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Tuần 4: RWA/NFT</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Tuần 5: DeFi/Green Banking</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Tuần 6: Data/AI/DApp</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Tuần 7: Bảo vệ đồ án</span>
+          </div>
+          <p>Đây cũng là cấu trúc được giữ nguyên trên website để sinh viên nhìn vào là hiểu ngay mỗi tuần đang cung cấp một mảnh ghép nào cho đồ án cuối kỳ.</p>
+        </section>
+
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG XEM</span>
+          <ul class="checklist">
+            <li data-section="gioi-thieu"><b>○</b> Giới thiệu &amp; Mục tiêu</li>
+            <li data-section="chu-de"><b>○</b> Chủ đề đồ án</li>
+            <li data-section="dang-ky-de-tai"><b>○</b> Đăng ký đề tài</li>
+            <li data-section="thanh-phan-bat-buoc"><b>○</b> 5 thành phần bắt buộc</li>
+            <li data-section="yeu-cau-du-lieu"><b>○</b> Yêu cầu dữ liệu</li>
+            <li data-section="kien-truc"><b>○</b> Kiến trúc hệ thống</li>
+            <li data-section="quy-trinh"><b>○</b> Quy trình thực hiện</li>
+            <li data-section="kiem-thu"><b>○</b> Kiểm thử</li>
+            <li data-section="hieu-nang"><b>○</b> Đánh giá hiệu năng</li>
+            <li data-section="bao-mat"><b>○</b> Bảo mật</li>
+            <li data-section="san-pham-nop"><b>○</b> Sản phẩm phải nộp</li>
+            <li data-section="cau-truc-bao-cao"><b>○</b> Cấu trúc báo cáo</li>
+            <li data-section="demo"><b>○</b> Yêu cầu demo</li>
+            <li data-section="cau-hoi-bao-ve"><b>○</b> Câu hỏi bảo vệ</li>
+            <li data-section="tieu-chi"><b>○</b> Tiêu chí đánh giá</li>
+            <li data-section="muc-do"><b>○</b> Mức độ đồ án</li>
+            <li data-section="toi-thieu"><b>○</b> Yêu cầu tối thiểu</li>
+            <li data-section="dev-stack"><b>○</b> Dev Stack khuyến nghị</li>
+            <li data-section="dinh-huong-cuoi"><b>○</b> Định hướng cuối cùng</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành các tuần</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#san-pham-nop">Sản phẩm phải nộp</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Đồ án là mini project có tính nghiên cứu, không chỉ là một Smart Contract đơn lẻ - Hãy chọn chủ đề từ Tuần 6 và bám theo mạch 5 thành phần bắt buộc.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=12"></script>
+</body>
+</html>

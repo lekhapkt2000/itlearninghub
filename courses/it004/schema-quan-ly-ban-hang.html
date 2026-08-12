@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../assets/css/base.css?v=20">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=39">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=40">
 </head>
 <body>
   <header class="topbar">
@@ -40,16 +40,60 @@
 
       <section class="lesson-section" style="padding-top:0;border-top:0" id="tong-quan">
         <p class="eyebrow">TỔNG QUAN</p>
-        <h2>Bài toán quản lý bán hàng</h2>
-        <div class="definition">Cửa hàng cần quản lý <strong>khách hàng thành viên</strong>, <strong>nhân viên bán hàng</strong>, <strong>sản phẩm</strong> và các <strong>hóa đơn bán hàng</strong> kèm chi tiết từng hóa đơn.</div>
-        <p>Cơ sở dữ liệu gồm 5 quan hệ:</p>
-        <div class="ascii-block">KHACHHANG   - Khách hàng thành viên
-NHANVIEN    - Nhân viên bán hàng
-SANPHAM     - Sản phẩm đang kinh doanh
-HOADON      - Hóa đơn bán hàng
-CTHD        - Chi tiết hóa đơn (sản phẩm nào, số lượng bao nhiêu)</div>
+        <h2>Cho cơ sở dữ liệu quản lý bán hàng gồm có các quan hệ sau</h2>
 
-        <h3>Quan hệ giữa các bảng</h3>
+        <div class="schema-def">
+          <p class="schema-def-head">KHACHHANG (<u>MAKH</u>, HOTEN, DCHI, SODT, NGSINH, DOANHSO, NGDK)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Quan hệ khách hàng sẽ lưu trữ thông tin của khách hàng thành viên gồm có các thuộc tính: mã khách hàng, họ tên, địa chỉ, số điện thoại, ngày sinh, ngày đăng ký và doanh số (tổng trị giá các hóa đơn của khách hàng thành viên này).</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">NHANVIEN (<u>MANV</u>, HOTEN, NGVL, SODT)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Mỗi nhân viên bán hàng cần ghi nhận họ tên, ngày vào làm, điện thoại liên lạc, mỗi nhân viên phân biệt với nhau bằng mã nhân viên.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">SANPHAM (<u>MASP</u>, TENSP, DVT, NUOCSX, GIA)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Mỗi sản phẩm có một mã số, một tên gọi, đơn vị tính, nước sản xuất và một giá bán.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">HOADON (<u>SOHD</u>, NGHD, MAKH, MANV, TRIGIA)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Khi mua hàng, mỗi khách hàng sẽ nhận một hóa đơn tính tiền, trong đó sẽ có số hóa đơn, ngày mua, nhân viên nào bán hàng, trị giá của hóa đơn là bao nhiêu và mã số của khách hàng nếu là khách hàng thành viên.</p>
+        </div>
+        <div class="schema-def">
+          <p class="schema-def-head">CTHD (<u>SOHD, MASP</u>, SL)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Diễn giải chi tiết trong mỗi hóa đơn gồm có những sản phẩm gì với số lượng là bao nhiêu.</p>
+        </div>
+
+        <h3>Sơ đồ quan hệ</h3>
+        <div class="er-diagram">
+          <svg viewBox="0 0 420 230" role="img" aria-label="KHACHHANG nhận tham chiếu từ HOADON; HOADON nhận tham chiếu từ CTHD và tham chiếu đến NHANVIEN; CTHD tham chiếu đến SANPHAM">
+            <defs>
+              <marker id="erArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10Z" style="fill:var(--primary)"/>
+              </marker>
+            </defs>
+            <line x1="90" y1="90" x2="90" y2="55" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrow)"/>
+            <line x1="90" y1="130" x2="90" y2="165" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrow)"/>
+            <line x1="240" y1="110" x2="165" y2="110" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrow)"/>
+            <line x1="310" y1="130" x2="310" y2="165" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrow)"/>
+
+            <rect x="20" y="10" width="140" height="40" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="90" y="34" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">KHACHHANG</text>
+
+            <rect x="20" y="90" width="140" height="40" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="90" y="114" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">HOADON</text>
+
+            <rect x="20" y="170" width="140" height="40" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="90" y="194" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">NHANVIEN</text>
+
+            <rect x="240" y="90" width="140" height="40" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="310" y="114" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">CTHD</text>
+
+            <rect x="240" y="170" width="140" height="40" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="310" y="194" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">SANPHAM</text>
+          </svg>
+        </div>
+
+        <h3>Diễn giải quan hệ</h3>
         <p class="er-relation">KHACHHANG (1) → HOADON (N): một khách hàng thành viên có thể có nhiều hóa đơn.</p>
         <p class="er-relation">NHANVIEN (1) → HOADON (N): một nhân viên bán nhiều hóa đơn.</p>
         <p class="er-relation">HOADON (1) → CTHD (N): một hóa đơn có nhiều dòng chi tiết.</p>

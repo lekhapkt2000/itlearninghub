@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../assets/css/base.css?v=20">
-  <link rel="stylesheet" href="../assets/css/home.css?v=17">
+  <link rel="stylesheet" href="../assets/css/home.css?v=18">
 </head>
 <body>
   <header class="topbar">
@@ -105,11 +105,20 @@
     <section class="info-section" id="contact">
       <div class="section-heading">
         <h2>Learn More</h2>
+        <p class="section-intro">How IT Learning Hub helps you study more effectively every week.</p>
       </div>
+
+      <div class="process-row">
+        <div class="process-step"><span class="process-num">01</span><h4>Pick a week</h4><p>Follow the course roadmap, matching your in-class pace.</p></div>
+        <div class="process-step"><span class="process-num">02</span><h4>Read the concise theory</h4><p>Straight to the point, with examples and diagrams that make it click.</p></div>
+        <div class="process-step"><span class="process-num">03</span><h4>Do the practice exercises</h4><p>The official weekly exercise set (BTTH), with hints when you need them.</p></div>
+        <div class="process-step"><span class="process-num">04</span><h4>Check the answers</h4><p>Unlock the Answer &amp; Source Code page with the access code your instructor gives you.</p></div>
+      </div>
+
       <div class="info-grid">
-        <div class="info-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5.5 7.5 4.3 3.5 4.3 3.5 15.3 7.5 15.3 10 16.5"/><path d="M10 5.5 12.5 4.3 16.5 4.3 16.5 15.3 12.5 15.3 10 16.5"/><path d="M10 5.5v11"/></svg></span><h3>Concise Theory</h3><p>Closely follows in-class lectures, condensed into a 5-minute read.</p></div>
-        <div class="info-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3.5" width="15" height="13" rx="1.2"/><path d="M6 7.5 9 10 6 12.5"/><path d="M10.5 13h4"/></svg></span><h3>Exercises &amp; Challenges</h3><p>A weekly set of practice exercises with detailed solutions.</p></div>
-        <div class="info-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15.5h12"/><path d="M6 15.5v-5l3-3 2 2 3-4"/></svg></span><h3>Ready-to-Use Cheat Sheets</h3><p>Quick-reference syntax tables for each course.</p></div>
+        <div class="info-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 5.5 7.5 4.3 3.5 4.3 3.5 15.3 7.5 15.3 10 16.5"/><path d="M10 5.5 12.5 4.3 16.5 4.3 16.5 15.3 12.5 15.3 10 16.5"/><path d="M10 5.5v11"/></svg></span><h3>Theory that tracks the syllabus</h3><p>Each week condenses exactly what's covered in class into a 5-10 minute read - no unrelated tangents.</p></div>
+        <div class="info-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3.5" width="15" height="13" rx="1.2"/><path d="M6 7.5 9 10 6 12.5"/><path d="M10.5 13h4"/></svg></span><h3>Official exercises with their own answer key</h3><p>Every week has an official practice set (BTTH), plus a separate Answer &amp; Source Code page unlocked with a code from your instructor.</p></div>
+        <div class="info-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15.5h12"/><path d="M6 15.5v-5l3-3 2 2 3-4"/></svg></span><h3>Examples you can run right away</h3><p>Every SQL snippet has a Copy button - paste it straight into SSMS instead of retyping it.</p></div>
       </div>
     </section>
   </main>
@@ -136,6 +145,12 @@
       { code: 'IS208', name: 'IT Project Management', englishName: 'Quản lý dự án công nghệ thông tin', category: 'Specialization', status: 'coming-soon', weeks: 6, path: '../courses/is208/index.html' },
       { code: 'IS355', name: 'Blockchain Technology', englishName: 'Công nghệ Blockchain', category: 'Specialization', status: 'active', weeks: 6, path: '../courses/is355/index.html' }
     ];
+
+    // Courses with content live (active) first, coming-soon ones after -
+    // relative order within each group is preserved.
+    COURSES = COURSES.slice().sort(function (a, b) {
+      return (a.status === 'active' ? 0 : 1) - (b.status === 'active' ? 0 : 1);
+    });
 
     var grid = document.getElementById('course-grid');
     if (grid) {

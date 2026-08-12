@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../assets/css/base.css?v=19">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=33">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=34">
 </head>
 <body>
   <header class="topbar">
@@ -58,6 +58,7 @@
         <a href="#dml" data-toc><b>07</b> DML</a>
         <a href="#bai-tap" data-toc><b>08</b> Bài tập</a>
         <a href="#checklist" data-toc><b>09</b> Checklist</a>
+        <a href="#dap-an-source" data-toc><b>10</b> Đáp án &amp; Source</a>
       </nav>
 
       <div class="lesson-content">
@@ -668,6 +669,39 @@ VALUES (105, N'Sinh viên lỗi ngày', '1800-01-01', 1);</code></pre></div>
           <p>Đây là phần nền tảng của toàn bộ IT004. Sang <strong>Tuần 2</strong>, sinh viên bắt đầu sử dụng dữ liệu đã tạo để thực hiện SELECT, toán tử, hàm, JOIN, phép toán tập hợp và Subquery.</p>
         </section>
 
+        <!-- 10 - Dap an & Source (pilot access-code gate) -->
+        <section class="lesson-section" id="dap-an-source">
+          <p class="eyebrow">10 · ĐÁP ÁN &amp; SOURCE CODE</p>
+          <h2>Đáp án &amp; source code</h2>
+          <p>Khu vực này chỉ dành cho sinh viên đang học lớp thực hành IT004. Nhập mã truy cập được giảng viên cung cấp để xem.</p>
+
+          <div class="access-gate" data-access-course="IT004" data-access-resource="week1">
+            <div class="access-locked">
+              <div class="access-locked-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg></div>
+              <h3>Nội dung được bảo vệ</h3>
+              <p>Nhập mã truy cập để xem đáp án và source code Tuần 1.</p>
+              <form class="access-form">
+                <input type="text" class="access-input" placeholder="Nhập mã truy cập..." autocomplete="off" spellcheck="false" required>
+                <button type="submit" class="primary-button access-submit">Xác nhận mã <span>›</span></button>
+              </form>
+              <p class="access-error" role="alert"></p>
+              <p class="access-hint">Mã truy cập được cung cấp bởi giảng viên.</p>
+            </div>
+            <div class="access-unlocked" hidden>
+              <div class="inline-ok access-success-msg">✅ Xác thực thành công - Bạn đã được cấp quyền truy cập nội dung Tuần 1.</div>
+              <div class="download-card">
+                <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span>
+                <div class="download-card-body">
+                  <strong>Đáp án Tuần 1 (thử nghiệm)</strong>
+                  <span>Nội dung mẫu để kiểm thử luồng - Sẽ được cập nhật bằng đáp án thật</span>
+                </div>
+                <a class="dark-button" href="#" onclick="return false">Xem đáp án <span>↓</span></a>
+              </div>
+              <button type="button" class="ghost-button access-logout">Đăng xuất khỏi khu vực này</button>
+            </div>
+          </div>
+        </section>
+
         <nav class="week-nav-links" aria-label="Điều hướng tuần">
           <a href="index.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tổng quan môn học</span></a>
           <a href="week-2.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 2: Truy vấn dữ liệu với SQL</span></a>
@@ -692,6 +726,7 @@ VALUES (105, N'Sinh viên lỗi ngày', '1800-01-01', 1);</code></pre></div>
             <li data-section="dml"><b>○</b> DML</li>
             <li data-section="bai-tap"><b>○</b> Bài tập</li>
             <li data-section="checklist"><b>○</b> Checklist</li>
+            <li data-section="dap-an-source"><b>○</b> Đáp án &amp; Source</li>
           </ul>
         </div>
         <div class="panel-box">
@@ -723,5 +758,6 @@ VALUES (105, N'Sinh viên lỗi ngày', '1800-01-01', 1);</code></pre></div>
   <script src="../../assets/js/main.js?v=5"></script>
   <script src="../../assets/js/progress.js?v=5"></script>
   <script src="../../assets/js/course.js?v=12"></script>
+  <script src="../../assets/js/access-gate.js?v=1"></script>
 </body>
 </html>

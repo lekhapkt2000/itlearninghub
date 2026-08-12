@@ -71,14 +71,20 @@ CTHD        - Chi tiết hóa đơn (sản phẩm nào, số lượng bao nhiêu
           <tr><td><code>NGDK</code></td><td><code>smalldatetime</code></td><td>Ngày đăng ký thành viên</td></tr>
           <tr><td><code>DOANHSO</code></td><td><code>money</code></td><td>Tổng trị giá các hóa đơn đã mua</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (trích)</p>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 10 khách hàng)</p>
         <div class="table-wrap"><table class="ref-table">
-          <tr><th>MAKH</th><th>HOTEN</th><th>NGSINH</th><th>DOANHSO</th><th>NGDK</th></tr>
-          <tr><td>KH01</td><td>Nguyen Van A</td><td>22/10/1960</td><td>13.060.000</td><td>22/07/2006</td></tr>
-          <tr><td>KH02</td><td>Tran Ngoc Han</td><td>03/04/1974</td><td>280.000</td><td>30/07/2006</td></tr>
-          <tr><td>KH03</td><td>Tran Ngoc Linh</td><td>12/06/1980</td><td>3.860.000</td><td>08/05/2006</td></tr>
+          <tr><th>MAKH</th><th>HOTEN</th><th>DCHI</th><th>SODT</th><th>NGSINH</th><th>NGDK</th><th>DOANHSO</th></tr>
+          <tr><td>KH01</td><td>Nguyen Van A</td><td>731 Tran Hung Dao, Q5, TpHCM</td><td>8823451</td><td>22/10/1960</td><td>22/07/2006</td><td>13.060.000</td></tr>
+          <tr><td>KH02</td><td>Tran Ngoc Han</td><td>23/5 Nguyen Trai, Q5, TpHCM</td><td>908256478</td><td>03/04/1974</td><td>30/07/2006</td><td>280.000</td></tr>
+          <tr><td>KH03</td><td>Tran Ngoc Linh</td><td>45 Nguyen Canh Chan, Q1, TpHCM</td><td>938776266</td><td>12/06/1980</td><td>08/05/2006</td><td>3.860.000</td></tr>
+          <tr><td>KH04</td><td>Tran Minh Long</td><td>50/34 Le Dai Hanh, Q10, TpHCM</td><td>917325476</td><td>09/03/1965</td><td>10/02/2006</td><td>250.000</td></tr>
+          <tr><td>KH05</td><td>Le Nhat Minh</td><td>34 Truong Dinh, Q3, TpHCM</td><td>8246108</td><td>10/03/1950</td><td>28/10/2006</td><td>21.000</td></tr>
+          <tr><td>KH06</td><td>Le Hoai Thuong</td><td>227 Nguyen Van Cu, Q5, TpHCM</td><td>8631738</td><td>31/12/1981</td><td>24/11/2006</td><td>915.000</td></tr>
+          <tr><td>KH07</td><td>Nguyen Van Tam</td><td>32/3 Tran Binh Trong, Q5, TpHCM</td><td>916783565</td><td>06/04/1971</td><td>12/01/2006</td><td>12.500</td></tr>
+          <tr><td>KH08</td><td>Phan Thi Thanh</td><td>45/2 An Duong Vuong, Q5, TpHCM</td><td>938435756</td><td>10/01/1971</td><td>13/12/2006</td><td>365.000</td></tr>
+          <tr><td>KH09</td><td>Le Ha Vinh</td><td>873 Le Hong Phong, Q5, TpHCM</td><td>8654763</td><td>03/09/1979</td><td>14/01/2007</td><td>70.000</td></tr>
+          <tr><td>KH10</td><td>Ha Duy Lap</td><td>34/34B Nguyen Trai, Q1, TpHCM</td><td>8768904</td><td>02/05/1983</td><td>16/01/2007</td><td>67.500</td></tr>
         </table></div>
-        <p style="color:var(--muted);font-size:11px">Đầy đủ 10 khách hàng (KH01 → KH10) trong file script SQL bên dưới.</p>
       </section>
 
       <section class="lesson-section" id="nhanvien">
@@ -115,13 +121,33 @@ CTHD        - Chi tiết hóa đơn (sản phẩm nào, số lượng bao nhiêu
           <tr><td><code>NUOCSX</code></td><td><code>varchar(40)</code></td><td>Nước sản xuất</td></tr>
           <tr><td><code>GIA</code></td><td><code>money</code></td><td>Giá bán</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (trích - đầy đủ 24 sản phẩm trong file SQL)</p>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 24 sản phẩm)</p>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>MASP</th><th>TENSP</th><th>DVT</th><th>NUOCSX</th><th>GIA</th></tr>
           <tr><td>BC01</td><td>But chi</td><td>cay</td><td>Singapore</td><td>3.000</td></tr>
+          <tr><td>BC02</td><td>But chi</td><td>cay</td><td>Singapore</td><td>5.000</td></tr>
+          <tr><td>BC03</td><td>But chi</td><td>cay</td><td>Viet Nam</td><td>3.500</td></tr>
+          <tr><td>BC04</td><td>But chi</td><td>hop</td><td>Viet Nam</td><td>30.000</td></tr>
+          <tr><td>BB01</td><td>But bi</td><td>cay</td><td>Viet Nam</td><td>5.000</td></tr>
+          <tr><td>BB02</td><td>But bi</td><td>cay</td><td>Trung Quoc</td><td>7.000</td></tr>
           <tr><td>BB03</td><td>But bi</td><td>hop</td><td>Thai Lan</td><td>100.000</td></tr>
+          <tr><td>TV01</td><td>Tap 100 giay mong</td><td>quyen</td><td>Trung Quoc</td><td>2.500</td></tr>
           <tr><td>TV02</td><td>Tap 200 giay mong</td><td>quyen</td><td>Trung Quoc</td><td>4.500</td></tr>
+          <tr><td>TV03</td><td>Tap 100 giay tot</td><td>quyen</td><td>Viet Nam</td><td>3.000</td></tr>
+          <tr><td>TV04</td><td>Tap 200 giay tot</td><td>quyen</td><td>Viet Nam</td><td>5.500</td></tr>
+          <tr><td>TV05</td><td>Tap 100 trang</td><td>chuc</td><td>Viet Nam</td><td>23.000</td></tr>
+          <tr><td>TV06</td><td>Tap 200 trang</td><td>chuc</td><td>Viet Nam</td><td>53.000</td></tr>
+          <tr><td>TV07</td><td>Tap 100 trang</td><td>chuc</td><td>Trung Quoc</td><td>34.000</td></tr>
           <tr><td>ST01</td><td>So tay 500 trang</td><td>quyen</td><td>Trung Quoc</td><td>40.000</td></tr>
+          <tr><td>ST02</td><td>So tay loai 1</td><td>quyen</td><td>Viet Nam</td><td>55.000</td></tr>
+          <tr><td>ST03</td><td>So tay loai 2</td><td>quyen</td><td>Viet Nam</td><td>51.000</td></tr>
+          <tr><td>ST04</td><td>So tay</td><td>quyen</td><td>Thai Lan</td><td>55.000</td></tr>
+          <tr><td>ST05</td><td>So tay mong</td><td>quyen</td><td>Thai Lan</td><td>20.000</td></tr>
+          <tr><td>ST06</td><td>Phan viet bang</td><td>hop</td><td>Viet Nam</td><td>5.000</td></tr>
+          <tr><td>ST07</td><td>Phan khong bui</td><td>hop</td><td>Viet Nam</td><td>7.000</td></tr>
+          <tr><td>ST08</td><td>Bong bang</td><td>cai</td><td>Viet Nam</td><td>1.000</td></tr>
+          <tr><td>ST09</td><td>But long</td><td>cay</td><td>Viet Nam</td><td>5.000</td></tr>
+          <tr><td>ST10</td><td>But long</td><td>cay</td><td>Trung Quoc</td><td>7.000</td></tr>
         </table></div>
       </section>
 
@@ -137,15 +163,33 @@ CTHD        - Chi tiết hóa đơn (sản phẩm nào, số lượng bao nhiêu
           <tr><td><code>MANV</code></td><td><code>char(4)</code></td><td>Nhân viên nào bán - khóa ngoại đến NHANVIEN</td></tr>
           <tr><td><code>TRIGIA</code></td><td><code>money</code></td><td>Trị giá hóa đơn</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (trích)</p>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 23 hóa đơn)</p>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>SOHD</th><th>NGHD</th><th>MAKH</th><th>MANV</th><th>TRIGIA</th></tr>
           <tr><td>1001</td><td>23/07/2006</td><td>KH01</td><td>NV01</td><td>320.000</td></tr>
+          <tr><td>1002</td><td>12/08/2006</td><td>KH01</td><td>NV02</td><td>840.000</td></tr>
+          <tr><td>1003</td><td>23/08/2006</td><td>KH02</td><td>NV01</td><td>100.000</td></tr>
+          <tr><td>1004</td><td>01/09/2006</td><td>KH02</td><td>NV01</td><td>180.000</td></tr>
+          <tr><td>1005</td><td>20/10/2006</td><td>KH01</td><td>NV02</td><td>3.800.000</td></tr>
+          <tr><td>1006</td><td>16/10/2006</td><td>KH01</td><td>NV03</td><td>2.430.000</td></tr>
+          <tr><td>1007</td><td>28/10/2006</td><td>KH03</td><td>NV03</td><td>510.000</td></tr>
+          <tr><td>1008</td><td>28/10/2006</td><td>KH01</td><td>NV03</td><td>440.000</td></tr>
+          <tr><td>1009</td><td>28/10/2006</td><td>KH03</td><td>NV04</td><td>200.000</td></tr>
           <tr><td>1010</td><td>01/11/2006</td><td>KH01</td><td>NV01</td><td>5.200.000</td></tr>
+          <tr><td>1011</td><td>04/11/2006</td><td>KH04</td><td>NV03</td><td>250.000</td></tr>
+          <tr><td>1012</td><td>30/11/2006</td><td>KH05</td><td>NV03</td><td>21.000</td></tr>
+          <tr><td>1013</td><td>12/12/2006</td><td>KH06</td><td>NV01</td><td>5.000</td></tr>
+          <tr><td>1014</td><td>31/12/2006</td><td>KH03</td><td>NV02</td><td>3.150.000</td></tr>
+          <tr><td>1015</td><td>01/01/2007</td><td>KH06</td><td>NV01</td><td>910.000</td></tr>
+          <tr><td>1016</td><td>01/01/2007</td><td>KH07</td><td>NV02</td><td>12.500</td></tr>
+          <tr><td>1017</td><td>02/01/2007</td><td>KH08</td><td>NV03</td><td>35.000</td></tr>
+          <tr><td>1018</td><td>13/01/2007</td><td>KH08</td><td>NV03</td><td>330.000</td></tr>
+          <tr><td>1019</td><td>13/01/2007</td><td>KH01</td><td>NV03</td><td>30.000</td></tr>
+          <tr><td>1020</td><td>14/01/2007</td><td>KH09</td><td>NV04</td><td>70.000</td></tr>
+          <tr><td>1021</td><td>16/01/2007</td><td>KH10</td><td>NV03</td><td>67.500</td></tr>
           <tr><td>1022</td><td>16/01/2007</td><td><em>NULL</em></td><td>NV03</td><td>7.000</td></tr>
           <tr><td>1023</td><td>17/01/2007</td><td><em>NULL</em></td><td>NV01</td><td>330.000</td></tr>
         </table></div>
-        <p style="color:var(--muted);font-size:11px">Đầy đủ 23 hóa đơn (1001 → 1023) trong file script SQL bên dưới.</p>
       </section>
 
       <section class="lesson-section" id="cthd">
@@ -158,21 +202,72 @@ CTHD        - Chi tiết hóa đơn (sản phẩm nào, số lượng bao nhiêu
           <tr><td><code>MASP</code></td><td><code>char(4)</code></td><td>Mã sản phẩm - khóa chính, khóa ngoại đến SANPHAM</td></tr>
           <tr><td><code>SL</code></td><td><code>int</code></td><td>Số lượng mua</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (trích - hóa đơn 1001)</p>
-        <div class="table-wrap"><table class="ref-table">
-          <tr><th>SOHD</th><th>MASP</th><th>SL</th></tr>
-          <tr><td>1001</td><td>TV02</td><td>10</td></tr>
-          <tr><td>1001</td><td>ST01</td><td>5</td></tr>
-          <tr><td>1001</td><td>BC01</td><td>5</td></tr>
-          <tr><td>1001</td><td>BC02</td><td>10</td></tr>
-          <tr><td>1001</td><td>ST08</td><td>10</td></tr>
-        </table></div>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 48 dòng)</p>
+        <div class="er-side-by-side">
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>SOHD</th><th>MASP</th><th>SL</th></tr>
+            <tr><td>1001</td><td>TV02</td><td>10</td></tr>
+            <tr><td>1001</td><td>ST01</td><td>5</td></tr>
+            <tr><td>1001</td><td>BC01</td><td>5</td></tr>
+            <tr><td>1001</td><td>BC02</td><td>10</td></tr>
+            <tr><td>1001</td><td>ST08</td><td>10</td></tr>
+            <tr><td>1002</td><td>BC04</td><td>20</td></tr>
+            <tr><td>1002</td><td>BB01</td><td>20</td></tr>
+            <tr><td>1002</td><td>BB02</td><td>20</td></tr>
+            <tr><td>1003</td><td>BB03</td><td>10</td></tr>
+            <tr><td>1004</td><td>TV01</td><td>20</td></tr>
+            <tr><td>1004</td><td>TV02</td><td>10</td></tr>
+            <tr><td>1004</td><td>TV03</td><td>10</td></tr>
+            <tr><td>1004</td><td>TV04</td><td>10</td></tr>
+            <tr><td>1005</td><td>TV05</td><td>50</td></tr>
+            <tr><td>1005</td><td>TV06</td><td>50</td></tr>
+            <tr><td>1006</td><td>TV07</td><td>20</td></tr>
+          </table></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>SOHD</th><th>MASP</th><th>SL</th></tr>
+            <tr><td>1006</td><td>ST01</td><td>30</td></tr>
+            <tr><td>1006</td><td>ST02</td><td>10</td></tr>
+            <tr><td>1007</td><td>ST03</td><td>10</td></tr>
+            <tr><td>1008</td><td>ST04</td><td>8</td></tr>
+            <tr><td>1009</td><td>ST05</td><td>10</td></tr>
+            <tr><td>1010</td><td>TV07</td><td>50</td></tr>
+            <tr><td>1010</td><td>ST07</td><td>50</td></tr>
+            <tr><td>1010</td><td>ST08</td><td>100</td></tr>
+            <tr><td>1010</td><td>ST04</td><td>50</td></tr>
+            <tr><td>1010</td><td>TV03</td><td>100</td></tr>
+            <tr><td>1011</td><td>ST06</td><td>50</td></tr>
+            <tr><td>1012</td><td>ST07</td><td>3</td></tr>
+            <tr><td>1013</td><td>ST08</td><td>5</td></tr>
+            <tr><td>1014</td><td>BC02</td><td>80</td></tr>
+            <tr><td>1014</td><td>BB02</td><td>100</td></tr>
+            <tr><td>1014</td><td>BC04</td><td>60</td></tr>
+          </table></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>SOHD</th><th>MASP</th><th>SL</th></tr>
+            <tr><td>1014</td><td>BB01</td><td>50</td></tr>
+            <tr><td>1015</td><td>BB02</td><td>30</td></tr>
+            <tr><td>1015</td><td>BB03</td><td>7</td></tr>
+            <tr><td>1016</td><td>TV01</td><td>5</td></tr>
+            <tr><td>1017</td><td>TV02</td><td>1</td></tr>
+            <tr><td>1017</td><td>TV03</td><td>1</td></tr>
+            <tr><td>1017</td><td>TV04</td><td>5</td></tr>
+            <tr><td>1018</td><td>ST04</td><td>6</td></tr>
+            <tr><td>1019</td><td>ST05</td><td>1</td></tr>
+            <tr><td>1019</td><td>ST06</td><td>2</td></tr>
+            <tr><td>1020</td><td>ST07</td><td>10</td></tr>
+            <tr><td>1021</td><td>ST08</td><td>5</td></tr>
+            <tr><td>1021</td><td>TV01</td><td>7</td></tr>
+            <tr><td>1021</td><td>TV02</td><td>10</td></tr>
+            <tr><td>1022</td><td>ST07</td><td>1</td></tr>
+            <tr><td>1023</td><td>ST04</td><td>6</td></tr>
+          </table></div>
+        </div>
       </section>
 
       <section class="lesson-section" id="script">
         <p class="eyebrow">SCRIPT ĐẦY ĐỦ</p>
         <h2>Tạo CSDL và nạp dữ liệu mẫu</h2>
-        <p>Script tạo database <code>QLBH_2025</code>, tạo 5 bảng kèm khóa chính/khóa ngoại, và nạp toàn bộ dữ liệu mẫu (10 khách hàng, 5 nhân viên, 24 sản phẩm, 23 hóa đơn, 47 dòng chi tiết). Chạy trực tiếp trong SSMS trước khi bắt đầu làm bài.</p>
+        <p>Script tạo database <code>QLBH_2025</code>, tạo 5 bảng kèm khóa chính/khóa ngoại, và nạp toàn bộ dữ liệu mẫu (10 khách hàng, 5 nhân viên, 24 sản phẩm, 23 hóa đơn, 48 dòng chi tiết). Chạy trực tiếp trong SSMS trước khi bắt đầu làm bài.</p>
         <div class="download-card">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
           <div class="download-card-body">

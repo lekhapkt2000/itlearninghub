@@ -34,6 +34,7 @@
     /* Shared field/panel styles */
     .field{margin-bottom:16px}
     .field label{display:block;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+    .field-hint{margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.5}
     .field input,.field select{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:9px;font:inherit;font-size:14px;background:var(--bg);color:var(--ink);transition:border-color .15s,box-shadow .15s}
     .field input:focus,.field select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgb(37 99 235 / .12)}
     button[type="submit"]{width:100%;padding:13px;margin-top:6px}
@@ -176,6 +177,19 @@
               </select>
             </div>
             <div class="field">
+              <label for="week">Tuần</label>
+              <select id="week" required>
+                <option value="1">Tuần 1</option>
+                <option value="2">Tuần 2</option>
+                <option value="3">Tuần 3</option>
+                <option value="4">Tuần 4</option>
+                <option value="5">Tuần 5</option>
+                <option value="6">Tuần 6</option>
+                <option value="">Tất cả các tuần</option>
+              </select>
+              <p class="field-hint">Mã chỉ mở khóa được đúng tuần đã chọn. Chọn "Tất cả các tuần" nếu muốn 1 mã dùng được cho mọi tuần của môn này.</p>
+            </div>
+            <div class="field">
               <label for="note">Ghi chú (tùy chọn)</label>
               <input type="text" id="note" placeholder="Ví dụ: Lớp thực hành thứ Ba - Tuần 2">
             </div>
@@ -202,7 +216,7 @@
           <p class="list-empty" id="list-empty">Chưa có mã nào.</p>
           <div class="table-wrap">
             <table id="codes-table" style="display:none">
-              <thead><tr><th>Mã</th><th>Môn</th><th>Trạng thái</th><th>Ghi chú</th><th></th></tr></thead>
+              <thead><tr><th>Mã</th><th>Môn</th><th>Tuần</th><th>Trạng thái</th><th>Ghi chú</th><th></th></tr></thead>
               <tbody id="codes-tbody"></tbody>
             </table>
           </div>
@@ -331,15 +345,42 @@
     var statActive = document.getElementById('stat-active');
     var statRevoked = document.getElementById('stat-revoked');
 
+    // Tự đăng xuất sau 20 phút không thao tác (chuột/bàn phím/cuộn) để tránh
+    // để phiên quản trị mở lâu trên máy dùng chung.
+    var IDLE_TIMEOUT_MS = 20 * 60 * 1000;
+    var idleTimer = null;
+
+    function clearIdleTimer() {
+      clearTimeout(idleTimer);
+      idleTimer = null;
+    }
+
+    function resetIdleTimer() {
+      if (!currentKey) return;
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(function () {
+        try { localStorage.removeItem('admin:key'); } catch (e) {}
+        loginKeyInput.value = '';
+        showLogin();
+        showToast('Phiên đã hết hạn do không hoạt động. Vui lòng đăng nhập lại.', 'error');
+      }, IDLE_TIMEOUT_MS);
+    }
+
+    ['click', 'keydown', 'mousemove', 'scroll'].forEach(function (evt) {
+      document.addEventListener(evt, resetIdleTimer, { passive: true });
+    });
+
     function showDashboard(key) {
       currentKey = key;
       loginView.style.display = 'none';
       dashboard.style.display = 'block';
       logoutBtn.style.display = 'inline-flex';
+      resetIdleTimer();
     }
 
     function showLogin(message) {
       currentKey = '';
+      clearIdleTimer();
       dashboard.style.display = 'none';
       loginView.style.display = 'flex';
       logoutBtn.style.display = 'none';
@@ -409,6 +450,7 @@
         tr.innerHTML =
           '<td><code>' + escapeHtml(c.code) + '</code></td>' +
           '<td>' + escapeHtml(c.course) + '</td>' +
+          '<td>' + (c.week ? 'Tuần ' + escapeHtml(c.week) : 'Tất cả') + '</td>' +
           '<td><span class="badge ' + (isActive ? 'badge-active' : 'badge-revoked') + '">' +
             (isActive ? 'Active' : 'Revoked') + '</span></td>' +
           '<td>' + escapeHtml(c.note) + '</td>' +
@@ -502,6 +544,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var course = document.getElementById('course').value;
+      var week = document.getElementById('week').value;
       var note = document.getElementById('note').value.trim();
 
       msgEl.textContent = '';
@@ -513,6 +556,7 @@
       var url = APPS_SCRIPT_URL + '?action=generate' +
         '&key=' + encodeURIComponent(currentKey) +
         '&course=' + encodeURIComponent(course) +
+        '&week=' + encodeURIComponent(week) +
         '&note=' + encodeURIComponent(note);
 
       jsonp(url)

@@ -27,6 +27,12 @@
  *    value can mint codes from admin/generate-code.html, so treat it like
  *    a real password - don't post it publicly, rotate it (just change the
  *    Script Property, no redeploy needed) if it ever leaks.
+ * 10. Codes can be scoped to one week (column `week` in ACCESS_CODES). A
+ *     code generated for week 3 only unlocks week-3's answer page; leaving
+ *     week blank when generating makes a code valid for every week of that
+ *     course. Run setup() again after updating this file so the `week`
+ *     column gets added to an existing sheet - safe to re-run, it only
+ *     adds missing columns/tabs, never touches existing rows.
  *
  * Gotcha this file avoids: SpreadsheetApp.getActiveSpreadsheet() returns
  * null when a Web App's doGet/doPost actually runs (no active UI in
@@ -37,7 +43,7 @@
 var SPREADSHEET_ID = '1yGco2Xf0SfFASmlxwFj2ZdoqtvDPCfvQsrypv04vsDM';
 
 var CODES_SHEET = 'ACCESS_CODES';
-var CODES_HEADERS = ['code', 'course', 'status', 'created_at', 'created_by', 'note'];
+var CODES_HEADERS = ['code', 'course', 'status', 'created_at', 'created_by', 'note', 'week'];
 var LOG_SHEET = 'ACCESS_LOG';
 var LOG_HEADERS = ['timestamp', 'course', 'resource', 'code_hash', 'name', 'class', 'result'];
 
@@ -79,7 +85,8 @@ function handleGenerate(params) {
     return { ok: false, message: 'Thiếu mã môn học.' };
   }
 
-  var code = generateCode(course, String(params.note || ''));
+  var week = String(params.week || '').trim();
+  var code = generateCode(course, String(params.note || ''), week);
   return { ok: true, code: code };
 }
 
@@ -95,6 +102,7 @@ function handleList(params) {
   var idxStatus = header.indexOf('status');
   var idxCreatedAt = header.indexOf('created_at');
   var idxNote = header.indexOf('note');
+  var idxWeek = header.indexOf('week');
 
   var codes = [];
   for (var i = rows.length - 1; i >= 1; i--) {
@@ -105,7 +113,8 @@ function handleList(params) {
       course: row[idxCourse],
       status: row[idxStatus],
       createdAt: createdAt instanceof Date ? createdAt.toISOString() : String(createdAt),
-      note: row[idxNote]
+      note: row[idxNote],
+      week: idxWeek === -1 ? '' : String(row[idxWeek] || '')
     });
   }
   return { ok: true, codes: codes };
@@ -166,6 +175,7 @@ function handleValidate(params) {
   var code = String(params.code || '').trim().toUpperCase();
   var course = String(params.course || '').trim().toUpperCase();
   var resource = String(params.resource || '');
+  var week = String(params.week || '').trim();
 
   if (!code || !course) {
     return { ok: false, message: 'Thiếu mã truy cập hoặc môn học.' };
@@ -177,13 +187,18 @@ function handleValidate(params) {
   var idxCode = header.indexOf('code');
   var idxCourse = header.indexOf('course');
   var idxStatus = header.indexOf('status');
+  var idxWeek = header.indexOf('week');
 
   var ok = false;
   for (var i = 1; i < rows.length; i++) {
     var row = rows[i];
     if (String(row[idxCode]).trim().toUpperCase() === code) {
-      ok = String(row[idxStatus]).trim().toLowerCase() === 'active' &&
-           String(row[idxCourse]).trim().toUpperCase() === course;
+      var statusOk = String(row[idxStatus]).trim().toLowerCase() === 'active';
+      var courseOk = String(row[idxCourse]).trim().toUpperCase() === course;
+      // A blank week on the code means "valid for every week" of the course.
+      var codeWeek = idxWeek === -1 ? '' : String(row[idxWeek] || '').trim();
+      var weekOk = !codeWeek || codeWeek === week;
+      ok = statusOk && courseOk && weekOk;
       break;
     }
   }
@@ -241,17 +256,22 @@ function ensureSheetWithHeaders(ss, name, headers) {
   }
 }
 
-/** Run manually from the editor to issue a new code. Reads back from the log. */
-function generateCode(course, note) {
-  var code = String(course).toUpperCase() + '-' + randomSegment() + '-' + randomSegment();
-  getSheet(CODES_SHEET).appendRow([code, String(course).toUpperCase(), 'Active', new Date(), 'Admin', note || '']);
+/**
+ * Run manually from the editor to issue a new code. Reads back from the log.
+ * week: '1'..'6' to scope the code to one week, or '' for a code valid on
+ * every week of the course (e.g. for a final-exam or all-weeks pass).
+ */
+function generateCode(course, note, week) {
+  var weekPart = week ? ('W' + week + '-') : '';
+  var code = String(course).toUpperCase() + '-' + weekPart + randomSegment() + '-' + randomSegment();
+  getSheet(CODES_SHEET).appendRow([code, String(course).toUpperCase(), 'Active', new Date(), 'Admin', note || '', week || '']);
   Logger.log(code);
   return code;
 }
 
 /** Run manually once after setup to create a code for testing the pilot. */
 function seedTestCode() {
-  return generateCode('IT004', 'Pilot test code - Tuần 1');
+  return generateCode('IT004', 'Pilot test code - Tuần 1', '1');
 }
 
 function randomSegment() {

@@ -39,7 +39,10 @@
   document.querySelectorAll('.access-gate').forEach(function (gate) {
     var course = gate.dataset.accessCourse || '';
     var resource = gate.dataset.accessResource || '';
-    var storageKey = 'access:' + course;
+    var week = gate.dataset.accessWeek || '';
+    // Scoped per week (not just per course): a code for week 3 must not
+    // silently unlock week 2's gate just because both are IT004.
+    var storageKey = 'access:' + course + ':' + (week || resource || 'default');
 
     var locked = gate.querySelector('.access-locked');
     var unlocked = gate.querySelector('.access-unlocked');
@@ -76,7 +79,8 @@
         var url = APPS_SCRIPT_URL + '?action=validate' +
           '&code=' + encodeURIComponent(code) +
           '&course=' + encodeURIComponent(course) +
-          '&resource=' + encodeURIComponent(resource);
+          '&resource=' + encodeURIComponent(resource) +
+          '&week=' + encodeURIComponent(week);
 
         jsonp(url)
           .then(function (data) {

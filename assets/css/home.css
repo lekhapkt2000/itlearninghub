@@ -8,7 +8,7 @@
 .hero-actions .outline-button{padding:18px 22px;font-size:13px}
 .hero-tags{margin-top:18px;color:var(--muted);font-size:11px;letter-spacing:.02em}
 
-.hero-copy{animation:hero-fade-up .7s ease-out both}
+.hero-copy{padding-left:clamp(0px,4vw,56px);animation:hero-fade-up .7s ease-out both}
 .hero-visual{position:relative;min-height:360px;display:grid;place-items:center;animation:hero-fade-up .7s ease-out .15s both}
 @keyframes hero-fade-up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 

@@ -6,14 +6,20 @@
   // Apps Script Web Apps don't send an Access-Control-Allow-Origin header,
   // so a plain fetch() gets blocked by CORS. JSONP (loading the response
   // via a <script> tag) sidesteps that entirely.
-  function jsonp(url) {
+  //
+  // The /exec URL 302-redirects to script.googleusercontent.com, and a
+  // cold Apps Script instance can take several seconds to spin up, so on
+  // a slow mobile connection a single attempt can time out even though
+  // the backend is fine - hence the generous timeout and one automatic
+  // retry before surfacing an error to the student.
+  function jsonpOnce(url, timeoutMs) {
     return new Promise(function (resolve, reject) {
       var callbackName = '__accessGateCb' + Date.now() + Math.floor(Math.random() * 1e6);
       var script = document.createElement('script');
       var timer = setTimeout(function () {
         cleanup();
         reject(new Error('timeout'));
-      }, 10000);
+      }, timeoutMs);
 
       function cleanup() {
         clearTimeout(timer);
@@ -32,6 +38,16 @@
         reject(new Error('script load error'));
       };
       document.body.appendChild(script);
+    });
+  }
+
+  function jsonp(url) {
+    return jsonpOnce(url, 20000).catch(function () {
+      // One retry after a short pause - covers transient mobile-network
+      // blips and Apps Script cold starts without making the student
+      // wait through two full 20s timeouts back to back.
+      return new Promise(function (resolve) { setTimeout(resolve, 800); })
+        .then(function () { return jsonpOnce(url, 20000); });
     });
   }
 
@@ -91,7 +107,7 @@
             }
           })
           .catch(function () {
-            errorEl.textContent = 'Không thể kết nối máy chủ xác thực. Vui lòng thử lại.';
+            errorEl.textContent = 'Không thể kết nối máy chủ xác thực. Kiểm tra kết nối mạng (wifi/4G) rồi thử lại.';
           })
           .finally(function () {
             submitBtn.disabled = false;

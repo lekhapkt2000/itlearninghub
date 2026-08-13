@@ -108,8 +108,34 @@
         <!-- 02 - SSMS -->
         <section class="lesson-section" id="ssms">
           <p class="eyebrow">02 · SQL SERVER MANAGEMENT STUDIO</p>
-          <h2>Installing SQL Server Management Studio</h2>
-          <p>In the practice sessions, students use <strong>SQL Server Management Studio (SSMS)</strong> to work with SQL Server. Make sure this tool is installed before class.</p>
+          <h2>Installing SQL Server &amp; SSMS</h2>
+          <p>Before the practice sessions, install 2 components on your computer: <strong>SQL Server</strong> (the database engine) and <strong>SQL Server Management Studio - SSMS</strong> (the client tool for connecting, writing queries, and managing SQL Server). SQL Server doesn't come with a built-in interface, so SSMS is required.</p>
+
+          <h3>Installing SQL Server 2022 (Developer Edition)</h3>
+          <p>The <strong>Developer Edition</strong> is free and has all the same features as the paid editions - it's meant for learning/development only, not for a live production environment.</p>
+          <ol class="question-list">
+            <li>Download the installer from the Microsoft site, choosing <strong>Download Media</strong> to download the setup files first instead of installing directly over the network.</li>
+            <li>Run <code>SQLServer2022-DEV-x64-ENU.exe</code>, go to <strong>Installation</strong>, and choose the <strong>Developer</strong> edition.</li>
+            <li>Accept the license terms. You can uncheck automatic update checks if you don't need them.</li>
+            <li>On the Feature Selection step, checking <strong>Database Engine Services</strong> alone is enough for this course.</li>
+            <li>Leave the Instance ID at its default, <code>MSSQLSERVER</code>.</li>
+            <li>On the authentication step (Database Engine Configuration), select <strong>Mixed Mode</strong>, set a password for the <code>sa</code> account, and add your current Windows account to the SQL Server Administrators list.</li>
+            <li>Wait for the install to finish, verify the components installed successfully, then click <strong>Close</strong>.</li>
+          </ol>
+          <div class="inline-warning"><strong>The step most people get wrong:</strong> On the authentication step, you must select <strong>Mixed Mode</strong> (not leave it on the default "Windows Authentication mode") and <strong>remember the <code>sa</code> account's password</strong> - you'll need it to log into SQL Server from SSMS later. Forgetting this step (or the password) is the most common reason students can't log into SQL Server and end up having to uninstall and start over.</div>
+
+          <h3>Installing SQL Server Management Studio (SSMS)</h3>
+          <ol class="question-list">
+            <li>Download the SSMS installer from the Microsoft site (search "Download SQL Server Management Studio").</li>
+            <li>Run <code>SSMS-Setup-ENU.exe</code> and click <strong>Install</strong>.</li>
+            <li>Wait a few minutes for the install to finish, then click <strong>Close</strong>.</li>
+          </ol>
+
+          <div class="inline-ok" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+            <span>See the full install guide with step-by-step screenshots at SQL Server Tutorial.</span>
+            <a class="outline-button" href="https://www.sqlservertutorial.net/getting-started/install-sql-server/" target="_blank" rel="noopener">View guide <span>›</span></a>
+          </div>
+
           <p>Once installed, the SSMS interface is typically used to:</p>
           <ul>
             <li>Connect to SQL Server</li>

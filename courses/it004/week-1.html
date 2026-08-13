@@ -104,8 +104,34 @@
         <!-- 02 - SSMS -->
         <section class="lesson-section" id="ssms">
           <p class="eyebrow">02 · SQL SERVER MANAGEMENT STUDIO</p>
-          <h2>Cài đặt SQL Server Management Studio</h2>
-          <p>Trong phần thực hành, sinh viên sử dụng <strong>SQL Server Management Studio (SSMS)</strong> để làm việc với SQL Server. Cần chuẩn bị sẵn công cụ thực hành trước buổi học.</p>
+          <h2>Cài đặt SQL Server &amp; SSMS</h2>
+          <p>Trước buổi thực hành, cần chuẩn bị sẵn 2 thành phần trên máy tính cá nhân: <strong>SQL Server</strong> (bộ máy CSDL) và <strong>SQL Server Management Studio - SSMS</strong> (công cụ giao diện để kết nối, viết truy vấn và quản lý SQL Server). SQL Server không có sẵn giao diện làm việc, nên bắt buộc phải cài thêm SSMS mới thao tác được.</p>
+
+          <h3>Cài đặt SQL Server 2022 (Developer Edition)</h3>
+          <p>Bản <strong>Developer Edition</strong> miễn phí, đầy đủ tính năng như bản trả phí, chỉ dùng cho mục đích học tập/phát triển (không dùng cho môi trường thực tế đang vận hành).</p>
+          <ol class="question-list">
+            <li>Tải bộ cài từ trang chủ Microsoft, chọn <strong>Download Media</strong> để tải file cài đặt về máy trước, thay vì cài trực tiếp qua mạng.</li>
+            <li>Chạy file <code>SQLServer2022-DEV-x64-ENU.exe</code>, vào mục <strong>Installation</strong>, chọn bản <strong>Developer</strong> để cài.</li>
+            <li>Đồng ý điều khoản license. Có thể bỏ chọn mục tự động kiểm tra cập nhật nếu không cần.</li>
+            <li>Ở bước chọn tính năng (Feature Selection), chỉ cần tick <strong>Database Engine Services</strong> là đủ dùng cho môn học này.</li>
+            <li>Instance ID giữ nguyên mặc định <code>MSSQLSERVER</code>.</li>
+            <li>Ở bước xác thực (Database Engine Configuration), chọn <strong>Mixed Mode</strong>, đặt mật khẩu cho tài khoản <code>sa</code>, và thêm tài khoản Windows hiện tại vào danh sách SQL Server Administrators.</li>
+            <li>Đợi cài đặt hoàn tất, kiểm tra các thành phần đã cài thành công rồi bấm <strong>Close</strong>.</li>
+          </ol>
+          <div class="inline-warning"><strong>Bước dễ sai nhất:</strong> Ở bước xác thực, phải chọn <strong>Mixed Mode</strong> (không để mặc định "Windows Authentication mode") và <strong>nhớ kỹ mật khẩu tài khoản <code>sa</code></strong> - mật khẩu này dùng để đăng nhập SQL Server trong SSMS về sau. Quên bước này (hoặc quên mật khẩu) là nguyên nhân phổ biến nhất khiến không đăng nhập được vào SQL Server, phải gỡ cài đặt và làm lại từ đầu.</div>
+
+          <h3>Cài đặt SQL Server Management Studio (SSMS)</h3>
+          <ol class="question-list">
+            <li>Tải bộ cài SSMS từ trang chủ Microsoft (tìm "Download SQL Server Management Studio").</li>
+            <li>Chạy file <code>SSMS-Setup-ENU.exe</code>, bấm <strong>Install</strong>.</li>
+            <li>Đợi vài phút để cài đặt hoàn tất, bấm <strong>Close</strong> khi xong.</li>
+          </ol>
+
+          <div class="inline-ok" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+            <span>Xem hướng dẫn cài đặt đầy đủ, có hình ảnh minh họa từng bước (tiếng Anh) tại SQL Server Tutorial.</span>
+            <a class="outline-button" href="https://www.sqlservertutorial.net/getting-started/install-sql-server/" target="_blank" rel="noopener">Xem hướng dẫn <span>›</span></a>
+          </div>
+
           <p>Sau khi cài đặt, giao diện SSMS thường được sử dụng để:</p>
           <ul>
             <li>Kết nối đến SQL Server</li>

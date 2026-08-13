@@ -59,6 +59,93 @@
           <li>Tìm sinh viên có điểm <code>IT004</code> cao nhất</li>
           <li>Hiển thị tất cả sinh viên, kể cả sinh viên chưa có kết quả học tập (gợi ý: <code>LEFT JOIN</code>)</li>
         </ol>
+
+        <h3>Bài tập ôn tập thêm - Quản lý hàng hóa (36 câu)</h3>
+        <p>Bài ôn luyện thêm, không bắt buộc, dùng lược đồ cổ điển "Nhà cung cấp - Phụ tùng - Vận chuyển" (Suppliers - Parts - Shipments) rất hay gặp trong các đề thi và giáo trình CSDL.</p>
+
+        <div class="schema-def">
+          <p class="schema-def-head">NHACUNGCAP (<u>MANCC</u>, TENNCC, TRANGTHAI, THANHPHO)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> "Nhà cung cấp" cung cấp các dịch vụ vận chuyển - mã nhà cung cấp, tên nhà cung cấp, trạng thái và thành phố.</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MANCC</code></td><td><code>varchar(5)</code></td><td>Mã nhà cung cấp - khóa chính</td></tr>
+          <tr><td><code>TENNCC</code></td><td><code>varchar(20)</code></td><td>Tên nhà cung cấp</td></tr>
+          <tr><td><code>TRANGTHAI</code></td><td><code>numeric(2)</code></td><td>Trạng thái (điểm xếp hạng nhà cung cấp)</td></tr>
+          <tr><td><code>THANHPHO</code></td><td><code>varchar(30)</code></td><td>Thành phố</td></tr>
+        </table></div>
+
+        <div class="schema-def">
+          <p class="schema-def-head">PHUTUNG (<u>MAPT</u>, TENPT, MAUSAC, KHOILUONG, THANHPHO)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Thông tin phụ tùng gồm mã phụ tùng, tên phụ tùng, màu sắc, khối lượng và thành phố.</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MAPT</code></td><td><code>varchar(5)</code></td><td>Mã phụ tùng - khóa chính</td></tr>
+          <tr><td><code>TENPT</code></td><td><code>varchar(10)</code></td><td>Tên phụ tùng</td></tr>
+          <tr><td><code>MAUSAC</code></td><td><code>varchar(10)</code></td><td>Màu sắc</td></tr>
+          <tr><td><code>KHOILUONG</code></td><td><code>float</code></td><td>Khối lượng</td></tr>
+          <tr><td><code>THANHPHO</code></td><td><code>varchar(30)</code></td><td>Thành phố</td></tr>
+        </table></div>
+
+        <div class="schema-def">
+          <p class="schema-def-head">VANCHUYEN (<u>MANCC, MAPT</u>, SOLUONG)</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin nhà cung cấp dịch vụ vận chuyển những phụ tùng nào, số lượng là bao nhiêu.</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
+          <tr><td><code>MANCC</code></td><td><code>varchar(5)</code></td><td>Mã nhà cung cấp - khóa chính, khóa ngoại đến NHACUNGCAP</td></tr>
+          <tr><td><code>MAPT</code></td><td><code>varchar(5)</code></td><td>Mã phụ tùng - khóa chính, khóa ngoại đến PHUTUNG</td></tr>
+          <tr><td><code>SOLUONG</code></td><td><code>numeric(5)</code></td><td>Số lượng phụ tùng đã vận chuyển</td></tr>
+        </table></div>
+
+        <div class="download-card">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
+          <div class="download-card-body">
+            <strong>Script CSDL Quản lý hàng hóa (PartShipmentDB)</strong>
+            <span>File .sql · tạo bảng, ràng buộc và dữ liệu mẫu đầy đủ</span>
+          </div>
+          <a class="dark-button" href="../../assets/file/luoc-do-quan-ly-hang-hoa.sql" download>Tải file <span>↓</span></a>
+        </div>
+
+        <ol class="question-list">
+          <li>Hiển thị thông tin (MANCC, TENNCC, THANHPHO) của tất cả nhà cung cấp.</li>
+          <li>Hiển thị thông tin của tất cả các phụ tùng.</li>
+          <li>Hiển thị thông tin các nhà cung cấp ở thành phố London.</li>
+          <li>Hiển thị mã phụ tùng, tên và màu sắc của tất cả các phụ tùng ở thành phố Paris.</li>
+          <li>Hiển thị mã phụ tùng, tên, khối lượng của những phụ tùng có khối lượng lớn hơn 15.</li>
+          <li>Tìm những phụ tùng (MAPT, TENPT, MAUSAC) có khối lượng lớn hơn 15, không phải màu đỏ (red).</li>
+          <li>Tìm những phụ tùng (MAPT, TENPT, MAUSAC) có khối lượng lớn hơn 15, màu sắc khác màu đỏ (red) và xanh (green).</li>
+          <li>Hiển thị những phụ tùng (MAPT, TENPT, khối lượng) có khối lượng lớn hơn 15 và nhỏ hơn 20, sắp xếp theo tên phụ tùng.</li>
+          <li>Hiển thị những phụ tùng được vận chuyển bởi nhà cung cấp có mã số S1. Không hiển thị kết quả trùng (sử dụng phép kết).</li>
+          <li>Hiển thị những nhà cung cấp vận chuyển phụ tùng có mã là P1 (sử dụng phép kết).</li>
+          <li>Hiển thị thông tin nhà cung cấp ở thành phố London và có vận chuyển phụ tùng của thành phố London. Không hiển thị kết quả trùng (sử dụng phép kết).</li>
+          <li>Lặp lại câu 9 nhưng sử dụng toán tử IN.</li>
+          <li>Lặp lại câu 10 nhưng sử dụng toán tử IN.</li>
+          <li>Lặp lại câu 9 nhưng sử dụng toán tử EXISTS.</li>
+          <li>Lặp lại câu 10 nhưng sử dụng toán tử EXISTS.</li>
+          <li>Lặp lại câu 11 nhưng sử dụng truy vấn con, dùng toán tử IN.</li>
+          <li>Lặp lại câu 11 nhưng dùng truy vấn con, sử dụng toán tử EXISTS.</li>
+          <li>Tìm nhà cung cấp chưa vận chuyển bất kỳ phụ tùng nào. Sử dụng NOT IN.</li>
+          <li>Tìm nhà cung cấp chưa vận chuyển bất kỳ phụ tùng nào. Sử dụng NOT EXISTS.</li>
+          <li>Tìm nhà cung cấp chưa vận chuyển bất kỳ phụ tùng nào. Sử dụng outer JOIN (phép kết ngoài).</li>
+          <li>Có tất cả bao nhiêu nhà cung cấp?</li>
+          <li>Có tất cả bao nhiêu nhà cung cấp ở London?</li>
+          <li>Hiển thị trị giá cao nhất, thấp nhất của TRANGTHAI của các nhà cung cấp.</li>
+          <li>Hiển thị giá trị cao nhất, thấp nhất của TRANGTHAI trong bảng NHACUNGCAP ở thành phố London.</li>
+          <li>Mỗi nhà cung cấp vận chuyển bao nhiêu phụ tùng? Chỉ hiển thị mã nhà cung cấp, tổng số phụ tùng đã vận chuyển.</li>
+          <li>Mỗi nhà cung cấp vận chuyển bao nhiêu phụ tùng? Hiển thị mã nhà cung cấp, tên, thành phố của nhà cung cấp và tổng số phụ tùng đã vận chuyển.</li>
+          <li>Nhà cung cấp nào đã vận chuyển tổng cộng nhiều hơn 500 phụ tùng? Chỉ hiển thị mã nhà cung cấp.</li>
+          <li>Nhà cung cấp nào đã vận chuyển nhiều hơn 300 phụ tùng màu đỏ (red)? Chỉ hiển thị mã nhà cung cấp.</li>
+          <li>Nhà cung cấp nào đã vận chuyển nhiều hơn 300 phụ tùng màu đỏ (red)? Hiển thị mã nhà cung cấp, tên, thành phố và số lượng phụ tùng màu đỏ đã vận chuyển.</li>
+          <li>Có bao nhiêu nhà cung cấp ở mỗi thành phố.</li>
+          <li>Nhà cung cấp nào đã vận chuyển nhiều phụ tùng nhất? Hiển thị tên nhà cung cấp và số lượng phụ tùng đã vận chuyển.</li>
+          <li>Thành phố nào có cả <strong>nhà cung cấp</strong> và <strong>phụ tùng</strong>.</li>
+          <li>Viết câu lệnh SQL để insert nhà cung cấp mới: S6, Duncan, 30, Paris.</li>
+          <li>Viết câu lệnh SQL để thay đổi thành phố của S6 (ở câu 33) thành Sydney.</li>
+          <li>Viết câu lệnh SQL tăng TRANGTHAI của nhà cung cấp ở London lên thêm 10.</li>
+          <li>Viết câu lệnh SQL xóa nhà cung cấp S6.</li>
+        </ol>
       </section>
 
       <section class="lesson-section" id="dap-an">

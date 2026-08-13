@@ -59,6 +59,93 @@
           <li>Find the student with the highest <code>IT004</code> score</li>
           <li>Display all students, including those with no academic results yet (hint: <code>LEFT JOIN</code>)</li>
         </ol>
+
+        <h3>Bonus review exercise - Goods Management (36 questions)</h3>
+        <p>An optional extra practice set using the classic "Suppliers - Parts - Shipments" schema, a very common example in database courses and exams.</p>
+
+        <div class="schema-def">
+          <p class="schema-def-head">NHACUNGCAP (<u>MANCC</u>, TENNCC, TRANGTHAI, THANHPHO)</p>
+          <p class="schema-def-body"><em>Predicate:</em> A "supplier" provides shipping services - supplier code, supplier name, status, and city.</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MANCC</code></td><td><code>varchar(5)</code></td><td>Supplier code - primary key</td></tr>
+          <tr><td><code>TENNCC</code></td><td><code>varchar(20)</code></td><td>Supplier name</td></tr>
+          <tr><td><code>TRANGTHAI</code></td><td><code>numeric(2)</code></td><td>Status (supplier rating score)</td></tr>
+          <tr><td><code>THANHPHO</code></td><td><code>varchar(30)</code></td><td>City</td></tr>
+        </table></div>
+
+        <div class="schema-def">
+          <p class="schema-def-head">PHUTUNG (<u>MAPT</u>, TENPT, MAUSAC, KHOILUONG, THANHPHO)</p>
+          <p class="schema-def-body"><em>Predicate:</em> Part information: part code, part name, color, weight, and city.</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAPT</code></td><td><code>varchar(5)</code></td><td>Part code - primary key</td></tr>
+          <tr><td><code>TENPT</code></td><td><code>varchar(10)</code></td><td>Part name</td></tr>
+          <tr><td><code>MAUSAC</code></td><td><code>varchar(10)</code></td><td>Color</td></tr>
+          <tr><td><code>KHOILUONG</code></td><td><code>float</code></td><td>Weight</td></tr>
+          <tr><td><code>THANHPHO</code></td><td><code>varchar(30)</code></td><td>City</td></tr>
+        </table></div>
+
+        <div class="schema-def">
+          <p class="schema-def-head">VANCHUYEN (<u>MANCC, MAPT</u>, SOLUONG)</p>
+          <p class="schema-def-body"><em>Predicate:</em> Records which supplier shipped which part, and in what quantity.</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MANCC</code></td><td><code>varchar(5)</code></td><td>Supplier code - primary key, foreign key to NHACUNGCAP</td></tr>
+          <tr><td><code>MAPT</code></td><td><code>varchar(5)</code></td><td>Part code - primary key, foreign key to PHUTUNG</td></tr>
+          <tr><td><code>SOLUONG</code></td><td><code>numeric(5)</code></td><td>Quantity of parts shipped</td></tr>
+        </table></div>
+
+        <div class="download-card">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
+          <div class="download-card-body">
+            <strong>Goods Management database script (PartShipmentDB)</strong>
+            <span>.sql file · full table creation, constraints, and sample data</span>
+          </div>
+          <a class="dark-button" href="../../../assets/file/luoc-do-quan-ly-hang-hoa.sql" download>Download <span>↓</span></a>
+        </div>
+
+        <ol class="question-list">
+          <li>Display the (MANCC, TENNCC, THANHPHO) information for all suppliers.</li>
+          <li>Display the information for all parts.</li>
+          <li>Display the information for suppliers located in London.</li>
+          <li>Display the part code, name, and color for all parts located in Paris.</li>
+          <li>Display the part code, name, and weight for parts with a weight greater than 15.</li>
+          <li>Find parts (MAPT, TENPT, MAUSAC) with a weight greater than 15 that are not red.</li>
+          <li>Find parts (MAPT, TENPT, MAUSAC) with a weight greater than 15 whose color is neither red nor green.</li>
+          <li>Display parts (MAPT, TENPT, weight) with a weight greater than 15 and less than 20, sorted by part name.</li>
+          <li>Display the parts shipped by supplier S1, with no duplicate rows (use a join).</li>
+          <li>Display the suppliers that shipped part P1 (use a join).</li>
+          <li>Display information for suppliers located in London that shipped parts located in London, with no duplicate rows (use a join).</li>
+          <li>Repeat question 9 but use the IN operator.</li>
+          <li>Repeat question 10 but use the IN operator.</li>
+          <li>Repeat question 9 but use the EXISTS operator.</li>
+          <li>Repeat question 10 but use the EXISTS operator.</li>
+          <li>Repeat question 11 using a subquery with the IN operator.</li>
+          <li>Repeat question 11 using a subquery with the EXISTS operator.</li>
+          <li>Find suppliers that have not shipped any part yet. Use NOT IN.</li>
+          <li>Find suppliers that have not shipped any part yet. Use NOT EXISTS.</li>
+          <li>Find suppliers that have not shipped any part yet. Use an outer JOIN.</li>
+          <li>How many suppliers are there in total?</li>
+          <li>How many suppliers are there in London?</li>
+          <li>Display the highest and lowest TRANGTHAI value among all suppliers.</li>
+          <li>Display the highest and lowest TRANGTHAI value in the NHACUNGCAP table for suppliers in London.</li>
+          <li>How many parts did each supplier ship? Show only the supplier code and total quantity shipped.</li>
+          <li>How many parts did each supplier ship? Show the supplier code, name, city, and total quantity shipped.</li>
+          <li>Which suppliers shipped a total of more than 500 parts? Show only the supplier code.</li>
+          <li>Which suppliers shipped more than 300 red parts? Show only the supplier code.</li>
+          <li>Which suppliers shipped more than 300 red parts? Show the supplier code, name, city, and quantity of red parts shipped.</li>
+          <li>How many suppliers are there in each city?</li>
+          <li>Which supplier shipped the most parts? Show the supplier name and quantity of parts shipped.</li>
+          <li>Which cities have both a <strong>supplier</strong> and a <strong>part</strong>.</li>
+          <li>Write the SQL statement to insert a new supplier: S6, Duncan, 30, Paris.</li>
+          <li>Write the SQL statement to change S6's city (from question 33) to Sydney.</li>
+          <li>Write the SQL statement to increase TRANGTHAI by 10 for suppliers in London.</li>
+          <li>Write the SQL statement to delete supplier S6.</li>
+        </ol>
       </section>
 
       <section class="lesson-section" id="dap-an">

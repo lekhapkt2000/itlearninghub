@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="IT004 - Lược đồ cơ sở dữ liệu Quản lý giáo vụ dùng cho BTTH4: các quan hệ, thuộc tính và dữ liệu mẫu.">
+  <meta name="description" content="IT004 - Lược đồ cơ sở dữ liệu Quản lý giáo vụ dùng cho BTTH4: Các quan hệ, thuộc tính và dữ liệu mẫu.">
   <title>Lược đồ Quản lý giáo vụ - IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
@@ -33,7 +33,7 @@
       <span class="week-tag">LƯỢC ĐỒ DÙNG CHUNG · IT004</span>
       <h1>Cơ sở dữ liệu Quản lý giáo vụ</h1>
       <div class="week-meta"><span>8 quan hệ</span><span>BTTH4</span></div>
-      <p style="max-width:720px;color:var(--muted);font-size:13px;margin-top:10px">Lược đồ quản lý lớp học, giáo viên, môn học và kết quả thi của một trung tâm đào tạo. Đọc kỹ phần tân từ và bảng thuộc tính trước khi làm bài - nắm đúng ý nghĩa dữ liệu giúp viết truy vấn chính xác hơn nhiều so với chỉ nhớ tên cột.</p>
+      <p style="max-width:720px;color:var(--muted);font-size:13px;margin-top:10px">Lược đồ quản lý lớp học, giáo viên, môn học và kết quả thi của một trung tâm đào tạo. Đọc kỹ phần tân từ và bảng thuộc tính trước khi làm bài - Nắm đúng ý nghĩa dữ liệu giúp viết truy vấn chính xác hơn nhiều so với chỉ nhớ tên cột.</p>
     </div>
 
     <div class="lesson-content" style="max-width:1000px;margin:0 auto">
@@ -68,11 +68,11 @@
         </div>
         <div class="schema-def">
           <p class="schema-def-head">GIANGDAY (<u>MALOP, MAMH</u>, MAGV, HOCKY, NAM, TUNGAY, DENNGAY)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Mỗi học kỳ của năm học sẽ phân công giảng dạy: lớp nào học môn gì do giáo viên nào phụ trách.</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Mỗi học kỳ của năm học sẽ phân công giảng dạy: Lớp nào học môn gì do giáo viên nào phụ trách.</p>
         </div>
         <div class="schema-def">
           <p class="schema-def-head">KETQUATHI (<u>MAHV, MAMH, LANTHI</u>, NGTHI, DIEM, KQUA)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ kết quả thi của học viên: học viên nào thi môn học gì, lần thi thứ mấy, ngày thi là ngày nào, điểm thi bao nhiêu và kết quả là đạt hay không đạt.</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ kết quả thi của học viên: Học viên nào thi môn học gì, lần thi thứ mấy, ngày thi là ngày nào, điểm thi bao nhiêu và kết quả là đạt hay không đạt.</p>
         </div>
 
         <h3>Sơ đồ quan hệ</h3>
@@ -129,16 +129,16 @@
         </div>
 
         <h3>Diễn giải quan hệ</h3>
-        <p class="er-relation">KHOA ➜ GIAOVIEN (qua <code>TRGKHOA</code>): mỗi khoa có 1 trưởng khoa, là một giáo viên.</p>
-        <p class="er-relation">GIAOVIEN ➜ KHOA (qua <code>MAKHOA</code>): mỗi giáo viên thuộc về 1 khoa duy nhất.</p>
-        <p class="er-relation">MONHOC ➜ KHOA (qua <code>MAKHOA</code>): mỗi môn học do 1 khoa phụ trách.</p>
-        <p class="er-relation">DIEUKIEN ➜ MONHOC (qua <code>MAMH</code> và <code>MAMH_TRUOC</code>): mỗi dòng điều kiện tiên quyết nối 2 môn học với nhau - môn học và môn phải học trước.</p>
-        <p class="er-relation">LOP ➜ HOCVIEN (qua <code>TRGLOP</code>): mỗi lớp có 1 lớp trưởng, là một học viên của chính lớp đó.</p>
-        <p class="er-relation">HOCVIEN ➜ LOP (qua <code>MALOP</code>): mỗi học viên thuộc về 1 lớp duy nhất.</p>
-        <p class="er-relation">LOP ➜ GIAOVIEN (qua <code>MAGVCN</code>): mỗi lớp có 1 giáo viên chủ nhiệm.</p>
-        <p class="er-relation">GIANGDAY ➜ LOP, MONHOC, GIAOVIEN: mỗi lượt phân công ghi rõ lớp nào học môn gì, do giáo viên nào dạy.</p>
-        <p class="er-relation">KETQUATHI ➜ HOCVIEN, MONHOC: mỗi kết quả thi gắn với 1 học viên và 1 môn học cụ thể.</p>
-        <div class="inline-warning"><strong>Lưu ý dễ nhầm:</strong> <code>KHOA.TRGKHOA</code> và <code>GIAOVIEN.MAKHOA</code> tham chiếu qua lại lẫn nhau (khoa có 1 trưởng khoa, giáo viên thuộc 1 khoa) - tương tự với <code>LOP.TRGLOP</code> và <code>HOCVIEN.MALOP</code>. Khoa <code>KTMT</code> trong dữ liệu mẫu chưa có trưởng khoa (<code>TRGKHOA</code> để <code>NULL</code>).</div>
+        <p class="er-relation">KHOA ➜ GIAOVIEN (qua <code>TRGKHOA</code>): Mỗi khoa có 1 trưởng khoa, là một giáo viên.</p>
+        <p class="er-relation">GIAOVIEN ➜ KHOA (qua <code>MAKHOA</code>): Mỗi giáo viên thuộc về 1 khoa duy nhất.</p>
+        <p class="er-relation">MONHOC ➜ KHOA (qua <code>MAKHOA</code>): Mỗi môn học do 1 khoa phụ trách.</p>
+        <p class="er-relation">DIEUKIEN ➜ MONHOC (qua <code>MAMH</code> và <code>MAMH_TRUOC</code>): Mỗi dòng điều kiện tiên quyết nối 2 môn học với nhau - Môn học và môn phải học trước.</p>
+        <p class="er-relation">LOP ➜ HOCVIEN (qua <code>TRGLOP</code>): Mỗi lớp có 1 lớp trưởng, là một học viên của chính lớp đó.</p>
+        <p class="er-relation">HOCVIEN ➜ LOP (qua <code>MALOP</code>): Mỗi học viên thuộc về 1 lớp duy nhất.</p>
+        <p class="er-relation">LOP ➜ GIAOVIEN (qua <code>MAGVCN</code>): Mỗi lớp có 1 giáo viên chủ nhiệm.</p>
+        <p class="er-relation">GIANGDAY ➜ LOP, MONHOC, GIAOVIEN: Mỗi lượt phân công ghi rõ lớp nào học môn gì, do giáo viên nào dạy.</p>
+        <p class="er-relation">KETQUATHI ➜ HOCVIEN, MONHOC: Mỗi kết quả thi gắn với 1 học viên và 1 môn học cụ thể.</p>
+        <div class="inline-warning"><strong>Lưu ý dễ nhầm:</strong> <code>KHOA.TRGKHOA</code> và <code>GIAOVIEN.MAKHOA</code> tham chiếu qua lại lẫn nhau (khoa có 1 trưởng khoa, giáo viên thuộc 1 khoa) - Tương tự với <code>LOP.TRGLOP</code> và <code>HOCVIEN.MALOP</code>. Khoa <code>KTMT</code> trong dữ liệu mẫu chưa có trưởng khoa (<code>TRGKHOA</code> để <code>NULL</code>).</div>
       </section>
 
       <section class="lesson-section" id="hocvien">
@@ -147,13 +147,13 @@
         <div class="definition">Mỗi học viên phân biệt với nhau bằng mã học viên, lưu trữ họ tên, ngày sinh, giới tính, nơi sinh và thuộc lớp nào.</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính</td></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - Khóa chính</td></tr>
           <tr><td><code>HO</code></td><td><code>varchar(40)</code></td><td>Họ và tên lót</td></tr>
           <tr><td><code>TEN</code></td><td><code>varchar(10)</code></td><td>Tên</td></tr>
           <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Ngày sinh</td></tr>
           <tr><td><code>GIOITINH</code></td><td><code>varchar(3)</code></td><td>Giới tính</td></tr>
           <tr><td><code>NOISINH</code></td><td><code>varchar(40)</code></td><td>Nơi sinh</td></tr>
-          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - khóa ngoại đến LOP</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - Khóa ngoại đến LOP</td></tr>
         </table></div>
         <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 35 học viên)</p>
         <div class="er-side-by-side">
@@ -207,11 +207,11 @@
         <div class="definition">Mỗi lớp gồm có mã lớp, tên lớp, học viên làm lớp trưởng của lớp, sỉ số lớp và giáo viên chủ nhiệm.</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - khóa chính</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - Khóa chính</td></tr>
           <tr><td><code>TENLOP</code></td><td><code>varchar(40)</code></td><td>Tên lớp</td></tr>
-          <tr><td><code>TRGLOP</code></td><td><code>char(5)</code></td><td>Lớp trưởng - khóa ngoại đến HOCVIEN</td></tr>
+          <tr><td><code>TRGLOP</code></td><td><code>char(5)</code></td><td>Lớp trưởng - Khóa ngoại đến HOCVIEN</td></tr>
           <tr><td><code>SISO</code></td><td><code>tinyint</code></td><td>Sỉ số lớp</td></tr>
-          <tr><td><code>MAGVCN</code></td><td><code>char(4)</code></td><td>Giáo viên chủ nhiệm - khóa ngoại đến GIAOVIEN</td></tr>
+          <tr><td><code>MAGVCN</code></td><td><code>char(4)</code></td><td>Giáo viên chủ nhiệm - Khóa ngoại đến GIAOVIEN</td></tr>
         </table></div>
         <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 3 lớp)</p>
         <div class="table-wrap"><table class="ref-table">
@@ -228,10 +228,10 @@
         <div class="definition">Mỗi khoa cần lưu trữ mã khoa, tên khoa, ngày thành lập khoa và trưởng khoa (cũng là một giáo viên thuộc khoa).</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Mã khoa - khóa chính</td></tr>
+          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Mã khoa - Khóa chính</td></tr>
           <tr><td><code>TENKHOA</code></td><td><code>varchar(40)</code></td><td>Tên khoa</td></tr>
           <tr><td><code>NGTLAP</code></td><td><code>smalldatetime</code></td><td>Ngày thành lập khoa</td></tr>
-          <tr><td><code>TRGKHOA</code></td><td><code>char(4)</code></td><td>Trưởng khoa - khóa ngoại đến GIAOVIEN, <strong>có thể NULL</strong></td></tr>
+          <tr><td><code>TRGKHOA</code></td><td><code>char(4)</code></td><td>Trưởng khoa - Khóa ngoại đến GIAOVIEN, <strong>có thể NULL</strong></td></tr>
         </table></div>
         <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 5 khoa)</p>
         <div class="table-wrap"><table class="ref-table">
@@ -250,11 +250,11 @@
         <div class="definition">Mỗi môn học cần lưu trữ tên môn học, số tín chỉ lý thuyết, số tín chỉ thực hành và khoa nào phụ trách.</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính</td></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - Khóa chính</td></tr>
           <tr><td><code>TENMH</code></td><td><code>varchar(40)</code></td><td>Tên môn học</td></tr>
           <tr><td><code>TCLT</code></td><td><code>tinyint</code></td><td>Số tín chỉ lý thuyết</td></tr>
           <tr><td><code>TCTH</code></td><td><code>tinyint</code></td><td>Số tín chỉ thực hành</td></tr>
-          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Môn học thuộc khoa nào - khóa ngoại đến KHOA</td></tr>
+          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Môn học thuộc khoa nào - Khóa ngoại đến KHOA</td></tr>
         </table></div>
         <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 13 môn học)</p>
         <div class="table-wrap"><table class="ref-table">
@@ -281,8 +281,8 @@
         <div class="definition">Có những môn học học viên phải có kiến thức từ một số môn học trước. Khóa chính là cặp <code>(MAMH, MAMH_TRUOC)</code>.</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính, khóa ngoại đến MONHOC</td></tr>
-          <tr><td><code>MAMH_TRUOC</code></td><td><code>char(10)</code></td><td>Mã môn học phải học trước - khóa chính, khóa ngoại đến MONHOC</td></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - Khóa chính, khóa ngoại đến MONHOC</td></tr>
+          <tr><td><code>MAMH_TRUOC</code></td><td><code>char(10)</code></td><td>Mã môn học phải học trước - Khóa chính, khóa ngoại đến MONHOC</td></tr>
         </table></div>
         <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 8 dòng)</p>
         <div class="table-wrap"><table class="ref-table">
@@ -304,7 +304,7 @@
         <div class="definition">Mã giáo viên để phân biệt giữa các giáo viên, cần lưu trữ họ tên, học vị, học hàm, giới tính, ngày sinh, ngày vào làm, hệ số, mức lương và thuộc một khoa.</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAGV</code></td><td><code>char(4)</code></td><td>Mã giáo viên - khóa chính</td></tr>
+          <tr><td><code>MAGV</code></td><td><code>char(4)</code></td><td>Mã giáo viên - Khóa chính</td></tr>
           <tr><td><code>HOTEN</code></td><td><code>varchar(40)</code></td><td>Họ tên</td></tr>
           <tr><td><code>HOCVI</code></td><td><code>varchar(10)</code></td><td>Học vị (CN, KS, ThS, TS, PTS...)</td></tr>
           <tr><td><code>HOCHAM</code></td><td><code>varchar(10)</code></td><td>Học hàm (GV, PGS, GS...), <strong>có thể NULL</strong></td></tr>
@@ -313,7 +313,7 @@
           <tr><td><code>NGVL</code></td><td><code>smalldatetime</code></td><td>Ngày vào làm việc</td></tr>
           <tr><td><code>HESO</code></td><td><code>numeric(4,2)</code></td><td>Hệ số lương</td></tr>
           <tr><td><code>MUCLUONG</code></td><td><code>money</code></td><td>Mức lương</td></tr>
-          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Thuộc khoa nào - khóa ngoại đến KHOA</td></tr>
+          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Thuộc khoa nào - Khóa ngoại đến KHOA</td></tr>
         </table></div>
         <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 15 giáo viên)</p>
         <div class="table-wrap"><table class="ref-table">
@@ -339,12 +339,12 @@
       <section class="lesson-section" id="giangday">
         <p class="eyebrow">QUAN HỆ 7 · GIANGDAY</p>
         <h2>GIANGDAY</h2>
-        <div class="definition">Mỗi học kỳ của năm học sẽ phân công giảng dạy: lớp nào học môn gì do giáo viên nào phụ trách. Khóa chính là cặp <code>(MALOP, MAMH)</code>.</div>
+        <div class="definition">Mỗi học kỳ của năm học sẽ phân công giảng dạy: Lớp nào học môn gì do giáo viên nào phụ trách. Khóa chính là cặp <code>(MALOP, MAMH)</code>.</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - khóa chính, khóa ngoại đến LOP</td></tr>
-          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính, khóa ngoại đến MONHOC</td></tr>
-          <tr><td><code>MAGV</code></td><td><code>char(4)</code></td><td>Giáo viên phụ trách - khóa ngoại đến GIAOVIEN</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - Khóa chính, khóa ngoại đến LOP</td></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - Khóa chính, khóa ngoại đến MONHOC</td></tr>
+          <tr><td><code>MAGV</code></td><td><code>char(4)</code></td><td>Giáo viên phụ trách - Khóa ngoại đến GIAOVIEN</td></tr>
           <tr><td><code>HOCKY</code></td><td><code>tinyint</code></td><td>Học kỳ</td></tr>
           <tr><td><code>NAM</code></td><td><code>smallint</code></td><td>Năm học</td></tr>
           <tr><td><code>TUNGAY</code></td><td><code>smalldatetime</code></td><td>Ngày bắt đầu môn học</td></tr>
@@ -375,12 +375,12 @@
       <section class="lesson-section" id="ketquathi">
         <p class="eyebrow">QUAN HỆ 8 · KETQUATHI</p>
         <h2>KETQUATHI</h2>
-        <div class="definition">Lưu trữ kết quả thi của học viên: học viên nào thi môn học gì, lần thi thứ mấy, ngày thi là ngày nào, điểm thi bao nhiêu và kết quả là đạt hay không đạt. Khóa chính là bộ ba <code>(MAHV, MAMH, LANTHI)</code>.</div>
+        <div class="definition">Lưu trữ kết quả thi của học viên: Học viên nào thi môn học gì, lần thi thứ mấy, ngày thi là ngày nào, điểm thi bao nhiêu và kết quả là đạt hay không đạt. Khóa chính là bộ ba <code>(MAHV, MAMH, LANTHI)</code>.</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính, khóa ngoại đến HOCVIEN</td></tr>
-          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính, khóa ngoại đến MONHOC</td></tr>
-          <tr><td><code>LANTHI</code></td><td><code>tinyint</code></td><td>Lần thi - khóa chính</td></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - Khóa chính, khóa ngoại đến HOCVIEN</td></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - Khóa chính, khóa ngoại đến MONHOC</td></tr>
+          <tr><td><code>LANTHI</code></td><td><code>tinyint</code></td><td>Lần thi - Khóa chính</td></tr>
           <tr><td><code>NGTHI</code></td><td><code>smalldatetime</code></td><td>Ngày thi</td></tr>
           <tr><td><code>DIEM</code></td><td><code>numeric(4,2)</code></td><td>Điểm thi</td></tr>
           <tr><td><code>KQUA</code></td><td><code>varchar(10)</code></td><td>Kết quả thi (Dat / Khong Dat)</td></tr>

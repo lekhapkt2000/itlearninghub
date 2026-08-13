@@ -89,7 +89,7 @@
         <section class="lesson-section" id="liquidity-pool">
           <p class="eyebrow">02 · PHẦN B - LIQUIDITY POOL</p>
           <h2>Liquidity Pool</h2>
-          <p>Thay vì chuyển trực tiếp giữa hai bên, DeFi có thể sử dụng một Pool chung: nhiều <strong>Liquidity Provider (LP)</strong> gửi tài sản vào Pool, người vay có thể vay từ Pool theo quy tắc của Smart Contract.</p>
+          <p>Thay vì chuyển trực tiếp giữa hai bên, DeFi có thể sử dụng một Pool chung: Nhiều <strong>Liquidity Provider (LP)</strong> gửi tài sản vào Pool, người vay có thể vay từ Pool theo quy tắc của Smart Contract.</p>
           <div class="flow-diagram">
             <span class="flow-box">Alice, Bob, Carol (LP)</span>
             <span class="flow-arrow">↓ Deposit</span>
@@ -164,7 +164,7 @@
         <section class="lesson-section" id="esg-lending">
           <p class="eyebrow">07 · ESG-BASED LENDING &amp; ORACLE</p>
           <h2>ESG-based Lending, tự động hóa &amp; vấn đề Oracle</h2>
-          <p>Ý tưởng: doanh nghiệp có ESG Score tốt được hưởng điều kiện vay tốt hơn. Đây chỉ là <strong>quy tắc mô phỏng cho bài thực hành</strong>, không phải khung định giá tín dụng thực tế:</p>
+          <p>Ý tưởng: Doanh nghiệp có ESG Score tốt được hưởng điều kiện vay tốt hơn. Đây chỉ là <strong>quy tắc mô phỏng cho bài thực hành</strong>, không phải khung định giá tín dụng thực tế:</p>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>ESG Score</th><th>Lãi suất</th></tr>
             <tr><td>90-100</td><td>5%</td></tr>
@@ -542,6 +542,16 @@ def test_liquidate_loan_rejects_when_ratio_still_safe(green_lending, admin, borr
           <ul class="resource-list">
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">CHÚ THÍCH MÀU</span>
+          <ul class="color-legend-list">
+            <li><span class="color-legend-dot is-blue"></span> Xanh dương - Định nghĩa, khái niệm</li>
+            <li><span class="color-legend-dot is-green"></span> Xanh lá - Khuyến nghị, cách làm đúng</li>
+            <li><span class="color-legend-dot is-yellow"></span> Vàng - Lưu ý, lỗi dễ gặp</li>
+            <li><span class="color-legend-dot is-red"></span> Đỏ - Cảnh báo, không thể hoàn tác</li>
+            <li><span class="color-legend-dot is-black"></span> Đen - Code SQL để chạy</li>
           </ul>
         </div>
         <div class="panel-box note-box">

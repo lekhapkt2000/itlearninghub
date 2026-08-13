@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="IT004 Tuần 1 - Bài tập thực hành 1 (BTTH1): đề bài, file đính kèm và đáp án chi tiết dành cho sinh viên đang học lớp thực hành.">
+  <meta name="description" content="IT004 Tuần 1 - Bài tập thực hành 1 (BTTH1): Đề bài, file đính kèm và đáp án chi tiết dành cho sinh viên đang học lớp thực hành.">
   <title>Bài tập · Tuần 1 - IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
@@ -48,11 +48,11 @@
 
         <div class="schema-def">
           <p class="schema-def-head">PHONGTAP (<u>MAPH</u>, TENPHONG, DIACHI, SUCCHUA, TRANGTHAI)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin phòng tập: mã phòng, tên phòng, địa chỉ, sức chứa tối đa (số người) và trạng thái phòng (hoạt động, bảo trì, đóng cửa…).</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin phòng tập: Mã phòng, tên phòng, địa chỉ, sức chứa tối đa (số người) và trạng thái phòng (hoạt động, bảo trì, đóng cửa…).</p>
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAPH</code></td><td><code>char(5)</code></td><td>Mã phòng tập - khóa chính</td></tr>
+          <tr><td><code>MAPH</code></td><td><code>char(5)</code></td><td>Mã phòng tập - Khóa chính</td></tr>
           <tr><td><code>TENPHONG</code></td><td><code>varchar(50)</code></td><td>Tên phòng tập</td></tr>
           <tr><td><code>DIACHI</code></td><td><code>varchar(100)</code></td><td>Địa chỉ phòng tập</td></tr>
           <tr><td><code>SUCCHUA</code></td><td><code>int</code></td><td>Sức chứa tối đa (số người)</td></tr>
@@ -61,11 +61,11 @@
 
         <div class="schema-def">
           <p class="schema-def-head">HUANLUYENVIEN (<u>MAHLV</u>, HOTEN, CHUYENMON, SDT, EMAIL)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin huấn luyện viên: mã huấn luyện viên, họ tên, chuyên môn (Yoga, Gym,...), số điện thoại và email liên lạc.</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin huấn luyện viên: Mã huấn luyện viên, họ tên, chuyên môn (Yoga, Gym,...), số điện thoại và email liên lạc.</p>
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAHLV</code></td><td><code>char(5)</code></td><td>Mã huấn luyện viên - khóa chính</td></tr>
+          <tr><td><code>MAHLV</code></td><td><code>char(5)</code></td><td>Mã huấn luyện viên - Khóa chính</td></tr>
           <tr><td><code>HOTEN</code></td><td><code>varchar(50)</code></td><td>Họ tên</td></tr>
           <tr><td><code>CHUYENMON</code></td><td><code>varchar(50)</code></td><td>Chuyên môn (Yoga, Gym,...)</td></tr>
           <tr><td><code>SDT</code></td><td><code>varchar(15)</code></td><td>Số điện thoại</td></tr>
@@ -74,11 +74,11 @@
 
         <div class="schema-def">
           <p class="schema-def-head">HOCVIEN (<u>MAHV</u>, HOTEN, NGSINH, SDT, DIACHI, GIOITINH, NGTG)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin học viên: mã học viên, họ tên, ngày sinh, số điện thoại, địa chỉ, giới tính (Nam, Nữ) và ngày bắt đầu tham gia là học viên.</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin học viên: Mã học viên, họ tên, ngày sinh, số điện thoại, địa chỉ, giới tính (Nam, Nữ) và ngày bắt đầu tham gia là học viên.</p>
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính</td></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - Khóa chính</td></tr>
           <tr><td><code>HOTEN</code></td><td><code>varchar(50)</code></td><td>Họ tên</td></tr>
           <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Ngày sinh</td></tr>
           <tr><td><code>SDT</code></td><td><code>varchar(15)</code></td><td>Số điện thoại</td></tr>
@@ -89,13 +89,13 @@
 
         <div class="schema-def">
           <p class="schema-def-head">LOPTAP (<u>MALOP</u>, MAPH, MAHLV, TENLOP, NGAYBD, NGAYKT, TRANGTHAI)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin lớp tập: mã lớp, phòng tập diễn ra, huấn luyện viên phụ trách, tên lớp, ngày bắt đầu, ngày kết thúc và trạng thái lớp (đang hoạt động, đã kết thúc, tạm dừng…).</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ thông tin lớp tập: Mã lớp, phòng tập diễn ra, huấn luyện viên phụ trách, tên lớp, ngày bắt đầu, ngày kết thúc và trạng thái lớp (đang hoạt động, đã kết thúc, tạm dừng…).</p>
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính</td></tr>
-          <tr><td><code>MAPH</code></td><td><code>char(5)</code></td><td>Mã phòng tập - khóa ngoại đến PHONGTAP</td></tr>
-          <tr><td><code>MAHLV</code></td><td><code>char(5)</code></td><td>Mã huấn luyện viên - khóa ngoại đến HUANLUYENVIEN</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - Khóa chính</td></tr>
+          <tr><td><code>MAPH</code></td><td><code>char(5)</code></td><td>Mã phòng tập - Khóa ngoại đến PHONGTAP</td></tr>
+          <tr><td><code>MAHLV</code></td><td><code>char(5)</code></td><td>Mã huấn luyện viên - Khóa ngoại đến HUANLUYENVIEN</td></tr>
           <tr><td><code>TENLOP</code></td><td><code>varchar(50)</code></td><td>Tên lớp tập</td></tr>
           <tr><td><code>NGAYBD</code></td><td><code>smalldatetime</code></td><td>Ngày bắt đầu lớp tập</td></tr>
           <tr><td><code>NGAYKT</code></td><td><code>smalldatetime</code></td><td>Ngày kết thúc lớp tập</td></tr>
@@ -104,23 +104,23 @@
 
         <div class="schema-def">
           <p class="schema-def-head">DANGKY (<u>MAHV, MALOP</u>, NGAYDK)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Chi tiết đăng ký: học viên nào đăng ký lớp tập nào, vào ngày nào.</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Chi tiết đăng ký: Học viên nào đăng ký lớp tập nào, vào ngày nào.</p>
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính, khóa ngoại đến HOCVIEN</td></tr>
-          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính, khóa ngoại đến LOPTAP</td></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - Khóa chính, khóa ngoại đến HOCVIEN</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - Khóa chính, khóa ngoại đến LOPTAP</td></tr>
           <tr><td><code>NGAYDK</code></td><td><code>smalldatetime</code></td><td>Ngày đăng ký</td></tr>
         </table></div>
 
         <div class="schema-def">
           <p class="schema-def-head">LICHTAP (<u>MALOP, NGAYTAP</u>, GIOBATDAU, GIOKETTHUC)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ lịch tập của từng lớp: ngày diễn ra buổi tập, giờ bắt đầu và giờ kết thúc.</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ lịch tập của từng lớp: Ngày diễn ra buổi tập, giờ bắt đầu và giờ kết thúc.</p>
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - khóa chính, khóa ngoại đến LOPTAP</td></tr>
-          <tr><td><code>NGAYTAP</code></td><td><code>smalldatetime</code></td><td>Ngày diễn ra buổi tập - khóa chính</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - Khóa chính, khóa ngoại đến LOPTAP</td></tr>
+          <tr><td><code>NGAYTAP</code></td><td><code>smalldatetime</code></td><td>Ngày diễn ra buổi tập - Khóa chính</td></tr>
           <tr><td><code>GIOBATDAU</code></td><td><code>time</code></td><td>Giờ bắt đầu buổi tập</td></tr>
           <tr><td><code>GIOKETTHUC</code></td><td><code>time</code></td><td>Giờ kết thúc buổi tập</td></tr>
         </table></div>
@@ -194,7 +194,7 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 1.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án đầy đủ cho Yêu cầu 1 (3 câu) và Yêu cầu 2 (10 câu Phần I, 4 câu Phần II). Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - nút Copy ở đây chỉ mang tính hình thức thôi.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án đầy đủ cho Yêu cầu 1 (3 câu) và Yêu cầu 2 (10 câu Phần I, 4 câu Phần II). Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - Nút Copy ở đây chỉ mang tính hình thức thôi.</p>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 1 (YC1) · CREATE DATABASE</p>
@@ -263,8 +263,8 @@ CREATE TABLE LICHTAP
     PRIMARY KEY (MALOP, NGAYTAP)
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CREATE DATABASE</code> tạo 1 CSDL rỗng, sau đó phải <code>USE</code> để chuyển ngữ cảnh làm việc sang CSDL đó trước khi tạo bảng. Khóa chính được khai báo ngay lúc tạo bảng: khóa đơn dùng <code>PRIMARY KEY</code> ngay sau cột, khóa phức hợp (<code>DANGKY</code>, <code>LICHTAP</code>) dùng dòng <code>PRIMARY KEY (...)</code> riêng ở cuối.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khóa chính là ràng buộc nội tại của chính bảng đó nên khai báo ngay khi tạo bảng là hợp lý nhất. Khóa ngoại thì khác - nó tham chiếu sang bảng khác, nên phải đợi bảng được tham chiếu tồn tại trước, do đó để dành sang Câu 2.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CREATE DATABASE</code> tạo 1 CSDL rỗng, sau đó phải <code>USE</code> để chuyển ngữ cảnh làm việc sang CSDL đó trước khi tạo bảng. Khóa chính được khai báo ngay lúc tạo bảng: Khóa đơn dùng <code>PRIMARY KEY</code> ngay sau cột, khóa phức hợp (<code>DANGKY</code>, <code>LICHTAP</code>) dùng dòng <code>PRIMARY KEY (...)</code> riêng ở cuối.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khóa chính là ràng buộc nội tại của chính bảng đó nên khai báo ngay khi tạo bảng là hợp lý nhất. Khóa ngoại thì khác - Nó tham chiếu sang bảng khác, nên phải đợi bảng được tham chiếu tồn tại trước, do đó để dành sang Câu 2.</p></div>
               </div>
             </div>
 
@@ -283,7 +283,7 @@ ALTER TABLE LICHTAP ADD CONSTRAINT FK_LICHTAP_LOPTAP
     FOREIGN KEY (MALOP) REFERENCES LOPTAP(MALOP);</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Khóa chính đã được tạo sẵn ở Câu 1, nên Câu 2 chỉ còn thêm khóa ngoại bằng <code>ALTER TABLE ... ADD CONSTRAINT ... FOREIGN KEY (...) REFERENCES ...(...)</code> cho từng cặp bảng có liên kết.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>LOPTAP</code> phải đã tồn tại (với khóa chính <code>MAPH</code> ở <code>PHONGTAP</code>, <code>MAHLV</code> ở <code>HUANLUYENVIEN</code>) trước khi tạo được khóa ngoại trỏ tới nó - đây chính là lý do khóa ngoại luôn phải đợi đến sau khi các bảng liên quan đã hình thành xong.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>LOPTAP</code> phải đã tồn tại (với khóa chính <code>MAPH</code> ở <code>PHONGTAP</code>, <code>MAHLV</code> ở <code>HUANLUYENVIEN</code>) trước khi tạo được khóa ngoại trỏ tới nó - Đây chính là lý do khóa ngoại luôn phải đợi đến sau khi các bảng liên quan đã hình thành xong.</p></div>
               </div>
             </div>
 
@@ -300,7 +300,7 @@ VALUES
 -- mẫu đầy đủ trong file PDF đính kèm ở phần Đề bài.</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>INSERT INTO ... VALUES (...)</code> thêm từng dòng dữ liệu vào bảng; nhiều dòng có thể gộp trong 1 câu lệnh bằng cách liệt kê nhiều nhóm giá trị, ngăn cách bởi dấu phẩy.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải nhập <code>PHONGTAP</code> và <code>HUANLUYENVIEN</code> trước <code>LOPTAP</code>, và <code>LOPTAP</code> trước <code>DANGKY</code>/<code>LICHTAP</code> - vì khóa ngoại đã tạo ở Câu 2 sẽ chặn <code>INSERT</code> nếu dòng cha (phòng, huấn luyện viên, lớp) chưa tồn tại.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải nhập <code>PHONGTAP</code> và <code>HUANLUYENVIEN</code> trước <code>LOPTAP</code>, và <code>LOPTAP</code> trước <code>DANGKY</code>/<code>LICHTAP</code> - Vì khóa ngoại đã tạo ở Câu 2 sẽ chặn <code>INSERT</code> nếu dòng cha (phòng, huấn luyện viên, lớp) chưa tồn tại.</p></div>
               </div>
             </div>
 
@@ -310,7 +310,7 @@ VALUES
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD GHICHU VARCHAR(20);</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>ALTER TABLE ... ADD</code> thêm 1 cột mới vào bảng đã tồn tại; các dòng dữ liệu cũ sẽ nhận giá trị <code>NULL</code> ở cột mới này.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>SANPHAM</code> đã có dữ liệu từ trước, không thể <code>CREATE TABLE</code> lại - phải dùng <code>ALTER TABLE</code> để bổ sung cột mà không mất dữ liệu hiện có.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>SANPHAM</code> đã có dữ liệu từ trước, không thể <code>CREATE TABLE</code> lại - Phải dùng <code>ALTER TABLE</code> để bổ sung cột mà không mất dữ liệu hiện có.</p></div>
               </div>
             </div>
 
@@ -320,7 +320,7 @@ VALUES
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD LOAIKH TINYINT;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>TINYINT</code> lưu số nguyên nhỏ (0-255), phù hợp khi <code>LOAIKH</code> chỉ cần vài mã số cố định.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề chỉ yêu cầu thêm cột, chưa yêu cầu ràng buộc giá trị - việc giới hạn <code>LOAIKH</code> chỉ được lưu vài nhãn cụ thể sẽ làm ở Câu 5.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề chỉ yêu cầu thêm cột, chưa yêu cầu ràng buộc giá trị - Việc giới hạn <code>LOAIKH</code> chỉ được lưu vài nhãn cụ thể sẽ làm ở Câu 5.</p></div>
               </div>
             </div>
 
@@ -353,7 +353,7 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
     CHECK (LOAIKH IN (N'Vang lai', N'Thuong xuyen', N'Vip'));</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LOAIKH</code> cần lưu chuỗi ký tự ("Vang lai", "Thuong xuyen", "Vip") nên phải đổi kiểu dữ liệu từ <code>TINYINT</code> (ở Câu 2) sang <code>VARCHAR</code>, sau đó thêm <code>CHECK ... IN (...)</code> để chỉ chấp nhận đúng 3 giá trị này.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>CHECK</code> là cách chuẩn để giới hạn miền giá trị của 1 cột ngay tại CSDL - dù ứng dụng có lỗi và cố ghi giá trị khác, CSDL vẫn từ chối câu lệnh.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>CHECK</code> là cách chuẩn để giới hạn miền giá trị của 1 cột ngay tại CSDL - Dù ứng dụng có lỗi và cố ghi giá trị khác, CSDL vẫn từ chối câu lệnh.</p></div>
               </div>
             </div>
 
@@ -364,7 +364,7 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
     CHECK (DVT IN (N'cay', N'hop', N'cai', N'quyen', N'chuc'));</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cùng kỹ thuật <code>CHECK ... IN</code> như Câu 5, áp dụng cho cột <code>DVT</code> (đơn vị tính) của <code>SANPHAM</code>.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đơn vị tính là dữ liệu dạng danh mục cố định, không phải nhập tự do - ràng buộc bằng danh sách giá trị hợp lệ giúp tránh nhập sai chính tả.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đơn vị tính là dữ liệu dạng danh mục cố định, không phải nhập tự do - Ràng buộc bằng danh sách giá trị hợp lệ giúp tránh nhập sai chính tả.</p></div>
               </div>
             </div>
 
@@ -393,8 +393,8 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
               <p><strong>Đề bài:</strong> Mỗi lần mua hàng, khách hàng phải mua ít nhất 1 sản phẩm.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE CTHD ADD CONSTRAINT CK_CTHD_SL CHECK (SL >= 1);</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Ràng buộc đặt trên cột <code>SL</code> (số lượng) của <code>CTHD</code> - mỗi dòng chi tiết hóa đơn phải có số lượng mua từ 1 trở lên.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Mua ít nhất 1 sản phẩm" thực chất là ràng buộc số lượng của từng dòng <code>CTHD</code>, không phải trên <code>HOADON</code> - vì <code>HOADON</code> không lưu trực tiếp thông tin sản phẩm.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Ràng buộc đặt trên cột <code>SL</code> (số lượng) của <code>CTHD</code> - Mỗi dòng chi tiết hóa đơn phải có số lượng mua từ 1 trở lên.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Mua ít nhất 1 sản phẩm" thực chất là ràng buộc số lượng của từng dòng <code>CTHD</code>, không phải trên <code>HOADON</code> - Vì <code>HOADON</code> không lưu trực tiếp thông tin sản phẩm.</p></div>
               </div>
             </div>
 
@@ -404,7 +404,7 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_NGDK CHECK (NGDK > NGSINH);</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CHECK</code> có thể so sánh 2 cột trong cùng 1 bảng với nhau, không chỉ so sánh với 1 giá trị cố định.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Về mặt logic, 1 người không thể đăng ký làm thành viên trước khi họ được sinh ra - ràng buộc này giữ dữ liệu luôn hợp lý theo đúng ý nghĩa thực tế.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Về mặt logic, 1 người không thể đăng ký làm thành viên trước khi họ được sinh ra - Ràng buộc này giữ dữ liệu luôn hợp lý theo đúng ý nghĩa thực tế.</p></div>
               </div>
             </div>
 
@@ -415,7 +415,7 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
 SELECT * INTO KHACHHANG1 FROM KHACHHANG;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>SELECT * INTO &lt;bảng mới&gt; FROM &lt;bảng nguồn&gt;</code> vừa tạo bảng mới vừa sao chép toàn bộ dữ liệu, không cần <code>CREATE TABLE</code> riêng.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Các câu sau đều là <code>UPDATE</code> có thể làm sai lệch dữ liệu gốc - tạo bản sao trước giúp thao tác thử nghiệm trên <code>SANPHAM1</code>/<code>KHACHHANG1</code> mà không ảnh hưởng đến <code>SANPHAM</code>/<code>KHACHHANG</code> thật.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Các câu sau đều là <code>UPDATE</code> có thể làm sai lệch dữ liệu gốc - Tạo bản sao trước giúp thao tác thử nghiệm trên <code>SANPHAM1</code>/<code>KHACHHANG1</code> mà không ảnh hưởng đến <code>SANPHAM</code>/<code>KHACHHANG</code> thật.</p></div>
               </div>
             </div>
 
@@ -427,7 +427,7 @@ SET GIA = GIA * 1.05
 WHERE NUOCSX = N'Thai Lan';</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GIA * 1.05</code> nghĩa là giữ nguyên 100% giá cũ và cộng thêm 5%, tương đương tăng 5%.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không dùng <code>GIA = GIA + 5</code> vì 5% không phải 1 con số cố định mà phụ thuộc vào giá của từng sản phẩm - phải nhân với hệ số 1.05 để tỷ lệ tăng đúng cho mọi mức giá khác nhau.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không dùng <code>GIA = GIA + 5</code> vì 5% không phải 1 con số cố định mà phụ thuộc vào giá của từng sản phẩm - Phải nhân với hệ số 1.05 để tỷ lệ tăng đúng cho mọi mức giá khác nhau.</p></div>
               </div>
             </div>
 
@@ -439,7 +439,7 @@ SET GIA = GIA * 0.95
 WHERE NUOCSX = N'Trung Quoc' AND GIA <= 10000;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GIA * 0.95</code> tương đương giảm 5% (giữ lại 95% giá cũ); mệnh đề <code>WHERE</code> kết hợp 2 điều kiện bằng <code>AND</code>.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải lọc đúng 2 điều kiện cùng lúc (nước sản xuất và mức giá) - thiếu 1 trong 2 sẽ giảm giá nhầm cả những sản phẩm không thuộc diện áp dụng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải lọc đúng 2 điều kiện cùng lúc (nước sản xuất và mức giá) - Thiếu 1 trong 2 sẽ giảm giá nhầm cả những sản phẩm không thuộc diện áp dụng.</p></div>
               </div>
             </div>
 
@@ -451,8 +451,8 @@ SET LOAIKH = N'Vip'
 WHERE (NGDK < '1/1/2007' AND DOANHSO >= 10000000)
    OR (NGDK >= '1/1/2007' AND DOANHSO >= 2000000);</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Điều kiện gồm 2 nhóm độc lập nối bằng <code>OR</code>, mỗi nhóm lại gồm 2 điều kiện nối bằng <code>AND</code> - dùng dấu ngoặc để phân nhóm rõ ràng, tránh sai thứ tự ưu tiên <code>AND</code>/<code>OR</code>.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Ngưỡng doanh số để đạt Vip khác nhau tùy thời điểm đăng ký (10 triệu nếu đăng ký trước 1/1/2007, chỉ cần 2 triệu nếu đăng ký từ 1/1/2007 trở đi) - phải tách 2 trường hợp bằng <code>OR</code> thay vì gộp chung 1 điều kiện.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Điều kiện gồm 2 nhóm độc lập nối bằng <code>OR</code>, mỗi nhóm lại gồm 2 điều kiện nối bằng <code>AND</code> - Dùng dấu ngoặc để phân nhóm rõ ràng, tránh sai thứ tự ưu tiên <code>AND</code>/<code>OR</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Ngưỡng doanh số để đạt Vip khác nhau tùy thời điểm đăng ký (10 triệu nếu đăng ký trước 1/1/2007, chỉ cần 2 triệu nếu đăng ký từ 1/1/2007 trở đi) - Phải tách 2 trường hợp bằng <code>OR</code> thay vì gộp chung 1 điều kiện.</p></div>
               </div>
             </div>
 

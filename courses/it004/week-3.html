@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IT004 Tuần 3 - Truy vấn nâng cao: phép chia, gom nhóm và kết ngoài trong SQL Server.">
+  <meta name="description" content="IT004 Tuần 3 - Truy vấn nâng cao: Phép chia, gom nhóm và kết ngoài trong SQL Server.">
   <title>Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
@@ -150,7 +150,7 @@ HAVING COUNT(DISTINCT MH.MaSP) =
           <p><strong>Bước 2</strong> - Gom theo từng khách hàng bằng <code>GROUP BY KH.MaKH</code>: <code>KH01 ➜ SP01,SP02,SP03</code>, <code>KH02 ➜ SP01,SP02</code>, <code>KH03 ➜ SP01,SP03</code>.</p>
           <p><strong>Bước 3</strong> - Đếm số sản phẩm khác nhau đã mua bằng <code>COUNT(DISTINCT MH.MaSP)</code>: <code>KH01 ➜ 3</code>, <code>KH02 ➜ 2</code>, <code>KH03 ➜ 2</code>.</p>
           <p><strong>Bước 4</strong> - Đếm tổng số sản phẩm: <code>SELECT COUNT(*) FROM SanPham</code> ➜ <code>3</code>.</p>
-          <p><strong>Bước 5</strong> - So sánh: số SP khách hàng đã mua = tổng số SP tồn tại ➜ khách hàng đã mua <strong>tất cả</strong>.</p>
+          <p><strong>Bước 5</strong> - So sánh: Số SP khách hàng đã mua = tổng số SP tồn tại ➜ Khách hàng đã mua <strong>tất cả</strong>.</p>
 
           <h3>Ví dụ 2 - Sinh viên đăng ký tất cả môn bắt buộc</h3>
           <p>Bảng: <code>SinhVien(MaSV, TenSV)</code>, <code>MonHoc(MaMH, TenMH)</code>, <code>DangKy(MaSV, MaMH)</code>.</p>
@@ -164,7 +164,7 @@ HAVING COUNT(DISTINCT DK.MaMH) =
     SELECT COUNT(*)
     FROM MonHoc
 );</code></pre></div>
-          <p>Sinh viên A đăng ký 5 môn, tổng môn bắt buộc = 5 ➜ đạt. Sinh viên B đăng ký 4 môn, tổng môn bắt buộc = 5 ➜ không đạt.</p>
+          <p>Sinh viên A đăng ký 5 môn, tổng môn bắt buộc = 5 ➜ Đạt. Sinh viên B đăng ký 4 môn, tổng môn bắt buộc = 5 ➜ Không đạt.</p>
 
           <h3>Ví dụ 3 - Nhân viên tham gia tất cả dự án</h3>
           <p>Bảng: <code>NhanVien(MaNV, TenNV)</code>, <code>DuAn(MaDA, TenDA)</code>, <code>ThamGia(MaNV, MaDA)</code>.</p>
@@ -286,7 +286,7 @@ WHERE NOT EXISTS
 );</code></pre></div>
 
           <h4>Đọc câu SQL bằng tiếng Việt</h4>
-          <p>Đừng đọc SQL theo từng dòng. Hãy đọc: "Lấy những khách hàng <strong>mà không tồn tại sản phẩm điện tử nào</strong> <strong>mà khách hàng đó chưa mua</strong>." Nếu không có sản phẩm nào như vậy ➜ khách hàng đã mua <strong>tất cả</strong>.</p>
+          <p>Đừng đọc SQL theo từng dòng. Hãy đọc: "Lấy những khách hàng <strong>mà không tồn tại sản phẩm điện tử nào</strong> <strong>mà khách hàng đó chưa mua</strong>." Nếu không có sản phẩm nào như vậy ➜ Khách hàng đã mua <strong>tất cả</strong>.</p>
 
           <h3>Ví dụ sinh viên</h3>
           <p>Đề bài: "Tìm sinh viên đã đăng ký tất cả môn học bắt buộc có số tín chỉ > 3."</p>
@@ -313,7 +313,7 @@ WHERE NOT EXISTS
             <tr><td>Phép chia có điều kiện</td><td><code>WHERE</code> + <code>GROUP BY</code> + <code>HAVING COUNT</code></td></tr>
             <tr><td>Phép chia NOT EXISTS</td><td>Hai lớp <code>NOT EXISTS</code> lồng nhau</td></tr>
           </table></div>
-          <div class="inline-warning">Lỗi hay gặp: quên viết đủ <strong>hai lớp phủ định</strong>. Chỉ viết một lớp <code>NOT EXISTS</code> mà thiếu lớp bên trong sẽ cho ra kết quả sai hoàn toàn - Luôn kiểm tra lại theo đúng mẫu "không tồn tại A mà chưa có B", gồm đúng hai <code>NOT EXISTS</code> lồng nhau như cấu trúc ở trên.</div>
+          <div class="inline-warning">Lỗi hay gặp: Quên viết đủ <strong>hai lớp phủ định</strong>. Chỉ viết một lớp <code>NOT EXISTS</code> mà thiếu lớp bên trong sẽ cho ra kết quả sai hoàn toàn - Luôn kiểm tra lại theo đúng mẫu "không tồn tại A mà chưa có B", gồm đúng hai <code>NOT EXISTS</code> lồng nhau như cấu trúc ở trên.</div>
         </section>
 
         <!-- 05 - Aggregate -->
@@ -373,7 +373,7 @@ FROM NhanVien;</code></pre></div>
     AVG(Luong) AS LuongTrungBinh
 FROM NhanVien
 GROUP BY Phong;</code></pre></div>
-          <div class="inline-warning">Lỗi hay gặp: đưa cột vào <code>SELECT</code> nhưng quên đưa vào <code>GROUP BY</code>. Quy tắc bắt buộc: mọi cột trong <code>SELECT</code> mà <strong>không nằm trong hàm gom nhóm</strong> (<code>SUM</code>, <code>COUNT</code>, <code>AVG</code>...) đều phải có mặt trong <code>GROUP BY</code>, nếu không SQL Server sẽ báo lỗi cú pháp.</div>
+          <div class="inline-warning">Lỗi hay gặp: Đưa cột vào <code>SELECT</code> nhưng quên đưa vào <code>GROUP BY</code>. Quy tắc bắt buộc: Mọi cột trong <code>SELECT</code> mà <strong>không nằm trong hàm gom nhóm</strong> (<code>SUM</code>, <code>COUNT</code>, <code>AVG</code>...) đều phải có mặt trong <code>GROUP BY</code>, nếu không SQL Server sẽ báo lỗi cú pháp.</div>
 
           <h3>Thống kê số nhân viên theo phòng</h3>
           <p><code>LEFT JOIN</code> giúp vẫn hiển thị phòng ban ngay cả khi phòng đó chưa có nhân viên:</p>
@@ -482,8 +482,8 @@ FROM NHANVIEN NV
 LEFT OUTER JOIN PHANCONG PC
     ON NV.MaNV = PC.MaNV
 WHERE PC.MaDA IS NULL;</code></pre></div>
-          <div class="inline-ok">Pattern quan trọng cần nhớ: <code>LEFT JOIN</code> + <code>WHERE right_table.key IS NULL</code> ➜ tìm những bản ghi <strong>không có bản ghi tương ứng</strong> ở bảng bên phải.</div>
-          <div class="inline-warning">Lỗi hay gặp: đặt điều kiện <code>WHERE</code> lên <strong>một cột khác (không phải kiểm tra NULL)</strong> của bảng bên phải sau <code>LEFT JOIN</code> - Khi đó những dòng NULL sinh ra từ LEFT JOIN sẽ bị chính điều kiện đó loại bỏ, khiến câu lệnh vô tình hoạt động giống <code>INNER JOIN</code>. Nếu cần lọc thêm ở bảng bên phải mà vẫn muốn giữ hành vi LEFT JOIN, hãy đưa điều kiện đó vào mệnh đề <code>ON</code> thay vì <code>WHERE</code>.</div>
+          <div class="inline-ok">Pattern quan trọng cần nhớ: <code>LEFT JOIN</code> + <code>WHERE right_table.key IS NULL</code> ➜ Tìm những bản ghi <strong>không có bản ghi tương ứng</strong> ở bảng bên phải.</div>
+          <div class="inline-warning">Lỗi hay gặp: Đặt điều kiện <code>WHERE</code> lên <strong>một cột khác (không phải kiểm tra NULL)</strong> của bảng bên phải sau <code>LEFT JOIN</code> - Khi đó những dòng NULL sinh ra từ LEFT JOIN sẽ bị chính điều kiện đó loại bỏ, khiến câu lệnh vô tình hoạt động giống <code>INNER JOIN</code>. Nếu cần lọc thêm ở bảng bên phải mà vẫn muốn giữ hành vi LEFT JOIN, hãy đưa điều kiện đó vào mệnh đề <code>ON</code> thay vì <code>WHERE</code>.</div>
 
           <h3>Ba loại OUTER JOIN</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -515,7 +515,7 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
             <tr><td>Tìm bản ghi không có liên kết</td><td><code>LEFT JOIN ... IS NULL</code></td></tr>
           </table></div>
 
-          <h3>Đọc đề ➜ nhận diện</h3>
+          <h3>Đọc đề ➜ Nhận diện</h3>
           <div class="ascii-block">"TẤT CẢ"                      ➜ PHÉP CHIA
 "TẤT CẢ + ĐIỀU KIỆN"          ➜ PHÉP CHIA CÓ ĐIỀU KIỆN
 "KHÔNG TỒN TẠI..."            ➜ NOT EXISTS
@@ -526,7 +526,7 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
 "KHÔNG CÓ DỮ LIỆU LIÊN QUAN"  ➜ LEFT JOIN + IS NULL</div>
 
           <h3>Tổng kết Tuần 3</h3>
-          <p>Tuần 1 là <strong>thiết kế &amp; thao tác dữ liệu</strong>, Tuần 2 là <strong>truy vấn &amp; kết hợp dữ liệu</strong>, Tuần 3 là <strong>truy vấn nâng cao</strong>: phép chia ("tất cả" ➜ GROUP BY+HAVING COUNT hoặc NOT EXISTS×2), gom nhóm (Aggregate, TOP/HAVING), và kết ngoài ("không có" ➜ LEFT JOIN+IS NULL).</p>
+          <p>Tuần 1 là <strong>thiết kế &amp; thao tác dữ liệu</strong>, Tuần 2 là <strong>truy vấn &amp; kết hợp dữ liệu</strong>, Tuần 3 là <strong>truy vấn nâng cao</strong>: Phép chia ("tất cả" ➜ GROUP BY+HAVING COUNT hoặc NOT EXISTS×2), gom nhóm (Aggregate, TOP/HAVING), và kết ngoài ("không có" ➜ LEFT JOIN+IS NULL).</p>
         </section>
 
         <!-- 09 - Bai tap -->
@@ -550,7 +550,7 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">01</span><h4>"Mua tất cả"</h4></div>
               <p>Tìm những khách hàng đã mua tất cả sản phẩm thuộc danh mục <code>Điện tử</code>.</p>
-              <details><summary>Gợi ý</summary><div class="ascii-block">"tất cả" ➜ phép chia ➜ GROUP BY ➜ HAVING COUNT</div></details>
+              <details><summary>Gợi ý</summary><div class="ascii-block">"tất cả" ➜ Phép chia ➜ GROUP BY ➜ HAVING COUNT</div></details>
             </article>
 
             <article class="challenge-card">
@@ -573,7 +573,7 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
 
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">05</span><h4>"Hai cách giải"</h4></div>
-              <p>Tìm nhân viên đã tham gia tất cả dự án. Yêu cầu viết <strong>2 câu SQL khác nhau</strong>: cách 1 dùng <code>GROUP BY</code> + <code>HAVING COUNT</code>, cách 2 dùng hai lớp <code>NOT EXISTS</code>.</p>
+              <p>Tìm nhân viên đã tham gia tất cả dự án. Yêu cầu viết <strong>2 câu SQL khác nhau</strong>: Cách 1 dùng <code>GROUP BY</code> + <code>HAVING COUNT</code>, cách 2 dùng hai lớp <code>NOT EXISTS</code>.</p>
               <details><summary>Gợi ý</summary><div class="ascii-block">Cách 1: GROUP BY + HAVING COUNT
 Cách 2: NOT EXISTS + NOT EXISTS</div></details>
             </article>
@@ -613,6 +613,16 @@ Cách 2: NOT EXISTS + NOT EXISTS</div></details>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">CHÚ THÍCH MÀU</span>
+          <ul class="color-legend-list">
+            <li><span class="color-legend-dot is-blue"></span> Xanh dương - Định nghĩa, khái niệm</li>
+            <li><span class="color-legend-dot is-green"></span> Xanh lá - Khuyến nghị, cách làm đúng</li>
+            <li><span class="color-legend-dot is-yellow"></span> Vàng - Lưu ý, lỗi dễ gặp</li>
+            <li><span class="color-legend-dot is-red"></span> Đỏ - Cảnh báo, không thể hoàn tác</li>
+            <li><span class="color-legend-dot is-black"></span> Đen - Code SQL để chạy</li>
           </ul>
         </div>
         <div class="panel-box note-box">

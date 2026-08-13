@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="IT004 - Lược đồ cơ sở dữ liệu Quản lý bán hàng dùng chung cho BTTH2, BTTH3, BTTH4 và BTTH5: các quan hệ, thuộc tính và dữ liệu mẫu.">
+  <meta name="description" content="IT004 - Lược đồ cơ sở dữ liệu Quản lý bán hàng dùng chung cho BTTH2, BTTH3, BTTH4 và BTTH5: Các quan hệ, thuộc tính và dữ liệu mẫu.">
   <title>Lược đồ Quản lý bán hàng - IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
@@ -33,7 +33,7 @@
       <span class="week-tag">LƯỢC ĐỒ DÙNG CHUNG · IT004</span>
       <h1>Cơ sở dữ liệu Quản lý bán hàng</h1>
       <div class="week-meta"><span>5 quan hệ</span><span>BTTH2 · BTTH3 · BTTH4 · BTTH5</span></div>
-      <p style="max-width:720px;color:var(--muted);font-size:13px;margin-top:10px">Lược đồ này được dùng chung cho nhiều bài tập thực hành từ Tuần 2 đến Tuần 5. Đọc kỹ phần tân từ và bảng thuộc tính trước khi làm bài - nắm đúng ý nghĩa dữ liệu giúp viết truy vấn chính xác hơn nhiều so với chỉ nhớ tên cột.</p>
+      <p style="max-width:720px;color:var(--muted);font-size:13px;margin-top:10px">Lược đồ này được dùng chung cho nhiều bài tập thực hành từ Tuần 2 đến Tuần 5. Đọc kỹ phần tân từ và bảng thuộc tính trước khi làm bài - Nắm đúng ý nghĩa dữ liệu giúp viết truy vấn chính xác hơn nhiều so với chỉ nhớ tên cột.</p>
     </div>
 
     <div class="lesson-content" style="max-width:1000px;margin:0 auto">
@@ -44,7 +44,7 @@
 
         <div class="schema-def">
           <p class="schema-def-head">KHACHHANG (<u>MAKH</u>, HOTEN, DCHI, SODT, NGSINH, DOANHSO, NGDK)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Quan hệ khách hàng sẽ lưu trữ thông tin của khách hàng thành viên gồm có các thuộc tính: mã khách hàng, họ tên, địa chỉ, số điện thoại, ngày sinh, ngày đăng ký và doanh số (tổng trị giá các hóa đơn của khách hàng thành viên này).</p>
+          <p class="schema-def-body"><em>Tân từ:</em> Quan hệ khách hàng sẽ lưu trữ thông tin của khách hàng thành viên gồm có các thuộc tính: Mã khách hàng, họ tên, địa chỉ, số điện thoại, ngày sinh, ngày đăng ký và doanh số (tổng trị giá các hóa đơn của khách hàng thành viên này).</p>
         </div>
         <div class="schema-def">
           <p class="schema-def-head">NHANVIEN (<u>MANV</u>, HOTEN, NGVL, SODT)</p>
@@ -94,20 +94,20 @@
         </div>
 
         <h3>Diễn giải quan hệ</h3>
-        <p class="er-relation">KHACHHANG (1) ➜ HOADON (N): một khách hàng thành viên có thể có nhiều hóa đơn.</p>
-        <p class="er-relation">NHANVIEN (1) ➜ HOADON (N): một nhân viên bán nhiều hóa đơn.</p>
-        <p class="er-relation">HOADON (1) ➜ CTHD (N): một hóa đơn có nhiều dòng chi tiết.</p>
-        <p class="er-relation">SANPHAM (1) ➜ CTHD (N): một sản phẩm xuất hiện trong nhiều dòng chi tiết, ở nhiều hóa đơn khác nhau.</p>
-        <div class="inline-warning"><strong>Lưu ý dễ nhầm:</strong> <code>HOADON.MAKH</code> có thể để trống (<code>NULL</code>) - không phải khách mua hàng nào cũng là khách hàng thành viên. Xem hóa đơn <code>1022</code> và <code>1023</code> trong dữ liệu mẫu, cả hai đều không gắn <code>MAKH</code>.</div>
+        <p class="er-relation">KHACHHANG (1) ➜ HOADON (N): Một khách hàng thành viên có thể có nhiều hóa đơn.</p>
+        <p class="er-relation">NHANVIEN (1) ➜ HOADON (N): Một nhân viên bán nhiều hóa đơn.</p>
+        <p class="er-relation">HOADON (1) ➜ CTHD (N): Một hóa đơn có nhiều dòng chi tiết.</p>
+        <p class="er-relation">SANPHAM (1) ➜ CTHD (N): Một sản phẩm xuất hiện trong nhiều dòng chi tiết, ở nhiều hóa đơn khác nhau.</p>
+        <div class="inline-warning"><strong>Lưu ý dễ nhầm:</strong> <code>HOADON.MAKH</code> có thể để trống (<code>NULL</code>) - Không phải khách mua hàng nào cũng là khách hàng thành viên. Xem hóa đơn <code>1022</code> và <code>1023</code> trong dữ liệu mẫu, cả hai đều không gắn <code>MAKH</code>.</div>
       </section>
 
       <section class="lesson-section" id="khachhang">
         <p class="eyebrow">QUAN HỆ 1 · KHACHHANG</p>
         <h2>KHACHHANG</h2>
-        <div class="definition">Lưu thông tin khách hàng <strong>thành viên</strong>: mã khách hàng, họ tên, địa chỉ, số điện thoại, ngày sinh, ngày đăng ký thành viên và <strong>doanh số</strong> (tổng trị giá các hóa đơn mà khách hàng thành viên này đã mua).</div>
+        <div class="definition">Lưu thông tin khách hàng <strong>thành viên</strong>: Mã khách hàng, họ tên, địa chỉ, số điện thoại, ngày sinh, ngày đăng ký thành viên và <strong>doanh số</strong> (tổng trị giá các hóa đơn mà khách hàng thành viên này đã mua).</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAKH</code></td><td><code>char(4)</code></td><td>Mã khách hàng - khóa chính</td></tr>
+          <tr><td><code>MAKH</code></td><td><code>char(4)</code></td><td>Mã khách hàng - Khóa chính</td></tr>
           <tr><td><code>HOTEN</code></td><td><code>varchar(40)</code></td><td>Họ tên</td></tr>
           <tr><td><code>DCHI</code></td><td><code>varchar(50)</code></td><td>Địa chỉ</td></tr>
           <tr><td><code>SODT</code></td><td><code>varchar(20)</code></td><td>Số điện thoại</td></tr>
@@ -134,15 +134,15 @@
       <section class="lesson-section" id="nhanvien">
         <p class="eyebrow">QUAN HỆ 2 · NHANVIEN</p>
         <h2>NHANVIEN</h2>
-        <div class="definition">Mỗi nhân viên bán hàng được ghi nhận: mã nhân viên, họ tên, ngày vào làm và số điện thoại liên lạc.</div>
+        <div class="definition">Mỗi nhân viên bán hàng được ghi nhận: Mã nhân viên, họ tên, ngày vào làm và số điện thoại liên lạc.</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MANV</code></td><td><code>char(4)</code></td><td>Mã nhân viên - khóa chính</td></tr>
+          <tr><td><code>MANV</code></td><td><code>char(4)</code></td><td>Mã nhân viên - Khóa chính</td></tr>
           <tr><td><code>HOTEN</code></td><td><code>varchar(40)</code></td><td>Họ tên</td></tr>
           <tr><td><code>SODT</code></td><td><code>varchar(20)</code></td><td>Số điện thoại</td></tr>
           <tr><td><code>NGVL</code></td><td><code>smalldatetime</code></td><td>Ngày vào làm</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ - chỉ có 5 nhân viên)</p>
+        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ - Chỉ có 5 nhân viên)</p>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>MANV</th><th>HOTEN</th><th>SODT</th><th>NGVL</th></tr>
           <tr><td>NV01</td><td>Nguyen Nhu Nhut</td><td>0927345678</td><td>13/04/2006</td></tr>
@@ -159,7 +159,7 @@
         <div class="definition">Mỗi sản phẩm có mã số, tên gọi, đơn vị tính, nước sản xuất và giá bán.</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MASP</code></td><td><code>char(4)</code></td><td>Mã sản phẩm - khóa chính</td></tr>
+          <tr><td><code>MASP</code></td><td><code>char(4)</code></td><td>Mã sản phẩm - Khóa chính</td></tr>
           <tr><td><code>TENSP</code></td><td><code>varchar(40)</code></td><td>Tên sản phẩm</td></tr>
           <tr><td><code>DVT</code></td><td><code>varchar(20)</code></td><td>Đơn vị tính (cây, hộp, quyển, cái...)</td></tr>
           <tr><td><code>NUOCSX</code></td><td><code>varchar(40)</code></td><td>Nước sản xuất</td></tr>
@@ -198,13 +198,13 @@
       <section class="lesson-section" id="hoadon">
         <p class="eyebrow">QUAN HỆ 4 · HOADON</p>
         <h2>HOADON</h2>
-        <div class="definition">Khi mua hàng, khách nhận một hóa đơn: số hóa đơn, ngày mua, nhân viên bán, trị giá hóa đơn và mã khách hàng (nếu người mua là khách hàng thành viên).</div>
+        <div class="definition">Khi mua hàng, khách nhận một hóa đơn: Số hóa đơn, ngày mua, nhân viên bán, trị giá hóa đơn và mã khách hàng (nếu người mua là khách hàng thành viên).</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>SOHD</code></td><td><code>int</code></td><td>Số hóa đơn - khóa chính</td></tr>
+          <tr><td><code>SOHD</code></td><td><code>int</code></td><td>Số hóa đơn - Khóa chính</td></tr>
           <tr><td><code>NGHD</code></td><td><code>smalldatetime</code></td><td>Ngày lập hóa đơn</td></tr>
-          <tr><td><code>MAKH</code></td><td><code>char(4)</code></td><td>Khách hàng nào mua - khóa ngoại đến KHACHHANG, <strong>có thể NULL</strong></td></tr>
-          <tr><td><code>MANV</code></td><td><code>char(4)</code></td><td>Nhân viên nào bán - khóa ngoại đến NHANVIEN</td></tr>
+          <tr><td><code>MAKH</code></td><td><code>char(4)</code></td><td>Khách hàng nào mua - Khóa ngoại đến KHACHHANG, <strong>có thể NULL</strong></td></tr>
+          <tr><td><code>MANV</code></td><td><code>char(4)</code></td><td>Nhân viên nào bán - Khóa ngoại đến NHANVIEN</td></tr>
           <tr><td><code>TRIGIA</code></td><td><code>money</code></td><td>Trị giá hóa đơn</td></tr>
         </table></div>
         <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 23 hóa đơn)</p>
@@ -239,11 +239,11 @@
       <section class="lesson-section" id="cthd">
         <p class="eyebrow">QUAN HỆ 5 · CTHD</p>
         <h2>CTHD (Chi tiết hóa đơn)</h2>
-        <div class="definition">Diễn giải chi tiết trong mỗi hóa đơn: hóa đơn đó gồm những sản phẩm nào, với số lượng bao nhiêu. Khóa chính là cặp <code>(SOHD, MASP)</code> - vì trong 1 hóa đơn, 1 sản phẩm chỉ xuất hiện tối đa 1 dòng.</div>
+        <div class="definition">Diễn giải chi tiết trong mỗi hóa đơn: Hóa đơn đó gồm những sản phẩm nào, với số lượng bao nhiêu. Khóa chính là cặp <code>(SOHD, MASP)</code> - Vì trong 1 hóa đơn, 1 sản phẩm chỉ xuất hiện tối đa 1 dòng.</div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>SOHD</code></td><td><code>int</code></td><td>Số hóa đơn - khóa chính, khóa ngoại đến HOADON</td></tr>
-          <tr><td><code>MASP</code></td><td><code>char(4)</code></td><td>Mã sản phẩm - khóa chính, khóa ngoại đến SANPHAM</td></tr>
+          <tr><td><code>SOHD</code></td><td><code>int</code></td><td>Số hóa đơn - Khóa chính, khóa ngoại đến HOADON</td></tr>
+          <tr><td><code>MASP</code></td><td><code>char(4)</code></td><td>Mã sản phẩm - Khóa chính, khóa ngoại đến SANPHAM</td></tr>
           <tr><td><code>SL</code></td><td><code>int</code></td><td>Số lượng mua</td></tr>
         </table></div>
         <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 48 dòng)</p>
@@ -320,7 +320,7 @@
           </div>
           <a class="dark-button" href="../../assets/file/luoc-do-quan-ly-ban-hang.sql" download>Tải file <span>↓</span></a>
         </div>
-        <div class="inline-ok"><strong>Áp dụng cho:</strong> BTTH2 (Tuần 2), BTTH3 (Tuần 3), một phần BTTH4 (Tuần 4) và các ví dụ Trigger ở BTTH5 (Tuần 5) đều dùng chung lược đồ này - chỉ cần chạy script 1 lần.</div>
+        <div class="inline-ok"><strong>Áp dụng cho:</strong> BTTH2 (Tuần 2), BTTH3 (Tuần 3), một phần BTTH4 (Tuần 4) và các ví dụ Trigger ở BTTH5 (Tuần 5) đều dùng chung lược đồ này - Chỉ cần chạy script 1 lần.</div>
       </section>
 
     </div>

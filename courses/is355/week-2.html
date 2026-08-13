@@ -112,7 +112,7 @@
             <span class="flow-arrow has-label">↓ Decryption + Same Key</span>
             <span class="flow-box">Plaintext</span>
           </div>
-          <p><strong>Ví dụ:</strong> Ngân hàng muốn gửi lệnh <code>"TRANSFER 100 USD"</code>. Dùng khóa AES để mã hóa, nội dung truyền đi trở thành một chuỗi vô nghĩa như <code>"8A91F2C4..."</code>. Chỉ bên nào có đúng khóa AES đó mới giải mã ngược lại được thành <code>"TRANSFER 100 USD"</code>. Vấn đề: hai bên phải tìm cách trao đổi khóa AES này một cách an toàn trước khi giao dịch - Nếu khóa bị lộ trên đường truyền, bất kỳ ai chặn được cũng đọc được nội dung.</p>
+          <p><strong>Ví dụ:</strong> Ngân hàng muốn gửi lệnh <code>"TRANSFER 100 USD"</code>. Dùng khóa AES để mã hóa, nội dung truyền đi trở thành một chuỗi vô nghĩa như <code>"8A91F2C4..."</code>. Chỉ bên nào có đúng khóa AES đó mới giải mã ngược lại được thành <code>"TRANSFER 100 USD"</code>. Vấn đề: Hai bên phải tìm cách trao đổi khóa AES này một cách an toàn trước khi giao dịch - Nếu khóa bị lộ trên đường truyền, bất kỳ ai chặn được cũng đọc được nội dung.</p>
 
           <h3>Mã hóa bất đối xứng (Asymmetric)</h3>
           <p>Dùng cặp khóa <strong>Public Key</strong> (chia sẻ công khai) và <strong>Private Key</strong> (giữ bí mật tuyệt đối). Đây chính là cách mã hóa bất đối xứng giải quyết vấn đề "chia sẻ khóa an toàn" ở trên: Ngân hàng mã hóa lệnh chuyển tiền bằng Public Key của khách hàng, và chỉ khách hàng - Người duy nhất giữ Private Key tương ứng - Mới giải mã được, dù Public Key được công khai cho bất kỳ ai.</p>
@@ -214,7 +214,7 @@ try:
     public_key.verify(signature, tampered_message, ec.ECDSA(hashes.SHA256()))
 except InvalidSignature:
     print("Alert: Message was tampered! Signature Invalid.")</code></pre></div>
-          <div class="inline-warning">Sinh viên cần giải thích: tại sao chỉ thay đổi nội dung <code>message</code> nhưng chữ ký cũ không còn hợp lệ? Đây chính là cách kết nối Hash ➜ Digital Signature ➜ Integrity.</div>
+          <div class="inline-warning">Sinh viên cần giải thích: Tại sao chỉ thay đổi nội dung <code>message</code> nhưng chữ ký cũ không còn hợp lệ? Đây chính là cách kết nối Hash ➜ Digital Signature ➜ Integrity.</div>
         </section>
 
         <!-- 09 - Thuc hanh: Smart Contract -->
@@ -292,7 +292,7 @@ def main():
           <h2>Hai hướng nghiên cứu của Tuần 2</h2>
 
           <h3>Hướng 1 - ZKP trong xác thực tiêu chuẩn ESG</h3>
-          <p>Bài toán: chứng minh <code>ESG Score ≥ Threshold</code> mà không làm tiết lộ dữ liệu doanh thu, lượng phát thải thực tế.</p>
+          <p>Bài toán: Chứng minh <code>ESG Score ≥ Threshold</code> mà không làm tiết lộ dữ liệu doanh thu, lượng phát thải thực tế.</p>
           <ul>
             <li><strong>RQ1:</strong> Làm sao thiết lập circuit ZKP (zk-SNARKs) để xác minh chỉ số ESG mà không lộ input?</li>
             <li><strong>RQ2:</strong> Tốn bao nhiêu gas chi phí để Verify Proof trên Smart Contract Ethereum?</li>
@@ -308,7 +308,7 @@ def main():
             <tr><td><code>Device_Count</code></td><td>int</td><td>Số tài khoản tạo trên cùng 1 thiết bị</td></tr>
             <tr><td><code>Target (Fraud)</code></td><td>0 / 1</td><td>0 = Hợp lệ, 1 = Gian lận</td></tr>
           </table></div>
-          <p>Pipeline &amp; đánh giá: mô hình đề xuất Random Forest / XGBoost. Metric chính: <strong>Recall</strong> (ưu tiên hạn chế tối đa việc bỏ sót gian lận) và <strong>PR-AUC</strong>.</p>
+          <p>Pipeline &amp; đánh giá: Mô hình đề xuất Random Forest / XGBoost. Metric chính: <strong>Recall</strong> (ưu tiên hạn chế tối đa việc bỏ sót gian lận) và <strong>PR-AUC</strong>.</p>
           <div class="inline-warning"><strong>Mô hình AI + Blockchain Hybrid:</strong> Lưu trữ ảnh/dữ liệu eKYC nhạy cảm Off-chain (IPFS/Encrypted DB). Chỉ lưu <code>Hash(eKYC_Data)</code> và <code>Proof_Status</code> lên Blockchain để tránh vi phạm quyền riêng tư dữ liệu cá nhân.</div>
         </section>
 
@@ -390,6 +390,16 @@ def main():
           <ul class="resource-list">
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">CHÚ THÍCH MÀU</span>
+          <ul class="color-legend-list">
+            <li><span class="color-legend-dot is-blue"></span> Xanh dương - Định nghĩa, khái niệm</li>
+            <li><span class="color-legend-dot is-green"></span> Xanh lá - Khuyến nghị, cách làm đúng</li>
+            <li><span class="color-legend-dot is-yellow"></span> Vàng - Lưu ý, lỗi dễ gặp</li>
+            <li><span class="color-legend-dot is-red"></span> Đỏ - Cảnh báo, không thể hoàn tác</li>
+            <li><span class="color-legend-dot is-black"></span> Đen - Code SQL để chạy</li>
           </ul>
         </div>
         <div class="panel-box note-box">

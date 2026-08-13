@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IT004 Tuần 2 - Truy vấn dữ liệu với SQL: toán tử, hàm, SELECT, JOIN, phép toán tập hợp và Subquery.">
+  <meta name="description" content="IT004 Tuần 2 - Truy vấn dữ liệu với SQL: Toán tử, hàm, SELECT, JOIN, phép toán tập hợp và Subquery.">
   <title>Tuần 2 · Truy vấn dữ liệu với SQL - IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
@@ -177,20 +177,20 @@ ALL</div>
             <tr><td><code>%</code></td><td>Đại diện cho một chuỗi ký tự bất kỳ, kể cả chuỗi rỗng (0, 1 hoặc nhiều ký tự)</td></tr>
             <tr><td><code>_</code></td><td>Đại diện cho đúng một ký tự bất kỳ</td></tr>
           </table></div>
-          <p>Bắt đầu bằng "Nguyễn" - dùng <code>%</code> ở cuối:</p>
+          <p>Bắt đầu bằng "Nguyễn" - Dùng <code>%</code> ở cuối:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
 FROM NhanVien
 WHERE HoTen LIKE N'Nguyễn%';</code></pre></div>
           <p>Đều có thể được tìm thấy: <code>Nguyễn An</code>, <code>Nguyễn Bình</code>, <code>Nguyễn Văn Nam</code>.</p>
-          <p>Kết thúc bằng "An" - dùng <code>%</code> ở đầu:</p>
+          <p>Kết thúc bằng "An" - Dùng <code>%</code> ở đầu:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
 FROM NhanVien
 WHERE HoTen LIKE N'%An';</code></pre></div>
-          <p>Có chứa "Văn" - dùng <code>%</code> ở cả hai đầu:</p>
+          <p>Có chứa "Văn" - Dùng <code>%</code> ở cả hai đầu:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
 FROM NhanVien
 WHERE HoTen LIKE N'%Văn%';</code></pre></div>
-          <p><code>_</code> chỉ thay thế đúng <strong>một</strong> ký tự - ví dụ tìm mã phòng ban dạng <code>PB0</code> kèm đúng một chữ số theo sau:</p>
+          <p><code>_</code> chỉ thay thế đúng <strong>một</strong> ký tự - Ví dụ tìm mã phòng ban dạng <code>PB0</code> kèm đúng một chữ số theo sau:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM NhanVien
 WHERE MaPB LIKE 'PB0_';</code></pre></div>
@@ -209,7 +209,7 @@ WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
         <section class="lesson-section" id="ham">
           <p class="eyebrow">03 · HÀM TRONG SQL</p>
           <h2>Hàm trong SQL</h2>
-          <div class="definition">Hàm giúp xử lý và biến đổi dữ liệu: hàm xử lý số, hàm xử lý chuỗi, hàm xử lý ngày giờ và hàm tập hợp.</div>
+          <div class="definition">Hàm giúp xử lý và biến đổi dữ liệu: Hàm xử lý số, hàm xử lý chuỗi, hàm xử lý ngày giờ và hàm tập hợp.</div>
 
           <div class="inline-warning">
             <strong>Lưu ý quan trọng:</strong> Tài liệu gốc trình bày một số hàm theo cú pháp SQL tổng quát/MySQL (<code>NOW()</code>, <code>CURDATE()</code>, <code>LENGTH()</code>, <code>DATE_ADD()</code>, <code>CEIL()</code>...). Môn thực hành dùng <strong>Microsoft SQL Server</strong>, nên các hàm dưới đây đã được chuẩn hóa sang <strong>T-SQL</strong> - Chạy được trực tiếp, không copy nguyên bản MySQL.
@@ -301,7 +301,7 @@ FROM NhanVien;</code></pre></div>
           <p>Loại bỏ dữ liệu trùng:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT MaPB
 FROM NhanVien;</code></pre></div>
-          <p>Dữ liệu <code>PB01, PB01, PB02, PB02, PB03</code> ➜ kết quả chỉ còn <code>PB01, PB02, PB03</code>.</p>
+          <p>Dữ liệu <code>PB01, PB01, PB02, PB02, PB03</code> ➜ Kết quả chỉ còn <code>PB01, PB02, PB03</code>.</p>
 
           <h3>WHERE</h3>
           <p>Dùng để lọc các dòng theo điều kiện:</p>
@@ -408,7 +408,7 @@ LEFT JOIN PhongBan pb
           </table></div>
 
           <h3>RIGHT JOIN</h3>
-          <p>Ngược lại với <code>LEFT JOIN</code>: giữ toàn bộ dữ liệu của bảng bên phải:</p>
+          <p>Ngược lại với <code>LEFT JOIN</code>: Giữ toàn bộ dữ liệu của bảng bên phải:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     nv.HoTen,
     pb.TenPB
@@ -564,8 +564,8 @@ WHERE DanhMuc = 'Phu Kien'
     FROM SanPham
     WHERE DanhMuc = 'Laptop'
 );</code></pre></div>
-          <div class="ascii-block">> ANY ➜ lớn hơn ít nhất một
-> ALL ➜ lớn hơn tất cả</div>
+          <div class="ascii-block">> ANY ➜ Lớn hơn ít nhất một
+> ALL ➜ Lớn hơn tất cả</div>
 
           <h3>EXISTS / NOT EXISTS</h3>
           <p><code>EXISTS</code> kiểm tra truy vấn con có trả về <strong>ít nhất một dòng</strong> hay không. Ví dụ - Nhân viên có ít nhất một đơn hàng:</p>
@@ -593,7 +593,7 @@ WHERE NOT EXISTS
         <section class="lesson-section" id="tong-hop">
           <p class="eyebrow">08 · TỔNG HỢP - CHỌN CÔNG CỤ NÀO?</p>
           <h2>Chọn công cụ nào?</h2>
-          <p>Bảng tra nhanh: biết cú pháp là một việc, biết <strong>khi nào dùng cái gì</strong> mới là quan trọng.</p>
+          <p>Bảng tra nhanh: Biết cú pháp là một việc, biết <strong>khi nào dùng cái gì</strong> mới là quan trọng.</p>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Bài toán</th><th>Công cụ</th></tr>
             <tr><td>Lọc dữ liệu</td><td><code>WHERE</code></td></tr>
@@ -661,6 +661,16 @@ WHERE NOT EXISTS
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">CHÚ THÍCH MÀU</span>
+          <ul class="color-legend-list">
+            <li><span class="color-legend-dot is-blue"></span> Xanh dương - Định nghĩa, khái niệm</li>
+            <li><span class="color-legend-dot is-green"></span> Xanh lá - Khuyến nghị, cách làm đúng</li>
+            <li><span class="color-legend-dot is-yellow"></span> Vàng - Lưu ý, lỗi dễ gặp</li>
+            <li><span class="color-legend-dot is-red"></span> Đỏ - Cảnh báo, không thể hoàn tác</li>
+            <li><span class="color-legend-dot is-black"></span> Đen - Code SQL để chạy</li>
           </ul>
         </div>
         <div class="panel-box note-box">

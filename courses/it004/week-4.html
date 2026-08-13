@@ -68,8 +68,8 @@
           <h2>Từ truy vấn dữ liệu đến xử lý dữ liệu</h2>
           <div class="ascii-block">TUẦN 4
 ├── Hàm mở rộng: CAST() · GETDATE() · LEFT() · RIGHT()
-├── CASE...END: theo điều kiện · theo giá trị · phân loại dữ liệu
-├── Alias + Subquery: alias bảng/cột · subquery trong FROM · subquery trong SELECT
+├── CASE...END: Theo điều kiện · theo giá trị · phân loại dữ liệu
+├── Alias + Subquery: Alias bảng/cột · subquery trong FROM · subquery trong SELECT
 └── Bài tập tổng hợp: Quản lý giáo vụ · Quản lý bán hàng</div>
           <p>Đây là bước chuyển từ <strong>truy vấn dữ liệu</strong> sang <strong>xử lý và tạo thông tin từ dữ liệu</strong>. Sau khi hoàn thành, sinh viên có thể chuyển đổi kiểu dữ liệu, trích xuất chuỗi, xây dựng logic điều kiện với <code>CASE</code>, và viết subquery trong <code>FROM</code>/<code>SELECT</code> kết hợp alias.</p>
         </section>
@@ -82,7 +82,7 @@
 
           <h3>Cú pháp</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CAST(expression AS target_data_type)</code></pre></div>
-          <p><code>expression</code>: giá trị hoặc biểu thức cần chuyển. <code>target_data_type</code>: kiểu dữ liệu muốn chuyển sang.</p>
+          <p><code>expression</code>: Giá trị hoặc biểu thức cần chuyển. <code>target_data_type</code>: Kiểu dữ liệu muốn chuyển sang.</p>
 
           <h3>Ví dụ cơ bản</h3>
           <p>Chuyển chuỗi thành ngày giờ:</p>
@@ -211,7 +211,7 @@ FROM KhachHang;</code></pre></div>
     WHEN TongChiTieu >= 10000000 THEN N'VIP'
     ELSE N'Thường'
 END</code></pre></div>
-          <div class="inline-warning">Vì <code>15.000.000 &gt;= 5.000.000</code> đã đúng ngay ở điều kiện đầu tiên, nên <code>15.000.000</code> sẽ bị phân loại "Thân thiết" thay vì "VIP". <strong>Quy tắc:</strong> Điều kiện cụ thể/cao hơn nên đặt trước điều kiện rộng hơn (<code>&gt;=10M</code> ➜ <code>&gt;=5M</code> ➜ còn lại).</div>
+          <div class="inline-warning">Vì <code>15.000.000 &gt;= 5.000.000</code> đã đúng ngay ở điều kiện đầu tiên, nên <code>15.000.000</code> sẽ bị phân loại "Thân thiết" thay vì "VIP". <strong>Quy tắc:</strong> Điều kiện cụ thể/cao hơn nên đặt trước điều kiện rộng hơn (<code>&gt;=10M</code> ➜ <code>&gt;=5M</code> ➜ Còn lại).</div>
 
           <h3>CASE dạng so sánh giá trị</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CASE expression
@@ -282,7 +282,7 @@ WHERE Diem > (
     SELECT AVG(Diem)
     FROM SinhVien
 );</code></pre></div>
-          <p>Đọc: "Tìm sinh viên có điểm lớn hơn điểm trung bình của tất cả sinh viên." Tư duy: tính <code>AVG(Diem)</code> trước, rồi lấy những dòng có <code>Diem &gt; AVG</code>.</p>
+          <p>Đọc: "Tìm sinh viên có điểm lớn hơn điểm trung bình của tất cả sinh viên." Tư duy: Tính <code>AVG(Diem)</code> trước, rồi lấy những dòng có <code>Diem &gt; AVG</code>.</p>
         </section>
 
         <!-- 07 - Subquery nang cao -->
@@ -343,8 +343,8 @@ FROM SanPham SP;</code></pre></div>
           </table></div>
 
           <h3>Correlated Subquery</h3>
-          <p>Trong ví dụ trên, <code>WHERE CTHD.MaSP = SP.MaSP</code> tham chiếu đến <code>SP.MaSP</code> của truy vấn bên ngoài - Đây là <strong>correlated subquery (truy vấn con tương quan)</strong>: subquery được tính lại <strong>riêng cho từng dòng</strong> của truy vấn ngoài.</p>
-          <div class="ascii-block">Query ngoài ➜ SP.MaSP ➜ Subquery ➜ tính riêng cho từng SP</div>
+          <p>Trong ví dụ trên, <code>WHERE CTHD.MaSP = SP.MaSP</code> tham chiếu đến <code>SP.MaSP</code> của truy vấn bên ngoài - Đây là <strong>correlated subquery (truy vấn con tương quan)</strong>: Subquery được tính lại <strong>riêng cho từng dòng</strong> của truy vấn ngoài.</p>
+          <div class="ascii-block">Query ngoài ➜ SP.MaSP ➜ Subquery ➜ Tính riêng cho từng SP</div>
 
           <h4>So sánh với subquery thường</h4>
           <p>Subquery thường chạy <strong>độc lập</strong>, không phụ thuộc dòng ngoài:</p>
@@ -358,7 +358,7 @@ WHERE Gia >
           <p>Correlated subquery <strong>phụ thuộc</strong> vào từng dòng ngoài (<code>SP.MaSP</code> ở ví dụ trên).</p>
 
           <h4>Khi nào nên dùng Correlated Subquery?</h4>
-          <p>Rất phù hợp với câu hỏi dạng "với <strong>mỗi A</strong>, tính một giá trị liên quan đến A" - Ví dụ: mỗi sản phẩm có bao nhiêu lần bán? mỗi sinh viên có bao nhiêu môn đã đăng ký? mỗi nhân viên tham gia bao nhiêu dự án? mỗi khách hàng có bao nhiêu hóa đơn? mỗi phòng ban có bao nhiêu nhân viên?</p>
+          <p>Rất phù hợp với câu hỏi dạng "với <strong>mỗi A</strong>, tính một giá trị liên quan đến A" - Ví dụ: Mỗi sản phẩm có bao nhiêu lần bán? mỗi sinh viên có bao nhiêu môn đã đăng ký? mỗi nhân viên tham gia bao nhiêu dự án? mỗi khách hàng có bao nhiêu hóa đơn? mỗi phòng ban có bao nhiêu nhân viên?</p>
 
           <h4>Ví dụ - Quản lý giáo vụ</h4>
           <p>Bảng <code>SINHVIEN(MaSV, HoTen)</code>, <code>DANGKY(MaSV, MaHP)</code>. Đề bài: "hiển thị mỗi sinh viên và số học phần đã đăng ký."</p>
@@ -427,7 +427,7 @@ FROM (SELECT ...) AS T   ➜ Derived Table
 SELECT (SELECT ...) AS X ➜ Cột tính toán bằng Subquery</div>
 
           <h3>Bốn tuần đầu của IT004</h3>
-          <p>Tuần 1: tạo &amp; thao tác dữ liệu. Tuần 2: truy vấn &amp; kết hợp dữ liệu. Tuần 3: truy vấn nâng cao ("tất cả" / nhóm / TOP). Tuần 4: <strong>biến đổi &amp; tính toán</strong> trên dữ liệu bằng CAST, CASE và Subquery.</p>
+          <p>Tuần 1: Tạo &amp; thao tác dữ liệu. Tuần 2: Truy vấn &amp; kết hợp dữ liệu. Tuần 3: Truy vấn nâng cao ("tất cả" / nhóm / TOP). Tuần 4: <strong>Biến đổi &amp; tính toán</strong> trên dữ liệu bằng CAST, CASE và Subquery.</p>
         </section>
 
         <!-- 09 - Bai tap -->
@@ -512,6 +512,16 @@ SELECT (SELECT ...) AS X ➜ Cột tính toán bằng Subquery</div>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">CHÚ THÍCH MÀU</span>
+          <ul class="color-legend-list">
+            <li><span class="color-legend-dot is-blue"></span> Xanh dương - Định nghĩa, khái niệm</li>
+            <li><span class="color-legend-dot is-green"></span> Xanh lá - Khuyến nghị, cách làm đúng</li>
+            <li><span class="color-legend-dot is-yellow"></span> Vàng - Lưu ý, lỗi dễ gặp</li>
+            <li><span class="color-legend-dot is-red"></span> Đỏ - Cảnh báo, không thể hoàn tác</li>
+            <li><span class="color-legend-dot is-black"></span> Đen - Code SQL để chạy</li>
           </ul>
         </div>
         <div class="panel-box note-box">

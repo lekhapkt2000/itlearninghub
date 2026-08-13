@@ -80,16 +80,16 @@
             <span class="flow-arrow">↓</span>
             <span class="flow-box">Dữ liệu được cập nhật</span>
           </div>
-          <p>Ví dụ: "không cho phép số lượng sản phẩm nhỏ hơn 0." Khi người dùng chạy <code>UPDATE SANPHAM SET SOLUONG = -10 WHERE MASP = 'SP01';</code>, Trigger phát hiện <code>SOLUONG &lt; 0</code> ➜ báo lỗi ➜ <code>ROLLBACK</code> ➜ hủy thao tác.</p>
+          <p>Ví dụ: "không cho phép số lượng sản phẩm nhỏ hơn 0." Khi người dùng chạy <code>UPDATE SANPHAM SET SOLUONG = -10 WHERE MASP = 'SP01';</code>, Trigger phát hiện <code>SOLUONG &lt; 0</code> ➜ Báo lỗi ➜ <code>ROLLBACK</code> ➜ Hủy thao tác.</p>
 
           <h3>Tại sao cần Trigger?</h3>
           <p>Trigger thường dùng để <strong>tự động kiểm soát dữ liệu ngay tại tầng cơ sở dữ liệu</strong>:</p>
           <ul>
             <li><strong>Kiểm tra dữ liệu:</strong> Số lượng sản phẩm ≥ 0</li>
             <li><strong>Ngăn thao tác không hợp lệ:</strong> Không cho xóa khách hàng đã phát sinh giao dịch</li>
-            <li><strong>Tự động cập nhật:</strong> Thêm CTHD ➜ tự động cập nhật trị giá hóa đơn</li>
-            <li><strong>Theo dõi thay đổi:</strong> Tên khách hàng cũ ➜ mới</li>
-            <li><strong>Đồng bộ dữ liệu:</strong> CTHD thay đổi ➜ cập nhật tổng tiền hóa đơn ➜ cập nhật doanh số khách hàng</li>
+            <li><strong>Tự động cập nhật:</strong> Thêm CTHD ➜ Tự động cập nhật trị giá hóa đơn</li>
+            <li><strong>Theo dõi thay đổi:</strong> Tên khách hàng cũ ➜ Mới</li>
+            <li><strong>Đồng bộ dữ liệu:</strong> CTHD thay đổi ➜ Cập nhật tổng tiền hóa đơn ➜ Cập nhật doanh số khách hàng</li>
           </ul>
         </section>
 
@@ -171,7 +171,7 @@ END;</code></pre></div>
         <section class="lesson-section" id="kiem-tra-loi">
           <p class="eyebrow">04 · KIỂM TRA VÀ XỬ LÝ LỖI</p>
           <h2>Trigger kiểm tra dữ liệu</h2>
-          <p>Bài toán: số lượng sản phẩm trong <code>SANPHAM</code> không được nhỏ hơn 0.</p>
+          <p>Bài toán: Số lượng sản phẩm trong <code>SANPHAM</code> không được nhỏ hơn 0.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_CheckQuantity_SanPham
 ON SANPHAM
 AFTER INSERT, UPDATE
@@ -199,7 +199,7 @@ END;</code></pre></div>
           <h3>Phân tích</h3>
           <div class="ascii-block">IF EXISTS ➜ RAISERROR ➜ ROLLBACK ➜ RETURN ➜ Hủy thao tác sai</div>
           <p><code>IF EXISTS(...)</code> kiểm tra có tồn tại bản ghi vi phạm điều kiện hay không. <code>RAISERROR(N'...', 16, 1)</code> báo lỗi - Mức độ <code>16</code> là mức thường dùng để biểu diễn lỗi do người dùng gây ra (dữ liệu nhập sai, vi phạm quy tắc). <code>ROLLBACK</code> hủy giao dịch đang thực hiện, đưa dữ liệu về trạng thái trước đó.</p>
-          <div class="inline-warning">Lỗi hay gặp: gọi <code>RAISERROR</code> và <code>ROLLBACK</code> nhưng <strong>quên <code>RETURN</code></strong> ngay sau đó. Nếu Trigger còn câu lệnh nào phía sau, chúng vẫn sẽ tiếp tục chạy dù giao dịch đã bị hủy, có thể gây lỗi hoặc hành vi không mong muốn. Nên tập thói quen luôn viết đủ bộ ba <code>RAISERROR ➜ ROLLBACK ➜ RETURN</code>, không chỉ dừng ở <code>ROLLBACK</code>.</div>
+          <div class="inline-warning">Lỗi hay gặp: Gọi <code>RAISERROR</code> và <code>ROLLBACK</code> nhưng <strong>quên <code>RETURN</code></strong> ngay sau đó. Nếu Trigger còn câu lệnh nào phía sau, chúng vẫn sẽ tiếp tục chạy dù giao dịch đã bị hủy, có thể gây lỗi hoặc hành vi không mong muốn. Nên tập thói quen luôn viết đủ bộ ba <code>RAISERROR ➜ ROLLBACK ➜ RETURN</code>, không chỉ dừng ở <code>ROLLBACK</code>.</div>
 
           <h3>PRINT và RAISERROR - Phân biệt</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -237,7 +237,7 @@ END;</code></pre></div>
           <div class="inline-ok"><strong>Mẹo nhớ:</strong> <code>INSERTED</code> = cái <strong>mới</strong>. <code>DELETED</code> = cái <strong>cũ / bị xóa</strong>.</div>
 
           <h3>Thử trực tiếp</h3>
-          <p>Bấm một nút để xem <code>INSERTED</code>/<code>DELETED</code> chứa gì với từng thao tác (ví dụ: đổi tên khách hàng từ "Nguyễn Văn A" thành "Nguyễn Văn B"):</p>
+          <p>Bấm một nút để xem <code>INSERTED</code>/<code>DELETED</code> chứa gì với từng thao tác (ví dụ: Đổi tên khách hàng từ "Nguyễn Văn A" thành "Nguyễn Văn B"):</p>
           <div class="trigger-demo">
             <p class="eyebrow">DEMO TRỰC QUAN</p>
             <div class="trigger-demo-actions">
@@ -255,7 +255,7 @@ END;</code></pre></div>
                 <div class="trigger-demo-row">HOTEN = 'Nguyễn Văn A' (bản ghi mới)</div>
               </div>
             </div>
-            <p class="trigger-demo-caption">INSERT ➜ chỉ INSERTED có dữ liệu · DELETE ➜ chỉ DELETED có dữ liệu · UPDATE ➜ cả hai đều có dữ liệu.</p>
+            <p class="trigger-demo-caption">INSERT ➜ Chỉ INSERTED có dữ liệu · DELETE ➜ Chỉ DELETED có dữ liệu · UPDATE ➜ Cả hai đều có dữ liệu.</p>
             <div class="trigger-demo-sql">
               <span class="side-label">CÂU LỆNH TƯƠNG ỨNG</span>
               <pre><code class="language-sql" data-demo-sql>INSERT INTO KHACHHANG (MAKH, HOTEN)
@@ -320,7 +320,7 @@ END;</code></pre></div>
           <p class="eyebrow">06 · ỨNG DỤNG THỰC TẾ</p>
           <h2>Ứng dụng thực tế của Trigger</h2>
 
-          <div class="inline-warning">Lỗi hay gặp: dùng Trigger cho những ràng buộc <strong>đơn giản</strong> mà <code>CHECK CONSTRAINT</code> hoặc <code>FOREIGN KEY</code> đã làm được (ví dụ chỉ để chặn <code>SOLUONG &lt; 0</code>, hoặc đặt giá trị mặc định). Trigger chạy sau khi thao tác DML đã xảy ra nên tốn thêm chi phí xử lý; chỉ nên dùng Trigger khi logic <strong>vượt quá khả năng của Constraint</strong> - Ví dụ cần tự động cập nhật dữ liệu ở bảng khác, hoặc kiểm tra điều kiện dựa trên dữ liệu ở nhiều bảng.</div>
+          <div class="inline-warning">Lỗi hay gặp: Dùng Trigger cho những ràng buộc <strong>đơn giản</strong> mà <code>CHECK CONSTRAINT</code> hoặc <code>FOREIGN KEY</code> đã làm được (ví dụ chỉ để chặn <code>SOLUONG &lt; 0</code>, hoặc đặt giá trị mặc định). Trigger chạy sau khi thao tác DML đã xảy ra nên tốn thêm chi phí xử lý; chỉ nên dùng Trigger khi logic <strong>vượt quá khả năng của Constraint</strong> - Ví dụ cần tự động cập nhật dữ liệu ở bảng khác, hoặc kiểm tra điều kiện dựa trên dữ liệu ở nhiều bảng.</div>
 
           <h3>Kiểm tra tồn tại trước khi thêm</h3>
           <p>Không cho phép thêm hóa đơn nếu khách hàng chưa tồn tại:</p>
@@ -332,7 +332,7 @@ END;</code></pre></div>
           <p>Bảng <code>HOADON(MAHD, TRIGIA)</code> và <code>CTHD(MAHD, MASP, SOLUONG, DONGIA)</code>. Khi <code>INSERT INTO CTHD</code>, Trigger tự động tính lại <code>TRIGIA</code> và <code>UPDATE HOADON</code>.</p>
 
           <h3>Trigger cập nhật doanh số khách hàng</h3>
-          <p>Bài toán nâng cao hơn: thêm/sửa hóa đơn ➜ Trigger tính tổng trị giá ➜ cập nhật <code>DOANHSO</code> trong <code>KHACHHANG</code>.</p>
+          <p>Bài toán nâng cao hơn: Thêm/sửa hóa đơn ➜ Trigger tính tổng trị giá ➜ Cập nhật <code>DOANHSO</code> trong <code>KHACHHANG</code>.</p>
 
           <h3>Không cho xóa dữ liệu đang được tham chiếu</h3>
           <p>Không cho phép xóa nhân viên nếu nhân viên đã tham gia bán hàng:</p>
@@ -410,7 +410,7 @@ RAISERROR    ➜ Báo lỗi
 ROLLBACK     ➜ Hủy thao tác / giao dịch</div>
 
           <h3>Năm tuần đầu của IT004</h3>
-          <p>Tuần 1: tạo CSDL. Tuần 2: truy vấn. Tuần 3: truy vấn nâng cao. Tuần 4: xử lý dữ liệu (CAST/CASE/Subquery). Tuần 5: <strong>tự động hóa &amp; kiểm soát</strong> bằng Trigger, INSERTED/DELETED, RAISERROR/ROLLBACK. Tuần 6 theo khung môn học sẽ là ôn tập và thi thực hành, thời gian và hình thức thi được thông báo sau.</p>
+          <p>Tuần 1: Tạo CSDL. Tuần 2: Truy vấn. Tuần 3: Truy vấn nâng cao. Tuần 4: Xử lý dữ liệu (CAST/CASE/Subquery). Tuần 5: <strong>Tự động hóa &amp; kiểm soát</strong> bằng Trigger, INSERTED/DELETED, RAISERROR/ROLLBACK. Tuần 6 theo khung môn học sẽ là ôn tập và thi thực hành, thời gian và hình thức thi được thông báo sau.</p>
         </section>
 
         <!-- 09 - Bai tap -->
@@ -433,7 +433,7 @@ ROLLBACK     ➜ Hủy thao tác / giao dịch</div>
           <div class="challenge-list">
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">01</span><h4>Không cho số lượng âm</h4></div>
-              <p>Tạo Trigger: không cho phép <code>SOLUONG &lt; 0</code> trong <code>SANPHAM</code>.</p>
+              <p>Tạo Trigger: Không cho phép <code>SOLUONG &lt; 0</code> trong <code>SANPHAM</code>.</p>
               <details><summary>Gợi ý</summary><div class="ascii-block">AFTER INSERT, UPDATE + IF EXISTS + RAISERROR + ROLLBACK</div></details>
             </article>
 
@@ -495,6 +495,16 @@ ROLLBACK     ➜ Hủy thao tác / giao dịch</div>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
             <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">CHÚ THÍCH MÀU</span>
+          <ul class="color-legend-list">
+            <li><span class="color-legend-dot is-blue"></span> Xanh dương - Định nghĩa, khái niệm</li>
+            <li><span class="color-legend-dot is-green"></span> Xanh lá - Khuyến nghị, cách làm đúng</li>
+            <li><span class="color-legend-dot is-yellow"></span> Vàng - Lưu ý, lỗi dễ gặp</li>
+            <li><span class="color-legend-dot is-red"></span> Đỏ - Cảnh báo, không thể hoàn tác</li>
+            <li><span class="color-legend-dot is-black"></span> Đen - Code SQL để chạy</li>
           </ul>
         </div>
         <div class="panel-box note-box">

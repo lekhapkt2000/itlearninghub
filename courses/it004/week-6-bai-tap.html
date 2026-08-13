@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="IT004 Tuần 6 - Bài tập ôn tập tổng hợp: đề bài và đáp án chi tiết dành cho sinh viên đang học lớp thực hành.">
+  <meta name="description" content="IT004 Tuần 6 - Bài tập ôn tập tổng hợp: Đề bài và đáp án chi tiết dành cho sinh viên đang học lớp thực hành.">
   <title>Bài tập · Tuần 6 - IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
@@ -45,11 +45,11 @@
 
         <div class="schema-def">
           <p class="schema-def-head">NHACUNGCAP (<u>MANCC</u>, TENNCC, TRANGTHAI, THANHPHO)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> "Nhà cung cấp" cung cấp các dịch vụ vận chuyển - mã nhà cung cấp, tên nhà cung cấp, trạng thái và thành phố.</p>
+          <p class="schema-def-body"><em>Tân từ:</em> "Nhà cung cấp" cung cấp các dịch vụ vận chuyển - Mã nhà cung cấp, tên nhà cung cấp, trạng thái và thành phố.</p>
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MANCC</code></td><td><code>varchar(5)</code></td><td>Mã nhà cung cấp - khóa chính</td></tr>
+          <tr><td><code>MANCC</code></td><td><code>varchar(5)</code></td><td>Mã nhà cung cấp - Khóa chính</td></tr>
           <tr><td><code>TENNCC</code></td><td><code>varchar(20)</code></td><td>Tên nhà cung cấp</td></tr>
           <tr><td><code>TRANGTHAI</code></td><td><code>numeric(2)</code></td><td>Trạng thái (điểm xếp hạng nhà cung cấp)</td></tr>
           <tr><td><code>THANHPHO</code></td><td><code>varchar(30)</code></td><td>Thành phố</td></tr>
@@ -61,7 +61,7 @@
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAPT</code></td><td><code>varchar(5)</code></td><td>Mã phụ tùng - khóa chính</td></tr>
+          <tr><td><code>MAPT</code></td><td><code>varchar(5)</code></td><td>Mã phụ tùng - Khóa chính</td></tr>
           <tr><td><code>TENPT</code></td><td><code>varchar(10)</code></td><td>Tên phụ tùng</td></tr>
           <tr><td><code>MAUSAC</code></td><td><code>varchar(10)</code></td><td>Màu sắc</td></tr>
           <tr><td><code>KHOILUONG</code></td><td><code>float</code></td><td>Khối lượng</td></tr>
@@ -74,8 +74,8 @@
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MANCC</code></td><td><code>varchar(5)</code></td><td>Mã nhà cung cấp - khóa chính, khóa ngoại đến NHACUNGCAP</td></tr>
-          <tr><td><code>MAPT</code></td><td><code>varchar(5)</code></td><td>Mã phụ tùng - khóa chính, khóa ngoại đến PHUTUNG</td></tr>
+          <tr><td><code>MANCC</code></td><td><code>varchar(5)</code></td><td>Mã nhà cung cấp - Khóa chính, khóa ngoại đến NHACUNGCAP</td></tr>
+          <tr><td><code>MAPT</code></td><td><code>varchar(5)</code></td><td>Mã phụ tùng - Khóa chính, khóa ngoại đến PHUTUNG</td></tr>
           <tr><td><code>SOLUONG</code></td><td><code>numeric(5)</code></td><td>Số lượng phụ tùng đã vận chuyển</td></tr>
         </table></div>
 
@@ -100,8 +100,8 @@
             <text x="250" y="173" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">PHUTUNG</text>
           </svg>
         </div>
-        <p class="er-relation">NHACUNGCAP (1) ➜ VANCHUYEN (N): một nhà cung cấp có thể vận chuyển nhiều dòng phụ tùng khác nhau.</p>
-        <p class="er-relation">PHUTUNG (1) ➜ VANCHUYEN (N): một phụ tùng có thể được nhiều nhà cung cấp vận chuyển.</p>
+        <p class="er-relation">NHACUNGCAP (1) ➜ VANCHUYEN (N): Một nhà cung cấp có thể vận chuyển nhiều dòng phụ tùng khác nhau.</p>
+        <p class="er-relation">PHUTUNG (1) ➜ VANCHUYEN (N): Một phụ tùng có thể được nhiều nhà cung cấp vận chuyển.</p>
 
         <div class="download-card">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
@@ -171,7 +171,7 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 6.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Bên dưới là câu hỏi mẫu để minh họa cách trình bày đáp án - sẽ được thay bằng lời giải thật của bài Quản lý hàng hóa.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Bên dưới là câu hỏi mẫu để minh họa cách trình bày đáp án - Sẽ được thay bằng lời giải thật của bài Quản lý hàng hóa.</p>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 1 (MẪU) · JOIN + GROUP BY + ORDER BY</p>
@@ -183,7 +183,7 @@ GROUP BY ncc.TENNCC
 ORDER BY TongSoLuong DESC;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Kết hợp <code>JOIN</code> (lấy tên nhà cung cấp), <code>GROUP BY</code> (cộng dồn số lượng theo từng nhà cung cấp) và <code>ORDER BY ... DESC</code> + <code>TOP 1</code> (lấy nhà cung cấp nhiều nhất).</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là ví dụ điển hình của việc ghép nhiều kỹ thuật đã học: phải <code>JOIN</code> trước để có tên, <code>GROUP BY</code> để cộng dồn theo từng nhà cung cấp, rồi mới sắp xếp và lấy dòng đầu tiên - làm sai thứ tự sẽ ra kết quả sai hoặc lỗi cú pháp.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là ví dụ điển hình của việc ghép nhiều kỹ thuật đã học: Phải <code>JOIN</code> trước để có tên, <code>GROUP BY</code> để cộng dồn theo từng nhà cung cấp, rồi mới sắp xếp và lấy dòng đầu tiên - Làm sai thứ tự sẽ ra kết quả sai hoặc lỗi cú pháp.</p></div>
               </div>
             </div>
 
@@ -198,7 +198,7 @@ SET THANHPHO = 'Sydney'
 WHERE MANCC = 'S6';</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>INSERT</code> thêm 1 dòng nhà cung cấp mới; <code>UPDATE ... WHERE MANCC = 'S6'</code> chỉ sửa đúng dòng vừa thêm.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>WHERE</code> trong câu <code>UPDATE</code> bắt buộc phải lọc đúng <code>MANCC</code> - nếu quên <code>WHERE</code>, toàn bộ nhà cung cấp trong bảng sẽ bị đổi thành "Sydney".</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>WHERE</code> trong câu <code>UPDATE</code> bắt buộc phải lọc đúng <code>MANCC</code> - Nếu quên <code>WHERE</code>, toàn bộ nhà cung cấp trong bảng sẽ bị đổi thành "Sydney".</p></div>
               </div>
             </div>
 

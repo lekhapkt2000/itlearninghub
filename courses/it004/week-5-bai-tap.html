@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="IT004 Tuần 5 - Bài tập thực hành 5 (BTTH5): đề bài, file đính kèm và đáp án chi tiết dành cho sinh viên đang học lớp thực hành.">
+  <meta name="description" content="IT004 Tuần 5 - Bài tập thực hành 5 (BTTH5): Đề bài, file đính kèm và đáp án chi tiết dành cho sinh viên đang học lớp thực hành.">
   <title>Bài tập · Tuần 5 - IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
@@ -53,12 +53,12 @@
         </div>
 
         <div class="inline-ok" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
-          <span>Bài này dùng lược đồ dùng chung <strong>Quản lý bán hàng</strong> (KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD) - xem đầy đủ thuộc tính, dữ liệu mẫu và script CSDL.</span>
+          <span>Bài này dùng lược đồ dùng chung <strong>Quản lý bán hàng</strong> (KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD) - Xem đầy đủ thuộc tính, dữ liệu mẫu và script CSDL.</span>
           <a class="outline-button" href="schema-quan-ly-ban-hang.html">Xem lược đồ <span>›</span></a>
         </div>
 
         <div class="inline-ok" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
-          <span>Và lược đồ dùng chung <strong>Quản lý giáo vụ</strong> (HOCVIEN, LOP, KHOA, MONHOC, DIEUKIEN, GIAOVIEN, GIANGDAY, KETQUATHI) - xem đầy đủ thuộc tính, dữ liệu mẫu và script CSDL.</span>
+          <span>Và lược đồ dùng chung <strong>Quản lý giáo vụ</strong> (HOCVIEN, LOP, KHOA, MONHOC, DIEUKIEN, GIAOVIEN, GIANGDAY, KETQUATHI) - Xem đầy đủ thuộc tính, dữ liệu mẫu và script CSDL.</span>
           <a class="outline-button" href="schema-quan-ly-giao-vu.html">Xem lược đồ <span>›</span></a>
         </div>
 
@@ -108,7 +108,7 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 5.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Bên dưới là câu hỏi mẫu để minh họa cách trình bày đáp án - sẽ được thay bằng lời giải thật của BTTH5.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Bên dưới là câu hỏi mẫu để minh họa cách trình bày đáp án - Sẽ được thay bằng lời giải thật của BTTH5.</p>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 1 (MẪU) · TRIGGER AFTER INSERT</p>
@@ -125,7 +125,7 @@ BEGIN
 END;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>AFTER INSERT</code> là trigger tự động chạy ngay sau khi 1 dòng được thêm vào bảng; bảng ảo <code>inserted</code> chứa (các) dòng vừa thêm.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cần đồng bộ <code>SoBuoiTap</code> tự động, không phụ thuộc việc lập trình viên có nhớ chạy <code>UPDATE</code> thủ công hay không - trigger đảm bảo dữ liệu luôn nhất quán.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cần đồng bộ <code>SoBuoiTap</code> tự động, không phụ thuộc việc lập trình viên có nhớ chạy <code>UPDATE</code> thủ công hay không - Trigger đảm bảo dữ liệu luôn nhất quán.</p></div>
               </div>
             </div>
 
@@ -148,7 +148,7 @@ BEGIN
 END;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>INSTEAD OF DELETE</code> thay thế hoàn toàn hành vi <code>DELETE</code> mặc định bằng logic tùy chỉnh do mình viết.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cần kiểm tra điều kiện <strong>trước khi</strong> việc xóa thật sự xảy ra. Nếu dùng <code>AFTER DELETE</code> thì dữ liệu đã bị xóa mất rồi mới kịp kiểm tra - quá muộn để ngăn lại.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cần kiểm tra điều kiện <strong>trước khi</strong> việc xóa thật sự xảy ra. Nếu dùng <code>AFTER DELETE</code> thì dữ liệu đã bị xóa mất rồi mới kịp kiểm tra - Quá muộn để ngăn lại.</p></div>
               </div>
             </div>
 

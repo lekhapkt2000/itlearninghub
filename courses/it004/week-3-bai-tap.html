@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="IT004 Tuần 3 - Bài tập thực hành 3 (BTTH3): đề bài, file đính kèm và đáp án chi tiết dành cho sinh viên đang học lớp thực hành.">
+  <meta name="description" content="IT004 Tuần 3 - Bài tập thực hành 3 (BTTH3): Đề bài, file đính kèm và đáp án chi tiết dành cho sinh viên đang học lớp thực hành.">
   <title>Bài tập · Tuần 3 - IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
@@ -86,7 +86,7 @@
         </div>
 
         <div class="inline-ok" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
-          <span>Bài này dùng lược đồ dùng chung <strong>Quản lý bán hàng</strong> (KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD) - xem đầy đủ thuộc tính, dữ liệu mẫu và script CSDL.</span>
+          <span>Bài này dùng lược đồ dùng chung <strong>Quản lý bán hàng</strong> (KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD) - Xem đầy đủ thuộc tính, dữ liệu mẫu và script CSDL.</span>
           <a class="outline-button" href="schema-quan-ly-ban-hang.html">Xem lược đồ <span>›</span></a>
         </div>
       </section>
@@ -110,7 +110,7 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 3.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án cho Câu 26 đến Câu 53. Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - nút Copy ở đây chỉ mang tính hình thức thôi.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án cho Câu 26 đến Câu 53. Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - Nút Copy ở đây chỉ mang tính hình thức thôi.</p>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 26 · PHÉP CHIA QUAN HỆ</p>
@@ -126,8 +126,8 @@ WHERE NOT EXISTS (
     )
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Phép chia: tìm hóa đơn mà <strong>không tồn tại</strong> sản phẩm Singapore nào chưa xuất hiện trong <code>CTHD</code> của hóa đơn đó.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>SQL Server không có toán tử chia trực tiếp, nên phải lập luận ngược bằng <code>NOT EXISTS</code> lồng nhau - đây là cách chuẩn để giải các đề "mua tất cả/dạy tất cả".</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Phép chia: Tìm hóa đơn mà <strong>không tồn tại</strong> sản phẩm Singapore nào chưa xuất hiện trong <code>CTHD</code> của hóa đơn đó.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>SQL Server không có toán tử chia trực tiếp, nên phải lập luận ngược bằng <code>NOT EXISTS</code> lồng nhau - Đây là cách chuẩn để giải các đề "mua tất cả/dạy tất cả".</p></div>
               </div>
               <details><summary>Cách khác</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.SOHD
 FROM HOADON hd
@@ -156,7 +156,7 @@ AND NOT EXISTS (
 );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Y hệt Câu 26, chỉ thêm điều kiện <code>YEAR(NGHD) = 2006</code> trên hóa đơn ngoài cùng.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Điều kiện năm chỉ áp dụng cho hóa đơn đang xét (bảng ngoài), không liên quan gì đến phép chia bên trong - nên thêm thẳng vào <code>WHERE</code> của truy vấn chính.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Điều kiện năm chỉ áp dụng cho hóa đơn đang xét (bảng ngoài), không liên quan gì đến phép chia bên trong - Nên thêm thẳng vào <code>WHERE</code> của truy vấn chính.</p></div>
               </div>
             </div>
 
@@ -168,7 +168,7 @@ FROM HOADON
 WHERE MAKH IS NULL;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>MAKH IS NULL</code> đúng nghĩa với hóa đơn không gắn khách hàng thành viên nào.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không được viết <code>MAKH = NULL</code> - trong SQL, so sánh bằng với <code>NULL</code> luôn cho kết quả không xác định, phải dùng <code>IS NULL</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không được viết <code>MAKH = NULL</code> - Trong SQL, so sánh bằng với <code>NULL</code> luôn cho kết quả không xác định, phải dùng <code>IS NULL</code>.</p></div>
               </div>
             </div>
 
@@ -181,7 +181,7 @@ JOIN HOADON hd ON ct.SOHD = hd.SOHD
 WHERE YEAR(hd.NGHD) = 2006;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>COUNT(DISTINCT ...)</code> đếm số giá trị khác nhau, loại bỏ trùng lặp.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>1 sản phẩm có thể xuất hiện ở nhiều dòng <code>CTHD</code> (nhiều hóa đơn khác nhau) - nếu chỉ <code>COUNT(*)</code> sẽ đếm trùng, phải dùng <code>DISTINCT</code> trên <code>MASP</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>1 sản phẩm có thể xuất hiện ở nhiều dòng <code>CTHD</code> (nhiều hóa đơn khác nhau) - Nếu chỉ <code>COUNT(*)</code> sẽ đếm trùng, phải dùng <code>DISTINCT</code> trên <code>MASP</code>.</p></div>
               </div>
             </div>
 
@@ -192,7 +192,7 @@ WHERE YEAR(hd.NGHD) = 2006;</code></pre></div>
 FROM HOADON;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>MAX</code>/<code>MIN</code> tính trực tiếp trên toàn bộ cột <code>TRIGIA</code>, không cần <code>GROUP BY</code> vì chỉ cần 1 dòng kết quả duy nhất.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề chỉ hỏi giá trị cao nhất/thấp nhất (2 con số), chưa hỏi hóa đơn nào - nên không cần <code>JOIN</code> hay lọc thêm gì khác.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề chỉ hỏi giá trị cao nhất/thấp nhất (2 con số), chưa hỏi hóa đơn nào - Nên không cần <code>JOIN</code> hay lọc thêm gì khác.</p></div>
               </div>
             </div>
 
@@ -204,7 +204,7 @@ FROM HOADON
 WHERE YEAR(NGHD) = 2006;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>AVG</code> tính giá trị trung bình của các dòng còn lại sau khi <code>WHERE</code> đã lọc theo năm.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>WHERE</code> chạy trước hàm tổng hợp nên lọc năm ở đây là đúng chỗ - không cần <code>GROUP BY</code>/<code>HAVING</code> vì không tách theo nhóm nào cả.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>WHERE</code> chạy trước hàm tổng hợp nên lọc năm ở đây là đúng chỗ - Không cần <code>GROUP BY</code>/<code>HAVING</code> vì không tách theo nhóm nào cả.</p></div>
               </div>
             </div>
 
@@ -216,7 +216,7 @@ FROM HOADON
 WHERE YEAR(NGHD) = 2006;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>SUM(TRIGIA)</code> cộng dồn trị giá tất cả hóa đơn còn lại sau khi lọc năm.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Doanh thu" = tổng trị giá các hóa đơn, khác với "trung bình" ở Câu 31 - chỉ đổi <code>AVG</code> thành <code>SUM</code>, cấu trúc còn lại giữ nguyên.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Doanh thu" = tổng trị giá các hóa đơn, khác với "trung bình" ở Câu 31 - Chỉ đổi <code>AVG</code> thành <code>SUM</code>, cấu trúc còn lại giữ nguyên.</p></div>
               </div>
             </div>
 
@@ -231,7 +231,7 @@ AND TRIGIA = (
 );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery tính giá trị <code>MAX(TRIGIA)</code> <strong>chỉ trong năm 2006</strong>, rồi truy vấn ngoài lọc đúng hóa đơn có trị giá bằng con số đó.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cả subquery lẫn truy vấn ngoài đều phải lọc năm 2006 - nếu chỉ lọc 1 trong 2 chỗ, kết quả có thể lẫn hóa đơn của năm khác trùng trị giá với hóa đơn cao nhất năm 2006.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cả subquery lẫn truy vấn ngoài đều phải lọc năm 2006 - Nếu chỉ lọc 1 trong 2 chỗ, kết quả có thể lẫn hóa đơn của năm khác trùng trị giá với hóa đơn cao nhất năm 2006.</p></div>
               </div>
               <details><summary>Cách khác</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES SOHD
 FROM HOADON
@@ -249,7 +249,7 @@ WHERE YEAR(hd.NGHD) = 2006
 ORDER BY hd.TRIGIA DESC;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>TOP 1 WITH TIES ... ORDER BY TRIGIA DESC</code> lấy (các) hóa đơn cao nhất, kèm luôn thông tin khách hàng qua <code>JOIN</code>.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>WITH TIES</code> đảm bảo nếu có nhiều hóa đơn cùng đồng hạng cao nhất thì lấy đủ tất cả, không bỏ sót - khác với <code>TOP 1</code> thường chỉ lấy đúng 1 dòng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>WITH TIES</code> đảm bảo nếu có nhiều hóa đơn cùng đồng hạng cao nhất thì lấy đủ tất cả, không bỏ sót - Khác với <code>TOP 1</code> thường chỉ lấy đúng 1 dòng.</p></div>
               </div>
             </div>
 
@@ -275,7 +275,7 @@ WHERE GIA IN (
 );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>SELECT DISTINCT TOP 3 GIA ... ORDER BY GIA DESC</code> lấy ra 3 <strong>mức giá</strong> (không phải 3 sản phẩm) cao nhất, khác nhau.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Nhiều sản phẩm có thể trùng giá - nếu không <code>DISTINCT</code>, "3 mức giá cao nhất" có thể chỉ ra 1-2 mức giá thực sự do trùng lặp trong <code>TOP 3</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Nhiều sản phẩm có thể trùng giá - Nếu không <code>DISTINCT</code>, "3 mức giá cao nhất" có thể chỉ ra 1-2 mức giá thực sự do trùng lặp trong <code>TOP 3</code>.</p></div>
               </div>
             </div>
 
@@ -290,7 +290,7 @@ AND GIA IN (
 );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Giống Câu 36, thêm điều kiện <code>NUOCSX = 'Thai Lan'</code> ở truy vấn ngoài.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Subquery tính 3 mức giá cao nhất trên <strong>toàn bộ</strong> sản phẩm (không lọc nước sản xuất) - vì đề nói rõ "của tất cả các sản phẩm", chỉ lọc Thái Lan ở ngoài.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Subquery tính 3 mức giá cao nhất trên <strong>toàn bộ</strong> sản phẩm (không lọc nước sản xuất) - Vì đề nói rõ "của tất cả các sản phẩm", chỉ lọc Thái Lan ở ngoài.</p></div>
               </div>
             </div>
 
@@ -307,7 +307,7 @@ AND GIA IN (
 );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Khác Câu 37 ở chỗ subquery <strong>cũng</strong> lọc <code>NUOCSX = 'Trung Quoc'</code> - 3 mức giá cao nhất được tính riêng trong nhóm Trung Quốc.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề nói rõ "của sản phẩm do Trung Quốc sản xuất" (khác cách nói "của tất cả các sản phẩm" ở Câu 37) - đọc kỹ phần chú thích trong ngoặc để biết lọc ở subquery hay không.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề nói rõ "của sản phẩm do Trung Quốc sản xuất" (khác cách nói "của tất cả các sản phẩm" ở Câu 37) - Đọc kỹ phần chú thích trong ngoặc để biết lọc ở subquery hay không.</p></div>
               </div>
             </div>
 
@@ -319,7 +319,7 @@ FROM KHACHHANG
 ORDER BY DOANHSO DESC;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>TOP 3 WITH TIES</code> lấy đủ mọi khách hàng thuộc 3 mức doanh số cao nhất, kể cả khi nhiều người cùng 1 mức.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 35 ("3 khách hàng đầu tiên" - đúng 3 dòng), đây là "3 <strong>hạng</strong>" - nếu 2 khách hàng đồng hạng 3 thì cả 2 đều phải xuất hiện, nên bắt buộc dùng <code>WITH TIES</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 35 ("3 khách hàng đầu tiên" - Đúng 3 dòng), đây là "3 <strong>hạng</strong>" - Nếu 2 khách hàng đồng hạng 3 thì cả 2 đều phải xuất hiện, nên bắt buộc dùng <code>WITH TIES</code>.</p></div>
               </div>
               <details><summary>Cách khác</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAKH, HOTEN, DOANHSO
 FROM KHACHHANG
@@ -348,7 +348,7 @@ FROM SANPHAM
 GROUP BY NUOCSX;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY NUOCSX</code> gom sản phẩm theo từng nước, <code>COUNT(*)</code> đếm số sản phẩm trong mỗi nhóm.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Của <strong>từng</strong> nước sản xuất" là dấu hiệu rõ ràng của <code>GROUP BY</code> - khác Câu 40 chỉ hỏi 1 nước cụ thể (Trung Quốc).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Của <strong>từng</strong> nước sản xuất" là dấu hiệu rõ ràng của <code>GROUP BY</code> - Khác Câu 40 chỉ hỏi 1 nước cụ thể (Trung Quốc).</p></div>
               </div>
             </div>
 
@@ -360,7 +360,7 @@ FROM SANPHAM
 GROUP BY NUOCSX;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Có thể tính nhiều hàm tổng hợp (<code>MAX</code>, <code>MIN</code>, <code>AVG</code>) cùng lúc trong 1 <code>SELECT</code>, miễn là cùng theo 1 <code>GROUP BY</code>.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không cần viết 3 câu truy vấn riêng - mỗi hàm tổng hợp tự tính trên từng nhóm <code>NUOCSX</code> độc lập với nhau trong cùng 1 lượt quét dữ liệu.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không cần viết 3 câu truy vấn riêng - Mỗi hàm tổng hợp tự tính trên từng nhóm <code>NUOCSX</code> độc lập với nhau trong cùng 1 lượt quét dữ liệu.</p></div>
               </div>
             </div>
 
@@ -372,7 +372,7 @@ FROM HOADON
 GROUP BY NGHD;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY NGHD</code> gom các hóa đơn cùng ngày lập thành 1 nhóm, <code>SUM(TRIGIA)</code> cộng dồn trị giá trong ngày đó.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Mỗi ngày" nghĩa là tách kết quả theo từng giá trị <code>NGHD</code> khác nhau - đúng bản chất của <code>GROUP BY</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Mỗi ngày" nghĩa là tách kết quả theo từng giá trị <code>NGHD</code> khác nhau - Đúng bản chất của <code>GROUP BY</code>.</p></div>
               </div>
             </div>
 
@@ -386,7 +386,7 @@ WHERE YEAR(hd.NGHD) = 2006 AND MONTH(hd.NGHD) = 10
 GROUP BY ct.MASP;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>WHERE</code> lọc đúng tháng 10/2006 trước, sau đó <code>GROUP BY MASP</code> mới cộng dồn số lượng theo từng sản phẩm.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Số lượng nằm ở <code>CTHD</code> nhưng ngày lại nằm ở <code>HOADON</code> - phải <code>JOIN</code> 2 bảng lại mới lọc được đúng khoảng thời gian.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Số lượng nằm ở <code>CTHD</code> nhưng ngày lại nằm ở <code>HOADON</code> - Phải <code>JOIN</code> 2 bảng lại mới lọc được đúng khoảng thời gian.</p></div>
               </div>
             </div>
 
@@ -413,7 +413,7 @@ GROUP BY hd.SOHD
 HAVING COUNT(DISTINCT ct.MASP) >= 4;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>HAVING COUNT(DISTINCT MASP) >= 4</code> chỉ giữ lại hóa đơn có từ 4 mã sản phẩm khác nhau trở lên.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>"4 sản phẩm khác nhau" bắt buộc phải <code>DISTINCT</code> - nếu chỉ <code>COUNT(*)</code>, 1 sản phẩm mua số lượng nhiều vẫn có thể bị đếm là "nhiều sản phẩm" (sai).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"4 sản phẩm khác nhau" bắt buộc phải <code>DISTINCT</code> - Nếu chỉ <code>COUNT(*)</code>, 1 sản phẩm mua số lượng nhiều vẫn có thể bị đếm là "nhiều sản phẩm" (sai).</p></div>
               </div>
             </div>
 
@@ -457,7 +457,7 @@ GROUP BY MONTH(NGHD)
 ORDER BY DoanhThu DESC;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Tính doanh thu từng tháng như Câu 45, sau đó <code>ORDER BY DoanhThu DESC</code> + <code>TOP 1 WITH TIES</code> để lấy tháng cao nhất.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải tính xong doanh thu theo tháng (<code>GROUP BY</code>) rồi mới so sánh được tháng nào cao nhất - không thể lấy <code>MAX</code> trực tiếp vì còn cần biết đó là tháng mấy.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải tính xong doanh thu theo tháng (<code>GROUP BY</code>) rồi mới so sánh được tháng nào cao nhất - Không thể lấy <code>MAX</code> trực tiếp vì còn cần biết đó là tháng mấy.</p></div>
               </div>
             </div>
 
@@ -488,7 +488,7 @@ WHERE sp.GIA = (
     WHERE sp1.NUOCSX = sp.NUOCSX
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Correlated subquery: với mỗi dòng <code>sp</code> ở ngoài, subquery bên trong tự tính lại <code>MAX(GIA)</code> riêng cho đúng <code>NUOCSX</code> của dòng đó.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Correlated subquery: Với mỗi dòng <code>sp</code> ở ngoài, subquery bên trong tự tính lại <code>MAX(GIA)</code> riêng cho đúng <code>NUOCSX</code> của dòng đó.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 42 (chỉ cần con số tổng hợp), đề này cần biết luôn <code>MASP</code>/<code>TENSP</code> của sản phẩm giá cao nhất - <code>GROUP BY</code> thường không lấy kèm được tên sản phẩm, nên phải dùng correlated subquery.</p></div>
               </div>
             </div>
@@ -502,7 +502,7 @@ GROUP BY NUOCSX
 HAVING COUNT(DISTINCT GIA) >= 3;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>HAVING COUNT(DISTINCT GIA) >= 3</code> chỉ giữ lại nước có từ 3 <strong>mức giá khác nhau</strong> trở lên.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Lưu ý <code>DISTINCT</code> phải nằm trong cả <code>HAVING</code>, không chỉ ở tên cột hiển thị - nếu <code>HAVING</code> chỉ viết <code>COUNT(GIA) >= 3</code> (thiếu <code>DISTINCT</code>) thì lại đang đếm "ít nhất 3 sản phẩm" chứ không phải "3 mức giá khác nhau", sai với đề.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Lưu ý <code>DISTINCT</code> phải nằm trong cả <code>HAVING</code>, không chỉ ở tên cột hiển thị - Nếu <code>HAVING</code> chỉ viết <code>COUNT(GIA) >= 3</code> (thiếu <code>DISTINCT</code>) thì lại đang đếm "ít nhất 3 sản phẩm" chứ không phải "3 mức giá khác nhau", sai với đề.</p></div>
               </div>
             </div>
 
@@ -519,7 +519,7 @@ GROUP BY hd.MAKH, kh.HOTEN
 ORDER BY SLMH DESC;</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery lọc ra 10 khách hàng doanh số cao nhất trước, truy vấn ngoài chỉ đếm số lần mua hàng trong phạm vi 10 người đó.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là bài toán 2 tầng: "lọc top 10" và "tìm người mua nhiều lần nhất" là 2 tiêu chí khác nhau (doanh số vs. số lần mua) - không thể gộp chung 1 <code>ORDER BY</code> duy nhất, phải tách thành subquery riêng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là bài toán 2 tầng: "lọc top 10" và "tìm người mua nhiều lần nhất" là 2 tiêu chí khác nhau (doanh số vs. số lần mua) - Không thể gộp chung 1 <code>ORDER BY</code> duy nhất, phải tách thành subquery riêng.</p></div>
               </div>
             </div>
 

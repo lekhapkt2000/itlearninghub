@@ -382,7 +382,7 @@ WHERE Diem > (
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SinhVien
 SET HoTen = N'Nguyễn Văn Nam'
 WHERE MaSV = 'SV001';</code></pre></div>
-          <div class="inline-warning"><strong>Cực kỳ quan trọng:</strong> Không nên viết <code>UPDATE SinhVien SET HoTen = N'Nguyễn Văn Nam';</code> vì câu lệnh này sẽ cập nhật toàn bộ sinh viên.</div>
+          <div class="inline-danger"><strong>Không thể hoàn tác:</strong> Không nên viết <code>UPDATE SinhVien SET HoTen = N'Nguyễn Văn Nam';</code> vì thiếu <code>WHERE</code>, câu lệnh này sẽ cập nhật toàn bộ sinh viên.</div>
 
           <h3>DELETE</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien

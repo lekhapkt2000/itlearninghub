@@ -386,7 +386,7 @@ WHERE Diem > (
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SinhVien
 SET HoTen = N'Nguyễn Văn Nam'
 WHERE MaSV = 'SV001';</code></pre></div>
-          <div class="inline-warning"><strong>Extremely important:</strong> Don't write <code>UPDATE SinhVien SET HoTen = N'Nguyễn Văn Nam';</code> without a <code>WHERE</code>, since that statement would update every student.</div>
+          <div class="inline-danger"><strong>Cannot be undone:</strong> Don't write <code>UPDATE SinhVien SET HoTen = N'Nguyễn Văn Nam';</code> without a <code>WHERE</code>, since that statement would update every student.</div>
 
           <h3>DELETE</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien

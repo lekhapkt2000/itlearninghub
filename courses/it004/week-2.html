@@ -120,7 +120,7 @@ FROM NhanVien;</code></pre></div>
             <tr><td>Trần Bình</td><td>15000000</td><td>16500000</td></tr>
             <tr><td>Lê Cường</td><td>12000000</td><td>13200000</td></tr>
           </table></div>
-          <div class="inline-ok"><strong>Lưu ý:</strong> Toán tử số học có thể dùng trực tiếp trong <code>SELECT</code> để tạo giá trị tính toán mà không cần lưu thêm cột mới vào bảng.</div>
+          <p><strong>Lưu ý:</strong> Toán tử số học có thể dùng trực tiếp trong <code>SELECT</code> để tạo giá trị tính toán mà không cần lưu thêm cột mới vào bảng.</p>
 
           <h3>Toán tử so sánh</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -164,13 +164,16 @@ FROM NhanVien
 WHERE NOT MaPB = 'PB01';</code></pre></div>
 
           <h3>Toán tử đặc biệt</h3>
-          <div class="ascii-block">LIKE
-IN
-BETWEEN
-IS NULL
-IS NOT NULL
-ANY
-ALL</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Toán tử</th><th>Ý nghĩa</th></tr>
+            <tr><td><code>LIKE</code></td><td>So khớp chuỗi theo mẫu (pattern)</td></tr>
+            <tr><td><code>IN</code></td><td>Giá trị nằm trong một danh sách cho trước</td></tr>
+            <tr><td><code>BETWEEN</code></td><td>Giá trị nằm trong một khoảng</td></tr>
+            <tr><td><code>IS NULL</code></td><td>Giá trị chưa xác định (rỗng)</td></tr>
+            <tr><td><code>IS NOT NULL</code></td><td>Giá trị đã có (không rỗng)</td></tr>
+            <tr><td><code>ANY</code></td><td>Đúng với ít nhất một giá trị trong tập kết quả</td></tr>
+            <tr><td><code>ALL</code></td><td>Đúng với tất cả giá trị trong tập kết quả</td></tr>
+          </table></div>
           <p><code>LIKE</code> dùng để tìm theo mẫu (pattern), kết hợp với hai ký tự đại diện (wildcard):</p>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Ký tự đại diện</th><th>Ý nghĩa</th></tr>
@@ -240,13 +243,16 @@ WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
     SQRT(16) AS CanBacHai;</code></pre></div>
 
           <h3>Hàm xử lý chuỗi</h3>
-          <div class="ascii-block">CONCAT()
-LEN()
-SUBSTRING()
-TRIM()
-UPPER()
-LOWER()
-REPLACE()</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Hàm</th><th>Công dụng</th></tr>
+            <tr><td><code>CONCAT()</code></td><td>Nối chuỗi</td></tr>
+            <tr><td><code>LEN()</code></td><td>Đếm số ký tự</td></tr>
+            <tr><td><code>SUBSTRING()</code></td><td>Cắt một đoạn chuỗi</td></tr>
+            <tr><td><code>TRIM()</code></td><td>Xóa khoảng trắng thừa ở đầu/cuối</td></tr>
+            <tr><td><code>UPPER()</code></td><td>Chuyển thành chữ hoa</td></tr>
+            <tr><td><code>LOWER()</code></td><td>Chuyển thành chữ thường</td></tr>
+            <tr><td><code>REPLACE()</code></td><td>Thay thế một đoạn chuỗi</td></tr>
+          </table></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     HoTen,
     UPPER(HoTen) AS HoTenInHoa
@@ -257,12 +263,15 @@ FROM NhanVien;</code></pre></div>
 FROM NhanVien;</code></pre></div>
 
           <h3>Hàm xử lý ngày giờ</h3>
-          <div class="ascii-block">GETDATE()
-YEAR()
-MONTH()
-DAY()
-DATEADD()
-DATEDIFF()</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Hàm</th><th>Công dụng</th></tr>
+            <tr><td><code>GETDATE()</code></td><td>Lấy ngày giờ hiện tại</td></tr>
+            <tr><td><code>YEAR()</code></td><td>Lấy năm</td></tr>
+            <tr><td><code>MONTH()</code></td><td>Lấy tháng</td></tr>
+            <tr><td><code>DAY()</code></td><td>Lấy ngày</td></tr>
+            <tr><td><code>DATEADD()</code></td><td>Cộng/trừ một khoảng thời gian vào một ngày</td></tr>
+            <tr><td><code>DATEDIFF()</code></td><td>Tính khoảng cách giữa hai ngày</td></tr>
+          </table></div>
           <p>Lấy năm của ngày vào làm:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     HoTen,

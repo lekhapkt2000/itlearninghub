@@ -124,7 +124,7 @@ FROM NhanVien;</code></pre></div>
             <tr><td>Trần Bình</td><td>15000000</td><td>16500000</td></tr>
             <tr><td>Lê Cường</td><td>12000000</td><td>13200000</td></tr>
           </table></div>
-          <div class="inline-ok"><strong>Note:</strong> Arithmetic operators can be used directly inside <code>SELECT</code> to produce a computed value without saving a new column to the table.</div>
+          <p><strong>Note:</strong> Arithmetic operators can be used directly inside <code>SELECT</code> to produce a computed value without saving a new column to the table.</p>
 
           <h3>Comparison Operators</h3>
           <div class="table-wrap"><table class="ref-table">
@@ -168,13 +168,16 @@ FROM NhanVien
 WHERE NOT MaPB = 'PB01';</code></pre></div>
 
           <h3>Special Operators</h3>
-          <div class="ascii-block">LIKE
-IN
-BETWEEN
-IS NULL
-IS NOT NULL
-ANY
-ALL</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Operator</th><th>Meaning</th></tr>
+            <tr><td><code>LIKE</code></td><td>Matches a string against a pattern</td></tr>
+            <tr><td><code>IN</code></td><td>Value is one of a given list</td></tr>
+            <tr><td><code>BETWEEN</code></td><td>Value falls within a range</td></tr>
+            <tr><td><code>IS NULL</code></td><td>Value is undefined (empty)</td></tr>
+            <tr><td><code>IS NOT NULL</code></td><td>Value is present (not empty)</td></tr>
+            <tr><td><code>ANY</code></td><td>True for at least one value in the result set</td></tr>
+            <tr><td><code>ALL</code></td><td>True for every value in the result set</td></tr>
+          </table></div>
           <p><code>LIKE</code> - <code>%</code> represents any sequence of characters:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
 FROM NhanVien
@@ -225,13 +228,16 @@ WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
     SQRT(16) AS CanBacHai;</code></pre></div>
 
           <h3>String Functions</h3>
-          <div class="ascii-block">CONCAT()
-LEN()
-SUBSTRING()
-TRIM()
-UPPER()
-LOWER()
-REPLACE()</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Function</th><th>Purpose</th></tr>
+            <tr><td><code>CONCAT()</code></td><td>Concatenates strings</td></tr>
+            <tr><td><code>LEN()</code></td><td>Counts characters</td></tr>
+            <tr><td><code>SUBSTRING()</code></td><td>Extracts part of a string</td></tr>
+            <tr><td><code>TRIM()</code></td><td>Strips leading/trailing whitespace</td></tr>
+            <tr><td><code>UPPER()</code></td><td>Converts to uppercase</td></tr>
+            <tr><td><code>LOWER()</code></td><td>Converts to lowercase</td></tr>
+            <tr><td><code>REPLACE()</code></td><td>Replaces part of a string</td></tr>
+          </table></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     HoTen,
     UPPER(HoTen) AS HoTenInHoa
@@ -242,12 +248,15 @@ FROM NhanVien;</code></pre></div>
 FROM NhanVien;</code></pre></div>
 
           <h3>Date and Time Functions</h3>
-          <div class="ascii-block">GETDATE()
-YEAR()
-MONTH()
-DAY()
-DATEADD()
-DATEDIFF()</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Function</th><th>Purpose</th></tr>
+            <tr><td><code>GETDATE()</code></td><td>Returns the current date and time</td></tr>
+            <tr><td><code>YEAR()</code></td><td>Extracts the year</td></tr>
+            <tr><td><code>MONTH()</code></td><td>Extracts the month</td></tr>
+            <tr><td><code>DAY()</code></td><td>Extracts the day</td></tr>
+            <tr><td><code>DATEADD()</code></td><td>Adds/subtracts an interval to/from a date</td></tr>
+            <tr><td><code>DATEDIFF()</code></td><td>Computes the difference between two dates</td></tr>
+          </table></div>
           <p>Get the year an employee was hired:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     HoTen,

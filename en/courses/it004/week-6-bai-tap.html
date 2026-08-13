@@ -32,7 +32,7 @@
     <div class="week-header">
       <span class="week-tag">WEEK 6 · PRACTICE EXERCISES</span>
       <h1>Exercises &amp; Answer Key</h1>
-      <div class="week-meta"><span>IT004</span><span>Comprehensive Review</span><span>QuanLyDaoTao</span></div>
+      <div class="week-meta"><span>IT004</span><span>Comprehensive Review</span><span>Goods Management</span></div>
       <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px">The exercise statement is open to read freely. The answer key and detailed explanations are reserved for students currently enrolled in the IT004 practicum class and require an access code from the instructor.</p>
     </div>
 
@@ -40,28 +40,8 @@
 
       <section class="lesson-section" style="padding-top:0;border-top:0" id="de-bai">
         <p class="eyebrow">EXERCISE</p>
-        <h2>Practice requirements - 15 questions</h2>
-        <p>Based on a training management scenario, students complete the following 15 questions in order:</p>
-        <ol class="question-list">
-          <li>Create the database <code>QuanLyDaoTao</code></li>
-          <li>Create the 4 tables <code>LOP</code>, <code>SINHVIEN</code>, <code>MONHOC</code>, <code>KETQUA</code> and set up the full Primary Key, Foreign Key, NOT NULL, UNIQUE (where needed), and CHECK (where needed) constraints</li>
-          <li>Insert sample data</li>
-          <li>Display all students</li>
-          <li>Display students belonging to class <code>HTTT01</code></li>
-          <li>Display subjects worth 4 credits</li>
-          <li>Display the list of Student ID, full name, class name</li>
-          <li>Display Student ID, full name, subject name, score using <code>JOIN</code></li>
-          <li>Calculate the average score of each student (hint: <code>GROUP BY MaSV</code>)</li>
-          <li>Find students with an average score of 8.0 or above</li>
-          <li>Find the highest score for the <code>IT004</code> subject</li>
-          <li>Count the number of students in each class</li>
-          <li>Find the subject with the highest average score</li>
-          <li>Find the student with the highest <code>IT004</code> score</li>
-          <li>Display all students, including those with no academic results yet (hint: <code>LEFT JOIN</code>)</li>
-        </ol>
-
-        <h3>Bonus review exercise - Goods Management (36 questions)</h3>
-        <p>An optional extra practice set using the classic "Suppliers - Parts - Shipments" schema, a very common example in database courses and exams.</p>
+        <h2>Practice requirements - Goods Management (36 questions)</h2>
+        <p>A comprehensive review exercise using the classic "Suppliers - Parts - Shipments" schema, a very common example in database courses and exams. Students complete the following 36 questions in order:</p>
 
         <div class="schema-def">
           <p class="schema-def-head">NHACUNGCAP (<u>MANCC</u>, TENNCC, TRANGTHAI, THANHPHO)</p>
@@ -98,6 +78,30 @@
           <tr><td><code>MAPT</code></td><td><code>varchar(5)</code></td><td>Part code - primary key, foreign key to PHUTUNG</td></tr>
           <tr><td><code>SOLUONG</code></td><td><code>numeric(5)</code></td><td>Quantity of parts shipped</td></tr>
         </table></div>
+
+        <h3>Relationship diagram</h3>
+        <div class="er-diagram">
+          <svg viewBox="0 0 500 220" role="img" aria-label="NHACUNGCAP (1) and PHUTUNG (1) are both referenced by VANCHUYEN (N)">
+            <defs>
+              <marker id="erArrowHH" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10Z" style="fill:var(--primary)"/>
+              </marker>
+            </defs>
+            <line x1="320" y1="28" x2="185" y2="28" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowHH)"/>
+            <line x1="360" y1="46" x2="290" y2="150" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowHH)"/>
+
+            <rect x="20" y="10" width="160" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="100" y="33" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">NHACUNGCAP</text>
+
+            <rect x="320" y="10" width="160" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="400" y="33" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">VANCHUYEN</text>
+
+            <rect x="170" y="150" width="160" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+            <text x="250" y="173" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">PHUTUNG</text>
+          </svg>
+        </div>
+        <p class="er-relation">NHACUNGCAP (1) ➜ VANCHUYEN (N): a supplier can ship many different part rows.</p>
+        <p class="er-relation">PHUTUNG (1) ➜ VANCHUYEN (N): a part can be shipped by many suppliers.</p>
 
         <div class="download-card">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
@@ -167,39 +171,34 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified - you now have access to the Week 6 answer.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Below is a sample question to illustrate how the answer is presented - it will be replaced with the real comprehensive review solution.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Below is a sample question to illustrate how the answer is presented - it will be replaced with the real Goods Management solution.</p>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 1 (SAMPLE) · JOIN + GROUP BY + ORDER BY</p>
-              <h3>Class with the most registered members</h3>
-              <p><strong>Exercise:</strong> Find the class name with the highest number of registered members.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 lt.TenLop, COUNT(*) AS SoHocVien
-FROM LopTap lt
-JOIN DangKy dk ON lt.MaLop = dk.MaLop
-GROUP BY lt.TenLop
-ORDER BY COUNT(*) DESC;</code></pre></div>
+              <p><strong>Exercise:</strong> Which supplier shipped the most parts? Show the supplier name and quantity of parts shipped.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES ncc.TENNCC, SUM(vc.SOLUONG) AS TongSoLuong
+FROM NHACUNGCAP ncc
+JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+GROUP BY ncc.TENNCC
+ORDER BY TongSoLuong DESC;</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Combines <code>JOIN</code> (to get the class name), <code>GROUP BY</code> (to count per class), and <code>ORDER BY ... DESC</code> + <code>TOP 1</code> (to take the class with the most members).</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>This is a typical example of chaining several learned techniques together: you must <code>JOIN</code> first to get the class name, <code>GROUP BY</code> to count per class, and only then sort and take the first row - doing the steps out of order produces a wrong result or a syntax error.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Combines <code>JOIN</code> (to get the supplier name), <code>GROUP BY</code> (to total the quantity per supplier), and <code>ORDER BY ... DESC</code> + <code>TOP 1</code> (to take the supplier with the most).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This is a typical example of chaining several learned techniques together: you must <code>JOIN</code> first to get the name, <code>GROUP BY</code> to total per supplier, and only then sort and take the first row - doing the steps out of order produces a wrong result or a syntax error.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">QUESTION 2 (SAMPLE) · CREATE TABLE + CONSTRAINT + DML</p>
-              <h3>Comprehensive exercise: create a table and manipulate data</h3>
-              <p><strong>Exercise:</strong> Create the table <code>THANHVIEN(MaTV, HoTen, Email)</code> with <code>Email</code> unique, then insert 1 sample row.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE ThanhVien
-(
-    MaTV INT PRIMARY KEY,
-    HoTen NVARCHAR(50) NOT NULL,
-    Email NVARCHAR(100) UNIQUE
-);
+              <p class="eyebrow">QUESTION 2 (SAMPLE) · INSERT + UPDATE</p>
+              <p><strong>Exercise:</strong> Write the SQL statement to insert a new supplier: S6, Duncan, 30, Paris. Then change S6's city to Sydney.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO NHACUNGCAP (MANCC, TENNCC, TRANGTHAI, THANHPHO)
+VALUES ('S6', 'Duncan', 30, 'Paris');
 
-INSERT INTO ThanhVien (MaTV, HoTen, Email)
-VALUES (1, N'Nguyễn Văn An', 'an@uit.edu.vn');</code></pre></div>
+UPDATE NHACUNGCAP
+SET THANHPHO = 'Sydney'
+WHERE MANCC = 'S6';</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>UNIQUE</code> ensures no 2 rows have the same <code>Email</code> value; this is a different constraint from <code>PRIMARY KEY</code> (a table has only 1 primary key but can have multiple <code>UNIQUE</code> columns).</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p><code>MaTV</code> is already the primary key that identifies each record, but the exercise also requires <code>Email</code> to be non-duplicate - this is a separate business rule, so <code>UNIQUE</code> must be added rather than reusing <code>PRIMARY KEY</code>.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>INSERT</code> adds 1 new supplier row; <code>UPDATE ... WHERE MANCC = 'S6'</code> only modifies the row just added.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The <code>WHERE</code> clause in <code>UPDATE</code> must filter to the exact <code>MANCC</code> - forgetting <code>WHERE</code> would change every supplier in the table to "Sydney."</p></div>
               </div>
             </div>
 

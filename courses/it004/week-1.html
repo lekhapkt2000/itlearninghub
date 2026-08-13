@@ -99,6 +99,15 @@
             <tr><td>MaLop <code>(FK)</code></td></tr>
           </table></div>
           <div class="inline-warning">Lỗi hay gặp khi vẽ sơ đồ: đặt chiều mũi tên ngược, khiến người đọc hiểu nhầm là "1 Sinh viên có nhiều Lớp". Chiều đúng phải đi từ bảng cha xuống bảng con: <strong>LOP</strong> là bảng cha (giữ khóa chính <code>MaLop</code>), <strong>SINHVIEN</strong> là bảng con (giữ khóa ngoại <code>MaLop</code> tham chiếu đến LOP) - Một Lớp có nhiều Sinh viên (1-N), không phải ngược lại.</div>
+
+          <h3>Hệ quản trị cơ sở dữ liệu (DBMS)</h3>
+          <div class="definition"><strong>Hệ quản trị cơ sở dữ liệu (DBMS - Database Management System)</strong> là phần mềm chuyên dụng dùng để tạo lập, quản lý và vận hành CSDL, cho phép người dùng truy cập, điều khiển và xử lý dữ liệu một cách hiệu quả mà không cần thao tác trực tiếp lên file lưu trữ.</div>
+          <p>Một số DBMS phổ biến:</p>
+          <div class="ascii-block">SQL Server ➜ DBMS của Microsoft, phổ biến trong doanh nghiệp - dùng trong môn học này
+MySQL      ➜ DBMS mã nguồn mở, phổ biến cho ứng dụng web
+Oracle     ➜ DBMS mạnh, dùng trong tổ chức lớn, hệ thống phức tạp
+PostgreSQL, SQLite, MongoDB... ➜ Nhiều lựa chọn khác tùy nhu cầu</div>
+          <p>CSDL và DBMS kết hợp với nhau tạo thành một <strong>hệ cơ sở dữ liệu</strong> hoàn chỉnh: người dùng/lập trình viên gửi truy vấn thông qua chương trình ứng dụng, DBMS tiếp nhận và xử lý truy vấn đó rồi truy xuất dữ liệu tương ứng từ CSDL trả về.</p>
         </section>
 
         <!-- 02 - SSMS -->
@@ -274,6 +283,14 @@ VALUES (1, N'Nguyễn Văn An', 'HTTT2022.1');</code></pre></div>
           </table></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">NgaySinh DATE
 NgayLap DATETIME</code></pre></div>
+
+          <div class="inline-ok"><strong>Lưu ý khi nhập dữ liệu ngày tháng:</strong> Giá trị ngày tháng phải đặt trong cặp dấu nháy đơn và theo đúng định dạng mặc định <code>'yyyy-mm-dd'</code>. Ví dụ <code>'2004-05-20'</code> là ngày 20 tháng 5 năm 2004.</div>
+          <p>Có thể đổi định dạng nhập bằng lệnh <code>SET DATEFORMAT</code>. Ví dụ, để nhập theo thứ tự ngày-tháng-năm <code>'dd-mm-yyyy'</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SET DATEFORMAT dmy;
+
+INSERT INTO SinhVien (MaSV, HoTen, NgaySinh, Lop)
+VALUES (104, N'Phạm Thị Dung', '20-05-2004', N'HTTT2022.1');</code></pre></div>
+          <p>Lệnh <code>SET DATEFORMAT</code> chỉ ảnh hưởng đến phiên làm việc (session) hiện tại trong SSMS, không thay đổi vĩnh viễn cấu hình Database.</p>
         </section>
 
         <!-- 04 - Database -->
@@ -308,6 +325,15 @@ NgayLap DATETIME</code></pre></div>
             <tr><td>2</td><td>Trần Thị Bình</td><td>2004-08-15</td></tr>
             <tr><td>3</td><td>Lê Văn Cường</td><td>2004-11-02</td></tr>
           </table></div>
+
+          <p>SQL sử dụng một số thuật ngữ riêng, tương ứng với các thuật ngữ trong lý thuyết CSDL quan hệ:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Thuật ngữ SQL</th><th>Thuật ngữ CSDL</th></tr>
+            <tr><td>Bảng (Table)</td><td>Quan hệ (Relation)</td></tr>
+            <tr><td>Cột (Column)</td><td>Thuộc tính (Attribute)</td></tr>
+            <tr><td>Dòng dữ liệu (Row)</td><td>Bộ giá trị (Tuple)</td></tr>
+          </table></div>
+          <p>Để định nghĩa một bảng trong SQL, cần xác định: tên bảng, các cột, kiểu dữ liệu của từng cột và các ràng buộc toàn vẹn (RBTV) trên nó.</p>
 
           <h3>Tạo Table</h3>
           <p>Cú pháp cơ bản:</p>
@@ -360,7 +386,15 @@ ALTER COLUMN NgaySinh DATE;</code></pre></div>
           <p class="eyebrow">06 · RÀNG BUỘC TOÀN VẸN - CONSTRAINTS</p>
           <h2>Constraints</h2>
           <div class="definition"><strong>Constraint</strong> giúp đảm bảo dữ liệu trong Database tuân thủ các quy tắc nhất định.</div>
-          <p>Các ràng buộc quan trọng trong Tuần 1:</p>
+
+          <h3>Phân loại ràng buộc toàn vẹn</h3>
+          <p>Ràng buộc toàn vẹn trong SQL Server được chia làm 2 loại chính:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loại</th><th>Mô tả</th></tr>
+            <tr><td>Ràng buộc đơn giản <span class="table-tag">Simple constraints</span></td><td>Dùng từ khóa <code>CONSTRAINT</code> để mô tả trực tiếp trong <code>CREATE TABLE</code>/<code>ALTER TABLE</code> - áp dụng cho hầu hết các quy tắc toàn vẹn thông thường.</td></tr>
+            <tr><td>Ràng buộc phức tạp <span class="table-tag">Complex constraints</span></td><td>Dùng <code>TRIGGER</code> để xử lý các quy tắc toàn vẹn phức tạp hơn mà <code>CONSTRAINT</code> không hỗ trợ được (ví dụ ràng buộc liên quan đến nhiều bảng, nhiều dòng dữ liệu).</td></tr>
+          </table></div>
+          <p>Tuần 1 chỉ tập trung vào các ràng buộc đơn giản dưới đây - <code>TRIGGER</code> sẽ được học ở các tuần sau:</p>
           <div class="ascii-block">PRIMARY KEY
 FOREIGN KEY
 UNIQUE
@@ -377,6 +411,18 @@ DEFAULT</div>
     NgaySinh DATE
 );</code></pre></div>
           <p>Khi đó không được phép có hai sinh viên cùng <code>MaSV</code>.</p>
+
+          <h4>Khóa chính nhiều thuộc tính (Composite Primary Key)</h4>
+          <p>Đôi khi khóa chính không chỉ có 1 cột mà là <strong>tổ hợp nhiều cột</strong> - thường gặp ở các bảng "chi tiết" biểu diễn quan hệ N-N. Ví dụ bảng CTHD (chi tiết hóa đơn) không có cột mã riêng, mà dùng cặp <code>(SOHD, MASP)</code> để xác định duy nhất một dòng:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE CTHD
+(
+    SOHD INT,
+    MASP CHAR(4),
+    SL INT,
+
+    CONSTRAINT PK_CTHD PRIMARY KEY (SOHD, MASP)
+);</code></pre></div>
+          <p>Đặt <code>CONSTRAINT</code> ở dòng cuối cùng là cách duy nhất để khai báo khóa chính gồm nhiều cột - không thể viết <code>PRIMARY KEY</code> ngay sau từng cột riêng lẻ trong trường hợp này.</p>
 
           <h3>NOT NULL</h3>
           <p><code>NOT NULL</code> yêu cầu cột phải có giá trị.</p>
@@ -561,7 +607,12 @@ FROM SinhVien;</code></pre></div>
 SELECT INTO
     ↓
 SINHVIEN_BACKUP</div>
-          <p>Nếu chỉ muốn sao chép một phần dữ liệu:</p>
+          <p>Nếu chỉ muốn sao chép một phần dữ liệu, có thể lọc bằng <code>WHERE</code> kết hợp toán tử <code>LIKE</code> - dùng để so khớp chuỗi theo một <strong>mẫu (pattern)</strong> với 2 ký tự đại diện:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Ký tự</th><th>Ý nghĩa</th><th>Ví dụ</th></tr>
+            <tr><td><code>_</code></td><td>Đại diện cho đúng 1 ký tự</td><td><code>LIKE 'a__'</code> - chuỗi bắt đầu bằng "a", theo sau đúng 2 ký tự bất kỳ</td></tr>
+            <tr><td><code>%</code></td><td>Đại diện cho 0, 1 hoặc nhiều ký tự</td><td><code>LIKE 'HTTT%'</code> - chuỗi bắt đầu bằng "HTTT", theo sau là bất kỳ đoạn nào</td></tr>
+          </table></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 INTO SinhVien_HTTT
 FROM SinhVien

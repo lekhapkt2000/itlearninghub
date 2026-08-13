@@ -103,6 +103,15 @@
             <tr><td>MaLop <code>(FK)</code></td></tr>
           </table></div>
           <div class="inline-warning">Common mistake when drawing this diagram: pointing the arrow the wrong way, which makes readers think "1 student has many classes." The correct direction goes from parent down to child: <strong>LOP</strong> is the parent table (holds the primary key <code>MaLop</code>), <strong>SINHVIEN</strong> is the child table (holds the foreign key <code>MaLop</code> referencing LOP) - one class has many students (1-N), not the other way around.</div>
+
+          <h3>Database Management System (DBMS)</h3>
+          <div class="definition"><strong>A Database Management System (DBMS)</strong> is dedicated software used to create, manage, and operate a database, letting users access, control, and process data efficiently without touching the underlying storage files directly.</div>
+          <p>Some common DBMS products:</p>
+          <div class="ascii-block">SQL Server ➜ Microsoft's DBMS, widely used in enterprises - used in this course
+MySQL      ➜ Open-source DBMS, popular for web applications
+Oracle     ➜ A powerful DBMS used by large organizations, complex systems
+PostgreSQL, SQLite, MongoDB... ➜ Many other options depending on the need</div>
+          <p>A database and a DBMS together form a complete <strong>database system</strong>: users/developers send queries through an application program, the DBMS receives and processes those queries, then retrieves the matching data from the database.</p>
         </section>
 
         <!-- 02 - SSMS -->
@@ -278,6 +287,14 @@ VALUES (1, N'Nguyễn Văn An', 'HTTT2022.1');</code></pre></div>
           </table></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">NgaySinh DATE
 NgayLap DATETIME</code></pre></div>
+
+          <div class="inline-ok"><strong>Note on entering dates:</strong> Date values must be enclosed in single quotes and follow the default format <code>'yyyy-mm-dd'</code>. For example, <code>'2004-05-20'</code> means May 20, 2004.</div>
+          <p>You can change the expected input format with <code>SET DATEFORMAT</code>. For example, to enter dates as day-month-year <code>'dd-mm-yyyy'</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SET DATEFORMAT dmy;
+
+INSERT INTO SinhVien (MaSV, HoTen, NgaySinh, Lop)
+VALUES (104, N'Phạm Thị Dung', '20-05-2004', N'HTTT2022.1');</code></pre></div>
+          <p><code>SET DATEFORMAT</code> only affects the current SSMS session - it does not permanently change the database configuration.</p>
         </section>
 
         <!-- 04 - Database -->
@@ -312,6 +329,15 @@ NgayLap DATETIME</code></pre></div>
             <tr><td>2</td><td>Trần Thị Bình</td><td>2004-08-15</td></tr>
             <tr><td>3</td><td>Lê Văn Cường</td><td>2004-11-02</td></tr>
           </table></div>
+
+          <p>SQL uses its own set of terms, corresponding to the terms used in relational database theory:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>SQL Term</th><th>Database Term</th></tr>
+            <tr><td>Table</td><td>Relation</td></tr>
+            <tr><td>Column</td><td>Attribute</td></tr>
+            <tr><td>Row</td><td>Tuple</td></tr>
+          </table></div>
+          <p>To define a table in SQL, you need: the table name, its columns, each column's data type, and any integrity constraints on it.</p>
 
           <h3>Creating a Table</h3>
           <p>Basic syntax:</p>
@@ -364,7 +390,15 @@ ALTER COLUMN NgaySinh DATE;</code></pre></div>
           <p class="eyebrow">06 · INTEGRITY CONSTRAINTS</p>
           <h2>Constraints</h2>
           <div class="definition">A <strong>Constraint</strong> helps ensure that data in the Database follows certain rules.</div>
-          <p>The key constraints covered in Week 1:</p>
+
+          <h3>Types of Integrity Constraints</h3>
+          <p>Integrity constraints in SQL Server fall into 2 main categories:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Type</th><th>Description</th></tr>
+            <tr><td>Simple constraints</td><td>Described directly in <code>CREATE TABLE</code>/<code>ALTER TABLE</code> using the <code>CONSTRAINT</code> keyword - covers most everyday integrity rules.</td></tr>
+            <tr><td>Complex constraints</td><td>Use a <code>TRIGGER</code> to enforce more complex integrity rules that <code>CONSTRAINT</code> can't handle (e.g. rules spanning multiple tables or multiple rows).</td></tr>
+          </table></div>
+          <p>Week 1 only covers the simple constraints below - <code>TRIGGER</code> is covered in later weeks:</p>
           <div class="ascii-block">PRIMARY KEY
 FOREIGN KEY
 UNIQUE
@@ -381,6 +415,18 @@ DEFAULT</div>
     NgaySinh DATE
 );</code></pre></div>
           <p>This means no two students can share the same <code>MaSV</code>.</p>
+
+          <h4>Composite Primary Key</h4>
+          <p>Sometimes the primary key isn't a single column but a <strong>combination of several columns</strong> - common in "detail" tables representing N-N relationships. For example, an CTHD (invoice line item) table has no dedicated ID column, and instead uses the pair <code>(SOHD, MASP)</code> to uniquely identify each row:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE CTHD
+(
+    SOHD INT,
+    MASP CHAR(4),
+    SL INT,
+
+    CONSTRAINT PK_CTHD PRIMARY KEY (SOHD, MASP)
+);</code></pre></div>
+          <p>Placing the <code>CONSTRAINT</code> on its own line at the end is the only way to declare a multi-column primary key - you cannot write <code>PRIMARY KEY</code> after each individual column in this case.</p>
 
           <h3>NOT NULL</h3>
           <p><code>NOT NULL</code> requires a column to always have a value.</p>
@@ -565,7 +611,12 @@ FROM SinhVien;</code></pre></div>
 SELECT INTO
     ↓
 SINHVIEN_BACKUP</div>
-          <p>To copy only part of the data:</p>
+          <p>To copy only part of the data, filter with <code>WHERE</code> combined with the <code>LIKE</code> operator - used to match strings against a <strong>pattern</strong> with 2 wildcard characters:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Character</th><th>Meaning</th><th>Example</th></tr>
+            <tr><td><code>_</code></td><td>Matches exactly 1 character</td><td><code>LIKE 'a__'</code> - a string starting with "a", followed by exactly 2 more characters</td></tr>
+            <tr><td><code>%</code></td><td>Matches 0, 1, or many characters</td><td><code>LIKE 'HTTT%'</code> - a string starting with "HTTT", followed by anything</td></tr>
+          </table></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 INTO SinhVien_HTTT
 FROM SinhVien

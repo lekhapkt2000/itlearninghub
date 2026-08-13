@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IS355 Week 1 - Green Finance Overview & Blockchain Basics. English translation coming soon; the full lesson is available in Vietnamese.">
+  <meta name="description" content="IS355 Week 1 - Green Finance Overview & Blockchain Basics: ESG, Carbon Credit, Blockchain architecture, cryptography, PoW/PoS, Python/Web3.py practice, Vyper v0.4.3 Smart Contracts, and Carbon Footprint research direction.">
   <title>Week 1 · Green Finance Overview & Blockchain Basics - IS355</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
@@ -28,35 +28,453 @@
   <main class="course-shell">
     <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IS355</a><span>/</span>Week 1</p>
 
-    <div class="course-header">
-      <div>
-        <span class="course-code">IS355 · WEEK 1</span>
-        <h1>Green Finance Overview &amp; Blockchain Basics</h1>
-        <p class="course-en">Tổng quan Tài chính Xanh &amp; Cơ sở Blockchain</p>
-      </div>
-      <span class="week-status">English translation in progress</span>
+    <div class="week-header">
+      <span class="week-tag">WEEK 01 · GREEN FINANCE &amp; BLOCKCHAIN</span>
+      <h1>Green Finance Overview &amp; Blockchain Basics</h1>
+      <div class="week-meta"><span>ESG</span><span>Cryptography</span><span>Vyper v0.4.3</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Objective:</strong> Understand the connection between green finance, ESG, Carbon Credit, and Blockchain technology; get familiar with Blockchain architecture (PoW, PoS, Cryptography); set up a development environment (Python, Web3.py, Vyper); and identify On-chain data sources for Carbon Footprint research.</p>
     </div>
 
-    <section class="panel">
-      <p class="eyebrow">TRANSLATION IN PROGRESS</p>
-      <h2>This lesson is available in Vietnamese</h2>
-      <p class="panel-lead">Week 1 covers ESG and green finance, Carbon Credit, Blockchain architecture and cryptography, PoW vs. PoS, setting up a Python/Web3.py/Vyper environment, and writing your first Vyper v0.4.3 smart contracts. The full lesson content was just finalized in Vietnamese and is being translated into English next.</p>
-      <div class="hero-actions" style="margin-top:22px">
-        <a class="ghost-button" href="../../../courses/is355/week-1.html">Read Week 1 in Vietnamese <span>›</span></a>
+    <nav class="course-nav" aria-label="IS355 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html" class="active">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <a href="week-6.html">Week 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 7 <small>Coming Soon</small></span>
+      <a href="project-lab.html">Project Lab</a>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 1 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#boi-canh" data-toc><b>01</b> Context &amp; ESG</a>
+        <a href="#tai-chinh-xanh" data-toc><b>02</b> Green finance &amp; data</a>
+        <a href="#carbon-credit" data-toc><b>03</b> Carbon Credit</a>
+        <a href="#blockchain-co-so" data-toc><b>04</b> Blockchain &amp; cryptography</a>
+        <a href="#thuc-hanh-moi-truong" data-toc><b>05</b> Environment setup</a>
+        <a href="#demo-crypto" data-toc><b>06</b> Cryptography demo</a>
+        <a href="#ket-noi-testnet" data-toc><b>07</b> Connecting to Testnet</a>
+        <a href="#vyper-co-ban" data-toc><b>08</b> Vyper: Basic syntax</a>
+        <a href="#vyper-mutability" data-toc><b>09</b> Vyper: Mutability</a>
+        <a href="#vyper-event" data-toc><b>10</b> Vyper: Event Logging</a>
+        <a href="#data-research" data-toc><b>11</b> Data &amp; Research</a>
+        <a href="#bai-tap" data-toc><b>12</b> Homework</a>
+        <a href="#checklist" data-toc><b>13</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Boi canh & ESG -->
+        <section class="lesson-section" id="boi-canh">
+          <p class="eyebrow">01 · PART A - THEORY</p>
+          <h2>Context: Finance oriented toward sustainable development (ESG)</h2>
+          <p>Modern financial activity does not focus on profit alone - it also assesses a business's impact on the environment, society, and governance.</p>
+          <ul>
+            <li><strong>E (Environmental):</strong> The environment, Carbon emissions, energy, climate change <em>(the focus of IS355)</em>.</li>
+            <li><strong>S (Social):</strong> Workers, communities, customer rights.</li>
+            <li><strong>G (Governance):</strong> Governance, transparency, business ethics, risk control.</li>
+          </ul>
+        </section>
+
+        <!-- 02 - Tai chinh xanh & Data -->
+        <section class="lesson-section" id="tai-chinh-xanh">
+          <p class="eyebrow">02 · GREEN FINANCE &amp; THE DATA PROBLEM</p>
+          <h2>Green Finance &amp; the Data Problem (ESG Data)</h2>
+          <div class="definition"><strong>Green Finance</strong> is the use of financial resources to support activities that have a positive impact, or reduce a negative impact, on the environment (renewable energy, green transport, reducing Carbon emissions).</div>
+          <div class="flow-diagram">
+            <span class="flow-box">ESG Score / Green Project</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk Assessment</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Credit Decision</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Interest Rate / Limit Incentives</span>
+          </div>
+
+          <h3>The data challenge (Data Integrity &amp; Transparency)</h3>
+          <div class="inline-warning">When a company claims "We have cut Carbon emissions by 30%," banks and investors need to verify: Where does the data come from? Has it been altered? Who audited it? Blockchain acts as an immutable ledger to solve this data integrity problem.</div>
+        </section>
+
+        <!-- 03 - Tin chi Carbon -->
+        <section class="lesson-section" id="carbon-credit">
+          <p class="eyebrow">03 · CARBON CREDIT</p>
+          <h2>Carbon Credit</h2>
+          <div class="definition">A Carbon Credit is a unit representing the right to emit, or the amount of greenhouse gas (1 tonne of CO<sub>2</sub>), that has been reduced/removed.</div>
+          <div class="flow-diagram">
+            <span class="flow-box">Green Project</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Emission Measurement</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Verification (Audit)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Carbon Credit Issuance</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Trade / Offset</span>
+          </div>
+        </section>
+
+        <!-- 04 - Blockchain, crypto, consensus -->
+        <section class="lesson-section" id="blockchain-co-so">
+          <p class="eyebrow">04 · BLOCKCHAIN, CRYPTOGRAPHY &amp; CONSENSUS</p>
+          <h2>What is Blockchain? Cryptography &amp; Consensus Mechanisms</h2>
+          <div class="definition">A Blockchain is an <strong>append-only database</strong> made up of blocks tightly linked together using cryptographic hash functions.</div>
+          <p>The chain structure is linked via the previous block's hash (Parent Hash):</p>
+          <div class="er-side-by-side">
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th colspan="2">BLOCK 1</th></tr>
+              <tr><td>ID</td><td>1</td></tr>
+              <tr><td>Parent Hash</td><td>0x000...</td></tr>
+              <tr><td>Timestamp</td><td>1718000000</td></tr>
+              <tr><td>Transactions</td><td>[...]</td></tr>
+            </table></div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th colspan="2">BLOCK 2</th></tr>
+              <tr><td>ID</td><td>2</td></tr>
+              <tr><td>Parent Hash</td><td>Hash(B1)</td></tr>
+              <tr><td>Timestamp</td><td>1718000012</td></tr>
+              <tr><td>Transactions</td><td>[...]</td></tr>
+            </table></div>
+          </div>
+          <p class="er-relation">↓ Block 2 links to Block 1 via Parent Hash = Hash(Block 1).</p>
+
+          <h3>Traditional databases vs Blockchain</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Criteria</th><th>Traditional database</th><th>Blockchain</th></tr>
+            <tr><td>Model</td><td>Centralized</td><td>Distributed</td></tr>
+            <tr><td>Management</td><td>A single organization / Admin</td><td>A network of many Nodes</td></tr>
+            <tr><td>Data modification</td><td>Can overwrite/delete (CRUD)</td><td>Append-only</td></tr>
+            <tr><td>Consensus</td><td>Not required</td><td>Mandatory (PoW, PoS...)</td></tr>
+            <tr><td>Transparency &amp; Audit</td><td>Depends on the system log</td><td>Transparent, publicly encoded</td></tr>
+          </table></div>
+          <div class="inline-warning"><strong>A system design principle:</strong> Don't adopt Blockchain just because it's trendy. It must start from <code>Problem Statement</code> ➜ <code>Requirement Analysis</code> ➜ <code>Blockchain Suitability</code>.</div>
+
+          <h3>Asymmetric-key cryptography &amp; Digital Signatures</h3>
+          <p>User authentication relies on a key pair: a <strong>Private Key</strong> (kept secret, used to sign transactions) and a <strong>Public Key</strong> (public, used by the network to verify).</p>
+          <div class="ascii-block">Message + Private Key ➜ Digital Signature
+Signature + Message + Public Key ➜ Verification (True / False)</div>
+
+          <h3>PoW vs PoS &amp; environmental impact</h3>
+          <ul>
+            <li><strong>Proof of Work (PoW):</strong> Uses computational power (Mining) to solve a cryptographic puzzle. Very secure, but consumes a huge amount of electricity.</li>
+            <li><strong>Proof of Stake (PoS):</strong> Uses staked assets (Stake) to select a Validator to create the next block. Cuts power consumption by more than 99.9% compared to PoW.</li>
+          </ul>
+          <p>A model for estimating On-chain Carbon Footprint:</p>
+          <div class="ascii-block">Carbon Emission (tCO₂e)
+        =
+Energy Consumption (kWh) × Emission Factor (kgCO₂e/kWh)</div>
+        </section>
+
+        <!-- 05 - Thiet lap moi truong -->
+        <section class="lesson-section" id="thuc-hanh-moi-truong">
+          <p class="eyebrow">05 · PART B - HANDS-ON PRACTICE</p>
+          <h2>Setting up a Python, OpenSSL &amp; Web3.py environment</h2>
+
+          <h3>Step 1: Create a Python virtual environment</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">python3 -m venv .venv
+# Trên Windows:
+.venv\Scripts\activate
+# Trên Linux/macOS:
+source .venv/bin/activate</code></pre></div>
+
+          <h3>Step 2: Install the required libraries</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">pip install web3 vyper cryptography</code></pre></div>
+        </section>
+
+        <!-- 06 - Demo crypto -->
+        <section class="lesson-section" id="demo-crypto">
+          <p class="eyebrow">06 · CRYPTOGRAPHY DEMO</p>
+          <h2>Cryptography demo: Creating a Block &amp; a digital signature in Python</h2>
+
+          <h3>Example 1: Simulating a linked Hash chain (basic Blockchain)</h3>
+          <p>Create the file <code>simple_chain.py</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">import hashlib
+import json
+
+class Block:
+    def __init__(self, block_id, history, parent_hash="0"):
+        self.id = block_id
+        self.history = history
+        self.parent_hash = parent_hash
+
+    def compute_hash(self):
+        block_string = json.dumps(self.__dict__, sort_keys=True)
+        return hashlib.sha256(block_string.encode('utf-8')).hexdigest()
+
+# Tạo Genesis Block
+block_A = Block(1, "Ty likes cat")
+hash_A = block_A.compute_hash()
+
+# Tạo Block kế tiếp
+block_B = Block(2, "Teo likes dog", parent_hash=hash_A)
+hash_B = block_B.compute_hash()
+
+print(f"Block A Hash: {hash_A}")
+print(f"Block B Parent Hash: {block_B.parent_hash}")</code></pre></div>
+
+          <h3>Example 2: Generating keys &amp; signing a digital signature with the <code>cryptography</code> library</h3>
+          <p>Create the file <code>digital_signature_demo.py</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import hashes, serialization
+
+# 1. Tạo cặp khóa RSA
+private_key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
+public_key = private_key.public_key()
+
+# 2. Tạo thông điệp và ký chữ ký số
+message = b"Ty likes cat"
+signature = private_key.sign(
+    message,
+    padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),
+    hashes.SHA256()
+)
+
+# 3. Xác thực chữ ký số thành công
+try:
+    public_key.verify(
+        signature,
+        message,
+        padding.PSS(mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH),
+        hashes.SHA256()
+    )
+    print("Xác thực chữ ký hợp lệ!")
+except Exception as e:
+    print("Chữ ký KHÔNG hợp lệ!", e)</code></pre></div>
+        </section>
+
+        <!-- 07 - Ket noi Testnet -->
+        <section class="lesson-section" id="ket-noi-testnet">
+          <p class="eyebrow">07 · CONNECTING TO TESTNET</p>
+          <h2>Interacting with a Testnet using Python (web3.py)</h2>
+          <p>Create the file <code>connect_testnet.py</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from web3 import Web3
+
+# Kết nối RPC Node (Ví dụ: Sepolia Testnet)
+rpc_url = "https://rpc.sepolia.org"
+w3 = Web3(Web3.HTTPProvider(rpc_url))
+
+if w3.is_connected():
+    print("Kết nối thành công đến Testnet!")
+    print(f"Block mới nhất: {w3.eth.block_number}")
+else:
+    print("Kết nối thất bại!")</code></pre></div>
+        </section>
+
+        <!-- 08 - Vyper co ban -->
+        <section class="lesson-section" id="vyper-co-ban">
+          <p class="eyebrow">08 · PART C - SMART CONTRACTS WITH VYPER (V0.4.3)</p>
+          <h2>Vyper: Basic syntax &amp; data types</h2>
+          <p>Vyper is a programming language designed for the EVM that prioritizes safety, with syntax similar to Python. Create the file <code>DataType.vy</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+# Kiểu dữ liệu cơ bản
+is_active: bool
+var_int: int128
+var_uint: uint256
+owner_wallet: address
+data_hash: bytes32
+author_name: String[100]
+
+# Struct & Mapping
+struct Permission:
+    write: bool
+    execute: bool
+
+my_permission: Permission
+donations: HashMap[address, uint256]
+
+@deploy
+def __init__():
+    self.is_active = True
+    self.var_uint = 100
+    self.owner_wallet = msg.sender
+    self.author_name = "IS355 Student"
+    self.my_permission = Permission(write=True, execute=False)</code></pre></div>
+        </section>
+
+        <!-- 09 - Vyper mutability -->
+        <section class="lesson-section" id="vyper-mutability">
+          <p class="eyebrow">09 · VYPER: SCOPE &amp; MUTABILITY</p>
+          <h2>Vyper: Scope &amp; Mutability Annotations</h2>
+          <p>Create the file <code>Annotations.vy</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+stored_data: uint256
+
+# @pure: Không đọc, không ghi dữ liệu trạng thái
+@external
+@pure
+def add(x: uint256, y: uint256) -> uint256:
+    return x + y
+
+# @view: Chỉ đọc dữ liệu trạng thái, không thay đổi trạng thái
+@external
+@view
+def read_data() -> uint256:
+    return self.stored_data
+
+# @nonpayable: Thay đổi trạng thái nhưng KHÔNG nhận ETH
+@external
+@nonpayable
+def set_data(new_value: uint256):
+    self.stored_data = new_value
+
+# @payable: Thay đổi trạng thái và CÓ THỂ nhận ETH
+@external
+@payable
+def deposit():
+    assert msg.value > 0, "So tien gui phai lon hon 0"</code></pre></div>
+        </section>
+
+        <!-- 10 - Vyper event logging -->
+        <section class="lesson-section" id="vyper-event">
+          <p class="eyebrow">10 · VYPER: EVENT LOGGING</p>
+          <h2>Vyper: Environment variables &amp; Event Logging</h2>
+          <p>Create the file <code>EventLogging.vy</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+# Khai báo sự kiện
+event CarbonCreditIssued:
+    issuer: indexed(address)
+    amount: uint256
+    timestamp: uint256
+
+@external
+@nonpayable
+def issue_credit(amount: uint256):
+    # Sử dụng các biến môi trường: msg.sender, block.timestamp
+    log CarbonCreditIssued(msg.sender, amount, block.timestamp)</code></pre></div>
+        </section>
+
+        <!-- 11 - Data & Research -->
+        <section class="lesson-section" id="data-research">
+          <p class="eyebrow">11 · PART D - DATA &amp; RESEARCH</p>
+          <h2>Modeling a Carbon Footprint forecasting problem from On-chain data</h2>
+          <div class="flow-diagram">
+            <span class="flow-box">On-chain Data</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data Preprocessing</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">ML Model</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Carbon Emission Prediction</span>
+          </div>
+
+          <h3>Suggested dataset (Features &amp; Target)</h3>
+          <ul>
+            <li><strong>X (Features):</strong> <code>Transaction Count</code>, <code>Active Addresses</code>, <code>Gas Used</code>, <code>Network Hashrate / Active Validators</code>.</li>
+            <li><strong>Y (Target):</strong> <code>Estimated Carbon Emission (tCO₂e)</code>.</li>
+          </ul>
+
+          <h3>Recommended research process</h3>
+          <ol>
+            <li>Survey historical data from On-chain Explorer sources (Etherscan, Green Software Foundation API)</li>
+            <li>Build a Baseline Model (Linear Regression)</li>
+            <li>Experiment with Traditional ML Models (Random Forest, XGBoost)</li>
+            <li>Evaluate using MAE, RMSE, R² metrics</li>
+          </ol>
+        </section>
+
+        <!-- 12 - Bai tap ve nha -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">12 · PART E - HOMEWORK</p>
+          <h2>Homework</h2>
+
+          <h3>Theory &amp; analysis exercises</h3>
+          <p><strong>Exercise 01 (Essay):</strong> Analyze the question "Is Blockchain the right technology for every green finance problem?" Use 1 real-world example to illustrate your argument (500-800 words).</p>
+          <p><strong>Exercise 02 (Python digital signature):</strong> Write a Python program illustrating this scenario:</p>
+          <ul>
+            <li>Ty creates a digital signature for the message <code>"Ty likes cat"</code></li>
+            <li>Teo deliberately tampers with the message to <code>"Ty hates cat"</code></li>
+            <li>Run the signature verification function and explain why the system detects the tampering</li>
+          </ul>
+
+          <h3>Smart Contract hands-on exercises (Vyper v0.4.3)</h3>
+          <p><strong>Exercise 03 (Storage &amp; Payable):</strong> Write a fund-management smart contract that lets users deposit ETH (<code>deposit</code>), check their personal balance (<code>HashMap[address, uint256]</code>), and withdraw their own funds (<code>withdraw</code>).</p>
+          <p><strong>Exercise 04 (Advanced - Document Notary):</strong> Write a document-notarization Smart Contract in Vyper that meets these requirements:</p>
+          <ul>
+            <li>A <code>register_document(doc_hash: bytes32)</code> function: stores the Hash, Sender, and Timestamp, and emits a <code>DocumentRegistered</code> event</li>
+            <li>An <code>add_signature(doc_hash: bytes32, sig: String[256])</code> function: lets only the registrant attach a digital signature to that document, and emits a <code>SignatureAdded</code> event</li>
+            <li>A <code>verify_document(doc_hash: bytes32)</code> function: checks the existence and validity of a document</li>
+          </ul>
+
+          <h3>Research proposal exercise</h3>
+          <p><strong>Exercise 05 (Research Proposal):</strong> Draft a short (1-2 page) group research proposal on: "Forecasting the Carbon Footprint of the Ethereum blockchain after its transition to PoS using Machine Learning." Clearly define the Research Problem, Dataset, Features, and the intended Model.</p>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Academic integrity policy</h3>
+            <p>Absolutely no copying or reusing another student's work for submission. Students must complete their own assignments honestly.</p>
+          </div>
+        </section>
+
+        <!-- 13 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">13 · WEEK 1 COMPLETION CHECKLIST</p>
+          <h2>Self-check</h2>
+          <ul class="lesson-checklist">
+            <li>Theory: Can explain ESG, Green Finance, Carbon Credit, Block/Transaction architecture, PoW vs PoS</li>
+            <li>Environment: Activated a Python virtual environment, successfully installed web3, vyper, cryptography</li>
+            <li>Cryptography: Successfully ran the Python Hash chain and digital signature verification source code</li>
+            <li>Vyper Contract: Successfully compiled and deployed a simple Vyper contract on Remix IDE or a local environment</li>
+            <li>Research: Chose a Research Question and a feature set for the Carbon Footprint problem</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="index.html"><span class="nav-dir">‹ PREVIOUS</span><span class="nav-title">Course Overview</span></a>
+          <a href="week-2.html" class="next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 2: Identity Security &amp; Financial Data Protection</span></a>
+        </nav>
       </div>
-    </section>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">YOU ARE LEARNING</span>
+          <ul class="checklist">
+            <li data-section="boi-canh"><b>○</b> Context &amp; ESG</li>
+            <li data-section="tai-chinh-xanh"><b>○</b> Green finance &amp; data</li>
+            <li data-section="carbon-credit"><b>○</b> Carbon Credit</li>
+            <li data-section="blockchain-co-so"><b>○</b> Blockchain &amp; cryptography</li>
+            <li data-section="thuc-hanh-moi-truong"><b>○</b> Environment setup</li>
+            <li data-section="demo-crypto"><b>○</b> Cryptography demo</li>
+            <li data-section="ket-noi-testnet"><b>○</b> Connecting to Testnet</li>
+            <li data-section="vyper-co-ban"><b>○</b> Vyper: Basic syntax</li>
+            <li data-section="vyper-mutability"><b>○</b> Vyper: Mutability</li>
+            <li data-section="vyper-event"><b>○</b> Vyper: Event Logging</li>
+            <li data-section="data-research"><b>○</b> Data &amp; Research</li>
+            <li data-section="bai-tap"><b>○</b> Homework</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Hands-on materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Homework</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Vyper v0.4.3: remember to declare the correct mutability (@pure/@view/@nonpayable/@payable) for each function.</span>
+        </div>
+      </aside>
+    </div>
   </main>
 
   <footer>
-    <div class="footer-grid">
+        <div class="footer-grid">
       <div class="footer-brand">
-        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
-        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">A learning resource hub for Information Technology students</p>
       </div>
-      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
     </div>
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
 </body>
 </html>

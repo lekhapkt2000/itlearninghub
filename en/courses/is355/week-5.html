@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Week 5 - Decentralized Finance (DeFi) & Green Banking: Liquidity Pool, P2P Lending, collateral, ESG Score, the GreenLending Smart Contract, pytest unit testing, and Machine Learning credit risk forecasting.">
+  <title>Week 5 · Decentralized Finance (DeFi) & Green Banking - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=42">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="../../../courses/is355/week-5.html">VI</a><a href="week-5.html" class="active">EN</a></div><button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">IS355 Overview <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IS355</a><span>/</span>Week 5</p>
+
+    <div class="week-header">
+      <span class="week-tag">WEEK 05 · DEFI &amp; GREEN BANKING</span>
+      <h1>Decentralized Finance (DeFi) &amp; Green Banking</h1>
+      <div class="week-meta"><span>DeFi Lending</span><span>ESG Score</span><span>Vyper v0.4.3</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Topic:</strong> Liquidity Pool, P2P Lending, collateral, interest rates, ESG Score, and Blockchain applications in green finance and banking.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IS355 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html" class="active">Week 5</a>
+      <a href="week-6.html">Week 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 7 <small>Coming Soon</small></span>
+      <a href="project-lab.html">Project Lab</a>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 5 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#defi-la-gi" data-toc><b>01</b> What is DeFi?</a>
+        <a href="#liquidity-pool" data-toc><b>02</b> Liquidity Pool</a>
+        <a href="#p2p-lending" data-toc><b>03</b> P2P Lending</a>
+        <a href="#collateral" data-toc><b>04</b> Collateral</a>
+        <a href="#liquidation" data-toc><b>05</b> Liquidation</a>
+        <a href="#green-banking" data-toc><b>06</b> Green Banking &amp; ESG</a>
+        <a href="#esg-lending" data-toc><b>07</b> ESG-based Lending &amp; Oracle</a>
+        <a href="#thuc-hanh-contract" data-toc><b>08</b> GreenLending Smart Contract</a>
+        <a href="#thuc-hanh-pytest" data-toc><b>09</b> Unit testing with pytest</a>
+        <a href="#bai-tap" data-toc><b>10</b> Homework</a>
+        <a href="#data-ml" data-toc><b>11</b> Data &amp; Machine Learning</a>
+        <a href="#mini-project" data-toc><b>12</b> Mini Project &amp; Dashboard</a>
+        <a href="#dinh-huong-do-an" data-toc><b>13</b> Project directions</a>
+        <a href="#thao-luan" data-toc><b>14</b> Discussion questions</a>
+        <a href="#checklist" data-toc><b>15</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - DeFi la gi -->
+        <section class="lesson-section" id="defi-la-gi">
+          <p class="eyebrow">01 · PART A - DEFI OVERVIEW</p>
+          <h2>What is DeFi?</h2>
+          <div class="definition"><strong>DeFi - Decentralized Finance</strong> is an ecosystem of financial services implemented through Smart Contracts on the Blockchain, without necessarily requiring a direct intermediary organization for each step.</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Criteria</th><th>Traditional finance</th><th>DeFi</th></tr>
+            <tr><td>Intermediary</td><td>Bank/financial institution</td><td>Smart Contract</td></tr>
+            <tr><td>Account</td><td>Bank account</td><td>Blockchain Wallet</td></tr>
+            <tr><td>Transactions</td><td>Through an intermediary system</td><td>On-chain</td></tr>
+            <tr><td>Transparency</td><td>Depends on the institution</td><td>On-chain data is auditable</td></tr>
+            <tr><td>Risk</td><td>Bank/Credit Risk</td><td>Smart Contract/Oracle/Liquidity Risk</td></tr>
+          </table></div>
+          <div class="inline-warning"><strong>DeFi does not mean risk-free</strong> - It shifts part of the risk from a financial intermediary onto code, the market, and Blockchain mechanics (Smart Contract Risk, Liquidity Risk, Default Risk, Liquidation Risk, Oracle Risk).</div>
+        </section>
+
+        <!-- 02 - Liquidity Pool -->
+        <section class="lesson-section" id="liquidity-pool">
+          <p class="eyebrow">02 · PART B - LIQUIDITY POOL</p>
+          <h2>Liquidity Pool</h2>
+          <p>Instead of transferring directly between two parties, DeFi can use a shared Pool: multiple <strong>Liquidity Providers (LP)</strong> deposit assets into the Pool, and borrowers can borrow from the Pool according to the Smart Contract's rules.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Alice, Bob, Carol (LP)</span>
+            <span class="flow-arrow">↓ Deposit</span>
+            <span class="flow-box">Liquidity Pool</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Borrowers</span>
+          </div>
+          <p>Liquidity providers can earn Interest + Protocol Rewards, but bear Smart Contract/Market/Liquidity/Protocol risk. Borrowers get faster access to capital but must pay Interest, provide Collateral, and face the possibility of Liquidation.</p>
+        </section>
+
+        <!-- 03 - P2P Lending -->
+        <section class="lesson-section" id="p2p-lending">
+          <p class="eyebrow">03 · DEFI LENDING &amp; P2P LENDING</p>
+          <h2>DeFi Lending &amp; P2P Lending</h2>
+          <p><strong>Peer-to-Peer Lending</strong> is a model where lenders and borrowers deal directly with each other through a Smart Contract:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Lender (Alice)</span>
+            <span class="flow-arrow has-label">↓ Deposit</span>
+            <span class="flow-box">Smart Contract</span>
+            <span class="flow-arrow has-label">↓ Loan</span>
+            <span class="flow-box">Borrower (Bob)</span>
+            <span class="flow-arrow has-label">↓ Repayment + Interest</span>
+            <span class="flow-box">Smart Contract ➜ Lender</span>
+          </div>
+        </section>
+
+        <!-- 04 - Collateral -->
+        <section class="lesson-section" id="collateral">
+          <p class="eyebrow">04 · COLLATERAL</p>
+          <h2>Collateral &amp; the Collateral Ratio</h2>
+          <p>What if the borrower doesn't repay? Many DeFi models use <strong>Overcollateralization</strong> to solve this problem.</p>
+          <div class="ascii-block">Collateral Ratio = (Collateral Value / Loan Value) × 100%</div>
+          <p><strong>Example:</strong> Collateral = $15,000, Loan = $10,000 ➜ Collateral Ratio = 150%.</p>
+        </section>
+
+        <!-- 05 - Liquidation -->
+        <section class="lesson-section" id="liquidation">
+          <p class="eyebrow">05 · LIQUIDATION</p>
+          <h2>Liquidation</h2>
+          <p>If the collateral's price drops, the Collateral Ratio drops with it. When that ratio falls below a set level (the <strong>Liquidation Threshold</strong>), the Smart Contract can trigger Liquidation.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Check Collateral Ratio</span>
+            <span class="flow-arrow has-label">↓ Ratio ≥ Threshold?</span>
+            <span class="flow-box">Yes ➜ Continue / No ➜ Liquidation</span>
+          </div>
+          <div class="inline-ok"><strong>Example:</strong> Collateral = $15,000, Loan = $10,000 ➜ Ratio = 150%. The Collateral price drops to $11,000 ➜ Ratio = 110%. If the Liquidation Threshold = 120%, the loan is liquidated because 110% &lt; 120%.</div>
+        </section>
+
+        <!-- 06 - Green Banking -->
+        <section class="lesson-section" id="green-banking">
+          <p class="eyebrow">06 · PART C - GREEN BANKING</p>
+          <h2>Green Banking &amp; ESG Score</h2>
+          <p>In the context of this course, <strong>Green Banking</strong> is the application of financial technology to support environmental projects, renewable energy, clean production, and ESG (Environmental, Social, Governance) investment.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Criteria</th><th>Traditional bank</th><th>DeFi Green Lending Protocol</th></tr>
+            <tr><td>Credit verification</td><td>Financial statements, manual review</td><td>Smart Contract + Data Oracle (ESG Score)</td></tr>
+            <tr><td>Collateral</td><td>Real estate, fixed assets</td><td>Tokenized assets (Overcollateralization)</td></tr>
+            <tr><td>Interest pricing</td><td>Bank's fixed/floating rate schedule</td><td>Dynamic Interest Rate based on ESG Score (ESG up ➜ Rate down)</td></tr>
+            <tr><td>Handling default</td><td>Litigation, traditional debt collection</td><td>Automatic On-chain liquidation when Collateral Ratio &lt; Liquidation Threshold</td></tr>
+          </table></div>
+          <p>Example ESG Score composed of 3 groups of metrics:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Criteria</th><th>Score</th></tr>
+            <tr><td>Environmental</td><td>90</td></tr>
+            <tr><td>Social</td><td>75</td></tr>
+            <tr><td>Governance</td><td>80</td></tr>
+            <tr><td><strong>Composite ESG Score</strong></td><td><strong>82</strong></td></tr>
+          </table></div>
+        </section>
+
+        <!-- 07 - ESG-based Lending & Oracle -->
+        <section class="lesson-section" id="esg-lending">
+          <p class="eyebrow">07 · ESG-BASED LENDING &amp; ORACLE</p>
+          <h2>ESG-based Lending, automation &amp; the Oracle problem</h2>
+          <p>Idea: a company with a good ESG Score gets better loan terms. This is only a <strong>simulated rule for the exercise</strong>, not an actual credit-pricing framework:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>ESG Score</th><th>Interest Rate</th></tr>
+            <tr><td>90-100</td><td>5%</td></tr>
+            <tr><td>80-89</td><td>6%</td></tr>
+            <tr><td>70-79</td><td>7%</td></tr>
+            <tr><td>&lt;70</td><td>9%</td></tr>
+          </table></div>
+          <p>Where does the Smart Contract get the ESG Score from? The Blockchain does not inherently know the ESG Score - The data lives in an ESG Database, Company Report, IoT, Auditor, or External API, and must be brought in via an <strong>Oracle</strong>:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">ESG Data (Off-chain)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Oracle</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Smart Contract</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Loan Amount + Interest Rate</span>
+          </div>
+        </section>
+
+        <!-- 08 - Thuc hanh Smart Contract -->
+        <section class="lesson-section" id="thuc-hanh-contract">
+          <p class="eyebrow">08 · PART D - SMART CONTRACT PRACTICE</p>
+          <h2>The <code>GreenLending.vy</code> Smart Contract</h2>
+          <p>A contract simulating a green lending system, managing borrowers, loans, collateral, ESG Score, interest rate, and loan status:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+"""
+@title GreenLending
+@notice Smart Contract mô phỏng cho vay xanh với lãi suất điều chỉnh theo ESG Score
+"""
+
+enum LoanStatus:
+    ACTIVE
+    PAID
+    LIQUIDATED
+
+event LoanCreated:
+    loan_id: indexed(uint256)
+    borrower: indexed(address)
+    principal: uint256
+    collateral: uint256
+    esg_score: uint256
+    interest_rate: uint256
+
+event LoanRepaid:
+    loan_id: indexed(uint256)
+    total_paid: uint256
+
+event LoanLiquidated:
+    loan_id: indexed(uint256)
+    collateral_ratio: uint256
+
+event ESGUpdated:
+    loan_id: indexed(uint256)
+    old_score: uint256
+    new_score: uint256
+
+struct Loan:
+    borrower: address
+    principal: uint256
+    collateral: uint256
+    interest_rate: uint256
+    esg_score: uint256
+    start_time: uint256
+    status: LoanStatus
+
+LIQUIDATION_THRESHOLD: constant(uint256) = 120  # %
+
+admin: public(address)
+oracle: public(address)
+loan_count: public(uint256)
+loans: public(HashMap[uint256, Loan])
+
+@deploy
+def __init__():
+    self.admin = msg.sender
+    self.oracle = msg.sender
+    self.loan_count = 0
+
+@internal
+@pure
+def calculate_rate(esg_score: uint256) -> uint256:
+    if esg_score >= 90:
+        return 5  # 5% APY cho doanh nghiệp xanh xuất sắc
+    elif esg_score >= 80:
+        return 6  # 6% APY
+    elif esg_score >= 70:
+        return 7  # 7% APY
+    return 9      # 9% APY phạt doanh nghiệp có chỉ số ESG thấp
+
+@external
+def createLoan(borrower: address, principal: uint256, collateral: uint256, esg_score: uint256) -> uint256:
+    assert msg.sender == self.admin, "Only Admin can create loan"
+    assert collateral * 100 / principal >= LIQUIDATION_THRESHOLD, "Collateral below threshold"
+
+    rate: uint256 = self.calculate_rate(esg_score)
+    loan_id: uint256 = self.loan_count
+
+    self.loans[loan_id] = Loan(
+        borrower=borrower,
+        principal=principal,
+        collateral=collateral,
+        interest_rate=rate,
+        esg_score=esg_score,
+        start_time=block.timestamp,
+        status=LoanStatus.ACTIVE
+    )
+    self.loan_count += 1
+
+    log LoanCreated(loan_id, borrower, principal, collateral, esg_score, rate)
+    return loan_id
+
+@view
+@external
+def getCollateralRatio(loan_id: uint256) -> uint256:
+    loan: Loan = self.loans[loan_id]
+    return loan.collateral * 100 / loan.principal
+
+@external
+def updateESGScore(loan_id: uint256, new_score: uint256):
+    assert msg.sender == self.oracle, "Only Oracle can update ESG score"
+    loan: Loan = self.loans[loan_id]
+    assert loan.status == LoanStatus.ACTIVE, "Loan is not active"
+
+    old_score: uint256 = loan.esg_score
+    self.loans[loan_id].esg_score = new_score
+    self.loans[loan_id].interest_rate = self.calculate_rate(new_score)
+
+    log ESGUpdated(loan_id, old_score, new_score)
+
+@external
+def repayLoan(loan_id: uint256):
+    loan: Loan = self.loans[loan_id]
+    assert loan.status == LoanStatus.ACTIVE, "Loan is not active"
+    assert msg.sender == loan.borrower, "Only borrower can repay"
+
+    elapsed: uint256 = block.timestamp - Loan.start_time
+    interest: uint256 = loan.principal * loan.interest_rate * elapsed / (100 * 365 * 86400)
+    total_paid: uint256 = loan.principal + interest
+
+    self.loans[loan_id].status = LoanStatus.PAID
+    log LoanRepaid(loan_id, total_paid)
+
+@external
+def liquidateLoan(loan_id: uint256, current_collateral_value: uint256):
+    assert msg.sender == self.admin, "Only Admin can trigger liquidation"
+    loan: Loan = self.loans[loan_id]
+    assert loan.status == LoanStatus.ACTIVE, "Loan is not active"
+
+    ratio: uint256 = current_collateral_value * 100 / loan.principal
+    assert ratio < LIQUIDATION_THRESHOLD, "Collateral ratio still above threshold"
+
+    self.loans[loan_id].status = LoanStatus.LIQUIDATED
+    log LoanLiquidated(loan_id, ratio)</code></pre></div>
+          <div class="inline-warning"><strong>Note:</strong> This logic is a teaching illustration for a Smart Contract, not the interest calculation model or liquidation process of an actual bank/protocol.</div>
+        </section>
+
+        <!-- 09 - Unit Test pytest -->
+        <section class="lesson-section" id="thuc-hanh-pytest">
+          <p class="eyebrow">09 · UNIT TESTING WITH PYTEST</p>
+          <h2>A <code>liquidateLoan</code> &amp; ESG Oracle test suite with pytest</h2>
+          <p>Use the Ape Framework together with <code>pytest</code> to automatically test the contract's most important functions - Especially <code>liquidateLoan()</code> and <code>updateESGScore()</code>. Create the file <code>tests/test_green_lending.py</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">import pytest
+from ape import project
+
+@pytest.fixture
+def admin(accounts):
+    return accounts[0]
+
+@pytest.fixture
+def borrower(accounts):
+    return accounts[1]
+
+@pytest.fixture
+def green_lending(admin, project):
+    return admin.deploy(project.GreenLending)
+
+def test_create_loan_sets_rate_from_esg_score(green_lending, admin, borrower):
+    loan_id = green_lending.createLoan(borrower, 10_000, 15_000, 85, sender=admin)
+    loan = green_lending.loans(loan_id)
+    assert loan.interest_rate == 6
+
+def test_oracle_updates_esg_score_and_recalculates_rate(green_lending, admin, borrower):
+    loan_id = green_lending.createLoan(borrower, 10_000, 15_000, 85, sender=admin)
+
+    # Oracle cập nhật ESG Score mới (tăng) cho khoản vay
+    green_lending.updateESGScore(loan_id, 92, sender=admin)
+    loan = green_lending.loans(loan_id)
+
+    assert loan.esg_score == 92
+    assert loan.interest_rate == 5  # Lãi suất giảm khi ESG tăng
+
+def test_update_esg_score_rejects_non_oracle_caller(green_lending, admin, borrower):
+    loan_id = green_lending.createLoan(borrower, 10_000, 15_000, 85, sender=admin)
+
+    with pytest.raises(Exception):
+        green_lending.updateESGScore(loan_id, 95, sender=borrower)
+
+def test_liquidate_loan_when_ratio_drops_below_threshold(green_lending, admin, borrower):
+    loan_id = green_lending.createLoan(borrower, 10_000, 15_000, 85, sender=admin)
+
+    # Giá Collateral giảm xuống 11,000 -> Ratio = 110% < 120% threshold
+    green_lending.liquidateLoan(loan_id, 11_000, sender=admin)
+    loan = green_lending.loans(loan_id)
+
+    assert loan.status == 2  # LIQUIDATED
+
+def test_liquidate_loan_rejects_when_ratio_still_safe(green_lending, admin, borrower):
+    loan_id = green_lending.createLoan(borrower, 10_000, 15_000, 85, sender=admin)
+
+    # Collateral vẫn giữ 15,000 -> Ratio = 150% > 120% threshold, không đủ điều kiện thanh lý
+    with pytest.raises(Exception):
+        green_lending.liquidateLoan(loan_id, 15_000, sender=admin)</code></pre></div>
+          <p>Run the whole test suite with:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">ape test tests/test_green_lending.py -v</code></pre></div>
+          <div class="inline-ok">Students should add further test cases for <code>repayLoan()</code> and the case where <code>createLoan()</code> is rejected because the initial Collateral Ratio is already below the Liquidation Threshold.</div>
+        </section>
+
+        <!-- 10 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">10 · HOMEWORK</p>
+          <h2>Homework</h2>
+
+          <h3>Exercise 1 - Create a Green Loan</h3>
+          <p>Create Loan #001 with Principal = 10,000, Collateral = 15,000, ESG Score = 85. Determine the Interest Rate the Smart Contract computes.</p>
+
+          <h3>Exercise 2 - A low-ESG loan</h3>
+          <p>Create Loan #002 with Principal = 10,000, Collateral = 15,000, ESG Score = 65. The result is Interest Rate = 9% - Explain why.</p>
+
+          <h3>Exercise 3 - Repayment</h3>
+          <p>Given Principal = 10,000, Rate = 6%, Time = 1 year. Compute the Interest and Total Repayment, then call <code>repayLoan()</code> and check that Status = PAID.</p>
+
+          <h3>Exercise 4 - Liquidation</h3>
+          <p>Create a loan with Collateral = 15,000, Loan = 10,000. Simulate the Collateral value dropping to $11,000, check the Collateral Ratio, and trigger Liquidation.</p>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Academic integrity policy</h3>
+            <p>Absolutely no copying or reusing another student's work for submission. Students must complete their own assignments honestly.</p>
+          </div>
+        </section>
+
+        <!-- 11 - Data & ML -->
+        <section class="lesson-section" id="data-ml">
+          <p class="eyebrow">11 · PART G - DATA &amp; MACHINE LEARNING</p>
+          <h2>Data &amp; Machine Learning</h2>
+          <p>This is an important part that connects Week 5 to <strong>Week 6 - AI &amp; On-chain Analytics</strong>.</p>
+
+          <h3>Default Risk Prediction</h3>
+          <p>Use Random Forest or XGBoost trained on historical data (Interest Rate, Collateral Ratio, ESG Score, Income) to forecast the probability of default (Default Probability).</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Historical Loan Data</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Machine Learning</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Default Probability</span>
+          </div>
+
+          <h3>Liquidation Risk Warning</h3>
+          <p>Build a time-series model that forecasts collateral price movement to warn early about liquidation risk before the Collateral Ratio hits the Liquidation Threshold (e.g., 120%).</p>
+
+          <h3>ESG Data Anomaly Detection</h3>
+          <p>Apply Unsupervised Learning to check the ESG data for anomalies before an Oracle writes it to the Blockchain, reducing "Greenwashing" risk.</p>
+
+          <h3>Green Investment Recommendation</h3>
+          <p>A system that suggests a green investment portfolio based on an investor's Risk Tolerance and ESG Preference, recommending suitable Green Bond, Carbon Credit, Renewable Energy, or Green Token options.</p>
+        </section>
+
+        <!-- 12 - Mini Project & Dashboard -->
+        <section class="lesson-section" id="mini-project">
+          <p class="eyebrow">12 · MINI PROJECT &amp; DASHBOARD</p>
+          <h2>Mini Project: Green Lending Protocol</h2>
+          <p>Students build a prototype consisting of a Smart Contract (<code>createLoan</code>, <code>calculate_rate</code>, <code>repayLoan</code>, <code>getCollateralRatio</code>, <code>liquidateLoan</code>) and a Dashboard showing:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loan ID</th><th>Borrower</th><th>ESG</th><th>Rate</th><th>Status</th></tr>
+            <tr><td>#001</td><td>0xABC</td><td>92</td><td>5%</td><td>ACTIVE</td></tr>
+            <tr><td>#002</td><td>0xDEF</td><td>85</td><td>6%</td><td>ACTIVE</td></tr>
+            <tr><td>#003</td><td>0x123</td><td>65</td><td>9%</td><td>PAID</td></tr>
+          </table></div>
+          <p>Along with summary metrics: Total Loans, Total Value Locked, Average ESG Score, Average Interest Rate, Active/Defaulted/Liquidated Loans.</p>
+        </section>
+
+        <!-- 13 - Dinh huong do an -->
+        <section class="lesson-section" id="dinh-huong-do-an">
+          <p class="eyebrow">13 · PROJECT DIRECTIONS</p>
+          <h2>Project directions from Week 5</h2>
+          <ul>
+            <li><strong>Topic 1 - Blockchain-based Green Lending Platform:</strong> Build a green lending platform using a Smart Contract</li>
+            <li><strong>Topic 2 - ESG-based Credit Scoring:</strong> Apply Machine Learning to assess credit risk based on ESG</li>
+            <li><strong>Topic 3 - AI-based DeFi Liquidation Risk Prediction:</strong> Forecast the likelihood of a DeFi loan being liquidated</li>
+            <li><strong>Topic 4 - Green Investment Recommendation System:</strong> Build a system that recommends a green investment portfolio</li>
+            <li><strong>Topic 5 - Blockchain-based Green Banking:</strong> Combine Blockchain + ESG + Smart Contract + AI to build a green banking model</li>
+          </ul>
+        </section>
+
+        <!-- 14 - Cau hoi thao luan -->
+        <section class="lesson-section" id="thao-luan">
+          <p class="eyebrow">14 · DISCUSSION QUESTIONS</p>
+          <h2>Discussion questions</h2>
+          <ol>
+            <li>Why does DeFi Lending usually require collateral?</li>
+            <li>If the collateral's price drops sharply, how should the Smart Contract handle it?</li>
+            <li>Should ESG Score be the sole factor determining the interest rate?</li>
+            <li>Who is responsible if the ESG Score provided is wrong?</li>
+            <li>How can the Oracle become a weak point in a DeFi system?</li>
+            <li>Does Blockchain truly remove banks entirely from lending activity?</li>
+            <li>How can Machine Learning help reduce Default and Liquidation risk?</li>
+            <li>If an Oracle supplies a wrong ESG Score (due to an attack or off-chain data manipulation), what risk does the Smart Contract system bear, and how can this be mitigated with a Decentralized Oracle (e.g., Chainlink)?</li>
+            <li>Overcollateralization fully solves anonymous credit risk, but why does it reduce Capital Efficiency for green businesses?</li>
+          </ol>
+        </section>
+
+        <!-- 15 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">15 · WEEK 5 COMPLETION CHECKLIST</p>
+          <h2>Self-check</h2>
+
+          <h3>Theory</h3>
+          <ul class="lesson-checklist">
+            <li>Understand DeFi and how it differs from traditional finance</li>
+            <li>Understand Liquidity Pool and the role of the Liquidity Provider</li>
+            <li>Understand P2P Lending and the Collateral Ratio</li>
+            <li>Understand the Liquidation mechanism</li>
+            <li>Understand ESG Score and Green Banking</li>
+            <li>Understand the Oracle's role and its risks</li>
+          </ul>
+
+          <h3>Practice</h3>
+          <ul class="lesson-checklist">
+            <li>Can read and understand the GreenLending.vy contract</li>
+            <li>Understand the createLoan(), repayLoan(), liquidateLoan() flow</li>
+            <li>Understand the updateESGScore() mechanism via Oracle</li>
+            <li>Can write pytest unit tests for liquidateLoan() and updateESGScore()</li>
+          </ul>
+
+          <h3>Data &amp; Research</h3>
+          <ul class="lesson-checklist">
+            <li>Know the Default Risk forecasting pipeline with Machine Learning</li>
+            <li>Understand the Liquidation Risk Warning idea using Time-series</li>
+            <li>Understand the ESG Data Anomaly Detection idea</li>
+            <li>Chose a suitable project direction</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="week-4.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 4: Real-World Assets (RWA) &amp; NFT Supply Chain</span></a>
+          <a class="next" href="week-6.html"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 6: AI, Transaction Analytics &amp; Green DApp Integration</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">YOU ARE LEARNING</span>
+          <ul class="checklist">
+            <li data-section="defi-la-gi"><b>○</b> What is DeFi?</li>
+            <li data-section="liquidity-pool"><b>○</b> Liquidity Pool</li>
+            <li data-section="p2p-lending"><b>○</b> P2P Lending</li>
+            <li data-section="collateral"><b>○</b> Collateral</li>
+            <li data-section="liquidation"><b>○</b> Liquidation</li>
+            <li data-section="green-banking"><b>○</b> Green Banking &amp; ESG</li>
+            <li data-section="esg-lending"><b>○</b> ESG-based Lending</li>
+            <li data-section="thuc-hanh-contract"><b>○</b> Smart Contract</li>
+            <li data-section="thuc-hanh-pytest"><b>○</b> Unit testing pytest</li>
+            <li data-section="bai-tap"><b>○</b> Homework</li>
+            <li data-section="data-ml"><b>○</b> Data &amp; ML</li>
+            <li data-section="mini-project"><b>○</b> Mini Project</li>
+            <li data-section="dinh-huong-do-an"><b>○</b> Project directions</li>
+            <li data-section="thao-luan"><b>○</b> Discussion</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Hands-on materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Homework</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>This is a teaching illustration, not an actual bank credit model.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+    <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
+</body>
+</html>

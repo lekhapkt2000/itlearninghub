@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Week 6 - AI, On-chain Transaction Analytics & Green DApp Integration: Blockchain Analytics, Fraud/Anomaly Detection, Graph Analytics, AML, Smart Contract Security, and building a Green Finance Analytics DApp with Web3.py, Scikit-learn, Streamlit.">
+  <title>Week 6 · AI, Transaction Analytics & Green DApp Integration - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=42">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="../../../courses/is355/week-6.html">VI</a><a href="week-6.html" class="active">EN</a></div><button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">IS355 Overview <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IS355</a><span>/</span>Week 6</p>
+
+    <div class="week-header">
+      <span class="week-tag">WEEK 06 · INTEGRATION WEEK</span>
+      <h1>AI, Transaction Analytics &amp; Green DApp Integration</h1>
+      <div class="week-meta"><span>On-chain Analytics</span><span>Machine Learning</span><span>Web3.py + Streamlit</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Topic:</strong> On-chain Analytics, AI/ML, anomaly detection (AML, Fraud, Anomaly), and building a green finance DApp - The session that integrates all of Weeks 1-5 into one complete system.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IS355 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <a href="week-6.html" class="active">Week 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 7 <small>Coming Soon</small></span>
+      <a href="project-lab.html">Project Lab</a>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 6 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#on-chain-data" data-toc><b>01</b> On-chain Data</a>
+        <a href="#event-logs" data-toc><b>02</b> Event Logs</a>
+        <a href="#blockchain-analytics" data-toc><b>03</b> Blockchain Analytics</a>
+        <a href="#ket-noi-web3py" data-toc><b>04</b> Connecting to Blockchain with Web3.py</a>
+        <a href="#machine-learning" data-toc><b>05</b> Machine Learning for Blockchain</a>
+        <a href="#graph-aml" data-toc><b>06</b> Graph Analytics &amp; AML</a>
+        <a href="#smart-contract-security" data-toc><b>07</b> Smart Contract Security</a>
+        <a href="#kien-truc-dapp" data-toc><b>08</b> DApp Architecture</a>
+        <a href="#thuc-hanh-dapp" data-toc><b>09</b> Practice: Green Finance Analytics DApp</a>
+        <a href="#mini-project" data-toc><b>10</b> Mini Project</a>
+        <a href="#bai-tap" data-toc><b>11</b> Advanced exercises</a>
+        <a href="#dinh-huong-do-an" data-toc><b>12</b> Project directions</a>
+        <a href="#thao-luan" data-toc><b>13</b> Discussion questions</a>
+        <a href="#checklist" data-toc><b>14</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - On-chain Data -->
+        <section class="lesson-section" id="on-chain-data">
+          <p class="eyebrow">01 · PART A - ON-CHAIN DATA</p>
+          <h2>What is On-chain Data?</h2>
+          <p>Week 6 is the <strong>Integration Week</strong> for the whole IS355 course. Where previous weeks each focused on a single component - Smart Contract, Token, NFT, DeFi, and ESG - this week students connect them into one complete system:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Blockchain</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">On-chain Data</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data Processing</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">AI / Machine Learning</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk / Fraud Prediction</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">DApp Dashboard</span>
+          </div>
+          <div class="definition"><strong>On-chain Data</strong> is data recorded and verified on the Blockchain: Transaction Hash, From/To Address, Value, Gas, Timestamp, Block Number, Contract Address.</div>
+          <p>Students need to distinguish the basic Blockchain data components:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Component</th><th>Role</th></tr>
+            <tr><td>Transaction</td><td>A single transfer of value/function call between two addresses, with its own identifying Hash</td></tr>
+            <tr><td>Block</td><td>A set of Transactions packaged and chained together over time</td></tr>
+            <tr><td>Address</td><td>The identifier for a user (EOA) or Smart Contract on the Blockchain</td></tr>
+            <tr><td>Smart Contract</td><td>A program that stores State and processes on-chain logic</td></tr>
+            <tr><td>Event</td><td>A record a Smart Contract emits when an important state change occurs</td></tr>
+            <tr><td>Token Transfer</td><td>A Token transfer event (ERC-20/ERC-721) between two addresses</td></tr>
+          </table></div>
+          <p>A Transaction has a typical data structure:</p>
+          <div class="ascii-block">Transaction
+├── Hash
+├── From
+├── To
+├── Value
+├── Gas
+├── Gas Price
+├── Nonce
+├── Block Number
+└── Timestamp</div>
+          <p>Blocks chain together one after another, each Block containing many Transactions - This is the basis for analyzing transaction counts, transaction value, activity over time, and each address's activity along a timeline.</p>
+        </section>
+
+        <!-- 02 - Event Logs -->
+        <section class="lesson-section" id="event-logs">
+          <p class="eyebrow">02 · PART B - EVENT LOGS</p>
+          <h2>Event Logs</h2>
+          <p>Besides ordinary Transactions, a Smart Contract also generates its own data through <strong>State</strong>, <strong>Transactions</strong>, and <strong>Event Logs</strong>. For the <code>GreenLending.vy</code> contract built in Week 5, Events such as <code>LoanCreated</code>, <code>LoanRepaid</code>, and <code>LoanLiquidated</code> are an excellent data source for Analytics.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper">event LoanCreated:
+    loan_id: indexed(uint256)
+    borrower: indexed(address)
+    amount: uint256</code></pre></div>
+          <p>When loan #001 is created with Borrower = 0xABC, Amount = 10,000, the Blockchain records the Event:</p>
+          <div class="ascii-block">LoanCreated
+├── loan_id = 001
+├── borrower = 0xABC
+└── amount = 10,000</div>
+          <p>A DApp can use Events to build an entire analytics flow:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Transaction History</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Analytics</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Dashboard</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">AI Dataset</span>
+          </div>
+          <p>From an Event sequence <code>LoanCreated ➜ LoanCreated ➜ LoanRepaid ➜ LoanCreated ➜ LoanLiquidated ➜ LoanCreated</code>, you can immediately compute: Total Loans, Active Loans, Repaid Loans, Liquidated Loans, Default Rate.</p>
+        </section>
+
+        <!-- 03 - Blockchain Analytics -->
+        <section class="lesson-section" id="blockchain-analytics">
+          <p class="eyebrow">03 · PART C - BLOCKCHAIN ANALYTICS</p>
+          <h2>Blockchain Analytics</h2>
+          <div class="definition"><strong>Blockchain Analytics</strong> is the process of collecting, processing, and analyzing Blockchain data to extract meaningful information.</div>
+          <div class="flow-diagram">
+            <span class="flow-box">Blockchain</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data Collection</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data Cleaning</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Analysis / AI</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Visualization</span>
+          </div>
+          <p>With Green Lending data, three main groups of metrics can be analyzed:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Metric group</th><th>Examples</th></tr>
+            <tr><td>Transaction Metrics</td><td>Transaction Count, Transaction Volume, Gas Used, Average Gas, Active Addresses</td></tr>
+            <tr><td>Lending Metrics</td><td>Total Loans, Total Loan Value, Average Loan, Average Interest, Default Rate, Liquidation Rate</td></tr>
+            <tr><td>ESG Metrics</td><td>Average ESG Score, ESG Distribution, ESG vs Default Rate, ESG vs Interest Rate</td></tr>
+          </table></div>
+          <p>Example of a small Green Lending dataset:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loan</th><th>ESG</th><th>Loan Amount</th><th>Collateral</th><th>Status</th></tr>
+            <tr><td>001</td><td>92</td><td>10,000</td><td>18,000</td><td>PAID</td></tr>
+            <tr><td>002</td><td>87</td><td>8,000</td><td>14,000</td><td>PAID</td></tr>
+            <tr><td>003</td><td>65</td><td>12,000</td><td>13,000</td><td>LIQUIDATED</td></tr>
+            <tr><td>004</td><td>72</td><td>15,000</td><td>18,000</td><td>DEFAULT</td></tr>
+          </table></div>
+          <div class="inline-ok">From the table above, students can pose a research question: <strong>Is a low ESG Score correlated with Default/Liquidation?</strong> - This is exactly the central question that leads into the Machine Learning section.</div>
+        </section>
+
+        <!-- 04 - Ket noi Web3.py -->
+        <section class="lesson-section" id="ket-noi-web3py">
+          <p class="eyebrow">04 · PART D - CONNECTING TO BLOCKCHAIN WITH WEB3.PY</p>
+          <h2>Data Pipeline: Connecting to Blockchain with Web3.py</h2>
+          <p>The full data architecture of an Analytics system:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Blockchain</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">RPC / API (Alchemy, Infura)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data Extraction (Web3.py)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Pandas DataFrame</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">ML Model</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">DApp Dashboard</span>
+          </div>
+          <p>Connect via RPC and check the connection status:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from web3 import Web3
+
+w3 = Web3(Web3.HTTPProvider("YOUR_RPC_URL"))
+
+print(w3.is_connected())  # True</code></pre></div>
+          <p>Read a specific Block:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">block = w3.eth.get_block(100)
+print(block)
+# Block Number, Timestamp, Transactions, Gas Used, Gas Limit</code></pre></div>
+          <p>Read a specific Transaction:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">tx = w3.eth.get_transaction("TRANSACTION_HASH")
+print(tx)
+# from, to, value, gas, gasPrice, nonce, blockNumber</code></pre></div>
+          <p>Query all <code>LoanCreated</code> Events from the Green Lending Smart Contract (ABI compiled from the Vyper source in Week 5) and convert them into a <code>pandas.DataFrame</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from web3 import Web3
+import pandas as pd
+
+# 1. Kết nối RPC và khởi tạo Contract
+w3 = Web3(Web3.HTTPProvider("https://eth-sepolia.g.alchemy.com/v2/YOUR_API_KEY"))
+contract_address = "0xYourGreenLendingContractAddress"
+contract_abi = [...]  # ABI được biên dịch từ Vyper ở Tuần 5
+
+contract = w3.eth.contract(address=contract_address, abi=contract_abi)
+
+# 2. Truy vấn Event "LoanCreated" từ Block quá khứ
+event_filter = contract.events.LoanCreated.create_filter(fromBlock=1000000, toBlock='latest')
+events = event_filter.get_all_entries()
+
+# 3. Chuyển đổi dữ liệu Event thành Pandas DataFrame
+loans_data = []
+for event in events:
+    args = event['args']
+    loans_data.append({
+        'loan_id': args['loan_id'],
+        'borrower': args['borrower'],
+        'amount': args['amount'] / 10**18,       # Convert Wei to ETH
+        'collateral': args['collateral'] / 10**18,
+        'esg_score': args['esg_score']
+    })
+
+df = pd.DataFrame(loans_data)
+df['collateral_ratio'] = (df['collateral'] / df['amount']) * 100</code></pre></div>
+        </section>
+
+        <!-- 05 - Machine Learning -->
+        <section class="lesson-section" id="machine-learning">
+          <p class="eyebrow">05 · PART E - MACHINE LEARNING FOR BLOCKCHAIN</p>
+          <h2>Machine Learning for Blockchain</h2>
+          <p>Blockchain stores a huge amount of data, but a lot of data doesn't mean humans can spot every anomalous behavior. AI can help with:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Transaction Data</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Machine Learning</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk Score</span>
+          </div>
+
+          <h3>Fraud Detection</h3>
+          <p>Compare the behavior of a normal address against an anomalous one:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Address</th><th>Transaction frequency</th><th>Average value</th></tr>
+            <tr><td>Normal</td><td>10 transactions/day</td><td>$500</td></tr>
+            <tr><td>Anomalous</td><td>1,000 transactions/hour</td><td>$50,000</td></tr>
+          </table></div>
+          <p>When a deviation from the norm is detected, the system can flag it as <strong>⚠ Suspicious Activity</strong>.</p>
+
+          <h3>Anomaly Detection</h3>
+          <p>Some commonly used Features: Transaction Frequency, Transaction Value, Unique Addresses, Gas Usage, Time Interval, Token Transfer.</p>
+          <div class="ascii-block">Normal:
+10 ➜ 20 ➜ 15 ➜ 18 transactions
+
+Abnormal:
+10 ➜ 12 ➜ 15 ➜ 1,500</div>
+
+          <h3>Algorithms</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Group</th><th>Typical algorithms</th></tr>
+            <tr><td>Unsupervised Learning</td><td>Isolation Forest, One-Class SVM, DBSCAN</td></tr>
+            <tr><td>Supervised Learning</td><td>Logistic Regression, Random Forest, XGBoost</td></tr>
+          </table></div>
+
+          <h3>Feature Engineering</h3>
+          <p>From raw transaction data, aggregate into a Feature Vector for each address:</p>
+          <div class="ascii-block">Address A
+
+Tx Count = 150
+Avg Value = 850
+Unique Addresses = 37
+Avg Interval = 2.5h</div>
+        </section>
+
+        <!-- 06 - Graph Analytics & AML -->
+        <section class="lesson-section" id="graph-aml">
+          <p class="eyebrow">06 · PART F - GRAPH ANALYTICS &amp; AML</p>
+          <h2>Graph Analytics &amp; AML</h2>
+          <p>Blockchain can be represented as a graph: <strong>Address = Node</strong>, <strong>Transaction = Edge</strong>. A single transaction may not reveal anything unusual, but the entire network can expose hidden structures.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">A ➜ B</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">B ➜ C</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">C ➜ D</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">D ➜ A (Circular Transaction)</span>
+          </div>
+          <div class="inline-warning">A Circular Transaction does not automatically mean money laundering - It is only a signal that warrants further analysis.</div>
+          <p>Graph Analytics helps uncover structures that single-transaction analysis struggles to see: a <strong>Hub Address</strong> (a fund-collecting wallet), a <strong>Transaction Cluster</strong>, <strong>Circular Transactions</strong> (fund loops), <strong>Peeling Chains</strong>, and abnormal <strong>Fund Flow</strong>.</p>
+
+          <div class="definition"><strong>AML - Anti-Money Laundering</strong> is the systems and processes used to detect, prevent, and report activity related to money laundering.</div>
+          <div class="flow-diagram">
+            <span class="flow-box">Transactions</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk Engine</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk Score</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Alert</span>
+          </div>
+          <p>A Risk Score is designed based on: Transaction Value, Transaction Frequency, Address History, Counterparty Risk, Transaction Pattern.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Risk Score</th><th>Level</th></tr>
+            <tr><td>0 - 0.3</td><td>LOW</td></tr>
+            <tr><td>0.3 - 0.7</td><td>MEDIUM</td></tr>
+            <tr><td>0.7 - 1.0</td><td>HIGH</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 07 - Smart Contract Security -->
+        <section class="lesson-section" id="smart-contract-security">
+          <p class="eyebrow">07 · PART G - SMART CONTRACT SECURITY</p>
+          <h2>Smart Contract Security</h2>
+          <p>A Smart Contract can directly manage Money, Token, Collateral, Loan, NFT - If it has a bug, assets can be lost or the system can behave incorrectly. Some common vulnerabilities students should know:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Vulnerability</th><th>Description</th></tr>
+            <tr><td>Reentrancy</td><td>A contract makes an External Call, and the recipient calls back into the contract before the State finishes updating</td></tr>
+            <tr><td>Access Control</td><td>An unauthorized party is still able to call an important function (e.g., <code>mint()</code>)</td></tr>
+            <tr><td>Integer/Arithmetic Issues</td><td>Errors related to arithmetic (overflow, underflow, rounding division)</td></tr>
+            <tr><td>Oracle Manipulation</td><td>External data (asset price, ESG Score...) is manipulated before being fed into the Smart Contract</td></tr>
+            <tr><td>Logic Errors</td><td>The Smart Contract runs the code correctly but implements the wrong business logic</td></tr>
+          </table></div>
+          <p>Example of a <code>mint()</code> function missing access control - Alice, Bob, Carol, and even an Attacker can all call it:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper">@external
+def mint(amount: uint256):
+    ...</code></pre></div>
+          <p>A Smart Contract therefore needs a clear authorization mechanism: <code>onlyOwner</code>, <code>onlyAdmin</code>, or role-based access - Exactly how <code>GreenLending.vy</code> in Week 5 restricts <code>createLoan()</code> to <code>admin</code> and <code>updateESGScore()</code> to <code>oracle</code>.</p>
+        </section>
+
+        <!-- 08 - Kien truc DApp -->
+        <section class="lesson-section" id="kien-truc-dapp">
+          <p class="eyebrow">08 · PART H - DAPP ARCHITECTURE</p>
+          <h2>DApp Architecture</h2>
+          <div class="definition"><strong>DApp - Decentralized Application</strong> is an application with part of its logic or data deployed on the Blockchain.</div>
+          <p>A typical DApp:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Frontend</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Web3 Provider</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Smart Contract</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Blockchain</span>
+          </div>
+          <p>If AI is integrated, the architecture gains an additional Off-chain processing branch:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Frontend</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Backend / AI API</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">ML Model</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Blockchain</span>
+          </div>
+          <p>Suggested architecture for the IS355 <strong>Green Finance DApp</strong>:</p>
+          <div class="ascii-block">┌──────────────────────────────┐
+│           FRONTEND           │
+│        Streamlit / Web       │
+└──────────────┬───────────────┘
+               │
+               ↓
+┌──────────────────────────────┐
+│        WEB3 / API LAYER      │
+└───────┬──────────────┬───────┘
+        │              │
+        ↓              ↓
+┌──────────────┐  ┌─────────────┐
+│  Blockchain  │  │  AI Engine  │
+│ Smart Contract│  │  ML Model   │
+└──────────────┘  └─────────────┘
+        │              │
+        └──────┬───────┘
+               ↓
+        Analytics Dashboard</div>
+          <p>For the Tech Stack, the Week 6 practice recommends:</p>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3>Blockchain &amp; Indexing</h3>
+              <p>Web3.py / Ethers.js, Alchemy or Infura RPC, The Graph (GraphQL queries for Event Logs)</p>
+            </div>
+            <div class="req-card">
+              <h3>Data Processing &amp; ML</h3>
+              <p>Pandas, Scikit-learn (RandomForestClassifier, IsolationForest), NetworkX / PyTorch Geometric</p>
+            </div>
+            <div class="req-card">
+              <h3>DApp Frontend &amp; Dashboard</h3>
+              <p>Streamlit (recommended for fast prototyping) or Next.js + Wagmi + Recharts</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 09 - Thuc hanh DApp -->
+        <section class="lesson-section" id="thuc-hanh-dapp">
+          <p class="eyebrow">09 · PART I - BUILDING A DAPP IN PRACTICE</p>
+          <h2>Practice: Green Finance Analytics DApp</h2>
+
+          <h3>Step 1 - Connect to Blockchain</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python"># app.py
+from web3 import Web3
+
+w3 = Web3(Web3.HTTPProvider("YOUR_RPC_URL"))
+
+if w3.is_connected():
+    print("Connected")</code></pre></div>
+
+          <h3>Step 2 - Read the Smart Contract &amp; Events</h3>
+          <p>You need the Contract Address, ABI, and RPC URL, then read data via the <code>call()</code> function or query Events as in part 04 (<code>LoanCreated</code>, <code>LoanRepaid</code>, <code>LoanLiquidated</code>) to build a Loan History.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">contract = w3.eth.contract(address=CONTRACT_ADDRESS, abi=ABI)
+
+loan = contract.functions.getLoan(1).call()
+print(loan)</code></pre></div>
+
+          <h3>Step 3 - Assess default risk with Scikit-learn &amp; display it on Streamlit</h3>
+          <p>With the sample data <code>loan_data.csv</code>:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>ESG</th><th>Loan</th><th>Collateral</th><th>Interest</th><th>Default</th></tr>
+            <tr><td>92</td><td>10,000</td><td>18,000</td><td>5</td><td>0</td></tr>
+            <tr><td>85</td><td>8,000</td><td>14,000</td><td>6</td><td>0</td></tr>
+            <tr><td>65</td><td>12,000</td><td>13,000</td><td>9</td><td>1</td></tr>
+            <tr><td>72</td><td>15,000</td><td>18,000</td><td>7</td><td>1</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">import streamlit as st
+from sklearn.ensemble import RandomForestClassifier
+
+# Giả định mô hình đã được huấn luyện trước đó
+# X: [esg_score, collateral_ratio, amount], y: default_status (0: Paid, 1: Default)
+model = RandomForestClassifier()
+
+st.title("🌱 Green Finance Analytics & AI Risk Engine")
+
+# Trực quan hóa chỉ số chính
+col1, col2, col3 = st.columns(3)
+col1.metric("Total Loans Executed", len(df))
+col2.metric("Average ESG Score", f"{df['esg_score'].mean():.1f}")
+col3.metric("Avg Collateral Ratio", f"{df['collateral_ratio'].mean():.1f}%")
+
+# AI Prediction Panel cho khoản vay mới
+st.subheader("🤖 AI Loan Risk Assessor")
+input_esg = st.slider("ESG Score", 0, 100, 75)
+input_collateral_ratio = st.number_input("Collateral Ratio (%)", value=130.0)
+input_amount = st.number_input("Loan Amount (ETH)", value=5.0)
+
+if st.button("Analyze Risk"):
+    # Giả lập dự đoán xác suất vỡ nợ từ Model
+    risk_prob = model.predict_proba([[input_esg, input_collateral_ratio, input_amount]])[0][1]
+
+    if risk_prob > 0.7:
+        st.error(f"🔴 HIGH RISK (Default Probability: {risk_prob*100:.1f}%)")
+    elif risk_prob > 0.3:
+        st.warning(f"🟡 MEDIUM RISK (Default Probability: {risk_prob*100:.1f}%)")
+    else:
+        st.success(f"🟢 LOW RISK (Default Probability: {risk_prob*100:.1f}%)")</code></pre></div>
+          <p>A minimal Dashboard layout for the prototype:</p>
+          <div class="ascii-block">GREEN FINANCE ANALYTICS
+────────────────────────────
+
+Total Transactions       1,254
+Total Loans              327
+TVL                      $2.4M
+Average ESG              82.5
+Default Rate             4.1%
+
+────────────────────────────
+
+[Transaction Chart]
+
+[ESG Distribution]
+
+[Risk Distribution]
+
+────────────────────────────
+
+Recent Transactions</div>
+          <div class="inline-warning"><strong>AI should not write the entire Model directly onto the Blockchain</strong> - Gas cost is extremely high for matrix/loop computation, and the EVM does not support complex floating-point numbers well. Solution: run ML <strong>Off-chain</strong> (Backend/Cloud), and only push the prediction result or a zkML proof <strong>On-chain</strong> via an Oracle if needed.</div>
+        </section>
+
+        <!-- 10 - Mini Project -->
+        <section class="lesson-section" id="mini-project">
+          <p class="eyebrow">10 · MINI PROJECT</p>
+          <h2>Mini Project: Green Finance Analytics DApp</h2>
+          <p>Students build a DApp with at least four components:</p>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3>1. Blockchain</h3>
+              <p>Connect to Testnet, read the Smart Contract, read Events</p>
+            </div>
+            <div class="req-card">
+              <h3>2. Data</h3>
+              <p>Collect Transaction, Loan, ESG, Collateral, Repayment, Liquidation data</p>
+            </div>
+            <div class="req-card">
+              <h3>3. AI</h3>
+              <p>Build at least one model: Default Prediction, Liquidation Prediction, Fraud Detection, or Anomaly Detection</p>
+            </div>
+            <div class="req-card">
+              <h3>4. Dashboard</h3>
+              <p>Display Total Transactions, Total Loan, TVL, Average ESG, Default Rate, Risk Distribution</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 11 - Bai tap nang cao -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">11 · ADVANCED EXERCISES</p>
+          <h2>Advanced exercises</h2>
+
+          <h3>Exercise 1 - Transaction Anomaly Detection</h3>
+          <p>Build a model to detect anomalous transactions. Input: Transaction Frequency, Transaction Value, Gas, Time, Counterparties. Output: Normal / Suspicious.</p>
+
+          <h3>Exercise 2 - Liquidation Prediction</h3>
+          <p>Based on Collateral Ratio, Loan Amount, ESG Score, Interest Rate, and Market Volatility, forecast the Probability of Liquidation.</p>
+
+          <h3>Exercise 3 - AML Graph</h3>
+          <p>Build a graph with Address = Node, Transaction = Edge. Find nodes with high degree, Clusters, Circular Flow, Suspicious Patterns.</p>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Academic integrity policy</h3>
+            <p>Absolutely no copying or reusing another student's work for submission. Students must complete their own assignments honestly.</p>
+          </div>
+        </section>
+
+        <!-- 12 - Dinh huong do an -->
+        <section class="lesson-section" id="dinh-huong-do-an">
+          <p class="eyebrow">12 · PROJECT DIRECTIONS</p>
+          <h2>Project directions from Week 6</h2>
+          <p>Week 6 should be a direct transition into Week 7 - Project Report. Students need to complete at least the three pillars of Blockchain, AI, and DApp converging into one Green Finance product:</p>
+          <ul>
+            <li><strong>Group 1 - Green Lending:</strong> Blockchain-based Green Lending Platform with ESG Credit Scoring (ESG ➜ Credit Score ➜ Loan ➜ Smart Contract)</li>
+            <li><strong>Group 2 - DeFi Risk:</strong> AI-based DeFi Liquidation Risk Prediction (On-chain Data ➜ Feature Engineering ➜ ML ➜ Liquidation Risk)</li>
+            <li><strong>Group 3 - AML:</strong> Blockchain Graph Analytics for Suspicious Transaction Detection (Transactions ➜ Graph ➜ Graph Analytics ➜ Suspicious Address)</li>
+            <li><strong>Group 4 - Green Investment:</strong> AI-powered Green Investment Recommendation System (Investor ➜ Risk Profile ➜ ESG Preference ➜ AI ➜ Green Portfolio)</li>
+            <li><strong>Group 5 - Green Finance DApp:</strong> Decentralized Green Finance Analytics Platform, integrating Smart Contract + ESG + Blockchain Analytics + AI + DApp - The most comprehensive direction, suited to groups wanting a larger project</li>
+          </ul>
+        </section>
+
+        <!-- 13 - Cau hoi thao luan -->
+        <section class="lesson-section" id="thao-luan">
+          <p class="eyebrow">13 · DISCUSSION QUESTIONS</p>
+          <h2>Discussion questions</h2>
+          <ol>
+            <li>How does Blockchain Analytics differ from traditional data analysis?</li>
+            <li>Why is Blockchain transparent yet still hard to use to detect money laundering?</li>
+            <li>Can a user's identity be determined from a Blockchain Address alone?</li>
+            <li>Can AI accurately detect every fraudulent transaction?</li>
+            <li>What risks does an Oracle create for an on-chain AI system?</li>
+            <li>Why shouldn't Machine Learning run directly on the Blockchain?</li>
+            <li>How do On-chain and Off-chain data differ?</li>
+            <li>What advantage does Graph Analytics have over analyzing individual transactions separately?</li>
+            <li>Can a Smart Contract automatically decide on a loan based on an AI Prediction?</li>
+            <li>If AI predicts incorrectly, who is responsible in a decentralized financial system?</li>
+          </ol>
+        </section>
+
+        <!-- 14 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">14 · WEEK 6 COMPLETION CHECKLIST</p>
+          <h2>Self-check</h2>
+
+          <h3>Theory</h3>
+          <ul class="lesson-checklist">
+            <li>Understand On-chain Data, Transaction, Block, Smart Contract Event</li>
+            <li>Understand the concept of Blockchain Analytics and its processing pipeline</li>
+            <li>Understand AML, Fraud Detection, Anomaly Detection</li>
+            <li>Understand Graph Analytics and notable patterns (Circular Transaction, Hub Address)</li>
+            <li>Understand common Smart Contract vulnerabilities</li>
+            <li>Understand the architecture of a complete DApp</li>
+          </ul>
+
+          <h3>Practice</h3>
+          <ul class="lesson-checklist">
+            <li>Connect to Blockchain with Web3.py, read Blocks and Transactions</li>
+            <li>Read a Smart Contract and query Events (LoanCreated/LoanRepaid/LoanLiquidated)</li>
+            <li>Extract Event data into a Pandas DataFrame</li>
+            <li>Train a basic Random Forest/Isolation Forest model</li>
+            <li>Build a Dashboard with Streamlit displaying a Risk Score</li>
+          </ul>
+
+          <h3>Research</h3>
+          <ul class="lesson-checklist">
+            <li>Chose a direction: Default/Liquidation Prediction, Fraud Detection, AML, or Green Investment Recommendation</li>
+            <li>Determined the overall architecture for the final project</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="week-5.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 5: Decentralized Finance (DeFi) &amp; Green Banking</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 7 (Coming Soon)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">YOU ARE LEARNING</span>
+          <ul class="checklist">
+            <li data-section="on-chain-data"><b>○</b> On-chain Data</li>
+            <li data-section="event-logs"><b>○</b> Event Logs</li>
+            <li data-section="blockchain-analytics"><b>○</b> Blockchain Analytics</li>
+            <li data-section="ket-noi-web3py"><b>○</b> Connecting with Web3.py</li>
+            <li data-section="machine-learning"><b>○</b> Machine Learning</li>
+            <li data-section="graph-aml"><b>○</b> Graph Analytics &amp; AML</li>
+            <li data-section="smart-contract-security"><b>○</b> Smart Contract Security</li>
+            <li data-section="kien-truc-dapp"><b>○</b> DApp Architecture</li>
+            <li data-section="thuc-hanh-dapp"><b>○</b> Practice: DApp</li>
+            <li data-section="mini-project"><b>○</b> Mini Project</li>
+            <li data-section="bai-tap"><b>○</b> Homework</li>
+            <li data-section="dinh-huong-do-an"><b>○</b> Project directions</li>
+            <li data-section="thao-luan"><b>○</b> Discussion</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Hands-on materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Homework</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Week 6 is the Integration session - By Week 7, students do not start a new project but instead finish, test, evaluate, and defend their product.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+    <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
+</body>
+</html>

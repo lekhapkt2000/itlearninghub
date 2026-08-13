@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Project Lab - Final project for the Blockchain Technology practicum: Green Finance/DeFi/AML/RWA/AI topics, 5 required components, execution process, testing, security, report structure, grading criteria, and defense requirements.">
+  <title>Project Lab · Final Project - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=42">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="../../../courses/is355/project-lab.html">VI</a><a href="project-lab.html" class="active">EN</a></div><button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">IS355 Overview <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IS355</a><span>/</span>Project Lab</p>
+
+    <div class="week-header">
+      <span class="week-tag">PROJECT LAB · FINAL PROJECT</span>
+      <h1>Final Project - Blockchain Technology Practicum</h1>
+      <div class="week-meta"><span>Green Finance</span><span>DeFi / AML / RWA / AI</span><span>Research-oriented mini project</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Direction:</strong> The project is not just "build a Smart Contract" - it is a research-and-development mini project, following the arc Blockchain ➜ Smart Contract ➜ Financial/Banking ➜ ESG/Green Finance ➜ Data/AI ➜ DApp ➜ Demo &amp; Evaluation.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IS355 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <a href="week-6.html">Week 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 7 <small>Coming Soon</small></span>
+      <a href="project-lab.html" class="active">Project Lab</a>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Project Lab table of contents">
+        <span class="side-label">IN THIS PROJECT LAB</span>
+        <a href="#gioi-thieu" data-toc><b>01</b> Introduction &amp; Objectives</a>
+        <a href="#chu-de" data-toc><b>02</b> Project topics</a>
+        <a href="#dang-ky-de-tai" data-toc><b>03</b> Topic registration</a>
+        <a href="#thanh-phan-bat-buoc" data-toc><b>04</b> 5 required components</a>
+        <a href="#yeu-cau-du-lieu" data-toc><b>05</b> Data requirements</a>
+        <a href="#kien-truc" data-toc><b>06</b> System architecture</a>
+        <a href="#quy-trinh" data-toc><b>07</b> Execution process</a>
+        <a href="#kiem-thu" data-toc><b>08</b> Smart Contract testing</a>
+        <a href="#hieu-nang" data-toc><b>09</b> Performance evaluation</a>
+        <a href="#bao-mat" data-toc><b>10</b> Security requirements</a>
+        <a href="#san-pham-nop" data-toc><b>11</b> Deliverables</a>
+        <a href="#cau-truc-bao-cao" data-toc><b>12</b> Report structure</a>
+        <a href="#demo" data-toc><b>13</b> Demo requirements</a>
+        <a href="#cau-hoi-bao-ve" data-toc><b>14</b> Defense questions</a>
+        <a href="#tieu-chi" data-toc><b>15</b> Grading criteria</a>
+        <a href="#muc-do" data-toc><b>16</b> Project levels</a>
+        <a href="#toi-thieu" data-toc><b>17</b> Minimum requirements</a>
+        <a href="#dev-stack" data-toc><b>18</b> Recommended dev stack</a>
+        <a href="#dinh-huong-cuoi" data-toc><b>19</b> Final product direction</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Gioi thieu & Muc tieu -->
+        <section class="lesson-section" id="gioi-thieu">
+          <p class="eyebrow">01 · INTRODUCTION &amp; OBJECTIVES</p>
+          <h2>Introduction</h2>
+          <p>The final project is a capstone activity to help students apply the knowledge and skills practiced throughout the Blockchain Technology course to build a product or prototype that applies Blockchain in <strong>finance, banking, and green finance</strong>.</p>
+          <p>Students must not only deploy a Smart Contract but also demonstrate the ability to:</p>
+          <ul>
+            <li>Analyze a real-world problem</li>
+            <li>Identify Blockchain's role in that problem</li>
+            <li>Design a system architecture</li>
+            <li>Build a Smart Contract</li>
+            <li>Process and analyze data</li>
+            <li>Apply AI/Machine Learning where appropriate</li>
+            <li>Build a DApp interface or Dashboard</li>
+            <li>Evaluate the system's correctness, performance, and security</li>
+            <li>Present the research results and the product</li>
+          </ul>
+
+          <h3>Project objectives</h3>
+          <p><strong>On Blockchain</strong> - Understand and choose an appropriate Blockchain model; design and deploy a Smart Contract on a test network; interact with the Smart Contract via Web3; use Event Logs to record and retrieve data.</p>
+          <p><strong>On finance and banking</strong> - Be able to model a business process such as Lending, Credit Scoring, Asset Management, Asset Tokenization, Carbon Credit, Green Bond, DeFi, Payments, Transaction Management, Anomalous Transaction Detection, AML, Investment Portfolio Management.</p>
+          <p><strong>On data and AI</strong> - Collect and clean data, build features, analyze data, build and evaluate a Machine Learning model, and feed prediction results into the system.</p>
+          <div class="inline-ok">AI/ML is not mandatory for every topic, but is encouraged for topics involving forecasting, classification, anomaly detection, or recommendation.</div>
+          <p><strong>On application development</strong> - Students build a prototype with a complete operating flow:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">User</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">DApp / Dashboard</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Web3 / Backend</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Smart Contract</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Blockchain</span>
+          </div>
+        </section>
+
+        <!-- 02 - Chu de do an -->
+        <section class="lesson-section" id="chu-de">
+          <p class="eyebrow">02 · PROJECT TOPICS</p>
+          <h2>Project topics</h2>
+          <p>The project must fall into one of the following directions:</p>
+
+          <h3>Group A - Green Finance</h3>
+          <p><strong>A1. Green Lending</strong> - Build a green lending platform based on ESG Score, Credit Score, Smart Contract, Collateral, Interest Rate. Example: <em>Blockchain-based Green Lending Platform with ESG Credit Scoring</em>.</p>
+          <p><strong>A2. Carbon Credit</strong> - Build a system to tokenize and manage Carbon Credit, optionally extended with Carbon Credit price forecasting:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Carbon Credit</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">ERC-20</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Mint</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Transfer</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Retire / Burn</span>
+          </div>
+          <p><strong>A3. Green Bond</strong> - Build a model for issuing and managing a Green Bond on the Blockchain, optionally researching Tokenization, Investor, Issuer, Interest, Maturity, Redemption.</p>
+
+          <h3>Group B - DeFi &amp; Banking</h3>
+          <p><strong>B1. Decentralized Lending</strong> - Build a decentralized lending system with functions: Deposit, Borrow, Repay, Withdraw, Liquidate.</p>
+          <p><strong>B2. ESG Credit Scoring</strong> - Build a credit assessment system based on ESG:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Financial Data + ESG Data + Transaction History</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Credit Score</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Loan Decision</span>
+          </div>
+          <p><strong>B3. AI-based Default Prediction</strong> - Build a model that forecasts the probability of default (e.g., Default Probability = 82%) and feed the result into a Dashboard.</p>
+
+          <h3>Group C - Blockchain Analytics &amp; AML</h3>
+          <p><strong>C1. Fraud Detection</strong> - Detect anomalous transactions, potentially using Isolation Forest, Random Forest, XGBoost, Autoencoder.</p>
+          <p><strong>C2. AML Analytics</strong> - Analyze fund flows on the Blockchain to detect suspicious transaction patterns (e.g., the loop <code>A ➜ B ➜ C ➜ D ➜ A</code> or a branching structure from a Hub Address), applying Graph Analytics to analyze the transaction network.</p>
+
+          <h3>Group D - RWA &amp; Tokenization</h3>
+          <p>Asset tokenization, NFT asset certificates, Digital Certificate, Green Asset, Supply Chain Asset. Example: <em>Blockchain-based Green Asset Certification Platform</em>.</p>
+
+          <h3>Group E - AI + Blockchain</h3>
+          <p>An advanced direction combining Blockchain + Data Analytics + AI. Some topics: AI forecasting DeFi risk, AI fraud detection, AI anomalous-transaction detection, AI green-investment recommendation, AI Carbon Credit price forecasting, AI credit risk assessment.</p>
+        </section>
+
+        <!-- 03 - Dang ky de tai -->
+        <section class="lesson-section" id="dang-ky-de-tai">
+          <p class="eyebrow">03 · TOPIC REGISTRATION</p>
+          <h2>Topic registration</h2>
+          <p>Students submit a topic registration by the end of <strong>Week 3</strong> or the start of <strong>Week 4</strong>, using the short template below, so the instructor can confirm the topic fits one of the 5 topic groups and the intended project level before development begins:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-markdown">1. Tên đề tài: [Tên tiếng Việt + tiếng Anh]
+2. Phân loại: [Nhóm A/B/C/D/E] - [Mức độ 1/2/3/4]
+3. Bài toán thực tế & Lý do cần Blockchain: [Mô tả trong 3-4 câu]
+4. Kiến trúc đề xuất: [Sơ đồ khối đơn giản]
+5. Dự kiến Công nghệ (Stack):
+   - Smart Contract: Vyper / Solidity
+   - AI/Data: Python / Scikit-Learn / NetworkX
+   - DApp: Streamlit / React</code></pre></div>
+          <div class="inline-ok">Registering early helps groups avoid picking a duplicate topic, and it sets the correct evaluation Track (AI/ML or not) from the start, per Section 15.</div>
+        </section>
+
+        <!-- 04 - 5 thanh phan bat buoc -->
+        <section class="lesson-section" id="thanh-phan-bat-buoc">
+          <p class="eyebrow">04 · MANDATORY PROJECT REQUIREMENTS</p>
+          <h2>5 main components</h2>
+          <p>Each group must satisfy all 5 components below - A topic that only simulates Blockchain with a regular database will not be accepted.</p>
+
+          <h3>Component 1 - Blockchain</h3>
+          <p>Must include at least one real Blockchain component: Smart Contract, Testnet, Transaction, Event, Token, or NFT.</p>
+
+          <h3>Component 2 - Smart Contract</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Requirement</th><th>Example</th></tr>
+            <tr><td>Business Logic</td><td><code>createLoan()</code>, <code>approveLoan()</code>, <code>repayLoan()</code>, <code>liquidateLoan()</code></td></tr>
+            <tr><td>Access Control</td><td>At minimum Admin/User roles, or Issuer/Investor/Borrower/Lender</td></tr>
+            <tr><td>Event</td><td><code>LoanCreated</code>, <code>LoanApproved</code>, <code>LoanRepaid</code>, <code>LoanLiquidated</code></td></tr>
+            <tr><td>Validation</td><td>Checks on Input, Permission, Balance, and business state</td></tr>
+          </table></div>
+
+          <h3>Component 3 - Data / Analytics</h3>
+          <p>Students must include at least one data analysis activity:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Metric group</th><th>Example</th></tr>
+            <tr><td>Transaction Analytics</td><td>Total Transactions, Transaction Volume, Average Transaction, Active Addresses</td></tr>
+            <tr><td>Financial Analytics</td><td>Loan Volume, Default Rate, Liquidation Rate, Interest Rate</td></tr>
+            <tr><td>ESG Analytics</td><td>Average ESG Score, ESG Distribution, ESG vs Default</td></tr>
+          </table></div>
+
+          <h3>Component 4 - AI/ML <small style="color:var(--muted);font-weight:500">(encouraged, not required)</small></h3>
+          <p>If AI/ML is used, the group must clearly present:</p>
+          <ul>
+            <li><strong>Dataset:</strong> the data source, sample size, attributes, and preprocessing method</li>
+            <li><strong>Model:</strong> e.g., Random Forest, XGBoost, LightGBM, LSTM, Isolation Forest</li>
+            <li><strong>Evaluation:</strong> not just the prediction results, but an appropriate metric - Accuracy, Precision, Recall, F1-score, ROC-AUC, MAE, RMSE depending on the problem</li>
+          </ul>
+
+          <h3>Component 5 - DApp / Dashboard</h3>
+          <p>The product must have an interface for users to interact with: HTML/CSS/JavaScript, React, Streamlit, PySide, or another suitable framework. At minimum, the Dashboard should include:</p>
+          <div class="ascii-block">┌─────────────────────────────┐
+│      GREEN FINANCE DApp     │
+├─────────┬─────────┬─────────┤
+│ Users   │ Loans   │ Volume  │
+├─────────┴─────────┴─────────┤
+│                             │
+│       Analytics Chart       │
+│                             │
+├─────────────────────────────┤
+│ Transaction History         │
+├─────────────────────────────┤
+│ AI Risk Prediction          │
+└─────────────────────────────┘</div>
+        </section>
+
+        <!-- 04 - Yeu cau du lieu -->
+        <section class="lesson-section" id="yeu-cau-du-lieu">
+          <p class="eyebrow">05 · DATA REQUIREMENTS</p>
+          <h2>Data requirements</h2>
+          <p>Students may use:</p>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3>Blockchain data</h3>
+              <p>Testnet, Public Blockchain Data, Transaction Data, Event Logs</p>
+            </div>
+            <div class="req-card">
+              <h3>Financial data</h3>
+              <p>Public datasets, simulated datasets, datasets built by the group</p>
+            </div>
+            <div class="req-card">
+              <h3>ESG data</h3>
+              <p>ESG Score, Carbon Emission, Environmental Indicators, Sustainability Indicators</p>
+            </div>
+          </div>
+          <div class="inline-warning">If simulated data is used, the group must clearly state that it is simulated data and explain how it was generated.</div>
+        </section>
+
+        <!-- 05 - Kien truc he thong -->
+        <section class="lesson-section" id="kien-truc">
+          <p class="eyebrow">06 · SYSTEM ARCHITECTURE REQUIREMENTS</p>
+          <h2>System architecture</h2>
+          <p>The report must include an architecture diagram, for example:</p>
+          <div class="ascii-block">                 USER
+                   │
+                   ▼
+          ┌────────────────┐
+          │   DApp / UI    │
+          └───────┬────────┘
+                  │
+          ┌───────▼────────┐
+          │ Web3 / Backend │
+          └───┬────────┬───┘
+              │        │
+              ▼        ▼
+      ┌────────────┐ ┌──────────┐
+      │ Blockchain │ │ AI Model │
+      │            │ │          │
+      │ Smart      │ │ Risk     │
+      │ Contract   │ │ Score    │
+      └────────────┘ └──────────┘</div>
+          <div class="inline-warning"><strong>Architecture note:</strong> If an AI model or an ESG Score is used to directly drive a Smart Contract decision (e.g., auto-approving a loan, computing interest), students must clearly explain the mechanism for passing data from Off-chain to On-chain (using an Oracle pattern, Signer Key/ECDSA Verification, or Chainlink Functions) - Avoiding a system that is "centralized in disguise as Decentralized."</div>
+        </section>
+
+        <!-- 07 - Quy trinh thuc hien -->
+        <section class="lesson-section" id="quy-trinh">
+          <p class="eyebrow">07 · PROJECT EXECUTION PROCESS</p>
+          <h2>Project execution process</h2>
+
+          <h3>Phase 1 - Define the problem</h3>
+          <p>The group answers: What is the real-world problem? Why is Blockchain needed? What does Blockchain solve?</p>
+
+          <h3>Phase 2 - Research</h3>
+          <p>Study existing solutions, related technologies, prior research, and the limitations of current solutions.</p>
+
+          <h3>Phase 3 - Analysis &amp; design</h3>
+          <p>Build a Use Case, User Flow, System Architecture, Database/Data Model if needed, Smart Contract Architecture.</p>
+
+          <h3>Phase 4 - Smart Contract</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Design</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Code</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Compile</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Test</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Deploy</span>
+          </div>
+
+          <h3>Phase 5 - Data &amp; AI</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Collect</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Clean</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Train</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Evaluate</span>
+          </div>
+
+          <h3>Phase 6 - DApp</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Frontend</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Web3</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Smart Contract</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Blockchain</span>
+          </div>
+
+          <h3>Phase 7 - Integration</h3>
+          <p>Integrate Blockchain + Smart Contract + AI + Dashboard into one unified system.</p>
+
+          <h3>Phase 8 - Testing</h3>
+          <p>Must test: Smart Contract, Business Logic, Access Control, Transaction, DApp, AI Model.</p>
+        </section>
+
+        <!-- 07 - Kiem thu Smart Contract -->
+        <section class="lesson-section" id="kiem-thu">
+          <p class="eyebrow">08 · SMART CONTRACT TESTING REQUIREMENTS</p>
+          <h2>Smart Contract testing</h2>
+          <p>The group must have test cases, similar to the pytest framework practiced in Week 5 for <code>liquidateLoan()</code>:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Test Case</th><th>Input</th><th>Expected</th></tr>
+            <tr><td>Create Loan</td><td>Valid</td><td>Success</td></tr>
+            <tr><td>Create Loan</td><td>Invalid amount</td><td>Reject</td></tr>
+            <tr><td>Repay Loan</td><td>Valid</td><td>Success</td></tr>
+            <tr><td>Repay Loan</td><td>Unauthorized</td><td>Reject</td></tr>
+            <tr><td>Liquidate</td><td>Valid condition</td><td>Success</td></tr>
+            <tr><td>Liquidate</td><td>Invalid condition</td><td>Reject</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 08 - Danh gia hieu nang -->
+        <section class="lesson-section" id="hieu-nang">
+          <p class="eyebrow">09 · PERFORMANCE EVALUATION</p>
+          <h2>Performance evaluation</h2>
+          <p>Depending on the topic, the group should evaluate:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Group</th><th>Metric</th></tr>
+            <tr><td>Blockchain</td><td>Gas Used, Gas Cost, Transaction Time</td></tr>
+            <tr><td>AI</td><td>Accuracy, F1, Recall, ROC-AUC</td></tr>
+            <tr><td>DApp</td><td>Response Time, Transaction Success Rate</td></tr>
+          </table></div>
+          <div class="inline-ok">Not all metrics are mandatory - The group chooses the metrics that fit its topic.</div>
+        </section>
+
+        <!-- 09 - Yeu cau bao mat -->
+        <section class="lesson-section" id="bao-mat">
+          <p class="eyebrow">10 · SECURITY REQUIREMENTS</p>
+          <h2>Security requirements</h2>
+          <p>The group must analyze at least <strong>3 security risks</strong> relevant to the system, e.g.: Reentrancy, Access Control, Integer/Arithmetic Issues, Oracle Manipulation, Front-running, Private Key Security, Input Validation.</p>
+          <div class="definition">For each risk, the group must explain it in exactly three steps: <strong>What the risk is ➜ How it could happen ➜ A mitigation.</strong></div>
+        </section>
+
+        <!-- 10 - San pham phai nop -->
+        <section class="lesson-section" id="san-pham-nop">
+          <p class="eyebrow">11 · DELIVERABLES</p>
+          <h2>Deliverables</h2>
+          <p>Each group submits 5 components:</p>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3>1. Source Code</h3>
+              <p>Smart Contract, Frontend, Backend, AI/ML, Scripts</p>
+            </div>
+            <div class="req-card">
+              <h3>2. Project report</h3>
+              <p>PDF format</p>
+            </div>
+            <div class="req-card">
+              <h3>3. Presentation slides</h3>
+              <p>Used for defending the project</p>
+            </div>
+            <div class="req-card">
+              <h3>4. Demo video</h3>
+              <p>About 5-10 minutes, showing Problem ➜ Solution ➜ Smart Contract ➜ DApp ➜ AI ➜ Demo</p>
+            </div>
+            <div class="req-card">
+              <h3>5. README</h3>
+              <p>Instructions for installing, configuring, deploying, running the DApp, running AI, and demoing</p>
+            </div>
+          </div>
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Academic integrity policy</h3>
+            <p>Absolutely no copying or reusing another student's work for submission. Students must complete their own assignments honestly.</p>
+          </div>
+        </section>
+
+        <!-- 11 - Cau truc bao cao -->
+        <section class="lesson-section" id="cau-truc-bao-cao">
+          <p class="eyebrow">12 · REPORT STRUCTURE</p>
+          <h2>Report structure</h2>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Chapter</th><th>Content</th></tr>
+            <tr><td>1. Introduction</td><td>Problem statement, reason for choosing the topic, objectives, scope, target users</td></tr>
+            <tr><td>2. Theoretical background</td><td>Blockchain, Smart Contract, Web3, Token/NFT if applicable, DeFi if applicable, ESG if applicable, AI/ML if applicable</td></tr>
+            <tr><td>3. Problem analysis</td><td>Problem Statement, Business Process, User Roles, Use Case, Functional/Non-functional Requirements</td></tr>
+            <tr><td>4. System design</td><td>System Architecture, Smart Contract Architecture, Data Architecture, DApp Architecture, AI Architecture</td></tr>
+            <tr><td>5. System implementation</td><td>Smart Contract, Blockchain Deployment, Backend/Web3, Data Processing, AI Model, DApp</td></tr>
+            <tr><td>6. Experiments &amp; evaluation</td><td>Test Case, Transaction, Gas Cost, AI Metrics, System Performance, Security Analysis</td></tr>
+            <tr><td>7. Conclusion &amp; future work</td><td>Results achieved, limitations, future direction</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 12 - Yeu cau demo -->
+        <section class="lesson-section" id="demo">
+          <p class="eyebrow">13 · DEMO REQUIREMENTS</p>
+          <h2>Demo requirements</h2>
+          <p>During the defense, the group must demo the product live - Not just show screenshots. Suggested order:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">1. Introduce the problem</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">2. Introduce the architecture</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">3. Demo the Smart Contract</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">4. Demo the DApp</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">5. Perform a Transaction</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">6. Check the Blockchain</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">7. Demo the AI</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">8. Show the results</span>
+          </div>
+        </section>
+
+        <!-- 13 - Cau hoi bao ve -->
+        <section class="lesson-section" id="cau-hoi-bao-ve">
+          <p class="eyebrow">14 · DEFENSE QUESTIONS</p>
+          <h2>Defense questions</h2>
+          <p>The instructor may ask across 5 topic groups:</p>
+
+          <h3>Blockchain</h3>
+          <ul>
+            <li>Why does this topic need Blockchain?</li>
+            <li>If Blockchain were removed, would the system still work?</li>
+            <li>What does the group's Smart Contract do?</li>
+            <li>Which data is stored on-chain?</li>
+          </ul>
+
+          <h3>Smart Contract</h3>
+          <ul>
+            <li>Why was the function designed this way?</li>
+            <li>Who has permission to call the function?</li>
+            <li>How does the group handle access control?</li>
+            <li>What security risks exist?</li>
+          </ul>
+
+          <h3>AI</h3>
+          <ul>
+            <li>Where does the dataset come from?</li>
+            <li>Why was this algorithm chosen?</li>
+            <li>Which metric matters most?</li>
+            <li>Is the model overfitting?</li>
+          </ul>
+
+          <h3>System</h3>
+          <ul>
+            <li>How does the system architecture work?</li>
+            <li>Is the AI on-chain or off-chain?</li>
+            <li>If Blockchain isn't working, how does the system handle it?</li>
+            <li>If a transaction fails, how does the DApp handle it?</li>
+          </ul>
+
+          <h3>Research</h3>
+          <ul>
+            <li>What is novel about this topic?</li>
+            <li>Compared to existing solutions, where is the system better?</li>
+            <li>What is the biggest limitation of the topic?</li>
+          </ul>
+        </section>
+
+        <!-- 14 - Tieu chi danh gia -->
+        <section class="lesson-section" id="tieu-chi">
+          <p class="eyebrow">15 · GRADING CRITERIA</p>
+          <h2>Grading criteria</h2>
+          <p>To avoid ambiguity in grading, the 100-point scale is split into <strong>2 Tracks</strong> depending on whether the topic uses AI/ML:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Category</th><th>Track A - With AI/ML<br><small style="color:var(--muted);font-weight:500">Levels ★★★ &amp; ★★★★</small></th><th>Track B - Without AI/ML<br><small style="color:var(--muted);font-weight:500">Levels ★ &amp; ★★</small></th></tr>
+            <tr><td>Problem analysis &amp; idea</td><td>10</td><td>10</td></tr>
+            <tr><td>Theoretical background &amp; research</td><td>10</td><td>10</td></tr>
+            <tr><td>Smart Contract &amp; Blockchain / Advanced Business Logic</td><td>20</td><td>25</td></tr>
+            <tr><td>Data &amp; AI/ML / On-chain Data Analytics</td><td>15</td><td>10</td></tr>
+            <tr><td>DApp &amp; interactive interface</td><td>15</td><td>20</td></tr>
+            <tr><td>Testing &amp; security</td><td>10</td><td>10</td></tr>
+            <tr><td>Report</td><td>10</td><td>10</td></tr>
+            <tr><td>Demo &amp; presentation</td><td>10</td><td>10</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>100</strong></td><td><strong>105</strong></td></tr>
+          </table></div>
+          <p><strong>Track B</strong> is for topics that go deep on DeFi Logic/Tokenomics/Security without using AI/ML: Smart Contract &amp; Advanced Business Logic gets 5 extra points for contract complexity, DApp &amp; interactive interface gets 5 extra points for Web3 user experience, while On-chain Data Analytics (Chart/Metrics/Event Indexing) is worth only 10 points.</p>
+          <div class="inline-warning">Whichever Track a group registers in Section 03 (Topic registration) is the one it is graded against - The two Tracks' points are not combined for the same topic.</div>
+        </section>
+
+        <!-- 15 - Muc do do an -->
+        <section class="lesson-section" id="muc-do">
+          <p class="eyebrow">16 · PROJECT LEVELS</p>
+          <h2>Project levels</h2>
+          <p>To avoid every group doing the same level of work, projects are split into 4 levels:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Level</th><th>Components</th></tr>
+            <tr><td>★ Level 1 - Basic</td><td>Smart Contract + Blockchain + DApp</td></tr>
+            <tr><td>★★ Level 2 - Intermediate</td><td>Smart Contract + Blockchain + DApp + Data Analytics</td></tr>
+            <tr><td>★★★ Level 3 - Advanced</td><td>Smart Contract + Blockchain + DApp + Data + AI/ML</td></tr>
+            <tr><td>★★★★ Level 4 - Research</td><td>Blockchain + AI + Graph Analytics + Security + Experimental Evaluation</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 16 - Yeu cau toi thieu -->
+        <section class="lesson-section" id="toi-thieu">
+          <p class="eyebrow">17 · MINIMUM REQUIREMENTS TO PASS</p>
+          <h2>Minimum requirements to be considered complete</h2>
+          <div class="definition">A passing project must demonstrate: <strong>A real-world problem ➜ A Blockchain-based solution ➜ A Smart Contract ➜ Actual deployment/testing ➜ An interface or interaction method ➜ Data/experiments ➜ An evaluation of the results.</strong></div>
+          <p>A project should not be graded highly if it only has:</p>
+          <div class="inline-warning">
+            ✗ A nice interface but no real Blockchain.<br>
+            ✗ A simple Smart Contract with no real business problem.<br>
+            ✗ AI run on a dataset while Blockchain only appears in the theory section.
+          </div>
+        </section>
+
+        <!-- 18 - Dev Stack khuyen nghi -->
+        <section class="lesson-section" id="dev-stack">
+          <p class="eyebrow">18 · RECOMMENDED DEV STACK</p>
+          <h2>Recommended dev stack</h2>
+          <p>So students aren't overwhelmed by tool choices, the appendix below suggests a minimal Dev Stack sufficient for most topics:</p>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3>Smart Contract Execution</h3>
+              <p>Vyper / Solidity, Remix IDE, Ape Framework / Hardhat, Sepolia Testnet / Anvil (Localhost)</p>
+            </div>
+            <div class="req-card">
+              <h3>Indexing &amp; Data Engine</h3>
+              <p>Web3.py, Pandas, NetworkX (Graph Analytics), The Graph (GraphQL)</p>
+            </div>
+            <div class="req-card">
+              <h3>AI Engine</h3>
+              <p>Scikit-Learn, XGBoost, Isolation Forest</p>
+            </div>
+            <div class="req-card">
+              <h3>Frontend &amp; Web3 Integration</h3>
+              <p>Streamlit (fastest for a Data App), Next.js + Wagmi / Ethers.js</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 19 - Dinh huong san pham cuoi cung -->
+        <section class="lesson-section" id="dinh-huong-cuoi">
+          <p class="eyebrow">19 · FINAL PRODUCT DIRECTION</p>
+          <h2>Final product direction</h2>
+          <p>The entire IS355 project should aim for the following overall model:</p>
+          <div class="ascii-block">                    ┌──────────────────┐
+                    │       USER       │
+                    └────────┬─────────┘
+                             ↓
+                    ┌──────────────────┐
+                    │  DApp / Web UI   │
+                    └────────┬─────────┘
+                             ↓
+              ┌──────────────┴──────────────┐
+              ↓                             ↓
+      ┌─────────────────┐          ┌─────────────────┐
+      │   BLOCKCHAIN    │          │   AI / DATA     │
+      │                 │          │                 │
+      │ Smart Contract  │          │ Analytics       │
+      │ Token / NFT     │          │ ML Prediction   │
+      │ Transaction     │          │ Risk Score      │
+      └────────┬────────┘          └────────┬────────┘
+               │                            │
+               └──────────────┬─────────────┘
+                              ↓
+                    ┌──────────────────┐
+                    │ GREEN FINANCE /  │
+                    │ BANKING SOLUTION │
+                    └──────────────────┘</div>
+          <p>In this way, the 7 weeks of practice lead very naturally to the project:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Week 1: Green Finance &amp; Blockchain basics</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Week 2: Security &amp; Identity</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Week 3: Token/Carbon Credit</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Week 4: RWA/NFT</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Week 5: DeFi/Green Banking</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Week 6: Data/AI/DApp</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Week 7: Project defense</span>
+          </div>
+          <p>This is also the structure kept consistent on the website, so students can see at a glance which piece of the final project each week is building.</p>
+        </section>
+
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">YOU ARE VIEWING</span>
+          <ul class="checklist">
+            <li data-section="gioi-thieu"><b>○</b> Introduction &amp; Objectives</li>
+            <li data-section="chu-de"><b>○</b> Project topics</li>
+            <li data-section="dang-ky-de-tai"><b>○</b> Topic registration</li>
+            <li data-section="thanh-phan-bat-buoc"><b>○</b> 5 required components</li>
+            <li data-section="yeu-cau-du-lieu"><b>○</b> Data requirements</li>
+            <li data-section="kien-truc"><b>○</b> System architecture</li>
+            <li data-section="quy-trinh"><b>○</b> Execution process</li>
+            <li data-section="kiem-thu"><b>○</b> Testing</li>
+            <li data-section="hieu-nang"><b>○</b> Performance evaluation</li>
+            <li data-section="bao-mat"><b>○</b> Security</li>
+            <li data-section="san-pham-nop"><b>○</b> Deliverables</li>
+            <li data-section="cau-truc-bao-cao"><b>○</b> Report structure</li>
+            <li data-section="demo"><b>○</b> Demo requirements</li>
+            <li data-section="cau-hoi-bao-ve"><b>○</b> Defense questions</li>
+            <li data-section="tieu-chi"><b>○</b> Grading criteria</li>
+            <li data-section="muc-do"><b>○</b> Project levels</li>
+            <li data-section="toi-thieu"><b>○</b> Minimum requirements</li>
+            <li data-section="dev-stack"><b>○</b> Recommended dev stack</li>
+            <li data-section="dinh-huong-cuoi"><b>○</b> Final direction</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Weekly hands-on materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#san-pham-nop">Deliverables</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>The project is a research-oriented mini project, not just a single Smart Contract - Pick a topic from Week 6 and follow the arc of the 5 required components.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+    <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
+</body>
+</html>

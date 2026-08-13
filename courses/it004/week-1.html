@@ -107,8 +107,37 @@
           <h2>Cài đặt SQL Server &amp; SSMS</h2>
           <p>Trước buổi thực hành, cần chuẩn bị sẵn 2 thành phần trên máy tính cá nhân: <strong>SQL Server</strong> (bộ máy CSDL) và <strong>SQL Server Management Studio - SSMS</strong> (công cụ giao diện để kết nối, viết truy vấn và quản lý SQL Server). SQL Server không có sẵn giao diện làm việc, nên bắt buộc phải cài thêm SSMS mới thao tác được.</p>
 
+          <h3>Giới thiệu Microsoft SQL Server</h3>
+          <p>SQL Server là hệ quản trị CSDL quan hệ (RDBMS) do Microsoft phát triển, ra đời từ năm 1989 và liên tục được cập nhật đến nay:</p>
+          <p class="ascii-label">MỘT SỐ MỐC PHIÊN BẢN CHÍNH</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Phiên bản</th><th>Năm ra mắt</th><th>Tính năng đặc trưng</th></tr>
+            <tr><td>SQL Server 1.0</td><td>1989</td><td>Phiên bản đầu tiên (Microsoft hợp tác với Sybase), các tính năng CSDL quan hệ cơ bản</td></tr>
+            <tr><td>SQL Server 6.5</td><td>1996</td><td>Phiên bản Windows NT đầu tiên hoàn toàn do Microsoft tự phát triển</td></tr>
+            <tr><td>SQL Server 7.0</td><td>1998</td><td>Viết lại toàn bộ storage engine, cải tiến giao diện quản trị</td></tr>
+            <tr><td>SQL Server 2000</td><td>2000</td><td>Hỗ trợ XML, cải thiện hiệu suất và bảo mật</td></tr>
+            <tr><td>SQL Server 2005</td><td>2005</td><td>Ra mắt SQL Server Management Studio (SSMS), tích hợp .NET CLR, Reporting Services</td></tr>
+            <tr><td>SQL Server 2008</td><td>2008</td><td>Nén dữ liệu (Data Compression), quản trị theo chính sách (Policy-Based Management)</td></tr>
+            <tr><td>SQL Server 2012</td><td>2012</td><td>AlwaysOn Availability Groups, Columnstore Index</td></tr>
+            <tr><td>SQL Server 2016</td><td>2016</td><td>Always Encrypted, hỗ trợ JSON, tích hợp ngôn ngữ R</td></tr>
+            <tr><td>SQL Server 2017</td><td>2017</td><td>Lần đầu chạy được trên Linux, tích hợp Python</td></tr>
+            <tr><td>SQL Server 2019</td><td>2019</td><td>Big Data Clusters, tích hợp AI, cải thiện tốc độ khôi phục CSDL</td></tr>
+            <tr><td>SQL Server 2022</td><td>2022</td><td>Tích hợp sâu với Azure - <strong>phiên bản dùng trong môn học này</strong></td></tr>
+          </table></div>
+
+          <p class="ascii-label">CÁC ẤN BẢN (EDITION)</p>
+          <p>Mỗi phiên bản SQL Server còn được đóng gói thành nhiều <strong>ấn bản</strong> khác nhau, phục vụ các nhu cầu và ngân sách khác nhau:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Ấn bản</th><th>Mô tả</th><th>Chi phí</th></tr>
+            <tr><td>Enterprise</td><td>Đầy đủ tính năng cao cấp nhất (bảo mật, hiệu năng, phân tích dữ liệu quy mô lớn) - dùng cho doanh nghiệp/tổ chức lớn</td><td>Trả phí, rất cao</td></tr>
+            <tr><td>Standard</td><td>Các tính năng cốt lõi, đủ dùng cho doanh nghiệp vừa và nhỏ</td><td>Trả phí</td></tr>
+            <tr><td>Web</td><td>Tối ưu cho việc lưu trữ website, chỉ cung cấp qua các nhà cung cấp dịch vụ hosting</td><td>Trả phí (thấp)</td></tr>
+            <tr><td>Developer</td><td>Đầy đủ tính năng y hệt bản Enterprise, nhưng chỉ được cấp phép dùng để học tập/phát triển/kiểm thử - không được dùng cho hệ thống thực tế đang vận hành</td><td>Miễn phí</td></tr>
+            <tr><td>Express</td><td>Phiên bản rút gọn, giới hạn dung lượng CSDL (tối đa 10GB) và tài nguyên CPU/RAM sử dụng - phù hợp ứng dụng nhỏ</td><td>Miễn phí</td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>Môn học này cài ấn bản nào?</strong> Cài <strong>Developer Edition</strong> - đây là bản <strong>miễn phí</strong> nhưng có <strong>đầy đủ tính năng giống hệt bản Enterprise</strong>, không bị giới hạn dung lượng CSDL hay tài nguyên như Express, phù hợp nhất để học và thực hành đúng với môi trường thực tế. Không chọn Express (bị giới hạn tính năng) và không cần các bản trả phí Enterprise/Standard/Web.</div>
+
           <h3>Cài đặt SQL Server 2022 (Developer Edition)</h3>
-          <p>Bản <strong>Developer Edition</strong> miễn phí, đầy đủ tính năng như bản trả phí, chỉ dùng cho mục đích học tập/phát triển (không dùng cho môi trường thực tế đang vận hành).</p>
           <ol class="question-list">
             <li>Tải bộ cài từ trang chủ Microsoft, chọn <strong>Download Media</strong> để tải file cài đặt về máy trước, thay vì cài trực tiếp qua mạng.</li>
             <li>Chạy file <code>SQLServer2022-DEV-x64-ENU.exe</code>, vào mục <strong>Installation</strong>, chọn bản <strong>Developer</strong> để cài.</li>
@@ -130,6 +159,8 @@
             <span>Xem hướng dẫn cài đặt đầy đủ, có hình ảnh minh họa từng bước (tiếng Anh) tại SQL Server Tutorial.</span>
             <a class="outline-button" href="https://www.sqlservertutorial.net/getting-started/install-sql-server/" target="_blank" rel="noopener">Xem hướng dẫn <span>›</span></a>
           </div>
+
+          <div class="inline-warning"><strong>Cài đặt gặp lỗi?</strong> Nếu quá trình cài đặt SQL Server hoặc SSMS gặp lỗi mà không tự khắc phục được, hãy liên hệ giảng viên phụ trách lớp thực hành để được hỗ trợ trực tiếp, tránh mất thời gian tự mò mẫm khi chưa quen.</div>
 
           <p>Sau khi cài đặt, giao diện SSMS thường được sử dụng để:</p>
           <ul>

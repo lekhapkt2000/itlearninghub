@@ -111,8 +111,37 @@
           <h2>Installing SQL Server &amp; SSMS</h2>
           <p>Before the practice sessions, install 2 components on your computer: <strong>SQL Server</strong> (the database engine) and <strong>SQL Server Management Studio - SSMS</strong> (the client tool for connecting, writing queries, and managing SQL Server). SQL Server doesn't come with a built-in interface, so SSMS is required.</p>
 
+          <h3>Introducing Microsoft SQL Server</h3>
+          <p>SQL Server is a relational database management system (RDBMS) built by Microsoft, first released in 1989 and continuously updated since then:</p>
+          <p class="ascii-label">SOME MAJOR VERSION MILESTONES</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Version</th><th>Release Year</th><th>Key Features</th></tr>
+            <tr><td>SQL Server 1.0</td><td>1989</td><td>The first version (a Microsoft-Sybase partnership), basic relational database features</td></tr>
+            <tr><td>SQL Server 6.5</td><td>1996</td><td>The first Windows NT version built entirely in-house by Microsoft</td></tr>
+            <tr><td>SQL Server 7.0</td><td>1998</td><td>A full storage engine rewrite, improved management interface</td></tr>
+            <tr><td>SQL Server 2000</td><td>2000</td><td>XML support, improved performance and security</td></tr>
+            <tr><td>SQL Server 2005</td><td>2005</td><td>Introduced SQL Server Management Studio (SSMS), .NET CLR integration, Reporting Services</td></tr>
+            <tr><td>SQL Server 2008</td><td>2008</td><td>Data Compression, Policy-Based Management</td></tr>
+            <tr><td>SQL Server 2012</td><td>2012</td><td>AlwaysOn Availability Groups, Columnstore Index</td></tr>
+            <tr><td>SQL Server 2016</td><td>2016</td><td>Always Encrypted, JSON support, R language integration</td></tr>
+            <tr><td>SQL Server 2017</td><td>2017</td><td>Runs on Linux for the first time, Python integration</td></tr>
+            <tr><td>SQL Server 2019</td><td>2019</td><td>Big Data Clusters, AI integration, faster database recovery</td></tr>
+            <tr><td>SQL Server 2022</td><td>2022</td><td>Deep Azure integration - <strong>the version used in this course</strong></td></tr>
+          </table></div>
+
+          <p class="ascii-label">EDITIONS</p>
+          <p>Each SQL Server version is also packaged into several <strong>editions</strong>, serving different needs and budgets:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Edition</th><th>Description</th><th>Cost</th></tr>
+            <tr><td>Enterprise</td><td>The most advanced feature set (security, performance, large-scale data analytics) - built for large enterprises/organizations</td><td>Paid, very expensive</td></tr>
+            <tr><td>Standard</td><td>Core features, sufficient for small and medium-sized businesses</td><td>Paid</td></tr>
+            <tr><td>Web</td><td>Optimized for website hosting, only available through hosting providers</td><td>Paid (low cost)</td></tr>
+            <tr><td>Developer</td><td>Has all the same features as Enterprise, but is only licensed for learning/development/testing - not for a live production system</td><td>Free</td></tr>
+            <tr><td>Express</td><td>A scaled-down edition with a database size cap (10GB max) and limited CPU/RAM usage - suited to small applications</td><td>Free</td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>Which edition does this course install?</strong> Install the <strong>Developer Edition</strong> - it's <strong>free</strong> but has <strong>all the same features as Enterprise</strong>, without Express's database size or resource caps, making it the best fit for learning and practicing with real-world capabilities. Don't use Express (limited features), and none of the paid Enterprise/Standard/Web editions are needed.</div>
+
           <h3>Installing SQL Server 2022 (Developer Edition)</h3>
-          <p>The <strong>Developer Edition</strong> is free and has all the same features as the paid editions - it's meant for learning/development only, not for a live production environment.</p>
           <ol class="question-list">
             <li>Download the installer from the Microsoft site, choosing <strong>Download Media</strong> to download the setup files first instead of installing directly over the network.</li>
             <li>Run <code>SQLServer2022-DEV-x64-ENU.exe</code>, go to <strong>Installation</strong>, and choose the <strong>Developer</strong> edition.</li>
@@ -134,6 +163,8 @@
             <span>See the full install guide with step-by-step screenshots at SQL Server Tutorial.</span>
             <a class="outline-button" href="https://www.sqlservertutorial.net/getting-started/install-sql-server/" target="_blank" rel="noopener">View guide <span>›</span></a>
           </div>
+
+          <div class="inline-warning"><strong>Installation errors?</strong> If installing SQL Server or SSMS runs into an error you can't resolve on your own, contact the instructor in charge of your practicum class for direct help rather than spending time troubleshooting alone.</div>
 
           <p>Once installed, the SSMS interface is typically used to:</p>
           <ul>

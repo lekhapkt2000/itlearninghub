@@ -178,11 +178,30 @@ WHERE NOT MaPB = 'PB01';</code></pre></div>
             <tr><td><code>ANY</code></td><td>True for at least one value in the result set</td></tr>
             <tr><td><code>ALL</code></td><td>True for every value in the result set</td></tr>
           </table></div>
-          <p><code>LIKE</code> - <code>%</code> represents any sequence of characters:</p>
+          <p><code>LIKE</code> is used to search by pattern, combined with two wildcard characters:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Wildcard</th><th>Meaning</th></tr>
+            <tr><td><code>%</code></td><td>Represents any sequence of characters, including an empty one (0, 1, or many characters)</td></tr>
+            <tr><td><code>_</code></td><td>Represents exactly one character</td></tr>
+          </table></div>
+          <p>Starts with "Nguyễn" - Use <code>%</code> at the end:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
 FROM NhanVien
 WHERE HoTen LIKE N'Nguyễn%';</code></pre></div>
-          <p>This would match: <code>Nguyễn An</code>, <code>Nguyễn Bình</code>, <code>Nguyễn Văn Nam</code>.</p>
+          <p>All of these would match: <code>Nguyễn An</code>, <code>Nguyễn Bình</code>, <code>Nguyễn Văn Nam</code>.</p>
+          <p>Ends with "An" - Use <code>%</code> at the start:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
+FROM NhanVien
+WHERE HoTen LIKE N'%An';</code></pre></div>
+          <p>Contains "Văn" - Use <code>%</code> on both ends:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen
+FROM NhanVien
+WHERE HoTen LIKE N'%Văn%';</code></pre></div>
+          <p><code>_</code> replaces exactly <strong>one</strong> character - for example, finding a department code shaped like <code>PB0</code> followed by exactly one digit:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NhanVien
+WHERE MaPB LIKE 'PB0_';</code></pre></div>
+          <p>Matches <code>PB01</code>, <code>PB02</code>,... but not <code>PB010</code>, since the pattern <code>PB0_</code> only accepts exactly 4 characters.</p>
           <p><code>BETWEEN</code>:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
 FROM NhanVien

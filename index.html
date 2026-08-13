@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="assets/css/base.css?v=20">
-  <link rel="stylesheet" href="assets/css/home.css?v=20">
+  <link rel="stylesheet" href="assets/css/home.css?v=21">
 </head>
 <body>
   <header class="topbar">
@@ -84,7 +84,11 @@
         </div>
         <div class="instructor-visual">
           <div class="mini-roadmap">
-            <span class="side-label">LỘ TRÌNH IT004 · BẤM ĐỂ XEM</span>
+            <div class="mini-roadmap-tabs" id="mini-roadmap-tabs" role="tablist">
+              <button type="button" class="mini-roadmap-tab is-active" data-course="IT004">IT004</button>
+              <button type="button" class="mini-roadmap-tab" data-course="IS355">IS355</button>
+            </div>
+            <span class="side-label" data-roadmap-label>LỘ TRÌNH IT004 · BẤM ĐỂ XEM</span>
             <div class="mini-roadmap-track" id="mini-roadmap-track">
               <button type="button" class="mini-roadmap-node is-active" data-week="1">1</button>
               <button type="button" class="mini-roadmap-node" data-week="2">2</button>
@@ -203,22 +207,36 @@
       hubList.innerHTML = listHtml;
     }
 
-    var IT004_WEEKS = [
-      { title: 'Nền tảng cơ sở dữ liệu', topics: 'SSMS · Data Types · Table · Constraints · DML', path: 'courses/it004/week-1.html' },
-      { title: 'Truy vấn dữ liệu với SQL', topics: 'Toán tử · Hàm · SELECT · JOIN · Subquery', path: 'courses/it004/week-2.html' },
-      { title: 'Phép chia & gom nhóm', topics: 'Phép chia · GROUP BY · TOP · Kết ngoài', path: 'courses/it004/week-3.html' },
-      { title: 'Hàm mở rộng, CASE & Subquery', topics: 'CAST · CASE · Alias · Subquery', path: 'courses/it004/week-4.html' },
-      { title: 'Trigger', topics: 'Cú pháp · AFTER · INSTEAD OF · Inserted/Deleted', path: 'courses/it004/week-5.html' },
-      { title: 'Ôn tập thực hành Cơ sở dữ liệu', topics: 'Mô hình dữ liệu · JOIN · Subquery · Bài tập tổng hợp', path: 'courses/it004/week-6.html' }
-    ];
+    var ROADMAPS = {
+      IT004: [
+        { title: 'Nền tảng cơ sở dữ liệu', topics: 'SSMS · Data Types · Table · Constraints · DML', path: 'courses/it004/week-1.html' },
+        { title: 'Truy vấn dữ liệu với SQL', topics: 'Toán tử · Hàm · SELECT · JOIN · Subquery', path: 'courses/it004/week-2.html' },
+        { title: 'Phép chia & gom nhóm', topics: 'Phép chia · GROUP BY · TOP · Kết ngoài', path: 'courses/it004/week-3.html' },
+        { title: 'Hàm mở rộng, CASE & Subquery', topics: 'CAST · CASE · Alias · Subquery', path: 'courses/it004/week-4.html' },
+        { title: 'Trigger', topics: 'Cú pháp · AFTER · INSTEAD OF · Inserted/Deleted', path: 'courses/it004/week-5.html' },
+        { title: 'Ôn tập thực hành Cơ sở dữ liệu', topics: 'Mô hình dữ liệu · JOIN · Subquery · Bài tập tổng hợp', path: 'courses/it004/week-6.html' }
+      ],
+      IS355: [
+        { title: 'Tổng quan Tài chính Xanh & Cơ sở Blockchain', topics: 'ESG · Tín chỉ Carbon · Blockchain & Mật mã học · Vyper cơ bản', path: 'courses/is355/week-1.html' },
+        { title: 'Bảo mật Danh tính & An toàn Dữ liệu Tài chính', topics: 'CIA Model · Mã hóa đối xứng/bất đối xứng · ZKP · Smart Contract ESG', path: 'courses/is355/week-2.html' },
+        { title: 'Số hóa Tài sản Xanh - ERC-20 & Carbon Credit', topics: 'ERC-20 · Coin vs Token · GreenCarbonToken · Dự báo giá Carbon', path: 'courses/is355/week-3.html' },
+        { title: 'Real-World Assets (RWA) & NFT Chuỗi Cung Ứng Bền Vững', topics: 'ERC-721 · Metadata/IPFS · Greenwashing · NFT chuỗi cung ứng', path: 'courses/is355/week-4.html' },
+        { title: 'Tài chính Phi tập trung (DeFi) & Ngân hàng Xanh', topics: 'Liquidity Pool · Thế chấp/Thanh lý · GreenLending · Dự đoán rủi ro', path: 'courses/is355/week-5.html' },
+        { title: 'AI, Phân tích Giao dịch & Tích hợp DApp Xanh', topics: 'On-chain Analytics · AML · Bảo mật Smart Contract · DApp tích hợp', path: 'courses/is355/week-6.html' }
+      ]
+    };
+
     var roadmapNodes = document.querySelectorAll('#mini-roadmap-track .mini-roadmap-node');
+    var roadmapTabs = document.querySelectorAll('#mini-roadmap-tabs .mini-roadmap-tab');
+    var roadmapLabel = document.querySelector('[data-roadmap-label]');
     var previewNum = document.querySelector('[data-preview-num]');
     var previewTitle = document.querySelector('[data-preview-title]');
     var previewTopics = document.querySelector('[data-preview-topics]');
     var previewCta = document.querySelector('[data-preview-cta]');
+    var currentCourse = 'IT004';
 
     function selectWeek(n) {
-      var w = IT004_WEEKS[n - 1];
+      var w = ROADMAPS[currentCourse][n - 1];
       if (!w) return;
       roadmapNodes.forEach(function (btn) {
         btn.classList.toggle('is-active', Number(btn.dataset.week) === n);
@@ -239,8 +257,21 @@
       }
     }
 
+    function selectCourse(code) {
+      if (!ROADMAPS[code]) return;
+      currentCourse = code;
+      roadmapTabs.forEach(function (tab) {
+        tab.classList.toggle('is-active', tab.dataset.course === code);
+      });
+      if (roadmapLabel) roadmapLabel.textContent = 'LỘ TRÌNH ' + code + ' · BẤM ĐỂ XEM';
+      selectWeek(1);
+    }
+
     roadmapNodes.forEach(function (btn) {
       btn.addEventListener('click', function () { selectWeek(Number(btn.dataset.week)); });
+    });
+    roadmapTabs.forEach(function (tab) {
+      tab.addEventListener('click', function () { selectCourse(tab.dataset.course); });
     });
     if (roadmapNodes.length) selectWeek(1);
   </script>

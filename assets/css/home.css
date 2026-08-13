@@ -80,6 +80,10 @@
 
 .instructor-visual{position:relative;z-index:1;display:flex;align-items:stretch;padding:8px}
 .mini-roadmap{width:100%;padding:26px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.mini-roadmap-tabs{display:flex;gap:6px;margin-bottom:14px}
+.mini-roadmap-tab{padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--tint);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s}
+.mini-roadmap-tab:hover{border-color:var(--primary-ink);color:var(--ink)}
+.mini-roadmap-tab.is-active{background:var(--primary);border-color:var(--primary);color:#fff}
 .mini-roadmap>.side-label{display:block;margin-bottom:18px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.12em}
 .mini-roadmap-track{position:relative;display:flex;justify-content:space-between;margin-bottom:22px}
 .mini-roadmap-track::before{content:'';position:absolute;top:50%;left:4px;right:4px;height:2px;background:var(--line);transform:translateY(-50%);z-index:0}

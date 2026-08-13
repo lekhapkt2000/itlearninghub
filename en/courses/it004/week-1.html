@@ -242,12 +242,14 @@ Tuoi TINYINT</code></pre></div>
           <p>Stored values: <code>1</code> (true), <code>0</code> (false), or <code>NULL</code> (undefined).</p>
 
           <h3>Decimal / Floating-Point Types</h3>
-          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECIMAL(p,s)
-NUMERIC(p,s)
-FLOAT
-REAL
-MONEY
-SMALLMONEY</code></pre></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Type</th><th>Description</th><th>Use When</th></tr>
+            <tr><td><code>DECIMAL(p,s)</code> / <code>NUMERIC(p,s)</code></td><td>Exact decimal number - <code>p</code> is the total digit count, <code>s</code> is the number of digits after the decimal point</td><td>Grades, quantities, unit prices - when exact results matter</td></tr>
+            <tr><td><code>FLOAT</code></td><td>Floating-point number, approximate precision, very large value range</td><td>Scientific calculations that don't require exact precision</td></tr>
+            <tr><td><code>REAL</code></td><td>Similar to <code>FLOAT</code> but lower precision and storage</td><td>Approximate figures where precision matters less</td></tr>
+            <tr><td><code>MONEY</code></td><td>Dedicated currency type, precise to 4 decimal places</td><td>Currency values with a large range</td></tr>
+            <tr><td><code>SMALLMONEY</code></td><td>Similar to <code>MONEY</code> but a smaller value range</td><td>Currency values with a small range</td></tr>
+          </table></div>
           <p><code>DECIMAL(p,s)</code> lets you define the total number of digits (<code>p</code>) and the number of digits after the decimal point (<code>s</code>). For example:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DiemTB DECIMAL(4,2)</code></pre></div>
           <p>Can store: <code>8.50</code>, <code>9.25</code>, <code>10.00</code></p>

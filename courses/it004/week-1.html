@@ -238,12 +238,14 @@ Tuoi TINYINT</code></pre></div>
           <p>Giá trị lưu trữ: <code>1</code> (true), <code>0</code> (false) hoặc <code>NULL</code> (chưa xác định).</p>
 
           <h3>Kiểu số thực</h3>
-          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECIMAL(p,s)
-NUMERIC(p,s)
-FLOAT
-REAL
-MONEY
-SMALLMONEY</code></pre></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Kiểu</th><th>Mô tả</th><th>Dùng khi</th></tr>
+            <tr><td><code>DECIMAL(p,s)</code> / <code>NUMERIC(p,s)</code></td><td>Số thập phân chính xác tuyệt đối - <code>p</code> là tổng số chữ số, <code>s</code> là số chữ số sau dấu phẩy</td><td>Điểm số, số lượng, đơn giá - cần kết quả chính xác</td></tr>
+            <tr><td><code>FLOAT</code></td><td>Số thực dấu phẩy động, độ chính xác gần đúng, phạm vi giá trị rất lớn</td><td>Tính toán khoa học, không đòi hỏi chính xác tuyệt đối</td></tr>
+            <tr><td><code>REAL</code></td><td>Tương tự <code>FLOAT</code> nhưng độ chính xác và dung lượng thấp hơn</td><td>Số liệu gần đúng, ít quan trọng độ chính xác</td></tr>
+            <tr><td><code>MONEY</code></td><td>Kiểu tiền tệ chuyên dụng, chính xác đến 4 chữ số thập phân</td><td>Giá trị tiền có biên độ lớn</td></tr>
+            <tr><td><code>SMALLMONEY</code></td><td>Tương tự <code>MONEY</code> nhưng phạm vi giá trị nhỏ hơn</td><td>Giá trị tiền có biên độ nhỏ</td></tr>
+          </table></div>
           <p><code>DECIMAL(p,s)</code> cho phép xác định số chữ số tổng cộng (<code>p</code>) và số chữ số sau dấu phẩy (<code>s</code>). Ví dụ:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DiemTB DECIMAL(4,2)</code></pre></div>
           <p>Có thể lưu: <code>8.50</code>, <code>9.25</code>, <code>10.00</code></p>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IT004 Tuần 6 - Ôn tập thực hành Cơ sở dữ liệu: mô hình dữ liệu, khóa, SELECT/WHERE/LIKE, ORDER BY, hàm tổng hợp, GROUP BY/HAVING, JOIN, Subquery, UPDATE/DELETE, lỗi thường gặp, bài tập tổng hợp và bài kiểm tra thực hành mô phỏng.">
+  <meta name="description" content="IT004 Tuần 6 - Ôn tập thực hành Cơ sở dữ liệu: mô hình dữ liệu, khóa, SELECT/WHERE/LIKE, ORDER BY, hàm tổng hợp, GROUP BY/HAVING, JOIN, Subquery, UPDATE/DELETE, lỗi thường gặp và bài tập ôn tập tổng hợp Quản lý hàng hóa.">
   <title>Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
@@ -59,12 +59,10 @@
         <a href="#join" data-toc><b>08</b> JOIN</a>
         <a href="#subquery" data-toc><b>09</b> Subquery</a>
         <a href="#update-delete" data-toc><b>10</b> UPDATE &amp; DELETE</a>
-        <a href="#bai-toan-tong-hop" data-toc><b>11</b> Bài thực hành tổng hợp</a>
-        <a href="#yeu-cau-thuc-hanh" data-toc><b>12</b> Yêu cầu thực hành</a>
-        <a href="#bai-tap-thach-thuc" data-toc><b>13</b> Bài tập thách thức</a>
-        <a href="#loi-thuong-gap" data-toc><b>14</b> Lỗi thường gặp</a>
-        <a href="#checklist" data-toc><b>15</b> Checklist ôn tập</a>
-        <a href="#kiem-tra-mo-phong" data-toc><b>16</b> Bài kiểm tra mô phỏng</a>
+        <a href="#yeu-cau-thuc-hanh" data-toc><b>11</b> Yêu cầu thực hành</a>
+        <a href="#bai-tap-thach-thuc" data-toc><b>12</b> Bài tập thách thức</a>
+        <a href="#loi-thuong-gap" data-toc><b>13</b> Lỗi thường gặp</a>
+        <a href="#checklist" data-toc><b>14</b> Checklist ôn tập</a>
       </nav>
 
       <div class="lesson-content">
@@ -392,51 +390,11 @@ WHERE MaSV = 'SV001';</code></pre></div>
           <p>Tương tự - Luôn kiểm tra <code>WHERE</code> trước khi <code>DELETE</code>.</p>
         </section>
 
-        <!-- 11 - Bai thuc hanh tong hop -->
-        <section class="lesson-section" id="bai-toan-tong-hop">
-          <p class="eyebrow">11 · BÀI THỰC HÀNH TỔNG HỢP</p>
-          <h2>Bài toán: Quản lý đào tạo</h2>
-          <p>Cho hệ thống gồm 4 bảng dữ liệu mẫu dưới đây:</p>
-
-          <p class="ascii-label">LOP</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>MaLop</th><th>TenLop</th></tr>
-            <tr><td>HTTT01</td><td>HTTT K18.1</td></tr>
-            <tr><td>HTTT02</td><td>HTTT K18.2</td></tr>
-          </table></div>
-
-          <p class="ascii-label">SINHVIEN</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>MaSV</th><th>HoTen</th><th>MaLop</th></tr>
-            <tr><td>SV001</td><td>Nguyễn Văn An</td><td>HTTT01</td></tr>
-            <tr><td>SV002</td><td>Trần Văn Bình</td><td>HTTT01</td></tr>
-            <tr><td>SV003</td><td>Lê Văn Cường</td><td>HTTT02</td></tr>
-          </table></div>
-
-          <p class="ascii-label">MONHOC</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>MaMH</th><th>TenMH</th><th>SoTinChi</th></tr>
-            <tr><td>IT004</td><td>Cơ sở dữ liệu</td><td>4</td></tr>
-            <tr><td>IS201</td><td>Phân tích thiết kế HTTT</td><td>4</td></tr>
-            <tr><td>IS210</td><td>Hệ quản trị CSDL</td><td>4</td></tr>
-          </table></div>
-
-          <p class="ascii-label">KETQUA</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>MaSV</th><th>MaMH</th><th>Diem</th></tr>
-            <tr><td>SV001</td><td>IT004</td><td>8.5</td></tr>
-            <tr><td>SV001</td><td>IS201</td><td>7.5</td></tr>
-            <tr><td>SV002</td><td>IT004</td><td>6.5</td></tr>
-            <tr><td>SV002</td><td>IS201</td><td>8.0</td></tr>
-            <tr><td>SV003</td><td>IT004</td><td>9.0</td></tr>
-          </table></div>
-        </section>
-
-        <!-- 12 - Yeu cau thuc hanh -->
+        <!-- 11 - Yeu cau thuc hanh -->
         <section class="lesson-section" id="yeu-cau-thuc-hanh">
-          <p class="eyebrow">12 · YÊU CẦU THỰC HÀNH</p>
+          <p class="eyebrow">11 · YÊU CẦU THỰC HÀNH</p>
           <h2>Yêu cầu thực hành</h2>
-          <p>Bài thực hành chính thức của tuần này dùng lược đồ cổ điển "Nhà cung cấp - Phụ tùng - Vận chuyển" (Quản lý hàng hóa) thay vì bài toán Quản lý đào tạo ở Mục 11 - schema, dữ liệu mẫu và toàn bộ 36 câu nằm trong trang bài tập bên dưới.</p>
+          <p>Bài thực hành chính thức của tuần này dùng lược đồ cổ điển "Nhà cung cấp - Phụ tùng - Vận chuyển" (Quản lý hàng hóa) - schema, dữ liệu mẫu và toàn bộ 36 câu nằm trong trang bài tập bên dưới.</p>
 
           <div class="answer-cta">
             <div class="answer-cta-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></div>
@@ -449,11 +407,11 @@ WHERE MaSV = 'SV001';</code></pre></div>
           </div>
         </section>
 
-        <!-- 13 - Bai tap thach thuc -->
+        <!-- 12 - Bai tap thach thuc -->
         <section class="lesson-section" id="bai-tap-thach-thuc">
-          <p class="eyebrow">13 · BÀI TẬP THÁCH THỨC</p>
+          <p class="eyebrow">12 · BÀI TẬP THÁCH THỨC</p>
           <h2>Bài tập thách thức</h2>
-          <p class="extra-intro">Rèn luyện thêm với lược đồ <strong>Quản lý đào tạo</strong> ở Mục 11 (không còn là bài thực hành chính thức, nhưng vẫn hữu ích để luyện phản xạ). Sinh viên khá/giỏi thực hiện thêm - Mỗi bài có gợi ý ẩn, bấm để mở.</p>
+          <p class="extra-intro">Rèn luyện thêm với lược đồ <strong>Quản lý đào tạo</strong> (LOP, SINHVIEN, MONHOC, KETQUA) đã dùng xuyên suốt các mục lý thuyết ở trên - không còn là bài thực hành chính thức, nhưng vẫn hữu ích để luyện phản xạ. Sinh viên khá/giỏi thực hiện thêm - Mỗi bài có gợi ý ẩn, bấm để mở.</p>
           <div class="challenge-list">
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">01</span><h4>Chưa học môn</h4></div>
@@ -488,9 +446,9 @@ WHERE MaSV = 'SV001';</code></pre></div>
           </div>
         </section>
 
-        <!-- 14 - Loi thuong gap -->
+        <!-- 13 - Loi thuong gap -->
         <section class="lesson-section" id="loi-thuong-gap">
-          <p class="eyebrow">14 · CÁC LỖI THƯỜNG GẶP</p>
+          <p class="eyebrow">13 · CÁC LỖI THƯỜNG GẶP</p>
           <h2>Các lỗi thường gặp</h2>
 
           <h3>Lỗi 1 - JOIN sai điều kiện</h3>
@@ -525,9 +483,9 @@ FROM SinhVien
 WHERE MaSV = 'SV001';</code></pre></div>
         </section>
 
-        <!-- 15 - Checklist -->
+        <!-- 14 - Checklist -->
         <section class="lesson-section" id="checklist">
-          <p class="eyebrow">15 · CHECKLIST ÔN TẬP</p>
+          <p class="eyebrow">14 · CHECKLIST ÔN TẬP</p>
           <h2>Checklist ôn tập</h2>
           <p>Sinh viên tự đánh giá trước khi thi thực hành:</p>
 
@@ -559,30 +517,6 @@ WHERE MaSV = 'SV001';</code></pre></div>
           </ul>
         </section>
 
-        <!-- 16 - Bai kiem tra mo phong -->
-        <section class="lesson-section" id="kiem-tra-mo-phong">
-          <p class="eyebrow">16 · BÀI KIỂM TRA THỰC HÀNH MÔ PHỎNG</p>
-          <h2>Bài kiểm tra thực hành mô phỏng</h2>
-          <p>Cuối tuần, sinh viên thực hiện một bài tổng hợp trong khoảng <strong>60-90 phút</strong> để tự đánh giá mức độ sẵn sàng trước khi thi thực hành.</p>
-          <div class="practice-lab">
-            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
-            <h3>Quản lý thư viện</h3>
-            <p style="color:#cbd5e1;font-size:13px;margin-bottom:14px">Xây dựng CSDL quản lý thư viện gồm <code style="background:#ffffff1a;color:#e2e8f0">DOCGIA</code>, <code style="background:#ffffff1a;color:#e2e8f0">SACH</code>, <code style="background:#ffffff1a;color:#e2e8f0">THELOAI</code>, <code style="background:#ffffff1a;color:#e2e8f0">MUONTRA</code>.</p>
-            <ol>
-              <li><strong>Bài 1 - Phân tích bài toán:</strong> Xác định Entity, Attribute và Relationship</li>
-              <li><strong>Bài 2 - Xác định khóa:</strong> Primary Key và Foreign Key cho từng bảng</li>
-              <li><strong>Bài 3 - Tạo bảng:</strong> Tạo đủ 4 bảng theo thiết kế</li>
-              <li><strong>Bài 4 - Thiết lập quan hệ:</strong> Ràng buộc Foreign Key giữa các bảng liên quan</li>
-              <li><strong>Bài 5 - Nhập dữ liệu:</strong> Nhập dữ liệu mẫu cho cả 4 bảng</li>
-              <li><strong>Bài 6 - Viết truy vấn:</strong> Viết tối thiểu 10 truy vấn, trong đó có ít nhất 2 câu <code style="background:#ffffff1a;color:#e2e8f0">JOIN</code>, 2 câu <code style="background:#ffffff1a;color:#e2e8f0">GROUP BY</code>, 1 câu <code style="background:#ffffff1a;color:#e2e8f0">HAVING</code>, 1 câu Subquery và 1 câu dùng hàm tổng hợp</li>
-              <li><strong>Bài 7 - Cập nhật dữ liệu:</strong> Thực hiện ít nhất một <code style="background:#ffffff1a;color:#e2e8f0">UPDATE</code></li>
-              <li><strong>Bài 8 - Xóa dữ liệu:</strong> Thực hiện ít nhất một <code style="background:#ffffff1a;color:#e2e8f0">DELETE</code></li>
-              <li><strong>Bài 9 - Giải thích kết quả:</strong> Giải thích được kết quả của các truy vấn đã viết</li>
-            </ol>
-          </div>
-          <div class="definition"><strong>Kết quả cần đạt sau Tuần 6:</strong> Sinh viên không chỉ nhớ cú pháp SQL, mà phải hình thành được quy trình <strong>đọc đề ➜ phân tích dữ liệu ➜ xác định quan hệ ➜ thiết kế bảng ➜ viết SQL ➜ kiểm tra kết quả ➜ giải thích truy vấn.</strong> Đây là tuần tổng kết thực hành IT004, đồng thời là bước chuẩn bị trực tiếp cho phần ôn tập/thi thực hành.</div>
-        </section>
-
         <nav class="week-nav-links" aria-label="Điều hướng tuần">
           <a href="week-5.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 5: Trigger trong SQL Server</span></a>
           <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Thi thử (sắp mở)</span></span>
@@ -608,12 +542,10 @@ WHERE MaSV = 'SV001';</code></pre></div>
             <li data-section="join"><b>○</b> JOIN</li>
             <li data-section="subquery"><b>○</b> Subquery</li>
             <li data-section="update-delete"><b>○</b> UPDATE &amp; DELETE</li>
-            <li data-section="bai-toan-tong-hop"><b>○</b> Bài thực hành tổng hợp</li>
             <li data-section="yeu-cau-thuc-hanh"><b>○</b> Yêu cầu thực hành</li>
             <li data-section="bai-tap-thach-thuc"><b>○</b> Bài tập thách thức</li>
             <li data-section="loi-thuong-gap"><b>○</b> Lỗi thường gặp</li>
             <li data-section="checklist"><b>○</b> Checklist</li>
-            <li data-section="kiem-tra-mo-phong"><b>○</b> Kiểm tra mô phỏng</li>
           </ul>
         </div>
         <div class="panel-box">

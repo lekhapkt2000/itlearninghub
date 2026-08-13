@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IT004 Week 6 - Database Practice Review: data models, keys, SELECT/WHERE/LIKE, ORDER BY, aggregate functions, GROUP BY/HAVING, JOIN, Subquery, UPDATE/DELETE, common mistakes, a comprehensive exercise, and a simulated practical exam.">
+  <meta name="description" content="IT004 Week 6 - Database Practice Review: data models, keys, SELECT/WHERE/LIKE, ORDER BY, aggregate functions, GROUP BY/HAVING, JOIN, Subquery, UPDATE/DELETE, common mistakes, and the Goods Management comprehensive review exercise.">
   <title>Week 6 · Database Practice Review - IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
@@ -63,12 +63,10 @@
         <a href="#join" data-toc><b>08</b> JOIN</a>
         <a href="#subquery" data-toc><b>09</b> Subquery</a>
         <a href="#update-delete" data-toc><b>10</b> UPDATE &amp; DELETE</a>
-        <a href="#bai-toan-tong-hop" data-toc><b>11</b> Comprehensive Exercise</a>
-        <a href="#yeu-cau-thuc-hanh" data-toc><b>12</b> Practice Requirements</a>
-        <a href="#bai-tap-thach-thuc" data-toc><b>13</b> Challenge Problems</a>
-        <a href="#loi-thuong-gap" data-toc><b>14</b> Common Mistakes</a>
-        <a href="#checklist" data-toc><b>15</b> Review Checklist</a>
-        <a href="#kiem-tra-mo-phong" data-toc><b>16</b> Simulated Practical Exam</a>
+        <a href="#yeu-cau-thuc-hanh" data-toc><b>11</b> Practice Requirements</a>
+        <a href="#bai-tap-thach-thuc" data-toc><b>12</b> Challenge Problems</a>
+        <a href="#loi-thuong-gap" data-toc><b>13</b> Common Mistakes</a>
+        <a href="#checklist" data-toc><b>14</b> Review Checklist</a>
       </nav>
 
       <div class="lesson-content">
@@ -396,51 +394,11 @@ WHERE MaSV = 'SV001';</code></pre></div>
           <p>Same idea - always double-check the <code>WHERE</code> clause before running <code>DELETE</code>.</p>
         </section>
 
-        <!-- 11 - Comprehensive Exercise -->
-        <section class="lesson-section" id="bai-toan-tong-hop">
-          <p class="eyebrow">11 · COMPREHENSIVE EXERCISE</p>
-          <h2>Problem: Training Management</h2>
-          <p>Given a system made up of the 4 sample data tables below:</p>
-
-          <p class="ascii-label">LOP</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>MaLop</th><th>TenLop</th></tr>
-            <tr><td>HTTT01</td><td>HTTT K18.1</td></tr>
-            <tr><td>HTTT02</td><td>HTTT K18.2</td></tr>
-          </table></div>
-
-          <p class="ascii-label">SINHVIEN</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>MaSV</th><th>HoTen</th><th>MaLop</th></tr>
-            <tr><td>SV001</td><td>Nguyễn Văn An</td><td>HTTT01</td></tr>
-            <tr><td>SV002</td><td>Trần Văn Bình</td><td>HTTT01</td></tr>
-            <tr><td>SV003</td><td>Lê Văn Cường</td><td>HTTT02</td></tr>
-          </table></div>
-
-          <p class="ascii-label">MONHOC</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>MaMH</th><th>TenMH</th><th>SoTinChi</th></tr>
-            <tr><td>IT004</td><td>Cơ sở dữ liệu</td><td>4</td></tr>
-            <tr><td>IS201</td><td>Phân tích thiết kế HTTT</td><td>4</td></tr>
-            <tr><td>IS210</td><td>Hệ quản trị CSDL</td><td>4</td></tr>
-          </table></div>
-
-          <p class="ascii-label">KETQUA</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>MaSV</th><th>MaMH</th><th>Diem</th></tr>
-            <tr><td>SV001</td><td>IT004</td><td>8.5</td></tr>
-            <tr><td>SV001</td><td>IS201</td><td>7.5</td></tr>
-            <tr><td>SV002</td><td>IT004</td><td>6.5</td></tr>
-            <tr><td>SV002</td><td>IS201</td><td>8.0</td></tr>
-            <tr><td>SV003</td><td>IT004</td><td>9.0</td></tr>
-          </table></div>
-        </section>
-
-        <!-- 12 - Practice Requirements -->
+        <!-- 11 - Practice Requirements -->
         <section class="lesson-section" id="yeu-cau-thuc-hanh">
-          <p class="eyebrow">12 · PRACTICE REQUIREMENTS</p>
+          <p class="eyebrow">11 · PRACTICE REQUIREMENTS</p>
           <h2>Practice Requirements</h2>
-          <p>This week's formal exercise uses the classic "Suppliers - Parts - Shipments" schema (Goods Management) instead of the Training Management problem in Section 11 - the schema, sample data, and all 36 questions are on the exercise page below.</p>
+          <p>This week's formal exercise uses the classic "Suppliers - Parts - Shipments" schema (Goods Management) - the schema, sample data, and all 36 questions are on the exercise page below.</p>
 
           <div class="answer-cta">
             <div class="answer-cta-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></div>
@@ -453,11 +411,11 @@ WHERE MaSV = 'SV001';</code></pre></div>
           </div>
         </section>
 
-        <!-- 13 - Challenge Problems -->
+        <!-- 12 - Challenge Problems -->
         <section class="lesson-section" id="bai-tap-thach-thuc">
-          <p class="eyebrow">13 · CHALLENGE PROBLEMS</p>
+          <p class="eyebrow">12 · CHALLENGE PROBLEMS</p>
           <h2>Challenge Problems</h2>
-          <p class="extra-intro">Extra practice with the <strong>Training Management</strong> schema from Section 11 (no longer the formal exercise, but still useful for building reflexes). For stronger students to attempt in addition - each has a hidden hint, click to reveal.</p>
+          <p class="extra-intro">Extra practice with the <strong>Training Management</strong> schema (LOP, SINHVIEN, MONHOC, KETQUA) used throughout the theory sections above - no longer the formal exercise, but still useful for building reflexes. For stronger students to attempt in addition - each has a hidden hint, click to reveal.</p>
           <div class="challenge-list">
             <article class="challenge-card">
               <div class="challenge-card-head"><span class="challenge-num">01</span><h4>Hasn't taken the course</h4></div>
@@ -492,9 +450,9 @@ WHERE MaSV = 'SV001';</code></pre></div>
           </div>
         </section>
 
-        <!-- 14 - Common Mistakes -->
+        <!-- 13 - Common Mistakes -->
         <section class="lesson-section" id="loi-thuong-gap">
-          <p class="eyebrow">14 · COMMON MISTAKES</p>
+          <p class="eyebrow">13 · COMMON MISTAKES</p>
           <h2>Common Mistakes</h2>
 
           <h3>Mistake 1 - Wrong JOIN condition</h3>
@@ -529,9 +487,9 @@ FROM SinhVien
 WHERE MaSV = 'SV001';</code></pre></div>
         </section>
 
-        <!-- 15 - Review Checklist -->
+        <!-- 14 - Review Checklist -->
         <section class="lesson-section" id="checklist">
-          <p class="eyebrow">15 · REVIEW CHECKLIST</p>
+          <p class="eyebrow">14 · REVIEW CHECKLIST</p>
           <h2>Review Checklist</h2>
           <p>Students should self-assess before the practical exam:</p>
 
@@ -563,30 +521,6 @@ WHERE MaSV = 'SV001';</code></pre></div>
           </ul>
         </section>
 
-        <!-- 16 - Simulated Practical Exam -->
-        <section class="lesson-section" id="kiem-tra-mo-phong">
-          <p class="eyebrow">16 · SIMULATED PRACTICAL EXAM</p>
-          <h2>Simulated Practical Exam</h2>
-          <p>At the end of the week, students complete a comprehensive exercise in about <strong>60-90 minutes</strong> to self-assess their readiness before the practical exam.</p>
-          <div class="practice-lab">
-            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
-            <h3>Library Management</h3>
-            <p style="color:#cbd5e1;font-size:13px;margin-bottom:14px">Build a library management database with <code style="background:#ffffff1a;color:#e2e8f0">DOCGIA</code>, <code style="background:#ffffff1a;color:#e2e8f0">SACH</code>, <code style="background:#ffffff1a;color:#e2e8f0">THELOAI</code>, <code style="background:#ffffff1a;color:#e2e8f0">MUONTRA</code>.</p>
-            <ol>
-              <li><strong>Task 1 - Analyze the problem:</strong> Identify the Entities, Attributes, and Relationships</li>
-              <li><strong>Task 2 - Identify keys:</strong> Primary Key and Foreign Key for each table</li>
-              <li><strong>Task 3 - Create tables:</strong> Create all 4 tables per the design</li>
-              <li><strong>Task 4 - Set up relationships:</strong> Foreign Key constraints between related tables</li>
-              <li><strong>Task 5 - Load data:</strong> Insert sample data for all 4 tables</li>
-              <li><strong>Task 6 - Write queries:</strong> Write at least 10 queries, including at least 2 <code style="background:#ffffff1a;color:#e2e8f0">JOIN</code> queries, 2 <code style="background:#ffffff1a;color:#e2e8f0">GROUP BY</code> queries, 1 <code style="background:#ffffff1a;color:#e2e8f0">HAVING</code> query, 1 Subquery, and 1 query using an aggregate function</li>
-              <li><strong>Task 7 - Update data:</strong> Perform at least one <code style="background:#ffffff1a;color:#e2e8f0">UPDATE</code></li>
-              <li><strong>Task 8 - Delete data:</strong> Perform at least one <code style="background:#ffffff1a;color:#e2e8f0">DELETE</code></li>
-              <li><strong>Task 9 - Explain the results:</strong> Be able to explain what each query returns</li>
-            </ol>
-          </div>
-          <div class="definition"><strong>What to achieve by the end of Week 6:</strong> Students shouldn't just memorize SQL syntax, but should develop the full workflow of <strong>read the problem ➜ analyze the data ➜ identify relationships ➜ design the tables ➜ write the SQL ➜ verify the results ➜ explain the query.</strong> This is the wrap-up week for IT004's practical component, and it directly prepares students for the review/practical exam.</div>
-        </section>
-
         <nav class="week-nav-links" aria-label="Week navigation">
           <a href="week-5.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 5: Triggers in SQL Server</span></a>
           <span class="nav-disabled next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Mock Exam (coming soon)</span></span>
@@ -612,12 +546,10 @@ WHERE MaSV = 'SV001';</code></pre></div>
             <li data-section="join"><b>○</b> JOIN</li>
             <li data-section="subquery"><b>○</b> Subquery</li>
             <li data-section="update-delete"><b>○</b> UPDATE &amp; DELETE</li>
-            <li data-section="bai-toan-tong-hop"><b>○</b> Comprehensive Exercise</li>
             <li data-section="yeu-cau-thuc-hanh"><b>○</b> Practice Requirements</li>
             <li data-section="bai-tap-thach-thuc"><b>○</b> Challenge Problems</li>
             <li data-section="loi-thuong-gap"><b>○</b> Common Mistakes</li>
             <li data-section="checklist"><b>○</b> Checklist</li>
-            <li data-section="kiem-tra-mo-phong"><b>○</b> Simulated Exam</li>
           </ul>
         </div>
         <div class="panel-box">

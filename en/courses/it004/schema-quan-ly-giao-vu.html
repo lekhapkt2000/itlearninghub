@@ -1,83 +1,83 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="IT004 - Lược đồ cơ sở dữ liệu Quản lý giáo vụ dùng cho BTTH4: các quan hệ, thuộc tính và dữ liệu mẫu.">
-  <title>Lược đồ Quản lý giáo vụ - IT004</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
-  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
-  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=2">
+  <meta name="description" content="IT004 - Academic Affairs Management database schema, used for BTTH4: relations, attributes, and sample data.">
+  <title>Academic Affairs Schema - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
-  <link rel="stylesheet" href="../../assets/css/base.css?v=20">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=42">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=42">
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
-      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
-        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
       </nav>
-      <div class="topbar-actions"><div class="lang-switch"><a href="schema-quan-ly-giao-vu.html" class="active">VI</a><a href="../../en/courses/it004/schema-quan-ly-giao-vu.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IT004 <span>›</span></a></div>
+      <div class="topbar-actions"><div class="lang-switch"><a href="../../../courses/it004/schema-quan-ly-giao-vu.html">VI</a><a href="schema-quan-ly-giao-vu.html" class="active">EN</a></div><button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">IT004 Overview <span>›</span></a></div>
     </div>
   </header>
 
   <main class="course-shell">
-    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IT004</a><span>/</span>Lược đồ Quản lý giáo vụ</p>
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IT004</a><span>/</span>Academic Affairs Schema</p>
 
     <div class="week-header">
-      <span class="week-tag">LƯỢC ĐỒ DÙNG CHUNG · IT004</span>
-      <h1>Cơ sở dữ liệu Quản lý giáo vụ</h1>
-      <div class="week-meta"><span>8 quan hệ</span><span>BTTH4</span></div>
-      <p style="max-width:720px;color:var(--muted);font-size:13px;margin-top:10px">Lược đồ quản lý lớp học, giáo viên, môn học và kết quả thi của một trung tâm đào tạo. Đọc kỹ phần tân từ và bảng thuộc tính trước khi làm bài - nắm đúng ý nghĩa dữ liệu giúp viết truy vấn chính xác hơn nhiều so với chỉ nhớ tên cột.</p>
+      <span class="week-tag">SHARED SCHEMA · IT004</span>
+      <h1>Academic Affairs Management Database</h1>
+      <div class="week-meta"><span>8 relations</span><span>BTTH4</span></div>
+      <p style="max-width:720px;color:var(--muted);font-size:13px;margin-top:10px">A schema for managing classes, teachers, courses, and exam results at a training center. Read the definitions and attribute tables carefully before starting - understanding what the data actually means makes writing accurate queries far easier than just memorizing column names.</p>
     </div>
 
     <div class="lesson-content" style="max-width:1000px;margin:0 auto">
 
       <section class="lesson-section" style="padding-top:0;border-top:0" id="tong-quan">
-        <p class="eyebrow">TỔNG QUAN</p>
-        <h2>Cho cơ sở dữ liệu quản lý giáo vụ gồm có các quan hệ sau</h2>
+        <p class="eyebrow">OVERVIEW</p>
+        <h2>The academic affairs management database consists of the following relations</h2>
 
         <div class="schema-def">
           <p class="schema-def-head">HOCVIEN (<u>MAHV</u>, HO, TEN, NGSINH, GIOITINH, NOISINH, MALOP)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Mỗi học viên phân biệt với nhau bằng mã học viên, lưu trữ họ tên, ngày sinh, giới tính, nơi sinh, thuộc lớp nào.</p>
+          <p class="schema-def-body"><em>Definition:</em> Each student is distinguished by a student ID, and has a recorded name, date of birth, gender, place of birth, and the class they belong to.</p>
         </div>
         <div class="schema-def">
           <p class="schema-def-head">LOP (<u>MALOP</u>, TENLOP, TRGLOP, SISO, MAGVCN)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Mỗi lớp gồm có mã lớp, tên lớp, học viên làm lớp trưởng của lớp, sỉ số lớp và giáo viên chủ nhiệm.</p>
+          <p class="schema-def-body"><em>Definition:</em> Each class has a class code, class name, the student who serves as class monitor, class size, and a homeroom teacher.</p>
         </div>
         <div class="schema-def">
           <p class="schema-def-head">KHOA (<u>MAKHOA</u>, TENKHOA, NGTLAP, TRGKHOA)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Mỗi khoa cần lưu trữ mã khoa, tên khoa, ngày thành lập khoa và trưởng khoa (cũng là một giáo viên thuộc khoa).</p>
+          <p class="schema-def-body"><em>Definition:</em> Each department records a department code, department name, founding date, and department head (who is also a teacher belonging to the department).</p>
         </div>
         <div class="schema-def">
           <p class="schema-def-head">MONHOC (<u>MAMH</u>, TENMH, TCLT, TCTH, MAKHOA)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Mỗi môn học cần lưu trữ tên môn học, số tín chỉ lý thuyết, số tín chỉ thực hành và khoa nào phụ trách.</p>
+          <p class="schema-def-body"><em>Definition:</em> Each course records a course name, number of theory credits, number of practical credits, and which department is responsible for it.</p>
         </div>
         <div class="schema-def">
           <p class="schema-def-head">DIEUKIEN (<u>MAMH, MAMH_TRUOC</u>)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Có những môn học học viên phải có kiến thức từ một số môn học trước.</p>
+          <p class="schema-def-body"><em>Definition:</em> Some courses require students to already have knowledge from certain prerequisite courses.</p>
         </div>
         <div class="schema-def">
           <p class="schema-def-head">GIAOVIEN (<u>MAGV</u>, HOTEN, HOCVI, HOCHAM, GIOITINH, NGSINH, NGVL, HESO, MUCLUONG, MAKHOA)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Mã giáo viên để phân biệt giữa các giáo viên, cần lưu trữ họ tên, học vị, học hàm, giới tính, ngày sinh, ngày vào làm, hệ số, mức lương và thuộc một khoa.</p>
+          <p class="schema-def-body"><em>Definition:</em> A teacher ID distinguishes between teachers; each record also stores name, degree, academic title, gender, date of birth, hire date, salary coefficient, salary amount, and the department they belong to.</p>
         </div>
         <div class="schema-def">
           <p class="schema-def-head">GIANGDAY (<u>MALOP, MAMH</u>, MAGV, HOCKY, NAM, TUNGAY, DENNGAY)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Mỗi học kỳ của năm học sẽ phân công giảng dạy: lớp nào học môn gì do giáo viên nào phụ trách.</p>
+          <p class="schema-def-body"><em>Definition:</em> Each semester of the academic year has teaching assignments: which class takes which course, taught by which teacher.</p>
         </div>
         <div class="schema-def">
           <p class="schema-def-head">KETQUATHI (<u>MAHV, MAMH, LANTHI</u>, NGTHI, DIEM, KQUA)</p>
-          <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ kết quả thi của học viên: học viên nào thi môn học gì, lần thi thứ mấy, ngày thi là ngày nào, điểm thi bao nhiêu và kết quả là đạt hay không đạt.</p>
+          <p class="schema-def-body"><em>Definition:</em> Stores students' exam results: which student took which course exam, which attempt number, the exam date, the score, and whether the result was a pass or fail.</p>
         </div>
 
-        <h3>Sơ đồ quan hệ</h3>
+        <h3>Relationship Diagram</h3>
         <div class="er-diagram">
-          <svg viewBox="0 0 620 270" role="img" aria-label="Sơ đồ 8 quan hệ: KHOA, GIAOVIEN, MONHOC, LOP, HOCVIEN, DIEUKIEN, GIANGDAY, KETQUATHI với các khóa ngoại liên kết">
+          <svg viewBox="0 0 620 270" role="img" aria-label="Diagram of 8 relations: KHOA, GIAOVIEN, MONHOC, LOP, HOCVIEN, DIEUKIEN, GIANGDAY, KETQUATHI connected by foreign keys">
             <defs>
               <marker id="erArrowGV" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
                 <path d="M0 0L10 5L0 10Z" style="fill:var(--primary)"/>
@@ -128,34 +128,34 @@
           </svg>
         </div>
 
-        <h3>Diễn giải quan hệ</h3>
-        <p class="er-relation">KHOA ➜ GIAOVIEN (qua <code>TRGKHOA</code>): mỗi khoa có 1 trưởng khoa, là một giáo viên.</p>
-        <p class="er-relation">GIAOVIEN ➜ KHOA (qua <code>MAKHOA</code>): mỗi giáo viên thuộc về 1 khoa duy nhất.</p>
-        <p class="er-relation">MONHOC ➜ KHOA (qua <code>MAKHOA</code>): mỗi môn học do 1 khoa phụ trách.</p>
-        <p class="er-relation">DIEUKIEN ➜ MONHOC (qua <code>MAMH</code> và <code>MAMH_TRUOC</code>): mỗi dòng điều kiện tiên quyết nối 2 môn học với nhau - môn học và môn phải học trước.</p>
-        <p class="er-relation">LOP ➜ HOCVIEN (qua <code>TRGLOP</code>): mỗi lớp có 1 lớp trưởng, là một học viên của chính lớp đó.</p>
-        <p class="er-relation">HOCVIEN ➜ LOP (qua <code>MALOP</code>): mỗi học viên thuộc về 1 lớp duy nhất.</p>
-        <p class="er-relation">LOP ➜ GIAOVIEN (qua <code>MAGVCN</code>): mỗi lớp có 1 giáo viên chủ nhiệm.</p>
-        <p class="er-relation">GIANGDAY ➜ LOP, MONHOC, GIAOVIEN: mỗi lượt phân công ghi rõ lớp nào học môn gì, do giáo viên nào dạy.</p>
-        <p class="er-relation">KETQUATHI ➜ HOCVIEN, MONHOC: mỗi kết quả thi gắn với 1 học viên và 1 môn học cụ thể.</p>
-        <div class="inline-warning"><strong>Lưu ý dễ nhầm:</strong> <code>KHOA.TRGKHOA</code> và <code>GIAOVIEN.MAKHOA</code> tham chiếu qua lại lẫn nhau (khoa có 1 trưởng khoa, giáo viên thuộc 1 khoa) - tương tự với <code>LOP.TRGLOP</code> và <code>HOCVIEN.MALOP</code>. Khoa <code>KTMT</code> trong dữ liệu mẫu chưa có trưởng khoa (<code>TRGKHOA</code> để <code>NULL</code>).</div>
+        <h3>Relationship Description</h3>
+        <p class="er-relation">KHOA ➜ GIAOVIEN (via <code>TRGKHOA</code>): each department has 1 department head, who is a teacher.</p>
+        <p class="er-relation">GIAOVIEN ➜ KHOA (via <code>MAKHOA</code>): each teacher belongs to exactly 1 department.</p>
+        <p class="er-relation">MONHOC ➜ KHOA (via <code>MAKHOA</code>): each course is managed by 1 department.</p>
+        <p class="er-relation">DIEUKIEN ➜ MONHOC (via <code>MAMH</code> and <code>MAMH_TRUOC</code>): each prerequisite row links 2 courses together - the course and the one that must be taken first.</p>
+        <p class="er-relation">LOP ➜ HOCVIEN (via <code>TRGLOP</code>): each class has 1 class monitor, who is a student of that same class.</p>
+        <p class="er-relation">HOCVIEN ➜ LOP (via <code>MALOP</code>): each student belongs to exactly 1 class.</p>
+        <p class="er-relation">LOP ➜ GIAOVIEN (via <code>MAGVCN</code>): each class has 1 homeroom teacher.</p>
+        <p class="er-relation">GIANGDAY ➜ LOP, MONHOC, GIAOVIEN: each teaching assignment records which class takes which course, taught by which teacher.</p>
+        <p class="er-relation">KETQUATHI ➜ HOCVIEN, MONHOC: each exam result is tied to 1 specific student and 1 specific course.</p>
+        <div class="inline-warning"><strong>Common mix-up:</strong> <code>KHOA.TRGKHOA</code> and <code>GIAOVIEN.MAKHOA</code> reference each other in both directions (a department has 1 department head, a teacher belongs to 1 department) - the same is true of <code>LOP.TRGLOP</code> and <code>HOCVIEN.MALOP</code>. In the sample data, department <code>KTMT</code> doesn't have a department head yet (<code>TRGKHOA</code> is <code>NULL</code>).</div>
       </section>
 
       <section class="lesson-section" id="hocvien">
-        <p class="eyebrow">QUAN HỆ 1 · HOCVIEN</p>
+        <p class="eyebrow">RELATION 1 · HOCVIEN</p>
         <h2>HOCVIEN</h2>
-        <div class="definition">Mỗi học viên phân biệt với nhau bằng mã học viên, lưu trữ họ tên, ngày sinh, giới tính, nơi sinh và thuộc lớp nào.</div>
+        <div class="definition">Each student is distinguished by a student ID, with a recorded name, date of birth, gender, place of birth, and which class they belong to.</div>
         <div class="table-wrap"><table class="ref-table">
-          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính</td></tr>
-          <tr><td><code>HO</code></td><td><code>varchar(40)</code></td><td>Họ và tên lót</td></tr>
-          <tr><td><code>TEN</code></td><td><code>varchar(10)</code></td><td>Tên</td></tr>
-          <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Ngày sinh</td></tr>
-          <tr><td><code>GIOITINH</code></td><td><code>varchar(3)</code></td><td>Giới tính</td></tr>
-          <tr><td><code>NOISINH</code></td><td><code>varchar(40)</code></td><td>Nơi sinh</td></tr>
-          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - khóa ngoại đến LOP</td></tr>
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Student ID - primary key</td></tr>
+          <tr><td><code>HO</code></td><td><code>varchar(40)</code></td><td>Family name and middle name</td></tr>
+          <tr><td><code>TEN</code></td><td><code>varchar(10)</code></td><td>Given name</td></tr>
+          <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Date of birth</td></tr>
+          <tr><td><code>GIOITINH</code></td><td><code>varchar(3)</code></td><td>Gender</td></tr>
+          <tr><td><code>NOISINH</code></td><td><code>varchar(40)</code></td><td>Place of birth</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Class code - foreign key to LOP</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 35 học viên)</p>
+        <p class="ascii-label">SAMPLE DATA (all 35 students)</p>
         <div class="er-side-by-side">
           <div class="table-wrap"><table class="ref-table">
             <tr><th>MAHV</th><th>HO</th><th>TEN</th><th>NGSINH</th><th>GIOITINH</th><th>NOISINH</th><th>MALOP</th></tr>
@@ -202,18 +202,18 @@
       </section>
 
       <section class="lesson-section" id="lop">
-        <p class="eyebrow">QUAN HỆ 2 · LOP</p>
+        <p class="eyebrow">RELATION 2 · LOP</p>
         <h2>LOP</h2>
-        <div class="definition">Mỗi lớp gồm có mã lớp, tên lớp, học viên làm lớp trưởng của lớp, sỉ số lớp và giáo viên chủ nhiệm.</div>
+        <div class="definition">Each class has a class code, class name, the student who serves as class monitor, class size, and a homeroom teacher.</div>
         <div class="table-wrap"><table class="ref-table">
-          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - khóa chính</td></tr>
-          <tr><td><code>TENLOP</code></td><td><code>varchar(40)</code></td><td>Tên lớp</td></tr>
-          <tr><td><code>TRGLOP</code></td><td><code>char(5)</code></td><td>Lớp trưởng - khóa ngoại đến HOCVIEN</td></tr>
-          <tr><td><code>SISO</code></td><td><code>tinyint</code></td><td>Sỉ số lớp</td></tr>
-          <tr><td><code>MAGVCN</code></td><td><code>char(4)</code></td><td>Giáo viên chủ nhiệm - khóa ngoại đến GIAOVIEN</td></tr>
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Class code - primary key</td></tr>
+          <tr><td><code>TENLOP</code></td><td><code>varchar(40)</code></td><td>Class name</td></tr>
+          <tr><td><code>TRGLOP</code></td><td><code>char(5)</code></td><td>Class monitor - foreign key to HOCVIEN</td></tr>
+          <tr><td><code>SISO</code></td><td><code>tinyint</code></td><td>Class size</td></tr>
+          <tr><td><code>MAGVCN</code></td><td><code>char(4)</code></td><td>Homeroom teacher - foreign key to GIAOVIEN</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 3 lớp)</p>
+        <p class="ascii-label">SAMPLE DATA (all 3 classes)</p>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>MALOP</th><th>TENLOP</th><th>TRGLOP</th><th>SISO</th><th>MAGVCN</th></tr>
           <tr><td>K11</td><td>Lop 1 khoa 1</td><td>K1108</td><td>11</td><td>GV07</td></tr>
@@ -223,17 +223,17 @@
       </section>
 
       <section class="lesson-section" id="khoa">
-        <p class="eyebrow">QUAN HỆ 3 · KHOA</p>
+        <p class="eyebrow">RELATION 3 · KHOA</p>
         <h2>KHOA</h2>
-        <div class="definition">Mỗi khoa cần lưu trữ mã khoa, tên khoa, ngày thành lập khoa và trưởng khoa (cũng là một giáo viên thuộc khoa).</div>
+        <div class="definition">Each department records a department code, department name, founding date, and department head (who is also a teacher belonging to the department).</div>
         <div class="table-wrap"><table class="ref-table">
-          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Mã khoa - khóa chính</td></tr>
-          <tr><td><code>TENKHOA</code></td><td><code>varchar(40)</code></td><td>Tên khoa</td></tr>
-          <tr><td><code>NGTLAP</code></td><td><code>smalldatetime</code></td><td>Ngày thành lập khoa</td></tr>
-          <tr><td><code>TRGKHOA</code></td><td><code>char(4)</code></td><td>Trưởng khoa - khóa ngoại đến GIAOVIEN, <strong>có thể NULL</strong></td></tr>
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Department code - primary key</td></tr>
+          <tr><td><code>TENKHOA</code></td><td><code>varchar(40)</code></td><td>Department name</td></tr>
+          <tr><td><code>NGTLAP</code></td><td><code>smalldatetime</code></td><td>Department founding date</td></tr>
+          <tr><td><code>TRGKHOA</code></td><td><code>char(4)</code></td><td>Department head - foreign key to GIAOVIEN, <strong>can be NULL</strong></td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 5 khoa)</p>
+        <p class="ascii-label">SAMPLE DATA (all 5 departments)</p>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>MAKHOA</th><th>TENKHOA</th><th>NGTLAP</th><th>TRGKHOA</th></tr>
           <tr><td>KHMT</td><td>Khoa hoc may tinh</td><td>06/07/2005</td><td>GV01</td></tr>
@@ -245,18 +245,18 @@
       </section>
 
       <section class="lesson-section" id="monhoc">
-        <p class="eyebrow">QUAN HỆ 4 · MONHOC</p>
+        <p class="eyebrow">RELATION 4 · MONHOC</p>
         <h2>MONHOC</h2>
-        <div class="definition">Mỗi môn học cần lưu trữ tên môn học, số tín chỉ lý thuyết, số tín chỉ thực hành và khoa nào phụ trách.</div>
+        <div class="definition">Each course records a course name, number of theory credits, number of practical credits, and which department is responsible for it.</div>
         <div class="table-wrap"><table class="ref-table">
-          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính</td></tr>
-          <tr><td><code>TENMH</code></td><td><code>varchar(40)</code></td><td>Tên môn học</td></tr>
-          <tr><td><code>TCLT</code></td><td><code>tinyint</code></td><td>Số tín chỉ lý thuyết</td></tr>
-          <tr><td><code>TCTH</code></td><td><code>tinyint</code></td><td>Số tín chỉ thực hành</td></tr>
-          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Môn học thuộc khoa nào - khóa ngoại đến KHOA</td></tr>
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Course code - primary key</td></tr>
+          <tr><td><code>TENMH</code></td><td><code>varchar(40)</code></td><td>Course name</td></tr>
+          <tr><td><code>TCLT</code></td><td><code>tinyint</code></td><td>Number of theory credits</td></tr>
+          <tr><td><code>TCTH</code></td><td><code>tinyint</code></td><td>Number of practical credits</td></tr>
+          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Which department the course belongs to - foreign key to KHOA</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 13 môn học)</p>
+        <p class="ascii-label">SAMPLE DATA (all 13 courses)</p>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>MAMH</th><th>TENMH</th><th>TCLT</th><th>TCTH</th><th>MAKHOA</th></tr>
           <tr><td>THDC</td><td>Tin hoc dai cuong</td><td>4</td><td>1</td><td>KHMT</td></tr>
@@ -276,15 +276,15 @@
       </section>
 
       <section class="lesson-section" id="dieukien">
-        <p class="eyebrow">QUAN HỆ 5 · DIEUKIEN</p>
+        <p class="eyebrow">RELATION 5 · DIEUKIEN</p>
         <h2>DIEUKIEN</h2>
-        <div class="definition">Có những môn học học viên phải có kiến thức từ một số môn học trước. Khóa chính là cặp <code>(MAMH, MAMH_TRUOC)</code>.</div>
+        <div class="definition">Some courses require students to already have knowledge from certain prerequisite courses. The primary key is the pair <code>(MAMH, MAMH_TRUOC)</code>.</div>
         <div class="table-wrap"><table class="ref-table">
-          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính, khóa ngoại đến MONHOC</td></tr>
-          <tr><td><code>MAMH_TRUOC</code></td><td><code>char(10)</code></td><td>Mã môn học phải học trước - khóa chính, khóa ngoại đến MONHOC</td></tr>
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Course code - primary key, foreign key to MONHOC</td></tr>
+          <tr><td><code>MAMH_TRUOC</code></td><td><code>char(10)</code></td><td>Prerequisite course code - primary key, foreign key to MONHOC</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 8 dòng)</p>
+        <p class="ascii-label">SAMPLE DATA (all 8 rows)</p>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>MAMH</th><th>MAMH_TRUOC</th></tr>
           <tr><td>CSDL</td><td>CTRR</td></tr>
@@ -299,23 +299,23 @@
       </section>
 
       <section class="lesson-section" id="giaovien">
-        <p class="eyebrow">QUAN HỆ 6 · GIAOVIEN</p>
+        <p class="eyebrow">RELATION 6 · GIAOVIEN</p>
         <h2>GIAOVIEN</h2>
-        <div class="definition">Mã giáo viên để phân biệt giữa các giáo viên, cần lưu trữ họ tên, học vị, học hàm, giới tính, ngày sinh, ngày vào làm, hệ số, mức lương và thuộc một khoa.</div>
+        <div class="definition">A teacher ID distinguishes between teachers; each record also stores name, degree, academic title, gender, date of birth, hire date, salary coefficient, salary amount, and the department the teacher belongs to.</div>
         <div class="table-wrap"><table class="ref-table">
-          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAGV</code></td><td><code>char(4)</code></td><td>Mã giáo viên - khóa chính</td></tr>
-          <tr><td><code>HOTEN</code></td><td><code>varchar(40)</code></td><td>Họ tên</td></tr>
-          <tr><td><code>HOCVI</code></td><td><code>varchar(10)</code></td><td>Học vị (CN, KS, ThS, TS, PTS...)</td></tr>
-          <tr><td><code>HOCHAM</code></td><td><code>varchar(10)</code></td><td>Học hàm (GV, PGS, GS...), <strong>có thể NULL</strong></td></tr>
-          <tr><td><code>GIOITINH</code></td><td><code>varchar(3)</code></td><td>Giới tính</td></tr>
-          <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Ngày sinh</td></tr>
-          <tr><td><code>NGVL</code></td><td><code>smalldatetime</code></td><td>Ngày vào làm việc</td></tr>
-          <tr><td><code>HESO</code></td><td><code>numeric(4,2)</code></td><td>Hệ số lương</td></tr>
-          <tr><td><code>MUCLUONG</code></td><td><code>money</code></td><td>Mức lương</td></tr>
-          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Thuộc khoa nào - khóa ngoại đến KHOA</td></tr>
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAGV</code></td><td><code>char(4)</code></td><td>Teacher ID - primary key</td></tr>
+          <tr><td><code>HOTEN</code></td><td><code>varchar(40)</code></td><td>Full name</td></tr>
+          <tr><td><code>HOCVI</code></td><td><code>varchar(10)</code></td><td>Degree (CN, KS, ThS, TS, PTS...)</td></tr>
+          <tr><td><code>HOCHAM</code></td><td><code>varchar(10)</code></td><td>Academic title (GV, PGS, GS...), <strong>can be NULL</strong></td></tr>
+          <tr><td><code>GIOITINH</code></td><td><code>varchar(3)</code></td><td>Gender</td></tr>
+          <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Date of birth</td></tr>
+          <tr><td><code>NGVL</code></td><td><code>smalldatetime</code></td><td>Hire date</td></tr>
+          <tr><td><code>HESO</code></td><td><code>numeric(4,2)</code></td><td>Salary coefficient</td></tr>
+          <tr><td><code>MUCLUONG</code></td><td><code>money</code></td><td>Salary amount</td></tr>
+          <tr><td><code>MAKHOA</code></td><td><code>char(4)</code></td><td>Which department - foreign key to KHOA</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 15 giáo viên)</p>
+        <p class="ascii-label">SAMPLE DATA (all 15 teachers)</p>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>MAGV</th><th>HOTEN</th><th>HOCVI</th><th>HOCHAM</th><th>GIOITINH</th><th>NGSINH</th><th>NGVL</th><th>HESO</th><th>MUCLUONG</th><th>MAKHOA</th></tr>
           <tr><td>GV01</td><td>Ho Thanh Son</td><td>PTS</td><td>GS</td><td>Nam</td><td>05/02/1950</td><td>01/11/2004</td><td>5</td><td>2.250.000</td><td>KHMT</td></tr>
@@ -337,20 +337,20 @@
       </section>
 
       <section class="lesson-section" id="giangday">
-        <p class="eyebrow">QUAN HỆ 7 · GIANGDAY</p>
+        <p class="eyebrow">RELATION 7 · GIANGDAY</p>
         <h2>GIANGDAY</h2>
-        <div class="definition">Mỗi học kỳ của năm học sẽ phân công giảng dạy: lớp nào học môn gì do giáo viên nào phụ trách. Khóa chính là cặp <code>(MALOP, MAMH)</code>.</div>
+        <div class="definition">Each semester of the academic year has teaching assignments: which class takes which course, taught by which teacher. The primary key is the pair <code>(MALOP, MAMH)</code>.</div>
         <div class="table-wrap"><table class="ref-table">
-          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Mã lớp - khóa chính, khóa ngoại đến LOP</td></tr>
-          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính, khóa ngoại đến MONHOC</td></tr>
-          <tr><td><code>MAGV</code></td><td><code>char(4)</code></td><td>Giáo viên phụ trách - khóa ngoại đến GIAOVIEN</td></tr>
-          <tr><td><code>HOCKY</code></td><td><code>tinyint</code></td><td>Học kỳ</td></tr>
-          <tr><td><code>NAM</code></td><td><code>smallint</code></td><td>Năm học</td></tr>
-          <tr><td><code>TUNGAY</code></td><td><code>smalldatetime</code></td><td>Ngày bắt đầu môn học</td></tr>
-          <tr><td><code>DENNGAY</code></td><td><code>smalldatetime</code></td><td>Ngày kết thúc môn học</td></tr>
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(3)</code></td><td>Class code - primary key, foreign key to LOP</td></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Course code - primary key, foreign key to MONHOC</td></tr>
+          <tr><td><code>MAGV</code></td><td><code>char(4)</code></td><td>Teacher in charge - foreign key to GIAOVIEN</td></tr>
+          <tr><td><code>HOCKY</code></td><td><code>tinyint</code></td><td>Semester</td></tr>
+          <tr><td><code>NAM</code></td><td><code>smallint</code></td><td>Academic year</td></tr>
+          <tr><td><code>TUNGAY</code></td><td><code>smalldatetime</code></td><td>Course start date</td></tr>
+          <tr><td><code>DENNGAY</code></td><td><code>smalldatetime</code></td><td>Course end date</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 16 dòng)</p>
+        <p class="ascii-label">SAMPLE DATA (all 16 rows)</p>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>MALOP</th><th>MAMH</th><th>MAGV</th><th>HOCKY</th><th>NAM</th><th>TUNGAY</th><th>DENNGAY</th></tr>
           <tr><td>K11</td><td>THDC</td><td>GV07</td><td>1</td><td>2006</td><td>01/02/2006</td><td>05/12/2006</td></tr>
@@ -373,19 +373,19 @@
       </section>
 
       <section class="lesson-section" id="ketquathi">
-        <p class="eyebrow">QUAN HỆ 8 · KETQUATHI</p>
+        <p class="eyebrow">RELATION 8 · KETQUATHI</p>
         <h2>KETQUATHI</h2>
-        <div class="definition">Lưu trữ kết quả thi của học viên: học viên nào thi môn học gì, lần thi thứ mấy, ngày thi là ngày nào, điểm thi bao nhiêu và kết quả là đạt hay không đạt. Khóa chính là bộ ba <code>(MAHV, MAMH, LANTHI)</code>.</div>
+        <div class="definition">Stores students' exam results: which student took which course exam, which attempt number, the exam date, the score, and whether the result was a pass or fail. The primary key is the triple <code>(MAHV, MAMH, LANTHI)</code>.</div>
         <div class="table-wrap"><table class="ref-table">
-          <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
-          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Mã học viên - khóa chính, khóa ngoại đến HOCVIEN</td></tr>
-          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Mã môn học - khóa chính, khóa ngoại đến MONHOC</td></tr>
-          <tr><td><code>LANTHI</code></td><td><code>tinyint</code></td><td>Lần thi - khóa chính</td></tr>
-          <tr><td><code>NGTHI</code></td><td><code>smalldatetime</code></td><td>Ngày thi</td></tr>
-          <tr><td><code>DIEM</code></td><td><code>numeric(4,2)</code></td><td>Điểm thi</td></tr>
-          <tr><td><code>KQUA</code></td><td><code>varchar(10)</code></td><td>Kết quả thi (Dat / Khong Dat)</td></tr>
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Student ID - primary key, foreign key to HOCVIEN</td></tr>
+          <tr><td><code>MAMH</code></td><td><code>char(10)</code></td><td>Course code - primary key, foreign key to MONHOC</td></tr>
+          <tr><td><code>LANTHI</code></td><td><code>tinyint</code></td><td>Attempt number - primary key</td></tr>
+          <tr><td><code>NGTHI</code></td><td><code>smalldatetime</code></td><td>Exam date</td></tr>
+          <tr><td><code>DIEM</code></td><td><code>numeric(4,2)</code></td><td>Score</td></tr>
+          <tr><td><code>KQUA</code></td><td><code>varchar(10)</code></td><td>Result (Dat / Khong Dat)</td></tr>
         </table></div>
-        <p class="ascii-label">DỮ LIỆU MẪU (đầy đủ 66 dòng)</p>
+        <p class="ascii-label">SAMPLE DATA (all 66 rows)</p>
         <div class="er-side-by-side">
           <div class="table-wrap"><table class="ref-table">
             <tr><th>MAHV</th><th>MAMH</th><th>LANTHI</th><th>NGTHI</th><th>DIEM</th><th>KQUA</th></tr>
@@ -466,34 +466,34 @@
       </section>
 
       <section class="lesson-section" id="script">
-        <p class="eyebrow">SCRIPT ĐẦY ĐỦ</p>
-        <h2>Tạo CSDL và nạp dữ liệu mẫu</h2>
-        <p>Script tạo database <code>QUANLIGIAOVU_2026</code>, tạo 8 bảng kèm khóa chính/khóa ngoại, và nạp toàn bộ dữ liệu mẫu (5 khoa, 3 lớp, 13 môn học, 8 điều kiện tiên quyết, 15 giáo viên, 35 học viên, 16 phân công giảng dạy, 66 kết quả thi). Chạy trực tiếp trong SSMS trước khi bắt đầu làm bài.</p>
+        <p class="eyebrow">FULL SCRIPT</p>
+        <h2>Create the database and load sample data</h2>
+        <p>A script that creates the <code>QUANLIGIAOVU_2026</code> database, creates 8 tables with primary/foreign keys, and loads the full set of sample data (5 departments, 3 classes, 13 courses, 8 prerequisites, 15 teachers, 35 students, 16 teaching assignments, 66 exam results). Run it directly in SSMS before starting the exercises.</p>
         <div class="download-card">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
           <div class="download-card-body">
-            <strong>Script CSDL Quản lý giáo vụ (QUANLIGIAOVU_2026)</strong>
-            <span>File .sql · tạo bảng, ràng buộc và dữ liệu mẫu đầy đủ</span>
+            <strong>Academic Affairs Database Script (QUANLIGIAOVU_2026)</strong>
+            <span>.sql file · creates tables, constraints, and the full sample data</span>
           </div>
-          <a class="dark-button" href="../../assets/file/luoc-do-quan-ly-giao-vu.sql" download>Tải file <span>↓</span></a>
+          <a class="dark-button" href="../../../assets/file/luoc-do-quan-ly-giao-vu.sql" download>Download <span>↓</span></a>
         </div>
-        <div class="inline-ok"><strong>Áp dụng cho:</strong> BTTH4 (Tuần 4) - Phần I câu 1, 3-8, 11-14 · Phần II câu 1-4 · Phần III câu 1-24 đều dùng chung lược đồ này, chỉ cần chạy script 1 lần.</div>
+        <div class="inline-ok"><strong>Applies to:</strong> BTTH4 (Week 4) - Part I questions 1, 3-8, 11-14 · Part II questions 1-4 · Part III questions 1-24 all share this schema; you only need to run the script once.</div>
       </section>
 
     </div>
   </main>
 
   <footer>
-        <div class="footer-grid">
+    <div class="footer-grid">
       <div class="footer-brand">
-      <div class="brand"><img class="brand-mark" src="../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
-      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
       </div>
-    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
     </div>
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
-  <script src="../../assets/js/main.js?v=5"></script>
-  <script src="../../assets/js/course.js?v=14"></script>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
 </body>
 </html>

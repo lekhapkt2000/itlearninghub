@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Week 2 - Identity Security and Financial Data Protection: Cryptography, Digital Signature, ZKP, Smart Contract Event Logs & Access Control, AI-based eKYC fraud detection.">
+  <title>Week 2 · Identity Security & Financial Data Protection - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=42">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="../../../courses/is355/week-2.html">VI</a><a href="week-2.html" class="active">EN</a></div><button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">IS355 Overview <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IS355</a><span>/</span>Week 2</p>
+
+    <div class="week-header">
+      <span class="week-tag">WEEK 02 · IDENTITY SECURITY &amp; DATA PROTECTION</span>
+      <h1>Identity Security &amp; Financial Data Protection</h1>
+      <div class="week-meta"><span>Cryptography</span><span>Digital Signature</span><span>ZKP</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Objective:</strong> Understand the cryptographic foundations used in Blockchain, digital signature mechanisms and transaction authentication; practice building a Smart Contract with Event Logs and Access Control using Vyper/Ape Framework; and study applications of Zero-Knowledge Proof (ZKP) and AI in eKYC/financial data security.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IS355 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html" class="active">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 4 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 5 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 6 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 7 <small>Coming Soon</small></span>
+      <a href="project-lab.html">Project Lab</a>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 2 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#bao-mat-danh-tinh" data-toc><b>01</b> Identity security</a>
+        <a href="#cia-model" data-toc><b>02</b> CIA Model</a>
+        <a href="#ma-hoa" data-toc><b>03</b> Symmetric/asymmetric encryption</a>
+        <a href="#khoa-dia-chi" data-toc><b>04</b> Blockchain keys &amp; addresses</a>
+        <a href="#hash-vs-encryption" data-toc><b>05</b> Hash vs Encryption</a>
+        <a href="#chu-ky-so" data-toc><b>06</b> Digital signature</a>
+        <a href="#zkp" data-toc><b>07</b> Zero-Knowledge Proof</a>
+        <a href="#thuc-hanh-chu-ky" data-toc><b>08</b> Practice: Digital signature</a>
+        <a href="#thuc-hanh-smart-contract" data-toc><b>09</b> Practice: Smart Contract</a>
+        <a href="#thuc-hanh-deploy" data-toc><b>10</b> Practice: Deploy</a>
+        <a href="#data-research" data-toc><b>11</b> Data &amp; Research</a>
+        <a href="#bai-tap" data-toc><b>12</b> Homework</a>
+        <a href="#thao-luan" data-toc><b>13</b> Discussion questions</a>
+        <a href="#checklist" data-toc><b>14</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Bao mat danh tinh -->
+        <section class="lesson-section" id="bao-mat-danh-tinh">
+          <p class="eyebrow">01 · PART A - THEORY &amp; CRYPTOGRAPHIC FOUNDATIONS</p>
+          <h2>The identity security problem in digital finance</h2>
+          <p>Financial systems handle a great deal of sensitive information (full name, national ID, account, credit profile). A typical eKYC process:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Customer</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Provides information</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">eKYC</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Verification</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Open account / Transact</span>
+          </div>
+          <div class="inline-warning">If identity is stolen, bad actors can forge profiles, launder money, or seize assets.</div>
+        </section>
+
+        <!-- 02 - CIA Model -->
+        <section class="lesson-section" id="cia-model">
+          <p class="eyebrow">02 · CIA MODEL</p>
+          <h2>The three pillars of data security (CIA Model)</h2>
+          <ul>
+            <li><strong>Confidentiality:</strong> Only authorized parties may view the data (solution: Encryption).</li>
+            <li><strong>Integrity:</strong> Data cannot be modified without authorization (solution: Hash).</li>
+            <li><strong>Authentication:</strong> Confirms the identity of whoever performed an action (solution: Digital Signature).</li>
+          </ul>
+          <div class="inline-ok"><strong>Example:</strong> When a customer transfers 5 million VND through a banking app - <strong>Confidentiality</strong> ensures no one but the bank and the customer can read the transfer order; <strong>Integrity</strong> ensures the amount "5,000,000" is not changed to "50,000,000" in transit; <strong>Authentication</strong> ensures the system knows for certain that this exact customer (not an impersonator) issued the transfer order.</div>
+        </section>
+
+        <!-- 03 - Ma hoa doi xung/bat doi xung -->
+        <section class="lesson-section" id="ma-hoa">
+          <p class="eyebrow">03 · SYMMETRIC &amp; ASYMMETRIC ENCRYPTION</p>
+          <h2>Symmetric encryption vs Asymmetric encryption</h2>
+          <h3>Symmetric encryption</h3>
+          <p>Uses one shared key for both encryption and decryption (e.g., AES). Fast, but runs into the hard problem of sharing that key securely.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Plaintext</span>
+            <span class="flow-arrow has-label">↓ Encryption + Key</span>
+            <span class="flow-box">Ciphertext</span>
+            <span class="flow-arrow has-label">↓ Decryption + Same Key</span>
+            <span class="flow-box">Plaintext</span>
+          </div>
+          <p><strong>Example:</strong> A bank wants to send the instruction <code>"TRANSFER 100 USD"</code>. Encrypting it with an AES key turns the transmitted content into a meaningless string like <code>"8A91F2C4..."</code>. Only the party holding that exact AES key can decrypt it back into <code>"TRANSFER 100 USD"</code>. The problem: both sides must find a way to exchange this AES key securely before transacting - If the key is exposed in transit, anyone who intercepts it can also read the content.</p>
+
+          <h3>Asymmetric encryption</h3>
+          <p>Uses a key pair: a <strong>Public Key</strong> (shared openly) and a <strong>Private Key</strong> (kept absolutely secret). This is exactly how asymmetric encryption solves the "secure key sharing" problem above: The bank encrypts the transfer order with the customer's Public Key, and only the customer - The sole holder of the matching Private Key - Can decrypt it, even though the Public Key is available to anyone.</p>
+        </section>
+
+        <!-- 04 - Khoa & dia chi Blockchain -->
+        <section class="lesson-section" id="khoa-dia-chi">
+          <p class="eyebrow">04 · KEYS &amp; ADDRESSES IN BLOCKCHAIN</p>
+          <h2>Keys &amp; Addresses in Blockchain</h2>
+          <div class="flow-diagram">
+            <span class="flow-box">Private Key</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Public Key</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Wallet Address</span>
+          </div>
+          <p><strong>Private Key</strong> proves ownership and is used to sign transactions.</p>
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Golden rule</h3>
+            <p>Never commit a Private Key to GitHub, never paste one into public source code. This course uses only Testnet/Local nodes (Ganache/Geth).</p>
+          </div>
+        </section>
+
+        <!-- 05 - Hash vs Encryption -->
+        <section class="lesson-section" id="hash-vs-encryption">
+          <p class="eyebrow">05 · HASH VS ENCRYPTION</p>
+          <h2>Hash functions &amp; distinguishing Encryption from Hash</h2>
+          <p>A hash is a one-way function that turns data into a fixed-length string (e.g., SHA-256).</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Trait</th><th>Encryption</th><th>Hash</th></tr>
+            <tr><td>Purpose</td><td>Protects data content</td><td>Verifies integrity</td></tr>
+            <tr><td>Reversible</td><td>Yes (with the Key)</td><td>No (one-way function)</td></tr>
+            <tr><td>Uses a Key</td><td>Yes</td><td>Not required</td></tr>
+            <tr><td>Typical uses</td><td>AES, RSA</td><td>SHA-256, Keccak-256</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 06 - Chu ky so -->
+        <section class="lesson-section" id="chu-ky-so">
+          <p class="eyebrow">06 · DIGITAL SIGNATURE</p>
+          <h2>Digital Signature</h2>
+          <p>A digital signature uses the Private Key to sign a Message Digest (a hash of the data). The recipient uses the Public Key to Verify it.</p>
+          <div class="inline-ok"><strong>Core difference:</strong> Encryption hides information; Digital Signature verifies the signer and guarantees integrity.</div>
+          <p>Blockchain transaction flow:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Create Tx</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Sign with Private Key</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Broadcast</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Network Verifies Signature</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Accept / Reject</span>
+          </div>
+        </section>
+
+        <!-- 07 - ZKP -->
+        <section class="lesson-section" id="zkp">
+          <p class="eyebrow">07 · ZERO-KNOWLEDGE PROOF</p>
+          <h2>Zero-Knowledge Proof (ZKP)</h2>
+          <div class="definition">ZKP lets a <strong>Prover</strong> prove to a <strong>Verifier</strong> that a statement is true without revealing the secret information behind it.</div>
+          <div class="flow-diagram">
+            <span class="flow-box">Prover</span>
+            <span class="flow-arrow has-label">↓ Proof</span>
+            <span class="flow-box">Verifier</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Valid / Invalid</span>
+          </div>
+          <div class="inline-ok"><strong>ZKP + ESG application:</strong> A company proves it has reached <code>ESG Score ≥ 80</code> to a bank/auditor without exposing operating reports, costs, or internal production data.</div>
+        </section>
+
+        <!-- 08 - Thuc hanh: Chu ky so -->
+        <section class="lesson-section" id="thuc-hanh-chu-ky">
+          <p class="eyebrow">08 · PART B - HANDS-ON LAB</p>
+          <h2>Practice 1: Create &amp; Verify a digital signature (Python Cryptography)</h2>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from cryptography.hazmat.primitives.asymmetric import ec
+from cryptography.hazmat.primitives import hashes
+from cryptography.exceptions import InvalidSignature
+
+# 1. Tạo cặp khóa SECP256K1 (chuẩn Ethereum)
+private_key = ec.generate_private_key(ec.SECP256K1())
+public_key = private_key.public_key()
+
+# 2. Ký thông điệp (Sign)
+message = b"Transfer 100 ETH to Alice"
+signature = private_key.sign(message, ec.ECDSA(hashes.SHA256()))
+
+# 3. Xác minh chữ ký (Verify)
+try:
+    public_key.verify(signature, message, ec.ECDSA(hashes.SHA256()))
+    print("Signature Valid")
+except InvalidSignature:
+    print("Signature Invalid")
+
+# 4. Thử sửa đổi dữ liệu, chữ ký lập tức thất bại
+tampered_message = b"Transfer 1000 ETH to Alice"
+try:
+    public_key.verify(signature, tampered_message, ec.ECDSA(hashes.SHA256()))
+except InvalidSignature:
+    print("Alert: Message was tampered! Signature Invalid.")</code></pre></div>
+          <div class="inline-warning">Students should explain: why does changing only the <code>message</code> content immediately invalidate the old signature? This is exactly how Hash ➜ Digital Signature ➜ Integrity connect.</div>
+        </section>
+
+        <!-- 09 - Thuc hanh: Smart Contract -->
+        <section class="lesson-section" id="thuc-hanh-smart-contract">
+          <p class="eyebrow">09 · PRACTICE: SMART CONTRACT</p>
+          <h2>Practice 2: ESGCertificate Smart Contract with Event Logs &amp; Access Control (Vyper)</h2>
+          <p>Write the file <code>contracts/ESGCertificate.vy</code> supporting Admin, Company, and Auditor roles, and emitting Events:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+event DataSubmitted:
+    company: indexed(address)
+    score: uint256
+
+event CertificateVerified:
+    company: indexed(address)
+    auditor: indexed(address)
+    approved: bool
+
+admin: public(address)
+auditors: public(HashMap[address, bool])
+esg_scores: public(HashMap[address, uint256])
+is_verified: public(HashMap[address, bool])
+
+@deploy
+def __init__():
+    self.admin = msg.sender
+
+@external
+def add_auditor(auditor_address: address):
+    assert msg.sender == self.admin, "Only Admin can add auditor"
+    self.auditors[auditor_address] = True
+
+@external
+def submit_esg_data(score: uint256):
+    self.esg_scores[msg.sender] = score
+    log DataSubmitted(msg.sender, score)
+
+@external
+def verify_certificate(company: address, approved: bool):
+    assert self.auditors[msg.sender] == True, "Only Auditor can verify"
+    self.is_verified[company] = approved
+    log CertificateVerified(company, msg.sender, approved)</code></pre></div>
+        </section>
+
+        <!-- 10 - Thuc hanh: Deploy -->
+        <section class="lesson-section" id="thuc-hanh-deploy">
+          <p class="eyebrow">10 · PRACTICE: DEPLOY &amp; TESTING</p>
+          <h2>Practice 3: Deploy &amp; test with Ape Framework and local Geth</h2>
+          <p>Step 1 - Start a local Geth node:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">geth --dev --http --http.api eth,web3,net --ipcpath /tmp/geth.ipc</code></pre></div>
+          <p>Step 2 - Compile the contract:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">ape compile</code></pre></div>
+          <p>Step 3 - Deployment &amp; interaction script <code>scripts/deploy_esg.py</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from ape import accounts, project
+
+def main():
+    # Load account đã import sẵn trong Ape
+    dev = accounts.load("is355_")
+    dev.set_autosign(True, passphrase="your_passphrase")
+
+    # Deploy contract
+    esg_contract = dev.deploy(project.ESGCertificate)
+    print(f"Contract deployed at: {esg_contract.address}")
+
+    # Submit ESG Data
+    tx = esg_contract.submit_esg_data(85, sender=dev)
+    print(f"ESG Data submitted. Tx hash: {tx.tx_hash}")</code></pre></div>
+          <p>Step 4 - Run the deployment script:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-bash">ape run deploy_esg --network ethereum:local:http://127.0.0.1:8545</code></pre></div>
+        </section>
+
+        <!-- 11 - Data & Research -->
+        <section class="lesson-section" id="data-research">
+          <p class="eyebrow">11 · PART C - DATA &amp; RESEARCH</p>
+          <h2>Two research directions for Week 2</h2>
+
+          <h3>Direction 1 - ZKP for ESG standard verification</h3>
+          <p>Problem: prove <code>ESG Score ≥ Threshold</code> without revealing revenue data or actual emission figures.</p>
+          <ul>
+            <li><strong>RQ1:</strong> How do you set up a ZKP circuit (zk-SNARKs) to verify an ESG metric without leaking its input?</li>
+            <li><strong>RQ2:</strong> How much gas does it cost to Verify a Proof on an Ethereum Smart Contract?</li>
+          </ul>
+
+          <h3>Direction 2 - AI for eKYC fraud detection</h3>
+          <p>Feature dataset:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Feature</th><th>Data type</th><th>Meaning</th></tr>
+            <tr><td><code>Document_Match_Score</code></td><td>float</td><td>How well the ID photo matches</td></tr>
+            <tr><td><code>Face_Match_Score</code></td><td>float</td><td>How well the face matches</td></tr>
+            <tr><td><code>IP_Risk_Score</code></td><td>float</td><td>IP risk level</td></tr>
+            <tr><td><code>Device_Count</code></td><td>int</td><td>Number of accounts created on the same device</td></tr>
+            <tr><td><code>Target (Fraud)</code></td><td>0 / 1</td><td>0 = Legitimate, 1 = Fraudulent</td></tr>
+          </table></div>
+          <p>Pipeline &amp; evaluation: Random Forest / XGBoost is the suggested model. Primary metric: <strong>Recall</strong> (prioritize minimizing missed fraud cases) and <strong>PR-AUC</strong>.</p>
+          <div class="inline-warning"><strong>AI + Blockchain Hybrid model:</strong> Store sensitive eKYC images/data Off-chain (IPFS/Encrypted DB). Only store <code>Hash(eKYC_Data)</code> and <code>Proof_Status</code> On-chain to avoid violating personal data privacy.</div>
+        </section>
+
+        <!-- 12 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">12 · PART D - HOMEWORK &amp; IN-CLASS WORK</p>
+          <h2>Homework</h2>
+
+          <h3>Exercise 1 - Cryptography</h3>
+          <p>Distinguish symmetric encryption, asymmetric encryption, and Hash. Give a real-world example from banking.</p>
+
+          <h3>Exercise 2 - Smart Contract Access Control</h3>
+          <p>Extend the <code>DebtBook.vy</code> contract from last week's lab:</p>
+          <ul>
+            <li>Add an <code>owner</code> access control feature</li>
+            <li>Add a <code>DebtAdded(debtor, amount)</code> Event</li>
+            <li>Test it with a Python script through the Ape Framework</li>
+          </ul>
+
+          <h3>Exercise 3 - Research Proposal</h3>
+          <p>Choose one of the two research directions (ZKP + ESG or AI + eKYC). Write a 1-page description covering: Problem, Input/Output, Model/Algorithm, and evaluation Metric.</p>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Academic integrity policy</h3>
+            <p>Absolutely no copying or reusing another student's work for submission. Students must complete their own assignments honestly.</p>
+          </div>
+        </section>
+
+        <!-- 13 - Cau hoi thao luan -->
+        <section class="lesson-section" id="thao-luan">
+          <p class="eyebrow">13 · IN-CLASS DISCUSSION QUESTIONS</p>
+          <h2>Discussion questions</h2>
+          <ol>
+            <li>Why shouldn't you store a photo of a national ID/passport directly on a Public Blockchain?</li>
+            <li>If an attacker steals an Admin account's Private Key, does that completely disable the Smart Contract's Access Control system? Why or why not?</li>
+          </ol>
+        </section>
+
+        <!-- 14 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">14 · WEEK 2 COMPLETION CHECKLIST</p>
+          <h2>Self-check</h2>
+          <ul class="lesson-checklist">
+            <li>Understand the nature of Digital Signatures and Public/Private Key pairs</li>
+            <li>Successfully created and verified a Digital Signature in Python</li>
+            <li>Wrote, compiled, and deployed a Smart Contract with Events &amp; Access Control using Ape/Geth</li>
+            <li>Framed a research question applying ZKP or AI Fraud Detection in eKYC</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="week-1.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 1: Green Finance Overview &amp; Blockchain Basics</span></a>
+          <a href="week-3.html" class="next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 3: Digitizing Green Assets - ERC-20 &amp; Carbon Credit</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">YOU ARE LEARNING</span>
+          <ul class="checklist">
+            <li data-section="bao-mat-danh-tinh"><b>○</b> Identity security</li>
+            <li data-section="cia-model"><b>○</b> CIA Model</li>
+            <li data-section="ma-hoa"><b>○</b> Symmetric/asymmetric encryption</li>
+            <li data-section="khoa-dia-chi"><b>○</b> Keys &amp; addresses</li>
+            <li data-section="hash-vs-encryption"><b>○</b> Hash vs Encryption</li>
+            <li data-section="chu-ky-so"><b>○</b> Digital signature</li>
+            <li data-section="zkp"><b>○</b> Zero-Knowledge Proof</li>
+            <li data-section="thuc-hanh-chu-ky"><b>○</b> Practice: Digital signature</li>
+            <li data-section="thuc-hanh-smart-contract"><b>○</b> Practice: Smart Contract</li>
+            <li data-section="thuc-hanh-deploy"><b>○</b> Practice: Deploy</li>
+            <li data-section="data-research"><b>○</b> Data &amp; Research</li>
+            <li data-section="bai-tap"><b>○</b> Homework</li>
+            <li data-section="thao-luan"><b>○</b> Discussion</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Hands-on materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Homework</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Never commit a Private Key to GitHub - Use only Testnet/Local nodes for practice.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+    <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
+</body>
+</html>

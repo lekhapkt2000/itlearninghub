@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="IT004 Week 2 - Practice Exercise 2 (BTTH2): exercise statement, attached file, and detailed answer key for students in the practicum class.">
+  <title>Exercises · Week 2 - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=42">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="../../../courses/it004/week-2-bai-tap.html">VI</a><a href="week-2-bai-tap.html" class="active">EN</a></div><button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="week-2.html">‹ Back to Week 2</a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IT004</a><span>/</span><a href="week-2.html">Week 2</a><span>/</span>Exercises</p>
+
+    <div class="week-header">
+      <span class="week-tag">WEEK 2 · PRACTICE EXERCISES</span>
+      <h1>Exercises &amp; Answer Key</h1>
+      <div class="week-meta"><span>IT004</span><span>BTTH2</span><span>Sales Management</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px">The exercise statement is open to read freely. The answer key and detailed explanations are reserved for students currently enrolled in the IT004 practicum class and require an access code from the instructor.</p>
+    </div>
+
+    <div class="lesson-content" style="max-width:1000px;margin:0 auto">
+
+      <section class="lesson-section" style="padding-top:0;border-top:0" id="de-bai">
+        <p class="eyebrow">EXERCISE · PART III - DATA QUERY LANGUAGE</p>
+        <h2>Sales Management - Questions 1 ➜ 25</h2>
+        <p>Use SQL statements in SQL Server Management Studio to carry out the 25 queries below on the <strong>Sales Management</strong> schema. Attempt each one yourself before checking the answer.</p>
+
+        <div class="inline-warning"><strong>Submission requirement:</strong> Save your work in a single script file named <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH2.sql</code> (MSSV is your student ID, HoVaTen is your full name).</div>
+
+        <ol class="question-list">
+          <li>Print the list of products (MASP, TENSP) manufactured in "Trung Quoc".</li>
+          <li>Print the list of products (MASP, TENSP) whose unit of measure is "cay" or "quyen".</li>
+          <li>Print the list of products (MASP, TENSP) whose product code starts with "B" and ends with "01".</li>
+          <li>Print the list of products (MASP, TENSP) manufactured in "Trung Quoc" priced from 30,000 to 40,000.</li>
+          <li>Print the list of products (MASP, TENSP) manufactured in "Trung Quoc" or "Thai Lan" priced from 30,000 to 40,000.</li>
+          <li>Print the invoice numbers and invoice totals sold on 1/1/2007 and 2/1/2007.</li>
+          <li>Print the invoice numbers and invoice totals in January 2007, sorted by date (ascending) and invoice total (descending).</li>
+          <li>Print the list of customers (MAKH, HOTEN) who made a purchase on 1/1/2007.</li>
+          <li>Print the invoice numbers and invoice totals for invoices created by the employee named "Nguyen Van B" on 28/10/2006.</li>
+          <li>Print the list of products (MASP, TENSP) purchased by the customer named "Nguyen Van A" during October 2006.</li>
+          <li>Find the invoice numbers that include the product with code "BB01" or "BB02".</li>
+          <li>Find the invoice numbers that include the product with code "BB01" or "BB02", each purchased in a quantity from 10 to 20.</li>
+          <li>Find the invoice numbers that include both products with code "BB01" and "BB02" at the same time, each purchased in a quantity from 10 to 20.</li>
+          <li>Print the list of products (MASP, TENSP) manufactured in "Trung Quoc" or products sold on 1/1/2007.</li>
+          <li>Print the list of products (MASP, TENSP) that have never been sold.</li>
+          <li>Print the list of products (MASP, TENSP) that were not sold in 2006.</li>
+          <li>Print the list of products (MASP, TENSP) manufactured in "Trung Quoc" that were not sold in 2006.</li>
+          <li>Report the number of invoices created by each employee in 2006, showing (MANV, HOTEN, SoLuongHD).</li>
+          <li>Print the list of employees together with the total number of distinct customers they sold to in 2006.</li>
+          <li>List the product(s) (MASP, TENSP) with the highest total quantity sold in 2006.</li>
+          <li>Find the employee with the highest sales revenue in October 2006.</li>
+          <li>Print the list of products not sold in 2007 but sold in 2006.</li>
+          <li>List the products (MASP, TENSP) sold by at least 2 different employees.</li>
+          <li>Print the list of customers who did not purchase any product manufactured in Thailand.</li>
+          <li>Find the invoice with the highest total value in 2006, printing (SOHD, NGHD, TRIGIA).</li>
+        </ol>
+
+        <div class="download-card">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
+          <div class="download-card-body">
+            <strong>Full exercise - Week 2 practice (BTTH2)</strong>
+            <span>PDF file · questions 1 through 25, Part III Sales Management</span>
+          </div>
+          <a class="dark-button" href="../../../assets/file/BTTH2-tuan2-co-so-du-lieu.pdf" download>Download <span>↓</span></a>
+        </div>
+
+        <div class="inline-ok" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+          <span>This exercise uses the shared <strong>Sales Management</strong> schema (KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD) - see the full attributes, sample data, and database script.</span>
+          <a class="outline-button" href="schema-quan-ly-ban-hang.html">View schema <span>›</span></a>
+        </div>
+      </section>
+
+      <section class="lesson-section" id="dap-an">
+        <p class="eyebrow">ANSWER</p>
+        <h2>View answer</h2>
+
+        <div class="access-gate" data-access-course="IT004" data-access-week="2" data-access-resource="week2-bai-tap">
+          <div class="access-locked">
+            <div class="access-locked-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg></div>
+            <h3>Protected content</h3>
+            <p>Enter the access code to view the Week 2 answer.</p>
+            <form class="access-form">
+              <input type="text" class="access-input" placeholder="Enter access code..." autocomplete="off" spellcheck="false" required>
+              <button type="submit" class="primary-button access-submit">Submit code <span>›</span></button>
+            </form>
+            <p class="access-error" role="alert"></p>
+            <p class="access-hint">Access code provided by the instructor.</p>
+          </div>
+
+          <div class="access-unlocked" hidden>
+            <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified - you now have access to the Week 2 answer.</div>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Answer for Questions 1 ➜ 23. Questions 24 and 25 will be added later. Retype each query in SSMS so it actually sticks - the Copy button here is just for show.</p>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 1 · WHERE</p>
+              <h3>Products manufactured in Trung Quoc</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX = 'Trung Quoc';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>WHERE</code> filters on a single equality condition on the <code>NUOCSX</code> column.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The exercise only asks for a single condition, so an equality comparison is enough - no more complex technique is needed.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2 · IN</p>
+              <h3>Products with unit "cay" or "quyen"</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE DVT IN ('cay', 'quyen');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>IN</code> checks whether a value is present in a given list.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>IN</code> is more compact when comparing 1 column to several discrete values - equivalent to but more readable than a chain of <code>OR</code>s.</p></div>
+              </div>
+              <details><summary>Alternative approach</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE DVT = 'cay' OR DVT = 'quyen';</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3 · LIKE</p>
+              <h3>Product code starting "B", ending "01"</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE MASP LIKE 'B%01';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>LIKE</code> matches a string pattern; <code>%</code> stands in for any sequence of characters (including none) between "B" and "01".</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The exercise requires a condition on the first/last characters, not an exact equality match, so <code>LIKE</code> must be used instead of <code>=</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 4 · BETWEEN</p>
+              <h3>Products from Trung Quoc, price 30,000 - 40,000</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX = 'Trung Quoc' AND (GIA BETWEEN 30000 AND 40000);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>BETWEEN a AND b</code> is equivalent to <code>&gt;= a AND &lt;= b</code>, checking whether a value falls within a closed range.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>BETWEEN</code> is more concise when filtering a continuous range like <code>GIA</code> from 30,000 to 40,000.</p></div>
+              </div>
+              <details><summary>Alternative approach</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX = 'Trung Quoc' AND (GIA >= 30000 AND GIA <= 40000);</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 5 · IN + BETWEEN</p>
+              <h3>Products from Trung Quoc or Thai Lan, price 30,000 - 40,000</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX IN ('Trung Quoc', 'Thai Lan') AND (GIA BETWEEN 30000 AND 40000);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Combines <code>IN</code> (multiple countries of manufacture) and <code>BETWEEN</code> (price range) with <code>AND</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The 2 independent conditions (country of manufacture and price range) must both be true at the same time, so they're joined with <code>AND</code>; each condition is itself shortened with <code>IN</code>/<code>BETWEEN</code> instead of a longer <code>OR</code>/comparison chain.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 6 · IN by date</p>
+              <h3>Invoices sold on 1/1/2007 and 2/1/2007</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, TRIGIA
+FROM HOADON
+WHERE NGHD IN ('1/1/2007', '2/1/2007');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Compares the <code>NGHD</code> column (date type) against a list of 2 specific date values.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>IN</code> replaces <code>OR</code> when comparing the same column against several discrete values - this applies to date columns too, not just strings or numbers.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 7 · YEAR/MONTH + multi-column ORDER BY</p>
+              <h3>Invoices in January 2007, sorted by date ascending, total descending</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, NGHD, TRIGIA
+FROM HOADON
+WHERE YEAR(NGHD) = 2007 AND MONTH(NGHD) = 1
+ORDER BY NGHD ASC, TRIGIA DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>YEAR()</code>/<code>MONTH()</code> extract the year/month from a date value; <code>ORDER BY</code> can sort by multiple columns, each with its own ascending/descending direction.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Filtering "January 2007" requires splitting out the year and month since <code>NGHD</code> stores a full date. Sorting by 2 criteria in opposite directions (date ascending, total descending) means <code>ASC</code>/<code>DESC</code> must be declared separately for each column within the same <code>ORDER BY</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 8 · JOIN</p>
+              <h3>Customers who purchased on 1/1/2007</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.MAKH, HOTEN
+FROM KHACHHANG kh JOIN HOADON hd ON kh.MAKH = hd.MAKH
+WHERE NGHD = '1/1/2007';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN</code> combines <code>KHACHHANG</code> with <code>HOADON</code> through <code>MAKH</code> to get the <code>HOTEN</code> of customers who have an invoice on that exact date.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The data needed (<code>HOTEN</code>) lives in <code>KHACHHANG</code>, while the filter condition (<code>NGHD</code>) lives in <code>HOADON</code> - the 2 tables must be <code>JOIN</code>ed to query both at once.</p></div>
+              </div>
+              <details><summary>Alternative approach</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAKH, HOTEN
+FROM KHACHHANG
+WHERE MAKH IN (SELECT MAKH
+                FROM HOADON
+                WHERE NGHD = '1/1/2007');</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 9 · JOIN filtered by employee name</p>
+              <h3>Invoices created by "Nguyen Van B" on 28/10/2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, TRIGIA
+FROM HOADON hd JOIN NHANVIEN nv ON hd.MANV = nv.MANV
+WHERE HOTEN = 'Nguyen Van B' AND NGHD = '28/10/2006';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN HOADON</code> with <code>NHANVIEN</code> through <code>MANV</code> to filter by employee full name.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>HOADON</code> only stores <code>MANV</code> (the code), not the employee's name - a <code>JOIN</code> to <code>NHANVIEN</code> is required before filtering by the name "Nguyen Van B".</p></div>
+              </div>
+              <details><summary>Alternative approach</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, TRIGIA
+FROM HOADON
+WHERE NGHD = '28/10/2006' AND MANV IN (SELECT MANV
+                                        FROM NHANVIEN
+                                        WHERE HOTEN = 'Nguyen Van B');</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 10 · JOIN 4 tables</p>
+              <h3>Products "Nguyen Van A" purchased in October 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT sp.MASP, TENSP
+FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                JOIN HOADON hd ON hd.SOHD = ct.SOHD
+                JOIN KHACHHANG kh ON kh.MAKH = hd.MAKH
+WHERE HOTEN = 'Nguyen Van A' AND YEAR(NGHD) = 2006 AND MONTH(NGHD) = 10;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Chains 4 tables together (<code>SANPHAM ➜ CTHD ➜ HOADON ➜ KHACHHANG</code>) following the exact foreign-key chain to get from "customer name" to "products purchased".</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>There's no direct foreign key between <code>KHACHHANG</code> and <code>SANPHAM</code> - you have to go through <code>HOADON</code> and <code>CTHD</code> (the intermediate tables) to connect 2 tables that are 2 relationship layers apart.</p></div>
+              </div>
+              <details><summary>Alternative approach (nested subquery)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE MASP IN (SELECT MASP
+                FROM CTHD
+                WHERE SOHD IN (SELECT SOHD
+                                FROM HOADON
+                                WHERE YEAR(NGHD) = 2006 AND MONTH(NGHD) = 10
+                                  AND MAKH IN (SELECT MAKH
+                                               FROM KHACHHANG
+                                               WHERE HOTEN = 'Nguyen Van A')));</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 11 · DISTINCT + IN</p>
+              <h3>Invoices that include "BB01" or "BB02"</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT SOHD
+FROM CTHD
+WHERE MASP IN ('BB01', 'BB02');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>DISTINCT</code> removes duplicate <code>SOHD</code> values from the returned result.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>An invoice could include both BB01 and BB02 (2 CTHD rows) - without <code>DISTINCT</code>, that invoice would appear twice in the result.</p></div>
+              </div>
+              <details><summary>Alternative approach (UNION)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT SOHD FROM CTHD WHERE MASP = 'BB01')
+UNION
+(SELECT SOHD FROM CTHD WHERE MASP = 'BB02');</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 12 · adding a quantity condition</p>
+              <h3>Invoices with "BB01"/"BB02", quantity 10-20</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT SOHD
+FROM CTHD
+WHERE MASP IN ('BB01', 'BB02') AND (SL BETWEEN 10 AND 20);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Adds the condition <code>AND (SL BETWEEN 10 AND 20)</code>, applied to each CTHD row that matches <code>MASP</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The quantity condition applies to the individual line item under consideration (not a summed total), so it only needs an extra <code>AND</code> in the same <code>WHERE</code> - no <code>GROUP BY</code> is needed.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 13 · INTERSECT</p>
+              <h3>Invoices that include BOTH "BB01" and "BB02", quantity 10-20</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT SOHD FROM CTHD WHERE MASP = 'BB01' AND (SL BETWEEN 10 AND 20))
+INTERSECT
+(SELECT SOHD FROM CTHD WHERE MASP = 'BB02' AND (SL BETWEEN 10 AND 20));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>INTERSECT</code> returns the rows that appear in <strong>both</strong> result sets (the intersection of the 2 <code>SOHD</code> sets).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Questions 11/12 use "or" (<code>IN</code>) because only 1 of the 2 products is needed; this question requires "both at the same time", so the intersection must be taken with <code>INTERSECT</code> - <code>IN</code>/<code>OR</code> cannot express this requirement.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 14 · UNION</p>
+              <h3>Products from Trung Quoc OR sold on 1/1/2007</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT MASP, TENSP
+ FROM SANPHAM
+ WHERE NUOCSX = 'Trung Quoc')
+UNION
+(SELECT sp.MASP, TENSP
+ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                 JOIN HOADON hd ON hd.SOHD = ct.SOHD
+ WHERE NGHD = '1/1/2007');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>UNION</code> combines 2 independent result sets (products by country of manufacture, products by sale date) and automatically removes duplicates.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The 2 conditions belong to 2 different logical branches (one only needs <code>SANPHAM</code>, the other needs to <code>JOIN</code> in <code>CTHD</code>/<code>HOADON</code>), so they're split into 2 separate <code>SELECT</code> statements and combined with <code>UNION</code> rather than being merged into 1 query.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 15 · NOT IN</p>
+              <h3>Products that have never been sold</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE MASP NOT IN (SELECT DISTINCT MASP FROM CTHD);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>NOT IN</code> excludes any <code>MASP</code> that has ever appeared in <code>CTHD</code> (i.e., has ever been sold).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Never sold" means the <code>MASP</code> doesn't exist in <code>CTHD</code> - the negation of <code>IN</code> is <code>NOT IN</code>.</p></div>
+              </div>
+              <details><summary>Alternative approach (EXCEPT)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT MASP, TENSP FROM SANPHAM)
+EXCEPT
+(SELECT DISTINCT ct.MASP, TENSP
+ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP);</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 16 · NOT IN nested through HOADON</p>
+              <h3>Products not sold in 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE MASP NOT IN (SELECT DISTINCT MASP
+                    FROM CTHD
+                    WHERE SOHD IN (SELECT SOHD
+                                   FROM HOADON
+                                   WHERE YEAR(NGHD) = 2006));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>A 2-layer nested subquery: the inner layer filters <code>SOHD</code> by year 2006, the outer layer filters <code>MASP</code> by those <code>SOHD</code> values.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>CTHD</code> has no year column - it must be nested through <code>HOADON</code> (which has <code>NGHD</code>) first to determine which <code>CTHD</code> rows belong to 2006.</p></div>
+              </div>
+              <details><summary>Alternative approach (EXCEPT)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT MASP, TENSP FROM SANPHAM)
+EXCEPT
+(SELECT DISTINCT ct.MASP, TENSP
+ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                 JOIN HOADON hd ON ct.SOHD = hd.SOHD
+ WHERE YEAR(NGHD) = 2006);</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 17 · combining a condition with Question 16</p>
+              <h3>Products from Trung Quoc, not sold in 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX = 'Trung Quoc'
+  AND MASP NOT IN (SELECT DISTINCT MASP
+                    FROM CTHD
+                    WHERE SOHD IN (SELECT SOHD
+                                   FROM HOADON
+                                   WHERE YEAR(NGHD) = 2006));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Combines a <code>NUOCSX</code> condition (on <code>SANPHAM</code>) with the same <code>NOT IN</code> subquery as Question 16.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This is Question 16 narrowed further with 1 more condition (country of manufacture) via <code>AND</code> - reusing the same subquery logic already built instead of writing it from scratch.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 18 · GROUP BY + COUNT</p>
+              <h3>Number of invoices each employee created in 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT nv.MANV, HOTEN, COUNT(*) AS SoLuongHD
+FROM NHANVIEN nv JOIN HOADON hd ON nv.MANV = hd.MANV
+WHERE YEAR(NGHD) = 2006
+GROUP BY nv.MANV, HOTEN;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY</code> groups invoices by each employee; <code>COUNT(*)</code> counts the number of rows (invoices) in each group.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The exercise asks for figures "per employee" (not an overall total), so grouping by <code>MANV</code> is required (along with <code>HOTEN</code>, which is functionally dependent on <code>MANV</code>).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 19 · COUNT DISTINCT</p>
+              <h3>Total distinct customers each employee sold to in 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT nv.MANV, nv.HOTEN, COUNT(DISTINCT hd.MAKH) AS TongSoKH
+FROM NHANVIEN nv JOIN HOADON hd ON nv.MANV = hd.MANV
+                 JOIN KHACHHANG kh ON kh.MAKH = hd.MAKH
+WHERE YEAR(NGHD) = 2006
+GROUP BY nv.MANV, nv.HOTEN;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>COUNT(DISTINCT ...)</code> counts the number of <strong>distinct</strong> values, ignoring duplicates.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>An employee may have sold multiple invoices to the same customer - a plain <code>COUNT(*)</code> would count that customer multiple times, so <code>DISTINCT</code> is needed to count each customer once.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 20 · SUM + TOP WITH TIES</p>
+              <h3>Product(s) with the highest total quantity sold in 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES sp.MASP, TENSP, SUM(SL) AS TongSoLuong
+FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                JOIN HOADON hd ON hd.SOHD = ct.SOHD
+WHERE YEAR(NGHD) = 2006
+GROUP BY sp.MASP, TENSP
+ORDER BY TongSoLuong DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>SUM(SL)</code> adds up the quantity for each product; <code>TOP 1 WITH TIES</code> takes the top row and also keeps any tied rows.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>SUM</code> is required because the exercise asks for "total quantity sold", not the number of sales. <code>WITH TIES</code> is used so you don't miss the case where multiple products are tied for the highest total.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 21 · SUM of value</p>
+              <h3>Employee with the highest sales in October 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES nv.MANV, HOTEN, SUM(TRIGIA) AS TongDoanhSo
+FROM NHANVIEN nv JOIN HOADON hd ON nv.MANV = hd.MANV
+WHERE MONTH(NGHD) = 10 AND YEAR(NGHD) = 2006
+GROUP BY nv.MANV, HOTEN
+ORDER BY TongDoanhSo DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>SUM(TRIGIA)</code> adds up the total value of the invoices each employee created in October 2006.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Sales" means the total invoice value an employee generated, which differs from Question 18 (counting the number of invoices) - <code>SUM</code> the money column here, not <code>COUNT</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 22 · EXCEPT</p>
+              <h3>Products not sold in 2007 but sold in 2006</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT sp.MASP, TENSP
+ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                 JOIN HOADON hd ON hd.SOHD = ct.SOHD
+ WHERE YEAR(NGHD) = 2006)
+EXCEPT
+(SELECT sp.MASP, TENSP
+ FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                 JOIN HOADON hd ON hd.SOHD = ct.SOHD
+ WHERE YEAR(NGHD) = 2007);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>EXCEPT</code> takes rows present in the first set but <strong>not</strong> present in the second set.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Present in 2006 but not in 2007" is exactly a set-subtraction operation - <code>EXCEPT</code> expresses this directly, more so than writing it with <code>NOT IN</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 23 · HAVING</p>
+              <h3>Products sold by at least 2 different employees</h3>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT sp.MASP, TENSP, COUNT(DISTINCT MANV) AS SLNVBan
+FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
+                JOIN HOADON hd ON hd.SOHD = ct.SOHD
+GROUP BY sp.MASP, TENSP
+HAVING COUNT(DISTINCT MANV) >= 2;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>HAVING</code> filters on a result that's already been <code>GROUP BY</code>'d (unlike <code>WHERE</code>, which filters before grouping).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The condition "at least 2 different employees" can only be evaluated after counting <code>DISTINCT MANV</code> per product - so it must be filtered with <code>HAVING</code>, not <code>WHERE</code>.</p></div>
+              </div>
+            </div>
+
+            <button type="button" class="ghost-button access-logout">Log out of this section</button>
+          </div>
+        </div>
+      </section>
+
+      <nav class="week-nav-links" aria-label="Navigation">
+        <a href="week-2.html"><span class="nav-dir">‹ BACK</span><span class="nav-title">Week 2: Querying Data with SQL</span></a>
+        <a href="week-3.html" class="next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 3: Division, Grouping &amp; Outer Joins</span></a>
+      </nav>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
+  <script src="../../../assets/js/access-gate.js?v=1"></script>
+</body>
+</html>

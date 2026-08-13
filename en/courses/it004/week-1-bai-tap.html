@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="IT004 Week 1 - Practice Exercise 1 (BTTH1): exercise statement, attached file, and detailed answer key for students in the practicum class.">
+  <title>Exercises · Week 1 - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=42">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="../../../courses/it004/week-1-bai-tap.html">VI</a><a href="week-1-bai-tap.html" class="active">EN</a></div><button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="week-1.html">‹ Back to Week 1</a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IT004</a><span>/</span><a href="week-1.html">Week 1</a><span>/</span>Exercises</p>
+
+    <div class="week-header">
+      <span class="week-tag">WEEK 1 · PRACTICE EXERCISES</span>
+      <h1>Exercises &amp; Answer Key</h1>
+      <div class="week-meta"><span>IT004</span><span>BTTH1</span><span>Fitness &amp; Sports Center</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px">The exercise statement is open to read freely. The answer key and detailed explanations are reserved for students currently enrolled in the IT004 practicum class and require an access code from the instructor.</p>
+    </div>
+
+    <div class="lesson-content" style="max-width:1000px;margin:0 auto">
+
+      <section class="lesson-section" style="padding-top:0;border-top:0" id="de-bai">
+        <p class="eyebrow">EXERCISE</p>
+        <h2>Fitness &amp; Sports Center (TrungTam_TDTT)</h2>
+        <p>The Week 1 exercise consists of 2 independent requirements, to be carried out in SQL Server Management Studio. Submit each requirement as a separate script file.</p>
+
+        <h3>Assignment requirement 1 - Design and data entry</h3>
+        <p>Given the "Fitness &amp; Sports Center Management" database schema consisting of the following 6 relations:</p>
+
+        <div class="schema-def">
+          <p class="schema-def-head">PHONGTAP (<u>MAPH</u>, TENPHONG, DIACHI, SUCCHUA, TRANGTHAI)</p>
+          <p class="schema-def-body"><em>Predicate:</em> Stores gym room information: room code, room name, address, maximum capacity (number of people), and room status (active, under maintenance, closed…).</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAPH</code></td><td><code>char(5)</code></td><td>Gym room code - primary key</td></tr>
+          <tr><td><code>TENPHONG</code></td><td><code>varchar(50)</code></td><td>Gym room name</td></tr>
+          <tr><td><code>DIACHI</code></td><td><code>varchar(100)</code></td><td>Gym room address</td></tr>
+          <tr><td><code>SUCCHUA</code></td><td><code>int</code></td><td>Maximum capacity (number of people)</td></tr>
+          <tr><td><code>TRANGTHAI</code></td><td><code>varchar(20)</code></td><td>Room status (active, under maintenance, closed…)</td></tr>
+        </table></div>
+
+        <div class="schema-def">
+          <p class="schema-def-head">HUANLUYENVIEN (<u>MAHLV</u>, HOTEN, CHUYENMON, SDT, EMAIL)</p>
+          <p class="schema-def-body"><em>Predicate:</em> Stores trainer information: trainer code, full name, specialty (Yoga, Gym,...), phone number, and contact email.</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAHLV</code></td><td><code>char(5)</code></td><td>Trainer code - primary key</td></tr>
+          <tr><td><code>HOTEN</code></td><td><code>varchar(50)</code></td><td>Full name</td></tr>
+          <tr><td><code>CHUYENMON</code></td><td><code>varchar(50)</code></td><td>Specialty (Yoga, Gym,...)</td></tr>
+          <tr><td><code>SDT</code></td><td><code>varchar(15)</code></td><td>Phone number</td></tr>
+          <tr><td><code>EMAIL</code></td><td><code>varchar(50)</code></td><td>Contact email</td></tr>
+        </table></div>
+
+        <div class="schema-def">
+          <p class="schema-def-head">HOCVIEN (<u>MAHV</u>, HOTEN, NGSINH, SDT, DIACHI, GIOITINH, NGTG)</p>
+          <p class="schema-def-body"><em>Predicate:</em> Stores member information: member code, full name, date of birth, phone number, address, gender (Male, Female), and the date the person joined as a member.</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Member code - primary key</td></tr>
+          <tr><td><code>HOTEN</code></td><td><code>varchar(50)</code></td><td>Full name</td></tr>
+          <tr><td><code>NGSINH</code></td><td><code>smalldatetime</code></td><td>Date of birth</td></tr>
+          <tr><td><code>SDT</code></td><td><code>varchar(15)</code></td><td>Phone number</td></tr>
+          <tr><td><code>DIACHI</code></td><td><code>varchar(100)</code></td><td>Member address</td></tr>
+          <tr><td><code>GIOITINH</code></td><td><code>varchar(10)</code></td><td>Member gender (Male, Female)</td></tr>
+          <tr><td><code>NGTG</code></td><td><code>smalldatetime</code></td><td>Date the person joined as a member</td></tr>
+        </table></div>
+
+        <div class="schema-def">
+          <p class="schema-def-head">LOPTAP (<u>MALOP</u>, MAPH, MAHLV, TENLOP, NGAYBD, NGAYKT, TRANGTHAI)</p>
+          <p class="schema-def-body"><em>Predicate:</em> Stores class information: class code, room where it takes place, trainer in charge, class name, start date, end date, and class status (in progress, ended, paused…).</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Class code - primary key</td></tr>
+          <tr><td><code>MAPH</code></td><td><code>char(5)</code></td><td>Gym room code - foreign key to PHONGTAP</td></tr>
+          <tr><td><code>MAHLV</code></td><td><code>char(5)</code></td><td>Trainer code - foreign key to HUANLUYENVIEN</td></tr>
+          <tr><td><code>TENLOP</code></td><td><code>varchar(50)</code></td><td>Class name</td></tr>
+          <tr><td><code>NGAYBD</code></td><td><code>smalldatetime</code></td><td>Class start date</td></tr>
+          <tr><td><code>NGAYKT</code></td><td><code>smalldatetime</code></td><td>Class end date</td></tr>
+          <tr><td><code>TRANGTHAI</code></td><td><code>varchar(20)</code></td><td>Class status (in progress, ended, paused…)</td></tr>
+        </table></div>
+
+        <div class="schema-def">
+          <p class="schema-def-head">DANGKY (<u>MAHV, MALOP</u>, NGAYDK)</p>
+          <p class="schema-def-body"><em>Predicate:</em> Enrollment details: which member registered for which class, and on what date.</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MAHV</code></td><td><code>char(5)</code></td><td>Member code - primary key, foreign key to HOCVIEN</td></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Class code - primary key, foreign key to LOPTAP</td></tr>
+          <tr><td><code>NGAYDK</code></td><td><code>smalldatetime</code></td><td>Registration date</td></tr>
+        </table></div>
+
+        <div class="schema-def">
+          <p class="schema-def-head">LICHTAP (<u>MALOP, NGAYTAP</u>, GIOBATDAU, GIOKETTHUC)</p>
+          <p class="schema-def-body"><em>Predicate:</em> Stores each class's schedule: the date of a session, the start time, and the end time.</p>
+        </div>
+        <div class="table-wrap"><table class="ref-table">
+          <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+          <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Class code - primary key, foreign key to LOPTAP</td></tr>
+          <tr><td><code>NGAYTAP</code></td><td><code>smalldatetime</code></td><td>Session date - primary key</td></tr>
+          <tr><td><code>GIOBATDAU</code></td><td><code>time</code></td><td>Session start time</td></tr>
+          <tr><td><code>GIOKETTHUC</code></td><td><code>time</code></td><td>Session end time</td></tr>
+        </table></div>
+
+        <div class="download-card">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
+          <div class="download-card-body">
+            <strong>Full exercise - Week 1 practice (BTTH1)</strong>
+            <span>PDF file · full sample data for all 6 relations</span>
+          </div>
+          <a class="dark-button" href="../../../assets/file/BTTH1-tuan1-co-so-du-lieu.pdf" download>Download <span>↓</span></a>
+        </div>
+
+        <div class="inline-warning"><strong>Submission requirement (Requirement 1):</strong> Save your work in the script file <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC1.sql</code> (MSSV is your student ID, HoVaTen is your full name).</div>
+
+        <ol class="question-list">
+          <li>Create the database <code>TrungTam_TDTT</code>, containing the 6 relations <code>PHONGTAP</code>, <code>HUANLUYENVIEN</code>, <code>HOCVIEN</code>, <code>LOPTAP</code>, <code>DANGKY</code>, <code>LICHTAP</code>.</li>
+          <li>Create the primary keys and foreign keys for the relations above.</li>
+          <li>Enter data for the 6 relations using the sample data provided in the exercise file.</li>
+        </ol>
+
+        <h3>Assignment requirement 2 - Definition and data manipulation</h3>
+        <p>From this point on, the exercise switches to the shared <strong>Sales Management</strong> schema (KHACHHANG, NHANVIEN, SANPHAM, HOADON, CTHD).</p>
+
+        <div class="inline-ok" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+          <span>See the full attributes, sample data, and database script for the <strong>Sales Management</strong> schema before starting.</span>
+          <a class="outline-button" href="schema-quan-ly-ban-hang.html">View schema <span>›</span></a>
+        </div>
+
+        <div class="inline-warning"><strong>Submission requirement (Requirement 2):</strong> Save your work in the script file <code>&lt;MSSV&gt;_&lt;HoVaTen&gt;_BTTH1_YC2.sql</code> (MSSV is your student ID, HoVaTen is your full name).</div>
+
+        <p><strong>Part I - Data Definition Language</strong></p>
+        <ol class="question-list">
+          <li>Add an attribute <code>GHICHU</code> with data type <code>varchar(20)</code> to the relation <code>SANPHAM</code>.</li>
+          <li>Add an attribute <code>LOAIKH</code> with data type <code>tinyint</code> to the relation <code>KHACHHANG</code>.</li>
+          <li>Change the data type of the attribute <code>GHICHU</code> in the relation <code>SANPHAM</code> to <code>varchar(100)</code>.</li>
+          <li>Drop the attribute <code>GHICHU</code> in the relation <code>SANPHAM</code>.</li>
+          <li>How can the attribute <code>LOAIKH</code> in the relation <code>KHACHHANG</code> be made to store the values "Vang lai", "Thuong xuyen", "Vip", …?</li>
+          <li>A product's unit of measure can only be one of ("cay", "hop", "cai", "quyen", "chuc").</li>
+          <li>A product's selling price must be 500 or higher.</li>
+          <li>An employee's phone number must start with the digit "0".</li>
+          <li>Each time a customer makes a purchase, they must buy at least 1 product.</li>
+          <li>The date a customer registers as a member must be later than that person's date of birth.</li>
+        </ol>
+
+        <p><strong>Part II - Data Manipulation Language</strong></p>
+        <ol class="question-list">
+          <li>Create the relation <code>SANPHAM1</code> containing all the data of the relation <code>SANPHAM</code>. Create the relation <code>KHACHHANG1</code> containing all the data of the relation <code>KHACHHANG</code>.</li>
+          <li>Update the price with a 5% increase for products manufactured in "Thai Lan" (for the relation <code>SANPHAM1</code>).</li>
+          <li>Update the price with a 5% decrease for products manufactured in "Trung Quoc" priced at 10,000 or below (for the relation <code>SANPHAM1</code>).</li>
+          <li>Update the <code>LOAIKH</code> value to "Vip" for customers who registered as members before 1/1/2007 with total sales of 10,000,000 or more, or customers who registered as members on or after 1/1/2007 with total sales of 2,000,000 or more (for the relation <code>KHACHHANG1</code>).</li>
+        </ol>
+      </section>
+
+      <section class="lesson-section" id="dap-an">
+        <p class="eyebrow">ANSWER</p>
+        <h2>View answer</h2>
+
+        <div class="access-gate" data-access-course="IT004" data-access-week="1" data-access-resource="week1-bai-tap">
+          <div class="access-locked">
+            <div class="access-locked-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg></div>
+            <h3>Protected content</h3>
+            <p>Enter the access code to view the Week 1 answer.</p>
+            <form class="access-form">
+              <input type="text" class="access-input" placeholder="Enter access code..." autocomplete="off" spellcheck="false" required>
+              <button type="submit" class="primary-button access-submit">Submit code <span>›</span></button>
+            </form>
+            <p class="access-error" role="alert"></p>
+            <p class="access-hint">Access code provided by the instructor.</p>
+          </div>
+
+          <div class="access-unlocked" hidden>
+            <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified - you now have access to the Week 1 answer.</div>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Full answer for Requirement 1 (3 questions) and Requirement 2 (10 questions in Part I, 4 questions in Part II). Retype each query in SSMS so it actually sticks - the Copy button here is just for show.</p>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 1 (REQ. 1) · CREATE DATABASE</p>
+              <p><strong>Exercise:</strong> Create the database <code>TrungTam_TDTT</code>, containing the 6 relations <code>PHONGTAP</code>, <code>HUANLUYENVIEN</code>, <code>HOCVIEN</code>, <code>LOPTAP</code>, <code>DANGKY</code>, <code>LICHTAP</code>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE TrungTam_TDTT;
+GO
+USE TrungTam_TDTT;
+GO
+
+CREATE TABLE PHONGTAP
+(
+    MAPH CHAR(5) PRIMARY KEY,
+    TENPHONG VARCHAR(50),
+    DIACHI VARCHAR(100),
+    SUCCHUA INT,
+    TRANGTHAI VARCHAR(20)
+);
+
+CREATE TABLE HUANLUYENVIEN
+(
+    MAHLV CHAR(5) PRIMARY KEY,
+    HOTEN VARCHAR(50),
+    CHUYENMON VARCHAR(50),
+    SDT VARCHAR(15),
+    EMAIL VARCHAR(50)
+);
+
+CREATE TABLE HOCVIEN
+(
+    MAHV CHAR(5) PRIMARY KEY,
+    HOTEN VARCHAR(50),
+    NGSINH SMALLDATETIME,
+    SDT VARCHAR(15),
+    DIACHI VARCHAR(100),
+    GIOITINH VARCHAR(10),
+    NGTG SMALLDATETIME
+);
+
+CREATE TABLE LOPTAP
+(
+    MALOP CHAR(5) PRIMARY KEY,
+    MAPH CHAR(5),
+    MAHLV CHAR(5),
+    TENLOP VARCHAR(50),
+    NGAYBD SMALLDATETIME,
+    NGAYKT SMALLDATETIME,
+    TRANGTHAI VARCHAR(20)
+);
+
+CREATE TABLE DANGKY
+(
+    MAHV CHAR(5),
+    MALOP CHAR(5),
+    NGAYDK SMALLDATETIME,
+
+    PRIMARY KEY (MAHV, MALOP)
+);
+
+CREATE TABLE LICHTAP
+(
+    MALOP CHAR(5),
+    NGAYTAP SMALLDATETIME,
+    GIOBATDAU TIME,
+    GIOKETTHUC TIME,
+
+    PRIMARY KEY (MALOP, NGAYTAP)
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>CREATE DATABASE</code> creates 1 empty database, after which you must <code>USE</code> it to switch the working context to that database before creating tables. The primary key is declared right when the table is created: a single-column key uses <code>PRIMARY KEY</code> right after the column, while a composite key (<code>DANGKY</code>, <code>LICHTAP</code>) uses a separate <code>PRIMARY KEY (...)</code> line at the end.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The primary key is an internal constraint of the table itself, so declaring it right when the table is created makes the most sense. A foreign key is different - it references another table, so it has to wait until the referenced table exists, which is why it's saved for Question 2.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2 (REQ. 1) · FOREIGN KEY</p>
+              <p><strong>Exercise:</strong> Create the primary keys and foreign keys for the relations above.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE LOPTAP ADD CONSTRAINT FK_LOPTAP_PHONGTAP
+    FOREIGN KEY (MAPH) REFERENCES PHONGTAP(MAPH);
+ALTER TABLE LOPTAP ADD CONSTRAINT FK_LOPTAP_HLV
+    FOREIGN KEY (MAHLV) REFERENCES HUANLUYENVIEN(MAHLV);
+ALTER TABLE DANGKY ADD CONSTRAINT FK_DANGKY_HOCVIEN
+    FOREIGN KEY (MAHV) REFERENCES HOCVIEN(MAHV);
+ALTER TABLE DANGKY ADD CONSTRAINT FK_DANGKY_LOPTAP
+    FOREIGN KEY (MALOP) REFERENCES LOPTAP(MALOP);
+ALTER TABLE LICHTAP ADD CONSTRAINT FK_LICHTAP_LOPTAP
+    FOREIGN KEY (MALOP) REFERENCES LOPTAP(MALOP);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The primary keys were already created in Question 1, so Question 2 only needs to add the foreign keys using <code>ALTER TABLE ... ADD CONSTRAINT ... FOREIGN KEY (...) REFERENCES ...(...)</code> for each linked pair of tables.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>LOPTAP</code> must already exist (with the primary keys <code>MAPH</code> in <code>PHONGTAP</code> and <code>MAHLV</code> in <code>HUANLUYENVIEN</code>) before a foreign key pointing to it can be created - this is exactly why a foreign key always has to wait until the related tables are already in place.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3 (REQ. 1) · INSERT</p>
+              <p><strong>Exercise:</strong> Enter data for the 6 relations using the sample data provided in the exercise file.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO PHONGTAP (MAPH, TENPHONG, DIACHI, SUCCHUA, TRANGTHAI)
+VALUES
+    ('PH001', N'Yoga Linh Dam', N'Ha Noi', 25, N'Hoat dong'),
+    ('PH002', N'Gym Nguyen Van Cu', N'TP. HCM', 60, N'Hoat dong');
+
+-- Apply this same INSERT INTO ... VALUES (...) syntax to the 5 remaining
+-- relations (HUANLUYENVIEN, HOCVIEN, LOPTAP, DANGKY, LICHTAP), taking the
+-- full sample data from the attached PDF file in the Exercise section.</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>INSERT INTO ... VALUES (...)</code> adds one row of data at a time into a table; multiple rows can be combined into a single statement by listing several value groups separated by commas.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>PHONGTAP</code> and <code>HUANLUYENVIEN</code> must be inserted before <code>LOPTAP</code>, and <code>LOPTAP</code> before <code>DANGKY</code>/<code>LICHTAP</code> - because the foreign keys created in Question 2 will block an <code>INSERT</code> if the parent row (room, trainer, class) doesn't exist yet.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 1 (REQ. 2 - PART I) · ADD COLUMN</p>
+              <p><strong>Exercise:</strong> Add an attribute <code>GHICHU</code> with data type <code>varchar(20)</code> to the relation <code>SANPHAM</code>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD GHICHU VARCHAR(20);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>ALTER TABLE ... ADD</code> adds a new column to an existing table; existing rows receive <code>NULL</code> for this new column.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>SANPHAM</code> already has data, so it can't be re-created with <code>CREATE TABLE</code> - <code>ALTER TABLE</code> must be used to add the column without losing the existing data.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2 (REQ. 2 - PART I) · ADD COLUMN</p>
+              <p><strong>Exercise:</strong> Add an attribute <code>LOAIKH</code> with data type <code>tinyint</code> to the relation <code>KHACHHANG</code>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD LOAIKH TINYINT;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>TINYINT</code> stores a small integer (0-255), which fits when <code>LOAIKH</code> only needs a handful of fixed codes.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The exercise only asks to add the column here, not to constrain its values yet - restricting <code>LOAIKH</code> to a few specific labels is handled in Question 5.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3 (REQ. 2 - PART I) · ALTER COLUMN</p>
+              <p><strong>Exercise:</strong> Change the data type of the attribute <code>GHICHU</code> in the relation <code>SANPHAM</code> to <code>varchar(100)</code>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ALTER COLUMN GHICHU VARCHAR(100);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>ALTER COLUMN</code> changes the data type (or length) of a column that already exists.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The <code>varchar(20)</code> from Question 1 might not leave enough room for a longer note, so the length needs to be extended instead of dropping the column and re-creating it.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 4 (REQ. 2 - PART I) · DROP COLUMN</p>
+              <p><strong>Exercise:</strong> Drop the attribute <code>GHICHU</code> in the relation <code>SANPHAM</code>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM DROP COLUMN GHICHU;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>DROP COLUMN</code> permanently removes a column along with all the data stored in it.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>If <code>GHICHU</code> is no longer needed, it should be dropped entirely to avoid a leftover column cluttering up <code>SELECT *</code> later on.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 5 (REQ. 2 - PART I) · CHECK ... IN</p>
+              <p><strong>Exercise:</strong> How can the attribute <code>LOAIKH</code> in the relation <code>KHACHHANG</code> be made to store the values "Vang lai", "Thuong xuyen", "Vip", …?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ALTER COLUMN LOAIKH VARCHAR(20);
+
+ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
+    CHECK (LOAIKH IN (N'Vang lai', N'Thuong xuyen', N'Vip'));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>LOAIKH</code> needs to store text strings ("Vang lai", "Thuong xuyen", "Vip"), so its data type must change from <code>TINYINT</code> (in Question 2) to <code>VARCHAR</code>, then a <code>CHECK ... IN (...)</code> is added so only these 3 values are accepted.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>CHECK</code> is the standard way to restrict a column's value domain right at the database level - even if the application has a bug and tries to write a different value, the database will still reject the statement.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 6 (REQ. 2 - PART I) · CHECK ... IN</p>
+              <p><strong>Exercise:</strong> A product's unit of measure can only be one of ("cay", "hop", "cai", "quyen", "chuc").</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD CONSTRAINT CK_SANPHAM_DVT
+    CHECK (DVT IN (N'cay', N'hop', N'cai', N'quyen', N'chuc'));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The same <code>CHECK ... IN</code> technique as Question 5, applied to the <code>DVT</code> (unit of measure) column of <code>SANPHAM</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The unit of measure is a fixed categorical value, not free text - constraining it with a list of valid values helps prevent typos.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 7 (REQ. 2 - PART I) · CHECK</p>
+              <p><strong>Exercise:</strong> A product's selling price must be 500 or higher.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD CONSTRAINT CK_SANPHAM_GIA CHECK (GIA >= 500);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>CHECK</code> with a comparison expression (unlike <code>IN</code>) is used when the constraint is a range of values, not an enumerated list.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"500 or higher" is a <code>&gt;=</code> condition - all valid values can't be listed out like in Question 6, so a direct comparison must be used instead.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 8 (REQ. 2 - PART I) · CHECK ... LIKE</p>
+              <p><strong>Exercise:</strong> An employee's phone number must start with the digit "0".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE NHANVIEN ADD CONSTRAINT CK_NHANVIEN_SODT CHECK (SODT LIKE '0%');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>LIKE '0%'</code> matches any string starting with the character "0"; the <code>%</code> stands in for the rest (any length).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>A "starts with" constraint is about string format, not a specific value or numeric range - <code>CHECK ... LIKE</code> is the right tool for this case.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 9 (REQ. 2 - PART I) · CHECK</p>
+              <p><strong>Exercise:</strong> Each time a customer makes a purchase, they must buy at least 1 product.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE CTHD ADD CONSTRAINT CK_CTHD_SL CHECK (SL >= 1);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The constraint is placed on the <code>SL</code> (quantity) column of <code>CTHD</code> - each invoice line item must have a purchased quantity of 1 or more.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Buy at least 1 product" is really a quantity constraint on each <code>CTHD</code> row, not on <code>HOADON</code> - because <code>HOADON</code> doesn't directly store product information.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 10 (REQ. 2 - PART I) · CHECK</p>
+              <p><strong>Exercise:</strong> The date a customer registers as a member must be later than that person's date of birth.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_NGDK CHECK (NGDK > NGSINH);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>CHECK</code> can compare 2 columns within the same table against each other, not just against a fixed value.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Logically, a person can't register as a member before they were born - this constraint keeps the data consistent with real-world meaning.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 1 (REQ. 2 - PART II) · SELECT INTO</p>
+              <p><strong>Exercise:</strong> Create the relation <code>SANPHAM1</code> containing all the data of the relation <code>SANPHAM</code>. Create the relation <code>KHACHHANG1</code> containing all the data of the relation <code>KHACHHANG</code>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT * INTO SANPHAM1 FROM SANPHAM;
+SELECT * INTO KHACHHANG1 FROM KHACHHANG;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>SELECT * INTO &lt;new table&gt; FROM &lt;source table&gt;</code> both creates a new table and copies all its data at once, without a separate <code>CREATE TABLE</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The following questions are all <code>UPDATE</code> statements that could corrupt the original data - creating a copy first lets you experiment on <code>SANPHAM1</code>/<code>KHACHHANG1</code> without affecting the real <code>SANPHAM</code>/<code>KHACHHANG</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2 (REQ. 2 - PART II) · UPDATE</p>
+              <p><strong>Exercise:</strong> Update the price with a 5% increase for products manufactured in "Thai Lan" (for the relation <code>SANPHAM1</code>).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SANPHAM1
+SET GIA = GIA * 1.05
+WHERE NUOCSX = N'Thai Lan';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GIA * 1.05</code> means keeping 100% of the old price and adding 5% more, which is equivalent to a 5% increase.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>GIA = GIA + 5</code> is wrong because 5% isn't a fixed number - it depends on each product's own price, so the price must be multiplied by 1.05 for the increase to be correct at every price level.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3 (REQ. 2 - PART II) · UPDATE</p>
+              <p><strong>Exercise:</strong> Update the price with a 5% decrease for products manufactured in "Trung Quoc" priced at 10,000 or below (for the relation <code>SANPHAM1</code>).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SANPHAM1
+SET GIA = GIA * 0.95
+WHERE NUOCSX = N'Trung Quoc' AND GIA <= 10000;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GIA * 0.95</code> is equivalent to a 5% decrease (keeping 95% of the old price); the <code>WHERE</code> clause combines 2 conditions with <code>AND</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Both conditions (country of manufacture and price level) must be filtered together - leaving out either one would incorrectly discount products that shouldn't be affected.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 4 (REQ. 2 - PART II) · UPDATE</p>
+              <p><strong>Exercise:</strong> Update the <code>LOAIKH</code> value to "Vip" for customers who registered as members before 1/1/2007 with total sales of 10,000,000 or more, or customers who registered as members on or after 1/1/2007 with total sales of 2,000,000 or more (for the relation <code>KHACHHANG1</code>).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE KHACHHANG1
+SET LOAIKH = N'Vip'
+WHERE (NGDK < '1/1/2007' AND DOANHSO >= 10000000)
+   OR (NGDK >= '1/1/2007' AND DOANHSO >= 2000000);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The condition consists of 2 independent groups joined by <code>OR</code>, each group made up of 2 conditions joined by <code>AND</code> - parentheses are used to group them clearly and avoid mixing up <code>AND</code>/<code>OR</code> precedence.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The sales threshold for Vip status differs depending on the registration date (10 million if registered before 1/1/2007, only 2 million if registered on or after 1/1/2007) - the 2 cases must be split with <code>OR</code> instead of combined into a single condition.</p></div>
+              </div>
+            </div>
+
+            <button type="button" class="ghost-button access-logout">Log out of this section</button>
+          </div>
+        </div>
+      </section>
+
+      <nav class="week-nav-links" aria-label="Navigation">
+        <a href="week-1.html"><span class="nav-dir">‹ BACK</span><span class="nav-title">Week 1: Database Fundamentals</span></a>
+        <a href="week-2.html" class="next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 2: Querying Data with SQL</span></a>
+      </nav>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
+  <script src="../../../assets/js/access-gate.js?v=1"></script>
+</body>
+</html>

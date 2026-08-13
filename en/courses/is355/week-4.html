@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Week 4 - Real-World Assets (RWA) & NFT for Sustainable Supply Chains: ERC-721, Metadata, IPFS, fighting Greenwashing, Chain of Custody, Graph Analytics, and IoT/Oracle integration.">
+  <title>Week 4 · Real-World Assets (RWA) & NFT for Sustainable Supply Chains - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=42">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="../../../courses/is355/week-4.html">VI</a><a href="week-4.html" class="active">EN</a></div><button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">IS355 Overview <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IS355</a><span>/</span>Week 4</p>
+
+    <div class="week-header">
+      <span class="week-tag">WEEK 04 · RWA &amp; NFT SUPPLY CHAIN</span>
+      <h1>Real-World Assets (RWA) &amp; NFT for Sustainable Supply Chains</h1>
+      <div class="week-meta"><span>ERC-721</span><span>IPFS</span><span>Vyper v0.4.3</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Topic:</strong> Digitizing real-world assets, NFTs certifying green provenance, Metadata, IPFS, and supply-chain traceability with Blockchain.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IS355 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html" class="active">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 6 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 7 <small>Coming Soon</small></span>
+      <a href="project-lab.html">Project Lab</a>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 4 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#erc20-den-erc721" data-toc><b>01</b> From ERC-20 to ERC-721</a>
+        <a href="#rwa" data-toc><b>02</b> Real-World Assets</a>
+        <a href="#metadata-ipfs" data-toc><b>03</b> Metadata &amp; IPFS</a>
+        <a href="#greenwashing" data-toc><b>04</b> Greenwashing &amp; Chain of Custody</a>
+        <a href="#thuc-hanh-contract" data-toc><b>05</b> NFT Smart Contract</a>
+        <a href="#thuc-hanh-ape" data-toc><b>06</b> Testing with Ape</a>
+        <a href="#thuc-hanh-ipfs" data-toc><b>07</b> Metadata &amp; IPFS in practice</a>
+        <a href="#graph-analytics" data-toc><b>08</b> Graph Analytics</a>
+        <a href="#iot-oracle" data-toc><b>09</b> IoT &amp; Oracle</a>
+        <a href="#bai-tap" data-toc><b>10</b> Homework</a>
+        <a href="#thao-luan" data-toc><b>11</b> Discussion questions</a>
+        <a href="#checklist" data-toc><b>12</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - ERC-20 den ERC-721 -->
+        <section class="lesson-section" id="erc20-den-erc721">
+          <p class="eyebrow">01 · PART A - LECTURE THEORY</p>
+          <h2>From ERC-20 (Week 3) to ERC-721 (Week 4)</h2>
+          <p>In Week 3, students worked with the <strong>ERC-20 (Fungible Token)</strong> standard: tokens that are identical and fully interchangeable (1 GCT ≈ 1 GCT) - Suitable for currency, uniform Carbon Credit, and reward points.</p>
+          <p>When each asset is <strong>unique and non-interchangeable</strong>, we need the <strong>ERC-721 (Non-Fungible Token - NFT)</strong> standard: each Token is tied to a unique <code>tokenId</code> - Suitable for a Solar Farm project certificate, a land-use rights deed, or an organic produce shipment.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Criteria</th><th>ERC-20</th><th>ERC-721</th></tr>
+            <tr><td>Fungibility</td><td>Fungible</td><td>Non-Fungible</td></tr>
+            <tr><td>Identifier (<code>tokenId</code>)</td><td>None</td><td>Required (<code>uint256</code>)</td></tr>
+            <tr><td>Divisibility</td><td>Yes (via <code>decimals</code>)</td><td>No (whole Token ID)</td></tr>
+            <tr><td>Typical use</td><td>Carbon Credit, Stablecoin, Payment</td><td>Green Certificate, RWA, Supply Chain Batch</td></tr>
+            <tr><td>Data management</td><td><code>balanceOf[address]</code></td><td><code>ownerOf[tokenId]</code>, <code>tokenURI[tokenId]</code></td></tr>
+          </table></div>
+        </section>
+
+        <!-- 02 - RWA -->
+        <section class="lesson-section" id="rwa">
+          <p class="eyebrow">02 · REAL-WORLD ASSETS</p>
+          <h2>Real-World Assets (RWA) and the "Token ≠ real asset" boundary</h2>
+          <div class="definition"><strong>Real-World Assets (RWA)</strong> is the process of digitizing physical assets (real estate, green bonds, energy certificates, agricultural produce) into Tokens on the Blockchain.</div>
+          <div class="flow-diagram">
+            <span class="flow-box">Real asset (Off-chain)</span>
+            <span class="flow-arrow has-label">↓ Verification / Legal</span>
+            <span class="flow-box">Oracle / Issuer</span>
+            <span class="flow-arrow has-label">↓ Mint NFT</span>
+            <span class="flow-box">Blockchain Record</span>
+          </div>
+          <div class="inline-warning"><strong>A key principle:</strong> Tokenization does not automatically carry off-chain legal value if there is no legal framework and independent verifier. It requires an accompanying legal mechanism, ownership regulations, a verification body, a Smart Contract, and an off-chain asset management process. Tokenization is a <strong>technology + legal + governance + verification</strong> problem, not merely a technology problem.</div>
+        </section>
+
+        <!-- 03 - Metadata & IPFS -->
+        <section class="lesson-section" id="metadata-ipfs">
+          <p class="eyebrow">03 · METADATA &amp; IPFS</p>
+          <h2>Metadata structure, IPFS &amp; Immutable Architecture</h2>
+          <p>Because Gas costs on the Blockchain are expensive, documents, images, and legal text are not stored directly on-chain but instead uploaded to <strong>IPFS (InterPlanetary File System)</strong> - A decentralized data storage and distribution system.</p>
+          <div class="er-side-by-side">
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th colspan="2">BLOCKCHAIN NETWORK</th></tr>
+              <tr><td>tokenId</td><td>1001</td></tr>
+              <tr><td>owner</td><td>0xAlice...</td></tr>
+              <tr><td>status</td><td>ACTIVE</td></tr>
+            </table></div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th colspan="2">IPFS STORAGE</th></tr>
+              <tr><td>Metadata JSON</td><td></td></tr>
+              <tr><td>High-res PDF Doc</td><td></td></tr>
+              <tr><td>Sensor Image Data</td><td></td></tr>
+            </table></div>
+          </div>
+          <p class="er-relation">↓ <code>tokenURI(tokenId)</code> on the Blockchain returns a path such as <code>ipfs://QmXyz.../metadata.json</code> pointing to the data stored on IPFS.</p>
+          <div class="inline-ok"><strong>Content Identifier (CID):</strong> Data on IPFS is retrieved by a content hash (<code>ipfs://Qm...</code>). If a file is modified by even 1 byte, the CID changes completely - Preventing tampering with Metadata content.</div>
+        </section>
+
+        <!-- 04 - Greenwashing -->
+        <section class="lesson-section" id="greenwashing">
+          <p class="eyebrow">04 · GREENWASHING &amp; CHAIN OF CUSTODY</p>
+          <h2>The Greenwashing problem &amp; Chain of Custody in supply chains</h2>
+          <p><strong>Greenwashing</strong> is when a company makes a "green" claim without certification or with misleading data.</p>
+          <div class="inline-warning"><strong>Blockchain's role:</strong> Blockchain does not itself verify whether input data is real or fake ("Garbage In, Garbage Out"), but it does guarantee transparency, irreversibility, and a complete transaction history (<strong>Chain of Custody</strong>) from Farm ➜ Processor ➜ Carrier ➜ Consumer.</div>
+        </section>
+
+        <!-- 05 - Thuc hanh Smart Contract -->
+        <section class="lesson-section" id="thuc-hanh-contract">
+          <p class="eyebrow">05 · PART B - SMART CONTRACT PRACTICE (VYPER)</p>
+          <h2>The <code>GreenCertificateNFT.vy</code> Smart Contract</h2>
+          <p>Source code for a simplified ERC-721 implementation for green certification:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+"""
+@title GreenCertificateNFT
+@notice Smart Contract quản lý NFT Chứng nhận Dự án Xanh / Lô hàng Chuỗi cung ứng
+"""
+
+# Khai báo Event
+event Transfer:
+    sender: indexed(address)
+    receiver: indexed(address)
+    tokenId: indexed(uint256)
+
+event Approval:
+    owner: indexed(address)
+    approved: indexed(address)
+    tokenId: indexed(uint256)
+
+event CertificateIssued:
+    tokenId: indexed(uint256)
+    owner: indexed(address)
+    metadataURI: String[256]
+
+event CertificateRevoked:
+    tokenId: indexed(uint256)
+    reason: String[100]
+
+# Trạng thái Chứng nhận
+enum CertStatus:
+    ACTIVE
+    EXPIRED
+    REVOKED
+
+# State Variables
+name: public(String[32])
+symbol: public(String[8])
+
+admin: public(address)
+total_supply: public(uint256)
+
+# Mappings
+ownerOf: public(HashMap[uint256, address])
+balanceOf: public(HashMap[address, uint256])
+getApproved: public(HashMap[uint256, address])
+tokenURI: public(HashMap[uint256, String[256]])
+statusOf: public(HashMap[uint256, CertStatus])
+
+@deploy
+def __init__():
+    self.name = "Green Certificate NFT"
+    self.symbol = "GCNFT"
+    self.admin = msg.sender
+    self.total_supply = 0
+
+@external
+def mint(to: address, tokenId: uint256, uri: String[256]):
+    """
+    @notice Phát hành NFT Chứng nhận Xanh mới
+    """
+    assert msg.sender == self.admin, "Only Admin can mint"
+    assert to != empty(address), "Invalid recipient"
+    assert self.ownerOf[tokenId] == empty(address), "Token ID already exists"
+
+    self.ownerOf[tokenId] = to
+    self.balanceOf[to] += 1
+    self.tokenURI[tokenId] = uri
+    self.statusOf[tokenId] = CertStatus.ACTIVE
+    self.total_supply += 1
+
+    log Transfer(empty(address), to, tokenId)
+    log CertificateIssued(tokenId, to, uri)
+
+@external
+def approve(approved: address, tokenId: uint256):
+    owner: address = self.ownerOf[tokenId]
+    assert owner != empty(address), "Token does not exist"
+    assert msg.sender == owner, "Not the token owner"
+
+    self.getApproved[tokenId] = approved
+    log Approval(owner, approved, tokenId)
+
+@external
+def transferFrom(sender: address, recipient: address, tokenId: uint256):
+    """
+    @notice Chuyển nhượng NFT Chứng nhận giữa các bên trong chuỗi cung ứng
+    """
+    assert self.ownerOf[tokenId] == sender, "Sender is not owner"
+    assert recipient != empty(address), "Invalid recipient"
+    assert msg.sender == sender or msg.sender == self.getApproved[tokenId], "Not authorized"
+    assert self.statusOf[tokenId] == CertStatus.ACTIVE, "Cannot transfer revoked certificate"
+
+    # Reset approval
+    self.getApproved[tokenId] = empty(address)
+
+    # Update Balances & Ownership
+    self.balanceOf[sender] -= 1
+    self.balanceOf[recipient] += 1
+    self.ownerOf[tokenId] = recipient
+
+    log Transfer(sender, recipient, tokenId)
+
+@external
+def revokeCertificate(tokenId: uint256, reason: String[100]):
+    """
+    @notice Tác vụ thu hồi chứng nhận khi phát hiện sai phạm / Greenwashing
+    """
+    assert msg.sender == self.admin, "Only Admin/Auditor can revoke"
+    assert self.ownerOf[tokenId] != empty(address), "Token does not exist"
+    assert self.statusOf[tokenId] == CertStatus.ACTIVE, "Certificate not active"
+
+    self.statusOf[tokenId] = CertStatus.REVOKED
+    log CertificateRevoked(tokenId, reason)</code></pre></div>
+          <div class="inline-ok"><strong>Why not delete the NFT when revoking it?</strong> Blockchain is meant to preserve history. Instead of deleting the NFT, the system just changes <code>statusOf[tokenId]</code> from <code>ACTIVE</code> to <code>REVOKED</code> - Preserving the entire issuance/transfer/revocation history, which is exactly the value Blockchain brings to traceability.</div>
+        </section>
+
+        <!-- 06 - Thuc hanh Ape -->
+        <section class="lesson-section" id="thuc-hanh-ape">
+          <p class="eyebrow">06 · TESTING WITH APE FRAMEWORK</p>
+          <h2>Interaction test script (Ape Framework)</h2>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from ape import accounts, project
+
+def main():
+    admin = accounts.test_accounts[0]
+    farm = accounts.test_accounts[1]
+    distributor = accounts.test_accounts[2]
+
+    # 1. Deploy Contract
+    nft = admin.deploy(project.GreenCertificateNFT)
+
+    # 2. Mint NFT Chứng nhận cho Cà phê Hữu cơ (Batch #1001)
+    metadata_ipfs = "ipfs://QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/metadata.json"
+    nft.mint(farm.address, 1001, metadata_ipfs, sender=admin)
+
+    print(f"Owner of Token 1001: {nft.ownerOf(1001)}")
+    print(f"Token URI: {nft.tokenURI(1001)}")
+
+    # 3. Nông trại chuyển nhượng lô hàng (và NFT đính kèm) cho Nhà phân phối
+    nft.transferFrom(farm.address, distributor.address, 1001, sender=farm)
+    print(f"New Owner after transfer: {nft.ownerOf(1001)}")
+
+    # 4. Kiểm toán viên (Admin) phát hiện vi phạm, thu hồi chứng nhận
+    nft.revokeCertificate(1001, "Failed organic residue test on-site", sender=admin)
+    print(f"Certificate Status (2 = REVOKED): {nft.statusOf(1001)}")</code></pre></div>
+        </section>
+
+        <!-- 07 - Thuc hanh IPFS -->
+        <section class="lesson-section" id="thuc-hanh-ipfs">
+          <p class="eyebrow">07 · PART C - IPFS IN PRACTICE</p>
+          <h2>Creating Metadata &amp; uploading to IPFS</h2>
+          <p>Students initialize a <code>metadata.json</code> file representing 1 shipment/green certificate:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-json">{
+  "name": "Organic Coffee Batch #2026-001",
+  "description": "Chứng nhận Cà phê Hữu cơ xuất khẩu - Lâm Đồng",
+  "image": "ipfs://QmZ4tDuvesSSp1D2C2A1k5UvG8wF3eH4k1xP9L/coffee.jpg",
+  "attributes": [
+    { "trait_type": "Project", "value": "Lam Dong Organic Farm" },
+    { "trait_type": "Capacity/Quantity", "value": "2000 kg" },
+    { "trait_type": "Harvest Date", "value": "2026-08-10" },
+    { "trait_type": "Certification Standard", "value": "USDA Organic" },
+    { "trait_type": "Auditor", "value": "Global Green Verification Corp" }
+  ]
+}</code></pre></div>
+          <h3>Upload &amp; link process</h3>
+          <ol>
+            <li>Use the IPFS CLI or a Pinning service (Pinata/Infura)</li>
+            <li>Upload the image file ➜ receive an <code>image_cid</code></li>
+            <li>Fill in <code>image_cid</code> inside <code>metadata.json</code> ➜ upload <code>metadata.json</code> ➜ receive a <code>metadata_cid</code></li>
+            <li>Pass <code>ipfs://&lt;metadata_cid&gt;</code> into the <code>mint()</code> function on the Smart Contract</li>
+          </ol>
+        </section>
+
+        <!-- 08 - Graph Analytics -->
+        <section class="lesson-section" id="graph-analytics">
+          <p class="eyebrow">08 · PART D - DATA &amp; RESEARCH</p>
+          <h2>Graph Analytics for the On-chain supply chain</h2>
+          <p>Build a graph model <code>G = (V, E)</code> from on-chain <code>Transfer</code> events: <strong>Node (V)</strong> is a wallet representing a Farm, Factory, Logistics provider, Distributor, or Retailer; <strong>Edge (E)</strong> is an NFT transfer transaction (<code>transferFrom</code>) carrying <code>timestamp</code> and <code>tokenId</code> data.</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">import networkx as nx
+import matplotlib.pyplot as plt
+
+# Khởi tạo đồ thị chuỗi cung ứng
+G = nx.DiGraph()
+
+# Thêm các giao dịch chuyển nhượng từ Event Logs
+events = [
+    ("Farm_A", "Processing_B", 1001),
+    ("Processing_B", "Distributor_C", 1001),
+    ("Distributor_C", "Retailer_D", 1001),
+    ("Farm_A", "Company_X", 1002),  # Luồng bất thường
+    ("Company_X", "Retailer_D", 1002)
+]
+
+for sender, receiver, token_id in events:
+    G.add_edge(sender, receiver, label=f"NFT #{token_id}")
+
+# Tính toán các chỉ số Graph Analytics
+degree_centrality = nx.degree_centrality(G)
+print("Degree Centrality:", degree_centrality)
+
+# Phát hiện điểm bất thường (ví dụ: luồng đi qua node trung gian không có chứng chỉ)
+print("Shortest Path (1001):", nx.shortest_path(G, "Farm_A", "Retailer_D"))</code></pre></div>
+        </section>
+
+        <!-- 09 - IoT + Oracle -->
+        <section class="lesson-section" id="iot-oracle">
+          <p class="eyebrow">09 · IOT + ORACLE ARCHITECTURE</p>
+          <h2>Combining IoT Sensors + Oracle + Smart Contract</h2>
+          <p>To reduce Greenwashing at the source, sensor data (temperature, CO₂, power consumption) is automatically pushed to the Blockchain:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">IoT Sensor</span>
+            <span class="flow-arrow has-label">↓ Data Hash</span>
+            <span class="flow-box">Chainlink Oracle</span>
+            <span class="flow-arrow has-label">↓ Threshold verification</span>
+            <span class="flow-box">Smart Contract (Update Status / Auto-Revoke)</span>
+          </div>
+          <h3>Project research directions</h3>
+          <ul>
+            <li><strong>Direction 1 - Green Certificate NFT:</strong> Build an NFT system to manage green project certificates</li>
+            <li><strong>Direction 2 - Blockchain Supply Chain:</strong> Build a traceability system for green products</li>
+            <li><strong>Direction 3 - Greenwashing Detection:</strong> Combine Blockchain + AI to detect anomalies in environmental claims</li>
+            <li><strong>Direction 4 - IoT + Blockchain:</strong> Combine environmental sensor data ➜ Oracle ➜ Smart Contract ➜ NFT/Carbon Token</li>
+          </ul>
+        </section>
+
+        <!-- 10 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">10 · PART E - HOMEWORK</p>
+          <h2>Homework</h2>
+
+          <h3>Hands-on exercise</h3>
+          <p><strong>Complete the Contract:</strong> Add a <code>burn(tokenId)</code> function to <code>GreenCertificateNFT.vy</code> that lets an owner self-destroy an NFT once a shipment has reached the end of its consumption lifecycle.</p>
+          <p><strong>IPFS Metadata task:</strong> Initialize a <code>metadata.json</code> file for a 50MW Solar Farm project in Ninh Thuan, upload it to IPFS, and record the resulting CID.</p>
+          <p><strong>Graph Analysis:</strong> Using the Python <code>networkx</code> library, write a script that reads the transfer log for 20 shipment NFTs, draws the network graph, and identifies the 2 nodes with the highest <code>Betweenness Centrality</code>.</p>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Academic integrity policy</h3>
+            <p>Absolutely no copying or reusing another student's work for submission. Students must complete their own assignments honestly.</p>
+          </div>
+        </section>
+
+        <!-- 11 - Cau hoi thao luan -->
+        <section class="lesson-section" id="thao-luan">
+          <p class="eyebrow">11 · IN-CLASS DISCUSSION QUESTIONS</p>
+          <h2>Discussion questions</h2>
+          <ol>
+            <li><strong>Core difference:</strong> Why should the Carbon Credit from Week 3 use ERC-20, but shipment provenance certificates in Week 4 must use ERC-721?</li>
+            <li><strong>Handling bad data:</strong> If an auditor discovers falsified environmental data after an NFT has already been minted, how does the <code>revokeCertificate</code> mechanism resolve this on the Blockchain without violating Immutability?</li>
+            <li><strong>Privacy:</strong> Should a company put all of its cost and supplier-partner information onto a public Blockchain? How is a hybrid solution (Hybrid/Private Metadata) applied?</li>
+          </ol>
+        </section>
+
+        <!-- 12 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">12 · WEEK 4 COMPLETION CHECKLIST</p>
+          <h2>Self-check</h2>
+
+          <h3>Theory</h3>
+          <ul class="lesson-checklist">
+            <li>Understand the concept of Real-World Assets (RWA)</li>
+            <li>Distinguish ERC-20 from ERC-721</li>
+            <li>Understand Metadata structure and its role</li>
+            <li>Understand IPFS and the Content Identifier (CID)</li>
+            <li>Understand Greenwashing and Chain of Custody</li>
+          </ul>
+
+          <h3>Practice</h3>
+          <ul class="lesson-checklist">
+            <li>Can read and understand the GreenCertificateNFT.vy contract</li>
+            <li>Understand the mint(), transferFrom(), revokeCertificate() flow</li>
+            <li>Can create a valid metadata.json file</li>
+            <li>Understand the IPFS upload process and how to assign tokenURI</li>
+          </ul>
+
+          <h3>Research</h3>
+          <ul class="lesson-checklist">
+            <li>Know how to represent supply chain data as a Graph (Node &amp; Edge)</li>
+            <li>Know how to use networkx to analyze Degree Centrality/Shortest Path</li>
+            <li>Understand the IoT + Oracle + Smart Contract combined architecture</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="week-3.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 3: Digitizing Green Assets - ERC-20 &amp; Carbon Credit</span></a>
+          <a class="next" href="week-5.html"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 5: Decentralized Finance (DeFi) &amp; Green Banking</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">YOU ARE LEARNING</span>
+          <ul class="checklist">
+            <li data-section="erc20-den-erc721"><b>○</b> From ERC-20 to ERC-721</li>
+            <li data-section="rwa"><b>○</b> Real-World Assets</li>
+            <li data-section="metadata-ipfs"><b>○</b> Metadata &amp; IPFS</li>
+            <li data-section="greenwashing"><b>○</b> Greenwashing</li>
+            <li data-section="thuc-hanh-contract"><b>○</b> NFT Smart Contract</li>
+            <li data-section="thuc-hanh-ape"><b>○</b> Testing with Ape</li>
+            <li data-section="thuc-hanh-ipfs"><b>○</b> Metadata &amp; IPFS in practice</li>
+            <li data-section="graph-analytics"><b>○</b> Graph Analytics</li>
+            <li data-section="iot-oracle"><b>○</b> IoT &amp; Oracle</li>
+            <li data-section="bai-tap"><b>○</b> Homework</li>
+            <li data-section="thao-luan"><b>○</b> Discussion</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Hands-on materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Homework</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Token ≠ real asset - Always pair it with an off-chain verification mechanism.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+    <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
+</body>
+</html>

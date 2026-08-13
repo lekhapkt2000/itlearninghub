@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS355 Week 3 - Digitizing Green Assets: ERC-20, Carbon Credit, Tokenomics, mint/burn/retire mechanics, the GreenCarbonToken Smart Contract in Vyper, Carbon price forecasting, and Adaptive Token Issuance.">
+  <title>Week 3 · Digitizing Green Assets - ERC-20 & Carbon Credit - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=42">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="../../../courses/is355/week-3.html">VI</a><a href="week-3.html" class="active">EN</a></div><button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">IS355 Overview <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IS355</a><span>/</span>Week 3</p>
+
+    <div class="week-header">
+      <span class="week-tag">WEEK 03 · TOKENIZATION &amp; CARBON CREDIT</span>
+      <h1>Digitizing Green Assets - ERC-20 &amp; Carbon Credit</h1>
+      <div class="week-meta"><span>Tokenomics</span><span>ERC-20</span><span>Vyper v0.4.3</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Topic:</strong> Tokenomics for sustainable finance, Carbon Tokens, and the mechanics of issuing, transferring, and retiring tokens.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IS355 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html" class="active">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 5 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 6 <small>Coming Soon</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 7 <small>Coming Soon</small></span>
+      <a href="project-lab.html">Project Lab</a>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 3 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#tokenization" data-toc><b>01</b> Tokenization</a>
+        <a href="#coin-vs-token" data-toc><b>02</b> Coin vs Token</a>
+        <a href="#carbon-credit-vs-token" data-toc><b>03</b> Carbon Credit vs Token</a>
+        <a href="#erc20" data-toc><b>04</b> The ERC-20 Standard</a>
+        <a href="#mint-burn-retire" data-toc><b>05</b> Mint, Burn &amp; Retire</a>
+        <a href="#thuc-hanh-contract" data-toc><b>06</b> GCT Smart Contract</a>
+        <a href="#thuc-hanh-ape" data-toc><b>07</b> Testing with Ape</a>
+        <a href="#carbon-price-forecast" data-toc><b>08</b> Carbon price forecasting</a>
+        <a href="#adaptive-issuance" data-toc><b>09</b> Adaptive Issuance</a>
+        <a href="#bai-tap" data-toc><b>10</b> Homework</a>
+        <a href="#thao-luan" data-toc><b>11</b> Discussion questions</a>
+        <a href="#checklist" data-toc><b>12</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Tokenization -->
+        <section class="lesson-section" id="tokenization">
+          <p class="eyebrow">01 · PART A - LECTURE THEORY</p>
+          <h2>From real assets to digital assets (Tokenization)</h2>
+          <p>In traditional finance, assets exist as stocks, bonds, certificates, or Carbon Credits. Blockchain makes it possible to standardize and digitize these ownership/usage rights.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Real asset / Credit</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Verification</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Tokenization</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Blockchain Token</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Trade / Transfer</span>
+          </div>
+          <div class="inline-ok"><strong>Example:</strong> 1 verified Carbon Credit (1 tCO₂e) ➜ encoded as 1 Carbon Token on the Blockchain.</div>
+        </section>
+
+        <!-- 02 - Coin vs Token -->
+        <section class="lesson-section" id="coin-vs-token">
+          <p class="eyebrow">02 · COIN VS TOKEN</p>
+          <h2>Distinguishing Coin from Token</h2>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Trait</th><th>Coin (Native network)</th><th>Token (Smart Contract asset)</th></tr>
+            <tr><td>Nature</td><td>The base currency of its own Blockchain</td><td>Created via a Smart Contract running on an existing platform</td></tr>
+            <tr><td>Example</td><td>Ethereum (ETH), Bitcoin (BTC)</td><td>USDT, USDC, Green Carbon Token (GCT)</td></tr>
+            <tr><td>Rules</td><td>Follows the Blockchain's Consensus Layer</td><td>Follows the programmed logic in the Smart Contract (e.g., the ERC-20 standard)</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 03 - Carbon Credit vs Carbon Token -->
+        <section class="lesson-section" id="carbon-credit-vs-token">
+          <p class="eyebrow">03 · CARBON CREDIT VS CARBON TOKEN</p>
+          <h2>Carbon Credit vs Carbon Token &amp; "Garbage In, Garbage Out"</h2>
+          <div class="definition"><strong>Carbon Credit ≠ Carbon Token:</strong> A Carbon Credit is a legal/environmental certificate tied to an off-chain verification standard. A Carbon Token is merely the vehicle that represents that asset on the Blockchain.</div>
+          <div class="inline-warning"><strong>"Garbage In, Garbage Out" risk:</strong> Blockchain guarantees data cannot be altered once written, but it does not itself verify the correctness of the input data. If a company overstates its emission reductions, the Blockchain will store that fabricated figure with perfect accuracy.</div>
+          <p><strong>Solution:</strong> Must combine independent auditing (Auditor), Certification, and an Oracle layer to verify data before minting Tokens.</p>
+        </section>
+
+        <!-- 04 - ERC-20 -->
+        <section class="lesson-section" id="erc20">
+          <p class="eyebrow">04 · THE ERC-20 STANDARD</p>
+          <h2>The ERC-20 standard and its core functions</h2>
+          <p>The ERC-20 standard defines the required interface for a Fungible Token:</p>
+          <ul>
+            <li><code>balanceOf(account)</code>: Looks up the balance of the <code>account</code> address</li>
+            <li><code>transfer(to, amount)</code>: Transfers <code>amount</code> tokens from the function caller (<code>msg.sender</code>) to <code>to</code></li>
+            <li><code>approve(spender, amount)</code> &amp; <code>transferFrom(sender, recipient, amount)</code>: The allowance mechanism, letting wallet A authorize contract B to spend up to a set amount of Token on its behalf - The foundation for DeFi, DEX, Staking, and Carbon payment gateway applications</li>
+          </ul>
+        </section>
+
+        <!-- 05 - Mint, Burn, Retire -->
+        <section class="lesson-section" id="mint-burn-retire">
+          <p class="eyebrow">05 · MINT, BURN &amp; CARBON RETIREMENT</p>
+          <h2>Mint, Burn, and Carbon Retirement mechanics</h2>
+          <ul>
+            <li><strong>Mint (Issuance):</strong> Creates new Tokens when a project adds a newly verified Carbon Credit (Total Supply increases)</li>
+            <li><strong>Burn / Retire:</strong> When a company uses a Carbon Token to Offset emissions, that Token must be burned out of circulation (Total Supply decreases)</li>
+          </ul>
+          <div class="inline-ok"><strong>Why it matters:</strong> This entirely eliminates the risk of Double Counting/Double Use - The same credit being used to offset for multiple different parties.</div>
+        </section>
+
+        <!-- 06 - Thuc hanh Smart Contract -->
+        <section class="lesson-section" id="thuc-hanh-contract">
+          <p class="eyebrow">06 · PART B - SMART CONTRACT PROGRAMMING PRACTICE (VYPER)</p>
+          <h2>The <code>GreenCarbonToken.vy</code> Smart Contract structure</h2>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-vyper"># @version ^0.4.3
+
+"""
+@title Green Carbon Token (GCT) - ERC-20 Implementation
+@notice Smart Contract quản lý Token Carbon phục vụ tài chính bền vững
+"""
+
+# Các sự kiện (Events)
+event Transfer:
+    sender: indexed(address)
+    receiver: indexed(address)
+    value: uint256
+
+event Approval:
+    owner: indexed(address)
+    spender: indexed(address)
+    value: uint256
+
+event CarbonRetired:
+    owner: indexed(address)
+    amount: uint256
+    carbon_offset_reason: String[100]
+
+# Biến trạng thái (State Variables)
+name: public(String[32])
+symbol: public(String[8])
+decimals: public(uint8)
+total_supply: public(uint256)
+
+balances: public(HashMap[address, uint256])
+allowances: public(HashMap[address, HashMap[address, uint256]])
+
+admin: public(address)
+
+@deploy
+def __init__():
+    self.name = "Green Carbon Token"
+    self.symbol = "GCT"
+    self.decimals = 18
+    self.total_supply = 0
+    self.admin = msg.sender
+
+@view
+@external
+def balanceOf(account: address) -> uint256:
+    return self.balances[account]
+
+@external
+def transfer(to: address, amount: uint256) -> bool:
+    assert to != empty(address), "Invalid receiver"
+    assert self.balances[msg.sender] >= amount, "Insufficient balance"
+
+    self.balances[msg.sender] -= amount
+    self.balances[to] += amount
+
+    log Transfer(msg.sender, to, amount)
+    return True
+
+@external
+def approve(spender: address, amount: uint256) -> bool:
+    assert spender != empty(address), "Invalid spender"
+
+    self.allowances[msg.sender][spender] = amount
+    log Approval(msg.sender, spender, amount)
+    return True
+
+@external
+def transferFrom(sender: address, recipient: address, amount: uint256) -> bool:
+    assert recipient != empty(address), "Invalid recipient"
+    assert self.balances[sender] >= amount, "Insufficient balance"
+    assert self.allowances[sender][msg.sender] >= amount, "Insufficient allowance"
+
+    self.allowances[sender][msg.sender] -= amount
+    self.balances[sender] -= amount
+    self.balances[recipient] += amount
+
+    log Transfer(sender, recipient, amount)
+    return True
+
+@external
+def mint(to: address, amount: uint256):
+    # Access Control: Chỉ Admin/Issuer mới được phát hành
+    assert msg.sender == self.admin, "Access Denied: Only Admin can mint"
+    assert to != empty(address), "Invalid address"
+
+    self.total_supply += amount
+    self.balances[to] += amount
+
+    log Transfer(empty(address), to, amount)
+
+@external
+def burn(amount: uint256):
+    assert self.balances[msg.sender] >= amount, "Insufficient balance to burn"
+
+    self.balances[msg.sender] -= amount
+    self.total_supply -= amount
+
+    log Transfer(msg.sender, empty(address), amount)
+
+@external
+def retireCarbon(amount: uint256, reason: String[100]):
+    """
+    @notice Tiêu hủy Token để thực hiện Offset phát thải và cấp chứng nhận
+    """
+    assert self.balances[msg.sender] >= amount, "Insufficient balance to retire"
+
+    self.balances[msg.sender] -= amount
+    self.total_supply -= amount
+
+    log Transfer(msg.sender, empty(address), amount)
+    log CarbonRetired(msg.sender, amount, reason)</code></pre></div>
+          <div class="inline-warning"><strong>Why does Access Control matter?</strong> If the line <code>assert msg.sender == self.admin</code> is removed, anyone could call <code>mint()</code> for an arbitrary amount, letting Total Supply grow without bound and breaking the Tokenomics. A Smart Contract is not just code - Function execution rights are also part of the financial design.</div>
+        </section>
+
+        <!-- 07 - Thuc hanh Ape -->
+        <section class="lesson-section" id="thuc-hanh-ape">
+          <p class="eyebrow">07 · TESTING WITH APE FRAMEWORK</p>
+          <h2>Test &amp; interaction script (Ape Framework Script)</h2>
+          <p>Create the file <code>scripts/interact_gct.py</code> to test the flow:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-python">from ape import accounts, project
+
+def main():
+    # Load tài khoản đại diện
+    admin = accounts.test_accounts[0]
+    alice = accounts.test_accounts[1]
+    bob = accounts.test_accounts[2]
+
+    # 1. Triển khai Contract
+    gct = admin.deploy(project.GreenCarbonToken)
+    print(f"Contract Deployed at: {gct.address}")
+
+    # 2. Mint Token cho Alice (Admin thực hiện)
+    gct.mint(alice.address, 1000 * 10**18, sender=admin)
+    print(f"Alice Balance after Mint: {gct.balanceOf(alice.address) / 10**18} GCT")
+
+    # 3. Alice chuyển Token cho Bob
+    gct.transfer(bob.address, 200 * 10**18, sender=alice)
+    print(f"Bob Balance: {gct.balanceOf(bob.address) / 10**18} GCT")
+
+    # 4. Alice retire 300 GCT để offset phát thải nhà máy
+    gct.retireCarbon(300 * 10**18, "Offset emissions for Q3 2026", sender=alice)
+    print(f"Alice Balance after Retirement: {gct.balanceOf(alice.address) / 10**18} GCT")
+    print(f"Total Supply after Retirement: {gct.total_supply() / 10**18} GCT")
+
+    # 5. Thử nghiệm Access Control: Bob gọi mint (kỳ vọng fail/revert)
+    try:
+        gct.mint(bob.address, 500 * 10**18, sender=bob)
+    except Exception as e:
+        print("Access Control Verified: Bob cannot mint Token!")</code></pre></div>
+        </section>
+
+        <!-- 08 - Carbon Price Forecast -->
+        <section class="lesson-section" id="carbon-price-forecast">
+          <p class="eyebrow">08 · PART C - DATA &amp; RESEARCH</p>
+          <h2>Research 1: Forecasting Carbon Credit prices</h2>
+          <p><strong>Problem statement:</strong> Forecast future Carbon Credit price movements based on historical trading data, energy prices, and emission policy.</p>
+          <h3>Process (Data Pipeline)</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Data Collection</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Preprocessing</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Feature Engineering</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Model Selection</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Evaluation</span>
+          </div>
+          <ul>
+            <li><strong>Data Collection:</strong> Gather Time Series data on Carbon Credit prices, coal/gas prices, and industrial production indices</li>
+            <li><strong>Preprocessing:</strong> Handle missing values, normalize data (MinMax Scaling)</li>
+            <li><strong>Feature Engineering:</strong> Build technical indicators (Moving Average, RSI, Volatility Index)</li>
+            <li><strong>Model Selection:</strong> Baseline (Moving Average/ARIMA) ➜ Machine Learning (XGBoost, Random Forest Regressor) ➜ Deep Learning (LSTM)</li>
+            <li><strong>Evaluation:</strong> Assess using MAE, RMSE, and MAPE</li>
+          </ul>
+        </section>
+
+        <!-- 09 - Adaptive Issuance -->
+        <section class="lesson-section" id="adaptive-issuance">
+          <p class="eyebrow">09 · ADAPTIVE TOKEN ISSUANCE</p>
+          <h2>Research 2: Adaptive Carbon Token Issuance</h2>
+          <p>Issue Tokens based on an off-chain data risk score, instead of a fixed 1 Carbon Credit = 1 Token conversion.</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Carbon survey data</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Machine Learning Risk Model</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Risk Score (0-100%)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Chainlink Oracle Node</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Chainlink Oracle Callback</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Smart Contract Mint Limit</span>
+          </div>
+          <p><strong>Architecture idea:</strong> Don't issue 100% of Tokens if the Carbon data hasn't been fully verified. Mechanism:</p>
+          <ol>
+            <li>An off-chain ML model analyzes satellite imagery/IoT sensor data from a forestry or green energy project</li>
+            <li>It computes a data confidence score (e.g., 85% confidence)</li>
+            <li>The risk score is passed into the Smart Contract via an Oracle</li>
+            <li>The Smart Contract applies a flexible mint formula</li>
+          </ol>
+          <div class="ascii-block">Mint Limit = Verified Credits × Confidence Score</div>
+        </section>
+
+        <!-- 10 - Bai tap -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">10 · PART D - HOMEWORK</p>
+          <h2>Homework</h2>
+
+          <h3>Theory &amp; code exercises</h3>
+          <p><strong>Smart Contract exercise:</strong> Extend the <code>GreenCarbonToken.vy</code> contract by adding <code>pause()</code> and <code>unpause()</code> functions that let the Admin freeze all token transfers when a security incident is detected.</p>
+          <p><strong>Attack scenario:</strong> Analyze the system risk if the <code>mint()</code> function is not protected by Access Control. What would the consequences be for the project's Tokenomics?</p>
+
+          <h3>Data research exercise</h3>
+          <p>Choose one of the two topics below and submit a short report (2-3 PDF pages):</p>
+          <ul>
+            <li><strong>Topic A:</strong> Build a Python notebook that forecasts Carbon Credit prices using <code>scikit-learn</code>/<code>XGBoost</code>. Compute the RMSE on the test set</li>
+            <li><strong>Topic B:</strong> Design an architecture diagram connecting factory emission IoT sensor data ➜ Oracle ➜ a Smart Contract that automatically burns Carbon Token</li>
+          </ul>
+
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Academic integrity policy</h3>
+            <p>Absolutely no copying or reusing another student's work for submission. Students must complete their own assignments honestly.</p>
+          </div>
+        </section>
+
+        <!-- 11 - Cau hoi thao luan -->
+        <section class="lesson-section" id="thao-luan">
+          <p class="eyebrow">11 · IN-CLASS DISCUSSION QUESTIONS</p>
+          <h2>Discussion questions</h2>
+          <ol>
+            <li>Can Blockchain, on its own, guarantee that a Carbon Token truly represents a valid Carbon Credit? Why or why not?</li>
+            <li>Why does burning/retiring a Token matter more than simply sending it to a dead/zero address?</li>
+            <li>How can the conflict between a company's business data confidentiality and Blockchain's public transparency be resolved when Carbon data is brought On-chain?</li>
+          </ol>
+        </section>
+
+        <!-- 12 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">12 · WEEK 3 COMPLETION CHECKLIST</p>
+          <h2>Self-check</h2>
+
+          <h3>Knowledge</h3>
+          <ul class="lesson-checklist">
+            <li>Understand Tokenization and its link to real assets</li>
+            <li>Distinguish Coin from Token</li>
+            <li>Understand the ERC-20 standard and its core functions</li>
+            <li>Understand Tokenomics and its role in Carbon Offset</li>
+            <li>Distinguish Carbon Credit from Carbon Token</li>
+            <li>Understand why Mint and Burn/Retire mechanisms are needed</li>
+          </ul>
+
+          <h3>Practice</h3>
+          <ul class="lesson-checklist">
+            <li>Can read and understand the GreenCarbonToken.vy contract structure</li>
+            <li>Understand the Access Control mechanism inside mint()</li>
+            <li>Understand the transfer(), approve(), transferFrom() flow</li>
+            <li>Understand the burn() and retireCarbon() flow</li>
+            <li>Can read and understand the Ape Framework test script</li>
+          </ul>
+
+          <h3>Research</h3>
+          <ul class="lesson-checklist">
+            <li>Know the steps in a Carbon price forecasting pipeline</li>
+            <li>Know how to choose an appropriate evaluation metric (MAE/RMSE/MAPE)</li>
+            <li>Understand the Adaptive Token Issuance idea</li>
+            <li>Can distinguish On-chain from Off-chain processing in an AI + Blockchain architecture</li>
+          </ul>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="week-2.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 2: Identity Security &amp; Financial Data Protection</span></a>
+          <a href="week-4.html" class="next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Week 4: Real-World Assets (RWA) &amp; NFT for Sustainable Supply Chains</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box">
+          <span class="side-label">YOU ARE LEARNING</span>
+          <ul class="checklist">
+            <li data-section="tokenization"><b>○</b> Tokenization</li>
+            <li data-section="coin-vs-token"><b>○</b> Coin vs Token</li>
+            <li data-section="carbon-credit-vs-token"><b>○</b> Carbon Credit vs Token</li>
+            <li data-section="erc20"><b>○</b> The ERC-20 Standard</li>
+            <li data-section="mint-burn-retire"><b>○</b> Mint, Burn &amp; Retire</li>
+            <li data-section="thuc-hanh-contract"><b>○</b> GCT Smart Contract</li>
+            <li data-section="thuc-hanh-ape"><b>○</b> Testing with Ape</li>
+            <li data-section="carbon-price-forecast"><b>○</b> Carbon price forecasting</li>
+            <li data-section="adaptive-issuance"><b>○</b> Adaptive Issuance</li>
+            <li data-section="bai-tap"><b>○</b> Homework</li>
+            <li data-section="thao-luan"><b>○</b> Discussion</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Hands-on materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Homework</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Don't forget Access Control on mint() - A missing assert line breaks Tokenomics instantly.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+    <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
+</body>
+</html>

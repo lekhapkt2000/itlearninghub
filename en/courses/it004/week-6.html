@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IT004 Week 6 - Database Practice Review: data models, keys, SELECT/WHERE/LIKE, ORDER BY, aggregate functions, GROUP BY/HAVING, JOIN, Subquery, UPDATE/DELETE, common mistakes, a comprehensive exercise, and a simulated practical exam.">
+  <title>Week 6 · Database Practice Review - IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=42">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions">
+        <div class="lang-switch"><a href="../../../courses/it004/week-6.html">VI</a><a href="index.html" class="active">EN</a></div>
+        <button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button>
+        <a class="outline-button" href="index.html">IT004 Overview <span>›</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IT004</a><span>/</span>Week 6</p>
+
+    <div class="week-header">
+      <span class="week-tag">REVIEW 06 · COMPREHENSIVE PRACTICE</span>
+      <h1>Database Practice Review</h1>
+      <div class="week-meta"><span>5 periods</span><span>Database</span><span>SQL Server</span></div>
+      <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Objective:</strong> Consolidate everything covered in Weeks 1-5, read and analyze a real-world management problem, identify Entity/Attribute/Relationship, convert from ER/EER to a relational model, and combine multiple SQL techniques to solve a complete problem.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IT004 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <a href="week-6.html" class="active">Week 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Mock Exam <small>Coming Soon</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Week 6 table of contents">
+        <span class="side-label">IN THIS WEEK</span>
+        <a href="#tong-quan" data-toc><b>01</b> Objectives &amp; Big Picture</a>
+        <a href="#mo-hinh-du-lieu" data-toc><b>02</b> Data Model</a>
+        <a href="#khoa" data-toc><b>03</b> Keys in a Database</a>
+        <a href="#tao-csdl-insert" data-toc><b>04</b> Creating a Database &amp; INSERT</a>
+        <a href="#select-where-like" data-toc><b>05</b> SELECT, WHERE &amp; LIKE</a>
+        <a href="#order-ham" data-toc><b>06</b> ORDER BY &amp; Aggregate Functions</a>
+        <a href="#group-having" data-toc><b>07</b> GROUP BY &amp; HAVING</a>
+        <a href="#join" data-toc><b>08</b> JOIN</a>
+        <a href="#subquery" data-toc><b>09</b> Subquery</a>
+        <a href="#update-delete" data-toc><b>10</b> UPDATE &amp; DELETE</a>
+        <a href="#bai-toan-tong-hop" data-toc><b>11</b> Comprehensive Exercise</a>
+        <a href="#yeu-cau-thuc-hanh" data-toc><b>12</b> Practice Requirements</a>
+        <a href="#bai-tap-thach-thuc" data-toc><b>13</b> Challenge Problems</a>
+        <a href="#loi-thuong-gap" data-toc><b>14</b> Common Mistakes</a>
+        <a href="#checklist" data-toc><b>15</b> Review Checklist</a>
+        <a href="#kiem-tra-mo-phong" data-toc><b>16</b> Simulated Practical Exam</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Objectives & Big Picture -->
+        <section class="lesson-section" id="tong-quan">
+          <p class="eyebrow">01 · OBJECTIVES &amp; BIG PICTURE</p>
+          <h2>Objectives</h2>
+          <p>By the end of Week 6, students should be able to:</p>
+          <ul>
+            <li>Consolidate everything covered in the practice sessions so far</li>
+            <li>Read and analyze a real-world management problem</li>
+            <li>Identify the Entities, Attributes, and Relationships involved</li>
+            <li>Convert from an ER/EER model to a relational model</li>
+            <li>Identify the Primary Key, Foreign Key, and Candidate Key</li>
+            <li>Create a database and tables with SQL, and set up integrity constraints</li>
+            <li>Perform <code>SELECT</code>, <code>WHERE</code>, <code>ORDER BY</code>, <code>GROUP BY</code>, <code>HAVING</code>, <code>JOIN</code>, Subquery, aggregate functions, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></li>
+            <li>Combine multiple SQL techniques to solve a complete problem</li>
+            <li>Spot and fix common mistakes when writing queries</li>
+          </ul>
+
+          <h3>The Big Picture</h3>
+          <p>Students need to look back over the whole process of building a database:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Real-world problem</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Requirements analysis</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Identify Entity / Attribute / Relationship</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">ERD</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Relational model</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Primary Key / Foreign Key</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">CREATE DATABASE / CREATE TABLE</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">INSERT DATA</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">SELECT / JOIN / GROUP BY</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Data analysis</span>
+          </div>
+          <div class="inline-warning"><strong>Key point:</strong> SQL is not where the problem begins. Before writing any SQL, students need to understand how the data is organized and how the tables relate to each other.</div>
+        </section>
+
+        <!-- 02 - Data Model -->
+        <section class="lesson-section" id="mo-hinh-du-lieu">
+          <p class="eyebrow">02 · REVIEWING THE DATABASE MODEL</p>
+          <h2>Data Model</h2>
+
+          <h3>Entity</h3>
+          <p>An Entity is an object that needs to be managed within the system. Example - a student management system:</p>
+          <div class="ascii-block">SINHVIEN
+MONHOC
+LOPHOC
+GIANGVIEN</div>
+
+          <h3>Attribute</h3>
+          <p>Example - the <code>SINHVIEN</code> Entity:</p>
+          <div class="ascii-block">SINHVIEN
+├── MaSV
+├── HoTen
+├── NgaySinh
+├── GioiTinh
+└── MaLop</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Attribute</th><th>Meaning</th></tr>
+            <tr><td>MaSV</td><td>Student identifier</td></tr>
+            <tr><td>HoTen</td><td>Student name</td></tr>
+            <tr><td>NgaySinh</td><td>Date of birth</td></tr>
+            <tr><td>GioiTinh</td><td>Gender</td></tr>
+            <tr><td>MaLop</td><td>Student's class</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 03 - Keys in a Database -->
+        <section class="lesson-section" id="khoa">
+          <p class="eyebrow">03 · KEYS IN A DATABASE</p>
+          <h2>Keys in a Database</h2>
+
+          <h3>Primary Key</h3>
+          <p>A Primary Key uniquely identifies a record:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien (
+    MaSV VARCHAR(10) PRIMARY KEY,
+    HoTen NVARCHAR(100),
+    NgaySinh DATE
+);</code></pre></div>
+          <p><code>MaSV</code> cannot be duplicated and cannot be <code>NULL</code>.</p>
+
+          <h3>Foreign Key</h3>
+          <p>A Foreign Key creates a relationship between tables:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien (
+    MaSV VARCHAR(10) PRIMARY KEY,
+    HoTen NVARCHAR(100),
+    MaLop VARCHAR(10),
+
+    FOREIGN KEY (MaLop)
+        REFERENCES Lop(MaLop)
+);</code></pre></div>
+          <p>Relationship - one class has many students:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">LOP (1)</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">SINHVIEN (N)</span>
+          </div>
+        </section>
+
+        <!-- 04 - Creating a Database & INSERT -->
+        <section class="lesson-section" id="tao-csdl-insert">
+          <p class="eyebrow">04 · REVIEWING DATABASE CREATION &amp; INSERT</p>
+          <h2>Creating a Database &amp; INSERT</h2>
+          <p>Example: building a <strong>student and academic results management</strong> database with 4 tables, <code>LOP</code>, <code>SINHVIEN</code>, <code>MONHOC</code>, <code>KETQUA</code>, related as follows:</p>
+          <div class="ascii-block">LOP 1 ─────── N SINHVIEN
+
+SINHVIEN 1 ─────── N KETQUA
+
+MONHOC 1 ─────── N KETQUA</div>
+
+          <h3>Creating the tables</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE Lop (
+    MaLop VARCHAR(10) PRIMARY KEY,
+    TenLop NVARCHAR(100)
+);
+
+CREATE TABLE MonHoc (
+    MaMH VARCHAR(10) PRIMARY KEY,
+    TenMH NVARCHAR(100),
+    SoTinChi INT
+);
+
+CREATE TABLE SinhVien (
+    MaSV VARCHAR(10) PRIMARY KEY,
+    HoTen NVARCHAR(100),
+    MaLop VARCHAR(10),
+
+    FOREIGN KEY (MaLop)
+        REFERENCES Lop(MaLop)
+);</code></pre></div>
+
+          <h3>INSERT</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO Lop
+VALUES
+('HTTT01', N'Hệ thống thông tin 01'),
+('HTTT02', N'Hệ thống thông tin 02');
+
+INSERT INTO SinhVien
+VALUES
+('SV001', N'Nguyễn Văn An', 'HTTT01'),
+('SV002', N'Trần Văn Bình', 'HTTT01'),
+('SV003', N'Lê Văn Cường', 'HTTT02');</code></pre></div>
+          <div class="inline-warning">If the <code>SinhVien</code> table has a Foreign Key referencing <code>Lop</code>, then <code>HTTT01</code> and <code>HTTT02</code> must already exist in the <code>Lop</code> table before students can be added.</div>
+        </section>
+
+        <!-- 05 - SELECT, WHERE & LIKE -->
+        <section class="lesson-section" id="select-where-like">
+          <p class="eyebrow">05 · REVIEWING SELECT, WHERE &amp; LIKE</p>
+          <h2>SELECT, WHERE &amp; LIKE</h2>
+
+          <h3>SELECT</h3>
+          <p>Retrieve all data:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien;</code></pre></div>
+          <p>Select specific columns and give them an alias:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaSV AS [Mã sinh viên],
+    HoTen AS [Họ tên]
+FROM SinhVien;</code></pre></div>
+
+          <h3>WHERE</h3>
+          <p>Find students in class <code>HTTT01</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien
+WHERE MaLop = 'HTTT01';</code></pre></div>
+          <p>Multiple conditions:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien
+WHERE MaLop = 'HTTT01'
+AND HoTen LIKE N'Nguyễn%';</code></pre></div>
+
+          <h3>LIKE - <code>%</code> and <code>_</code></h3>
+          <p>See the full details on both wildcard characters in <a href="week-2.html#toan-tu">Week 2 - Special Operators</a>. Quick review:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Wildcard</th><th>Meaning</th></tr>
+            <tr><td><code>%</code></td><td>Represents any string of characters, including an empty string (0, 1, or more characters)</td></tr>
+            <tr><td><code>_</code></td><td>Represents exactly one character</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- Starts with "Nguyễn"
+WHERE HoTen LIKE N'Nguyễn%'
+
+-- Ends with "An"
+WHERE HoTen LIKE N'%An'
+
+-- Contains "Văn"
+WHERE HoTen LIKE N'%Văn%'
+
+-- Exactly 4 characters, starting "PB0" + 1 any character
+WHERE MaPB LIKE 'PB0_'</code></pre></div>
+        </section>
+
+        <!-- 06 - ORDER BY & Aggregate Functions -->
+        <section class="lesson-section" id="order-ham">
+          <p class="eyebrow">06 · ORDER BY &amp; AGGREGATE FUNCTIONS</p>
+          <h2>ORDER BY &amp; Aggregate Functions</h2>
+
+          <h3>ORDER BY</h3>
+          <p>Sort students by name:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien
+ORDER BY HoTen ASC;   -- Change to DESC to sort descending</code></pre></div>
+
+          <h3>Aggregate functions</h3>
+          <p>Functions to remember: <code>COUNT()</code>, <code>SUM()</code>, <code>AVG()</code>, <code>MIN()</code>, <code>MAX()</code>. Example - how many students are there:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SoLuongSinhVien
+FROM SinhVien;</code></pre></div>
+        </section>
+
+        <!-- 07 - GROUP BY & HAVING -->
+        <section class="lesson-section" id="group-having">
+          <p class="eyebrow">07 · GROUP BY &amp; HAVING</p>
+          <h2>GROUP BY &amp; HAVING</h2>
+
+          <h3>GROUP BY</h3>
+          <p>Count the number of students in each class:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaLop,
+    COUNT(*) AS SoLuong
+FROM SinhVien
+GROUP BY MaLop;</code></pre></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaLop</th><th>SoLuong</th></tr>
+            <tr><td>HTTT01</td><td>2</td></tr>
+            <tr><td>HTTT02</td><td>1</td></tr>
+          </table></div>
+
+          <h3>HAVING</h3>
+          <div class="ascii-block">WHERE   ➜ Filters individual rows
+HAVING  ➜ Filters groups after GROUP BY</div>
+          <p>Only keep classes with 2 or more students:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    MaLop,
+    COUNT(*) AS SoLuong
+FROM SinhVien
+GROUP BY MaLop
+HAVING COUNT(*) >= 2;</code></pre></div>
+        </section>
+
+        <!-- 08 - JOIN -->
+        <section class="lesson-section" id="join">
+          <p class="eyebrow">08 · REVIEWING JOIN</p>
+          <h2>JOIN</h2>
+          <p>This is the core topic of the review week. To display Student ID, Full Name, and Class Name:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SV.MaSV,
+    SV.HoTen,
+    L.TenLop
+FROM SinhVien SV
+JOIN Lop L
+    ON SV.MaLop = L.MaLop;</code></pre></div>
+
+          <h3>INNER JOIN</h3>
+          <p>Only returns records that have a match in both tables - if a class has no students yet, that class won't appear in the result.</p>
+
+          <h3>LEFT JOIN</h3>
+          <p>Shows every class, including ones with no students yet - this is a question type students commonly run into during practice:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    L.MaLop,
+    L.TenLop,
+    SV.MaSV,
+    SV.HoTen
+FROM Lop L
+LEFT JOIN SinhVien SV
+    ON L.MaLop = SV.MaLop;</code></pre></div>
+
+          <h3>JOIN across multiple tables</h3>
+          <p>Example: given <code>LOP ➜ SINHVIEN ➜ KETQUA ➜ MONHOC</code>. Query which student took which course and what score they got:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    SV.MaSV,
+    SV.HoTen,
+    MH.TenMH,
+    KQ.Diem
+FROM SinhVien SV
+JOIN KetQua KQ
+    ON SV.MaSV = KQ.MaSV
+JOIN MonHoc MH
+    ON KQ.MaMH = MH.MaMH;</code></pre></div>
+          <p>This is the kind of comprehensive query students need to master before finishing the practical portion of the course.</p>
+        </section>
+
+        <!-- 09 - Subquery -->
+        <section class="lesson-section" id="subquery">
+          <p class="eyebrow">09 · REVIEWING SUBQUERY</p>
+          <h2>Subquery</h2>
+          <p>Find students whose grade is higher than the average grade:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM KetQua
+WHERE Diem > (
+    SELECT AVG(Diem)
+    FROM KetQua
+);</code></pre></div>
+          <p>The thinking:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Step 1: Calculate the average grade</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Step 2: Find students with a grade &gt; the average</span>
+          </div>
+        </section>
+
+        <!-- 10 - UPDATE & DELETE -->
+        <section class="lesson-section" id="update-delete">
+          <p class="eyebrow">10 · REVIEWING UPDATE &amp; DELETE</p>
+          <h2>UPDATE &amp; DELETE</h2>
+
+          <h3>UPDATE</h3>
+          <p>Fix a student's name:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE SinhVien
+SET HoTen = N'Nguyễn Văn Nam'
+WHERE MaSV = 'SV001';</code></pre></div>
+          <div class="inline-warning"><strong>Extremely important:</strong> Don't write <code>UPDATE SinhVien SET HoTen = N'Nguyễn Văn Nam';</code> without a <code>WHERE</code>, since that statement would update every student.</div>
+
+          <h3>DELETE</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien
+WHERE MaSV = 'SV001';</code></pre></div>
+          <p>Same idea - always double-check the <code>WHERE</code> clause before running <code>DELETE</code>.</p>
+        </section>
+
+        <!-- 11 - Comprehensive Exercise -->
+        <section class="lesson-section" id="bai-toan-tong-hop">
+          <p class="eyebrow">11 · COMPREHENSIVE EXERCISE</p>
+          <h2>Problem: Training Management</h2>
+          <p>Given a system made up of the 4 sample data tables below:</p>
+
+          <p class="ascii-label">LOP</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaLop</th><th>TenLop</th></tr>
+            <tr><td>HTTT01</td><td>HTTT K18.1</td></tr>
+            <tr><td>HTTT02</td><td>HTTT K18.2</td></tr>
+          </table></div>
+
+          <p class="ascii-label">SINHVIEN</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaSV</th><th>HoTen</th><th>MaLop</th></tr>
+            <tr><td>SV001</td><td>Nguyễn Văn An</td><td>HTTT01</td></tr>
+            <tr><td>SV002</td><td>Trần Văn Bình</td><td>HTTT01</td></tr>
+            <tr><td>SV003</td><td>Lê Văn Cường</td><td>HTTT02</td></tr>
+          </table></div>
+
+          <p class="ascii-label">MONHOC</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaMH</th><th>TenMH</th><th>SoTinChi</th></tr>
+            <tr><td>IT004</td><td>Cơ sở dữ liệu</td><td>4</td></tr>
+            <tr><td>IS201</td><td>Phân tích thiết kế HTTT</td><td>4</td></tr>
+            <tr><td>IS210</td><td>Hệ quản trị CSDL</td><td>4</td></tr>
+          </table></div>
+
+          <p class="ascii-label">KETQUA</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>MaSV</th><th>MaMH</th><th>Diem</th></tr>
+            <tr><td>SV001</td><td>IT004</td><td>8.5</td></tr>
+            <tr><td>SV001</td><td>IS201</td><td>7.5</td></tr>
+            <tr><td>SV002</td><td>IT004</td><td>6.5</td></tr>
+            <tr><td>SV002</td><td>IS201</td><td>8.0</td></tr>
+            <tr><td>SV003</td><td>IT004</td><td>9.0</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 12 - Practice Requirements -->
+        <section class="lesson-section" id="yeu-cau-thuc-hanh">
+          <p class="eyebrow">12 · PRACTICE REQUIREMENTS</p>
+          <h2>Practice Requirements</h2>
+          <p>Based on the problem in Section 11, students work through 15 questions following the full assignment.</p>
+
+          <div class="answer-cta">
+            <div class="answer-cta-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></div>
+            <div class="answer-cta-body">
+              <span class="eyebrow">PRACTICE REQUIREMENTS · 15 QUESTIONS</span>
+              <h3>Comprehensive Review - QuanLyDaoTao</h3>
+              <p>See the full assignment and detailed answers (access code required) for this comprehensive review exercise.</p>
+            </div>
+            <a class="primary-button" href="week-6-bai-tap.html">View exercise &amp; answers <span>›</span></a>
+          </div>
+        </section>
+
+        <!-- 13 - Challenge Problems -->
+        <section class="lesson-section" id="bai-tap-thach-thuc">
+          <p class="eyebrow">13 · CHALLENGE PROBLEMS</p>
+          <h2>Challenge Problems</h2>
+          <p class="extra-intro">For stronger students to attempt in addition - each has a hidden hint, click to reveal.</p>
+          <div class="challenge-list">
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">01</span><h4>Hasn't taken the course</h4></div>
+              <p>Find students who haven't taken course <code>IS210</code>.</p>
+              <details><summary>Hint</summary><div class="ascii-block">NOT IN (SELECT MaSV FROM KetQua WHERE MaMH = 'IS210')</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">02</span><h4>Passed every course</h4></div>
+              <p>Find students whose grade is 5 or higher in every course.</p>
+              <details><summary>Hint</summary><div class="ascii-block">GROUP BY MaSV + HAVING MIN(Diem) >= 5</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">03</span><span class="challenge-stars">★★</span></div>
+              <p>Find the student with the highest average grade.</p>
+              <details><summary>Hint</summary><div class="ascii-block">GROUP BY MaSV + ORDER BY AVG(Diem) DESC + TOP 1</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">04</span><span class="challenge-stars">★★</span></div>
+              <p>Rank students by average grade.</p>
+              <details><summary>Hint</summary><div class="ascii-block">ORDER BY AVG(Diem) DESC
+(You could also look into the RANK() OVER (...) function for proper ranking)</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">★★</span></div>
+              <p>Find the course with the most students scoring below 5.</p>
+              <details><summary>Hint</summary><div class="ascii-block">WHERE Diem < 5 + GROUP BY MaMH + ORDER BY COUNT(*) DESC</div></details>
+            </article>
+          </div>
+        </section>
+
+        <!-- 14 - Common Mistakes -->
+        <section class="lesson-section" id="loi-thuong-gap">
+          <p class="eyebrow">14 · COMMON MISTAKES</p>
+          <h2>Common Mistakes</h2>
+
+          <h3>Mistake 1 - Wrong JOIN condition</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- Wrong
+JOIN Lop L ON SV.MaSV = L.MaLop
+
+-- Correct
+JOIN Lop L ON SV.MaLop = L.MaLop</code></pre></div>
+
+          <h3>Mistake 2 - Using WHERE instead of HAVING</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- Wrong logic
+WHERE COUNT(*) > 2
+
+-- Correct
+GROUP BY MaLop
+HAVING COUNT(*) > 2</code></pre></div>
+
+          <h3>Mistake 3 - Forgetting GROUP BY</h3>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- Wrong
+SELECT MaLop, COUNT(*)
+FROM SinhVien;
+
+-- Must include GROUP BY
+SELECT MaLop, COUNT(*)
+FROM SinhVien
+GROUP BY MaLop;</code></pre></div>
+
+          <h3>Mistake 4 - UPDATE/DELETE without a WHERE</h3>
+          <p>Always check with <code>SELECT</code> before running <code>UPDATE</code> or <code>DELETE</code>:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM SinhVien
+WHERE MaSV = 'SV001';</code></pre></div>
+        </section>
+
+        <!-- 15 - Review Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">15 · REVIEW CHECKLIST</p>
+          <h2>Review Checklist</h2>
+          <p>Students should self-assess before the practical exam:</p>
+
+          <h3>Database</h3>
+          <ul class="lesson-checklist">
+            <li>Understand Entity, Attribute, Relationship</li>
+            <li>Can draw an ERD</li>
+            <li>Can identify Primary Key, Foreign Key</li>
+          </ul>
+
+          <h3>Basic SQL</h3>
+          <ul class="lesson-checklist">
+            <li>CREATE DATABASE, CREATE TABLE</li>
+            <li>INSERT, SELECT, WHERE, ORDER BY, LIKE</li>
+          </ul>
+
+          <h3>Advanced SQL</h3>
+          <ul class="lesson-checklist">
+            <li>GROUP BY, HAVING</li>
+            <li>COUNT, SUM, AVG, MIN, MAX</li>
+            <li>INNER JOIN, LEFT JOIN, Subquery</li>
+          </ul>
+
+          <h3>Data manipulation &amp; synthesis</h3>
+          <ul class="lesson-checklist">
+            <li>Check with WHERE before running UPDATE, DELETE</li>
+            <li>Read the problem, identify tables, relationships, and keys before writing SQL</li>
+            <li>Can explain their own SQL statements</li>
+          </ul>
+        </section>
+
+        <!-- 16 - Simulated Practical Exam -->
+        <section class="lesson-section" id="kiem-tra-mo-phong">
+          <p class="eyebrow">16 · SIMULATED PRACTICAL EXAM</p>
+          <h2>Simulated Practical Exam</h2>
+          <p>At the end of the week, students complete a comprehensive exercise in about <strong>60-90 minutes</strong> to self-assess their readiness before the practical exam.</p>
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> PRACTICE LAB</p>
+            <h3>Library Management</h3>
+            <p style="color:#cbd5e1;font-size:13px;margin-bottom:14px">Build a library management database with <code style="background:#ffffff1a;color:#e2e8f0">DOCGIA</code>, <code style="background:#ffffff1a;color:#e2e8f0">SACH</code>, <code style="background:#ffffff1a;color:#e2e8f0">THELOAI</code>, <code style="background:#ffffff1a;color:#e2e8f0">MUONTRA</code>.</p>
+            <ol>
+              <li><strong>Task 1 - Analyze the problem:</strong> Identify the Entities, Attributes, and Relationships</li>
+              <li><strong>Task 2 - Identify keys:</strong> Primary Key and Foreign Key for each table</li>
+              <li><strong>Task 3 - Create tables:</strong> Create all 4 tables per the design</li>
+              <li><strong>Task 4 - Set up relationships:</strong> Foreign Key constraints between related tables</li>
+              <li><strong>Task 5 - Load data:</strong> Insert sample data for all 4 tables</li>
+              <li><strong>Task 6 - Write queries:</strong> Write at least 10 queries, including at least 2 <code style="background:#ffffff1a;color:#e2e8f0">JOIN</code> queries, 2 <code style="background:#ffffff1a;color:#e2e8f0">GROUP BY</code> queries, 1 <code style="background:#ffffff1a;color:#e2e8f0">HAVING</code> query, 1 Subquery, and 1 query using an aggregate function</li>
+              <li><strong>Task 7 - Update data:</strong> Perform at least one <code style="background:#ffffff1a;color:#e2e8f0">UPDATE</code></li>
+              <li><strong>Task 8 - Delete data:</strong> Perform at least one <code style="background:#ffffff1a;color:#e2e8f0">DELETE</code></li>
+              <li><strong>Task 9 - Explain the results:</strong> Be able to explain what each query returns</li>
+            </ol>
+          </div>
+          <div class="definition"><strong>What to achieve by the end of Week 6:</strong> Students shouldn't just memorize SQL syntax, but should develop the full workflow of <strong>read the problem ➜ analyze the data ➜ identify relationships ➜ design the tables ➜ write the SQL ➜ verify the results ➜ explain the query.</strong> This is the wrap-up week for IT004's practical component, and it directly prepares students for the review/practical exam.</div>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Week navigation">
+          <a href="week-5.html"><span class="nav-dir">‹ PREVIOUS WEEK</span><span class="nav-title">Week 5: Triggers in SQL Server</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">NEXT WEEK ›</span><span class="nav-title">Mock Exam (coming soon)</span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">PROGRESS</span>
+          <strong>6<span>/6 weeks</span></strong>
+          <div class="mini-progress"><b style="width:100%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">YOU ARE HERE</span>
+          <ul class="checklist">
+            <li data-section="tong-quan"><b>○</b> Objectives &amp; overview</li>
+            <li data-section="mo-hinh-du-lieu"><b>○</b> Data Model</li>
+            <li data-section="khoa"><b>○</b> Keys in a Database</li>
+            <li data-section="tao-csdl-insert"><b>○</b> Creating a Database &amp; INSERT</li>
+            <li data-section="select-where-like"><b>○</b> SELECT, WHERE &amp; LIKE</li>
+            <li data-section="order-ham"><b>○</b> ORDER BY &amp; Aggregate Functions</li>
+            <li data-section="group-having"><b>○</b> GROUP BY &amp; HAVING</li>
+            <li data-section="join"><b>○</b> JOIN</li>
+            <li data-section="subquery"><b>○</b> Subquery</li>
+            <li data-section="update-delete"><b>○</b> UPDATE &amp; DELETE</li>
+            <li data-section="bai-toan-tong-hop"><b>○</b> Comprehensive Exercise</li>
+            <li data-section="yeu-cau-thuc-hanh"><b>○</b> Practice Requirements</li>
+            <li data-section="bai-tap-thach-thuc"><b>○</b> Challenge Problems</li>
+            <li data-section="loi-thuong-gap"><b>○</b> Common Mistakes</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+            <li data-section="kiem-tra-mo-phong"><b>○</b> Simulated Exam</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">RESOURCES</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Weeks 1-5 Practice Materials</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> SQL Server</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#yeu-cau-thuc-hanh">Exercises</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>WHERE filters individual rows, HAVING filters groups after GROUP BY - always check with SELECT before UPDATE/DELETE.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/progress.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=14"></script>
+</body>
+</html>

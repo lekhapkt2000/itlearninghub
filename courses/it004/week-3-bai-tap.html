@@ -114,7 +114,7 @@
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 26 · PHÉP CHIA QUAN HỆ</p>
-              <h3>Hóa đơn mua tất cả sản phẩm do Singapore sản xuất</h3>
+              <p><strong>Đề bài:</strong> Tìm số hóa đơn đã mua tất cả các sản phẩm do Singapore sản xuất.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.SOHD
 FROM HOADON hd
 WHERE NOT EXISTS (
@@ -142,7 +142,7 @@ HAVING COUNT(DISTINCT sp.MASP) = (
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 27 · PHÉP CHIA + WHERE</p>
-              <h3>Như Câu 26, chỉ tính hóa đơn năm 2006</h3>
+              <p><strong>Đề bài:</strong> Tìm số hóa đơn trong năm 2006 đã mua tất cả các sản phẩm do Singapore sản xuất.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.SOHD
 FROM HOADON hd
 WHERE YEAR(hd.NGHD) = 2006
@@ -162,7 +162,7 @@ AND NOT EXISTS (
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 28 · IS NULL</p>
-              <h3>Số hóa đơn không phải khách hàng thành viên mua</h3>
+              <p><strong>Đề bài:</strong> Có bao nhiêu hóa đơn không phải của khách hàng đăng ký thành viên mua?</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SLHoaDon
 FROM HOADON
 WHERE MAKH IS NULL;</code></pre></div>
@@ -174,7 +174,7 @@ WHERE MAKH IS NULL;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 29 · COUNT DISTINCT</p>
-              <h3>Số sản phẩm khác nhau bán ra năm 2006</h3>
+              <p><strong>Đề bài:</strong> Có bao nhiêu sản phẩm khác nhau được bán ra trong năm 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(DISTINCT ct.MASP) AS SLSanPham
 FROM CTHD ct
 JOIN HOADON hd ON ct.SOHD = hd.SOHD
@@ -187,7 +187,7 @@ WHERE YEAR(hd.NGHD) = 2006;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 30 · MAX/MIN</p>
-              <h3>Trị giá hóa đơn cao nhất, thấp nhất</h3>
+              <p><strong>Đề bài:</strong> Cho biết trị giá hóa đơn cao nhất, thấp nhất là bao nhiêu?</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAX(TRIGIA) AS TriGiaCaoNhat, MIN(TRIGIA) AS TriGiaThapNhat
 FROM HOADON;</code></pre></div>
               <div class="qa-explain">
@@ -198,7 +198,7 @@ FROM HOADON;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 31 · AVG + WHERE</p>
-              <h3>Trị giá trung bình hóa đơn năm 2006</h3>
+              <p><strong>Đề bài:</strong> Trị giá trung bình của tất cả các hóa đơn được bán ra trong năm 2006 là bao nhiêu?</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT AVG(TRIGIA) AS TriGiaTrungBinh
 FROM HOADON
 WHERE YEAR(NGHD) = 2006;</code></pre></div>
@@ -210,7 +210,7 @@ WHERE YEAR(NGHD) = 2006;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 32 · SUM</p>
-              <h3>Doanh thu bán hàng năm 2006</h3>
+              <p><strong>Đề bài:</strong> Tính doanh thu bán hàng trong năm 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SUM(TRIGIA) AS DoanhThu
 FROM HOADON
 WHERE YEAR(NGHD) = 2006;</code></pre></div>
@@ -222,7 +222,7 @@ WHERE YEAR(NGHD) = 2006;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 33 · SUBQUERY MAX theo năm</p>
-              <h3>Hóa đơn trị giá cao nhất năm 2006</h3>
+              <p><strong>Đề bài:</strong> Tìm số hóa đơn có trị giá cao nhất trong năm 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD
 FROM HOADON
 WHERE YEAR(NGHD) = 2006
@@ -241,7 +241,7 @@ ORDER BY TRIGIA DESC;</code></pre></div></details>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 34 · JOIN + TOP WITH TIES</p>
-              <h3>Khách hàng mua hóa đơn trị giá cao nhất năm 2006</h3>
+              <p><strong>Đề bài:</strong> Tìm họ tên khách hàng đã mua hóa đơn có trị giá cao nhất trong năm 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES hd.MAKH, kh.HOTEN, hd.SOHD, hd.TRIGIA
 FROM KHACHHANG kh
 JOIN HOADON hd ON kh.MAKH = hd.MAKH
@@ -255,7 +255,7 @@ ORDER BY hd.TRIGIA DESC;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 35 · TOP + ORDER BY</p>
-              <h3>3 khách hàng doanh số cao nhất</h3>
+              <p><strong>Đề bài:</strong> In ra danh sách 3 khách hàng đầu tiên (MAKH, HOTEN) sắp xếp theo doanh số giảm dần.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 3 MAKH, HOTEN
 FROM KHACHHANG
 ORDER BY DOANHSO DESC;</code></pre></div>
@@ -267,7 +267,7 @@ ORDER BY DOANHSO DESC;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 36 · DISTINCT TOP trong IN</p>
-              <h3>Sản phẩm nằm trong 3 mức giá cao nhất</h3>
+              <p><strong>Đề bài:</strong> In ra danh sách các sản phẩm (MASP, TENSP) có giá bán bằng 1 trong 3 mức giá cao nhất.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE GIA IN (
@@ -281,7 +281,7 @@ WHERE GIA IN (
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 37 · Lọc thêm sau khi có 3 mức giá</p>
-              <h3>Sản phẩm Thai Lan nằm trong 3 mức giá cao nhất (toàn bộ SP)</h3>
+              <p><strong>Đề bài:</strong> In ra danh sách các sản phẩm (MASP, TENSP) do "Thai Lan" sản xuất có giá bằng 1 trong 3 mức giá cao nhất (của tất cả các sản phẩm).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE NUOCSX = 'Thai Lan'
@@ -296,7 +296,7 @@ AND GIA IN (
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 38 · Subquery cũng lọc theo nước SX</p>
-              <h3>Sản phẩm Trung Quốc nằm trong 3 mức giá cao nhất (riêng Trung Quốc)</h3>
+              <p><strong>Đề bài:</strong> In ra danh sách các sản phẩm (MASP, TENSP) do "Trung Quoc" sản xuất có giá bằng 1 trong 3 mức giá cao nhất (của sản phẩm do "Trung Quoc" sản xuất).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE NUOCSX = 'Trung Quoc'
@@ -313,7 +313,7 @@ AND GIA IN (
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 39 · TOP WITH TIES theo doanh số</p>
-              <h3>Khách hàng nằm trong 3 hạng doanh số cao nhất</h3>
+              <p><strong>Đề bài:</strong> In ra danh sách khách hàng nằm trong 3 hạng cao nhất (xếp hạng theo doanh số).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 3 WITH TIES MAKH, HOTEN, DOANHSO
 FROM KHACHHANG
 ORDER BY DOANHSO DESC;</code></pre></div>
@@ -330,7 +330,7 @@ WHERE DOANHSO IN (
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 40 · COUNT + WHERE</p>
-              <h3>Tổng số sản phẩm do Trung Quốc sản xuất</h3>
+              <p><strong>Đề bài:</strong> Tính tổng số sản phẩm do "Trung Quoc" sản xuất.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SLSanPham
 FROM SANPHAM
 WHERE NUOCSX = 'Trung Quoc';</code></pre></div>
@@ -342,7 +342,7 @@ WHERE NUOCSX = 'Trung Quoc';</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 41 · GROUP BY + COUNT</p>
-              <h3>Tổng số sản phẩm của từng nước sản xuất</h3>
+              <p><strong>Đề bài:</strong> Tính tổng số sản phẩm của từng nước sản xuất.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT NUOCSX, COUNT(*) AS SLSanPham
 FROM SANPHAM
 GROUP BY NUOCSX;</code></pre></div>
@@ -354,7 +354,7 @@ GROUP BY NUOCSX;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 42 · GROUP BY nhiều hàm tổng hợp</p>
-              <h3>Giá cao nhất, thấp nhất, trung bình theo từng nước</h3>
+              <p><strong>Đề bài:</strong> Với từng nước sản xuất, tìm giá bán cao nhất, thấp nhất, trung bình của các sản phẩm.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT NUOCSX, MAX(GIA) AS GiaCaoNhat, MIN(GIA) AS GiaThapNhat, AVG(GIA) AS GiaTrungBinh
 FROM SANPHAM
 GROUP BY NUOCSX;</code></pre></div>
@@ -366,7 +366,7 @@ GROUP BY NUOCSX;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 43 · GROUP BY theo ngày</p>
-              <h3>Doanh thu bán hàng mỗi ngày</h3>
+              <p><strong>Đề bài:</strong> Tính doanh thu bán hàng mỗi ngày.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT NGHD, SUM(TRIGIA) AS DoanhThu
 FROM HOADON
 GROUP BY NGHD;</code></pre></div>
@@ -378,7 +378,7 @@ GROUP BY NGHD;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 44 · GROUP BY + WHERE nhiều điều kiện</p>
-              <h3>Số lượng bán ra của từng sản phẩm trong tháng 10/2006</h3>
+              <p><strong>Đề bài:</strong> Tính tổng số lượng của từng sản phẩm bán ra trong tháng 10/2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ct.MASP, SUM(ct.SL) AS SLSP
 FROM CTHD ct
 JOIN HOADON hd ON ct.SOHD = hd.SOHD
@@ -392,7 +392,7 @@ GROUP BY ct.MASP;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 45 · GROUP BY theo tháng</p>
-              <h3>Doanh thu của từng tháng trong năm 2006</h3>
+              <p><strong>Đề bài:</strong> Tính doanh thu bán hàng của từng tháng trong năm 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MONTH(NGHD) AS Thang, SUM(TRIGIA) AS DoanhThu
 FROM HOADON
 WHERE YEAR(NGHD) = 2006
@@ -405,7 +405,7 @@ GROUP BY MONTH(NGHD);</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 46 · HAVING COUNT DISTINCT</p>
-              <h3>Hóa đơn mua ít nhất 4 sản phẩm khác nhau</h3>
+              <p><strong>Đề bài:</strong> Tìm hóa đơn có mua ít nhất 4 sản phẩm khác nhau.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.SOHD, COUNT(DISTINCT ct.MASP) AS SLSP
 FROM HOADON hd
 JOIN CTHD ct ON hd.SOHD = ct.SOHD
@@ -419,7 +419,7 @@ HAVING COUNT(DISTINCT ct.MASP) >= 4;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 47 · JOIN 3 bảng + HAVING</p>
-              <h3>Hóa đơn mua ít nhất 3 sản phẩm Việt Nam khác nhau</h3>
+              <p><strong>Đề bài:</strong> Tìm hóa đơn có mua 3 sản phẩm do "Viet Nam" sản xuất (3 sản phẩm khác nhau).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.SOHD, COUNT(DISTINCT ct.MASP) AS SLSP
 FROM HOADON hd
 JOIN CTHD ct ON hd.SOHD = ct.SOHD
@@ -435,7 +435,7 @@ HAVING COUNT(DISTINCT ct.MASP) >= 3;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 48 · TOP WITH TIES + COUNT</p>
-              <h3>Khách hàng có số lần mua hàng nhiều nhất</h3>
+              <p><strong>Đề bài:</strong> Tìm khách hàng (MAKH, HOTEN) có số lần mua hàng nhiều nhất.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES hd.MAKH, kh.HOTEN, COUNT(DISTINCT hd.SOHD) AS SLMH
 FROM HOADON hd
 JOIN KHACHHANG kh ON hd.MAKH = kh.MAKH
@@ -449,7 +449,7 @@ ORDER BY SLMH DESC;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 49 · GROUP BY + TOP WITH TIES</p>
-              <h3>Tháng có doanh số cao nhất trong năm 2006</h3>
+              <p><strong>Đề bài:</strong> Tháng mấy trong năm 2006, doanh số bán hàng cao nhất?</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES MONTH(NGHD) AS Thang, SUM(TRIGIA) AS DoanhThu
 FROM HOADON
 WHERE YEAR(NGHD) = 2006
@@ -463,7 +463,7 @@ ORDER BY DoanhThu DESC;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 50 · ORDER BY ASC</p>
-              <h3>Sản phẩm bán ra ít nhất trong năm 2006</h3>
+              <p><strong>Đề bài:</strong> Tìm sản phẩm (MASP, TENSP) có tổng số lượng bán ra thấp nhất trong năm 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES ct.MASP, sp.TENSP, SUM(ct.SL) AS SLSP
 FROM CTHD ct
 JOIN HOADON hd ON ct.SOHD = hd.SOHD
@@ -479,7 +479,7 @@ ORDER BY SLSP ASC;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 51 · Correlated subquery</p>
-              <h3>Sản phẩm giá cao nhất của mỗi nước sản xuất</h3>
+              <p><strong>Đề bài:</strong> Mỗi nước sản xuất, tìm sản phẩm (MASP, TENSP) có giá bán cao nhất.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT sp.NUOCSX, sp.MASP, sp.TENSP
 FROM SANPHAM sp
 WHERE sp.GIA = (
@@ -495,7 +495,7 @@ WHERE sp.GIA = (
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 52 · HAVING COUNT DISTINCT</p>
-              <h3>Nước sản xuất có từ 3 mức giá khác nhau trở lên</h3>
+              <p><strong>Đề bài:</strong> Tìm nước sản xuất sản xuất ít nhất 3 sản phẩm có giá bán khác nhau.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT NUOCSX, COUNT(DISTINCT GIA) AS GiaBanKhacNhau
 FROM SANPHAM
 GROUP BY NUOCSX
@@ -508,7 +508,7 @@ HAVING COUNT(DISTINCT GIA) >= 3;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">CÂU 53 · Subquery TOP WITH TIES + GROUP BY</p>
-              <h3>Trong 10 khách hàng doanh số cao nhất, ai mua nhiều lần nhất</h3>
+              <p><strong>Đề bài:</strong> Trong 10 khách hàng có doanh số cao nhất, tìm khách hàng có số lần mua hàng nhiều nhất.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES hd.MAKH, kh.HOTEN, COUNT(hd.SOHD) AS SLMH
 FROM KHACHHANG kh
 JOIN HOADON hd ON kh.MAKH = hd.MAKH

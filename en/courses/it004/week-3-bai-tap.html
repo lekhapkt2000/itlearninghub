@@ -110,41 +110,416 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified - you now have access to the Week 3 answer.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Below is a sample question to illustrate how the answer is presented - it will be replaced with the real BTTH3 solution.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Answers for Question 26 through Question 53. Retype each query in SSMS so it actually sticks - the Copy button here is just for show.</p>
 
             <div class="qa-block">
-              <p class="eyebrow">QUESTION 1 (SAMPLE) · GROUP BY &amp; HAVING</p>
-              <h3>Filter classes with 5 or more members</h3>
-              <p><strong>Exercise:</strong> Count the number of registered members for each class, showing only classes with 5 or more members.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaLop, COUNT(*) AS SoHocVien
-FROM DangKy
-GROUP BY MaLop
-HAVING COUNT(*) >= 5;</code></pre></div>
+              <p class="eyebrow">QUESTION 26 · RELATIONAL DIVISION</p>
+              <p><strong>Exercise:</strong> Find the invoice numbers that include all products manufactured in Singapore.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.SOHD
+FROM HOADON hd
+WHERE NOT EXISTS (
+    SELECT * FROM SANPHAM sp
+    WHERE sp.NUOCSX = 'Singapore'
+    AND NOT EXISTS (
+        SELECT * FROM CTHD ct
+        WHERE ct.MASP = sp.MASP AND ct.SOHD = hd.SOHD
+    )
+);</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY</code> groups rows that share the same <code>MaLop</code> into 1 group; <code>HAVING</code> filters on the grouped result (unlike <code>WHERE</code>).</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p><code>WHERE</code> runs before grouping, so it can't be used with a group's <code>COUNT(*)</code>. The condition "5 or more members" only makes sense after the counting is done, so it has to be filtered with <code>HAVING</code>.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Relational division: find invoices where there is <strong>no</strong> Singapore product that is missing from that invoice's <code>CTHD</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>SQL Server has no direct division operator, so you have to reason in reverse using nested <code>NOT EXISTS</code> - this is the standard pattern for "bought all/taught all" type questions.</p></div>
+              </div>
+              <details><summary>Alternative approach</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.SOHD
+FROM HOADON hd
+JOIN CTHD ct ON hd.SOHD = ct.SOHD
+JOIN SANPHAM sp ON sp.MASP = ct.MASP
+WHERE sp.NUOCSX = 'Singapore'
+GROUP BY hd.SOHD
+HAVING COUNT(DISTINCT sp.MASP) = (
+    SELECT COUNT(*) FROM SANPHAM WHERE NUOCSX = 'Singapore'
+);</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 27 · DIVISION + WHERE</p>
+              <p><strong>Exercise:</strong> Find the invoice numbers in 2006 that include all products manufactured in Singapore.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.SOHD
+FROM HOADON hd
+WHERE YEAR(hd.NGHD) = 2006
+AND NOT EXISTS (
+    SELECT * FROM SANPHAM sp
+    WHERE sp.NUOCSX = 'Singapore'
+    AND NOT EXISTS (
+        SELECT * FROM CTHD ct
+        WHERE ct.MASP = sp.MASP AND ct.SOHD = hd.SOHD
+    )
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Exactly the same as Question 26, just adding <code>YEAR(NGHD) = 2006</code> on the outer invoice.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The year condition only applies to the invoice being checked (the outer table), and has nothing to do with the division logic inside - so it goes straight into the main query's <code>WHERE</code>.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">QUESTION 2 (SAMPLE) · RELATIONAL DIVISION</p>
-              <h3>Trainer teaching all classes in "Gym A" room</h3>
-              <p><strong>Exercise:</strong> Find the trainer who teaches <strong>all</strong> the classes held in the "Gym A" room (missing none).</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hlv.HoTen
-FROM HuanLuyenVien hlv
-WHERE NOT EXISTS (
-    SELECT lt.MaLop
-    FROM LopTap lt
-    JOIN PhongTap p ON lt.MaPhong = p.MaPhong
-    WHERE p.TenPhong = N'Gym A'
-    AND NOT EXISTS (
-        SELECT 1 FROM LopTap lt2
-        WHERE lt2.MaLop = lt.MaLop AND lt2.MaHLV = hlv.MaHLV
-    )
+              <p class="eyebrow">QUESTION 28 · IS NULL</p>
+              <p><strong>Exercise:</strong> How many invoices were not purchased by a registered member customer?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SLHoaDon
+FROM HOADON
+WHERE MAKH IS NULL;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>MAKH IS NULL</code> exactly matches invoices with no member customer attached.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>You can't write <code>MAKH = NULL</code> - in SQL, an equality comparison against <code>NULL</code> always evaluates to unknown, so <code>IS NULL</code> is required.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 29 · COUNT DISTINCT</p>
+              <p><strong>Exercise:</strong> How many distinct products were sold in 2006?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(DISTINCT ct.MASP) AS SLSanPham
+FROM CTHD ct
+JOIN HOADON hd ON ct.SOHD = hd.SOHD
+WHERE YEAR(hd.NGHD) = 2006;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>COUNT(DISTINCT ...)</code> counts distinct values, removing duplicates.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>A product can appear in multiple <code>CTHD</code> rows (across different invoices) - a plain <code>COUNT(*)</code> would count duplicates, so <code>DISTINCT</code> on <code>MASP</code> is required.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 30 · MAX/MIN</p>
+              <p><strong>Exercise:</strong> What are the highest and lowest invoice totals?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAX(TRIGIA) AS TriGiaCaoNhat, MIN(TRIGIA) AS TriGiaThapNhat
+FROM HOADON;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>MAX</code>/<code>MIN</code> compute directly over the whole <code>TRIGIA</code> column - no <code>GROUP BY</code> needed since only one result row is expected.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question only asks for the highest/lowest values (two numbers), not which invoice - so there's no need for a <code>JOIN</code> or any extra filtering.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 31 · AVG + WHERE</p>
+              <p><strong>Exercise:</strong> What is the average value of all invoices sold in 2006?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT AVG(TRIGIA) AS TriGiaTrungBinh
+FROM HOADON
+WHERE YEAR(NGHD) = 2006;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>AVG</code> computes the average over the rows left after <code>WHERE</code> has filtered by year.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>WHERE</code> runs before aggregate functions, so filtering the year here is correct - no <code>GROUP BY</code>/<code>HAVING</code> needed since there's no grouping involved.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 32 · SUM</p>
+              <p><strong>Exercise:</strong> Calculate the sales revenue for 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SUM(TRIGIA) AS DoanhThu
+FROM HOADON
+WHERE YEAR(NGHD) = 2006;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>SUM(TRIGIA)</code> adds up the value of every remaining invoice after the year filter.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Revenue" means the total of invoice values, unlike "average" in Question 31 - just swap <code>AVG</code> for <code>SUM</code>, everything else stays the same.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 33 · SUBQUERY MAX SCOPED BY YEAR</p>
+              <p><strong>Exercise:</strong> Find the invoice number with the highest total value in 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD
+FROM HOADON
+WHERE YEAR(NGHD) = 2006
+AND TRIGIA = (
+    SELECT MAX(TRIGIA) FROM HOADON WHERE YEAR(NGHD) = 2006
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Relational division finds rows in table A (trainers) that satisfy the condition against <strong>every</strong> corresponding value in table B (Gym A's classes).</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>SQL Server has no direct division operator, so you have to reason in reverse: "there is no class in Gym A that this trainer has not taught" - nested <code>NOT EXISTS</code> is used to simulate division.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The subquery computes <code>MAX(TRIGIA)</code> <strong>within 2006 only</strong>, then the outer query finds the invoice whose value equals that number.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Both the subquery and the outer query must filter by year 2006 - filtering only one of them risks matching an invoice from a different year that happens to tie the 2006 maximum.</p></div>
+              </div>
+              <details><summary>Alternative approach</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES SOHD
+FROM HOADON
+WHERE YEAR(NGHD) = 2006
+ORDER BY TRIGIA DESC;</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 34 · JOIN + TOP WITH TIES</p>
+              <p><strong>Exercise:</strong> Find the full name of the customer who purchased the invoice with the highest total value in 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES hd.MAKH, kh.HOTEN, hd.SOHD, hd.TRIGIA
+FROM KHACHHANG kh
+JOIN HOADON hd ON kh.MAKH = hd.MAKH
+WHERE YEAR(hd.NGHD) = 2006
+ORDER BY hd.TRIGIA DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>TOP 1 WITH TIES ... ORDER BY TRIGIA DESC</code> fetches the invoice(s) with the highest value, joined with customer info.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>WITH TIES</code> guarantees that if multiple invoices are tied for the highest value, all of them are returned - unlike plain <code>TOP 1</code>, which only returns exactly one row.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 35 · TOP + ORDER BY</p>
+              <p><strong>Exercise:</strong> Print the top 3 customers (MAKH, HOTEN) sorted by sales in descending order.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 3 MAKH, HOTEN
+FROM KHACHHANG
+ORDER BY DOANHSO DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>TOP 3</code> takes exactly the first 3 rows after sorting descending by <code>DOANHSO</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question asks for exactly "the top 3 customers" (not "top 3 ranks" like Question 39), so plain <code>TOP 3</code> works - no need for <code>WITH TIES</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 36 · DISTINCT TOP INSIDE IN</p>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) priced at one of the 3 highest price levels.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE GIA IN (
+    SELECT DISTINCT TOP 3 GIA FROM SANPHAM ORDER BY GIA DESC
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>SELECT DISTINCT TOP 3 GIA ... ORDER BY GIA DESC</code> gets the 3 highest, distinct <strong>price levels</strong> (not 3 products).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Many products can share the same price - without <code>DISTINCT</code>, "the 3 highest price levels" might only reflect 1-2 actual price levels due to duplicates inside <code>TOP 3</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 37 · Filtering after computing the 3 levels</p>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) manufactured in "Thai Lan" priced at one of the 3 highest price levels (among all products).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX = 'Thai Lan'
+AND GIA IN (
+    SELECT DISTINCT TOP 3 GIA FROM SANPHAM ORDER BY GIA DESC
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Same as Question 36, adding <code>NUOCSX = 'Thai Lan'</code> in the outer query.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The subquery computes the 3 highest price levels across <strong>all</strong> products (no country filter) - because the question says "among all products," so the Thailand filter only applies outside.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 38 · Subquery also scoped by country</p>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) manufactured in "Trung Quoc" priced at one of the 3 highest price levels (among products manufactured in "Trung Quoc").</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
+FROM SANPHAM
+WHERE NUOCSX = 'Trung Quoc'
+AND GIA IN (
+    SELECT DISTINCT TOP 3 GIA FROM SANPHAM
+    WHERE NUOCSX = 'Trung Quoc'
+    ORDER BY GIA DESC
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Unlike Question 37, the subquery here <strong>also</strong> filters <code>NUOCSX = 'Trung Quoc'</code> - the 3 highest price levels are computed only within the China group.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question explicitly says "among products manufactured in Trung Quoc" (unlike Question 37's "among all products") - read the parenthetical carefully to know whether the subquery needs its own filter.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 39 · TOP WITH TIES by sales</p>
+              <p><strong>Exercise:</strong> Print the list of customers ranked in the top 3 (ranked by sales).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 3 WITH TIES MAKH, HOTEN, DOANHSO
+FROM KHACHHANG
+ORDER BY DOANHSO DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>TOP 3 WITH TIES</code> returns every customer within the top 3 sales levels, including all customers tied at the same level.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Unlike Question 35 ("top 3 customers" - exactly 3 rows), this is "top 3 <strong>ranks</strong>" - if two customers tie for rank 3, both must appear, which requires <code>WITH TIES</code>.</p></div>
+              </div>
+              <details><summary>Alternative approach</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAKH, HOTEN, DOANHSO
+FROM KHACHHANG
+WHERE DOANHSO IN (
+    SELECT DISTINCT TOP 3 DOANHSO FROM KHACHHANG ORDER BY DOANHSO DESC
+);</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 40 · COUNT + WHERE</p>
+              <p><strong>Exercise:</strong> Calculate the total number of products manufactured in "Trung Quoc".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SLSanPham
+FROM SANPHAM
+WHERE NUOCSX = 'Trung Quoc';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>COUNT(*)</code> counts the rows left after <code>WHERE</code> filters the manufacturing country.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This is a simple single-condition count - no <code>GROUP BY</code> needed since there's no grouping involved.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 41 · GROUP BY + COUNT</p>
+              <p><strong>Exercise:</strong> Calculate the total number of products for each country of manufacture.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT NUOCSX, COUNT(*) AS SLSanPham
+FROM SANPHAM
+GROUP BY NUOCSX;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY NUOCSX</code> groups products by country, <code>COUNT(*)</code> counts the products in each group.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"For <strong>each</strong> country of manufacture" is a clear signal for <code>GROUP BY</code> - unlike Question 40, which asks about only one specific country (China).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 42 · GROUP BY with multiple aggregates</p>
+              <p><strong>Exercise:</strong> For each country of manufacture, find the highest, lowest, and average selling price of its products.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT NUOCSX, MAX(GIA) AS GiaCaoNhat, MIN(GIA) AS GiaThapNhat, AVG(GIA) AS GiaTrungBinh
+FROM SANPHAM
+GROUP BY NUOCSX;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Multiple aggregate functions (<code>MAX</code>, <code>MIN</code>, <code>AVG</code>) can be computed together in one <code>SELECT</code>, as long as they share the same <code>GROUP BY</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>No need to write 3 separate queries - each aggregate function computes independently within each <code>NUOCSX</code> group, in a single pass over the data.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 43 · GROUP BY date</p>
+              <p><strong>Exercise:</strong> Calculate the daily sales revenue.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT NGHD, SUM(TRIGIA) AS DoanhThu
+FROM HOADON
+GROUP BY NGHD;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY NGHD</code> groups invoices from the same date together; <code>SUM(TRIGIA)</code> totals the value for that date.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Daily" means splitting the result by each distinct <code>NGHD</code> value - the core meaning of <code>GROUP BY</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 44 · GROUP BY + multiple WHERE conditions</p>
+              <p><strong>Exercise:</strong> Calculate the total quantity sold for each product in October 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ct.MASP, SUM(ct.SL) AS SLSP
+FROM CTHD ct
+JOIN HOADON hd ON ct.SOHD = hd.SOHD
+WHERE YEAR(hd.NGHD) = 2006 AND MONTH(hd.NGHD) = 10
+GROUP BY ct.MASP;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>WHERE</code> filters down to October 2006 first, then <code>GROUP BY MASP</code> totals the quantity per product.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Quantity lives in <code>CTHD</code> but the date lives in <code>HOADON</code> - the two tables must be <code>JOIN</code>ed before you can filter by the right time range.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 45 · GROUP BY month</p>
+              <p><strong>Exercise:</strong> Calculate the monthly sales revenue for each month of 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MONTH(NGHD) AS Thang, SUM(TRIGIA) AS DoanhThu
+FROM HOADON
+WHERE YEAR(NGHD) = 2006
+GROUP BY MONTH(NGHD);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>You can <code>GROUP BY</code> directly on the result of a function (<code>MONTH(NGHD)</code>), not just a plain column name.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The result needs to be grouped by month (1-12), not by each individual date like Question 43 - <code>MONTH()</code> "rounds" the date down to its month before grouping.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 46 · HAVING COUNT DISTINCT</p>
+              <p><strong>Exercise:</strong> Find invoices that include at least 4 different products.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.SOHD, COUNT(DISTINCT ct.MASP) AS SLSP
+FROM HOADON hd
+JOIN CTHD ct ON hd.SOHD = ct.SOHD
+GROUP BY hd.SOHD
+HAVING COUNT(DISTINCT ct.MASP) >= 4;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>HAVING COUNT(DISTINCT MASP) >= 4</code> keeps only invoices with 4 or more distinct product codes.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"4 different products" requires <code>DISTINCT</code> - with plain <code>COUNT(*)</code>, one product bought in a large quantity could wrongly be counted as "many products."</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 47 · 3-table JOIN + HAVING</p>
+              <p><strong>Exercise:</strong> Find invoices that include 3 products manufactured in "Viet Nam" (3 distinct products).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.SOHD, COUNT(DISTINCT ct.MASP) AS SLSP
+FROM HOADON hd
+JOIN CTHD ct ON hd.SOHD = ct.SOHD
+JOIN SANPHAM sp ON sp.MASP = ct.MASP
+WHERE sp.NUOCSX = 'Viet Nam'
+GROUP BY hd.SOHD
+HAVING COUNT(DISTINCT ct.MASP) >= 3;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Same as Question 46, with an added <code>JOIN SANPHAM</code> to restrict to products manufactured in "Viet Nam" before counting.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The <code>WHERE</code> filter on manufacturing country must run before <code>GROUP BY</code>, so <code>COUNT(DISTINCT ...)</code> only counts Vietnamese products, not products from other countries on the same invoice.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 48 · TOP WITH TIES + COUNT</p>
+              <p><strong>Exercise:</strong> Find the customer (MAKH, HOTEN) with the highest number of purchases.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES hd.MAKH, kh.HOTEN, COUNT(DISTINCT hd.SOHD) AS SLMH
+FROM HOADON hd
+JOIN KHACHHANG kh ON hd.MAKH = kh.MAKH
+GROUP BY hd.MAKH, kh.HOTEN
+ORDER BY SLMH DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>"Number of purchases" means the count of distinct invoices for that customer, so group by customer and count <code>SOHD</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>TOP 1 WITH TIES</code> guarantees that if multiple customers tie for the most purchases, all of them are listed - not just one chosen arbitrarily.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 49 · GROUP BY + TOP WITH TIES</p>
+              <p><strong>Exercise:</strong> Which month of 2006 had the highest sales revenue?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES MONTH(NGHD) AS Thang, SUM(TRIGIA) AS DoanhThu
+FROM HOADON
+WHERE YEAR(NGHD) = 2006
+GROUP BY MONTH(NGHD)
+ORDER BY DoanhThu DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Compute revenue per month exactly like Question 45, then <code>ORDER BY DoanhThu DESC</code> + <code>TOP 1 WITH TIES</code> to get the highest month.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Revenue must be computed per month first (<code>GROUP BY</code>) before you can compare which month is highest - you can't just take <code>MAX</code> directly since you also need to know which month it was.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 50 · ORDER BY ASC</p>
+              <p><strong>Exercise:</strong> Find the product (MASP, TENSP) with the lowest total quantity sold in 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES ct.MASP, sp.TENSP, SUM(ct.SL) AS SLSP
+FROM CTHD ct
+JOIN HOADON hd ON ct.SOHD = hd.SOHD
+JOIN SANPHAM sp ON sp.MASP = ct.MASP
+WHERE YEAR(hd.NGHD) = 2006
+GROUP BY ct.MASP, sp.TENSP
+ORDER BY SLSP ASC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Same structure as Question 44 (total quantity per product), just switching to <code>ORDER BY ... ASC</code> (ascending) to get the <strong>lowest</strong>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>ASC</code> is <code>ORDER BY</code>'s default direction, but it's still worth writing explicitly for readability - especially when questions keep switching between "highest" and "lowest."</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 51 · Correlated subquery</p>
+              <p><strong>Exercise:</strong> For each country of manufacture, find the product (MASP, TENSP) with the highest selling price.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT sp.NUOCSX, sp.MASP, sp.TENSP
+FROM SANPHAM sp
+WHERE sp.GIA = (
+    SELECT MAX(sp1.GIA)
+    FROM SANPHAM sp1
+    WHERE sp1.NUOCSX = sp.NUOCSX
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>A correlated subquery: for each outer row <code>sp</code>, the inner subquery recomputes <code>MAX(GIA)</code> scoped to that same row's <code>NUOCSX</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Unlike Question 42 (which only needs an aggregate number), this question also needs the product's <code>MASP</code>/<code>TENSP</code> - plain <code>GROUP BY</code> can't return the product name alongside a MAX, so a correlated subquery is needed.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 52 · HAVING COUNT DISTINCT</p>
+              <p><strong>Exercise:</strong> Find the country of manufacture that produces at least 3 products with different selling prices.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT NUOCSX, COUNT(DISTINCT GIA) AS GiaBanKhacNhau
+FROM SANPHAM
+GROUP BY NUOCSX
+HAVING COUNT(DISTINCT GIA) >= 3;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>HAVING COUNT(DISTINCT GIA) >= 3</code> keeps only countries with 3 or more <strong>distinct price levels</strong>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Note that <code>DISTINCT</code> must be inside <code>HAVING</code> too, not just in the displayed column name - if <code>HAVING</code> only said <code>COUNT(GIA) >= 3</code> (missing <code>DISTINCT</code>), it would be counting "at least 3 products" instead of "3 different prices," which doesn't match the question.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 53 · Subquery with TOP WITH TIES + GROUP BY</p>
+              <p><strong>Exercise:</strong> Among the top 10 customers by sales, find the customer with the highest number of purchases.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES hd.MAKH, kh.HOTEN, COUNT(hd.SOHD) AS SLMH
+FROM KHACHHANG kh
+JOIN HOADON hd ON kh.MAKH = hd.MAKH
+WHERE hd.MAKH IN (
+    SELECT TOP 10 WITH TIES MAKH FROM KHACHHANG ORDER BY DOANHSO DESC
+)
+GROUP BY hd.MAKH, kh.HOTEN
+ORDER BY SLMH DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The subquery first narrows down to the top 10 customers by sales; the outer query then counts purchases only within that group of 10.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This is a two-layer problem: "filter the top 10" and "find who purchased the most" are two different criteria (sales vs. purchase count) - they can't be combined into a single <code>ORDER BY</code>, so a separate subquery is required.</p></div>
               </div>
             </div>
 

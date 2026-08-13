@@ -347,3 +347,79 @@ safeRun(function () {
   window.addEventListener('resize', onScroll);
   updateActiveSection();
 });
+
+// Floating color-key button - only on pages that actually use the
+// colored callout boxes (lesson/exercise/schema pages), so it stays out
+// of the way on overview/index pages. Built entirely from JS rather than
+// duplicated per-page markup, so the wording only lives in one place.
+safeRun(function () {
+  if (!document.querySelector('.lesson-content')) return;
+
+  var LEGEND = IS_EN
+    ? {
+        aria: 'Color key',
+        title: 'COLOR KEY',
+        close: 'Close',
+        items: [
+          ['is-blue', 'Blue - Definition, concept'],
+          ['is-green', 'Green - Recommended approach'],
+          ['is-yellow', 'Yellow - Heads up, common mistake'],
+          ['is-red', 'Red - Warning, cannot be undone'],
+          ['is-black', 'Black - SQL code to run']
+        ]
+      }
+    : {
+        aria: 'Chú thích màu',
+        title: 'CHÚ THÍCH MÀU',
+        close: 'Đóng',
+        items: [
+          ['is-blue', 'Xanh dương - Định nghĩa, khái niệm'],
+          ['is-green', 'Xanh lá - Khuyến nghị, cách làm đúng'],
+          ['is-yellow', 'Vàng - Lưu ý, lỗi dễ gặp'],
+          ['is-red', 'Đỏ - Cảnh báo, không thể hoàn tác'],
+          ['is-black', 'Đen - Code SQL để chạy']
+        ]
+      };
+
+  var fab = document.createElement('button');
+  fab.type = 'button';
+  fab.className = 'color-legend-fab';
+  fab.setAttribute('aria-label', LEGEND.aria);
+  fab.setAttribute('aria-expanded', 'false');
+  fab.innerHTML = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.3"/><circle cx="7.4" cy="7.8" r="1" fill="currentColor" stroke="none"/><circle cx="10.6" cy="6.3" r="1" fill="currentColor" stroke="none"/><circle cx="13" cy="8.8" r="1" fill="currentColor" stroke="none"/><circle cx="8.2" cy="12.4" r="1" fill="currentColor" stroke="none"/></svg>';
+
+  var itemsHtml = LEGEND.items.map(function (item) {
+    return '<li><span class="color-legend-dot ' + item[0] + '"></span> ' + item[1] + '</li>';
+  }).join('');
+
+  var popup = document.createElement('div');
+  popup.className = 'color-legend-popup';
+  popup.hidden = true;
+  popup.innerHTML =
+    '<div class="color-legend-popup-head"><span>' + LEGEND.title + '</span>' +
+    '<button type="button" class="color-legend-close" aria-label="' + LEGEND.close + '">✕</button></div>' +
+    '<ul class="color-legend-list">' + itemsHtml + '</ul>';
+
+  document.body.appendChild(fab);
+  document.body.appendChild(popup);
+
+  function closeLegend() {
+    popup.hidden = true;
+    fab.setAttribute('aria-expanded', 'false');
+  }
+  function openLegend() {
+    popup.hidden = false;
+    fab.setAttribute('aria-expanded', 'true');
+  }
+
+  fab.addEventListener('click', function () {
+    if (popup.hidden) openLegend(); else closeLegend();
+  });
+  popup.querySelector('.color-legend-close').addEventListener('click', closeLegend);
+  document.addEventListener('click', function (e) {
+    if (!popup.hidden && e.target !== fab && !popup.contains(e.target) && !fab.contains(e.target)) closeLegend();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeLegend();
+  });
+});

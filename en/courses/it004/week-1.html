@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
-  <link rel="stylesheet" href="../../../assets/css/course.css?v=44">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=45">
 </head>
 <body>
   <header class="topbar">
@@ -318,7 +318,7 @@ VALUES (104, N'Phạm Thị Dung', '20-05-2004', N'HTTT2022.1');</code></pre></d
 
           <h3>Dropping a Database</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DROP DATABASE QuanLySinhVien;</code></pre></div>
-          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Caution:</strong> This deletes the database and all data inside it. A database that is in use or has active connections cannot be dropped directly.</div>
+          <div class="inline-danger"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cannot be undone:</strong> This deletes the database and all data inside it. A database that is in use or has active connections cannot be dropped directly.</div>
         </section>
 
         <!-- 05 - Table -->
@@ -374,7 +374,7 @@ VALUES (104, N'Phạm Thị Dung', '20-05-2004', N'HTTT2022.1');</code></pre></d
 
           <h3>Dropping a Table</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DROP TABLE SinhVien;</code></pre></div>
-          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>When a Table is dropped, the data inside it is also deleted. A Table cannot be dropped while another table's <strong>Foreign Key</strong> still references it.</div>
+          <div class="inline-danger"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cannot be undone:</strong> When a Table is dropped, the data inside it is also deleted. A Table cannot be dropped while another table's <strong>Foreign Key</strong> still references it.</div>
 
           <h3>ALTER TABLE</h3>
           <p><code>ALTER TABLE</code> is used to change a Table's structure after it has been created.</p>
@@ -586,7 +586,7 @@ WHERE &lt;Condition&gt;;</code></pre></div>
           <p>Example - only the student with <code>MaSV = 101</code> is deleted:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien
 WHERE MaSV = 101;</code></pre></div>
-          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Extremely important:</strong> Without a <code>WHERE</code> clause -
+          <div class="inline-danger"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cannot be undone:</strong> Without a <code>WHERE</code> clause -
             <br><code>DELETE FROM SinhVien;</code>
             <br>➜ <strong>every row in the table gets deleted.</strong>
           </div>

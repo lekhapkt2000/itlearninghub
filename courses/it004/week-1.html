@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../assets/css/base.css?v=20">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=44">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=45">
 </head>
 <body>
   <header class="topbar">
@@ -314,7 +314,7 @@ VALUES (104, N'Phạm Thị Dung', '20-05-2004', N'HTTT2022.1');</code></pre></d
 
           <h3>Xóa Database</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DROP DATABASE QuanLySinhVien;</code></pre></div>
-          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cẩn thận:</strong> Thao tác này xóa Database và toàn bộ dữ liệu bên trong. Database đang được sử dụng hoặc còn kết nối không thể xóa trực tiếp.</div>
+          <div class="inline-danger"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Không thể hoàn tác:</strong> Thao tác này xóa Database và toàn bộ dữ liệu bên trong. Database đang được sử dụng hoặc còn kết nối không thể xóa trực tiếp.</div>
         </section>
 
         <!-- 05 - Table -->
@@ -370,7 +370,7 @@ VALUES (104, N'Phạm Thị Dung', '20-05-2004', N'HTTT2022.1');</code></pre></d
 
           <h3>Xóa Table</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DROP TABLE SinhVien;</code></pre></div>
-          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>Khi Table bị xóa, dữ liệu bên trong cũng bị xóa. Không thể xóa một Table nếu đang có <strong>Foreign Key</strong> từ Table khác tham chiếu đến nó.</div>
+          <div class="inline-danger"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Không thể hoàn tác:</strong> Khi Table bị xóa, dữ liệu bên trong cũng bị xóa. Không thể xóa một Table nếu đang có <strong>Foreign Key</strong> từ Table khác tham chiếu đến nó.</div>
 
           <h3>ALTER TABLE</h3>
           <p><code>ALTER TABLE</code> dùng để thay đổi cấu trúc của Table sau khi đã tạo.</p>
@@ -582,7 +582,7 @@ WHERE &lt;Điều kiện&gt;;</code></pre></div>
           <p>Ví dụ - Chỉ sinh viên có <code>MaSV = 101</code> bị xóa:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM SinhVien
 WHERE MaSV = 101;</code></pre></div>
-          <div class="inline-warning"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Cực kỳ quan trọng:</strong> Nếu không có <code>WHERE</code> -
+          <div class="inline-danger"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Không thể hoàn tác:</strong> Nếu không có <code>WHERE</code> -
             <br><code>DELETE FROM SinhVien;</code>
             <br>➜ <strong>tất cả các dòng trong bảng sẽ bị xóa.</strong>
           </div>

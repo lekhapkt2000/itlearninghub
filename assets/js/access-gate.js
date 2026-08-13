@@ -1,7 +1,6 @@
 (function () {
-  // TODO: replace with your deployed Google Apps Script Web App URL
-  // (script.google.com > Deploy > New deployment > Web app >
-  //  Execute as: Me, Who has access: Anyone > copy the /exec URL here)
+  // Deployed Google Apps Script Web App (script.google.com > Deploy >
+  // Manage deployments) backing the access-code validation.
   var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzl_MDfTRkxNExa--NscWG4HPI7ioAN0QImDGLDyk66UFuXaUo1Zrwi_qvwoIjrS5Vu/exec';
 
   // Apps Script Web Apps don't send an Access-Control-Allow-Origin header,

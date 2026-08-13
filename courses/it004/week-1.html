@@ -115,10 +115,9 @@
             <li>Đồng ý điều khoản license. Có thể bỏ chọn mục tự động kiểm tra cập nhật nếu không cần.</li>
             <li>Ở bước chọn tính năng (Feature Selection), chỉ cần tick <strong>Database Engine Services</strong> là đủ dùng cho môn học này.</li>
             <li>Instance ID giữ nguyên mặc định <code>MSSQLSERVER</code>.</li>
-            <li>Ở bước xác thực (Database Engine Configuration), chọn <strong>Mixed Mode</strong>, đặt mật khẩu cho tài khoản <code>sa</code>, và thêm tài khoản Windows hiện tại vào danh sách SQL Server Administrators.</li>
+            <li>Ở bước xác thực (Database Engine Configuration), giữ nguyên mặc định <strong>Windows Authentication Mode</strong> và bấm Next - không cần đổi sang Mixed Mode hay đặt mật khẩu <code>sa</code> cho việc thực hành cá nhân.</li>
             <li>Đợi cài đặt hoàn tất, kiểm tra các thành phần đã cài thành công rồi bấm <strong>Close</strong>.</li>
           </ol>
-          <div class="inline-warning"><strong>Bước dễ sai nhất:</strong> Ở bước xác thực, phải chọn <strong>Mixed Mode</strong> (không để mặc định "Windows Authentication mode") và <strong>nhớ kỹ mật khẩu tài khoản <code>sa</code></strong> - mật khẩu này dùng để đăng nhập SQL Server trong SSMS về sau. Quên bước này (hoặc quên mật khẩu) là nguyên nhân phổ biến nhất khiến không đăng nhập được vào SQL Server, phải gỡ cài đặt và làm lại từ đầu.</div>
 
           <h3>Cài đặt SQL Server Management Studio (SSMS)</h3>
           <ol class="question-list">

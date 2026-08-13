@@ -119,10 +119,9 @@
             <li>Accept the license terms. You can uncheck automatic update checks if you don't need them.</li>
             <li>On the Feature Selection step, checking <strong>Database Engine Services</strong> alone is enough for this course.</li>
             <li>Leave the Instance ID at its default, <code>MSSQLSERVER</code>.</li>
-            <li>On the authentication step (Database Engine Configuration), select <strong>Mixed Mode</strong>, set a password for the <code>sa</code> account, and add your current Windows account to the SQL Server Administrators list.</li>
+            <li>On the authentication step (Database Engine Configuration), leave it on the default <strong>Windows Authentication Mode</strong> and click Next - no need to switch to Mixed Mode or set an <code>sa</code> password for individual practice.</li>
             <li>Wait for the install to finish, verify the components installed successfully, then click <strong>Close</strong>.</li>
           </ol>
-          <div class="inline-warning"><strong>The step most people get wrong:</strong> On the authentication step, you must select <strong>Mixed Mode</strong> (not leave it on the default "Windows Authentication mode") and <strong>remember the <code>sa</code> account's password</strong> - you'll need it to log into SQL Server from SSMS later. Forgetting this step (or the password) is the most common reason students can't log into SQL Server and end up having to uninstall and start over.</div>
 
           <h3>Installing SQL Server Management Studio (SSMS)</h3>
           <ol class="question-list">

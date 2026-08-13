@@ -85,7 +85,7 @@
 .answer-cta-body{position:relative;z-index:1;flex:1;min-width:0}
 .answer-cta-body .eyebrow{color:#bfdbfe;margin-bottom:6px}
 .answer-cta-body h3{margin:0 0 6px;font-size:18px;color:#fff}
-.answer-cta-body p{margin:0;color:#eef2f8;font-size:12.5px;line-height:1.7;max-width:480px}
+.answer-cta-body p{margin:0;color:#ffffff;font-size:13.5px;font-weight:500;line-height:1.7;max-width:480px}
 .answer-cta .primary-button{position:relative;z-index:1;flex-shrink:0;white-space:nowrap}
 @media(max-width:680px){.answer-cta{flex-direction:column;align-items:flex-start}}
 

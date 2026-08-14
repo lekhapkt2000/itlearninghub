@@ -189,6 +189,8 @@
                 <option value="4">Tuần 4</option>
                 <option value="5">Tuần 5</option>
                 <option value="6">Tuần 6</option>
+                <option value="TD">Thi thử - Đề</option>
+                <option value="DA">Thi thử - Đáp án</option>
                 <option value="">Tất cả các tuần</option>
               </select>
               <p class="field-hint">Mã chỉ mở khóa được đúng tuần đã chọn. Chọn "Tất cả các tuần" nếu muốn 1 mã dùng được cho mọi tuần của môn này.</p>
@@ -454,7 +456,7 @@
         tr.innerHTML =
           '<td><code>' + escapeHtml(c.code) + '</code></td>' +
           '<td>' + escapeHtml(c.course) + '</td>' +
-          '<td>' + (c.week ? 'Tuần ' + escapeHtml(c.week) : 'Tất cả') + '</td>' +
+          '<td>' + (c.week === 'TD' ? 'Thi thử - Đề' : c.week === 'DA' ? 'Thi thử - Đáp án' : c.week ? 'Tuần ' + escapeHtml(c.week) : 'Tất cả') + '</td>' +
           '<td><span class="badge ' + (isActive ? 'badge-active' : 'badge-revoked') + '">' +
             (isActive ? 'Active' : 'Revoked') + '</span></td>' +
           '<td>' + escapeHtml(c.note) + '</td>' +

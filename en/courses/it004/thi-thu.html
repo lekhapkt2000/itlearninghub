@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="IT004 - Database Practice Mock Exam: the Resort Booking Management schema, 9 questions (database creation, constraints, Trigger, queries) with detailed answers, held in-class at the practice session.">
+  <title>Mock Exam · IT004</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=2">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=46">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions">
+        <div class="lang-switch"><a href="../../../courses/it004/thi-thu.html">VI</a><a href="index.html" class="active">EN</a></div>
+        <button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button>
+        <a class="outline-button" href="index.html">IT004 Overview <span>›</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IT004</a><span>/</span>Mock Exam</p>
+
+    <div class="week-header">
+      <span class="official-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg>OFFICIAL EXAM</span>
+      <span class="week-tag">DATABASE PRACTICE MOCK EXAM · IT004</span>
+      <h1>Database Practice Mock Exam</h1>
+      <div class="week-meta"><span>75 minutes</span><span>10 points</span><span>9 questions</span><span>Resort Booking Management</span></div>
+      <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px">This mock exam follows the exact structure of the official practice exam - Creating the database and keys (3 points), integrity constraints and Trigger (2 points), data queries (5 points). The exam is held <strong>in-class at the practice session</strong>; students may not use any reference material. Both the exam paper and the answer key require their own separate access code, provided by the instructor at the mock-exam session.</p>
+    </div>
+
+    <nav class="course-nav" aria-label="IT004 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <a href="week-6.html">Week 6</a>
+      <a href="thi-thu.html" class="active">Mock Exam</a>
+    </nav>
+
+    <div class="lesson-content" style="max-width:1000px;margin:0 auto">
+
+      <section class="lesson-section" style="padding-top:0;border-top:0" id="de-bai">
+        <p class="eyebrow">EXAM PAPER · ACCESS CODE REQUIRED</p>
+        <h2>View the exam paper</h2>
+
+        <div class="access-gate" data-access-course="IT004" data-access-week="TD" data-access-resource="thi-thu-de">
+          <div class="access-locked">
+            <div class="access-locked-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg></div>
+            <h3>Protected content</h3>
+            <p>Enter the access code to view the exam paper.</p>
+            <form class="access-form">
+              <input type="text" class="access-input" placeholder="Enter access code..." autocomplete="off" spellcheck="false" required>
+              <button type="submit" class="primary-button access-submit">Verify code <span>›</span></button>
+            </form>
+            <p class="access-error" role="alert"></p>
+            <p class="access-hint">The exam code is given by the instructor at the mock-exam session - Different from the answer-key code.</p>
+          </div>
+
+          <div class="access-unlocked" hidden>
+            <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified successfully - You now have access to the exam paper.</div>
+
+            <div class="inline-danger" style="margin-top:16px"><strong>No reference material is allowed.</strong> This mock exam mirrors the exact conditions of the real exam - No looking up theory, no referring to previous weeks' answers while working.</div>
+
+            <h3 style="margin-top:28px">Database schema "Resort Booking Management"</h3>
+            <p>Given a database schema with the following 6 relations:</p>
+
+            <div class="schema-def">
+              <p class="schema-def-head">PHONG (<u>MaPH</u>, LoaiPhong, GiaPhong, TinhTrangPhong, DienTich)</p>
+              <p class="schema-def-body"><em>Description:</em> Stores room information - Room code, room type, daily rate, room status, and area.</p>
+            </div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+              <tr><td><code>MaPH</code></td><td><code>char(5)</code></td><td>Room code - Primary key</td></tr>
+              <tr><td><code>LoaiPhong</code></td><td><code>varchar(50)</code></td><td>Room type (Deluxe, Suite, Standard, Superior,...)</td></tr>
+              <tr><td><code>GiaPhong</code></td><td><code>money</code></td><td>Daily room rate (VND)</td></tr>
+              <tr><td><code>TinhTrangPhong</code></td><td><code>varchar(20)</code></td><td>Room status (Vacant, Booked, Occupied, Under maintenance,...)</td></tr>
+              <tr><td><code>DienTich</code></td><td><code>float</code></td><td>Room area (m²)</td></tr>
+            </table></div>
+
+            <div class="schema-def">
+              <p class="schema-def-head">DICHVU (<u>MaDV</u>, TenDV, DonGia)</p>
+              <p class="schema-def-body"><em>Description:</em> Stores service information - Service code, service name, and unit price.</p>
+            </div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+              <tr><td><code>MaDV</code></td><td><code>char(5)</code></td><td>Service code - Primary key</td></tr>
+              <tr><td><code>TenDV</code></td><td><code>varchar(50)</code></td><td>Service name (Spa, Massage, Dining, Playground,...)</td></tr>
+              <tr><td><code>DonGia</code></td><td><code>money</code></td><td>Service unit price (VND)</td></tr>
+            </table></div>
+
+            <div class="schema-def">
+              <p class="schema-def-head">KHACHHANG (<u>MaKH</u>, HoTen, CCCD, NgaySinh, GioiTinh, SoDT, Email, DiaChi)</p>
+              <p class="schema-def-body"><em>Description:</em> Stores customer information - Customer code, full name, national ID number, date of birth, gender, phone number, email, and address.</p>
+            </div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+              <tr><td><code>MaKH</code></td><td><code>char(5)</code></td><td>Customer code - Primary key</td></tr>
+              <tr><td><code>HoTen</code></td><td><code>varchar(50)</code></td><td>Customer full name</td></tr>
+              <tr><td><code>CCCD</code></td><td><code>varchar(12)</code></td><td>National ID number</td></tr>
+              <tr><td><code>NgaySinh</code></td><td><code>smalldatetime</code></td><td>Customer date of birth</td></tr>
+              <tr><td><code>GioiTinh</code></td><td><code>varchar(10)</code></td><td>Customer gender</td></tr>
+              <tr><td><code>SoDT</code></td><td><code>varchar(15)</code></td><td>Phone number</td></tr>
+              <tr><td><code>Email</code></td><td><code>varchar(50)</code></td><td>Contact email</td></tr>
+              <tr><td><code>DiaChi</code></td><td><code>varchar(150)</code></td><td>Customer address</td></tr>
+            </table></div>
+
+            <div class="schema-def">
+              <p class="schema-def-head">DATPHONG (<u>MaDatPhong</u>, MaKH, MaPH, NgayDat, NgayCheckIn, NgayCheckOut, TrangThai)</p>
+              <p class="schema-def-body"><em>Description:</em> Stores booking information - Booking code, the customer who booked, the room booked, booking date, check-in date, check-out date, and booking status.</p>
+            </div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+              <tr><td><code>MaDatPhong</code></td><td><code>char(5)</code></td><td>Booking code - Primary key</td></tr>
+              <tr><td><code>MaKH</code></td><td><code>char(5)</code></td><td>Customer code who booked - Foreign key to KHACHHANG</td></tr>
+              <tr><td><code>MaPH</code></td><td><code>char(5)</code></td><td>Room code booked - Foreign key to PHONG</td></tr>
+              <tr><td><code>NgayDat</code></td><td><code>smalldatetime</code></td><td>Booking date</td></tr>
+              <tr><td><code>NgayCheckIn</code></td><td><code>smalldatetime</code></td><td>Check-in date</td></tr>
+              <tr><td><code>NgayCheckOut</code></td><td><code>smalldatetime</code></td><td>Check-out date</td></tr>
+              <tr><td><code>TrangThai</code></td><td><code>varchar(20)</code></td><td>Booking status (Confirmed, Cancelled, Occupied, Pending confirmation,...)</td></tr>
+            </table></div>
+
+            <div class="schema-def">
+              <p class="schema-def-head">THANHTOAN (<u>MaThanhToan</u>, MaDatPhong, SoTien, PTThanhToan, TTThanhToan, NgayThanhToan)</p>
+              <p class="schema-def-body"><em>Description:</em> Stores payment information - Payment code, the booking being paid, amount, payment method, status, and payment date.</p>
+            </div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+              <tr><td><code>MaThanhToan</code></td><td><code>char(5)</code></td><td>Payment code - Primary key</td></tr>
+              <tr><td><code>MaDatPhong</code></td><td><code>char(5)</code></td><td>Booking code being paid - Foreign key to DATPHONG</td></tr>
+              <tr><td><code>SoTien</code></td><td><code>money</code></td><td>Payment amount (VND)</td></tr>
+              <tr><td><code>PTThanhToan</code></td><td><code>varchar(20)</code></td><td>Payment method (Cash, Bank transfer, Voucher,...)</td></tr>
+              <tr><td><code>TTThanhToan</code></td><td><code>varchar(20)</code></td><td>Payment status (Paid, Unpaid, Partially paid,...)</td></tr>
+              <tr><td><code>NgayThanhToan</code></td><td><code>smalldatetime</code></td><td>Payment date</td></tr>
+            </table></div>
+
+            <div class="schema-def">
+              <p class="schema-def-head">CTDICHVU (<u>MaDatPhong, MaDV, NgaySuDung</u>, SoLuong, ThanhTien)</p>
+              <p class="schema-def-body"><em>Description:</em> Stores service usage details - Which booking used which service, on what date, quantity, and the amount charged. The primary key is the triple <code>(MaDatPhong, MaDV, NgaySuDung)</code>.</p>
+            </div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
+              <tr><td><code>MaDatPhong</code></td><td><code>char(5)</code></td><td>Booking code - Primary key, foreign key to DATPHONG</td></tr>
+              <tr><td><code>MaDV</code></td><td><code>char(5)</code></td><td>Service code used - Primary key, foreign key to DICHVU</td></tr>
+              <tr><td><code>NgaySuDung</code></td><td><code>smalldatetime</code></td><td>Date the service was used - Primary key</td></tr>
+              <tr><td><code>SoLuong</code></td><td><code>int</code></td><td>Quantity of the service used</td></tr>
+              <tr><td><code>ThanhTien</code></td><td><code>money</code></td><td>Total amount for the service used</td></tr>
+            </table></div>
+
+            <h3>Relationship diagram</h3>
+            <div class="er-diagram">
+              <svg viewBox="0 0 620 260" role="img" aria-label="KHACHHANG and PHONG are referenced by DATPHONG; DATPHONG is referenced by THANHTOAN and CTDICHVU; DICHVU is referenced by CTDICHVU">
+                <defs>
+                  <marker id="erArrowRS" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                    <path d="M0 0L10 5L0 10Z" style="fill:var(--primary)"/>
+                  </marker>
+                </defs>
+
+                <line x1="90" y1="46" x2="280" y2="90" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowRS)"/>
+                <line x1="530" y1="46" x2="340" y2="90" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowRS)"/>
+                <line x1="290" y1="126" x2="120" y2="170" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowRS)"/>
+                <line x1="310" y1="126" x2="310" y2="170" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowRS)"/>
+                <line x1="460" y1="188" x2="380" y2="188" style="stroke:var(--primary);stroke-width:2" marker-end="url(#erArrowRS)"/>
+
+                <rect x="20" y="10" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+                <text x="90" y="33" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">KHACHHANG</text>
+
+                <rect x="460" y="10" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+                <text x="530" y="33" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">PHONG</text>
+
+                <rect x="240" y="90" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+                <text x="310" y="113" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">DATPHONG</text>
+
+                <rect x="20" y="170" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+                <text x="90" y="193" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">THANHTOAN</text>
+
+                <rect x="240" y="170" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+                <text x="310" y="193" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">CTDICHVU</text>
+
+                <rect x="460" y="170" width="140" height="36" rx="6" style="fill:var(--surface);stroke:var(--line);stroke-width:1.5"/>
+                <text x="530" y="193" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">DICHVU</text>
+              </svg>
+            </div>
+            <p class="er-relation">KHACHHANG (1) ➜ DATPHONG (N): One customer can make many bookings.</p>
+            <p class="er-relation">PHONG (1) ➜ DATPHONG (N): One room can appear in many different bookings (at different time periods).</p>
+            <p class="er-relation">DATPHONG (1) ➜ THANHTOAN (N): One booking can have multiple payments (e.g. partial payments).</p>
+            <p class="er-relation">DATPHONG (1) ➜ CTDICHVU (N): One booking can use multiple services, on multiple different dates.</p>
+            <p class="er-relation">DICHVU (1) ➜ CTDICHVU (N): One service can be used by many different bookings.</p>
+
+            <div class="download-card">
+              <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
+              <div class="download-card-body">
+                <strong>Sample test data (QLRESORT)</strong>
+                <span>.sql file · Run after creating the database and 6 tables per Question 1</span>
+              </div>
+              <a class="dark-button" href="../../../assets/file/du-lieu-mau-thi-thu.sql" download>Download file <span>↓</span></a>
+            </div>
+
+            <details>
+              <summary>Preview sample data (PHONG, DICHVU)</summary>
+              <p class="ascii-label">PHONG (12 rows)</p>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>MaPH</th><th>LoaiPhong</th><th>GiaPhong</th><th>TinhTrangPhong</th><th>DienTich</th></tr>
+                <tr><td>PH001</td><td>Deluxe</td><td>5,200,000</td><td>Da dat</td><td>55</td></tr>
+                <tr><td>PH002</td><td>Deluxe</td><td>5,000,000</td><td>Trong</td><td>45</td></tr>
+                <tr><td>PH003</td><td>Suite</td><td>7,000,000</td><td>Da dat</td><td>35</td></tr>
+                <tr><td>PH004</td><td>Suite</td><td>7,000,000</td><td>Trong</td><td>35</td></tr>
+                <tr><td>PH005</td><td>Standard</td><td>1,500,000</td><td>Dang o</td><td>25</td></tr>
+                <tr><td>PH006</td><td>Standard</td><td>1,200,000</td><td>Dang o</td><td>22</td></tr>
+                <tr><td>PH007</td><td>Deluxe</td><td>5,200,000</td><td>Trong</td><td>58</td></tr>
+                <tr><td>PH008</td><td>Deluxe</td><td>8,000,000</td><td>Dang o</td><td>59</td></tr>
+                <tr><td>PH009</td><td>Suite</td><td>6,500,000</td><td>Trong</td><td>40</td></tr>
+                <tr><td>PH010</td><td>Standard</td><td>1,800,000</td><td>Dang bao tri</td><td>26</td></tr>
+                <tr><td>PH011</td><td>Superior</td><td>2,500,000</td><td>Dang o</td><td>30</td></tr>
+                <tr><td>PH012</td><td>Superior</td><td>3,000,000</td><td>Da dat</td><td>32</td></tr>
+              </table></div>
+              <p class="ascii-label">DICHVU (10 rows)</p>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>MaDV</th><th>TenDV</th><th>DonGia</th></tr>
+                <tr><td>DV001</td><td>Spa</td><td>800,000</td></tr>
+                <tr><td>DV002</td><td>Massage</td><td>500,000</td></tr>
+                <tr><td>DV003</td><td>An uong</td><td>300,000</td></tr>
+                <tr><td>DV004</td><td>Khu vui choi</td><td>400,000</td></tr>
+                <tr><td>DV005</td><td>Dua don san bay</td><td>700,000</td></tr>
+                <tr><td>DV006</td><td>Giat ui</td><td>200,000</td></tr>
+                <tr><td>DV007</td><td>Thue xe</td><td>900,000</td></tr>
+                <tr><td>DV008</td><td>Yoga buoi sang</td><td>600,000</td></tr>
+                <tr><td>DV009</td><td>Thue huong dan vien</td><td>1,200,000</td></tr>
+                <tr><td>DV010</td><td>Tham quan bien bang cano</td><td>1,500,000</td></tr>
+              </table></div>
+              <p style="color:var(--muted);font-size:12px">KHACHHANG (15 rows), DATPHONG (20 rows), THANHTOAN (20 rows), and CTDICHVU (37 rows) are only in the <code>du-lieu-mau-thi-thu.sql</code> file above - Too long to preview here, download the file to run it directly in SSMS.</p>
+            </details>
+
+            <h3 style="margin-top:32px">Exam requirements</h3>
+            <p>Students must complete the following requirements using SQL:</p>
+
+            <p><strong>Part 1 - Database creation (3 points)</strong></p>
+            <ol class="question-list">
+              <li>Create a database named "QLRESORT" containing the relations shown in the attribute table above. Declare primary keys and foreign keys. (3 points)</li>
+            </ol>
+
+            <p><strong>Part 2 - Integrity constraints (2 points)</strong></p>
+            <ol class="question-list">
+              <li>For rooms of type "Deluxe", the daily rate must be greater than 500,000 VND. (0.5 points)</li>
+              <li>A customer's phone number must start with the digit "0". (0.5 points)</li>
+              <li>Write a TRIGGER to check when data is inserted or updated into the CTDICHVU table. If the service usage date (NgaySuDung) does not fall within the stay period from NgayCheckIn to NgayCheckOut of the corresponding booking, the trigger must raise an error and cancel the transaction. (1 point)</li>
+            </ol>
+
+            <p><strong>Part 3 - Data queries (5 points)</strong></p>
+            <ol class="question-list">
+              <li>List the services (MaDV, TenDV) used in bookings during the first six months of 2025 with status "Confirmed" and booked for a room with a daily rate greater than 2,000,000 VND. (1 point)</li>
+              <li>Show the number of "Confirmed" bookings for each room during the period from 2024 to 2025. Display: MaPH, LoaiPhong, SoLanDat. Sort by SoLanDat in descending order. (1 point)</li>
+              <li>In 2025, identify the bookings (MaDatPhong) for "Deluxe" rooms that used both the "Spa" and "Massage" services on the check-in date (NgayCheckIn). (1 point)</li>
+              <li>Among the services with the highest total quantity used in Q3 2025, find the service used in the bookings with the lowest total service amount. Display: MaDV, TenDV, MaDatPhong, TongTienDichVu. (1 point)</li>
+              <li>List the services (MaDV, TenDV), excluding the service named "Massage", that are used by all 3 rooms with the highest total service amount among bookings with status "Confirmed". (1 point)</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="lesson-section" id="dap-an">
+        <p class="eyebrow">ANSWER KEY · SEPARATE ACCESS CODE REQUIRED</p>
+        <h2>View the answer key</h2>
+
+        <div class="access-gate" data-access-course="IT004" data-access-week="DA" data-access-resource="thi-thu-dapan">
+          <div class="access-locked">
+            <div class="access-locked-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg></div>
+            <h3>Protected content</h3>
+            <p>Enter the access code to view the answer key.</p>
+            <form class="access-form">
+              <input type="text" class="access-input" placeholder="Enter access code..." autocomplete="off" spellcheck="false" required>
+              <button type="submit" class="primary-button access-submit">Verify code <span>›</span></button>
+            </form>
+            <p class="access-error" role="alert"></p>
+            <p class="access-hint">The answer-key code is only given out after the exam period ends - Different from the exam-paper code.</p>
+          </div>
+
+          <div class="access-unlocked" hidden>
+            <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified successfully - You now have access to the answer key.</div>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Full answers for all 9 questions (10 points). Retype each one into SSMS yourself for better retention - The Copy button here is just for show.</p>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 1 · 3 POINTS · CREATE TABLE</p>
+              <p><strong>Question:</strong> Create a database named "QLRESORT" containing the relations shown in the attribute table above. Declare primary keys and foreign keys.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QLRESORT;
+GO
+USE QLRESORT;
+GO
+
+CREATE TABLE PHONG
+(
+    MaPH CHAR(5) PRIMARY KEY,
+    LoaiPhong VARCHAR(50),
+    GiaPhong MONEY,
+    TinhTrangPhong VARCHAR(20),
+    DienTich FLOAT
+);
+
+CREATE TABLE DICHVU
+(
+    MaDV CHAR(5) PRIMARY KEY,
+    TenDV VARCHAR(50),
+    DonGia MONEY
+);
+
+CREATE TABLE KHACHHANG
+(
+    MaKH CHAR(5) PRIMARY KEY,
+    HoTen VARCHAR(50),
+    CCCD VARCHAR(12),
+    NgaySinh SMALLDATETIME,
+    GioiTinh VARCHAR(10),
+    SoDT VARCHAR(15),
+    Email VARCHAR(50),
+    DiaChi VARCHAR(150)
+);
+
+CREATE TABLE DATPHONG
+(
+    MaDatPhong CHAR(5) PRIMARY KEY,
+    MaKH CHAR(5),
+    MaPH CHAR(5),
+    NgayDat SMALLDATETIME,
+    NgayCheckIn SMALLDATETIME,
+    NgayCheckOut SMALLDATETIME,
+    TrangThai VARCHAR(20),
+
+    FOREIGN KEY (MaKH) REFERENCES KHACHHANG(MaKH),
+    FOREIGN KEY (MaPH) REFERENCES PHONG(MaPH)
+);
+
+CREATE TABLE THANHTOAN
+(
+    MaThanhToan CHAR(5) PRIMARY KEY,
+    MaDatPhong CHAR(5),
+    SoTien MONEY,
+    PTThanhToan VARCHAR(20),
+    TTThanhToan VARCHAR(20),
+    NgayThanhToan SMALLDATETIME,
+
+    FOREIGN KEY (MaDatPhong) REFERENCES DATPHONG(MaDatPhong)
+);
+
+CREATE TABLE CTDICHVU
+(
+    MaDatPhong CHAR(5),
+    MaDV CHAR(5),
+    NgaySuDung SMALLDATETIME,
+    SoLuong INT,
+    ThanhTien MONEY,
+
+    PRIMARY KEY (MaDatPhong, MaDV, NgaySuDung),
+    FOREIGN KEY (MaDatPhong) REFERENCES DATPHONG(MaDatPhong),
+    FOREIGN KEY (MaDV) REFERENCES DICHVU(MaDV)
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT?</span><p>Create the 6 tables in strict foreign-key dependency order: <code>PHONG</code>, <code>DICHVU</code>, <code>KHACHHANG</code> depend on no other table so they are created first; <code>DATPHONG</code> references <code>KHACHHANG</code> and <code>PHONG</code> so it comes next; <code>THANHTOAN</code> and <code>CTDICHVU</code> reference <code>DATPHONG</code> so they come last.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>There is no pair of foreign keys referencing each other in a cycle (unlike some other schemas, e.g. KHOA↔GIAOVIEN), so no extra <code>ALTER TABLE</code> is needed afterward - Simply creating the tables in dependency order lets every foreign key be declared directly inside <code>CREATE TABLE</code>. The primary key of <code>CTDICHVU</code> is the triple <code>(MaDatPhong, MaDV, NgaySuDung)</code> because the same booking is allowed to use the same service on multiple different dates (each date is its own row).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2.1 · 0.5 POINTS · CHECK</p>
+              <p><strong>Question:</strong> For rooms of type "Deluxe", the daily rate must be greater than 500,000 VND.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE PHONG ADD CONSTRAINT CK_PHONG_Deluxe
+    CHECK (LoaiPhong <> 'Deluxe' OR GiaPhong > 500000);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT?</span><p><code>LoaiPhong &lt;&gt; 'Deluxe' OR GiaPhong &gt; 500000</code> is the classic "if...then..." CHECK pattern - If it isn't Deluxe, there's no constraint at all (the first clause is true); if it is Deluxe, the second clause must be true.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The constraint only applies to <strong>one specific room type</strong>, not the whole table - Writing <code>CHECK (GiaPhong &gt; 500000)</code> directly would force every room (including Standard and Superior) to have a minimum rate of 500,000, which is wrong since the requirement only limits Deluxe rooms. This is the technique of using implication (P ⟹ Q ⟺ ¬P ∨ Q) to express a conditional rule with <code>CHECK</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2.2 · 0.5 POINTS · CHECK ... LIKE</p>
+              <p><strong>Question:</strong> A customer's phone number must start with the digit "0".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_SoDT
+    CHECK (SoDT LIKE '0%');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT?</span><p><code>LIKE '0%'</code> matches any string starting with the character "0"; the <code>%</code> wildcard represents any remaining characters of any length.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>A "starts with" constraint is a string-format constraint, not a specific value or numeric range - <code>CHECK ... LIKE</code> is the right tool for this case, similar to Question 8 (Requirement 2 - Part I) of Week 1's Practice Exercise 1.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2.3 · 1 POINT · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Question:</strong> Write a TRIGGER to check when data is inserted or updated into the CTDICHVU table. If the service usage date (NgaySuDung) does not fall within the stay period from NgayCheckIn to NgayCheckOut of the corresponding booking, the trigger must raise an error and cancel the transaction.</p>
+              <h4>Impact-scope table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operations to catch</th><th>Why it can be violated</th></tr>
+                <tr><td><code>CTDICHVU</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Adding/editing a service-usage row whose <code>NgaySuDung</code> falls outside the stay period - This is exactly what the requirement asks to catch.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_INSERTUPDATE_CTDICHVU_NgaySuDung
+ON CTDICHVU
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN DATPHONG dp ON i.MaDatPhong = dp.MaDatPhong
+        WHERE i.NgaySuDung < dp.NgayCheckIn OR i.NgaySuDung > dp.NgayCheckOut
+    )
+    BEGIN
+        RAISERROR (N'Ngay su dung dich vu khong nam trong thoi gian luu tru!', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;
+GO</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT?</span><p><code>JOIN inserted</code> with <code>DATPHONG</code> on <code>MaDatPhong</code> to get the correct stay period for the corresponding booking; <code>IF EXISTS</code> checks the entire <code>inserted</code> table at once, so it stays correct whether <code>INSERT</code>/<code>UPDATE</code> affects 1 row or many.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This is an "outside the range" case, so it must be negated with <code>OR</code>: Earlier than <code>NgayCheckIn</code> <strong>or</strong> later than <code>NgayCheckOut</code> both count as a violation - It cannot be written as a single <code>BETWEEN</code> condition, because this Trigger raises an error when the condition is <em>not</em> satisfied, not when it is. <strong>Extension:</strong> The official answer only requires a Trigger on <code>CTDICHVU</code> (already worth the full point) - In practice, this constraint can still be broken if an <code>UPDATE</code> changes a <code>DATPHONG</code> row's <code>NgayCheckIn</code>/<code>NgayCheckOut</code> so that it no longer covers <code>NgaySuDung</code> values already recorded - Full protection would require an additional Trigger on <code>DATPHONG AFTER UPDATE</code>, but this is not required by the question.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3.1 · 1 POINT · JOIN</p>
+              <p><strong>Question:</strong> List the services (MaDV, TenDV) used in bookings during the first six months of 2025 with status "Confirmed" and booked for a room with a daily rate greater than 2,000,000 VND.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT DV.MaDV, TenDV
+FROM CTDICHVU CT
+JOIN DATPHONG DP ON CT.MaDatPhong = DP.MaDatPhong
+JOIN PHONG PH ON DP.MaPH = PH.MaPH
+JOIN DICHVU DV ON CT.MaDV = DV.MaDV
+WHERE YEAR(NgaySuDung) = 2025 AND MONTH(NgaySuDung) BETWEEN 1 AND 6
+  AND DP.TrangThai = 'Da xac nhan' AND GiaPhong > 2000000;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT?</span><p>4 consecutive <code>JOIN</code>s are needed to filter on 3 different entities: Service usage date (<code>CTDICHVU</code>), booking status (<code>DATPHONG</code>), room rate (<code>PHONG</code>); <code>DISTINCT</code> removes duplicates since the same service can be used by multiple different bookings.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"The first six months of 2025" filters on <code>NgaySuDung</code> (the service usage date), not <code>NgayDat</code> or <code>NgayCheckIn</code> - Read the question carefully to know exactly which column carries the time constraint, to avoid filtering on the wrong one.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3.2 · 1 POINT · GROUP BY ... ORDER BY</p>
+              <p><strong>Question:</strong> Show the number of "Confirmed" bookings for each room during the period from 2024 to 2025. Display: MaPH, LoaiPhong, SoLanDat. Sort by SoLanDat in descending order.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT PH.MaPH, LoaiPhong, COUNT(DP.MaDatPhong) AS SoLanDat
+FROM PHONG PH
+JOIN DATPHONG DP ON PH.MaPH = DP.MaPH
+WHERE DP.TrangThai = 'Da xac nhan' AND YEAR(DP.NgayDat) BETWEEN 2024 AND 2025
+GROUP BY PH.MaPH, LoaiPhong
+ORDER BY SoLanDat DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT?</span><p><code>COUNT(DP.MaDatPhong)</code> counts the filtered bookings per room; <code>GROUP BY</code> must list both <code>MaPH</code> and <code>LoaiPhong</code> since both appear in <code>SELECT</code> outside an aggregate function.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Starting the <code>JOIN</code> from <code>PHONG</code> (rather than <code>DATPHONG</code>) is purely a readability convention - An <code>INNER JOIN</code> doesn't care about table order, but here it makes sense because the question asks "for each room," so putting <code>PHONG</code> as the leading table makes the statement easier to read.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3.3 · 1 POINT · INTERSECT</p>
+              <p><strong>Question:</strong> In 2025, identify the bookings (MaDatPhong) for "Deluxe" rooms that used both the "Spa" and "Massage" services on the check-in date (NgayCheckIn).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT DP.MaDatPhong
+ FROM DATPHONG DP
+ JOIN PHONG PH ON DP.MaPH = PH.MaPH
+ JOIN CTDICHVU CT ON DP.MaDatPhong = CT.MaDatPhong
+ JOIN DICHVU DV ON CT.MaDV = DV.MaDV
+ WHERE PH.LoaiPhong = 'Deluxe' AND YEAR(DP.NgayCheckIn) = 2025
+   AND CT.NgaySuDung = DP.NgayCheckIn AND DV.TenDV = 'Spa')
+INTERSECT
+(SELECT DP.MaDatPhong
+ FROM DATPHONG DP
+ JOIN PHONG PH ON DP.MaPH = PH.MaPH
+ JOIN CTDICHVU CT ON DP.MaDatPhong = CT.MaDatPhong
+ JOIN DICHVU DV ON CT.MaDV = DV.MaDV
+ WHERE PH.LoaiPhong = 'Deluxe' AND YEAR(DP.NgayCheckIn) = 2025
+   AND CT.NgaySuDung = DP.NgayCheckIn AND DV.TenDV = 'Massage');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT?</span><p>2 structurally identical queries, differing only in the service name condition (Spa/Massage); <code>INTERSECT</code> takes the intersection of the 2 <code>MaDatPhong</code> sets, keeping only bookings that satisfy <strong>both</strong> sides.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>CT.NgaySuDung = DP.NgayCheckIn</code> is a required condition - The question asks for the service used exactly "on the check-in date," not at any point during the stay. With the sample data, the result set is <code>DP008</code> (Spa and Massage both used on 2025-01-18, exactly the check-in date) and <code>DP015</code> (Spa and Massage both used on 2025-07-08, exactly the check-in date) - <code>DP011</code> has both Spa and Massage but Massage was used 1 day off from <code>NgayCheckIn</code>, so it is excluded.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3.4 · 1 POINT · TOP WITH TIES</p>
+              <p><strong>Question:</strong> Among the services with the highest total quantity used in Q3 2025, find the service used in the bookings with the lowest total service amount. Display: MaDV, TenDV, MaDatPhong, TongTienDichVu.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DV.MaDV, TenDV, DP.MaDatPhong, SUM(ThanhTien) AS TongTienDichVu
+FROM CTDICHVU CT
+JOIN DATPHONG DP ON CT.MaDatPhong = DP.MaDatPhong
+JOIN DICHVU DV ON DV.MaDV = CT.MaDV
+WHERE DV.MaDV IN (
+    SELECT TOP 1 WITH TIES MaDV
+    FROM CTDICHVU
+    WHERE YEAR(NgaySuDung) = 2025 AND MONTH(NgaySuDung) BETWEEN 7 AND 9
+    GROUP BY MaDV
+    ORDER BY SUM(SoLuong) DESC
+)
+AND DP.MaDatPhong IN (
+    SELECT TOP 1 WITH TIES MaDatPhong
+    FROM CTDICHVU
+    WHERE YEAR(NgaySuDung) = 2025 AND MONTH(NgaySuDung) BETWEEN 7 AND 9
+    GROUP BY MaDatPhong
+    ORDER BY SUM(ThanhTien) ASC
+)
+GROUP BY DV.MaDV, TenDV, DP.MaDatPhong;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT?</span><p>2 independent subqueries, each handling exactly one side of the requirement: The first finds the service(s) with the highest total <code>SoLuong</code> in Q3 2025; the second finds the booking(s) with the lowest total <code>ThanhTien</code> in the same quarter - <code>TOP 1 WITH TIES</code> ensures ties are never missed.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This is the hardest question on the exam because it has <strong>2 independent "highest/lowest" criteria</strong> that must hold <em>simultaneously</em> - The service must be in the most-used group, and the booking that contains it must be in the lowest-spending group for that service. These cannot be combined into a single subquery because the 2 criteria are computed with 2 different <code>GROUP BY</code> keys (by <code>MaDV</code> and by <code>MaDatPhong</code>), so they must be split into 2 subqueries joined by <code>AND</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3.5 · 1 POINT · NOT EXISTS / TOP WITH TIES</p>
+              <p><strong>Question:</strong> List the services (MaDV, TenDV), excluding the service named "Massage", that are used by all 3 rooms with the highest total service amount among bookings with status "Confirmed".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DV.MaDV, DV.TenDV
+FROM CTDICHVU CT
+JOIN DICHVU DV ON CT.MaDV = DV.MaDV
+JOIN DATPHONG DP ON DP.MaDatPhong = CT.MaDatPhong
+WHERE DV.TenDV <> 'Massage'
+  AND DP.MaPH IN (
+      SELECT TOP 3 WITH TIES DP2.MaPH
+      FROM DATPHONG DP2
+      JOIN CTDICHVU CT2 ON DP2.MaDatPhong = CT2.MaDatPhong
+      WHERE DP2.TrangThai = 'Da xac nhan'
+      GROUP BY DP2.MaPH
+      ORDER BY SUM(CT2.ThanhTien) DESC
+  )
+GROUP BY DV.MaDV, DV.TenDV
+HAVING COUNT(DISTINCT DP.MaPH) = 3;</code></pre></div>
+              <details><summary>Alternative approach (NOT EXISTS)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT DV.MaDV, DV.TenDV
+FROM DICHVU DV
+WHERE DV.TenDV <> 'Massage'
+  AND NOT EXISTS (
+      SELECT *
+      FROM DATPHONG DP
+      WHERE DP.MaPH IN (
+          SELECT TOP 3 MaPH
+          FROM DATPHONG DP1
+          JOIN CTDICHVU CT1 ON DP1.MaDatPhong = CT1.MaDatPhong
+          WHERE DP1.TrangThai = 'Da xac nhan'
+          GROUP BY DP1.MaPH
+          ORDER BY SUM(CT1.ThanhTien) DESC
+      )
+      AND NOT EXISTS (
+          SELECT *
+          FROM DATPHONG DP2
+          JOIN CTDICHVU CT2 ON DP2.MaDatPhong = CT2.MaDatPhong
+          WHERE DP2.MaPH = DP.MaPH AND CT2.MaDV = DV.MaDV
+      )
+  );</code></pre></div>
+                <p>This is a division-style query - "There is no room in the Top-3-spending set where this service was never used" is equivalent to "this service was used at all 3 Top-3 rooms." This approach does not need <code>HAVING COUNT() = 3</code> because the double <code>NOT EXISTS</code> structure itself already guarantees full coverage of all 3 rooms.</p>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT?</span><p>The <code>TOP 3 WITH TIES</code> subquery finds the 3 rooms (possibly more if tied) with the highest service spending among "Confirmed" bookings; <code>HAVING COUNT(DISTINCT DP.MaPH) = 3</code> in the outer query ensures the service appears at <strong>all 3</strong> of those rooms, not just 1-2 of them.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Used by all 3 rooms" is a "for all" requirement over a specific, known subset (the 3 top rooms), unlike "used by at least 1 room" (which only needs <code>IN</code>) - Counting the distinct rooms the service matches and comparing to exactly 3 is what guarantees full coverage. This is also why <code>GROUP BY</code> + <code>HAVING COUNT DISTINCT</code> is the more intuitive way to express "for all over a known finite set," while the double <code>NOT EXISTS</code> division pattern (Alternative approach) is more general when the comparison set's exact size isn't known in advance.</p></div>
+              </div>
+            </div>
+
+            <button type="button" class="ghost-button access-logout">Log out of this section</button>
+          </div>
+        </div>
+      </section>
+
+      <nav class="week-nav-links" aria-label="Navigation">
+        <a href="week-6.html"><span class="nav-dir">‹ BACK</span><span class="nav-title">Week 6: Practice Review</span></a>
+        <a href="index.html" class="next"><span class="nav-dir">OVERVIEW ›</span><span class="nav-title">Back to IT004 home</span></a>
+      </nav>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><img class="brand-mark" src="../../../assets/img/logo-icon.png?v=1" alt=""><span>IT Learning<span> Hub</span></span></div>
+        <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+      <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=5"></script>
+  <script src="../../../assets/js/course.js?v=15"></script>
+  <script src="../../../assets/js/access-gate.js?v=2"></script>
+</body>
+</html>

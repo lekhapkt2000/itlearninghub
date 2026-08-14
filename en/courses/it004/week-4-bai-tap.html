@@ -32,7 +32,7 @@
     <div class="week-header">
       <span class="week-tag">WEEK 4 · PRACTICE EXERCISES</span>
       <h1>Exercises &amp; Answer Key</h1>
-      <div class="week-meta"><span>IT004</span><span>BTTH4</span><span>5 practice groups</span></div>
+      <div class="week-meta"><span>IT004</span><span>BTTH4</span><span>4 practice groups</span></div>
       <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px">The exercise statement is open to read freely. The answer key and detailed explanations are reserved for students currently enrolled in the IT004 practicum class and require an access code from the instructor.</p>
     </div>
 
@@ -40,28 +40,22 @@
 
       <section class="lesson-section" style="padding-top:0;border-top:0" id="de-bai">
         <p class="eyebrow">EXERCISE</p>
-        <h2>5 practice groups</h2>
-        <p>Following the official material, Week 4 uses Microsoft SQL Server to complete: <strong>Academic Affairs Management - Part I questions 1-11; Part II questions 1-4; Part III questions 1-35</strong>; and <strong>Sales Management - Part III questions 41-45</strong>. Full question details are in the PDF below.</p>
+        <h2>4 practice groups</h2>
+        <p>Following the official material, Week 4 uses Microsoft SQL Server to complete: <strong>Academic Affairs Management - Part I questions 1-11; Part II questions 1-4; Part III questions 1-35</strong>. Full question details are in the PDF below.</p>
         <ol class="question-list">
           <li><strong>Practice 01 - Extended functions:</strong> CAST, GETDATE, LEFT, RIGHT</li>
           <li><strong>Practice 02 - CASE:</strong> CASE WHEN, CASE expression, data classification</li>
           <li><strong>Practice 03 - Alias &amp; Subquery:</strong> Alias, Subquery in FROM/SELECT, Correlated Subquery</li>
           <li><strong>Practice 04 - Academic Affairs Management:</strong> Part I questions 1-11 · Part II questions 1-4 · Part III questions 1-35</li>
-          <li><strong>Practice 05 - Sales Management:</strong> Part III questions 41-45</li>
         </ol>
 
         <div class="download-card">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
           <div class="download-card-body">
             <strong>Full exercise - Week 4 practice (BTTH4)</strong>
-            <span>PDF file · Academic Affairs Management and Sales Management</span>
+            <span>PDF file · Academic Affairs Management</span>
           </div>
           <a class="dark-button" href="../../../assets/file/BTTH4-tuan4-co-so-du-lieu.pdf" download>Download <span>↓</span></a>
-        </div>
-
-        <div class="inline-ok" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
-          <span>The "Sales Management - Part III questions 41-45" section uses the shared <strong>Sales Management</strong> schema - see the full attributes, sample data, and database script.</span>
-          <a class="outline-button" href="schema-quan-ly-ban-hang.html">View schema <span>›</span></a>
         </div>
 
         <h3>Practice 04 - Academic Affairs Management (details)</h3>
@@ -155,37 +149,308 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified - you now have access to the Week 4 answer.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Below is a sample question to illustrate how the answer is presented - it will be replaced with the real BTTH4 solution.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Full answer key for Practice 04 - Academic Affairs Management (Part I 11 questions · Part II 4 questions · Part III 35 questions). Retype each answer into SSMS to remember it better - the Copy button here is purely for convenience.</p>
 
             <div class="qa-block">
-              <p class="eyebrow">QUESTION 1 (SAMPLE) · CASE WHEN</p>
-              <h3>Classify members by number of sessions</h3>
-              <p><strong>Exercise:</strong> Label members: fewer than 5 sessions is "Mới", 5-20 sessions is "Thường xuyên", over 20 sessions is "Tích cực".</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen,
-    CASE
-        WHEN SoBuoiTap < 5 THEN N'Mới'
-        WHEN SoBuoiTap <= 20 THEN N'Thường xuyên'
-        ELSE N'Tích cực'
-    END AS PhanLoai
-FROM HocVien;</code></pre></div>
+              <p class="eyebrow">QUESTION 1 (PART I) · CREATE TABLE</p>
+              <p><strong>Exercise:</strong> Create the relations and declare all primary key and foreign key constraints. Add the 3 attributes <code>GHICHU</code>, <code>DIEMTB</code>, <code>XEPLOAI</code> to the relation <code>HOCVIEN</code>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QUANLIGIAOVU_2026;
+GO
+USE QUANLIGIAOVU_2026;
+GO
+
+CREATE TABLE KHOA
+(
+    MAKHOA CHAR(4) PRIMARY KEY,
+    TENKHOA VARCHAR(40),
+    NGTLAP SMALLDATETIME,
+    TRGKHOA CHAR(4)
+);
+
+CREATE TABLE GIAOVIEN
+(
+    MAGV CHAR(4) PRIMARY KEY,
+    HOTEN VARCHAR(40),
+    HOCVI VARCHAR(10),
+    HOCHAM VARCHAR(10),
+    GIOITINH VARCHAR(3),
+    NGSINH SMALLDATETIME,
+    NGVL SMALLDATETIME,
+    HESO NUMERIC(4,2),
+    MUCLUONG MONEY,
+    MAKHOA CHAR(4),
+
+    FOREIGN KEY (MAKHOA) REFERENCES KHOA(MAKHOA)
+);
+
+ALTER TABLE KHOA ADD CONSTRAINT FK_KHOA_TRGKHOA
+    FOREIGN KEY (TRGKHOA) REFERENCES GIAOVIEN(MAGV);
+
+CREATE TABLE LOP
+(
+    MALOP CHAR(3) PRIMARY KEY,
+    TENLOP VARCHAR(40),
+    TRGLOP CHAR(5),
+    SISO TINYINT,
+    MAGVCN CHAR(4),
+
+    FOREIGN KEY (MAGVCN) REFERENCES GIAOVIEN(MAGV)
+);
+
+CREATE TABLE HOCVIEN
+(
+    MAHV CHAR(5) PRIMARY KEY,
+    HO VARCHAR(40),
+    TEN VARCHAR(10),
+    NGSINH SMALLDATETIME,
+    GIOITINH VARCHAR(3),
+    NOISINH VARCHAR(40),
+    MALOP CHAR(3),
+    GHICHU VARCHAR(20),
+    DIEMTB NUMERIC(4,2),
+    XEPLOAI VARCHAR(5),
+
+    FOREIGN KEY (MALOP) REFERENCES LOP(MALOP)
+);
+
+ALTER TABLE LOP ADD CONSTRAINT FK_LOP_TRGLOP
+    FOREIGN KEY (TRGLOP) REFERENCES HOCVIEN(MAHV);
+
+CREATE TABLE MONHOC
+(
+    MAMH CHAR(10) PRIMARY KEY,
+    TENMH VARCHAR(40),
+    TCLT TINYINT,
+    TCTH TINYINT,
+    MAKHOA CHAR(4),
+
+    FOREIGN KEY (MAKHOA) REFERENCES KHOA(MAKHOA)
+);
+
+CREATE TABLE DIEUKIEN
+(
+    MAMH CHAR(10),
+    MAMH_TRUOC CHAR(10),
+
+    PRIMARY KEY (MAMH, MAMH_TRUOC),
+    FOREIGN KEY (MAMH) REFERENCES MONHOC(MAMH),
+    FOREIGN KEY (MAMH_TRUOC) REFERENCES MONHOC(MAMH)
+);
+
+CREATE TABLE GIANGDAY
+(
+    MALOP CHAR(3),
+    MAMH CHAR(10),
+    MAGV CHAR(4),
+    HOCKY TINYINT,
+    NAM SMALLINT,
+    TUNGAY SMALLDATETIME,
+    DENNGAY SMALLDATETIME,
+
+    PRIMARY KEY (MALOP, MAMH),
+    FOREIGN KEY (MALOP) REFERENCES LOP(MALOP),
+    FOREIGN KEY (MAMH) REFERENCES MONHOC(MAMH),
+    FOREIGN KEY (MAGV) REFERENCES GIAOVIEN(MAGV)
+);
+
+CREATE TABLE KETQUATHI
+(
+    MAHV CHAR(5),
+    MAMH CHAR(10),
+    LANTHI TINYINT,
+    NGTHI SMALLDATETIME,
+    DIEM NUMERIC(4,2),
+    KQUA VARCHAR(10),
+
+    PRIMARY KEY (MAHV, MAMH, LANTHI),
+    FOREIGN KEY (MAHV) REFERENCES HOCVIEN(MAHV),
+    FOREIGN KEY (MAMH) REFERENCES MONHOC(MAMH)
+);</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>CASE WHEN</code> is a conditional expression that returns different values depending on the condition, used directly inside <code>SELECT</code>.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>Rows need to be labeled based on several different value ranges right within each row - <code>CASE WHEN</code> handles this neatly in 1 statement, instead of running multiple separate <code>UPDATE</code>/<code>IF</code> statements.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>All 8 relations are created with <code>CREATE TABLE</code>; foreign keys are declared right in the column definitions once the referenced table already exists. The 3 new columns <code>GHICHU</code>, <code>DIEMTB</code>, <code>XEPLOAI</code> are added straight into <code>HOCVIEN</code> at creation time.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Table creation order must follow the foreign key dependency chain - <code>GIAOVIEN</code> waits for <code>KHOA</code>, <code>HOCVIEN</code> waits for <code>LOP</code>. <code>KHOA.TRGKHOA</code> ↔ <code>GIAOVIEN.MAKHOA</code> and <code>LOP.TRGLOP</code> ↔ <code>HOCVIEN.MALOP</code> reference each other in a cycle, so both foreign keys can't be declared at once inside <code>CREATE TABLE</code> - One direction has to be created first, then <code>ALTER TABLE ADD CONSTRAINT</code> adds the other direction once the other table exists.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">QUESTION 2 (SAMPLE) · SUBQUERY</p>
-              <h3>Members training above the average</h3>
-              <p><strong>Exercise:</strong> Find the members whose number of sessions is higher than the average number of sessions across all members.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, SoBuoiTap
-FROM HocVien
-WHERE SoBuoiTap > (
-    SELECT AVG(SoBuoiTap) FROM HocVien
+              <p class="eyebrow">QUESTION 2 (PART I) · CHECK ... IN</p>
+              <p><strong>Exercise:</strong> The attribute <code>GIOITINH</code> may only hold "Nam" or "Nu".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE HOCVIEN ADD CONSTRAINT CK_HOCVIEN_GIOITINH
+    CHECK (GIOITINH IN (N'Nam', N'Nu'));
+ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_GIOITINH
+    CHECK (GIOITINH IN (N'Nam', N'Nu'));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>CHECK ... IN</code> restricts a column to exactly the 2 listed values, regardless of which table the column belongs to.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>GIOITINH</code> appears in both <code>HOCVIEN</code> and <code>GIAOVIEN</code> in this schema, and the question doesn't specify which relation - the constraint is applied to both so the data stays consistent everywhere the column appears.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3 (PART I) · CHECK</p>
+              <p><strong>Exercise:</strong> An exam score must be between 0 and 10 and needs to be stored with 2 decimal places (e.g. 6.22).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KETQUATHI ADD CONSTRAINT CK_KETQUATHI_DIEM
+    CHECK (DIEM BETWEEN 0 AND 10);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>BETWEEN 0 AND 10</code> limits the value to a closed range - both 0 and 10 are valid.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The "2 decimal places" part is already satisfied by the <code>NUMERIC(4,2)</code> type declared for <code>DIEM</code> in Question 1 (4 digits total, 2 after the decimal point) - This question only still needs the 0-10 range constraint.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 4 (PART I) · CHECK</p>
+              <p><strong>Exercise:</strong> The exam result is "Dat" if the score is from 5 to 10, and "Khong dat" if the score is below 5.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KETQUATHI ADD CONSTRAINT CK_KETQUATHI_KQUA
+    CHECK (
+        (DIEM >= 5 AND KQUA = N'Dat')
+        OR (DIEM < 5 AND KQUA = N'Khong dat')
+    );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>CHECK</code> constrains the relationship between 2 columns in the same row - here <code>DIEM</code> and <code>KQUA</code> must always agree.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The 2 conditions can't be split into 2 separate <code>CHECK</code> constraints because they depend on each other (whether <code>KQUA</code> is correct depends on <code>DIEM</code>) - Combining both cases in 1 <code>CHECK</code> with <code>OR</code> keeps the data consistent no matter how high or low <code>DIEM</code> is.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 5 (PART I) · CHECK</p>
+              <p><strong>Exercise:</strong> A student may take an exam for a given subject at most 3 times.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KETQUATHI ADD CONSTRAINT CK_KETQUATHI_LANTHI
+    CHECK (LANTHI BETWEEN 1 AND 3);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Restricts <code>LANTHI</code> to only 1, 2, or 3.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The primary key <code>(MAHV, MAMH, LANTHI)</code> already guarantees no duplicate attempt number for a given (student, subject) pair - combined with the <code>CHECK</code> capping <code>LANTHI</code> at 3, a student can have at most 3 exam result rows for the same subject.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 6 (PART I) · CHECK</p>
+              <p><strong>Exercise:</strong> The semester value can only be from 1 to 3.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIANGDAY ADD CONSTRAINT CK_GIANGDAY_HOCKY
+    CHECK (HOCKY BETWEEN 1 AND 3);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Same technique as Question 5, applied to the <code>HOCKY</code> column of <code>GIANGDAY</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>An academic year has only 3 semesters at this training center - <code>BETWEEN 1 AND 3</code> blocks any invalid semester value right at data entry.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 7 (PART I) · CHECK ... IN</p>
+              <p><strong>Exercise:</strong> A teacher's degree can only be one of "CN", "KS", "Ths", "TS", "PTS".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_HOCVI
+    CHECK (HOCVI IN (N'CN', N'KS', N'Ths', N'TS', N'PTS'));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>CHECK ... IN</code> with a closed list of 5 valid degrees.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question lists exactly 5 degrees, with no trailing "…" - this is a closed list, so <code>IN (...)</code> is the right fit.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 8 (PART I) · CHECK ... GETDATE</p>
+              <p><strong>Exercise:</strong> A student must be at least 18 years old.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE HOCVIEN ADD CONSTRAINT CK_HOCVIEN_TUOI
+    CHECK (NGSINH <= DATEADD(YEAR, -18, GETDATE()));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>DATEADD(YEAR, -18, GETDATE())</code> computes the date exactly 18 years before today; a valid student must be born on or before that date.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>SQL Server allows a <code>CHECK</code> to reference <code>GETDATE()</code>, but the constraint is only evaluated at <code>INSERT</code>/<code>UPDATE</code> time - a student who was valid when inserted stays in the table as-is even as time passes; <code>CHECK</code> does not automatically re-scan existing rows.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 9 (PART I) · CHECK</p>
+              <p><strong>Exercise:</strong> For a course being taught, the start date (<code>TUNGAY</code>) must be earlier than the end date (<code>DENNGAY</code>).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIANGDAY ADD CONSTRAINT CK_GIANGDAY_NGAY
+    CHECK (TUNGAY < DENNGAY);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>A direct comparison between 2 date columns in the same row.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>A course can't end before it starts - this constraint keeps the teaching period logically valid.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 10 (PART I) · CHECK</p>
+              <p><strong>Exercise:</strong> A teacher must be at least 22 years old when hired.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_TUOI_VAOLAM
+    CHECK (NGVL >= DATEADD(YEAR, 22, NGSINH));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>DATEADD(YEAR, 22, NGSINH)</code> computes the date the teacher turns 22; <code>NGVL</code> must be on or after that date.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Unlike Question 8, this constraint compares 2 columns within the same row (<code>NGSINH</code> and <code>NGVL</code>) instead of against <code>GETDATE()</code> - so it stays correct and stable forever, without going stale the way a current-date <code>CHECK</code> would.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 11 (PART I) · CHECK ... ABS</p>
+              <p><strong>Exercise:</strong> For every subject, the theory credit count and the practice credit count may not differ by more than 3.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE MONHOC ADD CONSTRAINT CK_MONHOC_TC
+    CHECK (ABS(TCLT - TCTH) <= 3);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>ABS(...)</code> takes the absolute value, so the difference is computed correctly whether <code>TCLT</code> is larger or smaller than <code>TCTH</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question only says the difference "may not exceed 3" without caring which side is larger - writing <code>TCLT - TCTH <= 3</code> without <code>ABS</code> would let a case where <code>TCTH</code> is much larger than <code>TCLT</code> slip through, which contradicts the intended meaning.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 1 (PART II) · UPDATE ... SUBQUERY</p>
+              <p><strong>Exercise:</strong> Increase the salary coefficient by 0.2 for teachers who are department heads.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE GIAOVIEN
+SET HESO = HESO + 0.2
+WHERE MAGV IN (
+    SELECT TRGKHOA FROM KHOA WHERE TRGKHOA IS NOT NULL
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p>A subquery placed in parentheses; here it returns exactly 1 value (the average) for the outer query to compare against in <code>WHERE</code>.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>The average value must be computed first - you can't compute <code>AVG</code> and compare it against each row within the same <code>SELECT</code> at once, so it has to be split into a subquery that runs first.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The subquery gets every <code>MAGV</code> that is currently the <code>TRGKHOA</code> of any department; <code>IN</code> filters the <code>UPDATE</code> to exactly those teachers.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>TRGKHOA</code> can be <code>NULL</code> (the KTMT department has no department head yet). With <code>IN</code>, filtering out <code>NULL</code> isn't strictly required since <code>NULL</code> never matches but also never causes a wrong result - however it's a good habit to keep the <code>IS NOT NULL</code> filter, because if this were switched to <code>NOT IN</code> in another exercise, a <code>NULL</code> in the list would make the whole statement return nothing - a very easy mistake to make.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2 (PART II) · UPDATE ... CORRELATED SUBQUERY</p>
+              <p><strong>Exercise:</strong> Update the average score (<code>DIEMTB</code>) across all subjects for each student (every subject has weight 1, and if a student has taken an exam multiple times, only the score from the most recent attempt counts).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE HOCVIEN
+SET DIEMTB = (
+    SELECT AVG(kq.DIEM)
+    FROM KETQUATHI kq
+    WHERE kq.MAHV = HOCVIEN.MAHV
+      AND kq.LANTHI = (
+          SELECT MAX(kq2.LANTHI)
+          FROM KETQUATHI kq2
+          WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
+      )
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The inner subquery uses <code>MAX(LANTHI)</code> to keep only the most recent attempt for each (<code>MAHV</code>, <code>MAMH</code>) pair; the outer subquery runs <code>AVG(DIEM)</code> over exactly that filtered set for each student.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>You can't run <code>AVG(DIEM)</code> directly over the whole <code>KETQUATHI</code> table, since a student can have multiple rows for the same subject (retakes) - without filtering to the most recent attempt, the average would be skewed by earlier failed attempts too.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3 (PART II) · UPDATE ... SUBQUERY</p>
+              <p><strong>Exercise:</strong> Update the <code>GHICHU</code> column to "Cam thi" for the case where: a student scores below 5 on their 3rd attempt at any subject.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE HOCVIEN
+SET GHICHU = N'Cam thi'
+WHERE MAHV IN (
+    SELECT MAHV
+    FROM KETQUATHI
+    WHERE LANTHI = 3 AND DIEM < 5
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The subquery gets the <code>MAHV</code> of every 3rd-attempt result scoring below 5; <code>IN</code> then flags exactly those students.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Just 1 qualifying subject is enough to trigger "Cam thi" ("any subject") - no <code>GROUP BY</code> or counting is needed, the student just has to appear at least once in the filtered result set.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 4 (PART II) · UPDATE ... CASE WHEN</p>
+              <p><strong>Exercise:</strong> Update the <code>XEPLOAI</code> column in the relation <code>HOCVIEN</code> as follows: "XS" if <code>DIEMTB</code> ≥ 9 · "G" if 8 ≤ <code>DIEMTB</code> &lt; 9 · "K" if 6.5 ≤ <code>DIEMTB</code> &lt; 8 · "TB" if 5 ≤ <code>DIEMTB</code> &lt; 6.5 · "Y" if <code>DIEMTB</code> &lt; 5.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE HOCVIEN
+SET XEPLOAI = CASE
+    WHEN DIEMTB >= 9 THEN N'XS'
+    WHEN DIEMTB >= 8 THEN N'G'
+    WHEN DIEMTB >= 6.5 THEN N'K'
+    WHEN DIEMTB >= 5 THEN N'TB'
+    ELSE N'Y'
+END;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>CASE WHEN</code> checks conditions in order from the highest threshold down - SQL Server stops at the first true condition, so each branch doesn't need to spell out both an upper and a lower bound.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>For example the "G" branch only needs <code>DIEMTB >= 8</code>, without an extra <code>AND DIEMTB < 9</code> - because if <code>DIEMTB</code> were really ≥ 9, the "XS" branch above it would already have matched first and <code>CASE</code> would have stopped there. Adding an upper-bound condition would be redundant.</p></div>
               </div>
             </div>
 

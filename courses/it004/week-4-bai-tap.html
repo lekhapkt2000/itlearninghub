@@ -32,7 +32,7 @@
     <div class="week-header">
       <span class="week-tag">TUẦN 4 · BÀI TẬP THỰC HÀNH</span>
       <h1>Bài tập &amp; đáp án</h1>
-      <div class="week-meta"><span>IT004</span><span>BTTH4</span><span>5 nhóm bài thực hành</span></div>
+      <div class="week-meta"><span>IT004</span><span>BTTH4</span><span>4 nhóm bài thực hành</span></div>
       <p style="max-width:640px;color:var(--muted);font-size:13px;margin-top:10px">Đề bài đọc tự do. Phần đáp án và giải thích chi tiết chỉ dành cho sinh viên đang học lớp thực hành IT004, cần mã truy cập từ giảng viên.</p>
     </div>
 
@@ -40,28 +40,22 @@
 
       <section class="lesson-section" style="padding-top:0;border-top:0" id="de-bai">
         <p class="eyebrow">ĐỀ BÀI</p>
-        <h2>5 nhóm bài thực hành</h2>
-        <p>Theo tài liệu chính thức, Tuần 4 sử dụng Microsoft SQL Server và thực hiện: <strong>Quản lý giáo vụ - Phần I câu 1-11; Phần II câu 1-4; Phần III câu 1-35</strong>; và <strong>Quản lý bán hàng - Phần III câu 41-45</strong>. Đề bài chi tiết trong file PDF bên dưới.</p>
+        <h2>4 nhóm bài thực hành</h2>
+        <p>Theo tài liệu chính thức, Tuần 4 sử dụng Microsoft SQL Server và thực hiện: <strong>Quản lý giáo vụ - Phần I câu 1-11; Phần II câu 1-4; Phần III câu 1-35</strong>. Đề bài chi tiết trong file PDF bên dưới.</p>
         <ol class="question-list">
           <li><strong>Practice 01 - Hàm mở rộng:</strong> CAST, GETDATE, LEFT, RIGHT</li>
           <li><strong>Practice 02 - CASE:</strong> CASE WHEN, CASE expression, phân loại dữ liệu</li>
           <li><strong>Practice 03 - Alias &amp; Subquery:</strong> Alias, Subquery trong FROM/SELECT, Correlated Subquery</li>
           <li><strong>Practice 04 - Quản lý giáo vụ:</strong> Phần I câu 1-11 · Phần II câu 1-4 · Phần III câu 1-35</li>
-          <li><strong>Practice 05 - Quản lý bán hàng:</strong> Phần III câu 41-45</li>
         </ol>
 
         <div class="download-card">
           <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span>
           <div class="download-card-body">
             <strong>Đề bài đầy đủ - Bài tập thực hành Tuần 4 (BTTH4)</strong>
-            <span>File PDF · Quản lý giáo vụ và Quản lý bán hàng</span>
+            <span>File PDF · Quản lý giáo vụ</span>
           </div>
           <a class="dark-button" href="../../assets/file/BTTH4-tuan4-co-so-du-lieu.pdf" download>Tải file <span>↓</span></a>
-        </div>
-
-        <div class="inline-ok" style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
-          <span>Phần "Quản lý bán hàng - Phần III câu 41-45" dùng lược đồ dùng chung <strong>Quản lý bán hàng</strong> - Xem đầy đủ thuộc tính, dữ liệu mẫu và script CSDL.</span>
-          <a class="outline-button" href="schema-quan-ly-ban-hang.html">Xem lược đồ <span>›</span></a>
         </div>
 
         <h3>Practice 04 - Quản lý giáo vụ (chi tiết)</h3>
@@ -155,37 +149,308 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 4.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Bên dưới là câu hỏi mẫu để minh họa cách trình bày đáp án - Sẽ được thay bằng lời giải thật của BTTH4.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án đầy đủ cho Practice 04 - Quản lý giáo vụ (Phần I 11 câu · Phần II 4 câu · Phần III 35 câu). Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - Nút Copy ở đây chỉ mang tính hình thức thôi.</p>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 1 (MẪU) · CASE WHEN</p>
-              <h3>Phân loại học viên theo số buổi tập</h3>
-              <p><strong>Đề bài:</strong> Gán nhãn học viên: Dưới 5 buổi là "Mới", từ 5-20 buổi là "Thường xuyên", trên 20 buổi là "Tích cực".</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen,
-    CASE
-        WHEN SoBuoiTap < 5 THEN N'Mới'
-        WHEN SoBuoiTap <= 20 THEN N'Thường xuyên'
-        ELSE N'Tích cực'
-    END AS PhanLoai
-FROM HocVien;</code></pre></div>
+              <p class="eyebrow">CÂU 1 (PHẦN I) · CREATE TABLE</p>
+              <p><strong>Đề bài:</strong> Tạo quan hệ và khai báo tất cả các ràng buộc khóa chính, khóa ngoại. Thêm vào 3 thuộc tính <code>GHICHU</code>, <code>DIEMTB</code>, <code>XEPLOAI</code> cho quan hệ <code>HOCVIEN</code>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QUANLIGIAOVU_2026;
+GO
+USE QUANLIGIAOVU_2026;
+GO
+
+CREATE TABLE KHOA
+(
+    MAKHOA CHAR(4) PRIMARY KEY,
+    TENKHOA VARCHAR(40),
+    NGTLAP SMALLDATETIME,
+    TRGKHOA CHAR(4)
+);
+
+CREATE TABLE GIAOVIEN
+(
+    MAGV CHAR(4) PRIMARY KEY,
+    HOTEN VARCHAR(40),
+    HOCVI VARCHAR(10),
+    HOCHAM VARCHAR(10),
+    GIOITINH VARCHAR(3),
+    NGSINH SMALLDATETIME,
+    NGVL SMALLDATETIME,
+    HESO NUMERIC(4,2),
+    MUCLUONG MONEY,
+    MAKHOA CHAR(4),
+
+    FOREIGN KEY (MAKHOA) REFERENCES KHOA(MAKHOA)
+);
+
+ALTER TABLE KHOA ADD CONSTRAINT FK_KHOA_TRGKHOA
+    FOREIGN KEY (TRGKHOA) REFERENCES GIAOVIEN(MAGV);
+
+CREATE TABLE LOP
+(
+    MALOP CHAR(3) PRIMARY KEY,
+    TENLOP VARCHAR(40),
+    TRGLOP CHAR(5),
+    SISO TINYINT,
+    MAGVCN CHAR(4),
+
+    FOREIGN KEY (MAGVCN) REFERENCES GIAOVIEN(MAGV)
+);
+
+CREATE TABLE HOCVIEN
+(
+    MAHV CHAR(5) PRIMARY KEY,
+    HO VARCHAR(40),
+    TEN VARCHAR(10),
+    NGSINH SMALLDATETIME,
+    GIOITINH VARCHAR(3),
+    NOISINH VARCHAR(40),
+    MALOP CHAR(3),
+    GHICHU VARCHAR(20),
+    DIEMTB NUMERIC(4,2),
+    XEPLOAI VARCHAR(5),
+
+    FOREIGN KEY (MALOP) REFERENCES LOP(MALOP)
+);
+
+ALTER TABLE LOP ADD CONSTRAINT FK_LOP_TRGLOP
+    FOREIGN KEY (TRGLOP) REFERENCES HOCVIEN(MAHV);
+
+CREATE TABLE MONHOC
+(
+    MAMH CHAR(10) PRIMARY KEY,
+    TENMH VARCHAR(40),
+    TCLT TINYINT,
+    TCTH TINYINT,
+    MAKHOA CHAR(4),
+
+    FOREIGN KEY (MAKHOA) REFERENCES KHOA(MAKHOA)
+);
+
+CREATE TABLE DIEUKIEN
+(
+    MAMH CHAR(10),
+    MAMH_TRUOC CHAR(10),
+
+    PRIMARY KEY (MAMH, MAMH_TRUOC),
+    FOREIGN KEY (MAMH) REFERENCES MONHOC(MAMH),
+    FOREIGN KEY (MAMH_TRUOC) REFERENCES MONHOC(MAMH)
+);
+
+CREATE TABLE GIANGDAY
+(
+    MALOP CHAR(3),
+    MAMH CHAR(10),
+    MAGV CHAR(4),
+    HOCKY TINYINT,
+    NAM SMALLINT,
+    TUNGAY SMALLDATETIME,
+    DENNGAY SMALLDATETIME,
+
+    PRIMARY KEY (MALOP, MAMH),
+    FOREIGN KEY (MALOP) REFERENCES LOP(MALOP),
+    FOREIGN KEY (MAMH) REFERENCES MONHOC(MAMH),
+    FOREIGN KEY (MAGV) REFERENCES GIAOVIEN(MAGV)
+);
+
+CREATE TABLE KETQUATHI
+(
+    MAHV CHAR(5),
+    MAMH CHAR(10),
+    LANTHI TINYINT,
+    NGTHI SMALLDATETIME,
+    DIEM NUMERIC(4,2),
+    KQUA VARCHAR(10),
+
+    PRIMARY KEY (MAHV, MAMH, LANTHI),
+    FOREIGN KEY (MAHV) REFERENCES HOCVIEN(MAHV),
+    FOREIGN KEY (MAMH) REFERENCES MONHOC(MAMH)
+);</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CASE WHEN</code> là biểu thức điều kiện, trả về giá trị khác nhau tùy điều kiện, dùng trực tiếp trong <code>SELECT</code>.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cần gán nhãn theo nhiều khoảng giá trị khác nhau ngay trên từng dòng dữ liệu - <code>CASE WHEN</code> xử lý gọn trong 1 câu lệnh, thay vì phải chạy nhiều câu <code>UPDATE</code>/<code>IF</code> riêng lẻ.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cả 8 quan hệ đều tạo bằng <code>CREATE TABLE</code>, khóa ngoại khai báo ngay trong phần định nghĩa cột khi bảng đích đã tồn tại; 3 cột mới <code>GHICHU</code>, <code>DIEMTB</code>, <code>XEPLOAI</code> được thêm thẳng vào <code>HOCVIEN</code> ngay từ lúc tạo bảng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Thứ tự tạo bảng phải theo đúng chiều phụ thuộc khóa ngoại - <code>GIAOVIEN</code> đợi <code>KHOA</code>, <code>HOCVIEN</code> đợi <code>LOP</code>. Riêng <code>KHOA.TRGKHOA</code> ↔ <code>GIAOVIEN.MAKHOA</code> và <code>LOP.TRGLOP</code> ↔ <code>HOCVIEN.MALOP</code> tham chiếu vòng lẫn nhau nên không thể khai báo cả 2 khóa ngoại cùng lúc trong <code>CREATE TABLE</code> - Phải tạo trước 1 chiều, dùng <code>ALTER TABLE ADD CONSTRAINT</code> bổ sung chiều còn lại sau khi bảng kia đã tồn tại.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 2 (MẪU) · SUBQUERY</p>
-              <h3>Học viên tập nhiều hơn mức trung bình</h3>
-              <p><strong>Đề bài:</strong> Tìm các học viên có số buổi tập cao hơn số buổi tập trung bình của toàn bộ học viên.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT HoTen, SoBuoiTap
-FROM HocVien
-WHERE SoBuoiTap > (
-    SELECT AVG(SoBuoiTap) FROM HocVien
+              <p class="eyebrow">CÂU 2 (PHẦN I) · CHECK ... IN</p>
+              <p><strong>Đề bài:</strong> Thuộc tính <code>GIOITINH</code> chỉ có giá trị là "Nam" hoặc "Nu".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE HOCVIEN ADD CONSTRAINT CK_HOCVIEN_GIOITINH
+    CHECK (GIOITINH IN (N'Nam', N'Nu'));
+ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_GIOITINH
+    CHECK (GIOITINH IN (N'Nam', N'Nu'));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CHECK ... IN</code> giới hạn cột chỉ nhận đúng 2 giá trị liệt kê, không phân biệt cột đó thuộc bảng nào.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>GIOITINH</code> xuất hiện ở cả <code>HOCVIEN</code> lẫn <code>GIAOVIEN</code> trong lược đồ này, đề không chỉ rõ quan hệ nào - Áp dụng ràng buộc cho cả 2 để đảm bảo tính nhất quán dữ liệu ở mọi nơi cột này xuất hiện.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 3 (PHẦN I) · CHECK</p>
+              <p><strong>Đề bài:</strong> Điểm số của một lần thi có giá trị từ 0 đến 10 và cần lưu đến 2 số lẽ (VD: 6.22).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KETQUATHI ADD CONSTRAINT CK_KETQUATHI_DIEM
+    CHECK (DIEM BETWEEN 0 AND 10);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>BETWEEN 0 AND 10</code> giới hạn khoảng giá trị đóng ở cả 2 đầu (0 và 10 đều hợp lệ).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phần "lưu đến 2 số lẻ" đã được đáp ứng ngay từ kiểu dữ liệu <code>NUMERIC(4,2)</code> khai báo cho <code>DIEM</code> ở Câu 1 (4 chữ số, 2 số sau dấu phẩy) - Câu này chỉ còn thiếu ràng buộc khoảng giá trị 0-10.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 4 (PHẦN I) · CHECK</p>
+              <p><strong>Đề bài:</strong> Kết quả thi là "Dat" nếu điểm từ 5 đến 10 và "Khong dat" nếu điểm nhỏ hơn 5.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KETQUATHI ADD CONSTRAINT CK_KETQUATHI_KQUA
+    CHECK (
+        (DIEM >= 5 AND KQUA = N'Dat')
+        OR (DIEM < 5 AND KQUA = N'Khong dat')
+    );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CHECK</code> ràng buộc quan hệ giữa 2 cột trong cùng 1 dòng - Ở đây là <code>DIEM</code> và <code>KQUA</code> phải luôn khớp nhau.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không thể tách thành 2 <code>CHECK</code> riêng vì 2 điều kiện phụ thuộc lẫn nhau (<code>KQUA</code> đúng hay sai phụ thuộc vào <code>DIEM</code>) - Gộp cả 2 trường hợp trong 1 <code>CHECK</code> bằng <code>OR</code> đảm bảo dữ liệu luôn nhất quán, dù <code>DIEM</code> cao hay thấp.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 5 (PHẦN I) · CHECK</p>
+              <p><strong>Đề bài:</strong> Học viên thi một môn tối đa 3 lần.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KETQUATHI ADD CONSTRAINT CK_KETQUATHI_LANTHI
+    CHECK (LANTHI BETWEEN 1 AND 3);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Giới hạn giá trị <code>LANTHI</code> chỉ được là 1, 2 hoặc 3.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khóa chính <code>(MAHV, MAMH, LANTHI)</code> đã đảm bảo mỗi cặp (học viên, môn học) không trùng lần thi - Kết hợp với <code>CHECK</code> giới hạn <code>LANTHI</code> ≤ 3, một học viên chỉ có thể có tối đa 3 dòng kết quả thi cho cùng 1 môn.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 6 (PHẦN I) · CHECK</p>
+              <p><strong>Đề bài:</strong> Học kỳ chỉ có giá trị từ 1 đến 3.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIANGDAY ADD CONSTRAINT CK_GIANGDAY_HOCKY
+    CHECK (HOCKY BETWEEN 1 AND 3);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Kỹ thuật giống Câu 5, áp dụng cho cột <code>HOCKY</code> của <code>GIANGDAY</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Một năm học chỉ có 3 học kỳ theo quy định của trung tâm - <code>BETWEEN 1 AND 3</code> chặn mọi giá trị học kỳ không hợp lệ ngay từ lúc nhập liệu.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 7 (PHẦN I) · CHECK ... IN</p>
+              <p><strong>Đề bài:</strong> Học vị của giáo viên chỉ có thể là "CN", "KS", "Ths", "TS", "PTS".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_HOCVI
+    CHECK (HOCVI IN (N'CN', N'KS', N'Ths', N'TS', N'PTS'));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CHECK ... IN</code> với danh sách đóng 5 giá trị học vị hợp lệ.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề liệt kê đúng 5 học vị, không có dấu "…" ở cuối - Đây là danh sách đóng nên <code>IN (...)</code> là lựa chọn phù hợp.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 8 (PHẦN I) · CHECK ... GETDATE</p>
+              <p><strong>Đề bài:</strong> Học viên ít nhất là 18 tuổi.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE HOCVIEN ADD CONSTRAINT CK_HOCVIEN_TUOI
+    CHECK (NGSINH <= DATEADD(YEAR, -18, GETDATE()));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>DATEADD(YEAR, -18, GETDATE())</code> tính ra ngày đúng 18 năm trước ngày hiện tại; học viên hợp lệ phải sinh trước hoặc đúng ngày đó.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>SQL Server cho phép <code>CHECK</code> tham chiếu <code>GETDATE()</code>, nhưng ràng buộc chỉ được kiểm tra tại thời điểm <code>INSERT</code>/<code>UPDATE</code> - Một học viên hợp lệ lúc nhập liệu vẫn giữ nguyên trong bảng dù thời gian trôi qua, <code>CHECK</code> không tự động rà soát lại các dòng đã có.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 9 (PHẦN I) · CHECK</p>
+              <p><strong>Đề bài:</strong> Giảng dạy một môn học ngày bắt đầu (<code>TUNGAY</code>) phải nhỏ hơn ngày kết thúc (<code>DENNGAY</code>).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIANGDAY ADD CONSTRAINT CK_GIANGDAY_NGAY
+    CHECK (TUNGAY < DENNGAY);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>So sánh trực tiếp 2 cột ngày tháng trong cùng 1 dòng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Một môn học không thể kết thúc trước khi bắt đầu - Ràng buộc này giữ cho khoảng thời gian giảng dạy luôn hợp lý về mặt logic.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 10 (PHẦN I) · CHECK</p>
+              <p><strong>Đề bài:</strong> Giáo viên khi vào làm ít nhất là 22 tuổi.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_TUOI_VAOLAM
+    CHECK (NGVL >= DATEADD(YEAR, 22, NGSINH));</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>DATEADD(YEAR, 22, NGSINH)</code> tính ngày giáo viên tròn 22 tuổi; <code>NGVL</code> phải từ ngày đó trở đi.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 8, ràng buộc này so sánh 2 cột trong cùng 1 dòng (<code>NGSINH</code> và <code>NGVL</code>) thay vì so với <code>GETDATE()</code> - Nhờ vậy nó luôn đúng và ổn định vĩnh viễn, không bị lỗi thời như <code>CHECK</code> dùng ngày hiện tại.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 11 (PHẦN I) · CHECK ... ABS</p>
+              <p><strong>Đề bài:</strong> Tất cả các môn học đều có số tín chỉ lý thuyết và tín chỉ thực hành chênh lệch nhau không quá 3.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE MONHOC ADD CONSTRAINT CK_MONHOC_TC
+    CHECK (ABS(TCLT - TCTH) <= 3);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>ABS(...)</code> lấy giá trị tuyệt đối, nên chênh lệch được tính đúng dù <code>TCLT</code> lớn hơn hay nhỏ hơn <code>TCTH</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề chỉ nói "chênh lệch nhau không quá 3", không quan tâm tín chỉ nào nhiều hơn - Nếu viết <code>TCLT - TCTH <= 3</code> mà thiếu <code>ABS</code>, trường hợp <code>TCTH</code> lớn hơn <code>TCLT</code> nhiều vẫn lọt qua được, sai với ý nghĩa đề bài.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 1 (PHẦN II) · UPDATE ... SUBQUERY</p>
+              <p><strong>Đề bài:</strong> Tăng hệ số lương thêm 0.2 cho những giáo viên là trưởng khoa.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE GIAOVIEN
+SET HESO = HESO + 0.2
+WHERE MAGV IN (
+    SELECT TRGKHOA FROM KHOA WHERE TRGKHOA IS NOT NULL
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery (truy vấn con) đặt trong dấu ngoặc, ở đây trả về đúng 1 giá trị (điểm trung bình) để truy vấn ngoài so sánh với <code>WHERE</code>.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Giá trị trung bình phải được tính xong trước, không thể vừa tính <code>AVG</code> vừa so sánh từng dòng trong cùng 1 <code>SELECT</code> - Nên phải tách thành 1 truy vấn con chạy trước.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery lấy toàn bộ <code>MAGV</code> đang là <code>TRGKHOA</code> của bất kỳ khoa nào, dùng <code>IN</code> để lọc đúng những giáo viên đó trong <code>UPDATE</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>TRGKHOA</code> có thể <code>NULL</code> (khoa KTMT chưa có trưởng khoa). Với <code>IN</code>, lọc <code>NULL</code> không bắt buộc vì <code>NULL</code> không được so khớp nhưng cũng không làm sai kết quả - Tuy nhiên nên giữ thói quen lọc <code>IS NOT NULL</code>, vì nếu đổi sang <code>NOT IN</code> ở bài khác, sự hiện diện của <code>NULL</code> trong danh sách sẽ làm cả câu lệnh trả về rỗng, đây là lỗi rất dễ mắc phải.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 2 (PHẦN II) · UPDATE ... CORRELATED SUBQUERY</p>
+              <p><strong>Đề bài:</strong> Cập nhật giá trị điểm trung bình tất cả các môn học (<code>DIEMTB</code>) của mỗi học viên (tất cả các môn học đều có hệ số 1 và nếu học viên thi một môn nhiều lần, chỉ lấy điểm của lần thi sau cùng).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE HOCVIEN
+SET DIEMTB = (
+    SELECT AVG(kq.DIEM)
+    FROM KETQUATHI kq
+    WHERE kq.MAHV = HOCVIEN.MAHV
+      AND kq.LANTHI = (
+          SELECT MAX(kq2.LANTHI)
+          FROM KETQUATHI kq2
+          WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
+      )
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery lồng trong cùng dùng <code>MAX(LANTHI)</code> để chỉ lấy đúng lần thi sau cùng của từng cặp (<code>MAHV</code>, <code>MAMH</code>); subquery ngoài <code>AVG(DIEM)</code> trên đúng tập đã lọc đó cho từng học viên.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không thể <code>AVG(DIEM)</code> trực tiếp trên toàn bộ <code>KETQUATHI</code> vì 1 học viên có thể có nhiều dòng cho cùng 1 môn (thi lại) - Nếu không lọc lần thi sau cùng, điểm trung bình sẽ bị lệch do tính luôn cả những lần thi trước đó chưa đạt.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 3 (PHẦN II) · UPDATE ... SUBQUERY</p>
+              <p><strong>Đề bài:</strong> Cập nhật giá trị cho cột <code>GHICHU</code> là "Cam thi" đối với trường hợp: Học viên có một môn bất kỳ thi lần thứ 3 dưới 5 điểm.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE HOCVIEN
+SET GHICHU = N'Cam thi'
+WHERE MAHV IN (
+    SELECT MAHV
+    FROM KETQUATHI
+    WHERE LANTHI = 3 AND DIEM < 5
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery lấy <code>MAHV</code> của mọi dòng kết quả thi lần 3 mà điểm dưới 5, dùng <code>IN</code> để đánh dấu đúng những học viên đó.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Chỉ cần 1 môn thỏa điều kiện là đủ để bị "Cam thi" ("một môn bất kỳ") - Không cần <code>GROUP BY</code> hay đếm số lượng, chỉ cần học viên đó xuất hiện ít nhất 1 lần trong tập kết quả đã lọc.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 4 (PHẦN II) · UPDATE ... CASE WHEN</p>
+              <p><strong>Đề bài:</strong> Cập nhật giá trị cho cột <code>XEPLOAI</code> trong quan hệ <code>HOCVIEN</code> như sau: Nếu <code>DIEMTB</code> ≥ 9 thì "XS" · nếu 8 ≤ <code>DIEMTB</code> &lt; 9 thì "G" · nếu 6.5 ≤ <code>DIEMTB</code> &lt; 8 thì "K" · nếu 5 ≤ <code>DIEMTB</code> &lt; 6.5 thì "TB" · nếu <code>DIEMTB</code> &lt; 5 thì "Y".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE HOCVIEN
+SET XEPLOAI = CASE
+    WHEN DIEMTB >= 9 THEN N'XS'
+    WHEN DIEMTB >= 8 THEN N'G'
+    WHEN DIEMTB >= 6.5 THEN N'K'
+    WHEN DIEMTB >= 5 THEN N'TB'
+    ELSE N'Y'
+END;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CASE WHEN</code> xét lần lượt từ ngưỡng cao nhất xuống thấp nhất - SQL Server dừng ở điều kiện đúng đầu tiên nên không cần viết đủ cả cận trên lẫn cận dưới cho mỗi nhánh.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Ví dụ nhánh "G" chỉ cần viết <code>DIEMTB >= 8</code> mà không cần thêm <code>AND DIEMTB < 9</code>, vì nếu <code>DIEMTB</code> thật sự ≥ 9 thì nhánh "XS" phía trên đã khớp trước và <code>CASE</code> dừng lại ở đó rồi - Viết thêm điều kiện cận trên là thừa.</p></div>
               </div>
             </div>
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="description" content="IT004 - Đề thi thử thực hành Cơ sở dữ liệu: Lược đồ Quản lý cho thuê khu nghỉ dưỡng, 9 câu (tạo CSDL, ràng buộc, Trigger, truy vấn) và đáp án chi tiết, tổ chức nội bộ tại lớp thực hành.">
+  <meta name="description" content="IT004 - Đề thi thử thực hành Cơ sở dữ liệu: 9 câu (tạo CSDL, ràng buộc, Trigger, truy vấn) và đáp án chi tiết, tổ chức nội bộ tại lớp thực hành. Cần mã truy cập riêng để xem đề bài và đáp án.">
   <title>Thi thử thực hành · IT004</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=2">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=2">
@@ -18,6 +18,8 @@
     .exam-timer{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:20px 0 0;padding:16px 22px;background:var(--ink);border-radius:12px;color:#fff}
     .exam-timer-label{display:block;margin-bottom:4px;color:#94a3b8;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
     .exam-timer-clock{font-family:var(--font-mono);font-size:26px;font-weight:700;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+    .exam-timer-idle-text{display:block;max-width:420px;color:#cbd5e1;font-size:12px;line-height:1.6}
+    .exam-timer-start{flex-shrink:0;white-space:nowrap}
     .exam-timer.is-warning .exam-timer-clock{color:#fbbf24}
     .exam-timer.is-danger .exam-timer-clock,.exam-timer.is-over .exam-timer-clock{color:#f87171}
     .exam-timer.is-danger .exam-timer-clock{animation:examTimerPulse 1s ease-in-out infinite}
@@ -45,7 +47,7 @@
       <span class="official-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg>ĐỀ THI CHÍNH THỨC</span>
       <span class="week-tag">THI THỬ THỰC HÀNH · IT004</span>
       <h1>Thi thử thực hành Cơ sở dữ liệu</h1>
-      <div class="week-meta"><span>75 phút</span><span>10 điểm</span><span>9 câu hỏi</span><span>Quản lý cho thuê khu nghỉ dưỡng</span></div>
+      <div class="week-meta"><span>75 phút</span><span>10 điểm</span><span>9 câu hỏi</span><span>SQL Server</span></div>
       <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px">Đề thi thử bám sát cấu trúc thi thực hành chính thức - Tạo CSDL và khóa (3 điểm), ràng buộc toàn vẹn và Trigger (2 điểm), truy vấn dữ liệu (5 điểm). Bài thi tổ chức <strong>nội bộ tại lớp thực hành</strong>, sinh viên không được sử dụng tài liệu khi làm bài. Đề bài và đáp án đều cần mã truy cập riêng do giảng viên cung cấp tại buổi thi thử.</p>
     </div>
 
@@ -84,9 +86,11 @@
 
             <div class="exam-timer" id="examTimer" hidden>
               <div>
-                <span class="exam-timer-label" id="examTimerLabel">Thời gian làm bài còn lại</span>
-                <span class="exam-timer-clock" id="examTimerClock">75:00</span>
+                <span class="exam-timer-label" id="examTimerLabel">Thời gian làm bài</span>
+                <span class="exam-timer-clock" id="examTimerClock" hidden>75:00</span>
+                <span class="exam-timer-idle-text" id="examTimerIdleText">Đồng hồ 75 phút sẽ bắt đầu chạy khi cả lớp sẵn sàng làm bài.</span>
               </div>
+              <button type="button" class="primary-button exam-timer-start" id="examTimerStart">Bắt đầu làm bài</button>
             </div>
 
             <div class="inline-danger" style="margin-top:16px"><strong>Sinh viên không được sử dụng tài liệu.</strong> Đề thi thử mô phỏng đúng điều kiện thi thật - Không tra cứu lý thuyết, không tham khảo đáp án tuần trước trong lúc làm bài.</div>
@@ -611,6 +615,8 @@ WHERE DV.TenDV <> 'Massage'
       var timerEl = document.getElementById('examTimer');
       var clockEl = document.getElementById('examTimerClock');
       var labelEl = document.getElementById('examTimerLabel');
+      var idleEl = document.getElementById('examTimerIdleText');
+      var startBtn = document.getElementById('examTimerStart');
       var tickHandle = null;
 
       function getStart() {
@@ -635,14 +641,29 @@ WHERE DV.TenDV <> 'Massage'
         timerEl.classList.toggle('is-over', remain <= 0);
       }
 
-      function startTimer() {
+      function showIdle() {
         if (!timerEl) return;
-        try {
-          if (!getStart()) localStorage.setItem(TIMER_KEY, String(Date.now()));
-        } catch (e) {}
         timerEl.hidden = false;
+        timerEl.classList.remove('is-warning', 'is-danger', 'is-over');
+        labelEl.textContent = 'Thời gian làm bài';
+        clockEl.hidden = true;
+        idleEl.hidden = false;
+        startBtn.hidden = false;
+      }
+
+      function showRunning() {
+        if (!timerEl) return;
+        timerEl.hidden = false;
+        idleEl.hidden = true;
+        startBtn.hidden = true;
+        clockEl.hidden = false;
         tick();
         if (!tickHandle) tickHandle = setInterval(tick, 1000);
+      }
+
+      function beginExam() {
+        try { localStorage.setItem(TIMER_KEY, String(Date.now())); } catch (e) {}
+        showRunning();
       }
 
       function stopTimer() {
@@ -650,6 +671,14 @@ WHERE DV.TenDV <> 'Massage'
         if (timerEl) timerEl.hidden = true;
         if (tickHandle) { clearInterval(tickHandle); tickHandle = null; }
       }
+
+      function syncTimer() {
+        var deOpen = deUnlockedEl && !deUnlockedEl.hidden;
+        if (!deOpen) { stopTimer(); return; }
+        if (getStart()) showRunning(); else showIdle();
+      }
+
+      if (startBtn) startBtn.addEventListener('click', beginExam);
 
       var daGate = document.querySelector('#dap-an .access-gate');
       var daLockedPanel = daGate ? daGate.querySelector('.access-locked') : null;
@@ -669,8 +698,7 @@ WHERE DV.TenDV <> 'Massage'
       }
 
       function syncAll() {
-        var deOpen = deUnlockedEl && !deUnlockedEl.hidden;
-        if (deOpen) startTimer(); else stopTimer();
+        syncTimer();
         syncDaGate();
       }
 

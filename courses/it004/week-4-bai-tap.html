@@ -454,6 +454,596 @@ END;</code></pre></div>
               </div>
             </div>
 
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 1 (PHẦN III) · JOIN</p>
+              <p><strong>Đề bài:</strong> In ra danh sách (mã học viên, họ tên, ngày sinh, mã lớp) lớp trưởng của các lớp.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, hv.NGSINH, hv.MALOP
+FROM HOCVIEN hv
+JOIN LOP l ON hv.MAHV = l.TRGLOP;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN HOCVIEN</code> với <code>LOP</code> qua <code>TRGLOP</code> để lấy đúng những học viên đang là lớp trưởng; <code>HO + ' ' + TEN</code> ghép thành họ tên đầy đủ vì <code>HOCVIEN</code> lưu 2 cột riêng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Dùng <code>JOIN</code> (không phải subquery) vì cần lấy đủ 4 cột thông tin học viên - Đề yêu cầu cả họ tên và ngày sinh nên phải join trực tiếp vào bảng <code>HOCVIEN</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 2 (PHẦN III) · JOIN ... ORDER BY</p>
+              <p><strong>Đề bài:</strong> In ra bảng điểm khi thi (mã học viên, họ tên, lần thi, điểm số) môn CTRR của lớp "K12", sắp xếp theo tên, họ học viên.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.LANTHI, kq.DIEM
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE hv.MALOP = N'K12' AND kq.MAMH = N'CTRR'
+ORDER BY hv.TEN, hv.HO;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN HOCVIEN</code> với <code>KETQUATHI</code> qua <code>MAHV</code>, lọc đúng lớp và môn học; <code>ORDER BY TEN</code> trước <code>HO</code> vì "sắp xếp theo tên, họ" nghĩa là ưu tiên tên trước.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không cần <code>JOIN</code> thêm <code>LOP</code> vì <code>MALOP</code> đã có sẵn ngay trong <code>HOCVIEN</code> - Không cần đi qua bảng <code>LOP</code> mới lọc được lớp "K12".</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 3 (PHẦN III) · JOIN</p>
+              <p><strong>Đề bài:</strong> In ra danh sách những học viên (mã học viên, họ tên) và những môn học mà học viên đó thi lần thứ nhất đã đạt.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.MAMH
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.LANTHI = 1 AND kq.KQUA = N'Dat';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Lọc trực tiếp <code>KETQUATHI</code> theo <code>LANTHI = 1</code> và <code>KQUA = 'Dat'</code>, <code>JOIN</code> sang <code>HOCVIEN</code> chỉ để lấy họ tên.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề yêu cầu in luôn "những môn học" đạt được ở lần 1 - Nên phải giữ lại <code>MAMH</code> trong kết quả, không <code>GROUP BY</code> hay gộp lại, mỗi dòng là 1 cặp (học viên, môn học) thỏa điều kiện.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 4 (PHẦN III) · JOIN</p>
+              <p><strong>Đề bài:</strong> In ra danh sách học viên (mã học viên, họ tên) của lớp "K11" thi môn CTRR không đạt (ở lần thi 1).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE hv.MALOP = N'K11' AND kq.MAMH = N'CTRR'
+  AND kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN</code> rồi lọc 4 điều kiện cùng lúc bằng <code>AND</code>: Đúng lớp, đúng môn, đúng lần thi, đúng kết quả.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Chỉ xét "lần thi 1" nên phải lọc rõ <code>LANTHI = 1</code> - Nếu bỏ điều kiện này, học viên thi lại nhiều lần vẫn có thể lọt vào kết quả dù lần thi sau đã đạt.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 5 (PHẦN III) · EXISTS / NOT EXISTS</p>
+              <p><strong>Đề bài:</strong> * Danh sách học viên (mã học viên, họ tên) của lớp "K" thi môn CTRR không đạt (ở tất cả các lần thi).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE hv.MALOP = N'K11'
+  AND EXISTS (
+      SELECT * FROM KETQUATHI kq WHERE kq.MAHV = hv.MAHV AND kq.MAMH = N'CTRR'
+  )
+  AND NOT EXISTS (
+      SELECT * FROM KETQUATHI kq
+      WHERE kq.MAHV = hv.MAHV AND kq.MAMH = N'CTRR' AND kq.KQUA = N'Dat'
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>EXISTS</code> đảm bảo học viên có thi môn CTRR (ít nhất 1 lần); <code>NOT EXISTS</code> đảm bảo không có lần thi nào đạt - Kết hợp cả 2 nghĩa là mọi lần thi CTRR của học viên này đều không đạt.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề ghi "lớp 'K'" - Đây gần như chắc chắn vẫn là lớp K11 đang xét xuyên suốt từ Câu 4 (lược đồ mẫu không có lớp nào tên đúng là "K", nhiều khả năng là lỗi đánh máy trong đề gốc). Nếu chỉ lọc <code>KQUA = 'Khong Dat'</code> như Câu 4, học viên thi lại nhiều lần và có 1 lần đạt vẫn bị liệt kê nhầm - Phải chắc chắn không có lần thi nào đạt (<code>NOT EXISTS</code>) mới đúng nghĩa "ở tất cả các lần thi".</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 6 (PHẦN III) · JOIN ... DISTINCT</p>
+              <p><strong>Đề bài:</strong> Tìm tên những môn học mà giáo viên có tên "Tran Tam Thanh" dạy trong học kỳ 1 năm 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT mh.TENMH
+FROM GIANGDAY gd
+JOIN GIAOVIEN gv ON gd.MAGV = gv.MAGV
+JOIN MONHOC mh ON gd.MAMH = mh.MAMH
+WHERE gv.HOTEN = N'Tran Tam Thanh' AND gd.HOCKY = 1 AND gd.NAM = 2006;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN</code> 3 bảng <code>GIANGDAY - GIAOVIEN - MONHOC</code> để đi từ tên giáo viên ra tên môn học; <code>DISTINCT</code> vì 1 giáo viên có thể dạy cùng môn cho nhiều lớp trong cùng học kỳ (trùng dòng).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề chỉ yêu cầu "tên môn học" (không cần mã), và theo dữ liệu mẫu giáo viên GV02 dạy CTRR cho cả K11 lẫn K12 trong cùng học kỳ 1/2006 - <code>DISTINCT</code> tránh in trùng tên môn.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 7 (PHẦN III) · SUBQUERY</p>
+              <p><strong>Đề bài:</strong> Tìm những môn học (mã môn học, tên môn học) mà giáo viên chủ nhiệm lớp "K11" dạy trong học kỳ 1 năm 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT mh.MAMH, mh.TENMH
+FROM GIANGDAY gd
+JOIN MONHOC mh ON gd.MAMH = mh.MAMH
+WHERE gd.MAGV = (SELECT MAGVCN FROM LOP WHERE MALOP = N'K11')
+  AND gd.HOCKY = 1 AND gd.NAM = 2006;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery lấy đúng 1 mã giáo viên chủ nhiệm của lớp K11 từ <code>LOP.MAGVCN</code>, rồi lọc <code>GIANGDAY</code> theo đúng giáo viên đó và đúng học kỳ/năm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Dùng subquery độc lập với dấu <code>=</code> (thay vì <code>IN</code>) vì mỗi lớp chỉ có đúng 1 giáo viên chủ nhiệm, subquery chắc chắn trả về 1 giá trị - Không cần join thêm bảng <code>LOP</code> vào truy vấn chính.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 8 (PHẦN III) · SUBQUERY ... IN</p>
+              <p><strong>Đề bài:</strong> Tìm họ tên lớp trưởng của các lớp mà giáo viên có tên "Nguyen To Lan" dạy môn "Co So Du Lieu".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT hv.HO + N' ' + hv.TEN AS HOTEN
+FROM LOP l
+JOIN HOCVIEN hv ON l.TRGLOP = hv.MAHV
+WHERE l.MALOP IN (
+    SELECT gd.MALOP
+    FROM GIANGDAY gd
+    JOIN GIAOVIEN gv ON gd.MAGV = gv.MAGV
+    JOIN MONHOC mh ON gd.MAMH = mh.MAMH
+    WHERE gv.HOTEN = N'Nguyen To Lan' AND mh.TENMH = N'Co So Du Lieu'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery tìm các mã lớp mà giáo viên "Nguyen To Lan" dạy môn "Co So Du Lieu"; truy vấn ngoài <code>JOIN LOP</code> với <code>HOCVIEN</code> qua <code>TRGLOP</code> để lấy họ tên lớp trưởng của những lớp đó.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>1 giáo viên có thể dạy môn này cho nhiều lớp khác nhau nên subquery dùng <code>IN</code> (không phải <code>=</code>) - <code>DISTINCT</code> phòng trường hợp trùng lớp trưởng nếu có nhiều dòng <code>GIANGDAY</code> khớp cùng 1 lớp.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 9 (PHẦN III) · SUBQUERY</p>
+              <p><strong>Đề bài:</strong> In ra danh sách những môn học (mã môn học, tên môn học) phải học liền trước môn "Co So Du Lieu".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT mh.MAMH, mh.TENMH
+FROM DIEUKIEN dk
+JOIN MONHOC mh ON dk.MAMH_TRUOC = mh.MAMH
+WHERE dk.MAMH = (SELECT MAMH FROM MONHOC WHERE TENMH = N'Co So Du Lieu');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery tra mã môn học ứng với tên "Co So Du Lieu"; <code>DIEUKIEN.MAMH_TRUOC</code> liệt kê những môn phải học trước môn đó, <code>JOIN MONHOC</code> để lấy tên.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề cho tên môn chứ không cho mã môn, nên phải tra mã trước bằng subquery - Không nên gõ cứng mã môn trực tiếp vào câu lệnh dù biết trước dữ liệu mẫu, vì cách viết phụ thuộc tên vẫn đúng ngay cả khi mã môn học đổi khác.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 10 (PHẦN III) · SUBQUERY</p>
+              <p><strong>Đề bài:</strong> Môn "Cau Truc Roi Rac" là môn bắt buộc phải học liền trước những môn học (mã môn học, tên môn học) nào.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT mh.MAMH, mh.TENMH
+FROM DIEUKIEN dk
+JOIN MONHOC mh ON dk.MAMH = mh.MAMH
+WHERE dk.MAMH_TRUOC = (SELECT MAMH FROM MONHOC WHERE TENMH = N'Cau Truc Roi Rac');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Ngược chiều với Câu 9 - Lần này lọc theo <code>MAMH_TRUOC</code> rồi lấy <code>MAMH</code> (môn học yêu cầu môn CTRR làm điều kiện tiên quyết).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>DIEUKIEN</code> lưu cặp <code>(MAMH, MAMH_TRUOC)</code>, Câu 9 đi từ <code>MAMH</code> tìm <code>MAMH_TRUOC</code>, Câu 10 đi ngược lại từ <code>MAMH_TRUOC</code> tìm <code>MAMH</code> - Cùng 1 bảng nhưng lọc theo cột khác nhau tùy chiều câu hỏi.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 11 (PHẦN III) · SUBQUERY ... IN</p>
+              <p><strong>Đề bài:</strong> Tìm họ tên giáo viên dạy môn CTRR cho cả hai lớp "K11" và "K12" trong cùng học kỳ 1 năm 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.HOTEN
+FROM GIAOVIEN gv
+WHERE gv.MAGV IN (
+    SELECT MAGV FROM GIANGDAY
+    WHERE MALOP = N'K11' AND MAMH = N'CTRR' AND HOCKY = 1 AND NAM = 2006
+)
+AND gv.MAGV IN (
+    SELECT MAGV FROM GIANGDAY
+    WHERE MALOP = N'K12' AND MAMH = N'CTRR' AND HOCKY = 1 AND NAM = 2006
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>2 subquery độc lập, mỗi subquery lấy <code>MAGV</code> dạy CTRR cho đúng 1 lớp (K11 hoặc K12) trong học kỳ 1/2006; giáo viên hợp lệ phải thỏa cả 2 điều kiện <code>IN</code> cùng lúc.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không thể gộp chung 1 điều kiện <code>MALOP IN ('K11','K12')</code> vì như vậy chỉ cần dạy 1 trong 2 lớp là đã lọt qua - Phải tách 2 subquery riêng, nối bằng <code>AND</code>, để bắt buộc giáo viên đó dạy cho đủ cả 2 lớp.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 12 (PHẦN III) · NOT EXISTS</p>
+              <p><strong>Đề bài:</strong> Tìm những học viên (mã học viên, họ tên) thi không đạt môn CSDL ở lần thi thứ 1 nhưng chưa thi lại môn này.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.MAMH = N'CSDL' AND kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat'
+  AND NOT EXISTS (
+      SELECT * FROM KETQUATHI kq2
+      WHERE kq2.MAHV = hv.MAHV AND kq2.MAMH = N'CSDL' AND kq2.LANTHI = 2
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Điều kiện chính lọc đúng lần thi 1 không đạt môn CSDL; <code>NOT EXISTS</code> kiểm tra không tồn tại dòng lần thi thứ 2 cho cùng học viên, cùng môn.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Chưa thi lại" nghĩa là không có bản ghi <code>LANTHI = 2</code> - <code>NOT EXISTS</code> là công cụ đúng để kiểm tra "không tồn tại", khác với chỉ đếm hay lọc trực tiếp.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 13 (PHẦN III) · NOT EXISTS</p>
+              <p><strong>Đề bài:</strong> Tìm giáo viên (mã giáo viên, họ tên) không được phân công giảng dạy bất kỳ môn học nào.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.MAGV, gv.HOTEN
+FROM GIAOVIEN gv
+WHERE NOT EXISTS (
+    SELECT * FROM GIANGDAY gd WHERE gd.MAGV = gv.MAGV
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>NOT EXISTS</code> kiểm tra giáo viên đó không xuất hiện trong bất kỳ dòng <code>GIANGDAY</code> nào.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là dạng truy vấn phủ định toàn phần (không có bất kỳ) - <code>NOT EXISTS</code> luôn là lựa chọn an toàn nhất, tránh được bẫy <code>NULL</code> mà <code>NOT IN</code> có thể gặp phải.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 14 (PHẦN III) · NOT EXISTS</p>
+              <p><strong>Đề bài:</strong> Tìm giáo viên (mã giáo viên, họ tên) không được phân công giảng dạy bất kỳ môn học nào thuộc khoa giáo viên đó phụ trách.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.MAGV, gv.HOTEN
+FROM GIAOVIEN gv
+WHERE NOT EXISTS (
+    SELECT * FROM GIANGDAY gd
+    JOIN MONHOC mh ON gd.MAMH = mh.MAMH
+    WHERE gd.MAGV = gv.MAGV AND mh.MAKHOA = gv.MAKHOA
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>NOT EXISTS</code> kiểm tra không tồn tại dòng <code>GIANGDAY</code> nào của giáo viên đó ứng với 1 môn học thuộc đúng khoa của giáo viên (<code>mh.MAKHOA = gv.MAKHOA</code>).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 13 (không dạy môn nào, bất kỳ khoa nào), câu này chỉ xét các môn thuộc khoa của chính giáo viên đó - Giáo viên có thể dạy môn của khoa khác vẫn thỏa điều kiện, miễn là không dạy môn nào của khoa mình.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 15 (PHẦN III) · EXISTS ... OR</p>
+              <p><strong>Đề bài:</strong> Tìm họ tên các học viên thuộc lớp "K11" thi một môn bất kỳ quá 3 lần vẫn "Khong dat" hoặc thi lần thứ 2 môn CTRR được 5 điểm.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE hv.MALOP = N'K11'
+  AND (
+      EXISTS (
+          SELECT * FROM KETQUATHI kq
+          WHERE kq.MAHV = hv.MAHV AND kq.LANTHI = 3 AND kq.KQUA = N'Khong Dat'
+      )
+      OR EXISTS (
+          SELECT * FROM KETQUATHI kq
+          WHERE kq.MAHV = hv.MAHV AND kq.MAMH = N'CTRR' AND kq.LANTHI = 2 AND kq.DIEM = 5
+      )
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>2 nhánh <code>EXISTS</code> nối bằng <code>OR</code> trong cùng 1 dấu ngoặc: Nhánh 1 kiểm tra có môn nào thi đến lần 3 (lần tối đa) mà vẫn không đạt; nhánh 2 kiểm tra thi CTRR lần 2 đúng 5 điểm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Thi một môn bất kỳ quá 3 lần vẫn không đạt" - Theo ràng buộc <code>LANTHI</code> tối đa là 3 (Câu 5, Phần I) - Được hiểu là đã thi đến lần thứ 3 (lần cuối cùng được phép) mà vẫn "Khong dat", tức đã hết cơ hội thi lại; đây là cách diễn đạt gần nhất với ràng buộc dữ liệu thực tế của lược đồ.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 16 (PHẦN III) · GROUP BY ... HAVING</p>
+              <p><strong>Đề bài:</strong> Tìm họ tên giáo viên dạy môn CTRR cho ít nhất hai lớp trong cùng một học kỳ của một năm học.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.HOTEN
+FROM GIAOVIEN gv
+WHERE gv.MAGV IN (
+    SELECT MAGV
+    FROM GIANGDAY
+    WHERE MAMH = N'CTRR'
+    GROUP BY MAGV, HOCKY, NAM
+    HAVING COUNT(DISTINCT MALOP) >= 2
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY</code> theo <code>(MAGV, HOCKY, NAM)</code> rồi đếm số lớp khác nhau bằng <code>COUNT(DISTINCT MALOP)</code>; <code>HAVING >= 2</code> lọc đúng những nhóm dạy từ 2 lớp trở lên.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải <code>GROUP BY</code> cả <code>HOCKY</code> và <code>NAM</code> (không chỉ <code>MAGV</code>) vì đề yêu cầu "trong cùng một học kỳ của một năm học" - Nếu chỉ <code>GROUP BY MAGV</code>, 1 giáo viên dạy K11 học kỳ 1 và K12 học kỳ 2 (2 lớp khác học kỳ) sẽ bị đếm nhầm là thỏa điều kiện.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 17 (PHẦN III) · SUBQUERY ... MAX</p>
+              <p><strong>Đề bài:</strong> Danh sách học viên và điểm thi môn CSDL (chỉ lấy điểm của lần thi sau cùng).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.DIEM
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.MAMH = N'CSDL'
+  AND kq.LANTHI = (
+      SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+      WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = N'CSDL'
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery <code>MAX(LANTHI)</code> tìm lần thi sau cùng của từng học viên cho môn CSDL; điều kiện ngoài chỉ giữ đúng dòng khớp lần thi đó.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Học viên có thể thi lại môn CSDL nhiều lần - Không lọc lần thi sau cùng sẽ in ra cả những điểm của các lần thi trước, sai với yêu cầu đề bài.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 18 (PHẦN III) · GROUP BY ... MAX</p>
+              <p><strong>Đề bài:</strong> Danh sách học viên và điểm thi môn "Co So Du Lieu" (chỉ lấy điểm cao nhất của các lần thi).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, MAX(kq.DIEM) AS DIEM
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.MAMH = (SELECT MAMH FROM MONHOC WHERE TENMH = N'Co So Du Lieu')
+GROUP BY hv.MAHV, hv.HO, hv.TEN;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY</code> theo từng học viên rồi lấy <code>MAX(DIEM)</code> - Khác Câu 17 (lọc theo lần thi sau cùng), câu này lấy đúng điểm số cao nhất bất kể lần thi nào.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Điểm cao nhất của các lần thi" khác hẳn "điểm lần thi sau cùng" ở Câu 17 - 1 học viên có thể đạt điểm cao nhất ở lần thi đầu rồi thi lại bị điểm thấp hơn, <code>MAX(DIEM)</code> luôn lấy đúng giá trị cao nhất bất kể thứ tự lần thi.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 19 (PHẦN III) · SUBQUERY ... MIN</p>
+              <p><strong>Đề bài:</strong> Khoa nào (mã khoa, tên khoa) được thành lập sớm nhất.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAKHOA, TENKHOA
+FROM KHOA
+WHERE NGTLAP = (SELECT MIN(NGTLAP) FROM KHOA);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery <code>MIN(NGTLAP)</code> tìm ngày thành lập sớm nhất; truy vấn ngoài lọc đúng khoa có ngày thành lập bằng giá trị đó.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không dùng <code>ORDER BY</code> kèm <code>TOP 1</code> vì nếu có 2 khoa cùng thành lập sớm nhất (trùng ngày), <code>TOP 1</code> sẽ bỏ sót 1 khoa - So sánh trực tiếp với <code>MIN(...)</code> luôn lấy đủ tất cả các khoa đồng hạng.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 20 (PHẦN III) · COUNT</p>
+              <p><strong>Đề bài:</strong> Có bao nhiêu giáo viên có học hàm là "GS" hoặc "PGS".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SoLuong
+FROM GIAOVIEN
+WHERE HOCHAM IN (N'GS', N'PGS');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>COUNT(*)</code> đếm số dòng thỏa điều kiện <code>HOCHAM</code> thuộc 1 trong 2 giá trị.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>HOCHAM</code> có thể <code>NULL</code> (giáo viên chưa có học hàm) - <code>IN (...)</code> tự động bỏ qua các dòng <code>NULL</code> mà không cần thêm điều kiện <code>IS NOT NULL</code> riêng.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 21 (PHẦN III) · GROUP BY</p>
+              <p><strong>Đề bài:</strong> Thống kê có bao nhiêu giáo viên có học vị là "CN", "KS", "Ths", "TS", "PTS" trong mỗi khoa.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAKHOA, HOCVI, COUNT(*) AS SoLuong
+FROM GIAOVIEN
+WHERE HOCVI IN (N'CN', N'KS', N'Ths', N'TS', N'PTS')
+GROUP BY MAKHOA, HOCVI;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY</code> theo cặp <code>(MAKHOA, HOCVI)</code>, <code>COUNT(*)</code> đếm số giáo viên trong từng nhóm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải <code>GROUP BY</code> cả 2 cột cùng lúc vì đề cần thống kê chi tiết đến từng (khoa, học vị) - Nếu chỉ <code>GROUP BY MAKHOA</code> sẽ gộp lẫn các học vị khác nhau vào 1 dòng.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 22 (PHẦN III) · GROUP BY</p>
+              <p><strong>Đề bài:</strong> Mỗi môn học thống kê số lượng học viên theo kết quả (đạt và không đạt).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAMH, KQUA, COUNT(*) AS SoLuong
+FROM KETQUATHI
+GROUP BY MAMH, KQUA;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY</code> theo cặp <code>(MAMH, KQUA)</code> để đếm số lượt thi ứng với từng kết quả của từng môn.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đếm theo lượt thi (mỗi dòng <code>KETQUATHI</code>), không loại trừ học viên thi lại nhiều lần - Trong ngữ cảnh bảng <code>KETQUATHI</code>, mỗi dòng đúng 1 lượt thi nên đếm trực tiếp theo dòng là hợp lý nhất; 1 học viên thi lại có thể vừa góp mặt ở nhóm "Khong Dat" (lần trước) vừa ở nhóm "Dat" (lần sau) của cùng 1 môn.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 23 (PHẦN III) · EXISTS</p>
+              <p><strong>Đề bài:</strong> Tìm giáo viên (mã giáo viên, họ tên) là giáo viên chủ nhiệm của một lớp, đồng thời dạy cho lớp đó ít nhất một môn học.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.MAGV, gv.HOTEN
+FROM GIAOVIEN gv
+JOIN LOP l ON gv.MAGV = l.MAGVCN
+WHERE EXISTS (
+    SELECT * FROM GIANGDAY gd WHERE gd.MAGV = gv.MAGV AND gd.MALOP = l.MALOP
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN GIAOVIEN</code> với <code>LOP</code> qua <code>MAGVCN</code> để xác định giáo viên chủ nhiệm lớp nào; <code>EXISTS</code> kiểm tra giáo viên đó có dạy môn nào cho đúng lớp mình chủ nhiệm không.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải so khớp đúng <code>MALOP</code> giữa <code>GIANGDAY</code> và <code>LOP</code> đang xét (<code>gd.MALOP = l.MALOP</code>) - Nếu chỉ kiểm tra "có dạy môn nào đó" mà không ràng buộc đúng lớp, giáo viên chủ nhiệm lớp này nhưng dạy môn cho lớp khác vẫn bị tính sai.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 24 (PHẦN III) · SUBQUERY ... MAX</p>
+              <p><strong>Đề bài:</strong> Tìm họ tên lớp trưởng của lớp có sỉ số cao nhất.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.HO + N' ' + hv.TEN AS HOTEN
+FROM LOP l
+JOIN HOCVIEN hv ON l.TRGLOP = hv.MAHV
+WHERE l.SISO = (SELECT MAX(SISO) FROM LOP);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery <code>MAX(SISO)</code> tìm sỉ số lớn nhất; truy vấn ngoài <code>JOIN LOP - HOCVIEN</code> qua <code>TRGLOP</code> để lấy họ tên lớp trưởng của đúng lớp đó.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cách viết này tự động lấy đủ nhiều lớp nếu có nhiều lớp cùng đồng hạng sỉ số cao nhất, không bỏ sót như <code>TOP 1</code> - Cùng lý do đã dùng ở Câu 19.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 25 (PHẦN III) · SCALAR SUBQUERY</p>
+              <p><strong>Đề bài:</strong> * Tìm họ tên những LOPTRG thi không đạt quá 3 môn (mỗi môn đều thi không đạt ở tất cả các lần thi).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE hv.MAHV IN (SELECT TRGLOP FROM LOP)
+  AND (
+      SELECT COUNT(DISTINCT kq.MAMH)
+      FROM KETQUATHI kq
+      WHERE kq.MAHV = hv.MAHV
+        AND NOT EXISTS (
+            SELECT * FROM KETQUATHI kq2
+            WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH AND kq2.KQUA = N'Dat'
+        )
+  ) > 3;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery đếm <code>COUNT(DISTINCT MAMH)</code>, trong đó với mỗi môn, <code>NOT EXISTS</code> đảm bảo không có lần thi nào đạt (giống ý tưởng Câu 5) - Kết quả là số môn mà học viên đó chưa từng đạt dù đã thi.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>hv.MAHV IN (SELECT TRGLOP FROM LOP)</code> lọc đúng những học viên đang là lớp trưởng (LOPTRG) của bất kỳ lớp nào; điều kiện đếm <code>&gt; 3</code> đặt trong dấu ngoặc riêng vì đây là scalar subquery so sánh trực tiếp, không phải <code>HAVING</code> (vì truy vấn ngoài không <code>GROUP BY</code>).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 26 (PHẦN III) · GROUP BY ... TOP WITH TIES</p>
+              <p><strong>Đề bài:</strong> Tìm học viên (mã học viên, họ tên) có số môn đạt điểm 9,10 nhiều nhất.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.DIEM IN (9, 10)
+GROUP BY hv.MAHV, hv.HO, hv.TEN
+ORDER BY COUNT(*) DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY</code> theo học viên, đếm số lượt điểm 9 hoặc 10; <code>TOP 1 WITH TIES</code> giữ nguyên tất cả học viên đồng hạng cao nhất thay vì chỉ lấy đúng 1 dòng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cần <code>TOP ... WITH TIES</code> (không phải <code>TOP 1</code> thường) vì có thể có nhiều học viên cùng đạt số lượng điểm 9-10 nhiều nhất bằng nhau - <code>TOP 1</code> thường sẽ chỉ giữ ngẫu nhiên 1 trong số đó.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 27 (PHẦN III) · CORRELATED SUBQUERY ... MAX</p>
+              <p><strong>Đề bài:</strong> Trong từng lớp, tìm học viên (mã học viên, họ tên) có số môn đạt điểm 9,10 nhiều nhất.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT t.MALOP, t.MAHV, t.HOTEN, t.SoMon
+FROM (
+    SELECT hv.MALOP, hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, COUNT(*) AS SoMon
+    FROM HOCVIEN hv
+    JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+    WHERE kq.DIEM IN (9, 10)
+    GROUP BY hv.MALOP, hv.MAHV, hv.HO, hv.TEN
+) t
+WHERE t.SoMon = (
+    SELECT MAX(t2.SoMon)
+    FROM (
+        SELECT hv2.MALOP, hv2.MAHV, COUNT(*) AS SoMon
+        FROM HOCVIEN hv2
+        JOIN KETQUATHI kq2 ON hv2.MAHV = kq2.MAHV
+        WHERE kq2.DIEM IN (9, 10)
+        GROUP BY hv2.MALOP, hv2.MAHV
+    ) t2
+    WHERE t2.MALOP = t.MALOP
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Truy vấn con <code>t</code> tính số môn đạt điểm 9-10 của từng học viên; truy vấn con <code>t2</code> tính lại số liệu tương tự rồi lấy <code>MAX</code> theo đúng lớp tương ứng (<code>t2.MALOP = t.MALOP</code>) để so sánh riêng cho từng lớp.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 26 (so sánh toàn trường), câu này phải tìm giá trị lớn nhất riêng cho từng lớp - Không thể dùng chung 1 giá trị <code>MAX</code> như Câu 19/24, nên phải tương quan (correlated) <code>MAX</code> theo đúng <code>MALOP</code> đang xét.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 28 (PHẦN III) · GROUP BY ... COUNT DISTINCT</p>
+              <p><strong>Đề bài:</strong> Trong từng học kỳ của từng năm, mỗi giáo viên phân công dạy bao nhiêu môn học, bao nhiêu lớp.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAGV, HOCKY, NAM, COUNT(DISTINCT MAMH) AS SoMonHoc, COUNT(DISTINCT MALOP) AS SoLop
+FROM GIANGDAY
+GROUP BY MAGV, HOCKY, NAM;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY</code> theo <code>(MAGV, HOCKY, NAM)</code>; <code>COUNT(DISTINCT MAMH)</code> đếm số môn khác nhau, <code>COUNT(DISTINCT MALOP)</code> đếm số lớp khác nhau trong cùng nhóm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải dùng <code>DISTINCT</code> trong <code>COUNT</code> vì 1 giáo viên có thể xuất hiện nhiều dòng <code>GIANGDAY</code> khác lớp nhưng cùng môn (hoặc ngược lại) trong cùng học kỳ/năm - Đếm thẳng <code>COUNT(*)</code> sẽ ra số dòng phân công, không phải số môn/số lớp thực tế.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 29 (PHẦN III) · CORRELATED SUBQUERY ... MAX</p>
+              <p><strong>Đề bài:</strong> Trong từng học kỳ của từng năm, tìm giáo viên (mã giáo viên, họ tên) giảng dạy nhiều nhất.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT t.MAGV, gv.HOTEN, t.HOCKY, t.NAM, t.SoLuot
+FROM (
+    SELECT MAGV, HOCKY, NAM, COUNT(*) AS SoLuot
+    FROM GIANGDAY
+    GROUP BY MAGV, HOCKY, NAM
+) t
+JOIN GIAOVIEN gv ON t.MAGV = gv.MAGV
+WHERE t.SoLuot = (
+    SELECT MAX(t2.SoLuot)
+    FROM (
+        SELECT MAGV, COUNT(*) AS SoLuot
+        FROM GIANGDAY
+        WHERE HOCKY = t.HOCKY AND NAM = t.NAM
+        GROUP BY MAGV
+    ) t2
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Truy vấn con <code>t</code> tính số lượt phân công (số dòng <code>GIANGDAY</code>) của từng giáo viên theo từng (học kỳ, năm); so sánh với <code>MAX</code> của đúng học kỳ/năm đó (tương quan qua <code>HOCKY</code>, <code>NAM</code>) để giữ lại giáo viên dạy nhiều nhất trong từng nhóm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Tương tự Câu 27, "nhiều nhất" ở đây là nhiều nhất riêng trong từng học kỳ/năm - Không phải nhiều nhất toàn bộ dữ liệu, nên <code>MAX</code> phải tương quan theo đúng <code>(HOCKY, NAM)</code> đang xét.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 30 (PHẦN III) · GROUP BY ... TOP WITH TIES</p>
+              <p><strong>Đề bài:</strong> Tìm môn học (mã môn học, tên môn học) có nhiều học viên thi không đạt (ở lần thi thứ 1) nhất.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES mh.MAMH, mh.TENMH
+FROM MONHOC mh
+JOIN KETQUATHI kq ON mh.MAMH = kq.MAMH
+WHERE kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat'
+GROUP BY mh.MAMH, mh.TENMH
+ORDER BY COUNT(*) DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY</code> theo môn học, đếm số học viên thi lần 1 không đạt; <code>TOP 1 WITH TIES</code> giữ tất cả môn đồng hạng cao nhất.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Giống lý do ở Câu 26 - <code>TOP ... WITH TIES</code> tránh bỏ sót nếu có nhiều môn cùng số lượng thi rớt lần 1 nhiều nhất.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 31 (PHẦN III) · EXISTS / NOT EXISTS</p>
+              <p><strong>Đề bài:</strong> Tìm học viên (mã học viên, họ tên) thi môn nào cũng đạt (chỉ xét lần thi thứ 1).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE EXISTS (
+    SELECT * FROM KETQUATHI kq WHERE kq.MAHV = hv.MAHV AND kq.LANTHI = 1
+)
+AND NOT EXISTS (
+    SELECT * FROM KETQUATHI kq
+    WHERE kq.MAHV = hv.MAHV AND kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>EXISTS</code> đảm bảo học viên có ít nhất 1 lượt thi lần 1; <code>NOT EXISTS</code> đảm bảo không có lượt thi lần 1 nào bị "Khong Dat" - Kết hợp nghĩa là mọi môn thi lần 1 đều đạt.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải có cả 2 điều kiện <code>EXISTS</code> và <code>NOT EXISTS</code> - Nếu chỉ có <code>NOT EXISTS</code>, học viên chưa từng thi môn nào cũng thỏa mãn "không có lần nào rớt" một cách vô nghĩa, dù họ chưa thi môn nào cả.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 32 (PHẦN III) · EXISTS / NOT EXISTS</p>
+              <p><strong>Đề bài:</strong> * Tìm học viên (mã học viên, họ tên) thi môn nào cũng đạt (chỉ xét lần thi sau cùng).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE EXISTS (
+    SELECT * FROM KETQUATHI kq WHERE kq.MAHV = hv.MAHV
+)
+AND NOT EXISTS (
+    SELECT * FROM KETQUATHI kq
+    WHERE kq.MAHV = hv.MAHV
+      AND kq.KQUA = N'Khong Dat'
+      AND kq.LANTHI = (
+          SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+          WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
+      )
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>NOT EXISTS</code> lần này kiểm tra không có môn nào mà lần thi sau cùng (<code>MAX(LANTHI)</code> tương ứng từng môn) bị "Khong Dat" - Khác Câu 31 chỉ xét đúng <code>LANTHI = 1</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Lần thi sau cùng" của mỗi môn có thể khác nhau tùy học viên (có môn thi 1 lần, có môn thi lại 2-3 lần) - Phải tính lại <code>MAX(LANTHI)</code> tương quan theo từng cặp <code>(MAHV, MAMH)</code> như đã làm ở Câu 17, không thể dùng chung 1 giá trị <code>LANTHI</code> cố định như Câu 31.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 33 (PHẦN III) · DOUBLE NOT EXISTS</p>
+              <p><strong>Đề bài:</strong> * Tìm học viên (mã học viên, họ tên) đã thi tất cả các môn đều đạt (chỉ xét lần thi thứ 1).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE NOT EXISTS (
+    SELECT mh.MAMH
+    FROM MONHOC mh
+    WHERE NOT EXISTS (
+        SELECT * FROM KETQUATHI kq
+        WHERE kq.MAHV = hv.MAHV AND kq.MAMH = mh.MAMH AND kq.LANTHI = 1 AND kq.KQUA = N'Dat'
+    )
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Đây là phép chia (division) kinh điển bằng 2 lớp <code>NOT EXISTS</code> lồng nhau - "Không tồn tại môn học nào mà học viên không đạt ở lần thi 1" tương đương "mọi môn học đều đã đạt ở lần thi 1".</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 31 (chỉ xét những môn học viên có thi), câu này đòi hỏi học viên phải thi đủ tất cả môn học hiện có trong <code>MONHOC</code> - Cấu trúc "không tồn tại X mà không tồn tại Y" là mẫu chuẩn cho dạng câu hỏi "với mọi" (for all) trong SQL, vì SQL không có toán tử tương đương trực tiếp.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 34 (PHẦN III) · DOUBLE NOT EXISTS</p>
+              <p><strong>Đề bài:</strong> * Tìm học viên (mã học viên, họ tên) đã thi tất cả các môn đều đạt (chỉ xét lần thi sau cùng).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE NOT EXISTS (
+    SELECT mh.MAMH
+    FROM MONHOC mh
+    WHERE NOT EXISTS (
+        SELECT * FROM KETQUATHI kq
+        WHERE kq.MAHV = hv.MAHV AND kq.MAMH = mh.MAMH AND kq.KQUA = N'Dat'
+          AND kq.LANTHI = (
+              SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+              WHERE kq2.MAHV = hv.MAHV AND kq2.MAMH = mh.MAMH
+          )
+    )
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cấu trúc phép chia giống Câu 33, nhưng điều kiện "đạt" ở lớp <code>NOT EXISTS</code> bên trong lấy đúng lần thi sau cùng của từng môn thay vì cố định <code>LANTHI = 1</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Kết hợp kỹ thuật "lần thi sau cùng" (Câu 17, Câu 32) với kỹ thuật phép chia (Câu 33) - Học viên phải đạt ở lần thi gần nhất của mọi môn học hiện có, mới được tính là thỏa điều kiện.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 35 (PHẦN III) · CORRELATED SUBQUERY ... MAX</p>
+              <p><strong>Đề bài:</strong> ** Tìm học viên (mã học viên, họ tên) có điểm thi cao nhất trong từng môn (lấy điểm ở lần thi sau cùng).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT t.MAMH, mh.TENMH, t.MAHV, t.HOTEN, t.Diem
+FROM (
+    SELECT kq.MAMH, hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.DIEM AS Diem
+    FROM KETQUATHI kq
+    JOIN HOCVIEN hv ON kq.MAHV = hv.MAHV
+    WHERE kq.LANTHI = (
+        SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+        WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
+    )
+) t
+JOIN MONHOC mh ON t.MAMH = mh.MAMH
+WHERE t.Diem = (
+    SELECT MAX(t2.Diem)
+    FROM (
+        SELECT kq3.MAMH, kq3.DIEM AS Diem
+        FROM KETQUATHI kq3
+        WHERE kq3.LANTHI = (
+            SELECT MAX(kq4.LANTHI) FROM KETQUATHI kq4
+            WHERE kq4.MAHV = kq3.MAHV AND kq4.MAMH = kq3.MAMH
+        )
+    ) t2
+    WHERE t2.MAMH = t.MAMH
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Truy vấn con <code>t</code> dựng danh sách điểm ở đúng lần thi sau cùng của từng cặp (học viên, môn học) - Kỹ thuật giống Câu 17; sau đó lọc lại những dòng có điểm bằng đúng điểm cao nhất của riêng môn đó (<code>t2.MAMH = t.MAMH</code>).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là bài toán "giá trị lớn nhất theo từng nhóm" (giống Câu 27, Câu 29) áp dụng trên tập dữ liệu đã lọc lần thi sau cùng (giống Câu 17) - Phải kết hợp cả 2 kỹ thuật cùng lúc: Vừa tương quan <code>MAX</code> theo <code>MAMH</code>, vừa loại các lần thi không phải sau cùng.</p></div>
+              </div>
+            </div>
+
             <button type="button" class="ghost-button access-logout">Đăng xuất khỏi khu vực này</button>
           </div>
         </div>

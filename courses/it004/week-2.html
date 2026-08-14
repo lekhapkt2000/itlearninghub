@@ -224,6 +224,7 @@ WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
             <tr><td><code>CEIL()</code></td><td><code>CEILING()</code></td></tr>
             <tr><td><code>DATE_ADD(date, INTERVAL n unit)</code></td><td><code>DATEADD(unit, n, date)</code></td></tr>
             <tr><td><code>DATEDIFF(date1, date2)</code> - Số ngày</td><td><code>DATEDIFF(DAY, date1, date2)</code> - Cần chỉ rõ đơn vị</td></tr>
+            <tr><td><code>GROUP_CONCAT(x)</code></td><td><code>STRING_AGG(x, ', ')</code> - Cần chỉ rõ dấu phân cách</td></tr>
           </table></div>
           </div>
 
@@ -281,6 +282,26 @@ FROM NhanVien;</code></pre></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     HoTen,
     DATEDIFF(DAY, NgVL, GETDATE()) AS SoNgayLamViec
+FROM NhanVien;</code></pre></div>
+
+          <h3>Hàm tổng hợp (Aggregate Functions)</h3>
+          <p>Khác với 3 nhóm hàm trên (tính trên <strong>từng dòng</strong>), hàm tổng hợp tính toán trên <strong>một tập nhiều dòng</strong> và trả về một giá trị duy nhất - Thường đi kèm <code>GROUP BY</code> ở mục 04.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Hàm</th><th>Công dụng</th></tr>
+            <tr><td><code>COUNT(*)</code></td><td>Đếm tổng số dòng (kể cả dòng có <code>NULL</code>)</td></tr>
+            <tr><td><code>COUNT(x)</code></td><td>Đếm số dòng có giá trị khác <code>NULL</code> ở cột <code>x</code></td></tr>
+            <tr><td><code>SUM(x)</code></td><td>Tính tổng giá trị cột <code>x</code></td></tr>
+            <tr><td><code>AVG(x)</code></td><td>Tính giá trị trung bình cột <code>x</code></td></tr>
+            <tr><td><code>MAX(x)</code></td><td>Giá trị lớn nhất</td></tr>
+            <tr><td><code>MIN(x)</code></td><td>Giá trị nhỏ nhất</td></tr>
+          </table></div>
+          <p>Đếm số nhân viên và tính tổng/trung bình lương:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    COUNT(*) AS SoNhanVien,
+    SUM(Luong) AS TongLuong,
+    AVG(Luong) AS LuongTrungBinh,
+    MAX(Luong) AS LuongCaoNhat,
+    MIN(Luong) AS LuongThapNhat
 FROM NhanVien;</code></pre></div>
         </section>
 
@@ -459,6 +480,8 @@ INNER JOIN PhongBan pb
           <p>thay vì đưa điều kiện kết vào <code>WHERE</code> (vẫn chạy được nhưng không được khuyến khích):</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">FROM NhanVien nv, PhongBan pb
 WHERE nv.MaPB = pb.MaPB;</code></pre></div>
+
+          <div class="inline-warning"><strong>SQL Server không có NATURAL JOIN:</strong> Một số tài liệu tham khảo (MySQL, PostgreSQL, Oracle) còn có thêm <code>NATURAL JOIN</code> - Tự động kết theo các cột trùng tên giữa hai bảng. T-SQL <strong>không hỗ trợ</strong> cú pháp này - Nếu gặp trong tài liệu khác, hãy viết lại bằng <code>INNER JOIN ... ON</code> với điều kiện kết tường minh như trên.</div>
         </section>
 
         <!-- 06 - Set Operations -->

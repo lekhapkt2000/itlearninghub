@@ -228,6 +228,7 @@ WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
             <tr><td><code>CEIL()</code></td><td><code>CEILING()</code></td></tr>
             <tr><td><code>DATE_ADD(date, INTERVAL n unit)</code></td><td><code>DATEADD(unit, n, date)</code></td></tr>
             <tr><td><code>DATEDIFF(date1, date2)</code> - number of days</td><td><code>DATEDIFF(DAY, date1, date2)</code> - unit must be specified</td></tr>
+            <tr><td><code>GROUP_CONCAT(x)</code></td><td><code>STRING_AGG(x, ', ')</code> - a separator must be specified</td></tr>
           </table></div>
           </div>
 
@@ -285,6 +286,26 @@ FROM NhanVien;</code></pre></div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     HoTen,
     DATEDIFF(DAY, NgVL, GETDATE()) AS SoNgayLamViec
+FROM NhanVien;</code></pre></div>
+
+          <h3>Aggregate Functions</h3>
+          <p>Unlike the 3 function groups above (which compute per row), aggregate functions compute over a <strong>set of many rows</strong> and return a single value - usually paired with <code>GROUP BY</code> in section 04.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Function</th><th>Purpose</th></tr>
+            <tr><td><code>COUNT(*)</code></td><td>Counts total rows (including rows with <code>NULL</code>)</td></tr>
+            <tr><td><code>COUNT(x)</code></td><td>Counts rows where column <code>x</code> is not <code>NULL</code></td></tr>
+            <tr><td><code>SUM(x)</code></td><td>Sums column <code>x</code></td></tr>
+            <tr><td><code>AVG(x)</code></td><td>Averages column <code>x</code></td></tr>
+            <tr><td><code>MAX(x)</code></td><td>Largest value</td></tr>
+            <tr><td><code>MIN(x)</code></td><td>Smallest value</td></tr>
+          </table></div>
+          <p>Count employees and compute the sum/average salary:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
+    COUNT(*) AS SoNhanVien,
+    SUM(Luong) AS TongLuong,
+    AVG(Luong) AS LuongTrungBinh,
+    MAX(Luong) AS LuongCaoNhat,
+    MIN(Luong) AS LuongThapNhat
 FROM NhanVien;</code></pre></div>
         </section>
 
@@ -463,6 +484,8 @@ INNER JOIN PhongBan pb
           <p>instead of putting the join condition in <code>WHERE</code> (still works, but not recommended):</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">FROM NhanVien nv, PhongBan pb
 WHERE nv.MaPB = pb.MaPB;</code></pre></div>
+
+          <div class="inline-warning"><strong>SQL Server has no NATURAL JOIN:</strong> Some reference material (MySQL, PostgreSQL, Oracle) also has <code>NATURAL JOIN</code> - automatically joining on columns with matching names between two tables. T-SQL does <strong>not support</strong> this syntax - if you see it in other material, rewrite it with an explicit <code>INNER JOIN ... ON</code> condition as shown above.</div>
         </section>
 
         <!-- 06 - Set Operations -->

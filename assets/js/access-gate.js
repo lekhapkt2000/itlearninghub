@@ -51,6 +51,26 @@
     });
   }
 
+  // A gate can be nested inside another gate's unlocked content (e.g. an
+  // answer key that only appears once the exam paper gate is open). Plain
+  // gate.querySelector('.access-logout') would then match whichever gate's
+  // element happens to come first in document order - not necessarily this
+  // gate's own. Scope each lookup to elements that aren't inside a nested
+  // child gate.
+  function scopedQuery(root, selector) {
+    var nestedGates = root.querySelectorAll('.access-gate');
+    var candidates = root.querySelectorAll(selector);
+    for (var i = 0; i < candidates.length; i++) {
+      var el = candidates[i];
+      var insideNested = false;
+      for (var j = 0; j < nestedGates.length; j++) {
+        if (nestedGates[j] !== root && nestedGates[j].contains(el)) { insideNested = true; break; }
+      }
+      if (!insideNested) return el;
+    }
+    return null;
+  }
+
   document.querySelectorAll('.access-gate').forEach(function (gate) {
     var course = gate.dataset.accessCourse || '';
     var resource = gate.dataset.accessResource || '';
@@ -59,13 +79,13 @@
     // silently unlock week 2's gate just because both are IT004.
     var storageKey = 'access:' + course + ':' + (week || resource || 'default');
 
-    var locked = gate.querySelector('.access-locked');
-    var unlocked = gate.querySelector('.access-unlocked');
-    var form = gate.querySelector('.access-form');
-    var input = gate.querySelector('.access-input');
-    var submitBtn = gate.querySelector('.access-submit');
-    var errorEl = gate.querySelector('.access-error');
-    var logoutBtn = gate.querySelector('.access-logout');
+    var locked = scopedQuery(gate, '.access-locked');
+    var unlocked = scopedQuery(gate, '.access-unlocked');
+    var form = scopedQuery(gate, '.access-form');
+    var input = scopedQuery(gate, '.access-input');
+    var submitBtn = scopedQuery(gate, '.access-submit');
+    var errorEl = scopedQuery(gate, '.access-error');
+    var logoutBtn = scopedQuery(gate, '.access-logout');
 
     function unlock() {
       locked.hidden = true;

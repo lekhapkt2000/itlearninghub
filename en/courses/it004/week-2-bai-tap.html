@@ -107,11 +107,11 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified - you now have access to the Week 2 answer.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Answer for Questions 1 ➜ 23. Questions 24 and 25 will be added later. Retype each query in SSMS so it actually sticks - the Copy button here is just for show.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Full answer key for Questions 1 ➜ 25. Retype each query in SSMS so it actually sticks - the Copy button here is just for show.</p>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 1 · WHERE</p>
-              <h3>Products manufactured in Trung Quoc</h3>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) manufactured in "Trung Quoc".</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE NUOCSX = 'Trung Quoc';</code></pre></div>
@@ -123,7 +123,7 @@ WHERE NUOCSX = 'Trung Quoc';</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 2 · IN</p>
-              <h3>Products with unit "cay" or "quyen"</h3>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) whose unit of measure is "cay" or "quyen".</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE DVT IN ('cay', 'quyen');</code></pre></div>
@@ -138,7 +138,7 @@ WHERE DVT = 'cay' OR DVT = 'quyen';</code></pre></div></details>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 3 · LIKE</p>
-              <h3>Product code starting "B", ending "01"</h3>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) whose product code starts with "B" and ends with "01".</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE MASP LIKE 'B%01';</code></pre></div>
@@ -150,7 +150,7 @@ WHERE MASP LIKE 'B%01';</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 4 · BETWEEN</p>
-              <h3>Products from Trung Quoc, price 30,000 - 40,000</h3>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) manufactured in "Trung Quoc" priced from 30,000 to 40,000.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE NUOCSX = 'Trung Quoc' AND (GIA BETWEEN 30000 AND 40000);</code></pre></div>
@@ -165,7 +165,7 @@ WHERE NUOCSX = 'Trung Quoc' AND (GIA >= 30000 AND GIA <= 40000);</code></pre></d
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 5 · IN + BETWEEN</p>
-              <h3>Products from Trung Quoc or Thai Lan, price 30,000 - 40,000</h3>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) manufactured in "Trung Quoc" or "Thai Lan" priced from 30,000 to 40,000.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE NUOCSX IN ('Trung Quoc', 'Thai Lan') AND (GIA BETWEEN 30000 AND 40000);</code></pre></div>
@@ -177,7 +177,7 @@ WHERE NUOCSX IN ('Trung Quoc', 'Thai Lan') AND (GIA BETWEEN 30000 AND 40000);</c
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 6 · IN by date</p>
-              <h3>Invoices sold on 1/1/2007 and 2/1/2007</h3>
+              <p><strong>Exercise:</strong> Print the invoice numbers and invoice totals sold on 1/1/2007 and 2/1/2007.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, TRIGIA
 FROM HOADON
 WHERE NGHD IN ('1/1/2007', '2/1/2007');</code></pre></div>
@@ -189,7 +189,7 @@ WHERE NGHD IN ('1/1/2007', '2/1/2007');</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 7 · YEAR/MONTH + multi-column ORDER BY</p>
-              <h3>Invoices in January 2007, sorted by date ascending, total descending</h3>
+              <p><strong>Exercise:</strong> Print the invoice numbers and invoice totals in January 2007, sorted by date (ascending) and invoice total (descending).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, NGHD, TRIGIA
 FROM HOADON
 WHERE YEAR(NGHD) = 2007 AND MONTH(NGHD) = 1
@@ -202,7 +202,7 @@ ORDER BY NGHD ASC, TRIGIA DESC;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 8 · JOIN</p>
-              <h3>Customers who purchased on 1/1/2007</h3>
+              <p><strong>Exercise:</strong> Print the list of customers (MAKH, HOTEN) who made a purchase on 1/1/2007.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hd.MAKH, HOTEN
 FROM KHACHHANG kh JOIN HOADON hd ON kh.MAKH = hd.MAKH
 WHERE NGHD = '1/1/2007';</code></pre></div>
@@ -219,7 +219,7 @@ WHERE MAKH IN (SELECT MAKH
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 9 · JOIN filtered by employee name</p>
-              <h3>Invoices created by "Nguyen Van B" on 28/10/2006</h3>
+              <p><strong>Exercise:</strong> Print the invoice numbers and invoice totals for invoices created by the employee named "Nguyen Van B" on 28/10/2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, TRIGIA
 FROM HOADON hd JOIN NHANVIEN nv ON hd.MANV = nv.MANV
 WHERE HOTEN = 'Nguyen Van B' AND NGHD = '28/10/2006';</code></pre></div>
@@ -236,7 +236,7 @@ WHERE NGHD = '28/10/2006' AND MANV IN (SELECT MANV
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 10 · JOIN 4 tables</p>
-              <h3>Products "Nguyen Van A" purchased in October 2006</h3>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) purchased by the customer named "Nguyen Van A" during October 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT sp.MASP, TENSP
 FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
                 JOIN HOADON hd ON hd.SOHD = ct.SOHD
@@ -260,7 +260,7 @@ WHERE MASP IN (SELECT MASP
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 11 · DISTINCT + IN</p>
-              <h3>Invoices that include "BB01" or "BB02"</h3>
+              <p><strong>Exercise:</strong> Find the invoice numbers that include the product with code "BB01" or "BB02".</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT SOHD
 FROM CTHD
 WHERE MASP IN ('BB01', 'BB02');</code></pre></div>
@@ -275,7 +275,7 @@ UNION
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 12 · adding a quantity condition</p>
-              <h3>Invoices with "BB01"/"BB02", quantity 10-20</h3>
+              <p><strong>Exercise:</strong> Find the invoice numbers that include the product with code "BB01" or "BB02", each purchased in a quantity from 10 to 20.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT SOHD
 FROM CTHD
 WHERE MASP IN ('BB01', 'BB02') AND (SL BETWEEN 10 AND 20);</code></pre></div>
@@ -287,7 +287,7 @@ WHERE MASP IN ('BB01', 'BB02') AND (SL BETWEEN 10 AND 20);</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 13 · INTERSECT</p>
-              <h3>Invoices that include BOTH "BB01" and "BB02", quantity 10-20</h3>
+              <p><strong>Exercise:</strong> Find the invoice numbers that include both products with code "BB01" and "BB02" at the same time, each purchased in a quantity from 10 to 20.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT SOHD FROM CTHD WHERE MASP = 'BB01' AND (SL BETWEEN 10 AND 20))
 INTERSECT
 (SELECT SOHD FROM CTHD WHERE MASP = 'BB02' AND (SL BETWEEN 10 AND 20));</code></pre></div>
@@ -299,7 +299,7 @@ INTERSECT
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 14 · UNION</p>
-              <h3>Products from Trung Quoc OR sold on 1/1/2007</h3>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) manufactured in "Trung Quoc" or products sold on 1/1/2007.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT MASP, TENSP
  FROM SANPHAM
  WHERE NUOCSX = 'Trung Quoc')
@@ -316,7 +316,7 @@ UNION
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 15 · NOT IN</p>
-              <h3>Products that have never been sold</h3>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) that have never been sold.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE MASP NOT IN (SELECT DISTINCT MASP FROM CTHD);</code></pre></div>
@@ -332,7 +332,7 @@ EXCEPT
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 16 · NOT IN nested through HOADON</p>
-              <h3>Products not sold in 2006</h3>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) that were not sold in 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE MASP NOT IN (SELECT DISTINCT MASP
@@ -354,7 +354,7 @@ EXCEPT
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 17 · combining a condition with Question 16</p>
-              <h3>Products from Trung Quoc, not sold in 2006</h3>
+              <p><strong>Exercise:</strong> Print the list of products (MASP, TENSP) manufactured in "Trung Quoc" that were not sold in 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MASP, TENSP
 FROM SANPHAM
 WHERE NUOCSX = 'Trung Quoc'
@@ -371,7 +371,7 @@ WHERE NUOCSX = 'Trung Quoc'
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 18 · GROUP BY + COUNT</p>
-              <h3>Number of invoices each employee created in 2006</h3>
+              <p><strong>Exercise:</strong> Report the number of invoices created by each employee in 2006, showing (MANV, HOTEN, SoLuongHD).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT nv.MANV, HOTEN, COUNT(*) AS SoLuongHD
 FROM NHANVIEN nv JOIN HOADON hd ON nv.MANV = hd.MANV
 WHERE YEAR(NGHD) = 2006
@@ -384,7 +384,7 @@ GROUP BY nv.MANV, HOTEN;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 19 · COUNT DISTINCT</p>
-              <h3>Total distinct customers each employee sold to in 2006</h3>
+              <p><strong>Exercise:</strong> Print the list of employees together with the total number of distinct customers they sold to in 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT nv.MANV, nv.HOTEN, COUNT(DISTINCT hd.MAKH) AS TongSoKH
 FROM NHANVIEN nv JOIN HOADON hd ON nv.MANV = hd.MANV
                  JOIN KHACHHANG kh ON kh.MAKH = hd.MAKH
@@ -398,7 +398,7 @@ GROUP BY nv.MANV, nv.HOTEN;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 20 · SUM + TOP WITH TIES</p>
-              <h3>Product(s) with the highest total quantity sold in 2006</h3>
+              <p><strong>Exercise:</strong> List the product(s) (MASP, TENSP) with the highest total quantity sold in 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES sp.MASP, TENSP, SUM(SL) AS TongSoLuong
 FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
                 JOIN HOADON hd ON hd.SOHD = ct.SOHD
@@ -413,7 +413,7 @@ ORDER BY TongSoLuong DESC;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 21 · SUM of value</p>
-              <h3>Employee with the highest sales in October 2006</h3>
+              <p><strong>Exercise:</strong> Find the employee with the highest sales revenue in October 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES nv.MANV, HOTEN, SUM(TRIGIA) AS TongDoanhSo
 FROM NHANVIEN nv JOIN HOADON hd ON nv.MANV = hd.MANV
 WHERE MONTH(NGHD) = 10 AND YEAR(NGHD) = 2006
@@ -427,7 +427,7 @@ ORDER BY TongDoanhSo DESC;</code></pre></div>
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 22 · EXCEPT</p>
-              <h3>Products not sold in 2007 but sold in 2006</h3>
+              <p><strong>Exercise:</strong> Print the list of products not sold in 2007 but sold in 2006.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT sp.MASP, TENSP
  FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
                  JOIN HOADON hd ON hd.SOHD = ct.SOHD
@@ -445,7 +445,7 @@ EXCEPT
 
             <div class="qa-block">
               <p class="eyebrow">QUESTION 23 · HAVING</p>
-              <h3>Products sold by at least 2 different employees</h3>
+              <p><strong>Exercise:</strong> List the products (MASP, TENSP) sold by at least 2 different employees.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT sp.MASP, TENSP, COUNT(DISTINCT MANV) AS SLNVBan
 FROM SANPHAM sp JOIN CTHD ct ON sp.MASP = ct.MASP
                 JOIN HOADON hd ON hd.SOHD = ct.SOHD
@@ -455,6 +455,52 @@ HAVING COUNT(DISTINCT MANV) >= 2;</code></pre></div>
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>HAVING</code> filters on a result that's already been <code>GROUP BY</code>'d (unlike <code>WHERE</code>, which filters before grouping).</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>The condition "at least 2 different employees" can only be evaluated after counting <code>DISTINCT MANV</code> per product - so it must be filtered with <code>HAVING</code>, not <code>WHERE</code>.</p></div>
               </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 24 · EXCEPT</p>
+              <p><strong>Exercise:</strong> Print the list of customers who did not purchase any product manufactured in Thailand.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT MAKH, HOTEN
+ FROM KHACHHANG)
+EXCEPT
+(SELECT DISTINCT kh.MAKH, HOTEN
+ FROM KHACHHANG kh JOIN HOADON hd ON kh.MAKH = hd.MAKH
+                   JOIN CTHD ct ON hd.SOHD = ct.SOHD
+                   JOIN SANPHAM sp ON sp.MASP = ct.MASP
+ WHERE NUOCSX = 'Thai Lan');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>EXCEPT</code> takes the rows in the first set (every customer) that don't appear in the second set (customers who have purchased at least 1 Thai product, found through the chain <code>JOIN KHACHHANG ➜ HOADON ➜ CTHD ➜ SANPHAM</code>).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Did not purchase any Thai product" is equivalent to "every customer minus those who purchased at least 1 Thai product" - this is exactly a set-subtraction operation, so <code>EXCEPT</code> is the most natural tool for this "none of..." phrasing.</p></div>
+              </div>
+              <details><summary>Alternative approach (NOT EXISTS)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT kh.MAKH, HOTEN
+FROM KHACHHANG kh
+WHERE NOT EXISTS
+(
+    SELECT *
+    FROM HOADON hd JOIN CTHD ct ON hd.SOHD = ct.SOHD
+                   JOIN SANPHAM sp ON sp.MASP = ct.MASP
+    WHERE hd.MAKH = kh.MAKH
+      AND sp.NUOCSX = 'Thai Lan'
+);</code></pre></div></details>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 25 · TOP WITH TIES</p>
+              <p><strong>Exercise:</strong> Find the invoice with the highest total value in 2006, printing (SOHD, NGHD, TRIGIA).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES SOHD, NGHD, TRIGIA
+FROM HOADON
+WHERE YEAR(NGHD) = 2006
+ORDER BY TRIGIA DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Sorts the 2006 invoices by <code>TRIGIA</code> descending, then takes <code>TOP 1</code>; <code>WITH TIES</code> also keeps every other invoice that reaches the exact same highest value, not just 1 row.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>With plain <code>TOP 1</code> (no <code>WITH TIES</code>), if 2 invoices tie for the highest value, SQL Server would only return 1 of them at random - the other would be missed. <code>WITH TIES</code> guarantees no data is lost in a tie.</p></div>
+              </div>
+              <details><summary>Alternative approach (MAX subquery)</summary><div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SOHD, NGHD, TRIGIA
+FROM HOADON
+WHERE YEAR(NGHD) = 2006
+  AND TRIGIA = (SELECT MAX(TRIGIA)
+                FROM HOADON
+                WHERE YEAR(NGHD) = 2006);</code></pre></div></details>
             </div>
 
             <button type="button" class="ghost-button access-logout">Log out of this section</button>

@@ -3,9 +3,9 @@
 .breadcrumb a:hover{color:var(--primary)}
 .breadcrumb span{margin:0 6px;color:#cbd5e1}
 
-.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;padding:36px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
-.course-header .course-code{color:var(--primary);font:700 12px var(--font-mono);letter-spacing:.1em}
-.course-header h1{margin:10px 0 6px;font-size:clamp(32px,4.5vw,48px)}
+.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;padding:36px;background:var(--surface);border:1px solid var(--line);border-radius:16px}
+.course-header .course-code{color:var(--primary);font:700 11px var(--font-mono);letter-spacing:.1em}
+.course-header h1{margin:10px 0 6px;font-size:clamp(30px,4vw,42px);font-weight:800;letter-spacing:-.02em}
 .course-header .course-en{color:var(--muted);font-size:13px}
 .course-header-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
 .stat-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
@@ -26,14 +26,15 @@
 .course-nav .nav-item svg{width:11px;height:11px;flex-shrink:0}
 .course-nav .nav-item small{font-size:9px;font-weight:600;color:#cbd5e1}
 
-.panel{padding:36px 0}
-.panel+.panel{border-top:1px solid var(--line)}
-.panel h2{margin-bottom:6px;font-size:24px}
-.panel-lead{max-width:640px;color:var(--muted);font-size:13px;line-height:1.7}
+.course-main{display:flex;flex-direction:column;gap:20px}
 
-.intro-panel{display:flex;gap:24px;align-items:flex-start;position:relative;overflow:hidden;padding:32px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,var(--tint) 0%,var(--surface) 60%)}
+.panel{padding:32px 36px;background:var(--surface);border:1px solid var(--line);border-radius:16px}
+.panel+.panel{border-top:none}
+.panel h2{margin-bottom:6px;font-size:21px;letter-spacing:-.01em}
+.panel-lead{max-width:640px;color:var(--muted);font-size:14px;line-height:1.75}
+
+.intro-panel{display:flex;gap:24px;align-items:flex-start;position:relative;overflow:hidden;padding:32px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,var(--tint) 0%,var(--surface) 60%)}
 .intro-panel::before{content:'';position:absolute;top:-70px;right:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgb(37 99 235 / .12),transparent 70%)}
-.intro-panel+.panel{border-top:none}
 .intro-panel-icon{position:relative;z-index:1;flex-shrink:0;display:grid;place-items:center;width:56px;height:56px;border-radius:14px;background:var(--primary);color:#fff;box-shadow:0 12px 24px -8px rgb(37 99 235 / .4)}
 .intro-panel-icon svg{width:26px;height:26px}
 .intro-panel-body{position:relative;z-index:1;flex:1;min-width:0}
@@ -43,7 +44,7 @@
 @media(max-width:600px){.intro-panel{flex-direction:column;padding:26px}}
 
 .req-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
-.req-card{padding:22px;background:var(--surface);border:1px solid var(--line);transition:transform .2s,box-shadow .2s,border-color .2s}
+.req-card{padding:22px;background:var(--surface);border:1px solid var(--line);border-radius:12px;transition:transform .2s,box-shadow .2s,border-color .2s}
 .req-card:hover{transform:translateY(-2px);border-color:var(--primary);box-shadow:0 12px 24px -14px rgb(15 23 42 / .18)}
 .req-card h3{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:12px}
 .req-card h3 .icon{font-size:16px;color:var(--primary)}
@@ -54,7 +55,7 @@
 .tool-list span{padding:6px 12px;background:var(--tint);color:var(--primary-ink);border-radius:6px;font-size:11px;font-weight:600}
 .req-note{margin-top:12px;color:var(--muted);font-size:11px}
 
-.warning-box{margin-top:16px;padding:20px 22px;background:#fffbeb;border:1px solid #fde68a;border-left:4px solid #d97706}
+.warning-box{margin-top:16px;padding:20px 22px;background:#fffbeb;border:1px solid #fde68a;border-left:3px solid #d97706;border-radius:12px}
 .warning-box h3{display:flex;align-items:center;gap:8px;margin-bottom:8px;color:#92400e;font-size:14px}
 .warning-box h3 .icon{font-size:16px}
 .warning-box p{margin:0;color:#78350f;font-size:12px;line-height:1.7}
@@ -99,18 +100,18 @@
 .extra-intro{margin-bottom:18px;color:var(--muted);font-size:12px;line-height:1.7}
 
 .score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}
-.score-card{padding:22px;background:var(--surface);border:1px solid var(--line);transition:transform .2s,box-shadow .2s,border-color .2s}
+.score-card{padding:22px;background:var(--surface);border:1px solid var(--line);border-radius:12px;transition:transform .2s,box-shadow .2s,border-color .2s}
 .score-card:hover{transform:translateY(-2px);border-color:var(--primary);box-shadow:0 12px 24px -14px rgb(15 23 42 / .18)}
 .score-card strong{display:block;color:var(--primary);font-size:32px;font-weight:800;letter-spacing:-.03em}
 .score-card span{color:var(--muted);font-size:11px;line-height:1.5}
 
 .roadmap{margin-top:34px}
 .roadmap-track{display:flex;position:relative;padding:0 4px}
-.roadmap-track:before{content:'';position:absolute;top:28px;left:56px;right:56px;height:2px;background:var(--line);z-index:0}
+.roadmap-track:before{content:'';position:absolute;top:28px;left:56px;right:56px;height:2px;background:linear-gradient(90deg,transparent,var(--line) 12%,var(--line) 88%,transparent);z-index:0}
 .roadmap-step{flex:1;min-width:0;position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 6px;text-align:center;text-decoration:none;color:inherit}
-.roadmap-node{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--tint);border:2px solid var(--primary);color:var(--primary-ink);font:700 16px var(--font-mono);margin-bottom:8px;transition:.2s}
+.roadmap-node{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--tint);border:2px solid var(--primary);color:var(--primary-ink);font:700 16px var(--font-mono);margin-bottom:8px;box-shadow:0 10px 20px -10px rgb(37 99 235 / .35);transition:.2s}
 .roadmap-step:hover .roadmap-node{transform:translateY(-2px)}
-.roadmap-label{color:var(--muted);font:700 10px var(--font-mono);letter-spacing:.08em}
+.roadmap-label{color:var(--muted);font:700 11px var(--font-mono);letter-spacing:.1em}
 .roadmap-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.4;max-width:150px}
 .roadmap-topics{font-size:10px;color:var(--muted);line-height:1.5;max-width:150px}
 
@@ -380,6 +381,7 @@
 }
 @media(max-width:600px){
   .course-shell{padding:40px 20px 70px}
+  .panel{padding:24px 22px}
   .course-header{flex-direction:column;align-items:flex-start;gap:20px}
   .course-header-right{align-items:flex-start}
   .stat-row{justify-content:flex-start}

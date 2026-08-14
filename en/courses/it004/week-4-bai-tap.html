@@ -454,6 +454,596 @@ END;</code></pre></div>
               </div>
             </div>
 
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 1 (PART III) · JOIN</p>
+              <p><strong>Exercise:</strong> Print the list (student ID, full name, date of birth, class code) of each class's class monitor.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, hv.NGSINH, hv.MALOP
+FROM HOCVIEN hv
+JOIN LOP l ON hv.MAHV = l.TRGLOP;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN HOCVIEN</code> with <code>LOP</code> via <code>TRGLOP</code> to get exactly the students who are currently a class monitor; <code>HO + ' ' + TEN</code> concatenates the full name since <code>HOCVIEN</code> stores it as 2 separate columns.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>JOIN</code> is used (not a subquery) because we need 4 full columns of student data - the question asks for both full name and date of birth, so we must join directly into <code>HOCVIEN</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2 (PART III) · JOIN ... ORDER BY</p>
+              <p><strong>Exercise:</strong> Print the exam scoresheet (student ID, full name, attempt number, score) for the CTRR subject in class "K12", sorted by student first and last name.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.LANTHI, kq.DIEM
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE hv.MALOP = N'K12' AND kq.MAMH = N'CTRR'
+ORDER BY hv.TEN, hv.HO;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN HOCVIEN</code> with <code>KETQUATHI</code> via <code>MAHV</code>, filtering for the right class and subject; <code>ORDER BY TEN</code> before <code>HO</code> because sorting "by first name, then last name" means the first (given) name takes priority.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>No need to <code>JOIN</code> in <code>LOP</code> as well, since <code>MALOP</code> already lives directly on <code>HOCVIEN</code> - there's no need to go through <code>LOP</code> just to filter for class "K12".</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3 (PART III) · JOIN</p>
+              <p><strong>Exercise:</strong> Print the list of students (student ID, full name) and the subjects they passed on their first attempt.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.MAMH
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.LANTHI = 1 AND kq.KQUA = N'Dat';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Filter <code>KETQUATHI</code> directly by <code>LANTHI = 1</code> and <code>KQUA = 'Dat'</code>, then <code>JOIN</code> to <code>HOCVIEN</code> just to get the full name.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question also asks to print "the subjects" passed on attempt 1 - so <code>MAMH</code> has to stay in the result, no <code>GROUP BY</code> or aggregation, each row is 1 (student, subject) pair that satisfies the condition.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 4 (PART III) · JOIN</p>
+              <p><strong>Exercise:</strong> Print the list of students (student ID, full name) in class "K11" who failed the CTRR subject (on attempt 1).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE hv.MALOP = N'K11' AND kq.MAMH = N'CTRR'
+  AND kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN</code> then filter on 4 conditions at once with <code>AND</code>: the right class, the right subject, the right attempt, the right result.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Only attempt 1 is in scope, so <code>LANTHI = 1</code> must be filtered explicitly - without it, a student who retook the exam could still show up in the result even if they passed on a later attempt.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 5 (PART III) · EXISTS / NOT EXISTS</p>
+              <p><strong>Exercise:</strong> * List of students (student ID, full name) in class "K" who failed the CTRR subject (across all attempts).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE hv.MALOP = N'K11'
+  AND EXISTS (
+      SELECT * FROM KETQUATHI kq WHERE kq.MAHV = hv.MAHV AND kq.MAMH = N'CTRR'
+  )
+  AND NOT EXISTS (
+      SELECT * FROM KETQUATHI kq
+      WHERE kq.MAHV = hv.MAHV AND kq.MAMH = N'CTRR' AND kq.KQUA = N'Dat'
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>EXISTS</code> confirms the student took the CTRR exam (at least once); <code>NOT EXISTS</code> confirms none of their attempts passed - together this means every CTRR attempt by this student failed.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question says class "K" - this almost certainly still refers to class K11 carried over from Question 4 (the sample schema has no class literally named "K", most likely a typo in the original document). If we only filtered <code>KQUA = 'Khong Dat'</code> like Question 4, a student who retook the exam and passed once would still show up incorrectly - <code>NOT EXISTS</code> is needed to guarantee no attempt ever passed, matching "across all attempts".</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 6 (PART III) · JOIN ... DISTINCT</p>
+              <p><strong>Exercise:</strong> Find the names of the subjects taught by the teacher named "Tran Tam Thanh" in semester 1 of 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT mh.TENMH
+FROM GIANGDAY gd
+JOIN GIAOVIEN gv ON gd.MAGV = gv.MAGV
+JOIN MONHOC mh ON gd.MAMH = mh.MAMH
+WHERE gv.HOTEN = N'Tran Tam Thanh' AND gd.HOCKY = 1 AND gd.NAM = 2006;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN</code> 3 tables <code>GIANGDAY - GIAOVIEN - MONHOC</code> to go from teacher name to subject name; <code>DISTINCT</code> because 1 teacher can teach the same subject to multiple classes in the same semester (duplicate rows).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question only asks for the "subject name" (not the code), and per the sample data teacher GV02 teaches CTRR to both K11 and K12 in semester 1/2006 - <code>DISTINCT</code> avoids printing the subject name twice.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 7 (PART III) · SUBQUERY</p>
+              <p><strong>Exercise:</strong> Find the subjects (subject code, subject name) taught by the homeroom teacher of class "K11" in semester 1 of 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT mh.MAMH, mh.TENMH
+FROM GIANGDAY gd
+JOIN MONHOC mh ON gd.MAMH = mh.MAMH
+WHERE gd.MAGV = (SELECT MAGVCN FROM LOP WHERE MALOP = N'K11')
+  AND gd.HOCKY = 1 AND gd.NAM = 2006;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The subquery gets exactly 1 teacher code, the homeroom teacher of class K11, from <code>LOP.MAGVCN</code>, then filters <code>GIANGDAY</code> for that teacher and the right semester/year.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>A plain equality subquery (<code>=</code>, not <code>IN</code>) is used because each class has exactly 1 homeroom teacher, so the subquery is guaranteed to return exactly 1 value - no need to join <code>LOP</code> into the outer query.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 8 (PART III) · SUBQUERY ... IN</p>
+              <p><strong>Exercise:</strong> Find the full name of the class monitor of the class(es) where the teacher named "Nguyen To Lan" teaches "Co So Du Lieu".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT hv.HO + N' ' + hv.TEN AS HOTEN
+FROM LOP l
+JOIN HOCVIEN hv ON l.TRGLOP = hv.MAHV
+WHERE l.MALOP IN (
+    SELECT gd.MALOP
+    FROM GIANGDAY gd
+    JOIN GIAOVIEN gv ON gd.MAGV = gv.MAGV
+    JOIN MONHOC mh ON gd.MAMH = mh.MAMH
+    WHERE gv.HOTEN = N'Nguyen To Lan' AND mh.TENMH = N'Co So Du Lieu'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The subquery finds the class codes where teacher "Nguyen To Lan" teaches "Co So Du Lieu"; the outer query <code>JOIN</code>s <code>LOP</code> with <code>HOCVIEN</code> via <code>TRGLOP</code> to get the class monitor's full name for those classes.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>1 teacher can teach this subject to more than 1 class, so the subquery uses <code>IN</code> (not <code>=</code>) - <code>DISTINCT</code> guards against a duplicate monitor name if multiple <code>GIANGDAY</code> rows match the same class.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 9 (PART III) · SUBQUERY</p>
+              <p><strong>Exercise:</strong> Print the list of subjects (subject code, subject name) that must be completed as a prerequisite before "Co So Du Lieu".</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT mh.MAMH, mh.TENMH
+FROM DIEUKIEN dk
+JOIN MONHOC mh ON dk.MAMH_TRUOC = mh.MAMH
+WHERE dk.MAMH = (SELECT MAMH FROM MONHOC WHERE TENMH = N'Co So Du Lieu');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The subquery looks up the subject code for "Co So Du Lieu"; <code>DIEUKIEN.MAMH_TRUOC</code> lists the subjects that must be taken before it, then <code>JOIN MONHOC</code> gets their names.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question gives a subject name, not a code, so the code must be looked up first via a subquery - hardcoding the subject code directly, even though we know it from the sample data, would break if the code ever changed, while looking it up by name stays correct.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 10 (PART III) · SUBQUERY</p>
+              <p><strong>Exercise:</strong> Which subjects (subject code, subject name) require "Cau Truc Roi Rac" as a mandatory prerequisite?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT mh.MAMH, mh.TENMH
+FROM DIEUKIEN dk
+JOIN MONHOC mh ON dk.MAMH = mh.MAMH
+WHERE dk.MAMH_TRUOC = (SELECT MAMH FROM MONHOC WHERE TENMH = N'Cau Truc Roi Rac');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The reverse direction of Question 9 - this time filter by <code>MAMH_TRUOC</code> and pull out <code>MAMH</code> (the subjects that require CTRR as a prerequisite).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>DIEUKIEN</code> stores the pair <code>(MAMH, MAMH_TRUOC)</code>; Question 9 goes from <code>MAMH</code> to find <code>MAMH_TRUOC</code>, Question 10 goes the other way, from <code>MAMH_TRUOC</code> to find <code>MAMH</code> - same table, filtered on a different column depending on the direction of the question.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 11 (PART III) · SUBQUERY ... IN</p>
+              <p><strong>Exercise:</strong> Find the full name of the teacher who taught CTRR to both class "K11" and class "K12" in the same semester 1 of 2006.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.HOTEN
+FROM GIAOVIEN gv
+WHERE gv.MAGV IN (
+    SELECT MAGV FROM GIANGDAY
+    WHERE MALOP = N'K11' AND MAMH = N'CTRR' AND HOCKY = 1 AND NAM = 2006
+)
+AND gv.MAGV IN (
+    SELECT MAGV FROM GIANGDAY
+    WHERE MALOP = N'K12' AND MAMH = N'CTRR' AND HOCKY = 1 AND NAM = 2006
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>2 independent subqueries, each returning the <code>MAGV</code> that taught CTRR to exactly 1 class (K11 or K12) in semester 1/2006; a valid teacher must satisfy both <code>IN</code> conditions at once.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>You can't merge this into a single <code>MALOP IN ('K11','K12')</code> condition, since that would match a teacher who taught just 1 of the 2 classes - the 2 subqueries have to stay separate, joined by <code>AND</code>, to force the teacher to cover both classes.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 12 (PART III) · NOT EXISTS</p>
+              <p><strong>Exercise:</strong> Find the students (student ID, full name) who failed the CSDL subject on their 1st attempt but have not yet retaken it.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.MAMH = N'CSDL' AND kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat'
+  AND NOT EXISTS (
+      SELECT * FROM KETQUATHI kq2
+      WHERE kq2.MAHV = hv.MAHV AND kq2.MAMH = N'CSDL' AND kq2.LANTHI = 2
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The main condition filters for a failing CSDL attempt 1; <code>NOT EXISTS</code> checks that no attempt-2 row exists for that same student and subject.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Has not retaken it" means no <code>LANTHI = 2</code> record exists - <code>NOT EXISTS</code> is the right tool for checking "does not exist", as opposed to counting or filtering directly.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 13 (PART III) · NOT EXISTS</p>
+              <p><strong>Exercise:</strong> Find the teachers (teacher ID, full name) not assigned to teach any subject.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.MAGV, gv.HOTEN
+FROM GIAOVIEN gv
+WHERE NOT EXISTS (
+    SELECT * FROM GIANGDAY gd WHERE gd.MAGV = gv.MAGV
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>NOT EXISTS</code> checks that the teacher doesn't appear in any <code>GIANGDAY</code> row at all.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This is a total negation query ("not any") - <code>NOT EXISTS</code> is always the safest choice here, avoiding the <code>NULL</code> trap that <code>NOT IN</code> can fall into.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 14 (PART III) · NOT EXISTS</p>
+              <p><strong>Exercise:</strong> Find the teachers (teacher ID, full name) not assigned to teach any subject belonging to the department they head.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.MAGV, gv.HOTEN
+FROM GIAOVIEN gv
+WHERE NOT EXISTS (
+    SELECT * FROM GIANGDAY gd
+    JOIN MONHOC mh ON gd.MAMH = mh.MAMH
+    WHERE gd.MAGV = gv.MAGV AND mh.MAKHOA = gv.MAKHOA
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>NOT EXISTS</code> checks that there's no <code>GIANGDAY</code> row for that teacher matching a subject that belongs to the teacher's own department (<code>mh.MAKHOA = gv.MAKHOA</code>).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Unlike Question 13 (not teaching anything at all), this only cares about subjects from the teacher's own department - a teacher can still teach subjects from other departments and satisfy this condition, as long as they teach nothing from their own department.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 15 (PART III) · EXISTS ... OR</p>
+              <p><strong>Exercise:</strong> Find the full names of students in class "K11" who either failed any subject on more than 3 attempts and are still "Khong dat", or scored exactly 5 on their 2nd attempt at CTRR.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE hv.MALOP = N'K11'
+  AND (
+      EXISTS (
+          SELECT * FROM KETQUATHI kq
+          WHERE kq.MAHV = hv.MAHV AND kq.LANTHI = 3 AND kq.KQUA = N'Khong Dat'
+      )
+      OR EXISTS (
+          SELECT * FROM KETQUATHI kq
+          WHERE kq.MAHV = hv.MAHV AND kq.MAMH = N'CTRR' AND kq.LANTHI = 2 AND kq.DIEM = 5
+      )
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>2 <code>EXISTS</code> branches joined by <code>OR</code> inside the same parentheses: branch 1 checks for any subject that reached attempt 3 (the maximum) and still failed; branch 2 checks for a CTRR attempt 2 scoring exactly 5.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Failed any subject on more than 3 attempts" - given the max <code>LANTHI</code> is 3 (Part I, Question 5) - is read as having reached attempt 3 (the last allowed attempt) and still being "Khong dat", meaning all retake chances are exhausted; this is the closest reading consistent with the schema's actual data constraint.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 16 (PART III) · GROUP BY ... HAVING</p>
+              <p><strong>Exercise:</strong> Find the full name of the teacher who taught CTRR to at least 2 classes in the same semester of the same academic year.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.HOTEN
+FROM GIAOVIEN gv
+WHERE gv.MAGV IN (
+    SELECT MAGV
+    FROM GIANGDAY
+    WHERE MAMH = N'CTRR'
+    GROUP BY MAGV, HOCKY, NAM
+    HAVING COUNT(DISTINCT MALOP) >= 2
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY (MAGV, HOCKY, NAM)</code>, then count distinct classes with <code>COUNT(DISTINCT MALOP)</code>; <code>HAVING >= 2</code> keeps only groups teaching 2 or more classes.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Both <code>HOCKY</code> and <code>NAM</code> must be in the <code>GROUP BY</code> (not just <code>MAGV</code>), since the question requires "in the same semester of the same academic year" - grouping by <code>MAGV</code> alone would wrongly count a teacher who taught K11 in semester 1 and K12 in semester 2 (2 different semesters) as satisfying the condition.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 17 (PART III) · SUBQUERY ... MAX</p>
+              <p><strong>Exercise:</strong> List of students and their CSDL exam scores (using only the score from the most recent attempt).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.DIEM
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.MAMH = N'CSDL'
+  AND kq.LANTHI = (
+      SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+      WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = N'CSDL'
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The <code>MAX(LANTHI)</code> subquery finds each student's most recent attempt for the CSDL subject; the outer condition keeps only the row matching that attempt.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>A student can retake the CSDL exam multiple times - without filtering to the most recent attempt, scores from earlier attempts would also print, which contradicts what the question asks for.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 18 (PART III) · GROUP BY ... MAX</p>
+              <p><strong>Exercise:</strong> List of students and their "Co So Du Lieu" exam scores (using the highest score across all attempts).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, MAX(kq.DIEM) AS DIEM
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.MAMH = (SELECT MAMH FROM MONHOC WHERE TENMH = N'Co So Du Lieu')
+GROUP BY hv.MAHV, hv.HO, hv.TEN;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY</code> per student, then <code>MAX(DIEM)</code> - unlike Question 17 (filtering by most recent attempt), this takes the highest score regardless of which attempt it came from.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Highest score across all attempts" is a different requirement from "score from the most recent attempt" in Question 17 - a student could score their highest on the first try and then score lower on a retake; <code>MAX(DIEM)</code> always picks the highest value regardless of attempt order.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 19 (PART III) · SUBQUERY ... MIN</p>
+              <p><strong>Exercise:</strong> Which department (department code, department name) was established earliest?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAKHOA, TENKHOA
+FROM KHOA
+WHERE NGTLAP = (SELECT MIN(NGTLAP) FROM KHOA);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The <code>MIN(NGTLAP)</code> subquery finds the earliest founding date; the outer query keeps the department(s) whose founding date matches it.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>ORDER BY</code> with <code>TOP 1</code> isn't used because if 2 departments share the same earliest date, <code>TOP 1</code> would drop 1 of them - comparing directly against <code>MIN(...)</code> always keeps every tied department.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 20 (PART III) · COUNT</p>
+              <p><strong>Exercise:</strong> How many teachers hold the academic rank "GS" or "PGS"?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SoLuong
+FROM GIAOVIEN
+WHERE HOCHAM IN (N'GS', N'PGS');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>COUNT(*)</code> counts the rows matching either of the 2 listed values for <code>HOCHAM</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>HOCHAM</code> can be <code>NULL</code> (a teacher with no academic rank yet) - <code>IN (...)</code> automatically skips <code>NULL</code> rows without needing a separate <code>IS NOT NULL</code> condition.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 21 (PART III) · GROUP BY</p>
+              <p><strong>Exercise:</strong> Report how many teachers hold the degree "CN", "KS", "Ths", "TS", "PTS" within each department.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAKHOA, HOCVI, COUNT(*) AS SoLuong
+FROM GIAOVIEN
+WHERE HOCVI IN (N'CN', N'KS', N'Ths', N'TS', N'PTS')
+GROUP BY MAKHOA, HOCVI;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY</code> on the pair <code>(MAKHOA, HOCVI)</code>, <code>COUNT(*)</code> counts teachers within each group.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Both columns must be in <code>GROUP BY</code> together since the report needs a breakdown down to each (department, degree) combination - grouping by <code>MAKHOA</code> alone would merge every degree together into 1 row.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 22 (PART III) · GROUP BY</p>
+              <p><strong>Exercise:</strong> For each subject, report the number of students by result (passed and failed).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAMH, KQUA, COUNT(*) AS SoLuong
+FROM KETQUATHI
+GROUP BY MAMH, KQUA;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY</code> on the pair <code>(MAMH, KQUA)</code> to count attempts by result for each subject.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This counts by exam attempt (each <code>KETQUATHI</code> row), without deduplicating students who retook the exam - since every row in <code>KETQUATHI</code> represents exactly 1 attempt, counting rows directly is the most reasonable reading; a student who retook a subject could contribute to both the "Khong Dat" group (earlier attempt) and the "Dat" group (later attempt) for the same subject.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 23 (PART III) · EXISTS</p>
+              <p><strong>Exercise:</strong> Find the teachers (teacher ID, full name) who are the homeroom teacher of a class and also teach at least one subject to that same class.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.MAGV, gv.HOTEN
+FROM GIAOVIEN gv
+JOIN LOP l ON gv.MAGV = l.MAGVCN
+WHERE EXISTS (
+    SELECT * FROM GIANGDAY gd WHERE gd.MAGV = gv.MAGV AND gd.MALOP = l.MALOP
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN GIAOVIEN</code> with <code>LOP</code> via <code>MAGVCN</code> to find which class each teacher is homeroom teacher of; <code>EXISTS</code> checks whether that teacher teaches any subject to that exact class.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The class must match exactly between <code>GIANGDAY</code> and the <code>LOP</code> row being considered (<code>gd.MALOP = l.MALOP</code>) - just checking "teaches something, somewhere" without tying it to the right class would wrongly count a homeroom teacher who teaches a different class entirely.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 24 (PART III) · SUBQUERY ... MAX</p>
+              <p><strong>Exercise:</strong> Find the full name of the class monitor of the class with the largest enrollment.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.HO + N' ' + hv.TEN AS HOTEN
+FROM LOP l
+JOIN HOCVIEN hv ON l.TRGLOP = hv.MAHV
+WHERE l.SISO = (SELECT MAX(SISO) FROM LOP);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The <code>MAX(SISO)</code> subquery finds the largest enrollment; the outer query <code>JOIN</code>s <code>LOP</code> with <code>HOCVIEN</code> via <code>TRGLOP</code> to get the monitor's full name for that class.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This approach automatically keeps every class tied for the largest enrollment instead of dropping some, the way <code>TOP 1</code> would - same reasoning as Question 19.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 25 (PART III) · SCALAR SUBQUERY</p>
+              <p><strong>Exercise:</strong> * Find the full names of class monitors (LOPTRG) who failed more than 3 subjects (each subject failed on every attempt).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE hv.MAHV IN (SELECT TRGLOP FROM LOP)
+  AND (
+      SELECT COUNT(DISTINCT kq.MAMH)
+      FROM KETQUATHI kq
+      WHERE kq.MAHV = hv.MAHV
+        AND NOT EXISTS (
+            SELECT * FROM KETQUATHI kq2
+            WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH AND kq2.KQUA = N'Dat'
+        )
+  ) > 3;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The subquery counts <code>COUNT(DISTINCT MAMH)</code>, where for each subject <code>NOT EXISTS</code> confirms no attempt ever passed (same idea as Question 5) - the result is the number of subjects this student has never passed despite taking them.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>hv.MAHV IN (SELECT TRGLOP FROM LOP)</code> filters to exactly the students currently acting as a class monitor (LOPTRG) for any class; the <code>&gt; 3</code> count condition sits in its own parentheses because it's a scalar subquery compared directly, not a <code>HAVING</code> clause (since the outer query has no <code>GROUP BY</code>).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 26 (PART III) · GROUP BY ... TOP WITH TIES</p>
+              <p><strong>Exercise:</strong> Find the student (student ID, full name) with the most subjects scored 9 or 10.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.DIEM IN (9, 10)
+GROUP BY hv.MAHV, hv.HO, hv.TEN
+ORDER BY COUNT(*) DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY</code> per student, counting scores of 9 or 10; <code>TOP 1 WITH TIES</code> keeps every student tied for the top count instead of just 1 row.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>TOP ... WITH TIES</code> (not a plain <code>TOP 1</code>) is needed because multiple students could tie for the highest count of 9-10 scores - a plain <code>TOP 1</code> would arbitrarily keep just 1 of them.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 27 (PART III) · CORRELATED SUBQUERY ... MAX</p>
+              <p><strong>Exercise:</strong> Within each class, find the student (student ID, full name) with the most subjects scored 9 or 10.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT t.MALOP, t.MAHV, t.HOTEN, t.SoMon
+FROM (
+    SELECT hv.MALOP, hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, COUNT(*) AS SoMon
+    FROM HOCVIEN hv
+    JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+    WHERE kq.DIEM IN (9, 10)
+    GROUP BY hv.MALOP, hv.MAHV, hv.HO, hv.TEN
+) t
+WHERE t.SoMon = (
+    SELECT MAX(t2.SoMon)
+    FROM (
+        SELECT hv2.MALOP, hv2.MAHV, COUNT(*) AS SoMon
+        FROM HOCVIEN hv2
+        JOIN KETQUATHI kq2 ON hv2.MAHV = kq2.MAHV
+        WHERE kq2.DIEM IN (9, 10)
+        GROUP BY hv2.MALOP, hv2.MAHV
+    ) t2
+    WHERE t2.MALOP = t.MALOP
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The derived table <code>t</code> counts each student's 9-10 scores; the derived table <code>t2</code> recomputes the same figures and takes <code>MAX</code> for the matching class (<code>t2.MALOP = t.MALOP</code>), comparing within each class separately.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Unlike Question 26 (school-wide comparison), this needs the highest count computed separately per class - a single shared <code>MAX</code> value like Question 19/24 won't work, so <code>MAX</code> must be correlated to the exact <code>MALOP</code> being evaluated.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 28 (PART III) · GROUP BY ... COUNT DISTINCT</p>
+              <p><strong>Exercise:</strong> For each semester of each academic year, report how many subjects and how many classes each teacher was assigned to teach.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAGV, HOCKY, NAM, COUNT(DISTINCT MAMH) AS SoMonHoc, COUNT(DISTINCT MALOP) AS SoLop
+FROM GIANGDAY
+GROUP BY MAGV, HOCKY, NAM;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY (MAGV, HOCKY, NAM)</code>; <code>COUNT(DISTINCT MAMH)</code> counts distinct subjects, <code>COUNT(DISTINCT MALOP)</code> counts distinct classes within each group.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>DISTINCT</code> inside <code>COUNT</code> is required because a teacher can appear in multiple <code>GIANGDAY</code> rows for different classes but the same subject (or vice versa) within the same semester/year - a plain <code>COUNT(*)</code> would just count assignment rows, not the actual number of subjects/classes.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 29 (PART III) · CORRELATED SUBQUERY ... MAX</p>
+              <p><strong>Exercise:</strong> For each semester of each academic year, find the teacher (teacher ID, full name) who taught the most.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT t.MAGV, gv.HOTEN, t.HOCKY, t.NAM, t.SoLuot
+FROM (
+    SELECT MAGV, HOCKY, NAM, COUNT(*) AS SoLuot
+    FROM GIANGDAY
+    GROUP BY MAGV, HOCKY, NAM
+) t
+JOIN GIAOVIEN gv ON t.MAGV = gv.MAGV
+WHERE t.SoLuot = (
+    SELECT MAX(t2.SoLuot)
+    FROM (
+        SELECT MAGV, COUNT(*) AS SoLuot
+        FROM GIANGDAY
+        WHERE HOCKY = t.HOCKY AND NAM = t.NAM
+        GROUP BY MAGV
+    ) t2
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The derived table <code>t</code> counts each teacher's number of assignments (<code>GIANGDAY</code> rows) per (semester, year); it's compared against the <code>MAX</code> for that exact semester/year (correlated via <code>HOCKY</code>, <code>NAM</code>) to keep the top teacher within each group.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Like Question 27, "the most" here means the most within each semester/year individually - not the most across the entire dataset, so <code>MAX</code> must be correlated to the exact <code>(HOCKY, NAM)</code> being evaluated.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 30 (PART III) · GROUP BY ... TOP WITH TIES</p>
+              <p><strong>Exercise:</strong> Find the subject (subject code, subject name) with the highest number of students who failed (on the 1st attempt).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES mh.MAMH, mh.TENMH
+FROM MONHOC mh
+JOIN KETQUATHI kq ON mh.MAMH = kq.MAMH
+WHERE kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat'
+GROUP BY mh.MAMH, mh.TENMH
+ORDER BY COUNT(*) DESC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY</code> per subject, counting attempt-1 failures; <code>TOP 1 WITH TIES</code> keeps every subject tied for the highest count.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Same reasoning as Question 26 - <code>TOP ... WITH TIES</code> avoids dropping a subject if multiple subjects tie for the most attempt-1 failures.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 31 (PART III) · EXISTS / NOT EXISTS</p>
+              <p><strong>Exercise:</strong> Find students (student ID, full name) who passed every subject they took (considering only the 1st attempt).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE EXISTS (
+    SELECT * FROM KETQUATHI kq WHERE kq.MAHV = hv.MAHV AND kq.LANTHI = 1
+)
+AND NOT EXISTS (
+    SELECT * FROM KETQUATHI kq
+    WHERE kq.MAHV = hv.MAHV AND kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>EXISTS</code> confirms the student has at least 1 attempt-1 record; <code>NOT EXISTS</code> confirms none of their attempt-1 records failed - together this means every subject's first attempt was a pass.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Both <code>EXISTS</code> and <code>NOT EXISTS</code> are needed - with only <code>NOT EXISTS</code>, a student who never took any exam at all would vacuously satisfy "never failed", even though they never took a subject in the first place.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 32 (PART III) · EXISTS / NOT EXISTS</p>
+              <p><strong>Exercise:</strong> * Find students (student ID, full name) who passed every subject they took (considering only the most recent attempt).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE EXISTS (
+    SELECT * FROM KETQUATHI kq WHERE kq.MAHV = hv.MAHV
+)
+AND NOT EXISTS (
+    SELECT * FROM KETQUATHI kq
+    WHERE kq.MAHV = hv.MAHV
+      AND kq.KQUA = N'Khong Dat'
+      AND kq.LANTHI = (
+          SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+          WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
+      )
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>This time <code>NOT EXISTS</code> checks that no subject's most recent attempt (<code>MAX(LANTHI)</code> for that subject) failed - unlike Question 31, which only looked at exactly <code>LANTHI = 1</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The "most recent attempt" differs by subject and by student (some subjects taken once, others retaken 2-3 times) - <code>MAX(LANTHI)</code> must be recomputed correlated to each <code>(MAHV, MAMH)</code> pair, the same technique used in Question 17, rather than a fixed <code>LANTHI</code> value like Question 31.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 33 (PART III) · DOUBLE NOT EXISTS</p>
+              <p><strong>Exercise:</strong> * Find students (student ID, full name) who passed all subjects taken (considering only the 1st attempt).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE NOT EXISTS (
+    SELECT mh.MAMH
+    FROM MONHOC mh
+    WHERE NOT EXISTS (
+        SELECT * FROM KETQUATHI kq
+        WHERE kq.MAHV = hv.MAHV AND kq.MAMH = mh.MAMH AND kq.LANTHI = 1 AND kq.KQUA = N'Dat'
+    )
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>This is the classic relational division pattern using 2 nested <code>NOT EXISTS</code> - "there is no subject the student did not pass on attempt 1" is equivalent to "every subject was passed on attempt 1".</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Unlike Question 31 (only considering subjects the student actually took), this requires the student to have taken every single subject that exists in <code>MONHOC</code> - the "not exists X such that not exists Y" structure is the standard SQL pattern for a "for all" condition, since SQL has no direct universal quantifier.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 34 (PART III) · DOUBLE NOT EXISTS</p>
+              <p><strong>Exercise:</strong> * Find students (student ID, full name) who passed all subjects taken (considering only the most recent attempt).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+WHERE NOT EXISTS (
+    SELECT mh.MAMH
+    FROM MONHOC mh
+    WHERE NOT EXISTS (
+        SELECT * FROM KETQUATHI kq
+        WHERE kq.MAHV = hv.MAHV AND kq.MAMH = mh.MAMH AND kq.KQUA = N'Dat'
+          AND kq.LANTHI = (
+              SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+              WHERE kq2.MAHV = hv.MAHV AND kq2.MAMH = mh.MAMH
+          )
+    )
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The same division structure as Question 33, but the inner "passed" condition uses each subject's most recent attempt instead of a fixed <code>LANTHI = 1</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This combines the "most recent attempt" technique (Question 17, Question 32) with the division technique (Question 33) - the student must have passed the latest attempt of every subject that exists to qualify.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 35 (PART III) · CORRELATED SUBQUERY ... MAX</p>
+              <p><strong>Exercise:</strong> ** Find the student (student ID, full name) with the highest score in each subject (using the most recent attempt's score).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT t.MAMH, mh.TENMH, t.MAHV, t.HOTEN, t.Diem
+FROM (
+    SELECT kq.MAMH, hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.DIEM AS Diem
+    FROM KETQUATHI kq
+    JOIN HOCVIEN hv ON kq.MAHV = hv.MAHV
+    WHERE kq.LANTHI = (
+        SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+        WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
+    )
+) t
+JOIN MONHOC mh ON t.MAMH = mh.MAMH
+WHERE t.Diem = (
+    SELECT MAX(t2.Diem)
+    FROM (
+        SELECT kq3.MAMH, kq3.DIEM AS Diem
+        FROM KETQUATHI kq3
+        WHERE kq3.LANTHI = (
+            SELECT MAX(kq4.LANTHI) FROM KETQUATHI kq4
+            WHERE kq4.MAHV = kq3.MAHV AND kq4.MAMH = kq3.MAMH
+        )
+    ) t2
+    WHERE t2.MAMH = t.MAMH
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The derived table <code>t</code> builds the list of scores from the most recent attempt of each (student, subject) pair - the same technique as Question 17; the result is then filtered to rows whose score equals the highest score for that specific subject (<code>t2.MAMH = t.MAMH</code>).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This is a "maximum per group" problem (like Question 27, Question 29) applied on top of data already filtered to the most recent attempt (like Question 17) - both techniques have to be combined: correlating <code>MAX</code> by <code>MAMH</code>, while also excluding any attempt that isn't the most recent one.</p></div>
+              </div>
+            </div>
+
             <button type="button" class="ghost-button access-logout">Log out of this section</button>
           </div>
         </div>

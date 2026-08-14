@@ -348,6 +348,94 @@ safeRun(function () {
   updateActiveSection();
 });
 
+// Nested sub-TOC: for each top-level .lesson-toc link, auto-build a
+// collapsed list of that section's H3 headings (using existing ids or
+// assigning one), open it whenever the parent link is the active one
+// (course.js's own scroll-spy above already toggles that class), and
+// run a lightweight scroll-spy scoped to just the open group's H3s.
+safeRun(function () {
+  var tocLinks = document.querySelectorAll('.lesson-toc a[data-toc]');
+  if (!tocLinks.length) return;
+
+  var groups = [];
+  tocLinks.forEach(function (link) {
+    var section = document.querySelector(link.getAttribute('href'));
+    if (!section) return;
+    var h3s = section.querySelectorAll('h3');
+    if (!h3s.length) return;
+
+    var ul = document.createElement('ul');
+    ul.className = 'toc-sub';
+    h3s.forEach(function (h3, i) {
+      if (!h3.id) h3.id = section.id + '-s' + (i + 1);
+      var a = document.createElement('a');
+      a.href = '#' + h3.id;
+      a.textContent = h3.textContent;
+      var li = document.createElement('li');
+      li.appendChild(a);
+      ul.appendChild(li);
+    });
+    link.insertAdjacentElement('afterend', ul);
+    groups.push({ link: link, ul: ul, h3s: Array.prototype.slice.call(h3s) });
+  });
+  if (!groups.length) return;
+
+  function syncExpanded() {
+    groups.forEach(function (g) {
+      g.ul.classList.toggle('is-open', g.link.classList.contains('active'));
+    });
+  }
+  var observer = new MutationObserver(syncExpanded);
+  tocLinks.forEach(function (link) {
+    observer.observe(link, { attributes: true, attributeFilter: ['class'] });
+  });
+  syncExpanded();
+
+  function updateSubActive() {
+    var triggerY = window.innerHeight * 0.35;
+    groups.forEach(function (g) {
+      var links = g.ul.querySelectorAll('a');
+      if (!g.ul.classList.contains('is-open')) {
+        links.forEach(function (a) { a.classList.remove('active'); });
+        return;
+      }
+      var activeH3 = null;
+      g.h3s.forEach(function (h3) {
+        if (h3.getBoundingClientRect().top <= triggerY) activeH3 = h3;
+      });
+      links.forEach(function (a) {
+        a.classList.toggle('active', !!activeH3 && a.getAttribute('href') === '#' + activeH3.id);
+      });
+    });
+  }
+
+  var subTicking = false;
+  window.addEventListener('scroll', function () {
+    if (subTicking) return;
+    subTicking = true;
+    requestAnimationFrame(function () { updateSubActive(); subTicking = false; });
+  }, { passive: true });
+  updateSubActive();
+});
+
+// Constraint/category picker pills: clicking one scrolls to and
+// briefly flashes the matching heading below (opt-in via markup, only
+// present on pages that use it).
+safeRun(function () {
+  var picker = document.querySelector('.constraint-picker');
+  if (!picker) return;
+  picker.addEventListener('click', function (e) {
+    var btn = e.target.closest('.constraint-pill');
+    if (!btn) return;
+    var target = document.getElementById(btn.dataset.target);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    target.classList.remove('is-jumped');
+    void target.offsetWidth;
+    target.classList.add('is-jumped');
+  });
+});
+
 // Floating color-key button - only on pages that actually use the
 // colored callout boxes (lesson/exercise/schema pages), so it stays out
 // of the way on overview/index pages. Built entirely from JS rather than

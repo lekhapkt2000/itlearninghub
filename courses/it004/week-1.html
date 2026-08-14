@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../assets/css/base.css?v=21">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=47">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=48">
 </head>
 <body>
   <header class="topbar">
@@ -84,20 +84,53 @@
     ├── Ngày sinh
     └── Lớp</div>
           <p>Nếu có hàng chục nghìn sinh viên, việc lưu trữ bằng các file rời rạc sẽ khó quản lý. CSDL giúp tổ chức dữ liệu thành các bảng có quan hệ với nhau:</p>
+
+          <div class="er-diagram">
+            <svg viewBox="0 0 300 210" role="img" aria-label="LOP (1) tham chiếu đến SINHVIEN (N)">
+              <defs>
+                <marker id="w1ArrowLOP" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0L10 5L0 10Z" style="fill:var(--primary)"/>
+                </marker>
+                <clipPath id="w1CardLOP"><rect x="70" y="10" width="160" height="56" rx="8"/></clipPath>
+                <clipPath id="w1CardSV1"><rect x="70" y="140" width="160" height="56" rx="8"/></clipPath>
+              </defs>
+              <line x1="150" y1="70" x2="150" y2="136" style="stroke:var(--primary);stroke-width:2" marker-end="url(#w1ArrowLOP)"/>
+              <text x="164" y="107" style="font-family:var(--font-mono);font-size:11px;font-weight:700;fill:var(--muted)">1 - N</text>
+
+              <g clip-path="url(#w1CardLOP)">
+                <rect x="70" y="10" width="160" height="56" style="fill:var(--surface)"/>
+                <rect x="70" y="10" width="160" height="26" style="fill:var(--primary)"/>
+              </g>
+              <rect x="70" y="10" width="160" height="56" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="150" y="27" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:#fff">LOP</text>
+              <text x="150" y="48" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">MaLop (PK)</text>
+
+              <g clip-path="url(#w1CardSV1)">
+                <rect x="70" y="140" width="160" height="56" style="fill:var(--surface)"/>
+                <rect x="70" y="140" width="160" height="26" style="fill:var(--primary)"/>
+              </g>
+              <rect x="70" y="140" width="160" height="56" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="150" y="157" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:#fff">SINHVIEN</text>
+              <text x="150" y="178" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">MaLop (FK)</text>
+            </svg>
+          </div>
+          <p class="er-relation">LOP (1) ➜ SINHVIEN (N): Một LOP có nhiều SINHVIEN - SINHVIEN giữ khóa ngoại <code>MaLop</code> tham chiếu đến LOP.</p>
+
           <p class="ascii-label">DATABASE: QuanLySinhVien</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>LOP <span class="table-tag">(1) - Bảng cha</span></th></tr>
-            <tr><td>MaLop</td></tr>
-            <tr><td>TenLop</td></tr>
-          </table></div>
-          <p class="er-relation">↓ Quan hệ 1-N: Một LOP có nhiều SINHVIEN.</p>
-          <div class="table-wrap"><table class="ref-table">
-            <tr><th>SINHVIEN <span class="table-tag">(N) - Bảng con</span></th></tr>
-            <tr><td>MaSV</td></tr>
-            <tr><td>HoTen</td></tr>
-            <tr><td>NgaySinh</td></tr>
-            <tr><td>MaLop <code>(FK)</code></td></tr>
-          </table></div>
+          <div class="er-side-by-side">
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>LOP <span class="table-tag">(1) - Bảng cha</span></th></tr>
+              <tr><td>MaLop</td></tr>
+              <tr><td>TenLop</td></tr>
+            </table></div>
+            <div class="table-wrap"><table class="ref-table">
+              <tr><th>SINHVIEN <span class="table-tag">(N) - Bảng con</span></th></tr>
+              <tr><td>MaSV</td></tr>
+              <tr><td>HoTen</td></tr>
+              <tr><td>NgaySinh</td></tr>
+              <tr><td>MaLop <code>(FK)</code></td></tr>
+            </table></div>
+          </div>
           <div class="inline-warning">Lỗi hay gặp khi vẽ sơ đồ: Đặt chiều mũi tên ngược, khiến người đọc hiểu nhầm là "1 Sinh viên có nhiều Lớp". Chiều đúng phải đi từ bảng cha xuống bảng con: <strong>LOP</strong> là bảng cha (giữ khóa chính <code>MaLop</code>), <strong>SINHVIEN</strong> là bảng con (giữ khóa ngoại <code>MaLop</code> tham chiếu đến LOP) - Một Lớp có nhiều Sinh viên (1-N), không phải ngược lại.</div>
 
           <h3>Hệ quản trị cơ sở dữ liệu (DBMS)</h3>
@@ -185,19 +218,19 @@ PostgreSQL, SQLite, MongoDB... ➜ Nhiều lựa chọn khác tùy nhu cầu</di
 
           <h3>Quy trình cơ bản</h3>
           <div class="flow-diagram">
-            <span class="flow-box">Mở SSMS</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="12" rx="1.5"/><path d="M3 7.5h14"/><circle cx="5.3" cy="5.7" r="0.5" fill="currentColor" stroke="none"/></svg> Mở SSMS</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">Connect đến SQL Server</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="13" r="3"/><circle cx="13" cy="7" r="3"/><path d="M9 11l2-2"/></svg> Connect đến SQL Server</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">Chọn / tạo Database</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="4.8" rx="6" ry="2.2"/><path d="M4 4.8v10.4c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2V4.8"/><path d="M4 10c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2"/></svg> Chọn / tạo Database</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">Mở New Query</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/></svg> Mở New Query</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">Viết câu lệnh SQL</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5 3 10l4 5"/><path d="M13 5l4 5-4 5"/></svg> Viết câu lệnh SQL</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">Execute</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M8.3 7.2v5.6l4.7-2.8-4.7-2.8z" fill="currentColor" stroke="none"/></svg> Execute</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">Xem kết quả</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="12" rx="1"/><path d="M3 8.5h14M3 13h14M8.3 4v12M12.7 4v12"/></svg> Xem kết quả</span>
           </div>
 
           <h3>Ví dụ câu lệnh đầu tiên</h3>
@@ -227,6 +260,15 @@ DaTotNghiep ➜ BIT</div>
             <tr><td><code>INT</code></td><td>4 byte</td><td>≈ -2,1 tỷ ➜ 2,1 tỷ</td></tr>
             <tr><td><code>BIGINT</code></td><td>8 byte</td><td>Phạm vi rất lớn</td></tr>
           </table></div>
+
+          <p class="ascii-label">SO SÁNH DUNG LƯỢNG (TỈ LỆ THEO BYTE)</p>
+          <div class="size-chart">
+            <div class="size-chart-row"><code>TINYINT</code><span class="size-chart-track"><span class="size-chart-bar" style="width:12.5%"></span></span><span class="size-chart-value">1 byte</span></div>
+            <div class="size-chart-row"><code>SMALLINT</code><span class="size-chart-track"><span class="size-chart-bar" style="width:25%"></span></span><span class="size-chart-value">2 byte</span></div>
+            <div class="size-chart-row"><code>INT</code><span class="size-chart-track"><span class="size-chart-bar" style="width:50%"></span></span><span class="size-chart-value">4 byte</span></div>
+            <div class="size-chart-row"><code>BIGINT</code><span class="size-chart-track"><span class="size-chart-bar" style="width:100%"></span></span><span class="size-chart-value">8 byte</span></div>
+          </div>
+
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">MaSV INT
 SoLuong INT
 Tuoi TINYINT</code></pre></div>
@@ -398,15 +440,17 @@ ALTER COLUMN NgaySinh DATE;</code></pre></div>
             <tr><td>Ràng buộc đơn giản <span class="table-tag">Simple constraints</span></td><td>Dùng từ khóa <code>CONSTRAINT</code> để mô tả trực tiếp trong <code>CREATE TABLE</code>/<code>ALTER TABLE</code> - Áp dụng cho hầu hết các quy tắc toàn vẹn thông thường.</td></tr>
             <tr><td>Ràng buộc phức tạp <span class="table-tag">Complex constraints</span></td><td>Dùng <code>TRIGGER</code> để xử lý các quy tắc toàn vẹn phức tạp hơn mà <code>CONSTRAINT</code> không hỗ trợ được (ví dụ ràng buộc liên quan đến nhiều bảng, nhiều dòng dữ liệu).</td></tr>
           </table></div>
-          <p>Tuần 1 chỉ tập trung vào các ràng buộc đơn giản dưới đây - <code>TRIGGER</code> sẽ được học ở các tuần sau:</p>
-          <div class="ascii-block">PRIMARY KEY
-FOREIGN KEY
-UNIQUE
-NOT NULL
-CHECK
-DEFAULT</div>
+          <p>Tuần 1 chỉ tập trung vào các ràng buộc đơn giản dưới đây - <code>TRIGGER</code> sẽ được học ở các tuần sau. Bấm vào tên để đi thẳng đến phần tương ứng:</p>
+          <div class="constraint-picker">
+            <button type="button" class="constraint-pill" data-target="w1-ck-pk">PRIMARY KEY</button>
+            <button type="button" class="constraint-pill" data-target="w1-ck-fk">FOREIGN KEY</button>
+            <button type="button" class="constraint-pill" data-target="w1-ck-unique">UNIQUE</button>
+            <button type="button" class="constraint-pill" data-target="w1-ck-notnull">NOT NULL</button>
+            <button type="button" class="constraint-pill" data-target="w1-ck-check">CHECK</button>
+            <button type="button" class="constraint-pill" data-target="w1-ck-default">DEFAULT</button>
+          </div>
 
-          <h3>PRIMARY KEY</h3>
+          <h3 id="w1-ck-pk">PRIMARY KEY</h3>
           <p>Khóa chính dùng để <strong>xác định duy nhất một bản ghi</strong> trong Table.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
 (
@@ -428,7 +472,7 @@ DEFAULT</div>
 );</code></pre></div>
           <p>Đặt <code>CONSTRAINT</code> ở dòng cuối cùng là cách duy nhất để khai báo khóa chính gồm nhiều cột - Không thể viết <code>PRIMARY KEY</code> ngay sau từng cột riêng lẻ trong trường hợp này.</p>
 
-          <h3>NOT NULL</h3>
+          <h3 id="w1-ck-notnull">NOT NULL</h3>
           <p><code>NOT NULL</code> yêu cầu cột phải có giá trị.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
 (
@@ -440,7 +484,7 @@ DEFAULT</div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO SinhVien
 VALUES (1, NULL, '2004-05-20');</code></pre></div>
 
-          <h3>UNIQUE</h3>
+          <h3 id="w1-ck-unique">UNIQUE</h3>
           <p>Đảm bảo giá trị trong cột không bị trùng.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
 (
@@ -450,7 +494,7 @@ VALUES (1, NULL, '2004-05-20');</code></pre></div>
           <div class="ascii-block">SV001 ➜ kha@uit.edu.vn
 SV002 ➜ kha@uit.edu.vn   ✗ trùng</div>
 
-          <h3>FOREIGN KEY</h3>
+          <h3 id="w1-ck-fk">FOREIGN KEY</h3>
           <p><code>FOREIGN KEY</code> dùng để tạo <strong>mối liên hệ giữa các bảng</strong>. Ví dụ có hai bảng:</p>
           <p class="ascii-label">LOP</p>
           <div class="table-wrap"><table class="ref-table">
@@ -458,7 +502,6 @@ SV002 ➜ kha@uit.edu.vn   ✗ trùng</div>
             <tr><td>1</td><td>HTTT2022.1</td></tr>
             <tr><td>2</td><td>HTTT2022.2</td></tr>
           </table></div>
-          <p class="er-relation">↑ SINHVIEN.MaLop tham chiếu đến LOP.MaLop.</p>
           <p class="ascii-label">SINHVIEN</p>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>MaSV</th><th>MaLop</th></tr>
@@ -466,6 +509,38 @@ SV002 ➜ kha@uit.edu.vn   ✗ trùng</div>
             <tr><td>102</td><td>1</td></tr>
             <tr><td>103</td><td>2</td></tr>
           </table></div>
+
+          <div class="er-diagram">
+            <svg viewBox="0 0 300 210" role="img" aria-label="SINHVIEN.MaLop tham chiếu đến LOP.MaLop">
+              <defs>
+                <marker id="w1ArrowFK" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0L10 5L0 10Z" style="fill:var(--primary)"/>
+                </marker>
+                <clipPath id="w1CardLOP2"><rect x="70" y="10" width="160" height="56" rx="8"/></clipPath>
+                <clipPath id="w1CardSV2"><rect x="70" y="140" width="160" height="56" rx="8"/></clipPath>
+              </defs>
+              <line x1="150" y1="136" x2="150" y2="70" style="stroke:var(--primary);stroke-width:2" marker-end="url(#w1ArrowFK)"/>
+              <text x="164" y="107" style="font-family:var(--font-mono);font-size:10.5px;font-weight:700;fill:var(--muted)">FK ➜ PK</text>
+
+              <g clip-path="url(#w1CardLOP2)">
+                <rect x="70" y="10" width="160" height="56" style="fill:var(--surface)"/>
+                <rect x="70" y="10" width="160" height="26" style="fill:var(--primary)"/>
+              </g>
+              <rect x="70" y="10" width="160" height="56" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="150" y="27" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:#fff">LOP</text>
+              <text x="150" y="48" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">MaLop (PK)</text>
+
+              <g clip-path="url(#w1CardSV2)">
+                <rect x="70" y="140" width="160" height="56" style="fill:var(--surface)"/>
+                <rect x="70" y="140" width="160" height="26" style="fill:var(--primary)"/>
+              </g>
+              <rect x="70" y="140" width="160" height="56" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="150" y="157" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:#fff">SINHVIEN</text>
+              <text x="150" y="178" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">MaLop (FK)</text>
+            </svg>
+          </div>
+          <p class="er-relation">SINHVIEN.MaLop (FK) ➜ LOP.MaLop (PK): Mỗi dòng SINHVIEN tham chiếu đến đúng 1 dòng LOP.</p>
+
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE Lop
 (
     MaLop INT PRIMARY KEY,
@@ -486,7 +561,7 @@ CREATE TABLE SinhVien
 VALUES (101, N'Nguyễn Văn An', 999);</code></pre></div>
           <p>Khóa ngoại phải được thiết lập ở Table chứa khóa ngoại.</p>
 
-          <h3>CHECK</h3>
+          <h3 id="w1-ck-check">CHECK</h3>
           <p><code>CHECK</code> dùng để giới hạn dữ liệu phải thỏa một điều kiện. Ví dụ điểm sinh viên phải từ 0 đến 10:</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE KetQua
 (
@@ -502,7 +577,7 @@ VALUES (101, 8.5);</code></pre></div>
 VALUES (102, 15);</code></pre></div>
           <p>✗ Không hợp lệ.</p>
 
-          <h3>DEFAULT</h3>
+          <h3 id="w1-ck-default">DEFAULT</h3>
           <p><code>DEFAULT</code> cung cấp giá trị mặc định nếu người dùng không nhập giá trị.</p>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE SinhVien
 (
@@ -822,7 +897,7 @@ VALUES (105, N'Sinh viên lỗi ngày', '1800-01-01', 1);</code></pre></div>
   </footer>
   <script src="../../assets/js/main.js?v=5"></script>
   <script src="../../assets/js/progress.js?v=5"></script>
-  <script src="../../assets/js/course.js?v=15"></script>
+  <script src="../../assets/js/course.js?v=16"></script>
   <script src="../../assets/js/access-gate.js?v=3"></script>
 </body>
 </html>

@@ -85,7 +85,8 @@
 .answer-cta-icon svg{width:24px;height:24px}
 .answer-cta-body{position:relative;z-index:1;flex:1;min-width:0}
 .answer-cta-body .eyebrow{color:#bfdbfe;margin-bottom:6px}
-.answer-cta-body h3{margin:0 0 6px;font-size:18px;color:#fff}
+.answer-cta-body h3{display:block;margin:0 0 6px;font-size:18px;color:#fff}
+.answer-cta-body h3::before{display:none}
 .answer-cta-body p{margin:0;color:#ffffff;font-size:13.5px;font-weight:500;line-height:1.7;max-width:480px}
 .answer-cta .primary-button{position:relative;z-index:1;flex-shrink:0;white-space:nowrap}
 @media(max-width:680px){.answer-cta{flex-direction:column;align-items:flex-start}}
@@ -123,7 +124,7 @@
 .week-header::before{content:'';position:absolute;top:-70px;right:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgb(37 99 235 / .12),transparent 70%)}
 .week-header .week-tag,.week-header h1,.week-header .week-meta,.week-header>p{position:relative;z-index:1}
 .week-header .week-tag{display:inline-flex;align-items:center;gap:7px;color:var(--primary);font:700 12px var(--font-mono);letter-spacing:.1em}
-.week-header h1{margin:10px 0 8px;font-size:clamp(28px,4vw,40px)}
+.week-header h1{display:table;margin:10px 0 8px -12px;padding:2px 12px;background:var(--tint);border-radius:8px;font-size:clamp(28px,4vw,40px)}
 .week-header .week-meta{display:flex;flex-wrap:wrap;gap:14px;margin-top:2px;color:var(--muted);font-size:13px}
 .week-header .week-meta span{padding:4px 11px;background:var(--surface);border:1px solid var(--line);border-radius:99px;font-weight:700;font-size:11px;color:var(--ink)}
 @media(max-width:600px){.week-header{padding:26px 22px}}
@@ -138,13 +139,27 @@
 .lesson-toc a.active{background:var(--primary);border-left-color:var(--primary-ink);color:#fff;font-weight:800;box-shadow:0 4px 12px -4px rgb(37 99 235 / .5)}
 .lesson-toc a.active b{color:#fff}
 
+/* Nested sub-TOC: auto-built from each section's H3 headings (see
+   course.js), collapsed by default and opened under whichever
+   top-level link is currently active. Underlined rather than filled
+   blue on its own active item, so it stays visually one step below
+   the solid-fill H2-level active state above it. */
+.toc-sub{list-style:none;margin:0 0 2px;padding:0;max-height:0;overflow:hidden;transition:max-height .3s ease}
+.toc-sub.is-open{max-height:600px}
+.toc-sub li{margin:0}
+.toc-sub a{display:block;padding:6px 8px 6px 26px;color:#94a3b8;font-size:11.5px;font-weight:600;line-height:1.4;border-left:3px solid transparent;transition:background .2s,color .2s}
+.toc-sub a:hover{background:var(--tint);color:var(--ink)}
+.toc-sub a.active{background:none;box-shadow:none;border-left-color:transparent;color:var(--ink);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:1000px){.toc-sub{display:none}}
+
 .lesson-content{min-width:0}
 .lesson-section{padding:44px 0;border-top:1px solid var(--line)}
 .lesson-section:first-child{padding-top:0;border-top:0}
 .lesson-section h2{font-size:28px;margin-bottom:16px;scroll-margin-top:96px}
-.lesson-section h3{font-size:16px;margin:0 0 10px;padding-top:26px;border-top:1px solid var(--line);scroll-margin-top:96px}
+.lesson-section h3{display:flex;align-items:center;gap:9px;font-size:17px;letter-spacing:-.005em;color:var(--primary-ink);margin:0 0 10px;padding-top:26px;border-top:1px solid var(--line);scroll-margin-top:96px}
+.lesson-section h3::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--primary);flex-shrink:0}
 .lesson-section h3:first-of-type{padding-top:0;border-top:0}
-.lesson-section h4{margin:18px 0 6px;color:var(--ink);font-size:13px;font-weight:700;scroll-margin-top:96px}
+.lesson-section h4{margin:20px 0 8px;color:var(--primary);font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;scroll-margin-top:96px}
 .lesson-section p{color:#334155;font-size:14px;line-height:1.8;margin-bottom:14px}
 .lesson-section ul{margin:0 0 14px;padding-left:20px;color:#334155;font-size:14px;line-height:1.8}
 .lesson-section li+li{margin-top:2px}
@@ -167,6 +182,15 @@
 .ref-table .table-tag{margin-left:8px;color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0}
 .ascii-label{margin:20px 0 0;color:var(--muted);font:12px var(--font-mono)}
 .ascii-label+.table-wrap{margin-top:8px}
+
+/* Byte-size comparison chart (e.g. TINYINT vs BIGINT): horizontal
+   bars scaled to a value, so a size difference is felt, not just
+   read off a table. */
+.size-chart{margin:16px 0;padding:20px 22px;background:var(--surface);border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;gap:12px}
+.size-chart-row{display:grid;grid-template-columns:100px 1fr 56px;align-items:center;gap:12px}
+.size-chart-track{height:10px;border-radius:99px;background:var(--tint);overflow:hidden}
+.size-chart-bar{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--primary),#60a5fa)}
+.size-chart-value{font-size:11px;color:var(--muted);text-align:right;font-weight:700}
 .er-relation{margin:10px 0 20px;color:var(--muted);font-size:12px;font-style:italic}
 .er-side-by-side{display:flex;flex-wrap:wrap;gap:20px;margin:16px 0}
 .er-side-by-side .table-wrap{flex:1;min-width:180px;margin:0}
@@ -210,7 +234,9 @@
 .lesson-checklist li.is-checked:before{content:'☑';color:#16a34a}
 
 .flow-diagram{display:flex;flex-direction:column;align-items:center;gap:6px;margin:22px 0;padding:32px 20px;background:var(--surface);border:1px solid var(--line)}
-.flow-diagram .flow-box{padding:12px 26px;background:var(--tint);color:var(--primary-ink);border-radius:8px;font-size:12px;font-weight:700;letter-spacing:.02em}
+.flow-diagram .flow-box{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;background:var(--tint);color:var(--primary-ink);border-radius:8px;font-size:12px;font-weight:700;letter-spacing:.02em;transition:transform .2s,box-shadow .2s,background .2s,color .2s}
+.flow-diagram .flow-box svg{width:15px;height:15px;flex-shrink:0}
+.flow-diagram .flow-box:hover{transform:translateY(-2px);box-shadow:0 10px 20px -10px rgb(37 99 235 / .4);background:var(--primary);color:#fff}
 .flow-diagram .flow-arrow{color:#cbd5e1;font-size:18px}
 .flow-diagram .flow-arrow.has-label{color:var(--muted);font-size:12px;font-weight:600}
 
@@ -253,9 +279,19 @@
 .quick-check .qc-feedback.wrong{background:#fef2f2;color:#991b1b}
 .quick-check .qc-feedback.correct{background:#f0fdf4;color:#166534}
 
+/* Constraint/category picker: clickable pills that jump to and
+   briefly flash the matching subsection below (see course.js),
+   instead of a flat static list. */
+.constraint-picker{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 20px}
+.constraint-pill{padding:9px 16px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:700 12px var(--font-mono);letter-spacing:.02em;cursor:pointer;transition:.2s}
+.constraint-pill:hover{border-color:var(--primary);color:var(--primary-ink);background:var(--tint);transform:translateY(-1px)}
+.lesson-section h3.is-jumped{animation:courseJumpFlash 1.4s ease}
+@keyframes courseJumpFlash{0%{background:var(--tint)}80%{background:var(--tint)}100%{background:transparent}}
+
 .practice-lab{margin:32px 0;padding:32px;background:var(--ink);border-radius:12px;color:#e2e8f0}
 .practice-lab .eyebrow{display:flex;align-items:center;gap:8px;color:#93c5fd}
-.practice-lab h3{color:#fff;font-size:20px;margin-bottom:14px}
+.practice-lab h3{display:block;color:#fff;font-size:20px;margin-bottom:14px}
+.practice-lab h3::before{display:none}
 .practice-lab ol{margin:0 0 22px;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-size:13px;color:#cbd5e1}
 .practice-lab strong{color:var(--accent-soft)}
 .practice-lab .primary-button{background:#fff;color:var(--ink)}

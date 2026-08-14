@@ -108,47 +108,980 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 5.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Bên dưới là câu hỏi mẫu để minh họa cách trình bày đáp án - Sẽ được thay bằng lời giải thật của BTTH5.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án đầy đủ cho Quản lý bán hàng (4 câu) và Quản lý giáo vụ (12 câu). Mỗi câu có "Bảng xét tầm ảnh hưởng" (bảng nào có thể vi phạm ràng buộc, cần Trigger nào), đáp án chính theo hướng <code>IF EXISTS</code>/<code>NOT EXISTS</code> (đúng với mọi số dòng bị tác động), và mục "Cách khác" dùng biến tạm (chỉ đúng khi thao tác ảnh hưởng đúng 1 dòng - Xem thêm lý thuyết mục 07). Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - Nút Copy ở đây chỉ mang tính hình thức thôi.</p>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 1 (MẪU) · TRIGGER AFTER INSERT</p>
-              <h3>Tự động cộng số buổi tập khi có lịch tập mới</h3>
-              <p><strong>Đề bài:</strong> Mỗi khi có 1 dòng mới trong <code>LICHTAP</code>, tự động cộng thêm 1 vào <code>SoBuoiTap</code> của học viên tương ứng.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_CapNhatSoBuoi
-ON LichTap
-AFTER INSERT
+              <p class="eyebrow">CÂU 1 (QLBH) · TRIGGER AFTER UPDATE / INSERT</p>
+              <p><strong>Đề bài:</strong> Ngày mua hàng (<code>NGHD</code>) của một khách hàng thành viên sẽ lớn hơn hoặc bằng ngày khách hàng đó đăng ký thành viên (<code>NGDK</code>).</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>KHACHHANG</code></td><td><code>UPDATE</code></td><td>Sửa <code>NGDK</code> thành ngày muộn hơn hóa đơn đã có sẵn của khách đó.</td></tr>
+                <tr><td><code>HOADON</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Thêm/sửa hóa đơn có <code>NGHD</code> sớm hơn <code>NGDK</code> của khách hàng.</td></tr>
+              </table></div>
+              <p>Phải viết đủ <strong>2 Trigger</strong> trên 2 bảng khác nhau mới bảo vệ được ràng buộc từ mọi hướng thay đổi dữ liệu.</p>
+
+              <h4>Trigger 1 - ON KHACHHANG AFTER UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KHACHHANG_NGDK
+ON KHACHHANG
+AFTER UPDATE
 AS
 BEGIN
-    UPDATE HocVien
-    SET SoBuoiTap = SoBuoiTap + 1
-    WHERE MaHV IN (SELECT MaHV FROM inserted);
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN HOADON hd ON hd.MAKH = i.MAKH
+        WHERE i.NGDK > hd.NGHD
+    )
+    BEGIN
+        RAISERROR(N'Ngày đăng ký thành viên phải nhỏ hơn hoặc bằng ngày mua hàng.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
 END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi UPDATE đúng 1 khách hàng)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KHACHHANG_NGDK_BIENTAM
+ON KHACHHANG
+AFTER UPDATE
+AS
+BEGIN
+    DECLARE @MAKH CHAR(4), @NGDK SMALLDATETIME, @NGHD_SomNhat SMALLDATETIME;
+
+    SELECT @MAKH = MAKH, @NGDK = NGDK FROM inserted;
+    SELECT @NGHD_SomNhat = MIN(NGHD) FROM HOADON WHERE MAKH = @MAKH;
+
+    IF (@NGHD_SomNhat IS NOT NULL AND @NGDK > @NGHD_SomNhat)
+    BEGIN
+        RAISERROR(N'Ngày đăng ký thành viên phải nhỏ hơn hoặc bằng ngày mua hàng.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+                <p><code>SELECT @MAKH = MAKH, @NGDK = NGDK FROM inserted</code> chỉ lấy đúng 1 dòng - Nếu câu <code>UPDATE</code> sửa <code>NGDK</code> của nhiều khách hàng cùng lúc (VD <code>UPDATE KHACHHANG SET NGDK = ...</code> không có <code>WHERE</code>), cách này chỉ kiểm tra được 1 khách hàng bất kỳ trong số đó, bỏ sót phần còn lại một cách im lặng.</p>
+              </details>
+
+              <h4>Trigger 2 - ON HOADON AFTER INSERT, UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_NGHD_NGDK
+ON HOADON
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN KHACHHANG kh ON kh.MAKH = i.MAKH
+        WHERE i.NGHD < kh.NGDK
+    )
+    BEGIN
+        RAISERROR(N'Ngày lập hóa đơn phải lớn hơn hoặc bằng ngày khách hàng đăng ký thành viên.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thêm/sửa đúng 1 hóa đơn)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_NGHD_NGDK_BIENTAM
+ON HOADON
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @NGHD SMALLDATETIME, @NGDK SMALLDATETIME;
+
+    SELECT @NGHD = i.NGHD, @NGDK = kh.NGDK
+    FROM inserted i
+    JOIN KHACHHANG kh ON kh.MAKH = i.MAKH;
+
+    IF (@NGDK IS NOT NULL AND @NGHD < @NGDK)
+    BEGIN
+        RAISERROR(N'Ngày lập hóa đơn phải lớn hơn hoặc bằng ngày khách hàng đăng ký thành viên.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+                <p>Cùng giới hạn với Trigger 1 - Chỉ an toàn khi <code>INSERT</code>/<code>UPDATE</code> tác động đúng 1 hóa đơn. <code>JOIN KHACHHANG</code> (không phải <code>LEFT JOIN</code>) tự động bỏ qua hóa đơn không gắn khách hàng thành viên (<code>MAKH IS NULL</code>) - Đúng với ý đề chỉ ràng buộc "khách hàng thành viên".</p>
+              </details>
+
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>AFTER INSERT</code> là trigger tự động chạy ngay sau khi 1 dòng được thêm vào bảng; bảng ảo <code>inserted</code> chứa (các) dòng vừa thêm.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cần đồng bộ <code>SoBuoiTap</code> tự động, không phụ thuộc việc lập trình viên có nhớ chạy <code>UPDATE</code> thủ công hay không - Trigger đảm bảo dữ liệu luôn nhất quán.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cả 2 Trigger đều dùng <code>IF EXISTS</code> đối chiếu <strong>toàn bộ</strong> <code>inserted</code> với bảng còn lại qua <code>JOIN</code>, thay vì gán ra 1 biến rồi so sánh - Nên đúng bất kể <code>UPDATE</code>/<code>INSERT</code> tác động 1 hay nhiều dòng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Ràng buộc "NGHD ≥ NGDK" có thể bị phá vỡ từ <strong>2 phía</strong>: Sửa <code>NGDK</code> (phía <code>KHACHHANG</code>) hoặc thêm/sửa hóa đơn (phía <code>HOADON</code>) - Bảng xét tầm ảnh hưởng ở trên chính là bước xác định điều này. Chỉ viết 1 Trigger trên 1 bảng sẽ để lọt ràng buộc từ hướng còn lại.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 2 (MẪU) · TRIGGER INSTEAD OF DELETE</p>
-              <h3>Chặn xóa phòng tập đang còn lớp học</h3>
-              <p><strong>Đề bài:</strong> Không cho phép xóa 1 phòng tập nếu vẫn còn lớp học được gán vào phòng đó.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_ChanXoaPhong
-ON PhongTap
-INSTEAD OF DELETE
+              <p class="eyebrow">CÂU 2 (QLBH) · TRIGGER AFTER UPDATE / INSERT</p>
+              <p><strong>Đề bài:</strong> Ngày bán hàng (<code>NGHD</code>) của một nhân viên phải lớn hơn hoặc bằng ngày nhân viên đó vào làm.</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>NHANVIEN</code></td><td><code>UPDATE</code></td><td>Sửa <code>NGVL</code> thành ngày muộn hơn hóa đơn nhân viên đó đã lập.</td></tr>
+                <tr><td><code>HOADON</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Thêm/sửa hóa đơn có <code>NGHD</code> sớm hơn <code>NGVL</code> của nhân viên bán.</td></tr>
+              </table></div>
+
+              <h4>Trigger 1 - ON NHANVIEN AFTER UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_NHANVIEN_NGVL
+ON NHANVIEN
+AFTER UPDATE
 AS
 BEGIN
     IF EXISTS (
-        SELECT 1 FROM LopTap lt
-        JOIN deleted d ON lt.MaPhong = d.MaPhong
+        SELECT *
+        FROM inserted i
+        JOIN HOADON hd ON hd.MANV = i.MANV
+        WHERE i.NGVL > hd.NGHD
     )
-        RAISERROR(N'Phòng đang có lớp, không thể xóa.', 16, 1);
-    ELSE
-        DELETE FROM PhongTap WHERE MaPhong IN (SELECT MaPhong FROM deleted);
+    BEGIN
+        RAISERROR(N'Ngày vào làm phải nhỏ hơn hoặc bằng ngày lập hóa đơn.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
 END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_NHANVIEN_NGVL_BIENTAM
+ON NHANVIEN
+AFTER UPDATE
+AS
+BEGIN
+    DECLARE @MANV CHAR(4), @NGVL SMALLDATETIME, @NGHD_SomNhat SMALLDATETIME;
+
+    SELECT @MANV = MANV, @NGVL = NGVL FROM inserted;
+    SELECT @NGHD_SomNhat = MIN(NGHD) FROM HOADON WHERE MANV = @MANV;
+
+    IF (@NGHD_SomNhat IS NOT NULL AND @NGVL > @NGHD_SomNhat)
+    BEGIN
+        RAISERROR(N'Ngày vào làm phải nhỏ hơn hoặc bằng ngày lập hóa đơn.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+                <p>Chỉ đúng khi <code>UPDATE</code> sửa <code>NGVL</code> của đúng 1 nhân viên - Giống hệt giới hạn đã nêu ở Câu 1.</p>
+              </details>
+
+              <h4>Trigger 2 - ON HOADON AFTER INSERT, UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_NGHD_NGVL
+ON HOADON
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN NHANVIEN nv ON nv.MANV = i.MANV
+        WHERE i.NGHD < nv.NGVL
+    )
+    BEGIN
+        RAISERROR(N'Ngày lập hóa đơn phải lớn hơn hoặc bằng ngày nhân viên vào làm.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_NGHD_NGVL_BIENTAM
+ON HOADON
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @NGHD SMALLDATETIME, @NGVL SMALLDATETIME;
+
+    SELECT @NGHD = i.NGHD, @NGVL = nv.NGVL
+    FROM inserted i
+    JOIN NHANVIEN nv ON nv.MANV = i.MANV;
+
+    IF (@NGHD < @NGVL)
+    BEGIN
+        RAISERROR(N'Ngày lập hóa đơn phải lớn hơn hoặc bằng ngày nhân viên vào làm.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+                <p>Chỉ đúng khi thêm/sửa đúng 1 hóa đơn mỗi lần.</p>
+              </details>
+
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>INSTEAD OF DELETE</code> thay thế hoàn toàn hành vi <code>DELETE</code> mặc định bằng logic tùy chỉnh do mình viết.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cần kiểm tra điều kiện <strong>trước khi</strong> việc xóa thật sự xảy ra. Nếu dùng <code>AFTER DELETE</code> thì dữ liệu đã bị xóa mất rồi mới kịp kiểm tra - Quá muộn để ngăn lại.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cấu trúc giống hệt Câu 1, chỉ đổi đối tượng: <code>NHANVIEN.NGVL</code> thay cho <code>KHACHHANG.NGDK</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cùng lý do "2 hướng vi phạm" như Câu 1 - <code>NHANVIEN</code> mọi nhân viên đều có <code>MANV</code> (không <code>NULL</code> như <code>HOADON.MAKH</code>) nên không cần lọc thêm điều kiện <code>IS NOT NULL</code> khi <code>JOIN</code>. Trên thực tế có thể gộp Trigger 2 của Câu 1 và Câu 2 thành 1 Trigger duy nhất trên <code>HOADON</code> kiểm tra cả 2 điều kiện - Ở đây tách riêng theo từng câu cho rõ ràng khi chấm bài.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 3 (QLBH) · TRIGGER TỰ ĐỘNG CẬP NHẬT</p>
+              <p><strong>Đề bài:</strong> Trị giá của một hóa đơn là tổng thành tiền (số lượng * đơn giá) của các chi tiết thuộc hóa đơn đó.</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể ảnh hưởng</th></tr>
+                <tr><td><code>CTHD</code></td><td><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></td><td>Thêm/sửa/xóa 1 dòng chi tiết đều làm thay đổi tổng thành tiền của hóa đơn chứa nó.</td></tr>
+              </table></div>
+              <p>Đây là Trigger <strong>tự động tính toán</strong> (không phải Trigger chặn lỗi) - <code>CTHD</code> không lưu sẵn đơn giá, phải lấy <code>GIA</code> từ <code>SANPHAM</code>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_CTHD_CAPNHAT_TRIGIA
+ON CTHD
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    UPDATE hd
+    SET TRIGIA = ISNULL((
+        SELECT SUM(ct.SL * sp.GIA)
+        FROM CTHD ct
+        JOIN SANPHAM sp ON sp.MASP = ct.MASP
+        WHERE ct.SOHD = hd.SOHD
+    ), 0)
+    FROM HOADON hd
+    WHERE hd.SOHD IN (
+        SELECT SOHD FROM inserted
+        UNION
+        SELECT SOHD FROM deleted
+    );
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thay đổi đúng 1 dòng CTHD)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_CTHD_CAPNHAT_TRIGIA_BIENTAM
+ON CTHD
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    DECLARE @SOHD INT;
+
+    SELECT @SOHD = SOHD FROM inserted;
+    IF (@SOHD IS NULL) SELECT @SOHD = SOHD FROM deleted;
+
+    UPDATE HOADON
+    SET TRIGIA = ISNULL((
+        SELECT SUM(SL * GIA)
+        FROM CTHD ct JOIN SANPHAM sp ON sp.MASP = ct.MASP
+        WHERE ct.SOHD = @SOHD
+    ), 0)
+    WHERE SOHD = @SOHD;
+END;</code></pre></div>
+                <p><code>@SOHD</code> lấy từ <code>inserted</code> trước (đúng cho <code>INSERT</code>/<code>UPDATE</code>); nếu rỗng (trường hợp <code>DELETE</code>, <code>inserted</code> không có dòng nào) mới lấy từ <code>deleted</code>. Cách này minh họa được cả 3 thao tác nhưng vẫn chỉ đúng khi mỗi lần <code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code> tác động đúng 1 dòng <code>CTHD</code> - Xóa nhiều dòng chi tiết cùng lúc (VD <code>DELETE FROM CTHD WHERE SOHD = 1001</code> khi hóa đơn có nhiều sản phẩm) sẽ chỉ cập nhật đúng cho 1 hóa đơn dù thực tế có thể ảnh hưởng nhiều hóa đơn khác trong cùng batch.</p>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>UNION</code> gộp <code>SOHD</code> từ cả <code>inserted</code> lẫn <code>deleted</code> thành 1 danh sách duy nhất các hóa đơn cần tính lại, phủ đủ cả 3 thao tác <code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code> trong cùng 1 Trigger; <code>ISNULL(..., 0)</code> đảm bảo hóa đơn không còn dòng chi tiết nào (xóa hết) vẫn nhận <code>TRIGIA = 0</code> thay vì <code>NULL</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>INSERT</code> chỉ có dữ liệu trong <code>inserted</code>, <code>DELETE</code> chỉ có trong <code>deleted</code>, còn <code>UPDATE</code> có ở cả hai - Dùng <code>UNION</code> trên cả 2 bảng ảo là cách duy nhất để 1 Trigger chung xử lý đúng cho tất cả trường hợp, đồng thời tính lại đúng cho <strong>mọi hóa đơn</strong> bị ảnh hưởng nếu batch thay đổi nhiều dòng CTHD của nhiều hóa đơn khác nhau cùng lúc.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 4 (QLBH) · TRIGGER TỰ ĐỘNG CẬP NHẬT</p>
+              <p><strong>Đề bài:</strong> Doanh số của một khách hàng là tổng trị giá các hóa đơn mà khách hàng thành viên đó đã mua.</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể ảnh hưởng</th></tr>
+                <tr><td><code>HOADON</code></td><td><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></td><td>Thêm/sửa/xóa hóa đơn (hoặc <code>TRIGIA</code> của nó bị Trigger Câu 3 cập nhật) đều làm thay đổi tổng doanh số của khách hàng.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_CAPNHAT_DOANHSO
+ON HOADON
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    UPDATE kh
+    SET DOANHSO = ISNULL((
+        SELECT SUM(hd.TRIGIA)
+        FROM HOADON hd
+        WHERE hd.MAKH = kh.MAKH
+    ), 0)
+    FROM KHACHHANG kh
+    WHERE kh.MAKH IN (
+        SELECT MAKH FROM inserted WHERE MAKH IS NOT NULL
+        UNION
+        SELECT MAKH FROM deleted WHERE MAKH IS NOT NULL
+    );
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thay đổi đúng 1 hóa đơn)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_CAPNHAT_DOANHSO_BIENTAM
+ON HOADON
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    DECLARE @MAKH CHAR(4);
+
+    SELECT @MAKH = MAKH FROM inserted;
+    IF (@MAKH IS NULL) SELECT @MAKH = MAKH FROM deleted;
+
+    IF (@MAKH IS NOT NULL)
+    BEGIN
+        UPDATE KHACHHANG
+        SET DOANHSO = ISNULL((SELECT SUM(TRIGIA) FROM HOADON WHERE MAKH = @MAKH), 0)
+        WHERE MAKH = @MAKH;
+    END
+END;</code></pre></div>
+                <p>Cùng cấu trúc và cùng giới hạn với Câu 3 - Chỉ đúng khi mỗi lần thay đổi tác động đúng 1 hóa đơn.</p>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cấu trúc giống hệt Câu 3, chỉ đổi từ tính <code>TRIGIA</code> của hóa đơn sang tính <code>DOANHSO</code> của khách hàng; lọc thêm <code>MAKH IS NOT NULL</code> vì hóa đơn khách vãng lai không có <code>MAKH</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>SQL Server mặc định cho phép <strong>Trigger lồng nhau</strong> (nested trigger): Khi Trigger Câu 3 chạy <code>UPDATE HOADON SET TRIGIA = ...</code>, chính thao tác <code>UPDATE</code> đó sẽ tự động kích hoạt Trigger <code>AFTER UPDATE</code> này trên <code>HOADON</code> - Nghĩa là chỉ cần <code>CTHD</code> thay đổi, cả <code>TRIGIA</code> lẫn <code>DOANHSO</code> đều tự động đồng bộ theo dây chuyền mà không cần gọi thủ công.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 1 (QGV) · TRIGGER AFTER INSERT, UPDATE, DELETE</p>
+              <p><strong>Đề bài:</strong> Lớp trưởng của một lớp phải là học viên của lớp đó.</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>LOP</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Gán <code>TRGLOP</code> là 1 học viên không thuộc lớp đó.</td></tr>
+                <tr><td><code>HOCVIEN</code></td><td><code>DELETE</code>, <code>UPDATE</code></td><td>Xóa học viên đang là lớp trưởng, hoặc chuyển học viên đó sang lớp khác.</td></tr>
+              </table></div>
+
+              <h4>Trigger 1 - ON LOP AFTER INSERT, UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_LOP_KIEMTRA_LOPTRUONG
+ON LOP
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT * FROM inserted i
+        WHERE i.TRGLOP IS NOT NULL
+          AND NOT EXISTS (
+              SELECT * FROM HOCVIEN hv
+              WHERE hv.MAHV = i.TRGLOP AND hv.MALOP = i.MALOP
+          )
+    )
+    BEGIN
+        RAISERROR(N'Lớp trưởng của một lớp phải là học viên của chính lớp đó.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <p><code>i.TRGLOP IS NOT NULL</code> cho phép lớp <strong>chưa có</strong> lớp trưởng (giá trị <code>NULL</code>) - Không nên chặn luôn cả trường hợp hợp lệ này.</p>
+
+              <h4>Trigger 2 - ON HOCVIEN AFTER DELETE, UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOCVIEN_BAOVE_LOPTRUONG
+ON HOCVIEN
+AFTER DELETE, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM deleted d
+        JOIN LOP l ON l.TRGLOP = d.MAHV
+        WHERE NOT EXISTS (
+            SELECT * FROM inserted i
+            WHERE i.MAHV = d.MAHV AND i.MALOP = l.MALOP
+        )
+    )
+    BEGIN
+        RAISERROR(N'Học viên đang là lớp trưởng - không thể xóa hoặc chuyển sang lớp khác.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thay đổi đúng 1 học viên, chỉ bắt DELETE)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOCVIEN_BAOVE_LOPTRUONG_BIENTAM
+ON HOCVIEN
+AFTER DELETE
+AS
+BEGIN
+    DECLARE @MAHV CHAR(5), @MALOP CHAR(3);
+
+    SELECT @MAHV = MAHV, @MALOP = MALOP FROM deleted;
+
+    IF EXISTS (SELECT * FROM LOP WHERE TRGLOP = @MAHV AND MALOP = @MALOP)
+    BEGIN
+        RAISERROR(N'Học viên đang là lớp trưởng, không thể xóa.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+                <p>Chỉ xử lý được <code>DELETE</code> đúng 1 học viên - Không bắt được trường hợp <code>UPDATE</code> đổi <code>MALOP</code> của lớp trưởng sang lớp khác, và không đúng nếu xóa nhiều học viên cùng lúc.</p>
+              </details>
+
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Trigger 1 chặn gán sai ngay từ phía <code>LOP</code>; Trigger 2 chặn việc học viên đang là lớp trưởng bị xóa hoặc "rời lớp" (đổi <code>MALOP</code>) từ phía <code>HOCVIEN</code>, dùng <code>NOT EXISTS</code> để kiểm tra học viên đó (nếu còn tồn tại sau thao tác) có còn đúng lớp mà mình đang làm lớp trưởng không.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>AFTER DELETE, UPDATE</code> gộp chung trên Trigger 2 vì cùng 1 điều kiện <code>NOT EXISTS</code> xử lý đúng cho cả 2 tình huống: Khi <code>DELETE</code>, <code>inserted</code> rỗng nên <code>NOT EXISTS</code> luôn đúng (chặn); khi <code>UPDATE</code>, chỉ chặn nếu dòng mới không còn khớp đúng lớp đang làm lớp trưởng.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 2 (QGV) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Đề bài:</strong> Trưởng khoa phải là giáo viên thuộc khoa và có học vị "TS" hoặc "PTS".</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>KHOA</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Gán <code>TRGKHOA</code> là giáo viên không thuộc khoa, hoặc học vị không phải TS/PTS.</td></tr>
+                <tr><td><code>GIAOVIEN</code></td><td><code>UPDATE</code></td><td>Đổi <code>MAKHOA</code> hoặc hạ <code>HOCVI</code> của giáo viên đang là trưởng khoa.</td></tr>
+              </table></div>
+
+              <h4>Trigger 1 - ON KHOA AFTER INSERT, UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KHOA_KIEMTRA_TRGKHOA
+ON KHOA
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT * FROM inserted i
+        WHERE i.TRGKHOA IS NOT NULL
+          AND NOT EXISTS (
+              SELECT * FROM GIAOVIEN gv
+              WHERE gv.MAGV = i.TRGKHOA
+                AND gv.MAKHOA = i.MAKHOA
+                AND gv.HOCVI IN (N'TS', N'PTS')
+          )
+    )
+    BEGIN
+        RAISERROR(N'Trưởng khoa phải là giáo viên thuộc khoa và có học vị TS hoặc PTS.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi INSERT/UPDATE đúng 1 khoa)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KHOA_KIEMTRA_TRGKHOA_BIENTAM
+ON KHOA
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @TRGKHOA CHAR(4), @MAKHOA CHAR(4);
+
+    SELECT @TRGKHOA = TRGKHOA, @MAKHOA = MAKHOA FROM inserted;
+
+    IF (@TRGKHOA IS NOT NULL AND NOT EXISTS (
+        SELECT * FROM GIAOVIEN
+        WHERE MAGV = @TRGKHOA AND MAKHOA = @MAKHOA AND HOCVI IN (N'TS', N'PTS')
+    ))
+    BEGIN
+        RAISERROR(N'Trưởng khoa phải là giáo viên thuộc khoa và có học vị TS hoặc PTS.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+
+              <h4>Trigger 2 - ON GIAOVIEN AFTER UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIAOVIEN_BAOVE_TRGKHOA
+ON GIAOVIEN
+AFTER UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN KHOA k ON k.TRGKHOA = i.MAGV
+        WHERE i.MAKHOA <> k.MAKHOA OR i.HOCVI NOT IN (N'TS', N'PTS')
+    )
+    BEGIN
+        RAISERROR(N'Giáo viên đang là trưởng khoa - không thể đổi khoa hoặc hạ học vị xuống dưới TS/PTS.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Trigger 1 kiểm tra ngay khi gán/đổi trưởng khoa; Trigger 2 bảo vệ ràng buộc theo <strong>chiều ngược lại</strong> - Chặn việc chỉnh sửa thông tin giáo viên khiến họ không còn đủ điều kiện làm trưởng khoa của khoa mình đang phụ trách.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là ví dụ rõ nhất cho việc lập bảng xét tầm ảnh hưởng trước khi viết Trigger - Nếu chỉ nhìn vào đề bài theo hướng "kiểm tra khi gán trưởng khoa" (Trigger 1), rất dễ bỏ sót tình huống dữ liệu bị phá vỡ ràng buộc từ phía <code>GIAOVIEN</code> (Trigger 2), vì đây là bảng không được nhắc trực tiếp trong câu hỏi.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 3 (QGV) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Đề bài:</strong> Học viên chỉ được thi một môn học nào đó khi lớp của học viên đã học xong môn học này.</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>KETQUATHI</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Thêm/sửa 1 kết quả thi ứng với môn mà lớp học viên chưa học xong.</td></tr>
+              </table></div>
+              <p>"Học xong" được hiểu là <code>GIANGDAY</code> đã có dòng (lớp, môn) với <code>DENNGAY</code> không muộn hơn ngày thi (<code>NGTHI</code>).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_DAHOC
+ON KETQUATHI
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN HOCVIEN hv ON hv.MAHV = i.MAHV
+        WHERE NOT EXISTS (
+            SELECT * FROM GIANGDAY gd
+            WHERE gd.MALOP = hv.MALOP AND gd.MAMH = i.MAMH AND gd.DENNGAY <= i.NGTHI
+        )
+    )
+    BEGIN
+        RAISERROR(N'Học viên chỉ được thi môn học mà lớp mình đã học xong.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thêm/sửa đúng 1 kết quả thi)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_DAHOC_BIENTAM
+ON KETQUATHI
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MAHV CHAR(5), @MAMH CHAR(10), @NGTHI SMALLDATETIME, @MALOP CHAR(3);
+
+    SELECT @MAHV = MAHV, @MAMH = MAMH, @NGTHI = NGTHI FROM inserted;
+    SELECT @MALOP = MALOP FROM HOCVIEN WHERE MAHV = @MAHV;
+
+    IF NOT EXISTS (
+        SELECT * FROM GIANGDAY
+        WHERE MALOP = @MALOP AND MAMH = @MAMH AND DENNGAY <= @NGTHI
+    )
+    BEGIN
+        RAISERROR(N'Học viên chỉ được thi môn học mà lớp mình đã học xong.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>NOT EXISTS</code> lồng bên trong tìm dòng <code>GIANGDAY</code> chứng minh lớp đã học xong môn đó (<code>DENNGAY &lt;= NGTHI</code>); nếu không tìm thấy dòng nào như vậy cho 1 học viên đang thi, đó là vi phạm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Học xong" không thể chỉ kiểm tra "có phân công giảng dạy hay không" - Phải kiểm tra thêm điều kiện thời gian <code>DENNGAY &lt;= NGTHI</code>, nếu không thì học viên vẫn có thể "thi" một môn đang được giảng dạy dở dang.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 4 (QGV) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Đề bài:</strong> Mỗi học kỳ của một năm học, một lớp chỉ được học tối đa 3 môn.</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>GIANGDAY</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Thêm/sửa phân công khiến 1 lớp có hơn 3 môn trong cùng học kỳ/năm.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_TOIDA_3MON
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT MALOP, HOCKY, NAM
+        FROM GIANGDAY
+        WHERE MALOP IN (SELECT MALOP FROM inserted)
+        GROUP BY MALOP, HOCKY, NAM
+        HAVING COUNT(*) > 3
+    )
+    BEGIN
+        RAISERROR(N'Mỗi học kỳ của một năm học, một lớp chỉ được học tối đa 3 môn.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thêm/sửa đúng 1 phân công)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_TOIDA_3MON_BIENTAM
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MALOP CHAR(3), @HOCKY TINYINT, @NAM SMALLINT, @SoMon INT;
+
+    SELECT @MALOP = MALOP, @HOCKY = HOCKY, @NAM = NAM FROM inserted;
+    SELECT @SoMon = COUNT(*) FROM GIANGDAY WHERE MALOP = @MALOP AND HOCKY = @HOCKY AND NAM = @NAM;
+
+    IF (@SoMon > 3)
+    BEGIN
+        RAISERROR(N'Mỗi học kỳ của một năm học, một lớp chỉ được học tối đa 3 môn.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY MALOP, HOCKY, NAM</code> kèm <code>HAVING COUNT(*) &gt; 3</code> tìm những nhóm (lớp, học kỳ, năm) đã có hơn 3 môn, giới hạn trước bằng <code>WHERE MALOP IN (SELECT MALOP FROM inserted)</code> để không phải quét toàn bộ <code>GIANGDAY</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không cần lọc thêm theo <code>HOCKY</code>/<code>NAM</code> trong mệnh đề <code>WHERE</code> ngoài vì <code>GROUP BY</code> đã tự tách đúng theo từng (học kỳ, năm) - Chỉ cần thu hẹp đúng những lớp vừa được phân công thêm.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 5 (QGV) · TRIGGER TỰ ĐỘNG CẬP NHẬT</p>
+              <p><strong>Đề bài:</strong> Sỉ số của một lớp bằng với số lượng học viên thuộc lớp đó.</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể ảnh hưởng</th></tr>
+                <tr><td><code>HOCVIEN</code></td><td><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></td><td>Thêm/xóa học viên, hoặc đổi <code>MALOP</code> của học viên, đều làm thay đổi sỉ số của (các) lớp liên quan.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOCVIEN_CAPNHAT_SISO
+ON HOCVIEN
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    UPDATE l
+    SET SISO = (
+        SELECT COUNT(*) FROM HOCVIEN hv WHERE hv.MALOP = l.MALOP
+    )
+    FROM LOP l
+    WHERE l.MALOP IN (
+        SELECT MALOP FROM inserted
+        UNION
+        SELECT MALOP FROM deleted
+    );
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thay đổi đúng 1 học viên)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOCVIEN_CAPNHAT_SISO_BIENTAM
+ON HOCVIEN
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    DECLARE @MALOP CHAR(3);
+
+    SELECT @MALOP = MALOP FROM inserted;
+    IF (@MALOP IS NULL) SELECT @MALOP = MALOP FROM deleted;
+
+    UPDATE LOP
+    SET SISO = (SELECT COUNT(*) FROM HOCVIEN WHERE MALOP = @MALOP)
+    WHERE MALOP = @MALOP;
+END;</code></pre></div>
+                <p>Bỏ sót lớp cũ khi <code>UPDATE</code> đổi <code>MALOP</code> của 1 học viên - Cách biến tạm ở đây chỉ cập nhật đúng cho <strong>lớp mới</strong> (lấy từ <code>inserted</code>), không cập nhật lại sỉ số cho <strong>lớp cũ</strong> (phải lấy từ <code>deleted</code>) mà học viên đó vừa rời đi. Đây là lý do bản <code>IF EXISTS</code>/<code>UNION</code> ở trên luôn là lựa chọn an toàn hơn.</p>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Tính lại <code>SISO</code> bằng <code>COUNT(*)</code> trực tiếp trên <code>HOCVIEN</code> cho từng lớp bị ảnh hưởng, xác định bằng <code>UNION</code> giữa <code>inserted</code> và <code>deleted</code> - Giống kỹ thuật đã dùng ở Câu 3, Câu 4 (QLBH).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khi <code>UPDATE</code> đổi <code>MALOP</code> của 1 học viên, <strong>cả lớp cũ lẫn lớp mới</strong> đều phải cập nhật lại sỉ số - <code>UNION</code> giữa <code>inserted</code> (lớp mới) và <code>deleted</code> (lớp cũ) đảm bảo không bỏ sót lớp nào trong 2 lớp đó.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 6 (QGV) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Đề bài:</strong> Trong quan hệ <code>DIEUKIEN</code> giá trị của thuộc tính <code>MAMH</code> và <code>MAMH_TRUOC</code> trong cùng một bộ không được giống nhau ("A","A") và cũng không tồn tại hai bộ ("A","B") và ("B","A").</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>DIEUKIEN</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Thêm/sửa 1 dòng tạo thành cặp (A,A), hoặc tạo cặp đối xứng ngược với 1 dòng đã có.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_DIEUKIEN_KIEMTRA
+ON DIEUKIEN
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (SELECT * FROM inserted WHERE MAMH = MAMH_TRUOC)
+    BEGIN
+        RAISERROR(N'Một môn học không thể là điều kiện tiên quyết của chính nó.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+
+    IF EXISTS (
+        SELECT * FROM inserted i
+        JOIN DIEUKIEN dk ON dk.MAMH = i.MAMH_TRUOC AND dk.MAMH_TRUOC = i.MAMH
+    )
+    BEGIN
+        RAISERROR(N'Không được tồn tại đồng thời (A,B) và (B,A) trong DIEUKIEN.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thêm/sửa đúng 1 dòng)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_DIEUKIEN_KIEMTRA_BIENTAM
+ON DIEUKIEN
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MAMH CHAR(10), @MAMH_TRUOC CHAR(10);
+
+    SELECT @MAMH = MAMH, @MAMH_TRUOC = MAMH_TRUOC FROM inserted;
+
+    IF (@MAMH = @MAMH_TRUOC)
+    BEGIN
+        RAISERROR(N'Một môn học không thể là điều kiện tiên quyết của chính nó.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+
+    IF EXISTS (SELECT * FROM DIEUKIEN WHERE MAMH = @MAMH_TRUOC AND MAMH_TRUOC = @MAMH)
+    BEGIN
+        RAISERROR(N'Không được tồn tại đồng thời (A,B) và (B,A) trong DIEUKIEN.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>IF</code> đầu chặn cặp (A,A) ngay trong <code>inserted</code>; <code>IF</code> sau tự <code>JOIN DIEUKIEN</code> với chính nó (self-join qua bảng ảo <code>inserted</code>) để tìm dòng đối xứng (B,A) đã tồn tại ứng với dòng mới thêm (A,B).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là 2 điều kiện độc lập nên tách thành 2 khối <code>IF</code> riêng, mỗi khối có thông báo lỗi rõ ràng khác nhau - Nếu gộp chung 1 <code>IF ... OR ...</code> thì thông báo lỗi sẽ mơ hồ, không biết chính xác vi phạm nào đã xảy ra.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 7 (QGV) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Đề bài:</strong> Các giáo viên có cùng học vị, học hàm, hệ số lương thì mức lương bằng nhau.</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>GIAOVIEN</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Thêm/sửa 1 giáo viên với mức lương khác giáo viên khác cùng (học vị, học hàm, hệ số).</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIAOVIEN_KIEMTRA_MUCLUONG
+ON GIAOVIEN
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN GIAOVIEN gv
+          ON gv.HOCVI = i.HOCVI
+         AND ISNULL(gv.HOCHAM, N'') = ISNULL(i.HOCHAM, N'')
+         AND gv.HESO = i.HESO
+         AND gv.MAGV <> i.MAGV
+        WHERE gv.MUCLUONG <> i.MUCLUONG
+    )
+    BEGIN
+        RAISERROR(N'Giáo viên có cùng học vị, học hàm, hệ số lương thì mức lương phải bằng nhau.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thêm/sửa đúng 1 giáo viên)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIAOVIEN_KIEMTRA_MUCLUONG_BIENTAM
+ON GIAOVIEN
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MAGV CHAR(4), @HOCVI VARCHAR(10), @HOCHAM VARCHAR(10),
+            @HESO NUMERIC(4,2), @MUCLUONG MONEY;
+
+    SELECT @MAGV = MAGV, @HOCVI = HOCVI, @HOCHAM = HOCHAM,
+           @HESO = HESO, @MUCLUONG = MUCLUONG
+    FROM inserted;
+
+    IF EXISTS (
+        SELECT * FROM GIAOVIEN
+        WHERE HOCVI = @HOCVI
+          AND ISNULL(HOCHAM, N'') = ISNULL(@HOCHAM, N'')
+          AND HESO = @HESO
+          AND MAGV <> @MAGV
+          AND MUCLUONG <> @MUCLUONG
+    )
+    BEGIN
+        RAISERROR(N'Giáo viên có cùng học vị, học hàm, hệ số lương thì mức lương phải bằng nhau.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN GIAOVIEN</code> với chính bảng đó (qua <code>inserted</code>) để so khớp 3 tiêu chí <code>HOCVI</code>, <code>HOCHAM</code>, <code>HESO</code>; nếu tìm được giáo viên khác (<code>MAGV &lt;&gt; i.MAGV</code>) cùng cả 3 tiêu chí nhưng khác <code>MUCLUONG</code>, đó là vi phạm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>HOCHAM</code> có thể <code>NULL</code> (giáo viên chưa có học hàm) - Trong SQL, <code>NULL = NULL</code> không cho kết quả <code>TRUE</code> mà là <em>không xác định</em>, nên nếu so sánh trực tiếp <code>gv.HOCHAM = i.HOCHAM</code>, 2 giáo viên cùng chưa có học hàm sẽ bị hiểu nhầm là "khác nhau" và không được so khớp. Bọc <code>ISNULL(..., N'')</code> quy đổi <code>NULL</code> thành chuỗi rỗng trước khi so sánh, giúp 2 giá trị <code>NULL</code> được xem là bằng nhau.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 8 (QGV) · TRIGGER AFTER INSERT</p>
+              <p><strong>Đề bài:</strong> Học viên chỉ được thi lại (lần thi &gt;1) khi điểm của lần thi trước đó dưới 5.</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>KETQUATHI</code></td><td><code>INSERT</code></td><td>Thêm 1 lượt thi lại (<code>LANTHI &gt; 1</code>) trong khi lần thi liền trước đã đạt (<code>DIEM &gt;= 5</code>).</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_THILAI
+ON KETQUATHI
+AFTER INSERT
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        WHERE i.LANTHI > 1
+          AND NOT EXISTS (
+              SELECT * FROM KETQUATHI kq
+              WHERE kq.MAHV = i.MAHV AND kq.MAMH = i.MAMH
+                AND kq.LANTHI = i.LANTHI - 1 AND kq.DIEM < 5
+          )
+    )
+    BEGIN
+        RAISERROR(N'Học viên chỉ được thi lại khi điểm lần thi trước đó dưới 5.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thêm đúng 1 kết quả thi)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_THILAI_BIENTAM
+ON KETQUATHI
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @MAHV CHAR(5), @MAMH CHAR(10), @LANTHI TINYINT, @DiemLanTruoc NUMERIC(4,2);
+
+    SELECT @MAHV = MAHV, @MAMH = MAMH, @LANTHI = LANTHI FROM inserted;
+
+    IF (@LANTHI > 1)
+    BEGIN
+        SELECT @DiemLanTruoc = DIEM FROM KETQUATHI
+        WHERE MAHV = @MAHV AND MAMH = @MAMH AND LANTHI = @LANTHI - 1;
+
+        IF (@DiemLanTruoc IS NULL OR @DiemLanTruoc >= 5)
+        BEGIN
+            RAISERROR(N'Học viên chỉ được thi lại khi điểm lần thi trước đó dưới 5.', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Chỉ kiểm tra khi <code>LANTHI &gt; 1</code> (lần thi đầu tiên không cần điều kiện gì); <code>NOT EXISTS</code> tìm dòng kết quả lần thi liền trước (<code>LANTHI - 1</code>) có <code>DIEM &lt; 5</code> - Nếu không tìm thấy (nghĩa là lần trước đã đạt, hoặc không hề có lần trước), đó là vi phạm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>NOT EXISTS</code> tự động xử lý luôn cả trường hợp lần thi trước <strong>không tồn tại</strong> (VD chèn thẳng <code>LANTHI = 3</code> mà bỏ qua <code>LANTHI = 2</code>) - Cách biến tạm phải tự thêm điều kiện <code>@DiemLanTruoc IS NULL</code> mới xử lý đúng tình huống này, cho thấy <code>NOT EXISTS</code> vừa gọn vừa ít sót hơn.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 9 (QGV) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Đề bài:</strong> Ngày thi của lần thi sau phải lớn hơn ngày thi của lần thi trước (cùng học viên, cùng môn học).</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>KETQUATHI</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Thêm/sửa <code>NGTHI</code> khiến thứ tự ngày thi không còn tăng dần theo <code>LANTHI</code>.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_NGTHI
+ON KETQUATHI
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN KETQUATHI kq
+          ON kq.MAHV = i.MAHV AND kq.MAMH = i.MAMH AND kq.LANTHI <> i.LANTHI
+        WHERE (kq.LANTHI < i.LANTHI AND kq.NGTHI >= i.NGTHI)
+           OR (kq.LANTHI > i.LANTHI AND kq.NGTHI <= i.NGTHI)
+    )
+    BEGIN
+        RAISERROR(N'Ngày thi của lần thi sau phải lớn hơn ngày thi của lần thi trước.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thêm/sửa đúng 1 kết quả thi)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_NGTHI_BIENTAM
+ON KETQUATHI
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MAHV CHAR(5), @MAMH CHAR(10), @LANTHI TINYINT, @NGTHI SMALLDATETIME;
+
+    SELECT @MAHV = MAHV, @MAMH = MAMH, @LANTHI = LANTHI, @NGTHI = NGTHI FROM inserted;
+
+    IF EXISTS (
+        SELECT * FROM KETQUATHI
+        WHERE MAHV = @MAHV AND MAMH = @MAMH AND LANTHI <> @LANTHI
+          AND (
+              (LANTHI < @LANTHI AND NGTHI >= @NGTHI)
+              OR (LANTHI > @LANTHI AND NGTHI <= @NGTHI)
+          )
+    )
+    BEGIN
+        RAISERROR(N'Ngày thi của lần thi sau phải lớn hơn ngày thi của lần thi trước.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN</code> mỗi dòng vừa thêm/sửa với các lần thi <strong>khác</strong> của cùng học viên, cùng môn (<code>kq.LANTHI &lt;&gt; i.LANTHI</code>); 2 điều kiện trong <code>WHERE</code> xét cả 2 chiều - Lần trước có ngày thi không nhỏ hơn lần đang xét, hoặc lần sau có ngày thi không lớn hơn.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải xét <strong>cả 2 chiều</strong> (lần thi trước lẫn lần thi sau so với dòng đang thêm/sửa) vì <code>UPDATE</code> có thể sửa ngày thi của bất kỳ lần thi nào, không nhất thiết là lần cuối cùng - Nếu chỉ so với "lần thi liền trước" như Câu 8, sẽ bỏ sót trường hợp sửa 1 lần thi ở giữa làm sai thứ tự với lần thi phía sau nó.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 10 (QGV) · CÙNG RÀNG BUỘC VỚI CÂU 3</p>
+              <p><strong>Đề bài:</strong> Học viên chỉ được thi những môn mà lớp của học viên đó đã học xong.</p>
+              <div class="inline-ok">Đây là <strong>cùng 1 quy tắc nghiệp vụ</strong> với Câu 3 ("Học viên chỉ được thi một môn học nào đó khi lớp của học viên đã học xong môn học này") - Chỉ diễn đạt lại bằng câu chữ khác. Trigger <code>TRG_KETQUATHI_KIEMTRA_DAHOC</code> đã tạo ở Câu 3 xử lý đầy đủ ràng buộc này, <strong>không cần tạo thêm Trigger mới</strong> - Tạo trùng sẽ khiến 2 Trigger cùng chạy trên cùng 1 sự kiện, không sai nhưng thừa và khó bảo trì.</div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Không có đáp án SQL mới - Xem lại Trigger <code>TRG_KETQUATHI_KIEMTRA_DAHOC</code> ở Câu 3.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Trước khi viết Trigger, nên đối chiếu nhanh với các câu đã làm trước đó trong cùng đề - Nhận ra 2 câu trùng ràng buộc giúp tránh viết trùng lặp, đồng thời là một bước kiểm tra hữu ích để chắc chắn không hiểu sai đề.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 11 (QGV) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Đề bài:</strong> Khi phân công giảng dạy một môn học, phải xét đến thứ tự trước sau giữa các môn học (sau khi học xong những môn học phải học trước mới được học những môn liền sau).</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>GIANGDAY</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Phân công 1 lớp học môn X trong khi lớp đó chưa học xong (các) môn tiên quyết của X.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_KIEMTRA_TIENQUYET
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN DIEUKIEN dk ON dk.MAMH = i.MAMH
+        WHERE NOT EXISTS (
+            SELECT * FROM GIANGDAY gd
+            WHERE gd.MALOP = i.MALOP
+              AND gd.MAMH = dk.MAMH_TRUOC
+              AND gd.DENNGAY <= i.TUNGAY
+        )
+    )
+    BEGIN
+        RAISERROR(N'Lớp phải học xong các môn tiên quyết trước khi được phân công học môn liền sau.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thêm/sửa đúng 1 phân công)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_KIEMTRA_TIENQUYET_BIENTAM
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MALOP CHAR(3), @MAMH CHAR(10), @TUNGAY SMALLDATETIME;
+
+    SELECT @MALOP = MALOP, @MAMH = MAMH, @TUNGAY = TUNGAY FROM inserted;
+
+    IF EXISTS (
+        SELECT * FROM DIEUKIEN dk
+        WHERE dk.MAMH = @MAMH
+          AND NOT EXISTS (
+              SELECT * FROM GIANGDAY gd
+              WHERE gd.MALOP = @MALOP AND gd.MAMH = dk.MAMH_TRUOC AND gd.DENNGAY <= @TUNGAY
+          )
+    )
+    BEGIN
+        RAISERROR(N'Lớp phải học xong các môn tiên quyết trước khi được phân công học môn liền sau.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN DIEUKIEN</code> để lấy hết các môn tiên quyết của môn vừa được phân công; <code>NOT EXISTS</code> lồng bên trong kiểm tra lớp đó đã có dòng <code>GIANGDAY</code> học xong (<code>DENNGAY &lt;= TUNGAY</code> của môn mới) từng môn tiên quyết hay chưa.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>1 môn học có thể có <strong>nhiều hơn 1</strong> môn tiên quyết (VD môn CSDL trong dữ liệu mẫu có cả CTRR lẫn CTDLGT) - Phải kiểm tra lớp đã học xong <em>tất cả</em> các môn tiên quyết đó, không chỉ 1 môn bất kỳ, nên cần <code>NOT EXISTS</code> đảm bảo không có môn tiên quyết nào còn thiếu.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 12 (QGV) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Đề bài:</strong> Giáo viên chỉ được phân công dạy những môn thuộc khoa giáo viên đó phụ trách.</p>
+              <h4>Bảng xét tầm ảnh hưởng</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                <tr><td><code>GIANGDAY</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Phân công 1 giáo viên dạy môn không thuộc khoa của giáo viên đó.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_KIEMTRA_KHOA
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN GIAOVIEN gv ON gv.MAGV = i.MAGV
+        JOIN MONHOC mh ON mh.MAMH = i.MAMH
+        WHERE gv.MAKHOA <> mh.MAKHOA
+    )
+    BEGIN
+        RAISERROR(N'Giáo viên chỉ được phân công dạy những môn học thuộc khoa mình phụ trách.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Cách khác (biến tạm - Chỉ đúng khi thêm/sửa đúng 1 phân công)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_KIEMTRA_KHOA_BIENTAM
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MAGV CHAR(4), @MAMH CHAR(10), @MAKHOA_GV CHAR(4), @MAKHOA_MH CHAR(4);
+
+    SELECT @MAGV = MAGV, @MAMH = MAMH FROM inserted;
+    SELECT @MAKHOA_GV = MAKHOA FROM GIAOVIEN WHERE MAGV = @MAGV;
+    SELECT @MAKHOA_MH = MAKHOA FROM MONHOC WHERE MAMH = @MAMH;
+
+    IF (@MAKHOA_GV <> @MAKHOA_MH)
+    BEGIN
+        RAISERROR(N'Giáo viên chỉ được phân công dạy những môn học thuộc khoa mình phụ trách.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN</code> đồng thời <code>GIAOVIEN</code> (lấy khoa của giáo viên) và <code>MONHOC</code> (lấy khoa phụ trách môn học), so sánh trực tiếp 2 mã khoa - Khác nhau nghĩa là vi phạm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là ràng buộc đơn giản nhất trong nhóm QGV - Chỉ cần so khớp đúng 2 cột <code>MAKHOA</code> từ 2 bảng khác nhau, không cần <code>NOT EXISTS</code> hay <code>GROUP BY</code>, nên chọn <code>JOIN</code> trực tiếp là gọn và dễ đọc nhất.</p></div>
               </div>
             </div>
 

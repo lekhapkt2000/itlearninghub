@@ -295,12 +295,33 @@ VALUES
     ('PH001', N'Yoga Linh Dam', N'Ha Noi', 25, N'Hoat dong'),
     ('PH002', N'Gym Nguyen Van Cu', N'TP. HCM', 60, N'Hoat dong');
 
--- Apply this same INSERT INTO ... VALUES (...) syntax to the 5 remaining
--- relations (HUANLUYENVIEN, HOCVIEN, LOPTAP, DANGKY, LICHTAP), taking the
--- full sample data from the attached PDF file in the Exercise section.</code></pre></div>
+INSERT INTO HUANLUYENVIEN (MAHLV, HOTEN, CHUYENMON, SDT, EMAIL)
+VALUES
+    ('HL001', N'Nguyen Van An', N'Yoga', '0901234567', 'an.nguyen@tdtt.vn'),
+    ('HL002', N'Tran Thi Binh', N'Gym', '0912345678', 'binh.tran@tdtt.vn');
+
+INSERT INTO LOPTAP (MALOP, MAPH, MAHLV, TENLOP, NGAYBD, NGAYKT, TRANGTHAI)
+VALUES
+    ('LOP001', 'PH001', 'HL001', N'Yoga co ban', '2024-01-05', '2024-03-05', N'Dang hoat dong'),
+    ('LOP002', 'PH002', 'HL002', N'Gym tang co', '2024-01-10', '2024-04-10', N'Dang hoat dong');
+
+INSERT INTO HOCVIEN (MAHV, HOTEN, NGSINH, SDT, DIACHI, GIOITINH, NGTG)
+VALUES
+    ('HV001', N'Le Van Cuong', '2000-05-20', '0923456789', N'12 Tran Phu, Ha Noi', N'Nam', '2024-01-02'),
+    ('HV002', N'Pham Thi Dung', '1999-08-15', '0934567890', N'34 Le Loi, TP. HCM', N'Nu', '2024-01-03');
+
+INSERT INTO DANGKY (MAHV, MALOP, NGAYDK)
+VALUES
+    ('HV001', 'LOP001', '2024-01-05'),
+    ('HV002', 'LOP002', '2024-01-10');
+
+INSERT INTO LICHTAP (MALOP, NGAYTAP, GIOBATDAU, GIOKETTHUC)
+VALUES
+    ('LOP001', '2024-01-08', '18:00:00', '19:00:00'),
+    ('LOP002', '2024-01-12', '19:00:00', '20:30:00');</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>INSERT INTO ... VALUES (...)</code> adds one row of data at a time into a table; multiple rows can be combined into a single statement by listing several value groups separated by commas.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p><code>PHONGTAP</code> and <code>HUANLUYENVIEN</code> must be inserted before <code>LOPTAP</code>, and <code>LOPTAP</code> before <code>DANGKY</code>/<code>LICHTAP</code> - because the foreign keys created in Question 2 will block an <code>INSERT</code> if the parent row (room, trainer, class) doesn't exist yet.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The insert order must follow the foreign-key direction: <code>PHONGTAP</code> and <code>HUANLUYENVIEN</code> before <code>LOPTAP</code> (since <code>LOPTAP</code> references both), <code>HOCVIEN</code> and <code>LOPTAP</code> before <code>DANGKY</code>, and <code>LOPTAP</code> before <code>LICHTAP</code> - because the foreign keys created in Question 2 will block an <code>INSERT</code> if the parent row doesn't exist yet. The data here is only illustrative of the correct syntax - for the actual assignment, enter the full sample data from the attached PDF in the Exercise section.</p></div>
               </div>
             </div>
 
@@ -347,13 +368,10 @@ VALUES
             <div class="qa-block">
               <p class="eyebrow">QUESTION 5 (REQ. 2 - PART I) · CHECK ... IN</p>
               <p><strong>Exercise:</strong> How can the attribute <code>LOAIKH</code> in the relation <code>KHACHHANG</code> be made to store the values "Vang lai", "Thuong xuyen", "Vip", …?</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ALTER COLUMN LOAIKH VARCHAR(20);
-
-ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
-    CHECK (LOAIKH IN (N'Vang lai', N'Thuong xuyen', N'Vip'));</code></pre></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ALTER COLUMN LOAIKH VARCHAR(20);</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>LOAIKH</code> needs to store text strings ("Vang lai", "Thuong xuyen", "Vip"), so its data type must change from <code>TINYINT</code> (in Question 2) to <code>VARCHAR</code>, then a <code>CHECK ... IN (...)</code> is added so only these 3 values are accepted.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p><code>CHECK</code> is the standard way to restrict a column's value domain right at the database level - even if the application has a bug and tries to write a different value, the database will still reject the statement.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>LOAIKH</code> needs to store text strings ("Vang lai", "Thuong xuyen", "Vip"...), so it's enough to change the data type from <code>TINYINT</code> (in Question 2) to <code>VARCHAR(20)</code> so the column has room for a string.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The exercise ends with an ellipsis <strong>"…"</strong> after "Vang lai", "Thuong xuyen", "Vip" - meaning the list of values is <strong>not closed</strong>, and other customer types could exist beyond these 3. So you should <strong>not</strong> add a <code>CHECK ... IN (...)</code> hard-limiting to exactly these 3 values like in Question 6 - doing so would accidentally block other valid customer types not yet listed. The exercise only asks for the column to be "able to store" these string values, so changing the data type is enough.</p></div>
               </div>
             </div>
 
@@ -362,9 +380,15 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
               <p><strong>Exercise:</strong> A product's unit of measure can only be one of ("cay", "hop", "cai", "quyen", "chuc").</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD CONSTRAINT CK_SANPHAM_DVT
     CHECK (DVT IN (N'cay', N'hop', N'cai', N'quyen', N'chuc'));</code></pre></div>
+              <details><summary>Alternative approach</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD CONSTRAINT CK_SANPHAM_DVT
+    CHECK (DVT = N'cay' OR DVT = N'hop' OR DVT = N'cai'
+        OR DVT = N'quyen' OR DVT = N'chuc');</code></pre></div>
+                <p>A chain of <code>=</code> comparisons joined by <code>OR</code> is equivalent to <code>IN (...)</code>, but gets verbose once the list has many values - <code>IN</code> remains the recommended way to write it.</p>
+              </details>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The same <code>CHECK ... IN</code> technique as Question 5, applied to the <code>DVT</code> (unit of measure) column of <code>SANPHAM</code>.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>The unit of measure is a fixed categorical value, not free text - constraining it with a list of valid values helps prevent typos.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The same <code>CHECK ... IN</code> technique considered for Question 5, applied to the <code>DVT</code> (unit of measure) column of <code>SANPHAM</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Unlike Question 5, this exercise lists exactly 5 units of measure with <strong>no ellipsis</strong> - this is a closed, fixed list, not free-form input. So a hard <code>CHECK ... IN</code> constraint is entirely appropriate here, helping prevent typos or an unintended unit of measure.</p></div>
               </div>
             </div>
 

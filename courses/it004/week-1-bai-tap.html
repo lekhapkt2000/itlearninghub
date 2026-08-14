@@ -295,12 +295,33 @@ VALUES
     ('PH001', N'Yoga Linh Dam', N'Ha Noi', 25, N'Hoat dong'),
     ('PH002', N'Gym Nguyen Van Cu', N'TP. HCM', 60, N'Hoat dong');
 
--- Áp dụng đúng cú pháp INSERT INTO ... VALUES (...) này cho 5 quan hệ
--- còn lại (HUANLUYENVIEN, HOCVIEN, LOPTAP, DANGKY, LICHTAP), lấy dữ liệu
--- mẫu đầy đủ trong file PDF đính kèm ở phần Đề bài.</code></pre></div>
+INSERT INTO HUANLUYENVIEN (MAHLV, HOTEN, CHUYENMON, SDT, EMAIL)
+VALUES
+    ('HL001', N'Nguyen Van An', N'Yoga', '0901234567', 'an.nguyen@tdtt.vn'),
+    ('HL002', N'Tran Thi Binh', N'Gym', '0912345678', 'binh.tran@tdtt.vn');
+
+INSERT INTO LOPTAP (MALOP, MAPH, MAHLV, TENLOP, NGAYBD, NGAYKT, TRANGTHAI)
+VALUES
+    ('LOP001', 'PH001', 'HL001', N'Yoga co ban', '2024-01-05', '2024-03-05', N'Dang hoat dong'),
+    ('LOP002', 'PH002', 'HL002', N'Gym tang co', '2024-01-10', '2024-04-10', N'Dang hoat dong');
+
+INSERT INTO HOCVIEN (MAHV, HOTEN, NGSINH, SDT, DIACHI, GIOITINH, NGTG)
+VALUES
+    ('HV001', N'Le Van Cuong', '2000-05-20', '0923456789', N'12 Tran Phu, Ha Noi', N'Nam', '2024-01-02'),
+    ('HV002', N'Pham Thi Dung', '1999-08-15', '0934567890', N'34 Le Loi, TP. HCM', N'Nu', '2024-01-03');
+
+INSERT INTO DANGKY (MAHV, MALOP, NGAYDK)
+VALUES
+    ('HV001', 'LOP001', '2024-01-05'),
+    ('HV002', 'LOP002', '2024-01-10');
+
+INSERT INTO LICHTAP (MALOP, NGAYTAP, GIOBATDAU, GIOKETTHUC)
+VALUES
+    ('LOP001', '2024-01-08', '18:00:00', '19:00:00'),
+    ('LOP002', '2024-01-12', '19:00:00', '20:30:00');</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>INSERT INTO ... VALUES (...)</code> thêm từng dòng dữ liệu vào bảng; nhiều dòng có thể gộp trong 1 câu lệnh bằng cách liệt kê nhiều nhóm giá trị, ngăn cách bởi dấu phẩy.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải nhập <code>PHONGTAP</code> và <code>HUANLUYENVIEN</code> trước <code>LOPTAP</code>, và <code>LOPTAP</code> trước <code>DANGKY</code>/<code>LICHTAP</code> - Vì khóa ngoại đã tạo ở Câu 2 sẽ chặn <code>INSERT</code> nếu dòng cha (phòng, huấn luyện viên, lớp) chưa tồn tại.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Thứ tự nhập bắt buộc phải theo đúng chiều khóa ngoại: <code>PHONGTAP</code> và <code>HUANLUYENVIEN</code> trước <code>LOPTAP</code> (vì <code>LOPTAP</code> tham chiếu đến cả 2 bảng này); <code>HOCVIEN</code> và <code>LOPTAP</code> trước <code>DANGKY</code>; <code>LOPTAP</code> trước <code>LICHTAP</code> - Vì khóa ngoại đã tạo ở Câu 2 sẽ chặn <code>INSERT</code> nếu dòng cha chưa tồn tại. Dữ liệu ở đây chỉ mang tính minh họa cách viết đúng cú pháp - Khi làm bài thực tế, hãy nhập đủ dữ liệu mẫu trong file PDF đính kèm ở phần Đề bài.</p></div>
               </div>
             </div>
 
@@ -347,13 +368,10 @@ VALUES
             <div class="qa-block">
               <p class="eyebrow">CÂU 5 (YC2 - PHẦN I) · CHECK ... IN</p>
               <p><strong>Đề bài:</strong> Làm thế nào để thuộc tính <code>LOAIKH</code> trong quan hệ <code>KHACHHANG</code> có thể lưu các giá trị là: "Vang lai", "Thuong xuyen", "Vip", …</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ALTER COLUMN LOAIKH VARCHAR(20);
-
-ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
-    CHECK (LOAIKH IN (N'Vang lai', N'Thuong xuyen', N'Vip'));</code></pre></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ALTER COLUMN LOAIKH VARCHAR(20);</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LOAIKH</code> cần lưu chuỗi ký tự ("Vang lai", "Thuong xuyen", "Vip") nên phải đổi kiểu dữ liệu từ <code>TINYINT</code> (ở Câu 2) sang <code>VARCHAR</code>, sau đó thêm <code>CHECK ... IN (...)</code> để chỉ chấp nhận đúng 3 giá trị này.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>CHECK</code> là cách chuẩn để giới hạn miền giá trị của 1 cột ngay tại CSDL - Dù ứng dụng có lỗi và cố ghi giá trị khác, CSDL vẫn từ chối câu lệnh.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LOAIKH</code> cần lưu chuỗi ký tự ("Vang lai", "Thuong xuyen", "Vip"...) nên chỉ cần đổi kiểu dữ liệu từ <code>TINYINT</code> (ở Câu 2) sang <code>VARCHAR(20)</code> để cột có đủ chỗ chứa chuỗi.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề bài kết thúc bằng dấu <strong>"…"</strong> sau "Vang lai", "Thuong xuyen", "Vip" - Nghĩa là danh sách giá trị <strong>chưa đóng</strong>, còn có thể phát sinh loại khách hàng khác ngoài 3 loại này. Do đó <strong>không nên</strong> thêm <code>CHECK ... IN (...)</code> giới hạn cứng đúng 3 giá trị như Câu 6 - Làm vậy sẽ vô tình chặn luôn các loại khách hàng hợp lệ khác chưa được liệt kê. Câu hỏi chỉ yêu cầu cột "có thể lưu" được các giá trị dạng chuỗi này, nên đổi kiểu dữ liệu là đủ.</p></div>
               </div>
             </div>
 
@@ -362,9 +380,15 @@ ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_LOAIKH
               <p><strong>Đề bài:</strong> Đơn vị tính của sản phẩm chỉ có thể là ("cay", "hop", "cai", "quyen", "chuc").</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD CONSTRAINT CK_SANPHAM_DVT
     CHECK (DVT IN (N'cay', N'hop', N'cai', N'quyen', N'chuc'));</code></pre></div>
+              <details><summary>Cách khác</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE SANPHAM ADD CONSTRAINT CK_SANPHAM_DVT
+    CHECK (DVT = N'cay' OR DVT = N'hop' OR DVT = N'cai'
+        OR DVT = N'quyen' OR DVT = N'chuc');</code></pre></div>
+                <p>Chuỗi các phép so sánh <code>=</code> nối bằng <code>OR</code> cho kết quả tương đương <code>IN (...)</code>, nhưng dài dòng hơn khi danh sách có nhiều giá trị - <code>IN</code> vẫn là cách viết được khuyến khích.</p>
+              </details>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cùng kỹ thuật <code>CHECK ... IN</code> như Câu 5, áp dụng cho cột <code>DVT</code> (đơn vị tính) của <code>SANPHAM</code>.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đơn vị tính là dữ liệu dạng danh mục cố định, không phải nhập tự do - Ràng buộc bằng danh sách giá trị hợp lệ giúp tránh nhập sai chính tả.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cùng kỹ thuật <code>CHECK ... IN</code> như hướng đã cân nhắc ở Câu 5, áp dụng cho cột <code>DVT</code> (đơn vị tính) của <code>SANPHAM</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác với Câu 5, đề bài ở đây liệt kê đúng 5 đơn vị tính và <strong>không có dấu "…"</strong> - Đây là danh sách đóng, cố định, không phải nhập tự do. Vì vậy <code>CHECK ... IN</code> giới hạn cứng là hoàn toàn phù hợp, giúp tránh nhập sai chính tả hoặc phát sinh đơn vị tính ngoài ý muốn.</p></div>
               </div>
             </div>
 

@@ -24,9 +24,6 @@
     .exam-timer.is-danger .exam-timer-clock,.exam-timer.is-over .exam-timer-clock{color:#f87171}
     .exam-timer.is-danger .exam-timer-clock{animation:examTimerPulse 1s ease-in-out infinite}
     @keyframes examTimerPulse{0%,100%{opacity:1}50%{opacity:.45}}
-    .access-locked.prereq-locked .access-locked-icon{background:var(--line);color:var(--muted)}
-    .access-locked.prereq-locked .access-form{opacity:.4;pointer-events:none}
-    .access-locked.prereq-locked .access-hint{margin-top:14px;padding:10px 14px;background:var(--tint);border-radius:8px;color:var(--primary-ink);font-weight:700}
   </style>
 </head>
 <body>
@@ -288,294 +285,294 @@
               <li>Liệt kê các dịch vụ (MaDV, TenDV) không bao gồm dịch vụ có tên là "Massage", được sử dụng bởi cả 3 phòng có tổng số tiền dịch vụ đã sử dụng cao nhất trong các đơn đặt phòng có trạng thái "Đã xác nhận". (1 điểm)</li>
             </ol>
 
-            <button type="button" class="ghost-button access-logout">Đăng xuất khỏi khu vực này</button>
-          </div>
-        </div>
-      </section>
+            <div class="lesson-section" id="dap-an">
+              <p class="eyebrow">ĐÁP ÁN · CẦN MÃ TRUY CẬP RIÊNG</p>
+              <h2>Xem đáp án</h2>
 
-      <section class="lesson-section" id="dap-an">
-        <p class="eyebrow">ĐÁP ÁN · CẦN MÃ TRUY CẬP RIÊNG</p>
-        <h2>Xem đáp án</h2>
+              <div class="access-gate" data-access-course="IT004" data-access-week="DA" data-access-resource="thi-thu-dapan">
+                <div class="access-locked">
+                  <div class="access-locked-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg></div>
+                  <h3>Nội dung được bảo vệ</h3>
+                  <p>Nhập mã truy cập để xem đáp án.</p>
+                  <form class="access-form">
+                    <input type="text" class="access-input" placeholder="Nhập mã truy cập..." autocomplete="off" spellcheck="false" required>
+                    <button type="submit" class="primary-button access-submit">Xác nhận mã <span>›</span></button>
+                  </form>
+                  <p class="access-error" role="alert"></p>
+                  <p class="access-hint">Mã đáp án chỉ được phát sau khi kết thúc giờ làm bài - Khác với mã xem đề thi.</p>
+                </div>
 
-        <div class="access-gate" data-access-course="IT004" data-access-week="DA" data-access-resource="thi-thu-dapan">
-          <div class="access-locked">
-            <div class="access-locked-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg></div>
-            <h3>Nội dung được bảo vệ</h3>
-            <p>Nhập mã truy cập để xem đáp án.</p>
-            <form class="access-form">
-              <input type="text" class="access-input" placeholder="Nhập mã truy cập..." autocomplete="off" spellcheck="false" required>
-              <button type="submit" class="primary-button access-submit">Xác nhận mã <span>›</span></button>
-            </form>
-            <p class="access-error" role="alert"></p>
-            <p class="access-hint">Mã đáp án chỉ được phát sau khi kết thúc giờ làm bài - Khác với mã xem đề thi.</p>
-          </div>
+                <div class="access-unlocked" hidden>
+                  <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền xem đáp án.</div>
+                  <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án đầy đủ cho cả 9 câu (10 điểm). Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - Nút Copy ở đây chỉ mang tính hình thức thôi.</p>
 
-          <div class="access-unlocked" hidden>
-            <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền xem đáp án.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án đầy đủ cho cả 9 câu (10 điểm). Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - Nút Copy ở đây chỉ mang tính hình thức thôi.</p>
+                  <div class="qa-block">
+                    <p class="eyebrow">CÂU 1 · 3 ĐIỂM · CREATE TABLE</p>
+                    <p><strong>Đề bài:</strong> Tạo cơ sở dữ liệu tên "QLRESORT" bao gồm các quan hệ như trong bảng thuộc tính trên. Khai báo khóa chính, khóa ngoại.</p>
+                    <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QLRESORT;
+      GO
+      USE QLRESORT;
+      GO
 
-            <div class="qa-block">
-              <p class="eyebrow">CÂU 1 · 3 ĐIỂM · CREATE TABLE</p>
-              <p><strong>Đề bài:</strong> Tạo cơ sở dữ liệu tên "QLRESORT" bao gồm các quan hệ như trong bảng thuộc tính trên. Khai báo khóa chính, khóa ngoại.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QLRESORT;
-GO
-USE QLRESORT;
-GO
+      CREATE TABLE PHONG
+      (
+          MaPH CHAR(5) PRIMARY KEY,
+          LoaiPhong VARCHAR(50),
+          GiaPhong MONEY,
+          TinhTrangPhong VARCHAR(20),
+          DienTich FLOAT
+      );
 
-CREATE TABLE PHONG
-(
-    MaPH CHAR(5) PRIMARY KEY,
-    LoaiPhong VARCHAR(50),
-    GiaPhong MONEY,
-    TinhTrangPhong VARCHAR(20),
-    DienTich FLOAT
-);
+      CREATE TABLE DICHVU
+      (
+          MaDV CHAR(5) PRIMARY KEY,
+          TenDV VARCHAR(50),
+          DonGia MONEY
+      );
 
-CREATE TABLE DICHVU
-(
-    MaDV CHAR(5) PRIMARY KEY,
-    TenDV VARCHAR(50),
-    DonGia MONEY
-);
+      CREATE TABLE KHACHHANG
+      (
+          MaKH CHAR(5) PRIMARY KEY,
+          HoTen VARCHAR(50),
+          CCCD VARCHAR(12),
+          NgaySinh SMALLDATETIME,
+          GioiTinh VARCHAR(10),
+          SoDT VARCHAR(15),
+          Email VARCHAR(50),
+          DiaChi VARCHAR(150)
+      );
 
-CREATE TABLE KHACHHANG
-(
-    MaKH CHAR(5) PRIMARY KEY,
-    HoTen VARCHAR(50),
-    CCCD VARCHAR(12),
-    NgaySinh SMALLDATETIME,
-    GioiTinh VARCHAR(10),
-    SoDT VARCHAR(15),
-    Email VARCHAR(50),
-    DiaChi VARCHAR(150)
-);
+      CREATE TABLE DATPHONG
+      (
+          MaDatPhong CHAR(5) PRIMARY KEY,
+          MaKH CHAR(5),
+          MaPH CHAR(5),
+          NgayDat SMALLDATETIME,
+          NgayCheckIn SMALLDATETIME,
+          NgayCheckOut SMALLDATETIME,
+          TrangThai VARCHAR(20),
 
-CREATE TABLE DATPHONG
-(
-    MaDatPhong CHAR(5) PRIMARY KEY,
-    MaKH CHAR(5),
-    MaPH CHAR(5),
-    NgayDat SMALLDATETIME,
-    NgayCheckIn SMALLDATETIME,
-    NgayCheckOut SMALLDATETIME,
-    TrangThai VARCHAR(20),
+          FOREIGN KEY (MaKH) REFERENCES KHACHHANG(MaKH),
+          FOREIGN KEY (MaPH) REFERENCES PHONG(MaPH)
+      );
 
-    FOREIGN KEY (MaKH) REFERENCES KHACHHANG(MaKH),
-    FOREIGN KEY (MaPH) REFERENCES PHONG(MaPH)
-);
+      CREATE TABLE THANHTOAN
+      (
+          MaThanhToan CHAR(5) PRIMARY KEY,
+          MaDatPhong CHAR(5),
+          SoTien MONEY,
+          PTThanhToan VARCHAR(20),
+          TTThanhToan VARCHAR(20),
+          NgayThanhToan SMALLDATETIME,
 
-CREATE TABLE THANHTOAN
-(
-    MaThanhToan CHAR(5) PRIMARY KEY,
-    MaDatPhong CHAR(5),
-    SoTien MONEY,
-    PTThanhToan VARCHAR(20),
-    TTThanhToan VARCHAR(20),
-    NgayThanhToan SMALLDATETIME,
+          FOREIGN KEY (MaDatPhong) REFERENCES DATPHONG(MaDatPhong)
+      );
 
-    FOREIGN KEY (MaDatPhong) REFERENCES DATPHONG(MaDatPhong)
-);
+      CREATE TABLE CTDICHVU
+      (
+          MaDatPhong CHAR(5),
+          MaDV CHAR(5),
+          NgaySuDung SMALLDATETIME,
+          SoLuong INT,
+          ThanhTien MONEY,
 
-CREATE TABLE CTDICHVU
-(
-    MaDatPhong CHAR(5),
-    MaDV CHAR(5),
-    NgaySuDung SMALLDATETIME,
-    SoLuong INT,
-    ThanhTien MONEY,
+          PRIMARY KEY (MaDatPhong, MaDV, NgaySuDung),
+          FOREIGN KEY (MaDatPhong) REFERENCES DATPHONG(MaDatPhong),
+          FOREIGN KEY (MaDV) REFERENCES DICHVU(MaDV)
+      );</code></pre></div>
+                    <div class="qa-explain">
+                      <div><span class="qa-explain-label">LÀ GÌ?</span><p>Tạo lần lượt 6 bảng theo đúng thứ tự phụ thuộc khóa ngoại: <code>PHONG</code>, <code>DICHVU</code>, <code>KHACHHANG</code> không phụ thuộc bảng nào nên tạo trước; <code>DATPHONG</code> tham chiếu <code>KHACHHANG</code> và <code>PHONG</code> nên tạo sau; <code>THANHTOAN</code> và <code>CTDICHVU</code> tham chiếu <code>DATPHONG</code> nên tạo cuối cùng.</p></div>
+                      <div><span class="qa-explain-label">VÌ SAO?</span><p>Không có cặp khóa ngoại tham chiếu vòng lẫn nhau như một số lược đồ khác (kiểu KHOA↔GIAOVIEN) nên không cần <code>ALTER TABLE</code> bổ sung sau - Chỉ cần đúng thứ tự tạo bảng theo chiều phụ thuộc là khai báo được hết khóa ngoại ngay trong <code>CREATE TABLE</code>. Khóa chính của <code>CTDICHVU</code> là bộ ba <code>(MaDatPhong, MaDV, NgaySuDung)</code> vì đề cho phép 1 đơn đặt phòng dùng cùng 1 dịch vụ vào nhiều ngày khác nhau (mỗi ngày là 1 dòng riêng).</p></div>
+                    </div>
+                  </div>
 
-    PRIMARY KEY (MaDatPhong, MaDV, NgaySuDung),
-    FOREIGN KEY (MaDatPhong) REFERENCES DATPHONG(MaDatPhong),
-    FOREIGN KEY (MaDV) REFERENCES DICHVU(MaDV)
-);</code></pre></div>
-              <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Tạo lần lượt 6 bảng theo đúng thứ tự phụ thuộc khóa ngoại: <code>PHONG</code>, <code>DICHVU</code>, <code>KHACHHANG</code> không phụ thuộc bảng nào nên tạo trước; <code>DATPHONG</code> tham chiếu <code>KHACHHANG</code> và <code>PHONG</code> nên tạo sau; <code>THANHTOAN</code> và <code>CTDICHVU</code> tham chiếu <code>DATPHONG</code> nên tạo cuối cùng.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không có cặp khóa ngoại tham chiếu vòng lẫn nhau như một số lược đồ khác (kiểu KHOA↔GIAOVIEN) nên không cần <code>ALTER TABLE</code> bổ sung sau - Chỉ cần đúng thứ tự tạo bảng theo chiều phụ thuộc là khai báo được hết khóa ngoại ngay trong <code>CREATE TABLE</code>. Khóa chính của <code>CTDICHVU</code> là bộ ba <code>(MaDatPhong, MaDV, NgaySuDung)</code> vì đề cho phép 1 đơn đặt phòng dùng cùng 1 dịch vụ vào nhiều ngày khác nhau (mỗi ngày là 1 dòng riêng).</p></div>
-              </div>
-            </div>
+                  <div class="qa-block">
+                    <p class="eyebrow">CÂU 2.1 · 0.5 ĐIỂM · CHECK</p>
+                    <p><strong>Đề bài:</strong> Đối với các phòng thuộc loại phòng "Deluxe", giá thuê theo ngày phải lớn hơn 500.000 đồng.</p>
+                    <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE PHONG ADD CONSTRAINT CK_PHONG_Deluxe
+          CHECK (LoaiPhong <> 'Deluxe' OR GiaPhong > 500000);</code></pre></div>
+                    <div class="qa-explain">
+                      <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LoaiPhong &lt;&gt; 'Deluxe' OR GiaPhong &gt; 500000</code> là dạng CHECK "nếu...thì..." kinh điển - Không phải Deluxe thì không ràng buộc gì cả (vế đầu đúng), là Deluxe thì bắt buộc vế sau phải đúng.</p></div>
+                      <div><span class="qa-explain-label">VÌ SAO?</span><p>Ràng buộc chỉ áp dụng cho <strong>1 loại phòng cụ thể</strong>, không phải toàn bảng - Nếu viết thẳng <code>CHECK (GiaPhong &gt; 500000)</code> thì mọi phòng (kể cả Standard, Superior) đều bị ép giá tối thiểu 500.000, sai với ý đề chỉ giới hạn riêng Deluxe. Đây là kỹ thuật dùng phép kéo theo (P ⟹ Q ⟺ ¬P ∨ Q) để diễn đạt điều kiện có điều kiện bằng <code>CHECK</code>.</p></div>
+                    </div>
+                  </div>
 
-            <div class="qa-block">
-              <p class="eyebrow">CÂU 2.1 · 0.5 ĐIỂM · CHECK</p>
-              <p><strong>Đề bài:</strong> Đối với các phòng thuộc loại phòng "Deluxe", giá thuê theo ngày phải lớn hơn 500.000 đồng.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE PHONG ADD CONSTRAINT CK_PHONG_Deluxe
-    CHECK (LoaiPhong <> 'Deluxe' OR GiaPhong > 500000);</code></pre></div>
-              <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LoaiPhong &lt;&gt; 'Deluxe' OR GiaPhong &gt; 500000</code> là dạng CHECK "nếu...thì..." kinh điển - Không phải Deluxe thì không ràng buộc gì cả (vế đầu đúng), là Deluxe thì bắt buộc vế sau phải đúng.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Ràng buộc chỉ áp dụng cho <strong>1 loại phòng cụ thể</strong>, không phải toàn bảng - Nếu viết thẳng <code>CHECK (GiaPhong &gt; 500000)</code> thì mọi phòng (kể cả Standard, Superior) đều bị ép giá tối thiểu 500.000, sai với ý đề chỉ giới hạn riêng Deluxe. Đây là kỹ thuật dùng phép kéo theo (P ⟹ Q ⟺ ¬P ∨ Q) để diễn đạt điều kiện có điều kiện bằng <code>CHECK</code>.</p></div>
-              </div>
-            </div>
+                  <div class="qa-block">
+                    <p class="eyebrow">CÂU 2.2 · 0.5 ĐIỂM · CHECK ... LIKE</p>
+                    <p><strong>Đề bài:</strong> Số điện thoại của khách hàng phải bắt đầu bằng chữ số "0".</p>
+                    <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_SoDT
+          CHECK (SoDT LIKE '0%');</code></pre></div>
+                    <div class="qa-explain">
+                      <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LIKE '0%'</code> khớp mọi chuỗi bắt đầu bằng ký tự "0", dấu <code>%</code> đại diện cho phần còn lại độ dài bất kỳ.</p></div>
+                      <div><span class="qa-explain-label">VÌ SAO?</span><p>Ràng buộc "bắt đầu bằng" là ràng buộc định dạng chuỗi, không phải giá trị cụ thể hay khoảng số - <code>CHECK ... LIKE</code> là công cụ đúng cho trường hợp này, tương tự Câu 8 (YC2 - Phần I) của BTTH1 Tuần 1.</p></div>
+                    </div>
+                  </div>
 
-            <div class="qa-block">
-              <p class="eyebrow">CÂU 2.2 · 0.5 ĐIỂM · CHECK ... LIKE</p>
-              <p><strong>Đề bài:</strong> Số điện thoại của khách hàng phải bắt đầu bằng chữ số "0".</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KHACHHANG ADD CONSTRAINT CK_KHACHHANG_SoDT
-    CHECK (SoDT LIKE '0%');</code></pre></div>
-              <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LIKE '0%'</code> khớp mọi chuỗi bắt đầu bằng ký tự "0", dấu <code>%</code> đại diện cho phần còn lại độ dài bất kỳ.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Ràng buộc "bắt đầu bằng" là ràng buộc định dạng chuỗi, không phải giá trị cụ thể hay khoảng số - <code>CHECK ... LIKE</code> là công cụ đúng cho trường hợp này, tương tự Câu 8 (YC2 - Phần I) của BTTH1 Tuần 1.</p></div>
-              </div>
-            </div>
+                  <div class="qa-block">
+                    <p class="eyebrow">CÂU 2.3 · 1 ĐIỂM · TRIGGER AFTER INSERT, UPDATE</p>
+                    <p><strong>Đề bài:</strong> Viết TRIGGER để kiểm tra khi thêm hoặc cập nhật dữ liệu vào bảng CTDICHVU. Nếu ngày sử dụng dịch vụ (NgaySuDung) không nằm trong khoảng thời gian lưu trú từ NgayCheckIn đến NgayCheckOut của đơn đặt phòng tương ứng, thì trigger phải báo lỗi và hủy giao dịch.</p>
+                    <h4>Bảng xét tầm ảnh hưởng</h4>
+                    <div class="table-wrap"><table class="ref-table">
+                      <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
+                      <tr><td><code>CTDICHVU</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Thêm/sửa 1 dòng sử dụng dịch vụ với <code>NgaySuDung</code> nằm ngoài thời gian lưu trú - Đây cũng chính xác là những gì đề bài yêu cầu bắt.</td></tr>
+                    </table></div>
+                    <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_INSERTUPDATE_CTDICHVU_NgaySuDung
+      ON CTDICHVU
+      AFTER INSERT, UPDATE
+      AS
+      BEGIN
+          IF EXISTS (
+              SELECT *
+              FROM inserted i
+              JOIN DATPHONG dp ON i.MaDatPhong = dp.MaDatPhong
+              WHERE i.NgaySuDung < dp.NgayCheckIn OR i.NgaySuDung > dp.NgayCheckOut
+          )
+          BEGIN
+              RAISERROR (N'Ngay su dung dich vu khong nam trong thoi gian luu tru!', 16, 1);
+              ROLLBACK TRANSACTION;
+              RETURN;
+          END
+      END;
+      GO</code></pre></div>
+                    <div class="qa-explain">
+                      <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN inserted</code> với <code>DATPHONG</code> qua <code>MaDatPhong</code> để lấy đúng khoảng lưu trú của đơn đặt phòng tương ứng; <code>IF EXISTS</code> kiểm tra toàn bộ <code>inserted</code> cùng lúc nên đúng dù <code>INSERT</code>/<code>UPDATE</code> tác động 1 hay nhiều dòng.</p></div>
+                      <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là dạng "nằm ngoài khoảng" nên phải phủ định bằng <code>OR</code>: Sớm hơn <code>NgayCheckIn</code> <strong>hoặc</strong> muộn hơn <code>NgayCheckOut</code> đều là vi phạm - Không thể viết gộp thành 1 điều kiện <code>BETWEEN</code> vì đây là Trigger báo lỗi khi <em>không thỏa</em>, không phải lọc khi thỏa. <strong>Mở rộng:</strong> Đáp án chính thức chỉ cần Trigger trên <code>CTDICHVU</code> (đã đủ 1 điểm) - Trên thực tế, ràng buộc này còn có thể bị phá vỡ nếu <code>UPDATE</code> đổi <code>NgayCheckIn</code>/<code>NgayCheckOut</code> của <code>DATPHONG</code> khiến nó không còn bao trọn các <code>NgaySuDung</code> đã ghi nhận trước đó - Muốn bảo vệ tuyệt đối thì cần thêm 1 Trigger tương tự trên <code>DATPHONG AFTER UPDATE</code>, nhưng đề bài không yêu cầu phần này.</p></div>
+                    </div>
+                  </div>
 
-            <div class="qa-block">
-              <p class="eyebrow">CÂU 2.3 · 1 ĐIỂM · TRIGGER AFTER INSERT, UPDATE</p>
-              <p><strong>Đề bài:</strong> Viết TRIGGER để kiểm tra khi thêm hoặc cập nhật dữ liệu vào bảng CTDICHVU. Nếu ngày sử dụng dịch vụ (NgaySuDung) không nằm trong khoảng thời gian lưu trú từ NgayCheckIn đến NgayCheckOut của đơn đặt phòng tương ứng, thì trigger phải báo lỗi và hủy giao dịch.</p>
-              <h4>Bảng xét tầm ảnh hưởng</h4>
-              <div class="table-wrap"><table class="ref-table">
-                <tr><th>Bảng</th><th>Thao tác cần bắt</th><th>Vì sao có thể vi phạm</th></tr>
-                <tr><td><code>CTDICHVU</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Thêm/sửa 1 dòng sử dụng dịch vụ với <code>NgaySuDung</code> nằm ngoài thời gian lưu trú - Đây cũng chính xác là những gì đề bài yêu cầu bắt.</td></tr>
-              </table></div>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_INSERTUPDATE_CTDICHVU_NgaySuDung
-ON CTDICHVU
-AFTER INSERT, UPDATE
-AS
-BEGIN
-    IF EXISTS (
-        SELECT *
-        FROM inserted i
-        JOIN DATPHONG dp ON i.MaDatPhong = dp.MaDatPhong
-        WHERE i.NgaySuDung < dp.NgayCheckIn OR i.NgaySuDung > dp.NgayCheckOut
-    )
-    BEGIN
-        RAISERROR (N'Ngay su dung dich vu khong nam trong thoi gian luu tru!', 16, 1);
-        ROLLBACK TRANSACTION;
-        RETURN;
-    END
-END;
-GO</code></pre></div>
-              <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN inserted</code> với <code>DATPHONG</code> qua <code>MaDatPhong</code> để lấy đúng khoảng lưu trú của đơn đặt phòng tương ứng; <code>IF EXISTS</code> kiểm tra toàn bộ <code>inserted</code> cùng lúc nên đúng dù <code>INSERT</code>/<code>UPDATE</code> tác động 1 hay nhiều dòng.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là dạng "nằm ngoài khoảng" nên phải phủ định bằng <code>OR</code>: Sớm hơn <code>NgayCheckIn</code> <strong>hoặc</strong> muộn hơn <code>NgayCheckOut</code> đều là vi phạm - Không thể viết gộp thành 1 điều kiện <code>BETWEEN</code> vì đây là Trigger báo lỗi khi <em>không thỏa</em>, không phải lọc khi thỏa. <strong>Mở rộng:</strong> Đáp án chính thức chỉ cần Trigger trên <code>CTDICHVU</code> (đã đủ 1 điểm) - Trên thực tế, ràng buộc này còn có thể bị phá vỡ nếu <code>UPDATE</code> đổi <code>NgayCheckIn</code>/<code>NgayCheckOut</code> của <code>DATPHONG</code> khiến nó không còn bao trọn các <code>NgaySuDung</code> đã ghi nhận trước đó - Muốn bảo vệ tuyệt đối thì cần thêm 1 Trigger tương tự trên <code>DATPHONG AFTER UPDATE</code>, nhưng đề bài không yêu cầu phần này.</p></div>
-              </div>
-            </div>
+                  <div class="qa-block">
+                    <p class="eyebrow">CÂU 3.1 · 1 ĐIỂM · JOIN</p>
+                    <p><strong>Đề bài:</strong> Liệt kê các dịch vụ (MaDV, TenDV) đã được sử dụng trong các đơn đặt phòng trong sáu tháng đầu năm 2025 có trạng thái "Đã xác nhận" và đã đặt phòng có giá phòng theo ngày lớn hơn 2.000.000 đồng.</p>
+                    <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT DV.MaDV, TenDV
+      FROM CTDICHVU CT
+      JOIN DATPHONG DP ON CT.MaDatPhong = DP.MaDatPhong
+      JOIN PHONG PH ON DP.MaPH = PH.MaPH
+      JOIN DICHVU DV ON CT.MaDV = DV.MaDV
+      WHERE YEAR(NgaySuDung) = 2025 AND MONTH(NgaySuDung) BETWEEN 1 AND 6
+        AND DP.TrangThai = 'Da xac nhan' AND GiaPhong > 2000000;</code></pre></div>
+                    <div class="qa-explain">
+                      <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN</code> liên tiếp 4 bảng để đủ điều kiện lọc trên cả 3 thực thể khác nhau: Ngày dùng dịch vụ (<code>CTDICHVU</code>), trạng thái đơn (<code>DATPHONG</code>), giá phòng (<code>PHONG</code>); <code>DISTINCT</code> loại trùng vì 1 dịch vụ có thể được nhiều đơn khác nhau sử dụng.</p></div>
+                      <div><span class="qa-explain-label">VÌ SAO?</span><p>"Sáu tháng đầu năm 2025" lọc trên <code>NgaySuDung</code> (ngày dùng dịch vụ), không phải <code>NgayDat</code> hay <code>NgayCheckIn</code> - Đọc kỹ đề để biết chính xác cột nào bị ràng buộc điều kiện thời gian, tránh lọc nhầm cột.</p></div>
+                    </div>
+                  </div>
 
-            <div class="qa-block">
-              <p class="eyebrow">CÂU 3.1 · 1 ĐIỂM · JOIN</p>
-              <p><strong>Đề bài:</strong> Liệt kê các dịch vụ (MaDV, TenDV) đã được sử dụng trong các đơn đặt phòng trong sáu tháng đầu năm 2025 có trạng thái "Đã xác nhận" và đã đặt phòng có giá phòng theo ngày lớn hơn 2.000.000 đồng.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT DV.MaDV, TenDV
-FROM CTDICHVU CT
-JOIN DATPHONG DP ON CT.MaDatPhong = DP.MaDatPhong
-JOIN PHONG PH ON DP.MaPH = PH.MaPH
-JOIN DICHVU DV ON CT.MaDV = DV.MaDV
-WHERE YEAR(NgaySuDung) = 2025 AND MONTH(NgaySuDung) BETWEEN 1 AND 6
-  AND DP.TrangThai = 'Da xac nhan' AND GiaPhong > 2000000;</code></pre></div>
-              <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN</code> liên tiếp 4 bảng để đủ điều kiện lọc trên cả 3 thực thể khác nhau: Ngày dùng dịch vụ (<code>CTDICHVU</code>), trạng thái đơn (<code>DATPHONG</code>), giá phòng (<code>PHONG</code>); <code>DISTINCT</code> loại trùng vì 1 dịch vụ có thể được nhiều đơn khác nhau sử dụng.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Sáu tháng đầu năm 2025" lọc trên <code>NgaySuDung</code> (ngày dùng dịch vụ), không phải <code>NgayDat</code> hay <code>NgayCheckIn</code> - Đọc kỹ đề để biết chính xác cột nào bị ràng buộc điều kiện thời gian, tránh lọc nhầm cột.</p></div>
-              </div>
-            </div>
+                  <div class="qa-block">
+                    <p class="eyebrow">CÂU 3.2 · 1 ĐIỂM · GROUP BY ... ORDER BY</p>
+                    <p><strong>Đề bài:</strong> Cho biết số lần đặt phòng có trạng thái "Đã xác nhận" của mỗi phòng trong khoảng thời gian từ năm 2024 đến năm 2025. Thông tin hiển thị: MaPH, LoaiPhong, SoLanDat. Sắp xếp thứ tự theo SoLanDat giảm dần.</p>
+                    <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT PH.MaPH, LoaiPhong, COUNT(DP.MaDatPhong) AS SoLanDat
+      FROM PHONG PH
+      JOIN DATPHONG DP ON PH.MaPH = DP.MaPH
+      WHERE DP.TrangThai = 'Da xac nhan' AND YEAR(DP.NgayDat) BETWEEN 2024 AND 2025
+      GROUP BY PH.MaPH, LoaiPhong
+      ORDER BY SoLanDat DESC;</code></pre></div>
+                    <div class="qa-explain">
+                      <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>COUNT(DP.MaDatPhong)</code> đếm số đơn đặt phòng đã lọc theo từng phòng; <code>GROUP BY</code> phải liệt kê cả <code>MaPH</code> và <code>LoaiPhong</code> vì cả 2 đều xuất hiện trong <code>SELECT</code> mà không nằm trong hàm tổng hợp.</p></div>
+                      <div><span class="qa-explain-label">VÌ SAO?</span><p><code>JOIN</code> bắt đầu từ <code>PHONG</code> (không phải <code>DATPHONG</code>) chỉ mang tính quy ước đọc - Bản chất <code>INNER JOIN</code> không quan tâm thứ tự bảng, nhưng ở đây phù hợp vì đề hỏi "mỗi phòng", nên đặt <code>PHONG</code> làm bảng chính giúp câu lệnh dễ đọc hơn.</p></div>
+                    </div>
+                  </div>
 
-            <div class="qa-block">
-              <p class="eyebrow">CÂU 3.2 · 1 ĐIỂM · GROUP BY ... ORDER BY</p>
-              <p><strong>Đề bài:</strong> Cho biết số lần đặt phòng có trạng thái "Đã xác nhận" của mỗi phòng trong khoảng thời gian từ năm 2024 đến năm 2025. Thông tin hiển thị: MaPH, LoaiPhong, SoLanDat. Sắp xếp thứ tự theo SoLanDat giảm dần.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT PH.MaPH, LoaiPhong, COUNT(DP.MaDatPhong) AS SoLanDat
-FROM PHONG PH
-JOIN DATPHONG DP ON PH.MaPH = DP.MaPH
-WHERE DP.TrangThai = 'Da xac nhan' AND YEAR(DP.NgayDat) BETWEEN 2024 AND 2025
-GROUP BY PH.MaPH, LoaiPhong
-ORDER BY SoLanDat DESC;</code></pre></div>
-              <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>COUNT(DP.MaDatPhong)</code> đếm số đơn đặt phòng đã lọc theo từng phòng; <code>GROUP BY</code> phải liệt kê cả <code>MaPH</code> và <code>LoaiPhong</code> vì cả 2 đều xuất hiện trong <code>SELECT</code> mà không nằm trong hàm tổng hợp.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>JOIN</code> bắt đầu từ <code>PHONG</code> (không phải <code>DATPHONG</code>) chỉ mang tính quy ước đọc - Bản chất <code>INNER JOIN</code> không quan tâm thứ tự bảng, nhưng ở đây phù hợp vì đề hỏi "mỗi phòng", nên đặt <code>PHONG</code> làm bảng chính giúp câu lệnh dễ đọc hơn.</p></div>
-              </div>
-            </div>
+                  <div class="qa-block">
+                    <p class="eyebrow">CÂU 3.3 · 1 ĐIỂM · INTERSECT</p>
+                    <p><strong>Đề bài:</strong> Trong năm 2025, xác định các đơn đặt phòng (MaDatPhong) đã đặt phòng thuộc loại phòng là "Deluxe" có sử dụng cả hai dịch vụ có tên là "Spa" và "Massage" trong ngày nhận phòng (NgayCheckIn).</p>
+                    <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT DP.MaDatPhong
+       FROM DATPHONG DP
+       JOIN PHONG PH ON DP.MaPH = PH.MaPH
+       JOIN CTDICHVU CT ON DP.MaDatPhong = CT.MaDatPhong
+       JOIN DICHVU DV ON CT.MaDV = DV.MaDV
+       WHERE PH.LoaiPhong = 'Deluxe' AND YEAR(DP.NgayCheckIn) = 2025
+         AND CT.NgaySuDung = DP.NgayCheckIn AND DV.TenDV = 'Spa')
+      INTERSECT
+      (SELECT DP.MaDatPhong
+       FROM DATPHONG DP
+       JOIN PHONG PH ON DP.MaPH = PH.MaPH
+       JOIN CTDICHVU CT ON DP.MaDatPhong = CT.MaDatPhong
+       JOIN DICHVU DV ON CT.MaDV = DV.MaDV
+       WHERE PH.LoaiPhong = 'Deluxe' AND YEAR(DP.NgayCheckIn) = 2025
+         AND CT.NgaySuDung = DP.NgayCheckIn AND DV.TenDV = 'Massage');</code></pre></div>
+                    <div class="qa-explain">
+                      <div><span class="qa-explain-label">LÀ GÌ?</span><p>2 truy vấn giống hệt nhau về cấu trúc, chỉ khác điều kiện tên dịch vụ (Spa/Massage); <code>INTERSECT</code> lấy giao 2 tập <code>MaDatPhong</code>, chỉ giữ lại đơn thỏa <strong>cả 2</strong> vế.</p></div>
+                      <div><span class="qa-explain-label">VÌ SAO?</span><p><code>CT.NgaySuDung = DP.NgayCheckIn</code> là điều kiện bắt buộc - Đề yêu cầu dịch vụ dùng đúng "trong ngày nhận phòng", không phải bất kỳ lúc nào trong thời gian lưu trú. Với dữ liệu mẫu, kết quả gồm <code>DP008</code> (Spa và Massage cùng dùng ngày 18/1/2025, đúng ngày check-in) và <code>DP015</code> (Spa và Massage cùng dùng ngày 8/7/2025, đúng ngày check-in) - <code>DP011</code> tuy có cả Spa lẫn Massage nhưng Massage lại dùng lệch 1 ngày so với <code>NgayCheckIn</code> nên bị loại.</p></div>
+                    </div>
+                  </div>
 
-            <div class="qa-block">
-              <p class="eyebrow">CÂU 3.3 · 1 ĐIỂM · INTERSECT</p>
-              <p><strong>Đề bài:</strong> Trong năm 2025, xác định các đơn đặt phòng (MaDatPhong) đã đặt phòng thuộc loại phòng là "Deluxe" có sử dụng cả hai dịch vụ có tên là "Spa" và "Massage" trong ngày nhận phòng (NgayCheckIn).</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT DP.MaDatPhong
- FROM DATPHONG DP
- JOIN PHONG PH ON DP.MaPH = PH.MaPH
- JOIN CTDICHVU CT ON DP.MaDatPhong = CT.MaDatPhong
- JOIN DICHVU DV ON CT.MaDV = DV.MaDV
- WHERE PH.LoaiPhong = 'Deluxe' AND YEAR(DP.NgayCheckIn) = 2025
-   AND CT.NgaySuDung = DP.NgayCheckIn AND DV.TenDV = 'Spa')
-INTERSECT
-(SELECT DP.MaDatPhong
- FROM DATPHONG DP
- JOIN PHONG PH ON DP.MaPH = PH.MaPH
- JOIN CTDICHVU CT ON DP.MaDatPhong = CT.MaDatPhong
- JOIN DICHVU DV ON CT.MaDV = DV.MaDV
- WHERE PH.LoaiPhong = 'Deluxe' AND YEAR(DP.NgayCheckIn) = 2025
-   AND CT.NgaySuDung = DP.NgayCheckIn AND DV.TenDV = 'Massage');</code></pre></div>
-              <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>2 truy vấn giống hệt nhau về cấu trúc, chỉ khác điều kiện tên dịch vụ (Spa/Massage); <code>INTERSECT</code> lấy giao 2 tập <code>MaDatPhong</code>, chỉ giữ lại đơn thỏa <strong>cả 2</strong> vế.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>CT.NgaySuDung = DP.NgayCheckIn</code> là điều kiện bắt buộc - Đề yêu cầu dịch vụ dùng đúng "trong ngày nhận phòng", không phải bất kỳ lúc nào trong thời gian lưu trú. Với dữ liệu mẫu, kết quả gồm <code>DP008</code> (Spa và Massage cùng dùng ngày 18/1/2025, đúng ngày check-in) và <code>DP015</code> (Spa và Massage cùng dùng ngày 8/7/2025, đúng ngày check-in) - <code>DP011</code> tuy có cả Spa lẫn Massage nhưng Massage lại dùng lệch 1 ngày so với <code>NgayCheckIn</code> nên bị loại.</p></div>
-              </div>
-            </div>
-
-            <div class="qa-block">
-              <p class="eyebrow">CÂU 3.4 · 1 ĐIỂM · TOP WITH TIES</p>
-              <p><strong>Đề bài:</strong> Trong các dịch vụ có tổng số lượng được sử dụng nhiều nhất trong quý III năm 2025, tìm dịch vụ được sử dụng trong các đơn đặt phòng có tổng tiền dịch vụ đã sử dụng thấp nhất. Thông tin hiển thị: MaDV, TenDV, MaDatPhong, TongTienDichVu.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DV.MaDV, TenDV, DP.MaDatPhong, SUM(ThanhTien) AS TongTienDichVu
-FROM CTDICHVU CT
-JOIN DATPHONG DP ON CT.MaDatPhong = DP.MaDatPhong
-JOIN DICHVU DV ON DV.MaDV = CT.MaDV
-WHERE DV.MaDV IN (
-    SELECT TOP 1 WITH TIES MaDV
-    FROM CTDICHVU
-    WHERE YEAR(NgaySuDung) = 2025 AND MONTH(NgaySuDung) BETWEEN 7 AND 9
-    GROUP BY MaDV
-    ORDER BY SUM(SoLuong) DESC
-)
-AND DP.MaDatPhong IN (
-    SELECT TOP 1 WITH TIES MaDatPhong
-    FROM CTDICHVU
-    WHERE YEAR(NgaySuDung) = 2025 AND MONTH(NgaySuDung) BETWEEN 7 AND 9
-    GROUP BY MaDatPhong
-    ORDER BY SUM(ThanhTien) ASC
-)
-GROUP BY DV.MaDV, TenDV, DP.MaDatPhong;</code></pre></div>
-              <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>2 subquery độc lập, mỗi subquery giải quyết đúng 1 vế của đề: Vế 1 tìm (các) dịch vụ có tổng <code>SoLuong</code> cao nhất trong quý III/2025; vế 2 tìm (các) đơn đặt phòng có tổng <code>ThanhTien</code> thấp nhất cùng quý - <code>TOP 1 WITH TIES</code> đảm bảo không bỏ sót nếu có đồng hạng.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là câu khó nhất đề vì có <strong>2 tiêu chí "nhất" độc lập</strong> cần thỏa <em>đồng thời</em> - Dịch vụ phải nằm trong nhóm dùng nhiều nhất, đồng thời đơn đặt phòng chứa nó phải nằm trong nhóm chi ít nhất cho dịch vụ. Không thể gộp thành 1 subquery duy nhất vì 2 tiêu chí tính trên 2 cách <code>GROUP BY</code> khác nhau (theo <code>MaDV</code> và theo <code>MaDatPhong</code>), nên phải tách 2 subquery rồi nối bằng <code>AND</code>.</p></div>
-              </div>
-            </div>
-
-            <div class="qa-block">
-              <p class="eyebrow">CÂU 3.5 · 1 ĐIỂM · NOT EXISTS / TOP WITH TIES</p>
-              <p><strong>Đề bài:</strong> Liệt kê các dịch vụ (MaDV, TenDV) không bao gồm dịch vụ có tên là "Massage", được sử dụng bởi cả 3 phòng có tổng số tiền dịch vụ đã sử dụng cao nhất trong các đơn đặt phòng có trạng thái "Đã xác nhận".</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DV.MaDV, DV.TenDV
-FROM CTDICHVU CT
-JOIN DICHVU DV ON CT.MaDV = DV.MaDV
-JOIN DATPHONG DP ON DP.MaDatPhong = CT.MaDatPhong
-WHERE DV.TenDV <> 'Massage'
-  AND DP.MaPH IN (
-      SELECT TOP 3 WITH TIES DP2.MaPH
-      FROM DATPHONG DP2
-      JOIN CTDICHVU CT2 ON DP2.MaDatPhong = CT2.MaDatPhong
-      WHERE DP2.TrangThai = 'Da xac nhan'
-      GROUP BY DP2.MaPH
-      ORDER BY SUM(CT2.ThanhTien) DESC
-  )
-GROUP BY DV.MaDV, DV.TenDV
-HAVING COUNT(DISTINCT DP.MaPH) = 3;</code></pre></div>
-              <details><summary>Cách khác (NOT EXISTS)</summary>
-                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT DV.MaDV, DV.TenDV
-FROM DICHVU DV
-WHERE DV.TenDV <> 'Massage'
-  AND NOT EXISTS (
-      SELECT *
-      FROM DATPHONG DP
-      WHERE DP.MaPH IN (
-          SELECT TOP 3 MaPH
-          FROM DATPHONG DP1
-          JOIN CTDICHVU CT1 ON DP1.MaDatPhong = CT1.MaDatPhong
-          WHERE DP1.TrangThai = 'Da xac nhan'
-          GROUP BY DP1.MaPH
-          ORDER BY SUM(CT1.ThanhTien) DESC
+                  <div class="qa-block">
+                    <p class="eyebrow">CÂU 3.4 · 1 ĐIỂM · TOP WITH TIES</p>
+                    <p><strong>Đề bài:</strong> Trong các dịch vụ có tổng số lượng được sử dụng nhiều nhất trong quý III năm 2025, tìm dịch vụ được sử dụng trong các đơn đặt phòng có tổng tiền dịch vụ đã sử dụng thấp nhất. Thông tin hiển thị: MaDV, TenDV, MaDatPhong, TongTienDichVu.</p>
+                    <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DV.MaDV, TenDV, DP.MaDatPhong, SUM(ThanhTien) AS TongTienDichVu
+      FROM CTDICHVU CT
+      JOIN DATPHONG DP ON CT.MaDatPhong = DP.MaDatPhong
+      JOIN DICHVU DV ON DV.MaDV = CT.MaDV
+      WHERE DV.MaDV IN (
+          SELECT TOP 1 WITH TIES MaDV
+          FROM CTDICHVU
+          WHERE YEAR(NgaySuDung) = 2025 AND MONTH(NgaySuDung) BETWEEN 7 AND 9
+          GROUP BY MaDV
+          ORDER BY SUM(SoLuong) DESC
       )
-      AND NOT EXISTS (
-          SELECT *
-          FROM DATPHONG DP2
-          JOIN CTDICHVU CT2 ON DP2.MaDatPhong = CT2.MaDatPhong
-          WHERE DP2.MaPH = DP.MaPH AND CT2.MaDV = DV.MaDV
+      AND DP.MaDatPhong IN (
+          SELECT TOP 1 WITH TIES MaDatPhong
+          FROM CTDICHVU
+          WHERE YEAR(NgaySuDung) = 2025 AND MONTH(NgaySuDung) BETWEEN 7 AND 9
+          GROUP BY MaDatPhong
+          ORDER BY SUM(ThanhTien) ASC
       )
-  );</code></pre></div>
-                <p>Đây là dạng phép chia (division) - "Không tồn tại 1 phòng nằm trong Top 3 chi nhiều nhất mà dịch vụ này lại chưa từng được dùng ở đó" tương đương "dịch vụ này được dùng ở cả 3 phòng Top 3". Cách này không cần <code>HAVING COUNT() = 3</code> vì bản thân cấu trúc 2 lớp <code>NOT EXISTS</code> đã tự đảm bảo phủ đủ cả 3 phòng.</p>
-              </details>
-              <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery <code>TOP 3 WITH TIES</code> tìm 3 phòng (có thể nhiều hơn nếu đồng hạng) chi nhiều nhất cho dịch vụ trong các đơn "Đã xác nhận"; <code>HAVING COUNT(DISTINCT DP.MaPH) = 3</code> ở truy vấn ngoài đảm bảo dịch vụ đó phải xuất hiện ở <strong>đủ cả 3</strong> phòng đó, không phải chỉ 1-2 phòng.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Được sử dụng bởi cả 3 phòng" là yêu cầu kiểu "với mọi" (for all) trên 1 tập con cụ thể (3 phòng Top), khác với "được sử dụng bởi ít nhất 1 phòng" (chỉ cần <code>IN</code> là đủ) - Phải đếm số phòng phân biệt mà dịch vụ đó khớp được và so với đúng 3 mới chắc chắn phủ hết. Đây cũng là lý do <code>GROUP BY</code> + <code>HAVING COUNT DISTINCT</code> là cách trực quan hơn để diễn đạt "với mọi trên 1 tập hữu hạn đã biết trước", còn phép chia 2 lớp <code>NOT EXISTS</code> (Cách khác) tổng quát hơn khi tập đối chiếu không biết trước số lượng chính xác.</p></div>
+      GROUP BY DV.MaDV, TenDV, DP.MaDatPhong;</code></pre></div>
+                    <div class="qa-explain">
+                      <div><span class="qa-explain-label">LÀ GÌ?</span><p>2 subquery độc lập, mỗi subquery giải quyết đúng 1 vế của đề: Vế 1 tìm (các) dịch vụ có tổng <code>SoLuong</code> cao nhất trong quý III/2025; vế 2 tìm (các) đơn đặt phòng có tổng <code>ThanhTien</code> thấp nhất cùng quý - <code>TOP 1 WITH TIES</code> đảm bảo không bỏ sót nếu có đồng hạng.</p></div>
+                      <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là câu khó nhất đề vì có <strong>2 tiêu chí "nhất" độc lập</strong> cần thỏa <em>đồng thời</em> - Dịch vụ phải nằm trong nhóm dùng nhiều nhất, đồng thời đơn đặt phòng chứa nó phải nằm trong nhóm chi ít nhất cho dịch vụ. Không thể gộp thành 1 subquery duy nhất vì 2 tiêu chí tính trên 2 cách <code>GROUP BY</code> khác nhau (theo <code>MaDV</code> và theo <code>MaDatPhong</code>), nên phải tách 2 subquery rồi nối bằng <code>AND</code>.</p></div>
+                    </div>
+                  </div>
+
+                  <div class="qa-block">
+                    <p class="eyebrow">CÂU 3.5 · 1 ĐIỂM · NOT EXISTS / TOP WITH TIES</p>
+                    <p><strong>Đề bài:</strong> Liệt kê các dịch vụ (MaDV, TenDV) không bao gồm dịch vụ có tên là "Massage", được sử dụng bởi cả 3 phòng có tổng số tiền dịch vụ đã sử dụng cao nhất trong các đơn đặt phòng có trạng thái "Đã xác nhận".</p>
+                    <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DV.MaDV, DV.TenDV
+      FROM CTDICHVU CT
+      JOIN DICHVU DV ON CT.MaDV = DV.MaDV
+      JOIN DATPHONG DP ON DP.MaDatPhong = CT.MaDatPhong
+      WHERE DV.TenDV <> 'Massage'
+        AND DP.MaPH IN (
+            SELECT TOP 3 WITH TIES DP2.MaPH
+            FROM DATPHONG DP2
+            JOIN CTDICHVU CT2 ON DP2.MaDatPhong = CT2.MaDatPhong
+            WHERE DP2.TrangThai = 'Da xac nhan'
+            GROUP BY DP2.MaPH
+            ORDER BY SUM(CT2.ThanhTien) DESC
+        )
+      GROUP BY DV.MaDV, DV.TenDV
+      HAVING COUNT(DISTINCT DP.MaPH) = 3;</code></pre></div>
+                    <details><summary>Cách khác (NOT EXISTS)</summary>
+                      <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT DV.MaDV, DV.TenDV
+      FROM DICHVU DV
+      WHERE DV.TenDV <> 'Massage'
+        AND NOT EXISTS (
+            SELECT *
+            FROM DATPHONG DP
+            WHERE DP.MaPH IN (
+                SELECT TOP 3 MaPH
+                FROM DATPHONG DP1
+                JOIN CTDICHVU CT1 ON DP1.MaDatPhong = CT1.MaDatPhong
+                WHERE DP1.TrangThai = 'Da xac nhan'
+                GROUP BY DP1.MaPH
+                ORDER BY SUM(CT1.ThanhTien) DESC
+            )
+            AND NOT EXISTS (
+                SELECT *
+                FROM DATPHONG DP2
+                JOIN CTDICHVU CT2 ON DP2.MaDatPhong = CT2.MaDatPhong
+                WHERE DP2.MaPH = DP.MaPH AND CT2.MaDV = DV.MaDV
+            )
+        );</code></pre></div>
+                      <p>Đây là dạng phép chia (division) - "Không tồn tại 1 phòng nằm trong Top 3 chi nhiều nhất mà dịch vụ này lại chưa từng được dùng ở đó" tương đương "dịch vụ này được dùng ở cả 3 phòng Top 3". Cách này không cần <code>HAVING COUNT() = 3</code> vì bản thân cấu trúc 2 lớp <code>NOT EXISTS</code> đã tự đảm bảo phủ đủ cả 3 phòng.</p>
+                    </details>
+                    <div class="qa-explain">
+                      <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery <code>TOP 3 WITH TIES</code> tìm 3 phòng (có thể nhiều hơn nếu đồng hạng) chi nhiều nhất cho dịch vụ trong các đơn "Đã xác nhận"; <code>HAVING COUNT(DISTINCT DP.MaPH) = 3</code> ở truy vấn ngoài đảm bảo dịch vụ đó phải xuất hiện ở <strong>đủ cả 3</strong> phòng đó, không phải chỉ 1-2 phòng.</p></div>
+                      <div><span class="qa-explain-label">VÌ SAO?</span><p>"Được sử dụng bởi cả 3 phòng" là yêu cầu kiểu "với mọi" (for all) trên 1 tập con cụ thể (3 phòng Top), khác với "được sử dụng bởi ít nhất 1 phòng" (chỉ cần <code>IN</code> là đủ) - Phải đếm số phòng phân biệt mà dịch vụ đó khớp được và so với đúng 3 mới chắc chắn phủ hết. Đây cũng là lý do <code>GROUP BY</code> + <code>HAVING COUNT DISTINCT</code> là cách trực quan hơn để diễn đạt "với mọi trên 1 tập hữu hạn đã biết trước", còn phép chia 2 lớp <code>NOT EXISTS</code> (Cách khác) tổng quát hơn khi tập đối chiếu không biết trước số lượng chính xác.</p></div>
+                    </div>
+                  </div>
+
+                  <button type="button" class="ghost-button access-logout">Đăng xuất khỏi khu vực này</button>
+                </div>
               </div>
             </div>
 
@@ -680,31 +677,9 @@ WHERE DV.TenDV <> 'Massage'
 
       if (startBtn) startBtn.addEventListener('click', beginExam);
 
-      var daGate = document.querySelector('#dap-an .access-gate');
-      var daLockedPanel = daGate ? daGate.querySelector('.access-locked') : null;
-      var daInput = daGate ? daGate.querySelector('.access-input') : null;
-      var daSubmit = daGate ? daGate.querySelector('.access-submit') : null;
-      var daHint = daGate ? daGate.querySelector('.access-hint') : null;
-      var daHintDefault = daHint ? daHint.textContent : '';
-      var daPrereqText = 'Bạn cần mở khóa đề thi ở mục "Xem đề thi" phía trên trước khi nhập mã xem đáp án.';
-
-      function syncDaGate() {
-        if (!daLockedPanel) return;
-        var deOpen = deUnlockedEl && !deUnlockedEl.hidden;
-        daLockedPanel.classList.toggle('prereq-locked', !deOpen);
-        if (daInput) daInput.disabled = !deOpen;
-        if (daSubmit) daSubmit.disabled = !deOpen;
-        if (daHint) daHint.textContent = deOpen ? daHintDefault : daPrereqText;
-      }
-
-      function syncAll() {
-        syncTimer();
-        syncDaGate();
-      }
-
-      syncAll();
+      syncTimer();
       if (deUnlockedEl) {
-        new MutationObserver(syncAll).observe(deUnlockedEl, { attributes: true, attributeFilter: ['hidden'] });
+        new MutationObserver(syncTimer).observe(deUnlockedEl, { attributes: true, attributeFilter: ['hidden'] });
       }
     })();
   </script>

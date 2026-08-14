@@ -53,48 +53,21 @@
     <div class="lesson-layout">
       <nav class="lesson-toc" aria-label="Week 2 table of contents">
         <span class="side-label">IN THIS WEEK</span>
-        <a href="#on-tap" data-toc><b>01</b> Week 1 Review</a>
-        <a href="#toan-tu" data-toc><b>02</b> Operators</a>
-        <a href="#ham" data-toc><b>03</b> Functions in SQL</a>
-        <a href="#select" data-toc><b>04</b> SELECT</a>
-        <a href="#join" data-toc><b>05</b> JOIN</a>
-        <a href="#set-operations" data-toc><b>06</b> Set Operations</a>
-        <a href="#subquery" data-toc><b>07</b> Subquery</a>
-        <a href="#tong-hop" data-toc><b>08</b> Which Tool to Use?</a>
-        <a href="#bai-tap" data-toc><b>09</b> Exercises</a>
+        <a href="#toan-tu" data-toc><b>01</b> Operators</a>
+        <a href="#ham" data-toc><b>02</b> Functions in SQL</a>
+        <a href="#select" data-toc><b>03</b> SELECT</a>
+        <a href="#join" data-toc><b>04</b> JOIN</a>
+        <a href="#set-operations" data-toc><b>05</b> Set Operations</a>
+        <a href="#subquery" data-toc><b>06</b> Subquery</a>
+        <a href="#tong-hop" data-toc><b>07</b> Which Tool to Use?</a>
+        <a href="#bai-tap" data-toc><b>08</b> Exercises</a>
       </nav>
 
       <div class="lesson-content">
 
-        <!-- 01 - Week 1 Review -->
-        <section class="lesson-section" id="on-tap">
-          <p class="eyebrow">01 · WEEK 1 REVIEW</p>
-          <h2>Review Before We Begin</h2>
-          <p>Before starting new content, students should review Database, Table, and the data manipulation commands learned in Week 1.</p>
-          <h3>Database</h3>
-          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QuanLyNhanVien;
-GO
-
-USE QuanLyNhanVien;
-GO</code></pre></div>
-          <h3>Table</h3>
-          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE PhongBan
-(
-    MaPB CHAR(4) PRIMARY KEY,
-    TenPB NVARCHAR(50)
-);</code></pre></div>
-          <h3>Insert</h3>
-          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO PhongBan
-VALUES
-('PB01', N'Phòng Kỹ thuật'),
-('PB02', N'Phòng Kinh doanh'),
-('PB03', N'Phòng Nhân sự');</code></pre></div>
-          <p>Concepts to remember: Database, Table, Column, Row, Primary Key, Foreign Key, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> - make sure you can manipulate data before moving on to more advanced querying.</p>
-        </section>
-
-        <!-- 02 - Operators -->
+        <!-- 01 - Operators -->
         <section class="lesson-section" id="toan-tu">
-          <p class="eyebrow">02 · OPERATORS IN SQL</p>
+          <p class="eyebrow">01 · OPERATORS IN SQL</p>
           <h2>Operators</h2>
           <div class="definition">Operators are symbols or keywords used to perform calculations, comparisons, or combine conditions in a query.</div>
           <p>The examples below assume the following table:</p>
@@ -212,9 +185,9 @@ FROM NhanVien
 WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
         </section>
 
-        <!-- 03 - Functions in SQL -->
+        <!-- 02 - Functions in SQL -->
         <section class="lesson-section" id="ham">
-          <p class="eyebrow">03 · FUNCTIONS IN SQL</p>
+          <p class="eyebrow">02 · FUNCTIONS IN SQL</p>
           <h2>Functions in SQL</h2>
           <div class="definition">Functions process and transform data: numeric functions, string functions, date/time functions, and aggregate functions.</div>
 
@@ -309,9 +282,9 @@ FROM NhanVien;</code></pre></div>
 FROM NhanVien;</code></pre></div>
         </section>
 
-        <!-- 04 - SELECT -->
+        <!-- 03 - SELECT -->
         <section class="lesson-section" id="select">
-          <p class="eyebrow">04 · THE SELECT CLAUSE</p>
+          <p class="eyebrow">03 · THE SELECT CLAUSE</p>
           <h2>SELECT</h2>
           <div class="definition"><code>SELECT</code> is one of the most important parts of SQL, used to retrieve data from one or more tables.</div>
 
@@ -397,9 +370,9 @@ filter groups</div>
           </div>
         </section>
 
-        <!-- 05 - JOIN -->
+        <!-- 04 - JOIN -->
         <section class="lesson-section" id="join">
-          <p class="eyebrow">05 · JOIN OPERATIONS</p>
+          <p class="eyebrow">04 · JOIN OPERATIONS</p>
           <h2>JOIN</h2>
           <div class="definition"><code>JOIN</code> is used to combine data from two or more tables based on a related condition between them.</div>
           <div class="er-side-by-side">
@@ -488,9 +461,9 @@ WHERE nv.MaPB = pb.MaPB;</code></pre></div>
           <div class="inline-warning"><strong>SQL Server has no NATURAL JOIN:</strong> Some reference material (MySQL, PostgreSQL, Oracle) also has <code>NATURAL JOIN</code> - automatically joining on columns with matching names between two tables. T-SQL does <strong>not support</strong> this syntax - if you see it in other material, rewrite it with an explicit <code>INNER JOIN ... ON</code> condition as shown above.</div>
         </section>
 
-        <!-- 06 - Set Operations -->
+        <!-- 05 - Set Operations -->
         <section class="lesson-section" id="set-operations">
-          <p class="eyebrow">06 · SET OPERATIONS</p>
+          <p class="eyebrow">05 · SET OPERATIONS</p>
           <h2>Set Operations</h2>
           <p>There are 3 main operations used to combine the <strong>results of multiple queries</strong>:</p>
           <div class="ascii-block">UNION
@@ -537,9 +510,9 @@ A INTERSECT B  ➜ A and B
 A EXCEPT B     ➜ A but not B</div>
         </section>
 
-        <!-- 07 - Subquery -->
+        <!-- 06 - Subquery -->
         <section class="lesson-section" id="subquery">
-          <p class="eyebrow">07 · NESTED QUERIES - SUBQUERY</p>
+          <p class="eyebrow">06 · NESTED QUERIES - SUBQUERY</p>
           <h2>Subquery</h2>
           <div class="definition">A Subquery is a query placed <strong>inside</strong> another query. The inner query runs to provide a result for the outer query.</div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
@@ -625,9 +598,9 @@ WHERE NOT EXISTS
 );</code></pre></div>
         </section>
 
-        <!-- 08 - Which Tool to Use -->
+        <!-- 07 - Which Tool to Use -->
         <section class="lesson-section" id="tong-hop">
-          <p class="eyebrow">08 · SUMMARY - WHICH TOOL TO USE?</p>
+          <p class="eyebrow">07 · SUMMARY - WHICH TOOL TO USE?</p>
           <h2>Which Tool to Use?</h2>
           <p>A quick-reference table: knowing the syntax is one thing, but knowing <strong>when to use what</strong> is what matters.</p>
           <div class="table-wrap"><table class="ref-table">
@@ -650,9 +623,9 @@ WHERE NOT EXISTS
           </table></div>
         </section>
 
-        <!-- 09 - Exercises -->
+        <!-- 08 - Exercises -->
         <section class="lesson-section" id="bai-tap">
-          <p class="eyebrow">09 · PRACTICE EXERCISES</p>
+          <p class="eyebrow">08 · PRACTICE EXERCISES</p>
           <h2>Comprehensive Practice</h2>
           <div class="answer-cta">
             <div class="answer-cta-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></div>
@@ -680,7 +653,6 @@ WHERE NOT EXISTS
         <div class="panel-box">
           <span class="side-label">YOU ARE HERE</span>
           <ul class="checklist">
-            <li data-section="on-tap"><b>○</b> Week 1 Review</li>
             <li data-section="toan-tu"><b>○</b> Operators</li>
             <li data-section="ham"><b>○</b> Functions in SQL</li>
             <li data-section="select"><b>○</b> SELECT</li>

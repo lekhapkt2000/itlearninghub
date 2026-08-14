@@ -49,48 +49,21 @@
     <div class="lesson-layout">
       <nav class="lesson-toc" aria-label="Mục lục Tuần 2">
         <span class="side-label">TRONG TUẦN NÀY</span>
-        <a href="#on-tap" data-toc><b>01</b> Ôn tập Tuần 1</a>
-        <a href="#toan-tu" data-toc><b>02</b> Toán tử</a>
-        <a href="#ham" data-toc><b>03</b> Hàm trong SQL</a>
-        <a href="#select" data-toc><b>04</b> SELECT</a>
-        <a href="#join" data-toc><b>05</b> JOIN</a>
-        <a href="#set-operations" data-toc><b>06</b> Set Operations</a>
-        <a href="#subquery" data-toc><b>07</b> Subquery</a>
-        <a href="#tong-hop" data-toc><b>08</b> Chọn công cụ nào?</a>
-        <a href="#bai-tap" data-toc><b>09</b> Bài tập</a>
+        <a href="#toan-tu" data-toc><b>01</b> Toán tử</a>
+        <a href="#ham" data-toc><b>02</b> Hàm trong SQL</a>
+        <a href="#select" data-toc><b>03</b> SELECT</a>
+        <a href="#join" data-toc><b>04</b> JOIN</a>
+        <a href="#set-operations" data-toc><b>05</b> Set Operations</a>
+        <a href="#subquery" data-toc><b>06</b> Subquery</a>
+        <a href="#tong-hop" data-toc><b>07</b> Chọn công cụ nào?</a>
+        <a href="#bai-tap" data-toc><b>08</b> Bài tập</a>
       </nav>
 
       <div class="lesson-content">
 
-        <!-- 01 - Ôn tập Tuần 1 -->
-        <section class="lesson-section" id="on-tap">
-          <p class="eyebrow">01 · ÔN TẬP TUẦN 1</p>
-          <h2>Ôn tập trước khi bắt đầu</h2>
-          <p>Trước khi bắt đầu nội dung mới, sinh viên cần ôn lại Database, Table và các lệnh thao tác dữ liệu đã học ở Tuần 1.</p>
-          <h3>Database</h3>
-          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE DATABASE QuanLyNhanVien;
-GO
-
-USE QuanLyNhanVien;
-GO</code></pre></div>
-          <h3>Table</h3>
-          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE PhongBan
-(
-    MaPB CHAR(4) PRIMARY KEY,
-    TenPB NVARCHAR(50)
-);</code></pre></div>
-          <h3>Insert</h3>
-          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO PhongBan
-VALUES
-('PB01', N'Phòng Kỹ thuật'),
-('PB02', N'Phòng Kinh doanh'),
-('PB03', N'Phòng Nhân sự');</code></pre></div>
-          <p>Các khái niệm cần nhớ: Database, Table, Column, Row, Primary Key, Foreign Key, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> - Đảm bảo sinh viên có thể thao tác với dữ liệu trước khi chuyển sang truy vấn nâng cao hơn.</p>
-        </section>
-
-        <!-- 02 - Toán tử -->
+        <!-- 01 - Toán tử -->
         <section class="lesson-section" id="toan-tu">
-          <p class="eyebrow">02 · TOÁN TỬ TRONG SQL</p>
+          <p class="eyebrow">01 · TOÁN TỬ TRONG SQL</p>
           <h2>Toán tử</h2>
           <div class="definition">Toán tử là các ký hiệu hoặc từ khóa dùng để thực hiện phép toán, so sánh hoặc kết hợp điều kiện trong câu truy vấn.</div>
           <p>Ví dụ dùng trong các mục dưới đây, giả sử có bảng:</p>
@@ -208,9 +181,9 @@ FROM NhanVien
 WHERE MaPB IN ('PB01', 'PB02');</code></pre></div>
         </section>
 
-        <!-- 03 - Hàm trong SQL -->
+        <!-- 02 - Hàm trong SQL -->
         <section class="lesson-section" id="ham">
-          <p class="eyebrow">03 · HÀM TRONG SQL</p>
+          <p class="eyebrow">02 · HÀM TRONG SQL</p>
           <h2>Hàm trong SQL</h2>
           <div class="definition">Hàm giúp xử lý và biến đổi dữ liệu: Hàm xử lý số, hàm xử lý chuỗi, hàm xử lý ngày giờ và hàm tập hợp.</div>
 
@@ -305,9 +278,9 @@ FROM NhanVien;</code></pre></div>
 FROM NhanVien;</code></pre></div>
         </section>
 
-        <!-- 04 - SELECT -->
+        <!-- 03 - SELECT -->
         <section class="lesson-section" id="select">
-          <p class="eyebrow">04 · MỆNH ĐỀ SELECT</p>
+          <p class="eyebrow">03 · MỆNH ĐỀ SELECT</p>
           <h2>SELECT</h2>
           <div class="definition"><code>SELECT</code> là một trong những thành phần quan trọng nhất của SQL, dùng để truy xuất dữ liệu từ một hoặc nhiều bảng.</div>
 
@@ -393,9 +366,9 @@ lọc nhóm</div>
           </div>
         </section>
 
-        <!-- 05 - JOIN -->
+        <!-- 04 - JOIN -->
         <section class="lesson-section" id="join">
-          <p class="eyebrow">05 · CÁC PHÉP KẾT JOIN</p>
+          <p class="eyebrow">04 · CÁC PHÉP KẾT JOIN</p>
           <h2>JOIN</h2>
           <div class="definition"><code>JOIN</code> dùng để kết hợp dữ liệu từ hai hoặc nhiều bảng dựa trên một điều kiện liên quan giữa các bảng.</div>
           <div class="er-side-by-side">
@@ -484,9 +457,9 @@ WHERE nv.MaPB = pb.MaPB;</code></pre></div>
           <div class="inline-warning"><strong>SQL Server không có NATURAL JOIN:</strong> Một số tài liệu tham khảo (MySQL, PostgreSQL, Oracle) còn có thêm <code>NATURAL JOIN</code> - Tự động kết theo các cột trùng tên giữa hai bảng. T-SQL <strong>không hỗ trợ</strong> cú pháp này - Nếu gặp trong tài liệu khác, hãy viết lại bằng <code>INNER JOIN ... ON</code> với điều kiện kết tường minh như trên.</div>
         </section>
 
-        <!-- 06 - Set Operations -->
+        <!-- 05 - Set Operations -->
         <section class="lesson-section" id="set-operations">
-          <p class="eyebrow">06 · CÁC PHÉP TOÁN TẬP HỢP</p>
+          <p class="eyebrow">05 · CÁC PHÉP TOÁN TẬP HỢP</p>
           <h2>Set Operations</h2>
           <p>Có 3 phép chính, dùng để kết hợp <strong>kết quả của nhiều truy vấn</strong>:</p>
           <div class="ascii-block">UNION
@@ -533,9 +506,9 @@ A INTERSECT B  ➜ A và B
 A EXCEPT B     ➜ A nhưng không B</div>
         </section>
 
-        <!-- 07 - Subquery -->
+        <!-- 06 - Subquery -->
         <section class="lesson-section" id="subquery">
-          <p class="eyebrow">07 · TRUY VẤN LỒNG SUBQUERY</p>
+          <p class="eyebrow">06 · TRUY VẤN LỒNG SUBQUERY</p>
           <h2>Subquery</h2>
           <div class="definition">Subquery là một câu truy vấn được đặt <strong>bên trong</strong> một câu truy vấn khác. Truy vấn bên trong được thực hiện để cung cấp kết quả cho truy vấn bên ngoài.</div>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TenSP
@@ -621,9 +594,9 @@ WHERE NOT EXISTS
 );</code></pre></div>
         </section>
 
-        <!-- 08 - Tổng hợp -->
+        <!-- 07 - Tổng hợp -->
         <section class="lesson-section" id="tong-hop">
-          <p class="eyebrow">08 · TỔNG HỢP - CHỌN CÔNG CỤ NÀO?</p>
+          <p class="eyebrow">07 · TỔNG HỢP - CHỌN CÔNG CỤ NÀO?</p>
           <h2>Chọn công cụ nào?</h2>
           <p>Bảng tra nhanh: Biết cú pháp là một việc, biết <strong>khi nào dùng cái gì</strong> mới là quan trọng.</p>
           <div class="table-wrap"><table class="ref-table">
@@ -646,9 +619,9 @@ WHERE NOT EXISTS
           </table></div>
         </section>
 
-        <!-- 09 - Bài tập -->
+        <!-- 08 - Bài tập -->
         <section class="lesson-section" id="bai-tap">
-          <p class="eyebrow">09 · BÀI TẬP THỰC HÀNH</p>
+          <p class="eyebrow">08 · BÀI TẬP THỰC HÀNH</p>
           <h2>Thực hành tổng hợp</h2>
           <div class="answer-cta">
             <div class="answer-cta-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></div>
@@ -676,7 +649,6 @@ WHERE NOT EXISTS
         <div class="panel-box">
           <span class="side-label">BẠN ĐANG HỌC</span>
           <ul class="checklist">
-            <li data-section="on-tap"><b>○</b> Ôn tập Tuần 1</li>
             <li data-section="toan-tu"><b>○</b> Toán tử</li>
             <li data-section="ham"><b>○</b> Hàm trong SQL</li>
             <li data-section="select"><b>○</b> SELECT</li>

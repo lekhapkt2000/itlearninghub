@@ -14,6 +14,18 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../../assets/css/base.css?v=20">
   <link rel="stylesheet" href="../../../assets/css/course.css?v=46">
+  <style>
+    .exam-timer{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:20px 0 0;padding:16px 22px;background:var(--ink);border-radius:12px;color:#fff}
+    .exam-timer-label{display:block;margin-bottom:4px;color:#94a3b8;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+    .exam-timer-clock{font-family:var(--font-mono);font-size:26px;font-weight:700;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+    .exam-timer.is-warning .exam-timer-clock{color:#fbbf24}
+    .exam-timer.is-danger .exam-timer-clock,.exam-timer.is-over .exam-timer-clock{color:#f87171}
+    .exam-timer.is-danger .exam-timer-clock{animation:examTimerPulse 1s ease-in-out infinite}
+    @keyframes examTimerPulse{0%,100%{opacity:1}50%{opacity:.45}}
+    .access-locked.prereq-locked .access-locked-icon{background:var(--line);color:var(--muted)}
+    .access-locked.prereq-locked .access-form{opacity:.4;pointer-events:none}
+    .access-locked.prereq-locked .access-hint{margin-top:14px;padding:10px 14px;background:var(--tint);border-radius:8px;color:var(--primary-ink);font-weight:700}
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -73,6 +85,13 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified successfully - You now have access to the exam paper.</div>
+
+            <div class="exam-timer" id="examTimer" hidden>
+              <div>
+                <span class="exam-timer-label" id="examTimerLabel">Time remaining</span>
+                <span class="exam-timer-clock" id="examTimerClock">75:00</span>
+              </div>
+            </div>
 
             <div class="inline-danger" style="margin-top:16px"><strong>No reference material is allowed.</strong> This mock exam mirrors the exact conditions of the real exam - No looking up theory, no referring to previous weeks' answers while working.</div>
 
@@ -585,5 +604,85 @@ WHERE DV.TenDV <> 'Massage'
   <script src="../../../assets/js/main.js?v=5"></script>
   <script src="../../../assets/js/course.js?v=15"></script>
   <script src="../../../assets/js/access-gate.js?v=2"></script>
+  <script>
+    (function () {
+      var deGate = document.querySelector('#de-bai .access-gate');
+      if (!deGate) return;
+      var deUnlockedEl = deGate.querySelector('.access-unlocked');
+
+      var EXAM_SECONDS = 75 * 60;
+      var TIMER_KEY = 'examTimerStart:IT004:TD';
+      var timerEl = document.getElementById('examTimer');
+      var clockEl = document.getElementById('examTimerClock');
+      var labelEl = document.getElementById('examTimerLabel');
+      var tickHandle = null;
+
+      function getStart() {
+        var raw = localStorage.getItem(TIMER_KEY);
+        return raw ? Number(raw) : null;
+      }
+
+      function format(sec) {
+        if (sec < 0) sec = 0;
+        var m = Math.floor(sec / 60);
+        var s = sec % 60;
+        return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+      }
+
+      function tick() {
+        var start = getStart() || Date.now();
+        var remain = EXAM_SECONDS - Math.floor((Date.now() - start) / 1000);
+        clockEl.textContent = format(remain);
+        labelEl.textContent = remain <= 0 ? "Time's up" : 'Time remaining';
+        timerEl.classList.toggle('is-warning', remain <= 15 * 60 && remain > 5 * 60);
+        timerEl.classList.toggle('is-danger', remain <= 5 * 60 && remain > 0);
+        timerEl.classList.toggle('is-over', remain <= 0);
+      }
+
+      function startTimer() {
+        if (!timerEl) return;
+        try {
+          if (!getStart()) localStorage.setItem(TIMER_KEY, String(Date.now()));
+        } catch (e) {}
+        timerEl.hidden = false;
+        tick();
+        if (!tickHandle) tickHandle = setInterval(tick, 1000);
+      }
+
+      function stopTimer() {
+        try { localStorage.removeItem(TIMER_KEY); } catch (e) {}
+        if (timerEl) timerEl.hidden = true;
+        if (tickHandle) { clearInterval(tickHandle); tickHandle = null; }
+      }
+
+      var daGate = document.querySelector('#dap-an .access-gate');
+      var daLockedPanel = daGate ? daGate.querySelector('.access-locked') : null;
+      var daInput = daGate ? daGate.querySelector('.access-input') : null;
+      var daSubmit = daGate ? daGate.querySelector('.access-submit') : null;
+      var daHint = daGate ? daGate.querySelector('.access-hint') : null;
+      var daHintDefault = daHint ? daHint.textContent : '';
+      var daPrereqText = 'You need to unlock the exam paper in the "View the exam paper" section above before entering the answer-key code.';
+
+      function syncDaGate() {
+        if (!daLockedPanel) return;
+        var deOpen = deUnlockedEl && !deUnlockedEl.hidden;
+        daLockedPanel.classList.toggle('prereq-locked', !deOpen);
+        if (daInput) daInput.disabled = !deOpen;
+        if (daSubmit) daSubmit.disabled = !deOpen;
+        if (daHint) daHint.textContent = deOpen ? daHintDefault : daPrereqText;
+      }
+
+      function syncAll() {
+        var deOpen = deUnlockedEl && !deUnlockedEl.hidden;
+        if (deOpen) startTimer(); else stopTimer();
+        syncDaGate();
+      }
+
+      syncAll();
+      if (deUnlockedEl) {
+        new MutationObserver(syncAll).observe(deUnlockedEl, { attributes: true, attributeFilter: ['hidden'] });
+      }
+    })();
+  </script>
 </body>
 </html>

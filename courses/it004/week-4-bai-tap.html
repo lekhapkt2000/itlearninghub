@@ -282,6 +282,14 @@ ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_GIOITINH
               <p><strong>Đề bài:</strong> Điểm số của một lần thi có giá trị từ 0 đến 10 và cần lưu đến 2 số lẽ (VD: 6.22).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KETQUATHI ADD CONSTRAINT CK_KETQUATHI_DIEM
     CHECK (DIEM BETWEEN 0 AND 10);</code></pre></div>
+              <details><summary>Cách khác (kiểm tra định dạng chuỗi)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KETQUATHI ADD CONSTRAINT CK_KETQUATHI_DIEM
+    CHECK (
+        DIEM BETWEEN 0 AND 10
+        AND RIGHT(CAST(DIEM AS VARCHAR), 3) LIKE '.__'
+    );</code></pre></div>
+                <p><code>RIGHT(CAST(DIEM AS VARCHAR), 3) LIKE '.__'</code> lấy 3 ký tự cuối của chuỗi số rồi đòi hỏi đúng dạng "dấu chấm + 2 ký tự bất kỳ" (VD "6.22" ➜ ".22" khớp mẫu). Cách này hữu ích khi cột không có kiểu dữ liệu cố định thang đo (scale) sẵn - Ở đây <code>NUMERIC(4,2)</code> đã tự đảm bảo đúng 2 số lẻ nên không bắt buộc, nhưng vẫn là kỹ thuật đáng biết khi cần ràng buộc định dạng hiển thị của 1 số thay vì chỉ ràng buộc giá trị.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>BETWEEN 0 AND 10</code> giới hạn khoảng giá trị đóng ở cả 2 đầu (0 và 10 đều hợp lệ).</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Phần "lưu đến 2 số lẻ" đã được đáp ứng ngay từ kiểu dữ liệu <code>NUMERIC(4,2)</code> khai báo cho <code>DIEM</code> ở Câu 1 (4 chữ số, 2 số sau dấu phẩy) - Câu này chỉ còn thiếu ràng buộc khoảng giá trị 0-10.</p></div>
@@ -318,6 +326,11 @@ ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_GIOITINH
               <p><strong>Đề bài:</strong> Học kỳ chỉ có giá trị từ 1 đến 3.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIANGDAY ADD CONSTRAINT CK_GIANGDAY_HOCKY
     CHECK (HOCKY BETWEEN 1 AND 3);</code></pre></div>
+              <details><summary>Cách khác (IN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIANGDAY ADD CONSTRAINT CK_GIANGDAY_HOCKY
+    CHECK (HOCKY IN (1, 2, 3));</code></pre></div>
+                <p><code>IN (1, 2, 3)</code> cho kết quả tương đương <code>BETWEEN 1 AND 3</code> vì đây là số nguyên liên tiếp - <code>BETWEEN</code> gọn hơn khi khoảng giá trị liên tục, còn <code>IN</code> phù hợp hơn nếu sau này danh sách học kỳ hợp lệ không còn liên tục (VD chỉ còn 1 và 3, bỏ học kỳ 2).</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Kỹ thuật giống Câu 5, áp dụng cho cột <code>HOCKY</code> của <code>GIANGDAY</code>.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Một năm học chỉ có 3 học kỳ theo quy định của trung tâm - <code>BETWEEN 1 AND 3</code> chặn mọi giá trị học kỳ không hợp lệ ngay từ lúc nhập liệu.</p></div>
@@ -340,6 +353,12 @@ ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_GIOITINH
               <p><strong>Đề bài:</strong> Học viên ít nhất là 18 tuổi.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE HOCVIEN ADD CONSTRAINT CK_HOCVIEN_TUOI
     CHECK (NGSINH <= DATEADD(YEAR, -18, GETDATE()));</code></pre></div>
+              <details><summary>Cách khác (YEAR)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE HOCVIEN ADD CONSTRAINT CK_HOCVIEN_TUOI
+    CHECK (YEAR(GETDATE()) - YEAR(NGSINH) >= 18);</code></pre></div>
+                <p>Cách này ngắn gọn và thường gặp, nhưng chỉ so sánh số năm chứ không xét tháng/ngày sinh - Học viên sinh ngày 31/12 vẫn bị tính đủ 18 tuổi ngay từ đầu năm đó dù thực ra còn thiếu gần 1 năm nữa mới tròn tuổi. Cách <code>DATEADD</code> ở trên chính xác đến từng ngày nên vẫn là lựa chọn nên dùng.</p>
+              </details>
+              <div class="inline-danger"><strong>Lỗi thường gặp:</strong> Viết <code>CHECK (GETDATE() - NGSINH >= 18)</code> (trừ trực tiếp 2 cột ngày rồi so với số 18) trông giống hướng đúng nhưng thực chất <strong>sai hoàn toàn</strong>. Hiệu số 2 giá trị ngày tháng trong SQL Server trả về số ngày chênh lệch, không phải số năm - So sánh số ngày đó với số nguyên 18 chỉ tương đương kiểm tra "đã sinh được từ 18 <em>ngày</em> trở lên", không phải 18 năm.</div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>DATEADD(YEAR, -18, GETDATE())</code> tính ra ngày đúng 18 năm trước ngày hiện tại; học viên hợp lệ phải sinh trước hoặc đúng ngày đó.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>SQL Server cho phép <code>CHECK</code> tham chiếu <code>GETDATE()</code>, nhưng ràng buộc chỉ được kiểm tra tại thời điểm <code>INSERT</code>/<code>UPDATE</code> - Một học viên hợp lệ lúc nhập liệu vẫn giữ nguyên trong bảng dù thời gian trôi qua, <code>CHECK</code> không tự động rà soát lại các dòng đã có.</p></div>
@@ -362,6 +381,11 @@ ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_GIOITINH
               <p><strong>Đề bài:</strong> Giáo viên khi vào làm ít nhất là 22 tuổi.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_TUOI_VAOLAM
     CHECK (NGVL >= DATEADD(YEAR, 22, NGSINH));</code></pre></div>
+              <details><summary>Cách khác (YEAR)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_TUOI_VAOLAM
+    CHECK (YEAR(NGVL) - YEAR(NGSINH) >= 22);</code></pre></div>
+                <p>Cùng nhược điểm với cách <code>YEAR</code> ở Câu 8 - Không xét chính xác đến tháng/ngày, nên có thể tính dư vài tháng tuổi cho giáo viên sinh cuối năm. <strong>Lưu ý:</strong> Viết <code>CHECK ((NGVL - NGSINH) >= 22)</code> (trừ trực tiếp 2 cột ngày) là sai giống hệt lỗi ở Câu 8 - Kết quả phép trừ là số ngày chênh lệch, so với 22 chỉ kiểm tra "cách nhau ít nhất 22 <em>ngày</em>", không phải 22 năm.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>DATEADD(YEAR, 22, NGSINH)</code> tính ngày giáo viên tròn 22 tuổi; <code>NGVL</code> phải từ ngày đó trở đi.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 8, ràng buộc này so sánh 2 cột trong cùng 1 dòng (<code>NGSINH</code> và <code>NGVL</code>) thay vì so với <code>GETDATE()</code> - Nhờ vậy nó luôn đúng và ổn định vĩnh viễn, không bị lỗi thời như <code>CHECK</code> dùng ngày hiện tại.</p></div>
@@ -407,6 +431,21 @@ SET DIEMTB = (
           WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
       )
 );</code></pre></div>
+              <details><summary>Cách khác (UPDATE ... FROM ... JOIN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE HOCVIEN
+SET DIEMTB = t.Diem
+FROM HOCVIEN
+JOIN (
+    SELECT kq.MAHV, AVG(kq.DIEM) AS Diem
+    FROM KETQUATHI kq
+    WHERE kq.LANTHI = (
+        SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+        WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
+    )
+    GROUP BY kq.MAHV
+) t ON HOCVIEN.MAHV = t.MAHV;</code></pre></div>
+                <p>Cú pháp <code>UPDATE ... FROM ... JOIN</code> (đặc trưng của SQL Server) tính điểm trung bình 1 lần bằng <code>GROUP BY</code> trong bảng dẫn xuất <code>t</code>, rồi <code>JOIN</code> thẳng vào <code>HOCVIEN</code> - Cho cùng kết quả với cách scalar subquery ở trên, nhưng chỉ chạy 1 lượt tính toán cho tất cả học viên thay vì lặp lại subquery cho từng dòng, nên thường nhanh hơn trên bảng lớn. Mẹo an toàn: Chạy thử phần <code>SELECT</code> bên trong <code>t</code> trước khi <code>UPDATE</code> để kiểm tra số liệu đúng chưa.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery lồng trong cùng dùng <code>MAX(LANTHI)</code> để chỉ lấy đúng lần thi sau cùng của từng cặp (<code>MAHV</code>, <code>MAMH</code>); subquery ngoài <code>AVG(DIEM)</code> trên đúng tập đã lọc đó cho từng học viên.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Không thể <code>AVG(DIEM)</code> trực tiếp trên toàn bộ <code>KETQUATHI</code> vì 1 học viên có thể có nhiều dòng cho cùng 1 môn (thi lại) - Nếu không lọc lần thi sau cùng, điểm trung bình sẽ bị lệch do tính luôn cả những lần thi trước đó chưa đạt.</p></div>
@@ -452,6 +491,12 @@ END;</code></pre></div>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, hv.NGSINH, hv.MALOP
 FROM HOCVIEN hv
 JOIN LOP l ON hv.MAHV = l.TRGLOP;</code></pre></div>
+              <details><summary>Cách khác (subquery IN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAHV, HO + N' ' + TEN AS HOTEN, NGSINH, MALOP
+FROM HOCVIEN
+WHERE MAHV IN (SELECT TRGLOP FROM LOP);</code></pre></div>
+                <p>Vì đề chỉ cần thông tin từ <code>HOCVIEN</code> (không cần cột nào của <code>LOP</code>), có thể thay <code>JOIN</code> bằng subquery <code>IN</code> để lọc trực tiếp trên <code>HOCVIEN</code> mà không cần join bảng nào cả - Ngắn gọn hơn, nhưng chỉ dùng được khi không cần lấy thêm cột nào từ bảng còn lại.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN HOCVIEN</code> với <code>LOP</code> qua <code>TRGLOP</code> để lấy đúng những học viên đang là lớp trưởng; <code>HO + ' ' + TEN</code> ghép thành họ tên đầy đủ vì <code>HOCVIEN</code> lưu 2 cột riêng.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Dùng <code>JOIN</code> (không phải subquery) vì cần lấy đủ 4 cột thông tin học viên - Đề yêu cầu cả họ tên và ngày sinh nên phải join trực tiếp vào bảng <code>HOCVIEN</code>.</p></div>
@@ -479,6 +524,13 @@ ORDER BY hv.TEN, hv.HO;</code></pre></div>
 FROM HOCVIEN hv
 JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
 WHERE kq.LANTHI = 1 AND kq.KQUA = N'Dat';</code></pre></div>
+              <details><summary>Cách khác (lọc theo DIEM)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.MAMH
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.LANTHI = 1 AND kq.DIEM >= 5;</code></pre></div>
+                <p>Nhờ <code>CHECK</code> ràng buộc ở Câu 4 (Phần I) đảm bảo <code>DIEM</code> và <code>KQUA</code> luôn khớp nhau (<code>DIEM &gt;= 5</code> khi và chỉ khi <code>KQUA = 'Dat'</code>), lọc theo <code>DIEM &gt;= 5</code> hay <code>KQUA = 'Dat'</code> luôn cho cùng 1 kết quả - Chọn cột nào cũng được, miễn ràng buộc đó còn hiệu lực.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Lọc trực tiếp <code>KETQUATHI</code> theo <code>LANTHI = 1</code> và <code>KQUA = 'Dat'</code>, <code>JOIN</code> sang <code>HOCVIEN</code> chỉ để lấy họ tên.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề yêu cầu in luôn "những môn học" đạt được ở lần 1 - Nên phải giữ lại <code>MAMH</code> trong kết quả, không <code>GROUP BY</code> hay gộp lại, mỗi dòng là 1 cặp (học viên, môn học) thỏa điều kiện.</p></div>
@@ -493,6 +545,14 @@ FROM HOCVIEN hv
 JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
 WHERE hv.MALOP = N'K11' AND kq.MAMH = N'CTRR'
   AND kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat';</code></pre></div>
+              <details><summary>Cách khác (lọc theo DIEM)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE hv.MALOP = N'K11' AND kq.MAMH = N'CTRR'
+  AND kq.LANTHI = 1 AND kq.DIEM < 5;</code></pre></div>
+                <p>Cùng lý do với Câu 3 - <code>DIEM &lt; 5</code> và <code>KQUA = 'Khong Dat'</code> luôn đi cùng nhau nhờ ràng buộc <code>CHECK</code> ở Câu 4 (Phần I), nên 2 cách lọc cho kết quả giống hệt nhau.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN</code> rồi lọc 4 điều kiện cùng lúc bằng <code>AND</code>: Đúng lớp, đúng môn, đúng lần thi, đúng kết quả.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Chỉ xét "lần thi 1" nên phải lọc rõ <code>LANTHI = 1</code> - Nếu bỏ điều kiện này, học viên thi lại nhiều lần vẫn có thể lọt vào kết quả dù lần thi sau đã đạt.</p></div>
@@ -500,21 +560,29 @@ WHERE hv.MALOP = N'K11' AND kq.MAMH = N'CTRR'
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 5 (PHẦN III) · EXISTS / NOT EXISTS</p>
+              <p class="eyebrow">CÂU 5 (PHẦN III) · NOT EXISTS / NOT IN</p>
               <p><strong>Đề bài:</strong> * Danh sách học viên (mã học viên, họ tên) của lớp "K" thi môn CTRR không đạt (ở tất cả các lần thi).</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
 FROM HOCVIEN hv
-WHERE hv.MALOP = N'K11'
-  AND EXISTS (
-      SELECT * FROM KETQUATHI kq WHERE kq.MAHV = hv.MAHV AND kq.MAMH = N'CTRR'
-  )
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE hv.MALOP LIKE N'K%' AND kq.MAMH = N'CTRR'
   AND NOT EXISTS (
-      SELECT * FROM KETQUATHI kq
-      WHERE kq.MAHV = hv.MAHV AND kq.MAMH = N'CTRR' AND kq.KQUA = N'Dat'
+      SELECT * FROM KETQUATHI kq2
+      WHERE kq2.MAHV = hv.MAHV AND kq2.MAMH = N'CTRR' AND kq2.KQUA = N'Dat'
   );</code></pre></div>
+              <details><summary>Cách khác (NOT IN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE hv.MALOP LIKE N'K%' AND kq.MAMH = N'CTRR'
+  AND hv.MAHV NOT IN (
+      SELECT MAHV FROM KETQUATHI WHERE MAMH = N'CTRR' AND KQUA = N'Dat'
+  );</code></pre></div>
+                <p><code>NOT IN</code> chỉ an toàn ở đây vì <code>KETQUATHI.MAHV</code> là 1 phần khóa chính - Không bao giờ <code>NULL</code>, nên danh sách con không dính bẫy <code>NULL</code> làm <code>NOT IN</code> trả về rỗng.</p>
+              </details>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>EXISTS</code> đảm bảo học viên có thi môn CTRR (ít nhất 1 lần); <code>NOT EXISTS</code> đảm bảo không có lần thi nào đạt - Kết hợp cả 2 nghĩa là mọi lần thi CTRR của học viên này đều không đạt.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề ghi "lớp 'K'" - Đây gần như chắc chắn vẫn là lớp K11 đang xét xuyên suốt từ Câu 4 (lược đồ mẫu không có lớp nào tên đúng là "K", nhiều khả năng là lỗi đánh máy trong đề gốc). Nếu chỉ lọc <code>KQUA = 'Khong Dat'</code> như Câu 4, học viên thi lại nhiều lần và có 1 lần đạt vẫn bị liệt kê nhầm - Phải chắc chắn không có lần thi nào đạt (<code>NOT EXISTS</code>) mới đúng nghĩa "ở tất cả các lần thi".</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN</code> với <code>KETQUATHI</code> lọc đúng học viên có thi môn CTRR (vừa đảm bảo họ có thi, vừa lọc theo lớp); <code>NOT EXISTS</code> đảm bảo không có lần thi CTRR nào đạt - Kết hợp lại nghĩa là mọi lần thi CTRR của học viên này đều không đạt.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Lớp 'K'" ở đây nên hiểu là tiền tố mã lớp - Toàn bộ lớp trong lược đồ này đều có mã bắt đầu bằng "K" (K11, K12, K13), nên "lớp 'K'" tương đương với <code>MALOP LIKE 'K%'</code> (tất cả các lớp), không phải 1 lớp cụ thể - Đây là kiểu ra đề bằng tiền tố giống Câu 3 (Tuần 2, mã sản phẩm bắt đầu bằng "B"). Nếu chỉ lọc <code>KQUA = 'Khong Dat'</code> như Câu 4, học viên thi lại nhiều lần và có 1 lần đạt vẫn bị liệt kê nhầm - Phải chắc chắn không có lần thi nào đạt mới đúng nghĩa "ở tất cả các lần thi". <code>DISTINCT</code> tránh trùng dòng vì <code>JOIN KETQUATHI</code> có thể khớp nhiều lần thi CTRR của cùng 1 học viên.</p></div>
               </div>
             </div>
 
@@ -604,6 +672,16 @@ AND gv.MAGV IN (
     SELECT MAGV FROM GIANGDAY
     WHERE MALOP = N'K12' AND MAMH = N'CTRR' AND HOCKY = 1 AND NAM = 2006
 );</code></pre></div>
+              <details><summary>Cách khác (INTERSECT)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT gv.HOTEN
+ FROM GIAOVIEN gv JOIN GIANGDAY gd ON gv.MAGV = gd.MAGV
+ WHERE gd.MAMH = N'CTRR' AND gd.HOCKY = 1 AND gd.NAM = 2006 AND gd.MALOP = N'K11')
+INTERSECT
+(SELECT gv.HOTEN
+ FROM GIAOVIEN gv JOIN GIANGDAY gd ON gv.MAGV = gd.MAGV
+ WHERE gd.MAMH = N'CTRR' AND gd.HOCKY = 1 AND gd.NAM = 2006 AND gd.MALOP = N'K12');</code></pre></div>
+                <p><code>INTERSECT</code> lấy giao của 2 tập kết quả - Danh sách giáo viên dạy K11 giao với danh sách giáo viên dạy K12 chính là những giáo viên dạy cả 2 lớp, cùng ý nghĩa với 2 <code>IN</code> nối bằng <code>AND</code> ở trên nhưng diễn đạt trực tiếp bằng phép toán tập hợp.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>2 subquery độc lập, mỗi subquery lấy <code>MAGV</code> dạy CTRR cho đúng 1 lớp (K11 hoặc K12) trong học kỳ 1/2006; giáo viên hợp lệ phải thỏa cả 2 điều kiện <code>IN</code> cùng lúc.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Không thể gộp chung 1 điều kiện <code>MALOP IN ('K11','K12')</code> vì như vậy chỉ cần dạy 1 trong 2 lớp là đã lọt qua - Phải tách 2 subquery riêng, nối bằng <code>AND</code>, để bắt buộc giáo viên đó dạy cho đủ cả 2 lớp.</p></div>
@@ -619,11 +697,11 @@ JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
 WHERE kq.MAMH = N'CSDL' AND kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat'
   AND NOT EXISTS (
       SELECT * FROM KETQUATHI kq2
-      WHERE kq2.MAHV = hv.MAHV AND kq2.MAMH = N'CSDL' AND kq2.LANTHI = 2
+      WHERE kq2.MAHV = hv.MAHV AND kq2.MAMH = N'CSDL' AND kq2.LANTHI > 1
   );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Điều kiện chính lọc đúng lần thi 1 không đạt môn CSDL; <code>NOT EXISTS</code> kiểm tra không tồn tại dòng lần thi thứ 2 cho cùng học viên, cùng môn.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Chưa thi lại" nghĩa là không có bản ghi <code>LANTHI = 2</code> - <code>NOT EXISTS</code> là công cụ đúng để kiểm tra "không tồn tại", khác với chỉ đếm hay lọc trực tiếp.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Điều kiện chính lọc đúng lần thi 1 không đạt môn CSDL; <code>NOT EXISTS</code> kiểm tra không tồn tại bất kỳ dòng nào có <code>LANTHI > 1</code> cho cùng học viên, cùng môn.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Chưa thi lại" nghĩa là không có bản ghi nào ở lần thi thứ 2 trở đi - Dùng <code>LANTHI > 1</code> (không phải cố định <code>LANTHI = 2</code>) để chắc chắn bắt được cả trường hợp hiếm gặp học viên đã có <code>LANTHI = 3</code> nhưng thiếu <code>LANTHI = 2</code> trong dữ liệu (lược đồ không có ràng buộc bắt buộc lần thi phải liên tục) - <code>NOT EXISTS</code> là công cụ đúng để kiểm tra "không tồn tại", khác với chỉ đếm hay lọc trực tiếp.</p></div>
               </div>
             </div>
 
@@ -635,6 +713,12 @@ FROM GIAOVIEN gv
 WHERE NOT EXISTS (
     SELECT * FROM GIANGDAY gd WHERE gd.MAGV = gv.MAGV
 );</code></pre></div>
+              <details><summary>Cách khác (LEFT JOIN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.MAGV, gv.HOTEN
+FROM GIAOVIEN gv LEFT JOIN GIANGDAY gd ON gv.MAGV = gd.MAGV
+WHERE gd.MAGV IS NULL;</code></pre></div>
+                <p><code>LEFT JOIN</code> giữ lại tất cả giáo viên kể cả khi không khớp được dòng <code>GIANGDAY</code> nào (cột phía <code>GIANGDAY</code> sẽ là <code>NULL</code>); lọc <code>WHERE gd.MAGV IS NULL</code> chính là cách "anti-join" kinh điển để tìm những dòng không có đối tác khớp, cho cùng kết quả với <code>NOT EXISTS</code>.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>NOT EXISTS</code> kiểm tra giáo viên đó không xuất hiện trong bất kỳ dòng <code>GIANGDAY</code> nào.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là dạng truy vấn phủ định toàn phần (không có bất kỳ) - <code>NOT EXISTS</code> luôn là lựa chọn an toàn nhất, tránh được bẫy <code>NULL</code> mà <code>NOT IN</code> có thể gặp phải.</p></div>
@@ -651,6 +735,14 @@ WHERE NOT EXISTS (
     JOIN MONHOC mh ON gd.MAMH = mh.MAMH
     WHERE gd.MAGV = gv.MAGV AND mh.MAKHOA = gv.MAKHOA
 );</code></pre></div>
+              <details><summary>Cách khác (LEFT JOIN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.MAGV, gv.HOTEN
+FROM GIAOVIEN gv
+LEFT JOIN GIANGDAY gd ON gv.MAGV = gd.MAGV
+LEFT JOIN MONHOC mh ON gd.MAMH = mh.MAMH AND mh.MAKHOA = gv.MAKHOA
+WHERE mh.MAMH IS NULL;</code></pre></div>
+                <p>Cùng kỹ thuật anti-join như Câu 13, nhưng điều kiện "đúng khoa của giáo viên" (<code>mh.MAKHOA = gv.MAKHOA</code>) phải đặt ngay trong mệnh đề <code>ON</code> của <code>LEFT JOIN MONHOC</code> (không phải <code>WHERE</code>) - Nếu đặt trong <code>WHERE</code>, những dòng không khớp bị <code>LEFT JOIN</code> giữ lại (đã có <code>MONHOC</code> là <code>NULL</code>) sẽ bị loại nhầm trước khi kịp xét đến điều kiện <code>IS NULL</code>.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>NOT EXISTS</code> kiểm tra không tồn tại dòng <code>GIANGDAY</code> nào của giáo viên đó ứng với 1 môn học thuộc đúng khoa của giáo viên (<code>mh.MAKHOA = gv.MAKHOA</code>).</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 13 (không dạy môn nào, bất kỳ khoa nào), câu này chỉ xét các môn thuộc khoa của chính giáo viên đó - Giáo viên có thể dạy môn của khoa khác vẫn thỏa điều kiện, miễn là không dạy môn nào của khoa mình.</p></div>
@@ -675,7 +767,7 @@ WHERE hv.MALOP = N'K11'
   );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>2 nhánh <code>EXISTS</code> nối bằng <code>OR</code> trong cùng 1 dấu ngoặc: Nhánh 1 kiểm tra có môn nào thi đến lần 3 (lần tối đa) mà vẫn không đạt; nhánh 2 kiểm tra thi CTRR lần 2 đúng 5 điểm.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Thi một môn bất kỳ quá 3 lần vẫn không đạt" - Theo ràng buộc <code>LANTHI</code> tối đa là 3 (Câu 5, Phần I) - Được hiểu là đã thi đến lần thứ 3 (lần cuối cùng được phép) mà vẫn "Khong dat", tức đã hết cơ hội thi lại; đây là cách diễn đạt gần nhất với ràng buộc dữ liệu thực tế của lược đồ.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Thi một môn bất kỳ quá 3 lần vẫn không đạt" - Theo ràng buộc <code>LANTHI</code> tối đa là 3 (Câu 5, Phần I) - Được hiểu là đã thi đến lần thứ 3 (lần cuối cùng được phép) mà vẫn "Khong dat", tức đã hết cơ hội thi lại; đây là cách diễn đạt gần nhất với ràng buộc dữ liệu thực tế của lược đồ. <strong>Lưu ý bẫy:</strong> Nếu viết điều kiện theo đúng câu chữ thành <code>LANTHI > 3</code>, nhánh này sẽ luôn rỗng (không bao giờ đúng), vì <code>CHECK</code> ở Câu 5 (Phần I) đã chặn <code>LANTHI</code> không bao giờ vượt quá 3 - Phải hiểu "quá 3 lần vẫn không đạt" theo đúng cơ chế ràng buộc của lược đồ (đã dùng hết 3 lần thi), chứ không thể dịch nguyên văn từ "quá 3" sang <code>&gt; 3</code>.</p></div>
               </div>
             </div>
 
@@ -693,7 +785,7 @@ WHERE gv.MAGV IN (
 );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY</code> theo <code>(MAGV, HOCKY, NAM)</code> rồi đếm số lớp khác nhau bằng <code>COUNT(DISTINCT MALOP)</code>; <code>HAVING >= 2</code> lọc đúng những nhóm dạy từ 2 lớp trở lên.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải <code>GROUP BY</code> cả <code>HOCKY</code> và <code>NAM</code> (không chỉ <code>MAGV</code>) vì đề yêu cầu "trong cùng một học kỳ của một năm học" - Nếu chỉ <code>GROUP BY MAGV</code>, 1 giáo viên dạy K11 học kỳ 1 và K12 học kỳ 2 (2 lớp khác học kỳ) sẽ bị đếm nhầm là thỏa điều kiện.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phải <code>GROUP BY</code> cả <code>HOCKY</code> và <code>NAM</code> (không chỉ <code>MAGV</code>) vì đề yêu cầu "trong cùng một học kỳ của một năm học" - Nếu chỉ <code>GROUP BY MAGV</code>, 1 giáo viên dạy K11 học kỳ 1 và K12 học kỳ 2 (2 lớp khác học kỳ) sẽ bị đếm nhầm là thỏa điều kiện. <strong>Lưu ý:</strong> Phải <code>GROUP BY</code> theo <code>MAGV</code> (mã, là khóa chính) rồi mới lấy <code>HOTEN</code> ra sau - Nếu gộp nhóm trực tiếp theo <code>HOTEN</code> thay vì <code>MAGV</code>, 2 giáo viên trùng tên (nếu có) sẽ vô tình bị gộp chung thành 1 nhóm, sai lệch kết quả đếm.</p></div>
               </div>
             </div>
 
@@ -771,6 +863,14 @@ GROUP BY MAKHOA, HOCVI;</code></pre></div>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAMH, KQUA, COUNT(*) AS SoLuong
 FROM KETQUATHI
 GROUP BY MAMH, KQUA;</code></pre></div>
+              <details><summary>Cách khác (pivot bằng CASE WHEN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAMH,
+    COUNT(CASE WHEN KQUA = N'Dat' THEN 1 END) AS SoLuongDat,
+    COUNT(CASE WHEN KQUA = N'Khong Dat' THEN 1 END) AS SoLuongKhongDat
+FROM KETQUATHI
+GROUP BY MAMH;</code></pre></div>
+                <p><code>COUNT(CASE WHEN ... THEN 1 END)</code> chỉ đếm những dòng khớp điều kiện trong <code>CASE</code> (các dòng không khớp trả về <code>NULL</code>, và <code>COUNT</code> luôn bỏ qua <code>NULL</code>) - Kỹ thuật này "xoay" (pivot) kết quả từ nhiều dòng (mỗi <code>KQUA</code> 1 dòng) thành 1 dòng duy nhất mỗi môn học với 2 cột riêng biệt, dễ đọc hơn khi cần so sánh Đạt/Không đạt cạnh nhau.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY</code> theo cặp <code>(MAMH, KQUA)</code> để đếm số lượt thi ứng với từng kết quả của từng môn.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Đếm theo lượt thi (mỗi dòng <code>KETQUATHI</code>), không loại trừ học viên thi lại nhiều lần - Trong ngữ cảnh bảng <code>KETQUATHI</code>, mỗi dòng đúng 1 lượt thi nên đếm trực tiếp theo dòng là hợp lý nhất; 1 học viên thi lại có thể vừa góp mặt ở nhóm "Khong Dat" (lần trước) vừa ở nhóm "Dat" (lần sau) của cùng 1 môn.</p></div>

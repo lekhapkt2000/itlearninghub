@@ -282,6 +282,14 @@ ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_GIOITINH
               <p><strong>Exercise:</strong> An exam score must be between 0 and 10 and needs to be stored with 2 decimal places (e.g. 6.22).</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KETQUATHI ADD CONSTRAINT CK_KETQUATHI_DIEM
     CHECK (DIEM BETWEEN 0 AND 10);</code></pre></div>
+              <details><summary>Alternative approach (string format check)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE KETQUATHI ADD CONSTRAINT CK_KETQUATHI_DIEM
+    CHECK (
+        DIEM BETWEEN 0 AND 10
+        AND RIGHT(CAST(DIEM AS VARCHAR), 3) LIKE '.__'
+    );</code></pre></div>
+                <p><code>RIGHT(CAST(DIEM AS VARCHAR), 3) LIKE '.__'</code> takes the last 3 characters of the number's string form and requires a decimal point followed by exactly 2 characters (e.g. "6.22" ➜ ".22" matches). This is useful when a column's type doesn't already enforce a fixed scale on its own - here <code>NUMERIC(4,2)</code> already guarantees exactly 2 decimal places, so it isn't strictly necessary, but it's a good technique to know for enforcing a number's display format rather than just its value.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>BETWEEN 0 AND 10</code> limits the value to a closed range - both 0 and 10 are valid.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>The "2 decimal places" part is already satisfied by the <code>NUMERIC(4,2)</code> type declared for <code>DIEM</code> in Question 1 (4 digits total, 2 after the decimal point) - This question only still needs the 0-10 range constraint.</p></div>
@@ -318,6 +326,11 @@ ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_GIOITINH
               <p><strong>Exercise:</strong> The semester value can only be from 1 to 3.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIANGDAY ADD CONSTRAINT CK_GIANGDAY_HOCKY
     CHECK (HOCKY BETWEEN 1 AND 3);</code></pre></div>
+              <details><summary>Alternative approach (IN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIANGDAY ADD CONSTRAINT CK_GIANGDAY_HOCKY
+    CHECK (HOCKY IN (1, 2, 3));</code></pre></div>
+                <p><code>IN (1, 2, 3)</code> gives the same result as <code>BETWEEN 1 AND 3</code> since these are consecutive integers - <code>BETWEEN</code> is more compact for a continuous range, while <code>IN</code> fits better if the valid semester list ever stops being continuous (e.g. only 1 and 3, dropping semester 2).</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p>Same technique as Question 5, applied to the <code>HOCKY</code> column of <code>GIANGDAY</code>.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>An academic year has only 3 semesters at this training center - <code>BETWEEN 1 AND 3</code> blocks any invalid semester value right at data entry.</p></div>
@@ -340,6 +353,12 @@ ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_GIOITINH
               <p><strong>Exercise:</strong> A student must be at least 18 years old.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE HOCVIEN ADD CONSTRAINT CK_HOCVIEN_TUOI
     CHECK (NGSINH <= DATEADD(YEAR, -18, GETDATE()));</code></pre></div>
+              <details><summary>Alternative approach (YEAR)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE HOCVIEN ADD CONSTRAINT CK_HOCVIEN_TUOI
+    CHECK (YEAR(GETDATE()) - YEAR(NGSINH) >= 18);</code></pre></div>
+                <p>This is short and commonly seen, but only compares calendar years and ignores month/day - a student born on December 31st would already count as 18 at the very start of that year, even though they're actually still almost a year short of turning 18. The <code>DATEADD</code> version above is exact to the day, so it stays the recommended choice.</p>
+              </details>
+              <div class="inline-danger"><strong>Common mistake:</strong> Writing <code>CHECK (GETDATE() - NGSINH >= 18)</code> (subtracting the 2 date columns directly and comparing to 18) looks like the right direction but is <strong>completely wrong</strong>. Subtracting 2 date values in SQL Server returns a difference measured in days, not years - comparing that to the plain integer 18 only checks "born at least 18 <em>days</em> ago", not 18 years.</div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>DATEADD(YEAR, -18, GETDATE())</code> computes the date exactly 18 years before today; a valid student must be born on or before that date.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>SQL Server allows a <code>CHECK</code> to reference <code>GETDATE()</code>, but the constraint is only evaluated at <code>INSERT</code>/<code>UPDATE</code> time - a student who was valid when inserted stays in the table as-is even as time passes; <code>CHECK</code> does not automatically re-scan existing rows.</p></div>
@@ -362,6 +381,11 @@ ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_GIOITINH
               <p><strong>Exercise:</strong> A teacher must be at least 22 years old when hired.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_TUOI_VAOLAM
     CHECK (NGVL >= DATEADD(YEAR, 22, NGSINH));</code></pre></div>
+              <details><summary>Alternative approach (YEAR)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">ALTER TABLE GIAOVIEN ADD CONSTRAINT CK_GIAOVIEN_TUOI_VAOLAM
+    CHECK (YEAR(NGVL) - YEAR(NGSINH) >= 22);</code></pre></div>
+                <p>Same drawback as the <code>YEAR</code> approach in Question 8 - it doesn't account for month/day precisely, so it can overcount a few months of age for a teacher born late in the year. <strong>Note:</strong> Writing <code>CHECK ((NGVL - NGSINH) >= 22)</code> (subtracting the 2 date columns directly) is wrong in the exact same way as the mistake flagged in Question 8 - the subtraction result is a difference in days, so comparing it to 22 only checks "at least 22 <em>days</em> apart", not 22 years.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>DATEADD(YEAR, 22, NGSINH)</code> computes the date the teacher turns 22; <code>NGVL</code> must be on or after that date.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>Unlike Question 8, this constraint compares 2 columns within the same row (<code>NGSINH</code> and <code>NGVL</code>) instead of against <code>GETDATE()</code> - so it stays correct and stable forever, without going stale the way a current-date <code>CHECK</code> would.</p></div>
@@ -407,6 +431,21 @@ SET DIEMTB = (
           WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
       )
 );</code></pre></div>
+              <details><summary>Alternative approach (UPDATE ... FROM ... JOIN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE HOCVIEN
+SET DIEMTB = t.Diem
+FROM HOCVIEN
+JOIN (
+    SELECT kq.MAHV, AVG(kq.DIEM) AS Diem
+    FROM KETQUATHI kq
+    WHERE kq.LANTHI = (
+        SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+        WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
+    )
+    GROUP BY kq.MAHV
+) t ON HOCVIEN.MAHV = t.MAHV;</code></pre></div>
+                <p>The <code>UPDATE ... FROM ... JOIN</code> syntax (a SQL Server feature) computes the average once with <code>GROUP BY</code> in the derived table <code>t</code>, then <code>JOIN</code>s it straight into <code>HOCVIEN</code> - it gives the same result as the scalar subquery version above, but runs the averaging calculation once for all students instead of re-running the subquery per row, so it's usually faster on a large table. Safety tip: run the <code>SELECT</code> inside <code>t</code> on its own first to sanity check the numbers before running the <code>UPDATE</code>.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p>The inner subquery uses <code>MAX(LANTHI)</code> to keep only the most recent attempt for each (<code>MAHV</code>, <code>MAMH</code>) pair; the outer subquery runs <code>AVG(DIEM)</code> over exactly that filtered set for each student.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>You can't run <code>AVG(DIEM)</code> directly over the whole <code>KETQUATHI</code> table, since a student can have multiple rows for the same subject (retakes) - without filtering to the most recent attempt, the average would be skewed by earlier failed attempts too.</p></div>
@@ -452,6 +491,12 @@ END;</code></pre></div>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, hv.NGSINH, hv.MALOP
 FROM HOCVIEN hv
 JOIN LOP l ON hv.MAHV = l.TRGLOP;</code></pre></div>
+              <details><summary>Alternative approach (subquery IN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAHV, HO + N' ' + TEN AS HOTEN, NGSINH, MALOP
+FROM HOCVIEN
+WHERE MAHV IN (SELECT TRGLOP FROM LOP);</code></pre></div>
+                <p>Since the question only needs columns from <code>HOCVIEN</code> (nothing from <code>LOP</code>), <code>JOIN</code> can be replaced with an <code>IN</code> subquery that filters <code>HOCVIEN</code> directly without joining any table - more compact, but only works when no extra column is needed from the other table.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN HOCVIEN</code> with <code>LOP</code> via <code>TRGLOP</code> to get exactly the students who are currently a class monitor; <code>HO + ' ' + TEN</code> concatenates the full name since <code>HOCVIEN</code> stores it as 2 separate columns.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p><code>JOIN</code> is used (not a subquery) because we need 4 full columns of student data - the question asks for both full name and date of birth, so we must join directly into <code>HOCVIEN</code>.</p></div>
@@ -479,6 +524,13 @@ ORDER BY hv.TEN, hv.HO;</code></pre></div>
 FROM HOCVIEN hv
 JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
 WHERE kq.LANTHI = 1 AND kq.KQUA = N'Dat';</code></pre></div>
+              <details><summary>Alternative approach (filtering by DIEM)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.MAMH
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.LANTHI = 1 AND kq.DIEM >= 5;</code></pre></div>
+                <p>Thanks to the <code>CHECK</code> constraint from Question 4 (Part I) guaranteeing <code>DIEM</code> and <code>KQUA</code> always agree (<code>DIEM &gt;= 5</code> if and only if <code>KQUA = 'Dat'</code>), filtering by <code>DIEM &gt;= 5</code> or by <code>KQUA = 'Dat'</code> always gives the same result - either column works, as long as that constraint stays in place.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p>Filter <code>KETQUATHI</code> directly by <code>LANTHI = 1</code> and <code>KQUA = 'Dat'</code>, then <code>JOIN</code> to <code>HOCVIEN</code> just to get the full name.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>The question also asks to print "the subjects" passed on attempt 1 - so <code>MAMH</code> has to stay in the result, no <code>GROUP BY</code> or aggregation, each row is 1 (student, subject) pair that satisfies the condition.</p></div>
@@ -493,6 +545,14 @@ FROM HOCVIEN hv
 JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
 WHERE hv.MALOP = N'K11' AND kq.MAMH = N'CTRR'
   AND kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat';</code></pre></div>
+              <details><summary>Alternative approach (filtering by DIEM)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE hv.MALOP = N'K11' AND kq.MAMH = N'CTRR'
+  AND kq.LANTHI = 1 AND kq.DIEM < 5;</code></pre></div>
+                <p>Same reasoning as Question 3 - <code>DIEM &lt; 5</code> and <code>KQUA = 'Khong Dat'</code> always go together thanks to the <code>CHECK</code> constraint from Question 4 (Part I), so both filters give the exact same result.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN</code> then filter on 4 conditions at once with <code>AND</code>: the right class, the right subject, the right attempt, the right result.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>Only attempt 1 is in scope, so <code>LANTHI = 1</code> must be filtered explicitly - without it, a student who retook the exam could still show up in the result even if they passed on a later attempt.</p></div>
@@ -500,21 +560,29 @@ WHERE hv.MALOP = N'K11' AND kq.MAMH = N'CTRR'
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">QUESTION 5 (PART III) · EXISTS / NOT EXISTS</p>
+              <p class="eyebrow">QUESTION 5 (PART III) · NOT EXISTS / NOT IN</p>
               <p><strong>Exercise:</strong> * List of students (student ID, full name) in class "K" who failed the CTRR subject (across all attempts).</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
 FROM HOCVIEN hv
-WHERE hv.MALOP = N'K11'
-  AND EXISTS (
-      SELECT * FROM KETQUATHI kq WHERE kq.MAHV = hv.MAHV AND kq.MAMH = N'CTRR'
-  )
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE hv.MALOP LIKE N'K%' AND kq.MAMH = N'CTRR'
   AND NOT EXISTS (
-      SELECT * FROM KETQUATHI kq
-      WHERE kq.MAHV = hv.MAHV AND kq.MAMH = N'CTRR' AND kq.KQUA = N'Dat'
+      SELECT * FROM KETQUATHI kq2
+      WHERE kq2.MAHV = hv.MAHV AND kq2.MAMH = N'CTRR' AND kq2.KQUA = N'Dat'
   );</code></pre></div>
+              <details><summary>Alternative approach (NOT IN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE hv.MALOP LIKE N'K%' AND kq.MAMH = N'CTRR'
+  AND hv.MAHV NOT IN (
+      SELECT MAHV FROM KETQUATHI WHERE MAMH = N'CTRR' AND KQUA = N'Dat'
+  );</code></pre></div>
+                <p><code>NOT IN</code> is safe here specifically because <code>KETQUATHI.MAHV</code> is part of the primary key - it's never <code>NULL</code>, so the inner list can't fall into the <code>NULL</code> trap that would otherwise make <code>NOT IN</code> return nothing.</p>
+              </details>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>EXISTS</code> confirms the student took the CTRR exam (at least once); <code>NOT EXISTS</code> confirms none of their attempts passed - together this means every CTRR attempt by this student failed.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>The question says class "K" - this almost certainly still refers to class K11 carried over from Question 4 (the sample schema has no class literally named "K", most likely a typo in the original document). If we only filtered <code>KQUA = 'Khong Dat'</code> like Question 4, a student who retook the exam and passed once would still show up incorrectly - <code>NOT EXISTS</code> is needed to guarantee no attempt ever passed, matching "across all attempts".</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN</code> with <code>KETQUATHI</code> filters to students who actually took the CTRR exam (confirming they took it while also filtering by class); <code>NOT EXISTS</code> confirms none of their CTRR attempts passed - together this means every CTRR attempt by this student failed.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Class "K" here should be read as a class-code prefix - every class in this schema has a code starting with "K" (K11, K12, K13), so class "K" is equivalent to <code>MALOP LIKE 'K%'</code> (every class), not a single specific class - the same prefix-style phrasing as Question 3 in Week 2 ("product code starting with B"). If we only filtered <code>KQUA = 'Khong Dat'</code> like Question 4, a student who retook the exam and passed once would still show up incorrectly - <code>NOT EXISTS</code> is needed to guarantee no attempt ever passed, matching "across all attempts". <code>DISTINCT</code> avoids duplicate rows since <code>JOIN KETQUATHI</code> can match more than 1 CTRR attempt per student.</p></div>
               </div>
             </div>
 
@@ -604,6 +672,16 @@ AND gv.MAGV IN (
     SELECT MAGV FROM GIANGDAY
     WHERE MALOP = N'K12' AND MAMH = N'CTRR' AND HOCKY = 1 AND NAM = 2006
 );</code></pre></div>
+              <details><summary>Alternative approach (INTERSECT)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">(SELECT gv.HOTEN
+ FROM GIAOVIEN gv JOIN GIANGDAY gd ON gv.MAGV = gd.MAGV
+ WHERE gd.MAMH = N'CTRR' AND gd.HOCKY = 1 AND gd.NAM = 2006 AND gd.MALOP = N'K11')
+INTERSECT
+(SELECT gv.HOTEN
+ FROM GIAOVIEN gv JOIN GIANGDAY gd ON gv.MAGV = gd.MAGV
+ WHERE gd.MAMH = N'CTRR' AND gd.HOCKY = 1 AND gd.NAM = 2006 AND gd.MALOP = N'K12');</code></pre></div>
+                <p><code>INTERSECT</code> keeps the overlap between 2 result sets - the list of teachers who taught K11 intersected with the list of teachers who taught K12 gives exactly the teachers who taught both classes, the same meaning as the 2 <code>IN</code> conditions joined by <code>AND</code> above, just expressed directly as a set operation.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p>2 independent subqueries, each returning the <code>MAGV</code> that taught CTRR to exactly 1 class (K11 or K12) in semester 1/2006; a valid teacher must satisfy both <code>IN</code> conditions at once.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>You can't merge this into a single <code>MALOP IN ('K11','K12')</code> condition, since that would match a teacher who taught just 1 of the 2 classes - the 2 subqueries have to stay separate, joined by <code>AND</code>, to force the teacher to cover both classes.</p></div>
@@ -619,11 +697,11 @@ JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
 WHERE kq.MAMH = N'CSDL' AND kq.LANTHI = 1 AND kq.KQUA = N'Khong Dat'
   AND NOT EXISTS (
       SELECT * FROM KETQUATHI kq2
-      WHERE kq2.MAHV = hv.MAHV AND kq2.MAMH = N'CSDL' AND kq2.LANTHI = 2
+      WHERE kq2.MAHV = hv.MAHV AND kq2.MAMH = N'CSDL' AND kq2.LANTHI > 1
   );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The main condition filters for a failing CSDL attempt 1; <code>NOT EXISTS</code> checks that no attempt-2 row exists for that same student and subject.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>"Has not retaken it" means no <code>LANTHI = 2</code> record exists - <code>NOT EXISTS</code> is the right tool for checking "does not exist", as opposed to counting or filtering directly.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The main condition filters for a failing CSDL attempt 1; <code>NOT EXISTS</code> checks that no row exists at all with <code>LANTHI > 1</code> for that same student and subject.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Has not retaken it" means no record exists from attempt 2 onward - <code>LANTHI > 1</code> (rather than a fixed <code>LANTHI = 2</code>) is used to also safely catch the rare edge case of a student having a <code>LANTHI = 3</code> record without a <code>LANTHI = 2</code> one in the data (the schema has no constraint forcing attempt numbers to be contiguous) - <code>NOT EXISTS</code> is the right tool for checking "does not exist", as opposed to counting or filtering directly.</p></div>
               </div>
             </div>
 
@@ -635,6 +713,12 @@ FROM GIAOVIEN gv
 WHERE NOT EXISTS (
     SELECT * FROM GIANGDAY gd WHERE gd.MAGV = gv.MAGV
 );</code></pre></div>
+              <details><summary>Alternative approach (LEFT JOIN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.MAGV, gv.HOTEN
+FROM GIAOVIEN gv LEFT JOIN GIANGDAY gd ON gv.MAGV = gd.MAGV
+WHERE gd.MAGV IS NULL;</code></pre></div>
+                <p><code>LEFT JOIN</code> keeps every teacher even when no <code>GIANGDAY</code> row matches (the <code>GIANGDAY</code>-side columns come back <code>NULL</code>); filtering <code>WHERE gd.MAGV IS NULL</code> is the classic "anti-join" pattern for finding rows with no match, giving the same result as <code>NOT EXISTS</code>.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>NOT EXISTS</code> checks that the teacher doesn't appear in any <code>GIANGDAY</code> row at all.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>This is a total negation query ("not any") - <code>NOT EXISTS</code> is always the safest choice here, avoiding the <code>NULL</code> trap that <code>NOT IN</code> can fall into.</p></div>
@@ -651,6 +735,14 @@ WHERE NOT EXISTS (
     JOIN MONHOC mh ON gd.MAMH = mh.MAMH
     WHERE gd.MAGV = gv.MAGV AND mh.MAKHOA = gv.MAKHOA
 );</code></pre></div>
+              <details><summary>Alternative approach (LEFT JOIN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gv.MAGV, gv.HOTEN
+FROM GIAOVIEN gv
+LEFT JOIN GIANGDAY gd ON gv.MAGV = gd.MAGV
+LEFT JOIN MONHOC mh ON gd.MAMH = mh.MAMH AND mh.MAKHOA = gv.MAKHOA
+WHERE mh.MAMH IS NULL;</code></pre></div>
+                <p>Same anti-join technique as Question 13, but the "belongs to the teacher's department" condition (<code>mh.MAKHOA = gv.MAKHOA</code>) has to sit inside the <code>ON</code> clause of <code>LEFT JOIN MONHOC</code> (not in <code>WHERE</code>) - putting it in <code>WHERE</code> would wrongly drop the non-matching rows that <code>LEFT JOIN</code> is meant to preserve (where <code>MONHOC</code> is already <code>NULL</code>) before the <code>IS NULL</code> condition even gets a chance to evaluate them.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>NOT EXISTS</code> checks that there's no <code>GIANGDAY</code> row for that teacher matching a subject that belongs to the teacher's own department (<code>mh.MAKHOA = gv.MAKHOA</code>).</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>Unlike Question 13 (not teaching anything at all), this only cares about subjects from the teacher's own department - a teacher can still teach subjects from other departments and satisfy this condition, as long as they teach nothing from their own department.</p></div>
@@ -675,7 +767,7 @@ WHERE hv.MALOP = N'K11'
   );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p>2 <code>EXISTS</code> branches joined by <code>OR</code> inside the same parentheses: branch 1 checks for any subject that reached attempt 3 (the maximum) and still failed; branch 2 checks for a CTRR attempt 2 scoring exactly 5.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>"Failed any subject on more than 3 attempts" - given the max <code>LANTHI</code> is 3 (Part I, Question 5) - is read as having reached attempt 3 (the last allowed attempt) and still being "Khong dat", meaning all retake chances are exhausted; this is the closest reading consistent with the schema's actual data constraint.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Failed any subject on more than 3 attempts" - given the max <code>LANTHI</code> is 3 (Part I, Question 5) - is read as having reached attempt 3 (the last allowed attempt) and still being "Khong dat", meaning all retake chances are exhausted; this is the closest reading consistent with the schema's actual data constraint. <strong>Watch out:</strong> Writing this condition literally as <code>LANTHI > 3</code> would make that branch always empty (never true), since the <code>CHECK</code> from Question 5 (Part I) already caps <code>LANTHI</code> at 3 - "failed on more than 3 attempts" has to be read according to how the schema's constraint actually works (all 3 allowed attempts used up), not translated word-for-word into <code>&gt; 3</code>.</p></div>
               </div>
             </div>
 
@@ -693,7 +785,7 @@ WHERE gv.MAGV IN (
 );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY (MAGV, HOCKY, NAM)</code>, then count distinct classes with <code>COUNT(DISTINCT MALOP)</code>; <code>HAVING >= 2</code> keeps only groups teaching 2 or more classes.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>Both <code>HOCKY</code> and <code>NAM</code> must be in the <code>GROUP BY</code> (not just <code>MAGV</code>), since the question requires "in the same semester of the same academic year" - grouping by <code>MAGV</code> alone would wrongly count a teacher who taught K11 in semester 1 and K12 in semester 2 (2 different semesters) as satisfying the condition.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Both <code>HOCKY</code> and <code>NAM</code> must be in the <code>GROUP BY</code> (not just <code>MAGV</code>), since the question requires "in the same semester of the same academic year" - grouping by <code>MAGV</code> alone would wrongly count a teacher who taught K11 in semester 1 and K12 in semester 2 (2 different semesters) as satisfying the condition. <strong>Note:</strong> Group by <code>MAGV</code> (the primary key) and only pull <code>HOTEN</code> out afterward - grouping directly by <code>HOTEN</code> instead of <code>MAGV</code> would accidentally merge 2 teachers who happen to share the same name into a single group, skewing the count.</p></div>
               </div>
             </div>
 
@@ -771,6 +863,14 @@ GROUP BY MAKHOA, HOCVI;</code></pre></div>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAMH, KQUA, COUNT(*) AS SoLuong
 FROM KETQUATHI
 GROUP BY MAMH, KQUA;</code></pre></div>
+              <details><summary>Alternative approach (pivot with CASE WHEN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAMH,
+    COUNT(CASE WHEN KQUA = N'Dat' THEN 1 END) AS SoLuongDat,
+    COUNT(CASE WHEN KQUA = N'Khong Dat' THEN 1 END) AS SoLuongKhongDat
+FROM KETQUATHI
+GROUP BY MAMH;</code></pre></div>
+                <p><code>COUNT(CASE WHEN ... THEN 1 END)</code> only counts the rows matching the condition inside <code>CASE</code> (non-matching rows return <code>NULL</code>, and <code>COUNT</code> always skips <code>NULL</code>) - this technique "pivots" the result from multiple rows (1 per <code>KQUA</code> value) into a single row per subject with 2 separate columns, easier to read side by side when comparing passed vs failed.</p>
+              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY</code> on the pair <code>(MAMH, KQUA)</code> to count attempts by result for each subject.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>This counts by exam attempt (each <code>KETQUATHI</code> row), without deduplicating students who retook the exam - since every row in <code>KETQUATHI</code> represents exactly 1 attempt, counting rows directly is the most reasonable reading; a student who retook a subject could contribute to both the "Khong Dat" group (earlier attempt) and the "Dat" group (later attempt) for the same subject.</p></div>

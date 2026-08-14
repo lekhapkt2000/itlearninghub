@@ -236,6 +236,25 @@ END;</code></pre></div>
           </table></div>
           <div class="inline-ok"><strong>Mẹo nhớ:</strong> <code>INSERTED</code> = cái <strong>mới</strong>. <code>DELETED</code> = cái <strong>cũ / bị xóa</strong>.</div>
 
+          <h3>Khai báo biến tạm (@)</h3>
+          <div class="definition">Biến tạm (local variable) trong T-SQL luôn bắt đầu bằng dấu <code>@</code>, khai báo bằng <code>DECLARE</code> - Chỉ tồn tại trong phạm vi batch/Trigger đang chạy, dùng để lưu tạm 1 giá trị lấy ra từ <code>INSERTED</code>/<code>DELETED</code> trước khi so sánh hay xử lý tiếp.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECLARE @TenBien KieuDuLieu;</code></pre></div>
+          <p>Khai báo nhiều biến cùng lúc, ngăn cách bằng dấu phẩy:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECLARE @MaKH CHAR(4), @NgayDK SMALLDATETIME;</code></pre></div>
+          <p>Biến mới khai báo mặc định mang giá trị <code>NULL</code>. Có 2 cách gán giá trị:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Cách gán</th><th>Cú pháp</th><th>Khi nào dùng</th></tr>
+            <tr><td><code>SET</code></td><td><code>SET @MaKH = 'KH01';</code></td><td>Gán 1 giá trị đơn, biết trước hoặc lấy từ subquery đúng 1 dòng.</td></tr>
+            <tr><td><code>SELECT</code></td><td><code>SELECT @MaKH = MAKH FROM inserted;</code></td><td>Gán trực tiếp từ kết quả 1 câu <code>SELECT</code>.</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECLARE @MaKH CHAR(4);
+
+SELECT @MaKH = MAKH
+FROM inserted;
+
+PRINT N'Khách hàng vừa thêm: ' + @MaKH;</code></pre></div>
+          <div class="inline-warning"><strong>Khác biệt quan trọng giữa <code>SET</code> và <code>SELECT</code>:</strong> Nếu subquery/bảng nguồn trả về <strong>nhiều hơn 1 dòng</strong>, <code>SET @x = (SELECT ...)</code> sẽ <strong>báo lỗi</strong> ngay lập tức - Nhưng <code>SELECT @x = cột FROM bảng</code> thì <strong>không báo lỗi gì cả</strong>, nó chỉ âm thầm gán giá trị của dòng cuối cùng được xử lý (thứ tự không đảm bảo) rồi bỏ qua tất cả các dòng còn lại. Đây chính là nguồn gốc của lỗi "Trigger chỉ đúng với 1 dòng" sẽ nói kỹ ở mục 07 - Không có thông báo lỗi nào để nhận biết, code vẫn chạy "được" nhưng sai âm thầm.</div>
+
           <h3>Thử trực tiếp</h3>
           <p>Bấm một nút để xem <code>INSERTED</code>/<code>DELETED</code> chứa gì với từng thao tác (ví dụ: Đổi tên khách hàng từ "Nguyễn Văn A" thành "Nguyễn Văn B"):</p>
           <div class="trigger-demo">
@@ -360,7 +379,7 @@ END;</code></pre></div>
 
 SELECT @MAKH = MAKH
 FROM INSERTED;</code></pre></div>
-          <p>Cách này dễ hiểu khi minh họa <strong>một bản ghi</strong>, nhưng một câu <code>INSERT INTO ... SELECT ...</code> có thể thêm <strong>nhiều dòng cùng lúc</strong>.</p>
+          <p>Cách này dễ hiểu khi minh họa <strong>một bản ghi</strong>, nhưng một câu <code>INSERT INTO ... SELECT ...</code> có thể thêm <strong>nhiều dòng cùng lúc</strong> - Và như đã nói ở mục 05, <code>SELECT @x = cột FROM inserted</code> không hề báo lỗi khi có nhiều dòng, nó chỉ âm thầm bỏ sót.</p>
           <div class="ascii-block">INSERTED
 ├── dòng 1
 ├── dòng 2
@@ -368,6 +387,32 @@ FROM INSERTED;</code></pre></div>
 ├── ...
 └── dòng n</div>
           <div class="inline-warning">Trigger nên được tư duy theo <strong>tập hợp dữ liệu (set-based)</strong> thay vì mặc định chỉ có một dòng - Đây là kỹ năng quan trọng khi bước từ bài thực hành sang SQL thực tế. Không nên chỉ tư duy "INSERTED ➜ 1 dòng ➜ 1 biến", mà cần xử lý <strong>toàn bộ tập dữ liệu</strong> trong INSERTED/DELETED.</div>
+
+          <h3>Biến tạm so với IF EXISTS/JOIN</h3>
+          <p>Đây là 2 cách viết phổ biến cho cùng 1 bài toán kiểm tra dữ liệu trong Trigger:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th></th><th>Biến tạm (<code>DECLARE</code> + <code>SELECT @x = ...</code>)</th><th><code>IF EXISTS</code>/<code>NOT EXISTS</code> + <code>JOIN</code></th></tr>
+            <tr><td>Đúng với nhiều dòng?</td><td>Chỉ đúng khi chắc chắn thao tác tác động đúng 1 dòng</td><td>Luôn đúng, bất kể 1 hay nhiều dòng</td></tr>
+            <tr><td>Cách kiểm tra</td><td>Gán giá trị ra biến rồi so sánh</td><td>Kiểm tra "có tồn tại dòng vi phạm không" trên toàn bộ <code>inserted</code>/<code>deleted</code></td></tr>
+            <tr><td>Khi nào nên dùng</td><td>Bài minh họa đơn giản, hoặc chắc chắn 100% chỉ có 1 dòng</td><td>Nên dùng mặc định cho mọi Trigger kiểm tra dữ liệu</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- Biến tạm - chỉ an toàn khi chắc chắn 1 dòng
+DECLARE @SoLuong INT;
+SELECT @SoLuong = SOLUONG FROM inserted;
+IF (@SoLuong < 0)
+BEGIN
+    RAISERROR (N'Số lượng không thể âm.', 16, 1);
+    ROLLBACK TRANSACTION;
+    RETURN;
+END</code></pre></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- IF EXISTS - đúng với bất kỳ số dòng nào
+IF EXISTS (SELECT * FROM inserted WHERE SOLUONG < 0)
+BEGIN
+    RAISERROR (N'Số lượng không thể âm.', 16, 1);
+    ROLLBACK TRANSACTION;
+    RETURN;
+END</code></pre></div>
+          <p>Trong đề bài BTTH5, đa số câu đều nên trình bày theo hướng <code>IF EXISTS</code>/<code>NOT EXISTS</code> làm đáp án chính - Cách dùng biến tạm vẫn được giữ lại trong đáp án như một "Cách khác" để tham khảo, kèm ghi chú rõ giới hạn chỉ đúng khi thao tác ảnh hưởng đúng 1 dòng.</p>
         </section>
 
         <!-- 08 - Quy trinh + cheat sheet -->
@@ -403,6 +448,9 @@ AFTER        ➜ Chạy sau thao tác DML
 INSTEAD OF   ➜ Thay thế thao tác DML
 INSERTED     ➜ Dữ liệu mới
 DELETED      ➜ Dữ liệu cũ / bị xóa
+DECLARE @x   ➜ Khai báo biến tạm
+SET @x = ... ➜ Gán 1 giá trị, báo lỗi nếu subquery >1 dòng
+SELECT @x = ...FROM... ➜ Gán từ SELECT, ÂM THẦM chỉ lấy 1 dòng
 IF EXISTS    ➜ Kiểm tra có dữ liệu thỏa điều kiện
 IF NOT EXISTS ➜ Kiểm tra không tồn tại dữ liệu
 PRINT        ➜ Thông báo

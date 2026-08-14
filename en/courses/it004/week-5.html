@@ -240,6 +240,25 @@ END;</code></pre></div>
           </table></div>
           <div class="inline-ok"><strong>Memory trick:</strong> <code>INSERTED</code> = the <strong>new</strong> one. <code>DELETED</code> = the <strong>old / removed</strong> one.</div>
 
+          <h3>Declaring Local Variables (@)</h3>
+          <div class="definition">A local variable in T-SQL always starts with <code>@</code>, declared with <code>DECLARE</code> - it only exists within the scope of the current batch/Trigger, and is used to hold a value pulled from <code>INSERTED</code>/<code>DELETED</code> before comparing it or processing it further.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECLARE @VariableName DataType;</code></pre></div>
+          <p>Declare several variables at once, separated by commas:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECLARE @MaKH CHAR(4), @NgayDK SMALLDATETIME;</code></pre></div>
+          <p>A newly declared variable starts out as <code>NULL</code>. There are 2 ways to assign a value:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Method</th><th>Syntax</th><th>When to Use</th></tr>
+            <tr><td><code>SET</code></td><td><code>SET @MaKH = 'KH01';</code></td><td>Assign a single known value, or a subquery guaranteed to return exactly 1 row.</td></tr>
+            <tr><td><code>SELECT</code></td><td><code>SELECT @MaKH = MAKH FROM inserted;</code></td><td>Assign directly from the result of a <code>SELECT</code>.</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DECLARE @MaKH CHAR(4);
+
+SELECT @MaKH = MAKH
+FROM inserted;
+
+PRINT N'Customer just added: ' + @MaKH;</code></pre></div>
+          <div class="inline-warning"><strong>The key difference between <code>SET</code> and <code>SELECT</code>:</strong> If the subquery/source table returns <strong>more than 1 row</strong>, <code>SET @x = (SELECT ...)</code> will <strong>raise an error</strong> immediately - but <code>SELECT @x = column FROM table</code> raises <strong>no error at all</strong>. It just silently assigns the value from the last row processed (the order isn't guaranteed) and drops every other row. This is exactly where the "Trigger only works for 1 row" bug covered in section 07 comes from - there's no error message to catch it, the code just runs "fine" while being silently wrong.</div>
+
           <h3>Try It Yourself</h3>
           <p>Click a button to see what <code>INSERTED</code>/<code>DELETED</code> contain for each operation (example: renaming a customer from "Nguyễn Văn A" to "Nguyễn Văn B"):</p>
           <div class="trigger-demo">
@@ -364,7 +383,7 @@ END;</code></pre></div>
 
 SELECT @MAKH = MAKH
 FROM INSERTED;</code></pre></div>
-          <p>This is easy to understand when illustrating <strong>a single record</strong>, but a single <code>INSERT INTO ... SELECT ...</code> statement can insert <strong>many rows at once</strong>.</p>
+          <p>This is easy to understand when illustrating <strong>a single record</strong>, but a single <code>INSERT INTO ... SELECT ...</code> statement can insert <strong>many rows at once</strong> - and as section 05 already pointed out, <code>SELECT @x = column FROM inserted</code> raises no error at all with multiple rows, it just silently drops the rest.</p>
           <div class="ascii-block">INSERTED
 ├── row 1
 ├── row 2
@@ -372,6 +391,32 @@ FROM INSERTED;</code></pre></div>
 ├── ...
 └── row n</div>
           <div class="inline-warning">A Trigger should be designed with <strong>set-based thinking</strong> instead of assuming there's always just one row - this is an important skill when moving from classroom exercises to real-world SQL. Don't just think "INSERTED ➜ 1 row ➜ 1 variable" - you need to handle the <strong>entire set of data</strong> in INSERTED/DELETED.</div>
+
+          <h3>Local Variables vs. IF EXISTS/JOIN</h3>
+          <p>These are 2 common ways to write the same data-validation problem in a Trigger:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th></th><th>Local variable (<code>DECLARE</code> + <code>SELECT @x = ...</code>)</th><th><code>IF EXISTS</code>/<code>NOT EXISTS</code> + <code>JOIN</code></th></tr>
+            <tr><td>Correct with multiple rows?</td><td>Only correct when the operation is guaranteed to affect exactly 1 row</td><td>Always correct, whether 1 row or many</td></tr>
+            <tr><td>How it checks</td><td>Assign a value into a variable, then compare</td><td>Check "does a violating row exist" across the whole <code>inserted</code>/<code>deleted</code> set</td></tr>
+            <tr><td>When to use</td><td>Simple illustrative examples, or when it's 100% guaranteed to be 1 row</td><td>Should be the default for every data-validation Trigger</td></tr>
+          </table></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- Local variable - only safe with exactly 1 row
+DECLARE @SoLuong INT;
+SELECT @SoLuong = SOLUONG FROM inserted;
+IF (@SoLuong < 0)
+BEGIN
+    RAISERROR (N'Quantity cannot be negative.', 16, 1);
+    ROLLBACK TRANSACTION;
+    RETURN;
+END</code></pre></div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">-- IF EXISTS - correct for any number of rows
+IF EXISTS (SELECT * FROM inserted WHERE SOLUONG < 0)
+BEGIN
+    RAISERROR (N'Quantity cannot be negative.', 16, 1);
+    ROLLBACK TRANSACTION;
+    RETURN;
+END</code></pre></div>
+          <p>In the BTTH5 exercises, most questions should present <code>IF EXISTS</code>/<code>NOT EXISTS</code> as the main answer - the local-variable approach is still kept in the answer key as an "Alternative approach" for reference, with a clear note on its limitation: it's only correct when the operation affects exactly 1 row.</p>
         </section>
 
         <!-- 08 - Workflow + Cheat Sheet -->
@@ -407,6 +452,9 @@ AFTER        ➜ Runs after the DML operation
 INSTEAD OF   ➜ Replaces the DML operation
 INSERTED     ➜ The new data
 DELETED      ➜ The old / removed data
+DECLARE @x   ➜ Declares a local variable
+SET @x = ... ➜ Assigns 1 value, errors if the subquery has >1 row
+SELECT @x = ...FROM... ➜ Assigns from a SELECT, SILENTLY keeps only 1 row
 IF EXISTS    ➜ Checks that matching data exists
 IF NOT EXISTS ➜ Checks that no matching data exists
 PRINT        ➜ A notification

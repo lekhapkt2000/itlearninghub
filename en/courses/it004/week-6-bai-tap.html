@@ -171,10 +171,406 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified - you now have access to the Week 6 answer.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Below is a sample question to illustrate how the answer is presented - it will be replaced with the real Goods Management solution.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Full answer key for all 36 questions. This is the classic "Suppliers - Parts - Shipments" schema, so several questions (9-17, 18-20) intentionally repeat the same requirement using different techniques (JOIN, IN, EXISTS, subquery, outer JOIN) - that's the exercise's intent, to directly compare equivalent ways of writing the same query, not redundancy. Retype each answer into SSMS to remember it better - the Copy button here is purely for convenience.</p>
 
             <div class="qa-block">
-              <p class="eyebrow">QUESTION 1 (SAMPLE) · JOIN + GROUP BY + ORDER BY</p>
+              <p class="eyebrow">QUESTION 1 · SELECT</p>
+              <p><strong>Exercise:</strong> Display the (MANCC, TENNCC, THANHPHO) information for all suppliers.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, TENNCC, THANHPHO
+FROM NHACUNGCAP;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>SELECT</code> lists exactly the 3 columns the question asks for, instead of <code>SELECT *</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question explicitly names 3 columns in parentheses (MANCC, TENNCC, THANHPHO) - <code>TRANGTHAI</code> isn't pulled even though the table has it.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2 · SELECT *</p>
+              <p><strong>Exercise:</strong> Display the information for all parts.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM PHUTUNG;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>SELECT *</code> pulls every column that currently exists in <code>PHUTUNG</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The question just says "information" in general, without naming specific columns like Question 1 - so pulling everything is the reasonable reading.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3 · WHERE</p>
+              <p><strong>Exercise:</strong> Display the information for suppliers located in London.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NHACUNGCAP
+WHERE THANHPHO = 'London';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>A direct filter with <code>WHERE THANHPHO = 'London'</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The sample data has exactly 2 suppliers in London (S1 Smith, S4 Clark) - an <code>=</code> comparison is enough, no <code>LIKE</code> needed since the city name matches exactly.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 4 · WHERE</p>
+              <p><strong>Exercise:</strong> Display the part code, name, and color for all parts located in Paris.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, MAUSAC
+FROM PHUTUNG
+WHERE THANHPHO = 'Paris';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Same technique as Question 3, switching the table and the city condition.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The result is P2 (Bolt, Green) and P5 (Cam, Blue) - the only 2 parts with <code>THANHPHO = 'Paris'</code> in the sample data.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 5 · WHERE</p>
+              <p><strong>Exercise:</strong> Display the part code, name, and weight for parts with a weight greater than 15.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, KHOILUONG
+FROM PHUTUNG
+WHERE KHOILUONG > 15;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>A numeric comparison with <code>&gt;</code> on the <code>KHOILUONG</code> column (a <code>FLOAT</code>).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The result is P2 (17), P3 (17), P6 (19) - "greater than 15" excludes a value equal to 15 (no part happens to be exactly 15 here, but it's still worth telling <code>&gt;</code> apart from <code>&gt;=</code> when reading a question).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 6 · WHERE ... AND</p>
+              <p><strong>Exercise:</strong> Find parts (MAPT, TENPT, MAUSAC) with a weight greater than 15 that are not red.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, MAUSAC
+FROM PHUTUNG
+WHERE KHOILUONG > 15 AND MAUSAC <> 'Red';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Adds a <code>MAUSAC &lt;&gt; 'Red'</code> condition joined by <code>AND</code> onto Question 5.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Of the 3 parts satisfying Question 5 (P2, P3, P6), P6 is excluded for being Red - leaving just P2 (Green) and P3 (Blue).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 7 · WHERE ... NOT IN</p>
+              <p><strong>Exercise:</strong> Find parts (MAPT, TENPT, MAUSAC) with a weight greater than 15 whose color is neither red nor green.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, MAUSAC
+FROM PHUTUNG
+WHERE KHOILUONG > 15 AND MAUSAC NOT IN ('Red', 'Green');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>NOT IN ('Red', 'Green')</code> excludes both colors at once, more compact than writing <code>MAUSAC &lt;&gt; 'Red' AND MAUSAC &lt;&gt; 'Green'</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Starting from Question 6's result (P2 Green, P3 Blue), P2 is now excluded too for being Green - leaving only P3 (Blue).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 8 · WHERE ... ORDER BY</p>
+              <p><strong>Exercise:</strong> Display parts (MAPT, TENPT, weight) with a weight greater than 15 and less than 20, sorted by part name.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, KHOILUONG
+FROM PHUTUNG
+WHERE KHOILUONG > 15 AND KHOILUONG < 20
+ORDER BY TENPT;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>An open range on both ends (<code>&gt; 15 AND &lt; 20</code>, excluding 15 and 20); <code>ORDER BY TENPT</code> sorts alphabetically by part name.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The 3 parts that qualify are P2 (Bolt, 17), P3 (Screw, 17), P6 (Cog, 19) - sorting by name gives the order Bolt, Cog, Screw (not by part code P2/P3/P6).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 9 · JOIN</p>
+              <p><strong>Exercise:</strong> Display the parts shipped by supplier S1, with no duplicate rows (use a join).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT pt.MAPT, pt.TENPT, pt.MAUSAC, pt.KHOILUONG, pt.THANHPHO
+FROM PHUTUNG pt
+JOIN VANCHUYEN vc ON pt.MAPT = vc.MAPT
+WHERE vc.MANCC = 'S1';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN PHUTUNG</code> with <code>VANCHUYEN</code> via <code>MAPT</code>, filtered to supplier S1; <code>DISTINCT</code> removes duplicates.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>A part could appear multiple times in <code>VANCHUYEN</code> if shipped by several different suppliers, but filtering to exactly 1 <code>MANCC</code> here means each <code>MAPT</code> actually matches just 1 row (since <code>VANCHUYEN</code>'s primary key is the pair <code>MANCC, MAPT</code>) - <code>DISTINCT</code> is still kept to match what the question explicitly asks for, and is a safe habit whenever <code>JOIN</code>ing.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 10 · JOIN</p>
+              <p><strong>Exercise:</strong> Display the suppliers that shipped part P1 (use a join).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT ncc.MANCC, ncc.TENNCC, ncc.TRANGTHAI, ncc.THANHPHO
+FROM NHACUNGCAP ncc
+JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+WHERE vc.MAPT = 'P1';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The mirror structure of Question 9 - the <code>JOIN</code> direction flips from <code>NHACUNGCAP</code> to <code>VANCHUYEN</code>, filtering by <code>MAPT</code> instead of <code>MANCC</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The 2 suppliers who ever shipped P1 are S1 and S2 - a good example of an N-N relationship: a single part can be shipped by several different suppliers.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 11 · JOIN 3 TABLES</p>
+              <p><strong>Exercise:</strong> Display information for suppliers located in London that shipped parts located in London, with no duplicate rows (use a join).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT ncc.MANCC, ncc.TENNCC, ncc.TRANGTHAI, ncc.THANHPHO
+FROM NHACUNGCAP ncc
+JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+JOIN PHUTUNG pt ON vc.MAPT = pt.MAPT
+WHERE ncc.THANHPHO = 'London' AND pt.THANHPHO = 'London';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Chains <code>JOIN</code> across all 3 tables to know both where the supplier is located and where the parts they shipped are located; the 2 <code>THANHPHO = 'London'</code> conditions apply to 2 different tables (<code>ncc</code> and <code>pt</code>).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>It's easy to mistake the 2 "London" conditions as the same idea, but these are 2 independent constraints on 2 different entities - the supplier is based in London <strong>and</strong> (not necessarily the same row of data) has shipped at least 1 part that originates from London. Both S1 and S4 qualify (S1 shipped P1/P4/P6 - all located in London; S4 shipped P4 - located in London).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 12 · SUBQUERY ... IN</p>
+              <p><strong>Exercise:</strong> Repeat question 9 but use the IN operator.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, MAUSAC, KHOILUONG, THANHPHO
+FROM PHUTUNG
+WHERE MAPT IN (
+    SELECT MAPT FROM VANCHUYEN WHERE MANCC = 'S1'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>An independent subquery gets the list of <code>MAPT</code> that S1 ever shipped; the outer query filters <code>PHUTUNG</code> against that list with <code>IN</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Gives the same result as Question 9 without needing <code>JOIN</code> or <code>DISTINCT</code> - since <code>IN</code> only checks "is it in the list" instead of multiplying rows the way <code>JOIN</code> can, there's naturally no duplication to remove.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 13 · SUBQUERY ... IN</p>
+              <p><strong>Exercise:</strong> Repeat question 10 but use the IN operator.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, TENNCC, TRANGTHAI, THANHPHO
+FROM NHACUNGCAP
+WHERE MANCC IN (
+    SELECT MANCC FROM VANCHUYEN WHERE MAPT = 'P1'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The mirror of Question 12, flipping the filter from <code>MAPT</code> to <code>MANCC</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Same reasoning as Question 12 - <code>IN</code> compactly replaces the <code>JOIN + DISTINCT</code> pair when all that's needed is to check "does a relationship exist", with no extra column pulled from the intermediate <code>VANCHUYEN</code> table.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 14 · SUBQUERY ... EXISTS</p>
+              <p><strong>Exercise:</strong> Repeat question 9 but use the EXISTS operator.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, MAUSAC, KHOILUONG, THANHPHO
+FROM PHUTUNG pt
+WHERE EXISTS (
+    SELECT * FROM VANCHUYEN vc
+    WHERE vc.MAPT = pt.MAPT AND vc.MANCC = 'S1'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>A correlated subquery - <code>vc.MAPT = pt.MAPT</code> references back to the current <code>PHUTUNG</code> row in the outer query, unlike the independent subquery in Question 12.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>All 3 approaches (Question 9's <code>JOIN</code>, Question 12's <code>IN</code>, Question 14's <code>EXISTS</code>) give exactly the same result - the difference is in how SQL Server optimizes execution: <code>EXISTS</code> stops as soon as it finds the first matching row, usually faster than <code>IN</code> when the inner table is large.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 15 · SUBQUERY ... EXISTS</p>
+              <p><strong>Exercise:</strong> Repeat question 10 but use the EXISTS operator.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, TENNCC, TRANGTHAI, THANHPHO
+FROM NHACUNGCAP ncc
+WHERE EXISTS (
+    SELECT * FROM VANCHUYEN vc
+    WHERE vc.MANCC = ncc.MANCC AND vc.MAPT = 'P1'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The mirror of Question 14, correlated via <code>MANCC</code> instead of <code>MAPT</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Questions 10/13/15 form a complete trio illustrating the same question answered with <code>JOIN</code>, <code>IN</code>, and <code>EXISTS</code> - worth writing out all 3 and comparing results to make sure each technique's behavior is properly understood.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 16 · SUBQUERY ... IN</p>
+              <p><strong>Exercise:</strong> Repeat question 11 using a subquery with the IN operator.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, TENNCC, TRANGTHAI, THANHPHO
+FROM NHACUNGCAP
+WHERE THANHPHO = 'London'
+  AND MANCC IN (
+      SELECT vc.MANCC
+      FROM VANCHUYEN vc
+      JOIN PHUTUNG pt ON vc.MAPT = pt.MAPT
+      WHERE pt.THANHPHO = 'London'
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The "supplier is in London" condition stays in the outer query; the "shipped a London part" condition becomes an independent subquery returning a list of <code>MANCC</code>, matched with <code>IN</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The subquery still needs to <code>JOIN VANCHUYEN</code> with <code>PHUTUNG</code> internally, since it has to know which parts are in London before tracing back to the supplier - the <code>JOIN</code> doesn't disappear, it just moves inside the subquery.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 17 · SUBQUERY ... EXISTS</p>
+              <p><strong>Exercise:</strong> Repeat question 11 using a subquery with the EXISTS operator.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, TENNCC, TRANGTHAI, THANHPHO
+FROM NHACUNGCAP ncc
+WHERE THANHPHO = 'London'
+  AND EXISTS (
+      SELECT * FROM VANCHUYEN vc
+      JOIN PHUTUNG pt ON vc.MAPT = pt.MAPT
+      WHERE vc.MANCC = ncc.MANCC AND pt.THANHPHO = 'London'
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Same as Question 16, but the subquery is correlated via <code>vc.MANCC = ncc.MANCC</code> instead of returning a standalone list to compare with <code>IN</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Questions 11/16/17 round out the complete trio of <code>JOIN</code>, <code>IN</code>, and <code>EXISTS</code> for the same 2-condition problem - a step up in complexity from Questions 9-10 since it needs an extra <code>JOIN</code> right inside the subquery.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 18 · NOT IN</p>
+              <p><strong>Exercise:</strong> Find suppliers that have not shipped any part yet. Use NOT IN.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NHACUNGCAP
+WHERE MANCC NOT IN (
+    SELECT MANCC FROM VANCHUYEN
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>NOT IN</code> excludes every supplier whose code appears in <code>VANCHUYEN</code>, leaving only suppliers that have never shipped anything.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The result is S5 (Adams) - the only supplier with no row at all in <code>VANCHUYEN</code>. <code>NOT IN</code> is safe here since <code>VANCHUYEN.MANCC</code> is part of the primary key and can never be <code>NULL</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 19 · NOT EXISTS</p>
+              <p><strong>Exercise:</strong> Find suppliers that have not shipped any part yet. Use NOT EXISTS.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NHACUNGCAP ncc
+WHERE NOT EXISTS (
+    SELECT * FROM VANCHUYEN vc WHERE vc.MANCC = ncc.MANCC
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>NOT EXISTS</code> checks that no <code>VANCHUYEN</code> row matches the supplier being evaluated.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Gives the same S5 result as Question 18 - <code>NOT EXISTS</code> is always the safer long-term choice over <code>NOT IN</code> (no <code>NULL</code> trap to worry about), even though both are correct in this exercise since there's no <code>NULL</code> in <code>VANCHUYEN.MANCC</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 20 · OUTER JOIN</p>
+              <p><strong>Exercise:</strong> Find suppliers that have not shipped any part yet. Use an outer JOIN.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ncc.*
+FROM NHACUNGCAP ncc
+LEFT JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+WHERE vc.MANCC IS NULL;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>LEFT JOIN</code> keeps every supplier even when no <code>VANCHUYEN</code> row matches (the <code>vc</code>-side columns come back <code>NULL</code>); filtering <code>WHERE vc.MANCC IS NULL</code> is the classic "anti-join" technique.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Questions 18/19/20 are the 3 most classic ways to answer a "doesn't have any" question in SQL - <code>NOT IN</code>, <code>NOT EXISTS</code>, and <code>LEFT JOIN ... IS NULL</code> - worth memorizing all 3, since this pattern shows up constantly on practice exams.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 21 · COUNT</p>
+              <p><strong>Exercise:</strong> How many suppliers are there in total?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SoLuongNCC
+FROM NHACUNGCAP;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>COUNT(*)</code> counts every row in the table.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The sample data has exactly 5 suppliers (S1-S5).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 22 · COUNT ... WHERE</p>
+              <p><strong>Exercise:</strong> How many suppliers are there in London?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SoLuongNCC_London
+FROM NHACUNGCAP
+WHERE THANHPHO = 'London';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>WHERE</code> filters first, <code>COUNT(*)</code> counts second - only rows that pass the filter get counted.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The result is 2 (S1, S4) - the difference from Question 21 is the added <code>WHERE</code> to narrow the scope of the count.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 23 · MAX / MIN</p>
+              <p><strong>Exercise:</strong> Display the highest and lowest TRANGTHAI value among all suppliers.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAX(TRANGTHAI) AS TrangThaiCaoNhat, MIN(TRANGTHAI) AS TrangThaiThapNhat
+FROM NHACUNGCAP;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>MAX()</code> and <code>MIN()</code> can be computed together in the same <code>SELECT</code>, no need for 2 separate statements.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>TRANGTHAI</code> across the 5 suppliers is 20, 10, 30, 20, 30 - highest is 30, lowest is 10.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 24 · MAX / MIN ... WHERE</p>
+              <p><strong>Exercise:</strong> Display the highest and lowest TRANGTHAI value in the NHACUNGCAP table for suppliers in London.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAX(TRANGTHAI) AS TrangThaiCaoNhat, MIN(TRANGTHAI) AS TrangThaiThapNhat
+FROM NHACUNGCAP
+WHERE THANHPHO = 'London';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Adds <code>WHERE THANHPHO = 'London'</code> before computing <code>MAX</code>/<code>MIN</code>, unlike Question 23 which computes over the whole table.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Both suppliers in London (S1, S4) happen to have <code>TRANGTHAI = 20</code>, so both the highest and lowest come out to 20 - not a bug, just a coincidence of the data.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 25 · GROUP BY ... SUM</p>
+              <p><strong>Exercise:</strong> How many parts did each supplier ship? Show only the supplier code and total quantity shipped.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, SUM(SOLUONG) AS TongSoLuong
+FROM VANCHUYEN
+GROUP BY MANCC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY MANCC</code> splits the data by supplier; <code>SUM(SOLUONG)</code> totals the quantity within each group.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"How many parts" here means the <strong>total quantity</strong> shipped (the <code>SOLUONG</code> column), not a count of distinct part types - the result: S1=1300, S2=700, S3=200, S4=900. S5 doesn't appear since <code>GROUP BY</code> runs on <code>VANCHUYEN</code>, where S5 has no rows at all.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 26 · JOIN ... GROUP BY ... SUM</p>
+              <p><strong>Exercise:</strong> How many parts did each supplier ship? Show the supplier code, name, city, and total quantity shipped.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ncc.MANCC, ncc.TENNCC, ncc.THANHPHO, SUM(vc.SOLUONG) AS TongSoLuong
+FROM NHACUNGCAP ncc
+JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+GROUP BY ncc.MANCC, ncc.TENNCC, ncc.THANHPHO;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Same idea as Question 25, but now needs a <code>JOIN</code> to <code>NHACUNGCAP</code> to get <code>TENNCC</code>/<code>THANHPHO</code>, so <code>GROUP BY</code> has to list all 3 non-aggregated columns.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>SQL Server requires every column in <code>SELECT</code> that isn't wrapped in an aggregate function to also appear in <code>GROUP BY</code> - leaving out <code>TENNCC</code> or <code>THANHPHO</code> from <code>GROUP BY</code> raises a syntax error.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 27 · GROUP BY ... HAVING</p>
+              <p><strong>Exercise:</strong> Which suppliers shipped a total of more than 500 parts? Show only the supplier code.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC
+FROM VANCHUYEN
+GROUP BY MANCC
+HAVING SUM(SOLUONG) > 500;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>HAVING SUM(SOLUONG) &gt; 500</code> filters on the <strong>aggregated result</strong> after <code>GROUP BY</code>, unlike <code>WHERE</code> which can only filter the original individual rows.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>WHERE SUM(SOLUONG) &gt; 500</code> wouldn't work, since at the point <code>WHERE</code> runs the data hasn't been grouped yet, so <code>SUM()</code> has no value - from Question 25's result (S1=1300, S2=700, S3=200, S4=900), only S3 (200) gets excluded.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 28 · JOIN ... GROUP BY ... HAVING</p>
+              <p><strong>Exercise:</strong> Which suppliers shipped more than 300 red parts? Show only the supplier code.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT vc.MANCC
+FROM VANCHUYEN vc
+JOIN PHUTUNG pt ON vc.MAPT = pt.MAPT
+WHERE pt.MAUSAC = 'Red'
+GROUP BY vc.MANCC
+HAVING SUM(vc.SOLUONG) > 300;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>WHERE pt.MAUSAC = 'Red'</code> filters before grouping (keeping only shipments of red parts), then <code>GROUP BY</code> + <code>HAVING</code> filters on the total quantity.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The red parts are P1, P4, P6. Per supplier: S1 shipped red P1(300)+P4(200)+P6(100)=600; S2 shipped red P1(300)=300; S4 shipped red P4(300)=300 - only S1's total is <strong>greater than</strong> 300 (S2 and S4 are exactly 300, which doesn't satisfy "more than").</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 29 · JOIN ... GROUP BY ... HAVING</p>
+              <p><strong>Exercise:</strong> Which suppliers shipped more than 300 red parts? Show the supplier code, name, city, and quantity of red parts shipped.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ncc.MANCC, ncc.TENNCC, ncc.THANHPHO, SUM(vc.SOLUONG) AS SoLuongDo
+FROM NHACUNGCAP ncc
+JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+JOIN PHUTUNG pt ON vc.MAPT = pt.MAPT
+WHERE pt.MAUSAC = 'Red'
+GROUP BY ncc.MANCC, ncc.TENNCC, ncc.THANHPHO
+HAVING SUM(vc.SOLUONG) > 300;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Same logic as Question 28, adding a <code>JOIN</code> to <code>NHACUNGCAP</code> for <code>TENNCC</code>/<code>THANHPHO</code>, the same way Question 26 extended Question 25.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The result is exactly 1 row: S1, Smith, London, 600 - matching the analysis in Question 28.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 30 · GROUP BY</p>
+              <p><strong>Exercise:</strong> How many suppliers are there in each city?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT THANHPHO, COUNT(*) AS SoLuongNCC
+FROM NHACUNGCAP
+GROUP BY THANHPHO;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY THANHPHO</code> splits suppliers by city; <code>COUNT(*)</code> counts how many fall into each group.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The result: London=2 (S1, S4), Paris=2 (S2, S3), Athens=1 (S5) - all 5 suppliers accounted for, unlike Question 25 (where S5 was missing since the source table there was <code>VANCHUYEN</code>, not <code>NHACUNGCAP</code>).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 31 · JOIN + GROUP BY + ORDER BY + TOP</p>
               <p><strong>Exercise:</strong> Which supplier shipped the most parts? Show the supplier name and quantity of parts shipped.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES ncc.TENNCC, SUM(vc.SOLUONG) AS TongSoLuong
 FROM NHACUNGCAP ncc
@@ -182,23 +578,72 @@ JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
 GROUP BY ncc.TENNCC
 ORDER BY TongSoLuong DESC;</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Combines <code>JOIN</code> (to get the supplier name), <code>GROUP BY</code> (to total the quantity per supplier), and <code>ORDER BY ... DESC</code> + <code>TOP 1</code> (to take the supplier with the most).</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>This is a typical example of chaining several learned techniques together: you must <code>JOIN</code> first to get the name, <code>GROUP BY</code> to total per supplier, and only then sort and take the first row - doing the steps out of order produces a wrong result or a syntax error.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Combines <code>JOIN</code> (to get the supplier name), <code>GROUP BY</code> (to total the quantity per supplier), and <code>ORDER BY ... DESC</code> + <code>TOP 1 WITH TIES</code> (to take the supplier with the highest total, keeping any suppliers tied for the top spot).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>A typical example of chaining several learned techniques in 1 question - from the total-quantity results in Question 25 (S1=1300, S2=700, S3=200, S4=900), S1 (Smith) leads with 1300, and no other supplier is tied, so the result is exactly 1 row.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">QUESTION 2 (SAMPLE) · INSERT + UPDATE</p>
-              <p><strong>Exercise:</strong> Write the SQL statement to insert a new supplier: S6, Duncan, 30, Paris. Then change S6's city to Sydney.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO NHACUNGCAP (MANCC, TENNCC, TRANGTHAI, THANHPHO)
-VALUES ('S6', 'Duncan', 30, 'Paris');
+              <p class="eyebrow">QUESTION 32 · INTERSECT</p>
+              <p><strong>Exercise:</strong> Which cities have both a <strong>supplier</strong> and a <strong>part</strong>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT THANHPHO FROM NHACUNGCAP
+INTERSECT
+SELECT THANHPHO FROM PHUTUNG;</code></pre></div>
+              <details><summary>Alternative approach (subquery IN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT THANHPHO
+FROM NHACUNGCAP
+WHERE THANHPHO IN (SELECT THANHPHO FROM PHUTUNG);</code></pre></div>
+                <p><code>INTERSECT</code> automatically removes duplicates, so no <code>DISTINCT</code> is needed; the <code>IN</code> version has to add <code>DISTINCT</code> explicitly since <code>NHACUNGCAP</code> can have several suppliers sharing the same city.</p>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>INTERSECT</code> takes the overlap between 2 sets of <code>THANHPHO</code> values - keeping only cities that appear in <strong>both</strong> tables.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Supplier cities: London, Paris, Athens. Part cities: London, Paris, Oslo - the overlap is just London and Paris (Athens only has a supplier, Oslo only has a part).</p></div>
+              </div>
+            </div>
 
-UPDATE NHACUNGCAP
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 33 · INSERT</p>
+              <p><strong>Exercise:</strong> Write the SQL statement to insert a new supplier: S6, Duncan, 30, Paris.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO NHACUNGCAP (MANCC, TENNCC, TRANGTHAI, THANHPHO)
+VALUES ('S6', 'Duncan', 30, 'Paris');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>INSERT INTO ... (column list) VALUES (...)</code> adds exactly 1 new row with values matching the order listed.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Naming the columns explicitly (instead of just <code>VALUES (...)</code>) makes the statement independent of the table's physical column order, and easier to read and less error-prone on a table with many columns.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 34 · UPDATE</p>
+              <p><strong>Exercise:</strong> Write the SQL statement to change S6's city (from question 33) to Sydney.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE NHACUNGCAP
 SET THANHPHO = 'Sydney'
 WHERE MANCC = 'S6';</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>INSERT</code> adds 1 new supplier row; <code>UPDATE ... WHERE MANCC = 'S6'</code> only modifies the row just added.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>UPDATE ... SET ... WHERE</code> only modifies the row with <code>MANCC = 'S6'</code> just added in Question 33.</p></div>
                 <div><span class="qa-explain-label">WHY?</span><p>The <code>WHERE</code> clause in <code>UPDATE</code> must filter to the exact <code>MANCC</code> - forgetting <code>WHERE</code> would change every supplier in the table to "Sydney."</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 35 · UPDATE</p>
+              <p><strong>Exercise:</strong> Write the SQL statement to increase TRANGTHAI by 10 for suppliers in London.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE NHACUNGCAP
+SET TRANGTHAI = TRANGTHAI + 10
+WHERE THANHPHO = 'London';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>SET TRANGTHAI = TRANGTHAI + 10</code> takes the column's current value and adds 10, applied to every row matching <code>WHERE</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Unlike Question 34 (updating 1 row by primary key), this question intentionally updates <strong>multiple rows at once</strong> (both S1 and S4 are in London) - <code>WHERE THANHPHO = 'London'</code> is still required, just filtering on a different attribute instead of the primary key.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 36 · DELETE</p>
+              <p><strong>Exercise:</strong> Write the SQL statement to delete supplier S6.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM NHACUNGCAP
+WHERE MANCC = 'S6';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>DELETE FROM ... WHERE</code> deletes exactly the row with <code>MANCC = 'S6'</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>S6 doesn't appear in <code>VANCHUYEN</code> (it never shipped anything) so it can be deleted right away - if S6 already had linked rows in <code>VANCHUYEN</code>, the <code>FKShip1</code> foreign key constraint would block this <code>DELETE</code> until the related <code>VANCHUYEN</code> rows were removed first.</p></div>
               </div>
             </div>
 

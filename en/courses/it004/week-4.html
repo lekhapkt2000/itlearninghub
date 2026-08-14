@@ -71,11 +71,11 @@
           <p class="eyebrow">01 · WEEK 4 OVERVIEW</p>
           <h2>From Querying Data to Processing Data</h2>
           <div class="ascii-block">WEEK 4
-├── Extended functions: CAST() · GETDATE() · LEFT() · RIGHT()
+├── Extended functions: CAST() · GETDATE() · DATEADD() · LEFT() · RIGHT()
 ├── CASE...END: by condition · by value · classifying data
-├── Alias + Subquery: table/column alias · subquery in FROM · subquery in SELECT
-└── Comprehensive exercises: Academic Affairs · Sales Management</div>
-          <p>This is the shift from <strong>querying data</strong> to <strong>processing data and turning it into information</strong>. By the end of this week, students will be able to convert data types, extract substrings, build conditional logic with <code>CASE</code>, and write subqueries in <code>FROM</code>/<code>SELECT</code> combined with aliases.</p>
+├── Alias + Subquery: table/column alias · subquery in FROM · subquery in SELECT · EXISTS/NOT EXISTS
+└── Comprehensive exercises: Academic Affairs Management (50 questions)</div>
+          <p>This is the shift from <strong>querying data</strong> to <strong>processing data and turning it into information</strong>. By the end of this week, students will be able to convert data types, extract substrings, build conditional logic with <code>CASE</code>, write subqueries in <code>FROM</code>/<code>SELECT</code> combined with aliases, and check for the existence of related data with <code>EXISTS</code>/<code>NOT EXISTS</code>.</p>
         </section>
 
         <!-- 02 - CAST -->
@@ -138,6 +138,19 @@ FROM NhanVien;</code></pre></div>
           <h3>Example: Calculating Age</h3>
           <p>Suppose <code>NgaySinh = '2000-08-15'</code>. Get today's date with <code>SELECT GETDATE() AS HomNay;</code></p>
           <div class="inline-warning"><strong>Note:</strong> Don't use a simple subtraction between the current year and birth year to calculate exact age, since it also depends on whether the person has already had their birthday this year - this is the difference between <strong>naive data processing</strong> and <strong>processing data correctly from a business standpoint</strong>.</div>
+
+          <h3>DATEADD() - Precise Age Calculation Down to the Day</h3>
+          <div class="definition"><code>DATEADD(datepart, number, date)</code> adds (or subtracts, if <code>number</code> is negative) a span of time to a date value, returning a new date - <code>datepart</code> can be <code>YEAR</code>, <code>MONTH</code>, <code>DAY</code>, and so on.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DATEADD(YEAR, -18, GETDATE()) AS Ngay18NamTruoc;</code></pre></div>
+          <p>To check "the student must be at least 18 years old", instead of subtracting year from year (which drifts around the birthday), compare <code>NgaySinh</code> against "the date exactly 18 years before today":</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaSV, HoTen, NgaySinh
+FROM SinhVien
+WHERE NgaySinh <= DATEADD(YEAR, -18, GETDATE());</code></pre></div>
+          <div class="ascii-block">At least 18 today
+⟺ NgaySinh <= (today - 18 years)
+⟺ NgaySinh <= DATEADD(YEAR, -18, GETDATE())</div>
+          <p>This is exact down to the day since it compares 2 date values directly, unlike rounding to calendar years with <code>YEAR(GETDATE()) - YEAR(NgaySinh)</code> - the calendar-year rounding still works fine when the question only needs a rough estimate, but it will be off by a few months around a birthday.</p>
+          <div class="inline-warning"><strong>Common mistake:</strong> Writing <code>GETDATE() - NgaySinh &gt;= 18</code> (subtracting the 2 date values directly and comparing to 18) looks like the right direction but is <strong>completely wrong</strong> - a date subtraction in SQL Server returns a difference measured in <em>days</em>, so comparing it to 18 only checks "18 days have passed since birth", not 18 years.</div>
         </section>
 
         <!-- 04 - LEFT RIGHT -->
@@ -401,6 +414,39 @@ FROM SinhVien SV;</code></pre></div>
         ELSE N'Đăng ký ít'
     END AS PhanLoai
 FROM SinhVien SV;</code></pre></div>
+
+          <h3>EXISTS and NOT EXISTS</h3>
+          <div class="definition"><code>EXISTS</code> checks whether a subquery returns <strong>at least 1 row</strong>, and the result is only <code>TRUE</code>/<code>FALSE</code> - it doesn't care what value the subquery returns or how many rows it has, unlike <code>IN</code> which must match directly against a list of specific values.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ...
+FROM BangA a
+WHERE EXISTS (
+    SELECT * FROM BangB b WHERE b.KhoaNgoai = a.KhoaChinh
+);</code></pre></div>
+          <p>Example - "Find students who registered for at least 1 course" (reusing <code>SinhVien</code>, <code>DangKy</code> from above):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SV.MaSV, SV.HoTen
+FROM SinhVien SV
+WHERE EXISTS (
+    SELECT * FROM DangKy DK WHERE DK.MaSV = SV.MaSV
+);</code></pre></div>
+          <p>Flip it to <code>NOT EXISTS</code> to find students who have <strong>not</strong> registered for any course:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SV.MaSV, SV.HoTen
+FROM SinhVien SV
+WHERE NOT EXISTS (
+    SELECT * FROM DangKy DK WHERE DK.MaSV = SV.MaSV
+);</code></pre></div>
+          <p><code>EXISTS</code>/<code>NOT EXISTS</code> is always a <strong>correlated subquery</strong> (just like the Correlated Subquery above) - the <code>WHERE DK.MaSV = SV.MaSV</code> clause references the outer row, so the subquery is re-evaluated separately for each student. This is exactly the mechanism behind the "2 nested <code>NOT EXISTS</code>" structure from Week 3 used to solve "for all" problems - a single <code>EXISTS</code>/<code>NOT EXISTS</code> is for a simpler "does this exist or not" question, while 2 nested layers are needed to express "for every".</p>
+          <div class="inline-warning"><strong>Why prefer <code>NOT EXISTS</code> over <code>NOT IN</code>?</strong> If the inner list for <code>NOT IN</code> contains even a single <code>NULL</code> value, the entire <code>NOT IN</code> expression returns nothing (no rows at all) - a very hard bug to spot. <code>NOT EXISTS</code> never compares values directly, so it never runs into this trap and always gives the correct result.</div>
+
+          <div class="quick-check">
+            <p class="eyebrow">QUICK CHECK</p>
+            <p class="qc-question">The <code>MaSV</code> column in the <code>DangKy</code> table could contain <code>NULL</code>. Which approach is safest for finding students who haven't registered for any course?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">MaSV NOT IN (SELECT MaSV FROM DangKy)</button>
+              <button class="qc-option" type="button" data-correct="true">NOT EXISTS (SELECT * FROM DangKy WHERE MaSV = SV.MaSV)</button>
+              <button class="qc-option" type="button" data-correct="false">Both approaches are equally safe</button>
+            </div>
+            <div class="qc-feedback correct">✓ Correct! <code>NOT IN</code> silently returns nothing if the inner list has a <code>NULL</code> in it, while <code>NOT EXISTS</code> only checks "is there a matching row", so it's unaffected by <code>NULL</code>.</div>
+          </div>
         </section>
 
         <!-- 08 - Cheat Sheet -->
@@ -411,6 +457,7 @@ FROM SinhVien SV;</code></pre></div>
             <tr><th>Keyword in the Problem</th><th>Concept</th></tr>
             <tr><td>Convert data type</td><td><code>CAST()</code></td></tr>
             <tr><td>Current date</td><td><code>GETDATE()</code></td></tr>
+            <tr><td>Add/subtract time from a date, exact age</td><td><code>DATEADD()</code></td></tr>
             <tr><td>First / last characters</td><td><code>LEFT()</code> / <code>RIGHT()</code></td></tr>
             <tr><td>Classify / "If... then..."</td><td><code>CASE WHEN</code></td></tr>
             <tr><td>Temporary name for a table/column</td><td>Alias</td></tr>
@@ -418,20 +465,24 @@ FROM SinhVien SV;</code></pre></div>
             <tr><td>Compute for each object</td><td>Correlated Subquery</td></tr>
             <tr><td>Subquery inside FROM</td><td>Derived Table + Alias</td></tr>
             <tr><td>Subquery inside SELECT</td><td>Scalar / Correlated Subquery</td></tr>
+            <tr><td>"Does... exist / not exist..."</td><td><code>EXISTS</code> / <code>NOT EXISTS</code></td></tr>
           </table></div>
 
           <div class="ascii-block">CAST()      ➜ Convert data type
 GETDATE()   ➜ Current date + time
+DATEADD()   ➜ Add/subtract time from a date
 LEFT(x, n)  ➜ n characters from the left
 RIGHT(x, n) ➜ n characters from the right
 CASE ... END ➜ Condition / classification
 Alias       ➜ Temporary name for a table / column
 Subquery    ➜ A query inside another query
 FROM (SELECT ...) AS T   ➜ Derived Table
-SELECT (SELECT ...) AS X ➜ Column computed via Subquery</div>
+SELECT (SELECT ...) AS X ➜ Column computed via Subquery
+EXISTS (SELECT ...)      ➜ Does any row match?
+NOT EXISTS (SELECT ...)  ➜ No row matches</div>
 
           <h3>The First Four Weeks of IT004</h3>
-          <p>Week 1: creating &amp; manipulating data. Week 2: querying &amp; combining data. Week 3: advanced querying ("all" / grouping / TOP). Week 4: <strong>transforming &amp; computing</strong> over data with CAST, CASE, and Subquery.</p>
+          <p>Week 1: creating &amp; manipulating data. Week 2: querying &amp; combining data. Week 3: advanced querying ("all" / grouping / TOP). Week 4: <strong>transforming &amp; computing</strong> over data with CAST, CASE, Subquery, and EXISTS/NOT EXISTS.</p>
         </section>
 
         <!-- 09 - Exercises -->
@@ -480,6 +531,12 @@ SELECT (SELECT ...) AS X ➜ Column computed via Subquery</div>
               <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">★</span></div>
               <p>Display each student, the number of courses they've registered for, and a classification: ≥20 ➜ Heavy load, 15-19 ➜ Normal, &lt;15 ➜ Light load.</p>
               <details><summary>Hint</summary><div class="ascii-block">CASE + Correlated Subquery</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">06</span></div>
+              <p>Display the student ID and full name of students who haven't registered for any course.</p>
+              <details><summary>Hint</summary><div class="ascii-block">NOT EXISTS</div></details>
             </article>
           </div>
         </section>

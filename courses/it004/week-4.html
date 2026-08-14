@@ -67,11 +67,11 @@
           <p class="eyebrow">01 · TỔNG QUAN TUẦN 4</p>
           <h2>Từ truy vấn dữ liệu đến xử lý dữ liệu</h2>
           <div class="ascii-block">TUẦN 4
-├── Hàm mở rộng: CAST() · GETDATE() · LEFT() · RIGHT()
+├── Hàm mở rộng: CAST() · GETDATE() · DATEADD() · LEFT() · RIGHT()
 ├── CASE...END: Theo điều kiện · theo giá trị · phân loại dữ liệu
-├── Alias + Subquery: Alias bảng/cột · subquery trong FROM · subquery trong SELECT
-└── Bài tập tổng hợp: Quản lý giáo vụ · Quản lý bán hàng</div>
-          <p>Đây là bước chuyển từ <strong>truy vấn dữ liệu</strong> sang <strong>xử lý và tạo thông tin từ dữ liệu</strong>. Sau khi hoàn thành, sinh viên có thể chuyển đổi kiểu dữ liệu, trích xuất chuỗi, xây dựng logic điều kiện với <code>CASE</code>, và viết subquery trong <code>FROM</code>/<code>SELECT</code> kết hợp alias.</p>
+├── Alias + Subquery: Alias bảng/cột · subquery trong FROM · subquery trong SELECT · EXISTS/NOT EXISTS
+└── Bài tập tổng hợp: Quản lý giáo vụ (50 câu)</div>
+          <p>Đây là bước chuyển từ <strong>truy vấn dữ liệu</strong> sang <strong>xử lý và tạo thông tin từ dữ liệu</strong>. Sau khi hoàn thành, sinh viên có thể chuyển đổi kiểu dữ liệu, trích xuất chuỗi, xây dựng logic điều kiện với <code>CASE</code>, viết subquery trong <code>FROM</code>/<code>SELECT</code> kết hợp alias, và kiểm tra sự tồn tại dữ liệu liên quan bằng <code>EXISTS</code>/<code>NOT EXISTS</code>.</p>
         </section>
 
         <!-- 02 - CAST -->
@@ -134,6 +134,19 @@ FROM NhanVien;</code></pre></div>
           <h3>Ví dụ tính tuổi</h3>
           <p>Giả sử <code>NgaySinh = '2000-08-15'</code>. Lấy ngày hiện tại bằng <code>SELECT GETDATE() AS HomNay;</code></p>
           <div class="inline-warning"><strong>Lưu ý:</strong> Không nên dùng phép trừ đơn giản giữa năm hiện tại và năm sinh để tính tuổi chính xác, vì còn phụ thuộc người đó đã qua sinh nhật trong năm hay chưa - Đây là sự khác biệt giữa <strong>xử lý dữ liệu đơn giản</strong> và <strong>xử lý dữ liệu đúng về mặt nghiệp vụ</strong>.</div>
+
+          <h3>DATEADD() - Tính tuổi chính xác đến từng ngày</h3>
+          <div class="definition"><code>DATEADD(datepart, number, date)</code> cộng (hoặc trừ nếu <code>number</code> âm) một khoảng thời gian vào một giá trị ngày, trả về ngày mới - <code>datepart</code> có thể là <code>YEAR</code>, <code>MONTH</code>, <code>DAY</code>...</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DATEADD(YEAR, -18, GETDATE()) AS Ngay18NamTruoc;</code></pre></div>
+          <p>Muốn kiểm tra "sinh viên phải từ 18 tuổi trở lên", thay vì trừ năm cho năm (dễ sai lệch quanh ngày sinh nhật), hãy so sánh <code>NgaySinh</code> với "ngày tròn 18 tuổi tính từ hôm nay":</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MaSV, HoTen, NgaySinh
+FROM SinhVien
+WHERE NgaySinh <= DATEADD(YEAR, -18, GETDATE());</code></pre></div>
+          <div class="ascii-block">Đủ 18 tuổi hôm nay
+⟺ NgaySinh <= (Hôm nay - 18 năm)
+⟺ NgaySinh <= DATEADD(YEAR, -18, GETDATE())</div>
+          <p>Cách này chính xác đến từng ngày vì so sánh trực tiếp 2 mốc ngày tháng, không quy tròn về năm như <code>YEAR(GETDATE()) - YEAR(NgaySinh)</code> - Cách quy tròn theo năm vẫn dùng được khi đề chỉ cần ước lượng gần đúng, nhưng sẽ sai lệch vài tháng quanh dịp sinh nhật.</p>
+          <div class="inline-warning"><strong>Lỗi thường gặp:</strong> Viết <code>GETDATE() - NgaySinh &gt;= 18</code> (trừ trực tiếp 2 giá trị ngày rồi so với số 18) trông giống hướng đúng nhưng <strong>sai hoàn toàn</strong> - Hiệu số 2 ngày trong SQL Server là số <em>ngày</em> chênh lệch, so với 18 chỉ tương đương kiểm tra "đã qua 18 ngày kể từ khi sinh", không phải 18 năm.</div>
         </section>
 
         <!-- 04 - LEFT RIGHT -->
@@ -397,6 +410,39 @@ FROM SinhVien SV;</code></pre></div>
         ELSE N'Đăng ký ít'
     END AS PhanLoai
 FROM SinhVien SV;</code></pre></div>
+
+          <h3>EXISTS và NOT EXISTS</h3>
+          <div class="definition"><code>EXISTS</code> kiểm tra 1 subquery có trả về <strong>ít nhất 1 dòng</strong> hay không, kết quả chỉ là <code>TRUE</code>/<code>FALSE</code> - Không quan tâm subquery trả về giá trị gì hay bao nhiêu dòng, khác hẳn <code>IN</code> phải so khớp trực tiếp với danh sách giá trị cụ thể.</div>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ...
+FROM BangA a
+WHERE EXISTS (
+    SELECT * FROM BangB b WHERE b.KhoaNgoai = a.KhoaChinh
+);</code></pre></div>
+          <p>Ví dụ - "Tìm sinh viên đã đăng ký ít nhất 1 học phần" (dùng lại <code>SinhVien</code>, <code>DangKy</code> ở trên):</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SV.MaSV, SV.HoTen
+FROM SinhVien SV
+WHERE EXISTS (
+    SELECT * FROM DangKy DK WHERE DK.MaSV = SV.MaSV
+);</code></pre></div>
+          <p>Đảo ngược thành <code>NOT EXISTS</code> để tìm sinh viên <strong>chưa</strong> đăng ký học phần nào:</p>
+          <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT SV.MaSV, SV.HoTen
+FROM SinhVien SV
+WHERE NOT EXISTS (
+    SELECT * FROM DangKy DK WHERE DK.MaSV = SV.MaSV
+);</code></pre></div>
+          <p><code>EXISTS</code>/<code>NOT EXISTS</code> luôn là <strong>correlated subquery</strong> (giống Correlated Subquery ở trên) - Mệnh đề <code>WHERE DK.MaSV = SV.MaSV</code> tham chiếu đến dòng ngoài, nên subquery được tính lại riêng cho từng sinh viên. Đây chính là công cụ đứng sau cấu trúc "hai lớp <code>NOT EXISTS</code>" đã học ở Tuần 3 để giải bài toán "tất cả" - <code>EXISTS</code>/<code>NOT EXISTS</code> một lớp dùng cho câu hỏi "có tồn tại hay không" đơn giản hơn, còn hai lớp lồng nhau mới diễn đạt được "với mọi".</p>
+          <div class="inline-warning"><strong>Vì sao ưu tiên <code>NOT EXISTS</code> hơn <code>NOT IN</code>?</strong> Nếu danh sách con của <code>NOT IN</code> chứa dù chỉ 1 giá trị <code>NULL</code>, cả câu <code>NOT IN</code> sẽ trả về rỗng (không có dòng nào) - Một lỗi rất khó phát hiện. <code>NOT EXISTS</code> không so khớp giá trị trực tiếp nên hoàn toàn không gặp phải bẫy này, luôn cho kết quả đúng.</div>
+
+          <div class="quick-check">
+            <p class="eyebrow">KIỂM TRA NHANH</p>
+            <p class="qc-question">Cột <code>MaSV</code> trong bảng <code>DangKy</code> có khả năng chứa <code>NULL</code>. Nên dùng cách nào để tìm sinh viên chưa đăng ký học phần nào cho an toàn nhất?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">MaSV NOT IN (SELECT MaSV FROM DangKy)</button>
+              <button class="qc-option" type="button" data-correct="true">NOT EXISTS (SELECT * FROM DangKy WHERE MaSV = SV.MaSV)</button>
+              <button class="qc-option" type="button" data-correct="false">Cả 2 cách đều an toàn như nhau</button>
+            </div>
+            <div class="qc-feedback correct">✓ Chính xác! <code>NOT IN</code> sẽ âm thầm trả về rỗng nếu danh sách con dính <code>NULL</code>, còn <code>NOT EXISTS</code> chỉ kiểm tra "có dòng khớp hay không" nên không bị ảnh hưởng bởi <code>NULL</code>.</div>
+          </div>
         </section>
 
         <!-- 08 - Cheat sheet -->
@@ -407,6 +453,7 @@ FROM SinhVien SV;</code></pre></div>
             <tr><th>Từ khóa đề bài</th><th>Kiến thức</th></tr>
             <tr><td>Chuyển kiểu dữ liệu</td><td><code>CAST()</code></td></tr>
             <tr><td>Ngày hiện tại</td><td><code>GETDATE()</code></td></tr>
+            <tr><td>Cộng/trừ thời gian vào 1 ngày, tính tuổi chính xác</td><td><code>DATEADD()</code></td></tr>
             <tr><td>Ký tự đầu / ký tự cuối</td><td><code>LEFT()</code> / <code>RIGHT()</code></td></tr>
             <tr><td>Phân loại / "Nếu... thì..."</td><td><code>CASE WHEN</code></td></tr>
             <tr><td>Tên tạm của bảng/cột</td><td>Alias</td></tr>
@@ -414,20 +461,24 @@ FROM SinhVien SV;</code></pre></div>
             <tr><td>Tính cho từng đối tượng</td><td>Correlated Subquery</td></tr>
             <tr><td>Truy vấn con trong FROM</td><td>Derived Table + Alias</td></tr>
             <tr><td>Truy vấn con trong SELECT</td><td>Scalar / Correlated Subquery</td></tr>
+            <tr><td>"Có tồn tại / không tồn tại..."</td><td><code>EXISTS</code> / <code>NOT EXISTS</code></td></tr>
           </table></div>
 
           <div class="ascii-block">CAST()      ➜ Chuyển kiểu dữ liệu
 GETDATE()   ➜ Ngày + giờ hiện tại
+DATEADD()   ➜ Cộng/trừ thời gian vào 1 ngày
 LEFT(x, n)  ➜ n ký tự bên trái
 RIGHT(x, n) ➜ n ký tự bên phải
 CASE ... END ➜ Điều kiện / phân loại
 Alias       ➜ Tên tạm cho bảng / cột
 Subquery    ➜ Truy vấn bên trong truy vấn
 FROM (SELECT ...) AS T   ➜ Derived Table
-SELECT (SELECT ...) AS X ➜ Cột tính toán bằng Subquery</div>
+SELECT (SELECT ...) AS X ➜ Cột tính toán bằng Subquery
+EXISTS (SELECT ...)      ➜ Có dòng nào khớp không?
+NOT EXISTS (SELECT ...)  ➜ Không có dòng nào khớp</div>
 
           <h3>Bốn tuần đầu của IT004</h3>
-          <p>Tuần 1: Tạo &amp; thao tác dữ liệu. Tuần 2: Truy vấn &amp; kết hợp dữ liệu. Tuần 3: Truy vấn nâng cao ("tất cả" / nhóm / TOP). Tuần 4: <strong>Biến đổi &amp; tính toán</strong> trên dữ liệu bằng CAST, CASE và Subquery.</p>
+          <p>Tuần 1: Tạo &amp; thao tác dữ liệu. Tuần 2: Truy vấn &amp; kết hợp dữ liệu. Tuần 3: Truy vấn nâng cao ("tất cả" / nhóm / TOP). Tuần 4: <strong>Biến đổi &amp; tính toán</strong> trên dữ liệu bằng CAST, CASE, Subquery và EXISTS/NOT EXISTS.</p>
         </section>
 
         <!-- 09 - Bai tap -->
@@ -476,6 +527,12 @@ SELECT (SELECT ...) AS X ➜ Cột tính toán bằng Subquery</div>
               <div class="challenge-card-head"><span class="challenge-num">05</span><span class="challenge-stars">★</span></div>
               <p>Hiển thị mỗi sinh viên, số học phần đã đăng ký và phân loại: ≥20 ➜ Đăng ký nhiều, 15-19 ➜ Bình thường, &lt;15 ➜ Đăng ký ít.</p>
               <details><summary>Gợi ý</summary><div class="ascii-block">CASE + Correlated Subquery</div></details>
+            </article>
+
+            <article class="challenge-card">
+              <div class="challenge-card-head"><span class="challenge-num">06</span></div>
+              <p>Hiển thị mã sinh viên, họ tên của những sinh viên chưa đăng ký học phần nào.</p>
+              <details><summary>Gợi ý</summary><div class="ascii-block">NOT EXISTS</div></details>
             </article>
           </div>
         </section>

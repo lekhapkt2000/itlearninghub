@@ -171,10 +171,406 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Xác thực thành công - Bạn đã được cấp quyền truy cập đáp án Tuần 6.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Bên dưới là câu hỏi mẫu để minh họa cách trình bày đáp án - Sẽ được thay bằng lời giải thật của bài Quản lý hàng hóa.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Đáp án đầy đủ cho 36 câu. Đây là lược đồ kinh điển "Suppliers - Parts - Shipments" nên nhiều câu (9-17, 18-20) cố ý lặp lại cùng 1 yêu cầu bằng nhiều kỹ thuật khác nhau (JOIN, IN, EXISTS, subquery, outer JOIN) - Đúng ý đồ của đề là để so sánh trực tiếp các cách viết tương đương nhau, không phải làm dư thừa. Gõ lại từng câu vào SSMS để nhớ lâu hơn nhé - Nút Copy ở đây chỉ mang tính hình thức thôi.</p>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 1 (MẪU) · JOIN + GROUP BY + ORDER BY</p>
+              <p class="eyebrow">CÂU 1 · SELECT</p>
+              <p><strong>Đề bài:</strong> Hiển thị thông tin (MANCC, TENNCC, THANHPHO) của tất cả nhà cung cấp.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, TENNCC, THANHPHO
+FROM NHACUNGCAP;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>SELECT</code> liệt kê đúng 3 cột đề yêu cầu, không dùng <code>SELECT *</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề chỉ định rõ 3 cột trong ngoặc (MANCC, TENNCC, THANHPHO) - Không lấy thêm cột <code>TRANGTHAI</code> dù bảng có sẵn.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 2 · SELECT *</p>
+              <p><strong>Đề bài:</strong> Hiển thị thông tin của tất cả các phụ tùng.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM PHUTUNG;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>SELECT *</code> lấy toàn bộ cột hiện có trong <code>PHUTUNG</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đề chỉ nói "thông tin" chung chung, không liệt kê cột cụ thể như Câu 1 - Nên lấy tất cả là hợp lý nhất.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 3 · WHERE</p>
+              <p><strong>Đề bài:</strong> Hiển thị thông tin các nhà cung cấp ở thành phố London.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NHACUNGCAP
+WHERE THANHPHO = 'London';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Lọc trực tiếp bằng <code>WHERE THANHPHO = 'London'</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Dữ liệu mẫu có đúng 2 nhà cung cấp ở London (S1 Smith, S4 Clark) - So sánh chuỗi bằng dấu <code>=</code> là đủ, không cần <code>LIKE</code> vì tên thành phố khớp chính xác.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 4 · WHERE</p>
+              <p><strong>Đề bài:</strong> Hiển thị mã phụ tùng, tên và màu sắc của tất cả các phụ tùng ở thành phố Paris.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, MAUSAC
+FROM PHUTUNG
+WHERE THANHPHO = 'Paris';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cùng kỹ thuật với Câu 3, đổi bảng và điều kiện thành phố.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Kết quả gồm P2 (Bolt, Green) và P5 (Cam, Blue) - 2 phụ tùng duy nhất có <code>THANHPHO = 'Paris'</code> trong dữ liệu mẫu.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 5 · WHERE</p>
+              <p><strong>Đề bài:</strong> Hiển thị mã phụ tùng, tên, khối lượng của những phụ tùng có khối lượng lớn hơn 15.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, KHOILUONG
+FROM PHUTUNG
+WHERE KHOILUONG > 15;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>So sánh số bằng <code>&gt;</code> trên cột <code>KHOILUONG</code> (kiểu <code>FLOAT</code>).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Kết quả gồm P2 (17), P3 (17), P6 (19) - "Lớn hơn 15" không bao gồm giá trị bằng 15 (ở đây không có phụ tùng nào đúng 15 nên không ảnh hưởng, nhưng vẫn cần phân biệt <code>&gt;</code> với <code>&gt;=</code> khi đọc đề).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 6 · WHERE ... AND</p>
+              <p><strong>Đề bài:</strong> Tìm những phụ tùng (MAPT, TENPT, MAUSAC) có khối lượng lớn hơn 15, không phải màu đỏ (red).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, MAUSAC
+FROM PHUTUNG
+WHERE KHOILUONG > 15 AND MAUSAC <> 'Red';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Thêm điều kiện <code>MAUSAC &lt;&gt; 'Red'</code> nối bằng <code>AND</code> vào Câu 5.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Trong 3 phụ tùng thỏa Câu 5 (P2, P3, P6), P6 màu Red bị loại - Kết quả chỉ còn P2 (Green), P3 (Blue).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 7 · WHERE ... NOT IN</p>
+              <p><strong>Đề bài:</strong> Tìm những phụ tùng (MAPT, TENPT, MAUSAC) có khối lượng lớn hơn 15, màu sắc khác màu đỏ (red) và xanh (green).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, MAUSAC
+FROM PHUTUNG
+WHERE KHOILUONG > 15 AND MAUSAC NOT IN ('Red', 'Green');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>NOT IN ('Red', 'Green')</code> loại cùng lúc 2 giá trị màu, gọn hơn viết <code>MAUSAC &lt;&gt; 'Red' AND MAUSAC &lt;&gt; 'Green'</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Từ kết quả Câu 6 (P2 Green, P3 Blue), loại tiếp P2 vì màu Green - Chỉ còn P3 (Blue).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 8 · WHERE ... ORDER BY</p>
+              <p><strong>Đề bài:</strong> Hiển thị những phụ tùng (MAPT, TENPT, khối lượng) có khối lượng lớn hơn 15 và nhỏ hơn 20, sắp xếp theo tên phụ tùng.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, KHOILUONG
+FROM PHUTUNG
+WHERE KHOILUONG > 15 AND KHOILUONG < 20
+ORDER BY TENPT;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Khoảng giá trị mở ở cả 2 đầu (<code>&gt; 15 AND &lt; 20</code>, không bao gồm 15 và 20); <code>ORDER BY TENPT</code> sắp theo bảng chữ cái tên phụ tùng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>3 phụ tùng thỏa điều kiện là P2 (Bolt, 17), P3 (Screw, 17), P6 (Cog, 19) - Sắp theo tên cho ra thứ tự Bolt, Cog, Screw (không phải theo mã P2/P3/P6).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 9 · JOIN</p>
+              <p><strong>Đề bài:</strong> Hiển thị những phụ tùng được vận chuyển bởi nhà cung cấp có mã số S1. Không hiển thị kết quả trùng (sử dụng phép kết).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT pt.MAPT, pt.TENPT, pt.MAUSAC, pt.KHOILUONG, pt.THANHPHO
+FROM PHUTUNG pt
+JOIN VANCHUYEN vc ON pt.MAPT = vc.MAPT
+WHERE vc.MANCC = 'S1';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN PHUTUNG</code> với <code>VANCHUYEN</code> qua <code>MAPT</code>, lọc đúng nhà cung cấp S1; <code>DISTINCT</code> loại trùng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>1 phụ tùng có thể xuất hiện nhiều lần trong <code>VANCHUYEN</code> nếu được vận chuyển bởi nhiều nhà cung cấp khác nhau, nhưng ở đây lọc theo đúng 1 <code>MANCC</code> nên thực ra mỗi <code>MAPT</code> chỉ khớp 1 dòng (do khóa chính <code>VANCHUYEN</code> là cặp <code>MANCC, MAPT</code>) - <code>DISTINCT</code> vẫn nên giữ theo đúng yêu cầu đề, và là thói quen an toàn khi <code>JOIN</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 10 · JOIN</p>
+              <p><strong>Đề bài:</strong> Hiển thị những nhà cung cấp vận chuyển phụ tùng có mã là P1 (sử dụng phép kết).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT ncc.MANCC, ncc.TENNCC, ncc.TRANGTHAI, ncc.THANHPHO
+FROM NHACUNGCAP ncc
+JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+WHERE vc.MAPT = 'P1';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cấu trúc đối xứng với Câu 9 - Đổi chiều <code>JOIN</code> từ <code>NHACUNGCAP</code> sang <code>VANCHUYEN</code>, lọc theo <code>MAPT</code> thay vì <code>MANCC</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>2 nhà cung cấp từng vận chuyển P1 là S1 và S2 - Đây là ví dụ về quan hệ N-N: 1 phụ tùng có thể do nhiều nhà cung cấp khác nhau vận chuyển.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 11 · JOIN 3 BẢNG</p>
+              <p><strong>Đề bài:</strong> Hiển thị thông tin nhà cung cấp ở thành phố London và có vận chuyển phụ tùng của thành phố London. Không hiển thị kết quả trùng (sử dụng phép kết).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT ncc.MANCC, ncc.TENNCC, ncc.TRANGTHAI, ncc.THANHPHO
+FROM NHACUNGCAP ncc
+JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+JOIN PHUTUNG pt ON vc.MAPT = pt.MAPT
+WHERE ncc.THANHPHO = 'London' AND pt.THANHPHO = 'London';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>JOIN</code> liên tiếp qua cả 3 bảng để vừa biết nhà cung cấp ở đâu, vừa biết phụ tùng họ vận chuyển ở đâu; 2 điều kiện <code>THANHPHO = 'London'</code> áp vào 2 bảng khác nhau (<code>ncc</code> và <code>pt</code>).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Dễ nhầm 2 điều kiện "London" thành cùng 1 ý, nhưng đây là 2 ràng buộc độc lập trên 2 thực thể khác nhau - Nhà cung cấp đặt tại London <strong>và</strong> (không nhất thiết cùng dòng dữ liệu) từng vận chuyển ít nhất 1 phụ tùng có xuất xứ London. Cả S1 và S4 đều thỏa (S1 vận chuyển P1/P4/P6 - Đều ở London; S4 vận chuyển P4 - Ở London).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 12 · SUBQUERY ... IN</p>
+              <p><strong>Đề bài:</strong> Lặp lại câu 9 nhưng sử dụng toán tử IN.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, MAUSAC, KHOILUONG, THANHPHO
+FROM PHUTUNG
+WHERE MAPT IN (
+    SELECT MAPT FROM VANCHUYEN WHERE MANCC = 'S1'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery độc lập lấy danh sách <code>MAPT</code> mà S1 từng vận chuyển; truy vấn ngoài lọc <code>PHUTUNG</code> theo danh sách đó bằng <code>IN</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cho cùng kết quả với Câu 9 nhưng không cần <code>JOIN</code> lẫn <code>DISTINCT</code> - Vì <code>IN</code> chỉ kiểm tra "có nằm trong danh sách" chứ không nhân dòng như <code>JOIN</code>, nên tự nhiên đã không trùng.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 13 · SUBQUERY ... IN</p>
+              <p><strong>Đề bài:</strong> Lặp lại câu 10 nhưng sử dụng toán tử IN.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, TENNCC, TRANGTHAI, THANHPHO
+FROM NHACUNGCAP
+WHERE MANCC IN (
+    SELECT MANCC FROM VANCHUYEN WHERE MAPT = 'P1'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Đối xứng với Câu 12, đổi chiều lọc từ <code>MAPT</code> sang <code>MANCC</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cùng lý do với Câu 12 - <code>IN</code> thay thế gọn cho cặp <code>JOIN + DISTINCT</code> khi chỉ cần lọc "có tồn tại quan hệ", không cần lấy thêm cột nào từ bảng trung gian <code>VANCHUYEN</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 14 · SUBQUERY ... EXISTS</p>
+              <p><strong>Đề bài:</strong> Lặp lại câu 9 nhưng sử dụng toán tử EXISTS.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAPT, TENPT, MAUSAC, KHOILUONG, THANHPHO
+FROM PHUTUNG pt
+WHERE EXISTS (
+    SELECT * FROM VANCHUYEN vc
+    WHERE vc.MAPT = pt.MAPT AND vc.MANCC = 'S1'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery tương quan (correlated) - <code>vc.MAPT = pt.MAPT</code> tham chiếu ngược lại dòng <code>PHUTUNG</code> đang xét ở truy vấn ngoài, khác với subquery độc lập ở Câu 12.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>3 cách viết (Câu 9 <code>JOIN</code>, Câu 12 <code>IN</code>, Câu 14 <code>EXISTS</code>) đều cho đúng cùng 1 kết quả - Khác nhau ở cách SQL Server tối ưu thực thi: <code>EXISTS</code> dừng ngay khi tìm được 1 dòng khớp đầu tiên, thường hiệu quả hơn <code>IN</code> khi bảng con lớn.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 15 · SUBQUERY ... EXISTS</p>
+              <p><strong>Đề bài:</strong> Lặp lại câu 10 nhưng sử dụng toán tử EXISTS.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, TENNCC, TRANGTHAI, THANHPHO
+FROM NHACUNGCAP ncc
+WHERE EXISTS (
+    SELECT * FROM VANCHUYEN vc
+    WHERE vc.MANCC = ncc.MANCC AND vc.MAPT = 'P1'
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Đối xứng với Câu 14, tương quan qua <code>MANCC</code> thay vì <code>MAPT</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>3 câu 10/13/15 là bộ ba minh họa hoàn chỉnh cho cùng 1 câu hỏi bằng <code>JOIN</code>, <code>IN</code>, <code>EXISTS</code> - Nên tự làm cả 3 và so sánh kết quả để chắc chắn hiểu đúng cách vận hành từng kỹ thuật.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 16 · SUBQUERY ... IN</p>
+              <p><strong>Đề bài:</strong> Lặp lại câu 11 nhưng sử dụng truy vấn con, dùng toán tử IN.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, TENNCC, TRANGTHAI, THANHPHO
+FROM NHACUNGCAP
+WHERE THANHPHO = 'London'
+  AND MANCC IN (
+      SELECT vc.MANCC
+      FROM VANCHUYEN vc
+      JOIN PHUTUNG pt ON vc.MAPT = pt.MAPT
+      WHERE pt.THANHPHO = 'London'
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Điều kiện "nhà cung cấp ở London" giữ nguyên ở truy vấn ngoài; điều kiện "từng vận chuyển phụ tùng London" chuyển thành 1 subquery độc lập trả về danh sách <code>MANCC</code>, so khớp bằng <code>IN</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Subquery vẫn cần <code>JOIN VANCHUYEN</code> với <code>PHUTUNG</code> bên trong nó, vì phải biết phụ tùng nào ở London trước khi tra ngược ra nhà cung cấp - <code>JOIN</code> không biến mất hoàn toàn, chỉ chuyển vào trong subquery.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 17 · SUBQUERY ... EXISTS</p>
+              <p><strong>Đề bài:</strong> Lặp lại câu 11 nhưng dùng truy vấn con, sử dụng toán tử EXISTS.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, TENNCC, TRANGTHAI, THANHPHO
+FROM NHACUNGCAP ncc
+WHERE THANHPHO = 'London'
+  AND EXISTS (
+      SELECT * FROM VANCHUYEN vc
+      JOIN PHUTUNG pt ON vc.MAPT = pt.MAPT
+      WHERE vc.MANCC = ncc.MANCC AND pt.THANHPHO = 'London'
+  );</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Giống Câu 16 nhưng subquery tương quan qua <code>vc.MANCC = ncc.MANCC</code> thay vì trả về danh sách rời rạc để so bằng <code>IN</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Bộ ba Câu 11/16/17 hoàn chỉnh 3 cách viết (<code>JOIN</code>, <code>IN</code>, <code>EXISTS</code>) cho cùng 1 bài toán 2 điều kiện lồng nhau - Mức độ phức tạp cao hơn Câu 9-10 vì cần <code>JOIN</code> thêm 1 bảng ngay trong subquery.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 18 · NOT IN</p>
+              <p><strong>Đề bài:</strong> Tìm nhà cung cấp chưa vận chuyển bất kỳ phụ tùng nào. Sử dụng NOT IN.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NHACUNGCAP
+WHERE MANCC NOT IN (
+    SELECT MANCC FROM VANCHUYEN
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>NOT IN</code> loại mọi nhà cung cấp có mã xuất hiện trong <code>VANCHUYEN</code>, chỉ giữ lại nhà cung cấp chưa từng vận chuyển gì.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Kết quả là S5 (Adams) - Nhà cung cấp duy nhất không có dòng nào trong <code>VANCHUYEN</code>. <code>NOT IN</code> an toàn ở đây vì <code>VANCHUYEN.MANCC</code> là 1 phần khóa chính, không bao giờ <code>NULL</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 19 · NOT EXISTS</p>
+              <p><strong>Đề bài:</strong> Tìm nhà cung cấp chưa vận chuyển bất kỳ phụ tùng nào. Sử dụng NOT EXISTS.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT *
+FROM NHACUNGCAP ncc
+WHERE NOT EXISTS (
+    SELECT * FROM VANCHUYEN vc WHERE vc.MANCC = ncc.MANCC
+);</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>NOT EXISTS</code> kiểm tra không tồn tại bất kỳ dòng <code>VANCHUYEN</code> nào khớp với nhà cung cấp đang xét.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Cho cùng kết quả S5 như Câu 18 - <code>NOT EXISTS</code> luôn là lựa chọn an toàn hơn <code>NOT IN</code> về lâu dài (không sợ bẫy <code>NULL</code>), dù ở bài này cả 2 đều đúng vì không có <code>NULL</code> trong <code>VANCHUYEN.MANCC</code>.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 20 · OUTER JOIN</p>
+              <p><strong>Đề bài:</strong> Tìm nhà cung cấp chưa vận chuyển bất kỳ phụ tùng nào. Sử dụng outer JOIN (phép kết ngoài).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ncc.*
+FROM NHACUNGCAP ncc
+LEFT JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+WHERE vc.MANCC IS NULL;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>LEFT JOIN</code> giữ lại mọi nhà cung cấp kể cả không khớp được dòng <code>VANCHUYEN</code> nào (cột phía <code>vc</code> sẽ là <code>NULL</code>); lọc <code>WHERE vc.MANCC IS NULL</code> chính là kỹ thuật "anti-join" kinh điển.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Bộ ba Câu 18/19/20 là 3 cách kinh điển nhất để trả lời câu hỏi "không có bất kỳ" trong SQL - <code>NOT IN</code>, <code>NOT EXISTS</code>, và <code>LEFT JOIN ... IS NULL</code> - Nên thuộc lòng cả 3 vì đây là dạng câu hỏi cực kỳ phổ biến trong đề thi thực hành.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 21 · COUNT</p>
+              <p><strong>Đề bài:</strong> Có tất cả bao nhiêu nhà cung cấp?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SoLuongNCC
+FROM NHACUNGCAP;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>COUNT(*)</code> đếm toàn bộ số dòng trong bảng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Dữ liệu mẫu có đúng 5 nhà cung cấp (S1-S5).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 22 · COUNT ... WHERE</p>
+              <p><strong>Đề bài:</strong> Có tất cả bao nhiêu nhà cung cấp ở London?</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT COUNT(*) AS SoLuongNCC_London
+FROM NHACUNGCAP
+WHERE THANHPHO = 'London';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>WHERE</code> lọc trước, <code>COUNT(*)</code> đếm sau - Chỉ đếm những dòng đã qua bộ lọc.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Kết quả là 2 (S1, S4) - Khác Câu 21 ở chỗ có thêm <code>WHERE</code> để giới hạn phạm vi đếm.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 23 · MAX / MIN</p>
+              <p><strong>Đề bài:</strong> Hiển thị trị giá cao nhất, thấp nhất của TRANGTHAI của các nhà cung cấp.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAX(TRANGTHAI) AS TrangThaiCaoNhat, MIN(TRANGTHAI) AS TrangThaiThapNhat
+FROM NHACUNGCAP;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>MAX()</code> và <code>MIN()</code> có thể tính cùng lúc trong 1 câu <code>SELECT</code>, không cần 2 câu riêng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p><code>TRANGTHAI</code> của 5 nhà cung cấp là 20, 10, 30, 20, 30 - Cao nhất 30, thấp nhất 10.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 24 · MAX / MIN ... WHERE</p>
+              <p><strong>Đề bài:</strong> Hiển thị giá trị cao nhất, thấp nhất của TRANGTHAI trong bảng NHACUNGCAP ở thành phố London.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MAX(TRANGTHAI) AS TrangThaiCaoNhat, MIN(TRANGTHAI) AS TrangThaiThapNhat
+FROM NHACUNGCAP
+WHERE THANHPHO = 'London';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Thêm <code>WHERE THANHPHO = 'London'</code> trước khi tính <code>MAX</code>/<code>MIN</code>, khác Câu 23 tính trên toàn bảng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>2 nhà cung cấp ở London (S1, S4) đều có <code>TRANGTHAI = 20</code>, nên cả cao nhất lẫn thấp nhất đều ra 20 - Không phải lỗi, chỉ là trùng hợp dữ liệu.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 25 · GROUP BY ... SUM</p>
+              <p><strong>Đề bài:</strong> Mỗi nhà cung cấp vận chuyển bao nhiêu phụ tùng? Chỉ hiển thị mã nhà cung cấp, tổng số phụ tùng đã vận chuyển.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC, SUM(SOLUONG) AS TongSoLuong
+FROM VANCHUYEN
+GROUP BY MANCC;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY MANCC</code> tách dữ liệu theo từng nhà cung cấp; <code>SUM(SOLUONG)</code> cộng dồn số lượng trong mỗi nhóm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>"Bao nhiêu phụ tùng" ở đây hiểu là <strong>tổng số lượng</strong> đã vận chuyển (cột <code>SOLUONG</code>), không phải đếm số loại phụ tùng khác nhau - Kết quả: S1=1300, S2=700, S3=200, S4=900. S5 không xuất hiện vì <code>GROUP BY</code> chạy trên <code>VANCHUYEN</code>, nơi S5 không có dòng nào.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 26 · JOIN ... GROUP BY ... SUM</p>
+              <p><strong>Đề bài:</strong> Mỗi nhà cung cấp vận chuyển bao nhiêu phụ tùng? Hiển thị mã nhà cung cấp, tên, thành phố của nhà cung cấp và tổng số phụ tùng đã vận chuyển.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ncc.MANCC, ncc.TENNCC, ncc.THANHPHO, SUM(vc.SOLUONG) AS TongSoLuong
+FROM NHACUNGCAP ncc
+JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+GROUP BY ncc.MANCC, ncc.TENNCC, ncc.THANHPHO;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cùng ý tưởng Câu 25 nhưng phải <code>JOIN</code> thêm <code>NHACUNGCAP</code> để lấy <code>TENNCC</code>/<code>THANHPHO</code>, nên <code>GROUP BY</code> phải liệt kê đủ 3 cột không tổng hợp.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>SQL Server bắt buộc mọi cột xuất hiện trong <code>SELECT</code> mà không nằm trong hàm tổng hợp đều phải có mặt trong <code>GROUP BY</code> - Thiếu <code>TENNCC</code> hoặc <code>THANHPHO</code> trong <code>GROUP BY</code> sẽ báo lỗi cú pháp.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 27 · GROUP BY ... HAVING</p>
+              <p><strong>Đề bài:</strong> Nhà cung cấp nào đã vận chuyển tổng cộng nhiều hơn 500 phụ tùng? Chỉ hiển thị mã nhà cung cấp.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT MANCC
+FROM VANCHUYEN
+GROUP BY MANCC
+HAVING SUM(SOLUONG) > 500;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>HAVING SUM(SOLUONG) &gt; 500</code> lọc theo <strong>kết quả tổng hợp</strong> sau khi đã <code>GROUP BY</code>, khác <code>WHERE</code> chỉ lọc được từng dòng gốc.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Không thể viết <code>WHERE SUM(SOLUONG) &gt; 500</code> vì tại thời điểm <code>WHERE</code> chạy, dữ liệu chưa được gom nhóm nên <code>SUM()</code> chưa có giá trị - Từ kết quả Câu 25 (S1=1300, S2=700, S3=200, S4=900), chỉ S3 (200) bị loại.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 28 · JOIN ... GROUP BY ... HAVING</p>
+              <p><strong>Đề bài:</strong> Nhà cung cấp nào đã vận chuyển nhiều hơn 300 phụ tùng màu đỏ (red)? Chỉ hiển thị mã nhà cung cấp.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT vc.MANCC
+FROM VANCHUYEN vc
+JOIN PHUTUNG pt ON vc.MAPT = pt.MAPT
+WHERE pt.MAUSAC = 'Red'
+GROUP BY vc.MANCC
+HAVING SUM(vc.SOLUONG) > 300;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>WHERE pt.MAUSAC = 'Red'</code> lọc trước khi gom nhóm (chỉ giữ dòng vận chuyển phụ tùng đỏ), rồi mới <code>GROUP BY</code> + <code>HAVING</code> để lọc theo tổng số lượng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Phụ tùng đỏ gồm P1, P4, P6. Riêng từng nhà cung cấp: S1 vận chuyển đỏ P1(300)+P4(200)+P6(100)=600; S2 vận chuyển đỏ P1(300)=300; S4 vận chuyển đỏ P4(300)=300 - Chỉ S1 có tổng <strong>lớn hơn</strong> 300 (S2, S4 đúng bằng 300 nên không thỏa "nhiều hơn").</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 29 · JOIN ... GROUP BY ... HAVING</p>
+              <p><strong>Đề bài:</strong> Nhà cung cấp nào đã vận chuyển nhiều hơn 300 phụ tùng màu đỏ (red)? Hiển thị mã nhà cung cấp, tên, thành phố và số lượng phụ tùng màu đỏ đã vận chuyển.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT ncc.MANCC, ncc.TENNCC, ncc.THANHPHO, SUM(vc.SOLUONG) AS SoLuongDo
+FROM NHACUNGCAP ncc
+JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
+JOIN PHUTUNG pt ON vc.MAPT = pt.MAPT
+WHERE pt.MAUSAC = 'Red'
+GROUP BY ncc.MANCC, ncc.TENNCC, ncc.THANHPHO
+HAVING SUM(vc.SOLUONG) > 300;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Cùng logic Câu 28, thêm <code>JOIN NHACUNGCAP</code> để lấy <code>TENNCC</code>/<code>THANHPHO</code>, giống cách Câu 26 mở rộng từ Câu 25.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Kết quả chỉ còn đúng 1 dòng: S1, Smith, London, 600 - Khớp với phân tích ở Câu 28.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 30 · GROUP BY</p>
+              <p><strong>Đề bài:</strong> Có bao nhiêu nhà cung cấp ở mỗi thành phố.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT THANHPHO, COUNT(*) AS SoLuongNCC
+FROM NHACUNGCAP
+GROUP BY THANHPHO;</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>GROUP BY THANHPHO</code> tách nhà cung cấp theo từng thành phố; <code>COUNT(*)</code> đếm số lượng trong mỗi nhóm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Kết quả: London=2 (S1, S4), Paris=2 (S2, S3), Athens=1 (S5) - Đủ cả 5 nhà cung cấp, khác với Câu 25 (nơi S5 bị thiếu vì bảng nguồn là <code>VANCHUYEN</code> chứ không phải <code>NHACUNGCAP</code>).</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 31 · JOIN + GROUP BY + ORDER BY + TOP</p>
               <p><strong>Đề bài:</strong> Nhà cung cấp nào đã vận chuyển nhiều phụ tùng nhất? Hiển thị tên nhà cung cấp và số lượng phụ tùng đã vận chuyển.</p>
               <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT TOP 1 WITH TIES ncc.TENNCC, SUM(vc.SOLUONG) AS TongSoLuong
 FROM NHACUNGCAP ncc
@@ -182,23 +578,72 @@ JOIN VANCHUYEN vc ON ncc.MANCC = vc.MANCC
 GROUP BY ncc.TENNCC
 ORDER BY TongSoLuong DESC;</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Kết hợp <code>JOIN</code> (lấy tên nhà cung cấp), <code>GROUP BY</code> (cộng dồn số lượng theo từng nhà cung cấp) và <code>ORDER BY ... DESC</code> + <code>TOP 1</code> (lấy nhà cung cấp nhiều nhất).</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là ví dụ điển hình của việc ghép nhiều kỹ thuật đã học: Phải <code>JOIN</code> trước để có tên, <code>GROUP BY</code> để cộng dồn theo từng nhà cung cấp, rồi mới sắp xếp và lấy dòng đầu tiên - Làm sai thứ tự sẽ ra kết quả sai hoặc lỗi cú pháp.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Kết hợp <code>JOIN</code> (lấy tên nhà cung cấp), <code>GROUP BY</code> (cộng dồn số lượng theo từng nhà cung cấp) và <code>ORDER BY ... DESC</code> + <code>TOP 1 WITH TIES</code> (lấy nhà cung cấp nhiều nhất, giữ luôn các nhà cung cấp đồng hạng nếu có).</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là ví dụ điển hình của việc ghép nhiều kỹ thuật đã học trong 1 câu - Từ bảng tổng số lượng ở Câu 25 (S1=1300, S2=700, S3=200, S4=900), S1 (Smith) dẫn đầu với 1300, không có nhà cung cấp nào khác đồng hạng nên kết quả chỉ có đúng 1 dòng.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 2 (MẪU) · INSERT + UPDATE</p>
-              <p><strong>Đề bài:</strong> Viết câu lệnh SQL để insert nhà cung cấp mới: S6, Duncan, 30, Paris. Sau đó thay đổi thành phố của S6 thành Sydney.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO NHACUNGCAP (MANCC, TENNCC, TRANGTHAI, THANHPHO)
-VALUES ('S6', 'Duncan', 30, 'Paris');
+              <p class="eyebrow">CÂU 32 · INTERSECT</p>
+              <p><strong>Đề bài:</strong> Thành phố nào có cả <strong>nhà cung cấp</strong> và <strong>phụ tùng</strong>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT THANHPHO FROM NHACUNGCAP
+INTERSECT
+SELECT THANHPHO FROM PHUTUNG;</code></pre></div>
+              <details><summary>Cách khác (subquery IN)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT DISTINCT THANHPHO
+FROM NHACUNGCAP
+WHERE THANHPHO IN (SELECT THANHPHO FROM PHUTUNG);</code></pre></div>
+                <p><code>INTERSECT</code> tự động loại trùng nên không cần <code>DISTINCT</code>; cách <code>IN</code> phải tự thêm <code>DISTINCT</code> vì <code>NHACUNGCAP</code> có thể có nhiều nhà cung cấp cùng 1 thành phố.</p>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>INTERSECT</code> lấy giao giữa 2 tập <code>THANHPHO</code> - Chỉ giữ lại thành phố xuất hiện ở <strong>cả 2</strong> bảng.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Thành phố của nhà cung cấp: London, Paris, Athens. Thành phố của phụ tùng: London, Paris, Oslo - Giao nhau chỉ còn London và Paris (Athens chỉ có nhà cung cấp, Oslo chỉ có phụ tùng).</p></div>
+              </div>
+            </div>
 
-UPDATE NHACUNGCAP
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 33 · INSERT</p>
+              <p><strong>Đề bài:</strong> Viết câu lệnh SQL để insert nhà cung cấp mới: S6, Duncan, 30, Paris.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">INSERT INTO NHACUNGCAP (MANCC, TENNCC, TRANGTHAI, THANHPHO)
+VALUES ('S6', 'Duncan', 30, 'Paris');</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>INSERT INTO ... (danh sách cột) VALUES (...)</code> thêm đúng 1 dòng mới với giá trị theo đúng thứ tự đã liệt kê.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Nên liệt kê rõ tên cột thay vì chỉ <code>VALUES (...)</code> - Giúp câu lệnh không phụ thuộc vào đúng thứ tự cột vật lý của bảng, dễ đọc và ít lỗi hơn khi bảng có nhiều cột.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 34 · UPDATE</p>
+              <p><strong>Đề bài:</strong> Viết câu lệnh SQL để thay đổi thành phố của S6 (ở câu 33) thành Sydney.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE NHACUNGCAP
 SET THANHPHO = 'Sydney'
 WHERE MANCC = 'S6';</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>INSERT</code> thêm 1 dòng nhà cung cấp mới; <code>UPDATE ... WHERE MANCC = 'S6'</code> chỉ sửa đúng dòng vừa thêm.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>UPDATE ... SET ... WHERE</code> chỉ sửa đúng dòng có <code>MANCC = 'S6'</code> vừa thêm ở Câu 33.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p><code>WHERE</code> trong câu <code>UPDATE</code> bắt buộc phải lọc đúng <code>MANCC</code> - Nếu quên <code>WHERE</code>, toàn bộ nhà cung cấp trong bảng sẽ bị đổi thành "Sydney".</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 35 · UPDATE</p>
+              <p><strong>Đề bài:</strong> Viết câu lệnh SQL tăng TRANGTHAI của nhà cung cấp ở London lên thêm 10.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE NHACUNGCAP
+SET TRANGTHAI = TRANGTHAI + 10
+WHERE THANHPHO = 'London';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>SET TRANGTHAI = TRANGTHAI + 10</code> lấy giá trị hiện tại của chính cột đó rồi cộng thêm 10, áp dụng cho mọi dòng khớp <code>WHERE</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 34 (sửa 1 dòng theo khóa chính), câu này cố ý sửa <strong>nhiều dòng cùng lúc</strong> (S1 và S4 đều ở London) - <code>WHERE THANHPHO = 'London'</code> vẫn là bắt buộc, chỉ là điều kiện lọc theo thuộc tính khác thay vì khóa chính.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">CÂU 36 · DELETE</p>
+              <p><strong>Đề bài:</strong> Viết câu lệnh SQL xóa nhà cung cấp S6.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">DELETE FROM NHACUNGCAP
+WHERE MANCC = 'S6';</code></pre></div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>DELETE FROM ... WHERE</code> xóa đúng dòng có <code>MANCC = 'S6'</code>.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>S6 không xuất hiện trong <code>VANCHUYEN</code> (chưa từng vận chuyển gì) nên xóa được ngay - Nếu S6 đã có dòng liên kết trong <code>VANCHUYEN</code>, ràng buộc khóa ngoại <code>FKShip1</code> sẽ chặn lệnh <code>DELETE</code> này lại cho đến khi xóa hết các dòng <code>VANCHUYEN</code> liên quan trước.</p></div>
               </div>
             </div>
 

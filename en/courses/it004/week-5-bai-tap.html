@@ -108,47 +108,980 @@
 
           <div class="access-unlocked" hidden>
             <div class="inline-ok access-success-msg"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M6.5 10.2l2.3 2.3 4.7-5"/></svg></span> Verified - you now have access to the Week 5 answer.</div>
-            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Below is a sample question to illustrate how the answer is presented - it will be replaced with the real BTTH5 solution.</p>
+            <p style="color:var(--muted);font-size:12px;margin:14px 0 0">Full answer key for Sales Management (4 questions) and Academic Affairs Management (12 questions). Each question includes an "Impact Scope Table" (which tables could violate the rule, and which Triggers are needed), a main answer using <code>IF EXISTS</code>/<code>NOT EXISTS</code> (correct regardless of how many rows are affected), and an "Alternative approach" using a local variable (only correct when the operation affects exactly 1 row - see theory section 07). Retype each answer into SSMS to remember it better - the Copy button here is purely for convenience.</p>
 
             <div class="qa-block">
-              <p class="eyebrow">QUESTION 1 (SAMPLE) · TRIGGER AFTER INSERT</p>
-              <h3>Automatically increment session count on a new schedule entry</h3>
-              <p><strong>Exercise:</strong> Whenever a new row is added to <code>LICHTAP</code>, automatically add 1 to the corresponding member's <code>SoBuoiTap</code>.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_CapNhatSoBuoi
-ON LichTap
-AFTER INSERT
+              <p class="eyebrow">QUESTION 1 (SALES) · TRIGGER AFTER UPDATE / INSERT</p>
+              <p><strong>Exercise:</strong> A member customer's purchase date (<code>NGHD</code>) must be greater than or equal to their membership registration date (<code>NGDK</code>).</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>KHACHHANG</code></td><td><code>UPDATE</code></td><td>Changing <code>NGDK</code> to a date later than an invoice that already exists for that customer.</td></tr>
+                <tr><td><code>HOADON</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Adding/updating an invoice with a <code>NGHD</code> earlier than the customer's <code>NGDK</code>.</td></tr>
+              </table></div>
+              <p>Both <strong>2 Triggers</strong> on 2 different tables are needed to fully protect the constraint from every direction data can change.</p>
+
+              <h4>Trigger 1 - ON KHACHHANG AFTER UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KHACHHANG_NGDK
+ON KHACHHANG
+AFTER UPDATE
 AS
 BEGIN
-    UPDATE HocVien
-    SET SoBuoiTap = SoBuoiTap + 1
-    WHERE MaHV IN (SELECT MaHV FROM inserted);
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN HOADON hd ON hd.MAKH = i.MAKH
+        WHERE i.NGDK > hd.NGHD
+    )
+    BEGIN
+        RAISERROR(N'Ngày đăng ký thành viên phải nhỏ hơn hoặc bằng ngày mua hàng.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
 END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct when UPDATE affects exactly 1 customer)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KHACHHANG_NGDK_BIENTAM
+ON KHACHHANG
+AFTER UPDATE
+AS
+BEGIN
+    DECLARE @MAKH CHAR(4), @NGDK SMALLDATETIME, @NGHD_SomNhat SMALLDATETIME;
+
+    SELECT @MAKH = MAKH, @NGDK = NGDK FROM inserted;
+    SELECT @NGHD_SomNhat = MIN(NGHD) FROM HOADON WHERE MAKH = @MAKH;
+
+    IF (@NGHD_SomNhat IS NOT NULL AND @NGDK > @NGHD_SomNhat)
+    BEGIN
+        RAISERROR(N'Ngày đăng ký thành viên phải nhỏ hơn hoặc bằng ngày mua hàng.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+                <p><code>SELECT @MAKH = MAKH, @NGDK = NGDK FROM inserted</code> only picks up 1 row - if the <code>UPDATE</code> changes <code>NGDK</code> for several customers at once (e.g. <code>UPDATE KHACHHANG SET NGDK = ...</code> with no <code>WHERE</code>), this only checks 1 arbitrary customer out of the batch, silently skipping the rest.</p>
+              </details>
+
+              <h4>Trigger 2 - ON HOADON AFTER INSERT, UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_NGHD_NGDK
+ON HOADON
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN KHACHHANG kh ON kh.MAKH = i.MAKH
+        WHERE i.NGHD < kh.NGDK
+    )
+    BEGIN
+        RAISERROR(N'Ngày lập hóa đơn phải lớn hơn hoặc bằng ngày khách hàng đăng ký thành viên.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct when adding/updating exactly 1 invoice)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_NGHD_NGDK_BIENTAM
+ON HOADON
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @NGHD SMALLDATETIME, @NGDK SMALLDATETIME;
+
+    SELECT @NGHD = i.NGHD, @NGDK = kh.NGDK
+    FROM inserted i
+    JOIN KHACHHANG kh ON kh.MAKH = i.MAKH;
+
+    IF (@NGDK IS NOT NULL AND @NGHD < @NGDK)
+    BEGIN
+        RAISERROR(N'Ngày lập hóa đơn phải lớn hơn hoặc bằng ngày khách hàng đăng ký thành viên.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+                <p>Same limitation as Trigger 1 - only safe when <code>INSERT</code>/<code>UPDATE</code> affects exactly 1 invoice. <code>JOIN KHACHHANG</code> (not <code>LEFT JOIN</code>) automatically skips invoices with no member customer attached (<code>MAKH IS NULL</code>) - matching the question's intent, which only constrains "member customers".</p>
+              </details>
+
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>AFTER INSERT</code> is a trigger that runs automatically right after a row is added to a table; the virtual table <code>inserted</code> holds the row(s) just added.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p><code>SoBuoiTap</code> needs to stay in sync automatically, regardless of whether the developer remembers to run a manual <code>UPDATE</code> - the trigger guarantees the data stays consistent.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Both Triggers use <code>IF EXISTS</code> to compare the <strong>entire</strong> <code>inserted</code> set against the other table via <code>JOIN</code>, instead of assigning into a variable and comparing - so they stay correct regardless of whether <code>UPDATE</code>/<code>INSERT</code> affects 1 or many rows.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>The "NGHD ≥ NGDK" constraint can be broken from <strong>2 directions</strong>: changing <code>NGDK</code> (the <code>KHACHHANG</code> side) or adding/updating an invoice (the <code>HOADON</code> side) - the impact scope table above is exactly the step that surfaces this. Writing only 1 Trigger on 1 table would let the constraint slip from the other direction.</p></div>
               </div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">QUESTION 2 (SAMPLE) · TRIGGER INSTEAD OF DELETE</p>
-              <h3>Block deletion of a room that still has classes</h3>
-              <p><strong>Exercise:</strong> Do not allow a gym room to be deleted if there are still classes assigned to it.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER trg_ChanXoaPhong
-ON PhongTap
-INSTEAD OF DELETE
+              <p class="eyebrow">QUESTION 2 (SALES) · TRIGGER AFTER UPDATE / INSERT</p>
+              <p><strong>Exercise:</strong> An employee's sale date (<code>NGHD</code>) must be greater than or equal to their hire date.</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>NHANVIEN</code></td><td><code>UPDATE</code></td><td>Changing <code>NGVL</code> to a date later than an invoice that employee already created.</td></tr>
+                <tr><td><code>HOADON</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Adding/updating an invoice with a <code>NGHD</code> earlier than the selling employee's <code>NGVL</code>.</td></tr>
+              </table></div>
+
+              <h4>Trigger 1 - ON NHANVIEN AFTER UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_NHANVIEN_NGVL
+ON NHANVIEN
+AFTER UPDATE
 AS
 BEGIN
     IF EXISTS (
-        SELECT 1 FROM LopTap lt
-        JOIN deleted d ON lt.MaPhong = d.MaPhong
+        SELECT *
+        FROM inserted i
+        JOIN HOADON hd ON hd.MANV = i.MANV
+        WHERE i.NGVL > hd.NGHD
     )
-        RAISERROR(N'Phòng đang có lớp, không thể xóa.', 16, 1);
-    ELSE
-        DELETE FROM PhongTap WHERE MaPhong IN (SELECT MaPhong FROM deleted);
+    BEGIN
+        RAISERROR(N'Ngày vào làm phải nhỏ hơn hoặc bằng ngày lập hóa đơn.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
 END;</code></pre></div>
+              <details><summary>Alternative approach (local variable)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_NHANVIEN_NGVL_BIENTAM
+ON NHANVIEN
+AFTER UPDATE
+AS
+BEGIN
+    DECLARE @MANV CHAR(4), @NGVL SMALLDATETIME, @NGHD_SomNhat SMALLDATETIME;
+
+    SELECT @MANV = MANV, @NGVL = NGVL FROM inserted;
+    SELECT @NGHD_SomNhat = MIN(NGHD) FROM HOADON WHERE MANV = @MANV;
+
+    IF (@NGHD_SomNhat IS NOT NULL AND @NGVL > @NGHD_SomNhat)
+    BEGIN
+        RAISERROR(N'Ngày vào làm phải nhỏ hơn hoặc bằng ngày lập hóa đơn.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+                <p>Only correct when <code>UPDATE</code> changes <code>NGVL</code> for exactly 1 employee - the exact same limitation noted in Question 1.</p>
+              </details>
+
+              <h4>Trigger 2 - ON HOADON AFTER INSERT, UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_NGHD_NGVL
+ON HOADON
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN NHANVIEN nv ON nv.MANV = i.MANV
+        WHERE i.NGHD < nv.NGVL
+    )
+    BEGIN
+        RAISERROR(N'Ngày lập hóa đơn phải lớn hơn hoặc bằng ngày nhân viên vào làm.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_NGHD_NGVL_BIENTAM
+ON HOADON
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @NGHD SMALLDATETIME, @NGVL SMALLDATETIME;
+
+    SELECT @NGHD = i.NGHD, @NGVL = nv.NGVL
+    FROM inserted i
+    JOIN NHANVIEN nv ON nv.MANV = i.MANV;
+
+    IF (@NGHD < @NGVL)
+    BEGIN
+        RAISERROR(N'Ngày lập hóa đơn phải lớn hơn hoặc bằng ngày nhân viên vào làm.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+                <p>Only correct when adding/updating exactly 1 invoice at a time.</p>
+              </details>
+
               <div class="qa-explain">
-                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>INSTEAD OF DELETE</code> completely replaces the default <code>DELETE</code> behavior with your own custom logic.</p></div>
-                <div><span class="qa-explain-label">WHY?</span><p>The condition needs to be checked <strong>before</strong> the deletion actually happens. Using <code>AFTER DELETE</code> would mean the data is already gone by the time the check runs - too late to stop it.</p></div>
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Exact same structure as Question 1, just swapping the target: <code>NHANVIEN.NGVL</code> instead of <code>KHACHHANG.NGDK</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Same "2 directions of violation" reasoning as Question 1 - every row in <code>NHANVIEN</code> always has a <code>MANV</code> (unlike <code>HOADON.MAKH</code> which can be <code>NULL</code>), so no extra <code>IS NOT NULL</code> filter is needed on the join. In practice, Trigger 2 from this question and Trigger 2 from Question 1 could be merged into a single Trigger on <code>HOADON</code> checking both conditions - kept separate here per question for clarity when grading.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3 (SALES) · AUTO-UPDATE TRIGGER</p>
+              <p><strong>Exercise:</strong> An invoice's total value is the sum of the line totals (quantity * unit price) of the line items belonging to that invoice.</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could affect the value</th></tr>
+                <tr><td><code>CTHD</code></td><td><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></td><td>Adding/updating/deleting a single line item changes the total for the invoice it belongs to.</td></tr>
+              </table></div>
+              <p>This is an <strong>automatic calculation</strong> Trigger (not a validation Trigger) - <code>CTHD</code> doesn't store a unit price itself, so <code>GIA</code> must be pulled from <code>SANPHAM</code>.</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_CTHD_CAPNHAT_TRIGIA
+ON CTHD
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    UPDATE hd
+    SET TRIGIA = ISNULL((
+        SELECT SUM(ct.SL * sp.GIA)
+        FROM CTHD ct
+        JOIN SANPHAM sp ON sp.MASP = ct.MASP
+        WHERE ct.SOHD = hd.SOHD
+    ), 0)
+    FROM HOADON hd
+    WHERE hd.SOHD IN (
+        SELECT SOHD FROM inserted
+        UNION
+        SELECT SOHD FROM deleted
+    );
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct when exactly 1 CTHD row changes)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_CTHD_CAPNHAT_TRIGIA_BIENTAM
+ON CTHD
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    DECLARE @SOHD INT;
+
+    SELECT @SOHD = SOHD FROM inserted;
+    IF (@SOHD IS NULL) SELECT @SOHD = SOHD FROM deleted;
+
+    UPDATE HOADON
+    SET TRIGIA = ISNULL((
+        SELECT SUM(SL * GIA)
+        FROM CTHD ct JOIN SANPHAM sp ON sp.MASP = ct.MASP
+        WHERE ct.SOHD = @SOHD
+    ), 0)
+    WHERE SOHD = @SOHD;
+END;</code></pre></div>
+                <p><code>@SOHD</code> is first pulled from <code>inserted</code> (correct for <code>INSERT</code>/<code>UPDATE</code>); if that's empty (the <code>DELETE</code> case, where <code>inserted</code> has no rows), it falls back to <code>deleted</code>. This covers all 3 operations, but is still only correct when each <code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code> touches exactly 1 <code>CTHD</code> row - deleting several line items at once (e.g. <code>DELETE FROM CTHD WHERE SOHD = 1001</code> for an invoice with many products) would only recompute for 1 invoice even if the batch actually spans several invoices.</p>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>UNION</code> combines <code>SOHD</code> from both <code>inserted</code> and <code>deleted</code> into 1 list of invoices to recompute, covering all 3 operations (<code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>) in a single Trigger; <code>ISNULL(..., 0)</code> ensures an invoice left with no line items at all gets <code>TRIGIA = 0</code> instead of <code>NULL</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>INSERT</code> only has data in <code>inserted</code>, <code>DELETE</code> only in <code>deleted</code>, and <code>UPDATE</code> has both - using <code>UNION</code> across both virtual tables is the only way for 1 shared Trigger to handle every case correctly, while also recomputing <strong>every</strong> affected invoice if the batch touches CTHD rows belonging to several different invoices at once.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 4 (SALES) · AUTO-UPDATE TRIGGER</p>
+              <p><strong>Exercise:</strong> A customer's sales figure is the sum of the invoice totals that member customer has purchased.</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could affect the value</th></tr>
+                <tr><td><code>HOADON</code></td><td><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></td><td>Adding/updating/deleting an invoice (or its <code>TRIGIA</code> being updated by Question 3's Trigger) changes a customer's total sales figure.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_CAPNHAT_DOANHSO
+ON HOADON
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    UPDATE kh
+    SET DOANHSO = ISNULL((
+        SELECT SUM(hd.TRIGIA)
+        FROM HOADON hd
+        WHERE hd.MAKH = kh.MAKH
+    ), 0)
+    FROM KHACHHANG kh
+    WHERE kh.MAKH IN (
+        SELECT MAKH FROM inserted WHERE MAKH IS NOT NULL
+        UNION
+        SELECT MAKH FROM deleted WHERE MAKH IS NOT NULL
+    );
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct when exactly 1 invoice changes)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOADON_CAPNHAT_DOANHSO_BIENTAM
+ON HOADON
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    DECLARE @MAKH CHAR(4);
+
+    SELECT @MAKH = MAKH FROM inserted;
+    IF (@MAKH IS NULL) SELECT @MAKH = MAKH FROM deleted;
+
+    IF (@MAKH IS NOT NULL)
+    BEGIN
+        UPDATE KHACHHANG
+        SET DOANHSO = ISNULL((SELECT SUM(TRIGIA) FROM HOADON WHERE MAKH = @MAKH), 0)
+        WHERE MAKH = @MAKH;
+    END
+END;</code></pre></div>
+                <p>Same structure and same limitation as Question 3 - only correct when each change affects exactly 1 invoice.</p>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Same structure as Question 3, just switching from computing an invoice's <code>TRIGIA</code> to a customer's <code>DOANHSO</code>; an extra <code>MAKH IS NOT NULL</code> filter is added since walk-in customer invoices have no <code>MAKH</code>.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>SQL Server allows <strong>nested triggers</strong> by default: when Question 3's Trigger runs <code>UPDATE HOADON SET TRIGIA = ...</code>, that very <code>UPDATE</code> automatically fires this <code>AFTER UPDATE</code> trigger on <code>HOADON</code> too - meaning a single change to <code>CTHD</code> automatically keeps both <code>TRIGIA</code> and <code>DOANHSO</code> in sync down the chain, with no manual call needed.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 1 (ACADEMIC) · TRIGGER AFTER INSERT, UPDATE, DELETE</p>
+              <p><strong>Exercise:</strong> A class's class monitor must be a member of that class.</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>LOP</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Assigning <code>TRGLOP</code> to a student who doesn't belong to that class.</td></tr>
+                <tr><td><code>HOCVIEN</code></td><td><code>DELETE</code>, <code>UPDATE</code></td><td>Deleting the student who is currently a class monitor, or moving that student to a different class.</td></tr>
+              </table></div>
+
+              <h4>Trigger 1 - ON LOP AFTER INSERT, UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_LOP_KIEMTRA_LOPTRUONG
+ON LOP
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT * FROM inserted i
+        WHERE i.TRGLOP IS NOT NULL
+          AND NOT EXISTS (
+              SELECT * FROM HOCVIEN hv
+              WHERE hv.MAHV = i.TRGLOP AND hv.MALOP = i.MALOP
+          )
+    )
+    BEGIN
+        RAISERROR(N'Lớp trưởng của một lớp phải là học viên của chính lớp đó.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <p><code>i.TRGLOP IS NOT NULL</code> allows a class to have <strong>no</strong> class monitor yet (a <code>NULL</code> value) - this valid case shouldn't be blocked.</p>
+
+              <h4>Trigger 2 - ON HOCVIEN AFTER DELETE, UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOCVIEN_BAOVE_LOPTRUONG
+ON HOCVIEN
+AFTER DELETE, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM deleted d
+        JOIN LOP l ON l.TRGLOP = d.MAHV
+        WHERE NOT EXISTS (
+            SELECT * FROM inserted i
+            WHERE i.MAHV = d.MAHV AND i.MALOP = l.MALOP
+        )
+    )
+    BEGIN
+        RAISERROR(N'Học viên đang là lớp trưởng - không thể xóa hoặc chuyển sang lớp khác.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 student, only catches DELETE)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOCVIEN_BAOVE_LOPTRUONG_BIENTAM
+ON HOCVIEN
+AFTER DELETE
+AS
+BEGIN
+    DECLARE @MAHV CHAR(5), @MALOP CHAR(3);
+
+    SELECT @MAHV = MAHV, @MALOP = MALOP FROM deleted;
+
+    IF EXISTS (SELECT * FROM LOP WHERE TRGLOP = @MAHV AND MALOP = @MALOP)
+    BEGIN
+        RAISERROR(N'Học viên đang là lớp trưởng, không thể xóa.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+                <p>Only handles <code>DELETE</code> for exactly 1 student - it doesn't catch the case of an <code>UPDATE</code> moving a class monitor's <code>MALOP</code> to a different class, and it's incorrect when several students are deleted at once.</p>
+              </details>
+
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Trigger 1 blocks a bad assignment from the <code>LOP</code> side; Trigger 2 blocks a class monitor from being deleted or "leaving" their class (via a <code>MALOP</code> change) from the <code>HOCVIEN</code> side, using <code>NOT EXISTS</code> to check whether that student (if they still exist after the operation) is still tied to the class they're monitoring.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>AFTER DELETE, UPDATE</code> are combined on Trigger 2 because the same <code>NOT EXISTS</code> condition correctly handles both situations: on <code>DELETE</code>, <code>inserted</code> is empty so <code>NOT EXISTS</code> is always true (blocked); on <code>UPDATE</code>, it only blocks when the new row no longer matches the class they're monitoring.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 2 (ACADEMIC) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Exercise:</strong> A department head must be a teacher belonging to the department and hold the degree "TS" or "PTS".</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>KHOA</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Assigning <code>TRGKHOA</code> to a teacher who doesn't belong to the department, or whose degree isn't TS/PTS.</td></tr>
+                <tr><td><code>GIAOVIEN</code></td><td><code>UPDATE</code></td><td>Changing <code>MAKHOA</code> or downgrading <code>HOCVI</code> for a teacher who is currently a department head.</td></tr>
+              </table></div>
+
+              <h4>Trigger 1 - ON KHOA AFTER INSERT, UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KHOA_KIEMTRA_TRGKHOA
+ON KHOA
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT * FROM inserted i
+        WHERE i.TRGKHOA IS NOT NULL
+          AND NOT EXISTS (
+              SELECT * FROM GIAOVIEN gv
+              WHERE gv.MAGV = i.TRGKHOA
+                AND gv.MAKHOA = i.MAKHOA
+                AND gv.HOCVI IN (N'TS', N'PTS')
+          )
+    )
+    BEGIN
+        RAISERROR(N'Trưởng khoa phải là giáo viên thuộc khoa và có học vị TS hoặc PTS.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 department)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KHOA_KIEMTRA_TRGKHOA_BIENTAM
+ON KHOA
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @TRGKHOA CHAR(4), @MAKHOA CHAR(4);
+
+    SELECT @TRGKHOA = TRGKHOA, @MAKHOA = MAKHOA FROM inserted;
+
+    IF (@TRGKHOA IS NOT NULL AND NOT EXISTS (
+        SELECT * FROM GIAOVIEN
+        WHERE MAGV = @TRGKHOA AND MAKHOA = @MAKHOA AND HOCVI IN (N'TS', N'PTS')
+    ))
+    BEGIN
+        RAISERROR(N'Trưởng khoa phải là giáo viên thuộc khoa và có học vị TS hoặc PTS.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+
+              <h4>Trigger 2 - ON GIAOVIEN AFTER UPDATE</h4>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIAOVIEN_BAOVE_TRGKHOA
+ON GIAOVIEN
+AFTER UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN KHOA k ON k.TRGKHOA = i.MAGV
+        WHERE i.MAKHOA <> k.MAKHOA OR i.HOCVI NOT IN (N'TS', N'PTS')
+    )
+    BEGIN
+        RAISERROR(N'Giáo viên đang là trưởng khoa - không thể đổi khoa hoặc hạ học vị xuống dưới TS/PTS.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Trigger 1 checks right when a department head is assigned/changed; Trigger 2 protects the constraint from the <strong>reverse direction</strong> - blocking a teacher's record edit that would leave them no longer qualified to head the department they lead.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This is the clearest example of why the impact scope table needs to be drawn up before writing a Trigger - looking at the question only from the "check when assigning a department head" angle (Trigger 1) makes it very easy to miss the case where the constraint gets broken from the <code>GIAOVIEN</code> side (Trigger 2), since that table isn't mentioned directly in the question.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 3 (ACADEMIC) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Exercise:</strong> A student may only take an exam for a subject once their class has finished studying that subject.</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>KETQUATHI</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Adding/updating an exam result for a subject the student's class hasn't finished studying yet.</td></tr>
+              </table></div>
+              <p>"Finished studying" is read as: <code>GIANGDAY</code> has a (class, subject) row whose <code>DENNGAY</code> is no later than the exam date (<code>NGTHI</code>).</p>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_DAHOC
+ON KETQUATHI
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN HOCVIEN hv ON hv.MAHV = i.MAHV
+        WHERE NOT EXISTS (
+            SELECT * FROM GIANGDAY gd
+            WHERE gd.MALOP = hv.MALOP AND gd.MAMH = i.MAMH AND gd.DENNGAY <= i.NGTHI
+        )
+    )
+    BEGIN
+        RAISERROR(N'Học viên chỉ được thi môn học mà lớp mình đã học xong.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 exam result)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_DAHOC_BIENTAM
+ON KETQUATHI
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MAHV CHAR(5), @MAMH CHAR(10), @NGTHI SMALLDATETIME, @MALOP CHAR(3);
+
+    SELECT @MAHV = MAHV, @MAMH = MAMH, @NGTHI = NGTHI FROM inserted;
+    SELECT @MALOP = MALOP FROM HOCVIEN WHERE MAHV = @MAHV;
+
+    IF NOT EXISTS (
+        SELECT * FROM GIANGDAY
+        WHERE MALOP = @MALOP AND MAMH = @MAMH AND DENNGAY <= @NGTHI
+    )
+    BEGIN
+        RAISERROR(N'Học viên chỉ được thi môn học mà lớp mình đã học xong.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The inner <code>NOT EXISTS</code> looks for a <code>GIANGDAY</code> row proving the class already finished the subject (<code>DENNGAY &lt;= NGTHI</code>); if no such row exists for a student currently taking the exam, that's a violation.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>"Finished studying" can't just check "was this subject ever assigned to the class" - it also needs the timing condition <code>DENNGAY &lt;= NGTHI</code>, otherwise a student could still "take an exam" for a subject that's still being taught.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 4 (ACADEMIC) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Exercise:</strong> In each semester of an academic year, a class may study at most 3 subjects.</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>GIANGDAY</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Adding/updating an assignment pushes a class past 3 subjects in the same semester/year.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_TOIDA_3MON
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT MALOP, HOCKY, NAM
+        FROM GIANGDAY
+        WHERE MALOP IN (SELECT MALOP FROM inserted)
+        GROUP BY MALOP, HOCKY, NAM
+        HAVING COUNT(*) > 3
+    )
+    BEGIN
+        RAISERROR(N'Mỗi học kỳ của một năm học, một lớp chỉ được học tối đa 3 môn.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 assignment)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_TOIDA_3MON_BIENTAM
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MALOP CHAR(3), @HOCKY TINYINT, @NAM SMALLINT, @SoMon INT;
+
+    SELECT @MALOP = MALOP, @HOCKY = HOCKY, @NAM = NAM FROM inserted;
+    SELECT @SoMon = COUNT(*) FROM GIANGDAY WHERE MALOP = @MALOP AND HOCKY = @HOCKY AND NAM = @NAM;
+
+    IF (@SoMon > 3)
+    BEGIN
+        RAISERROR(N'Mỗi học kỳ của một năm học, một lớp chỉ được học tối đa 3 môn.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>GROUP BY MALOP, HOCKY, NAM</code> with <code>HAVING COUNT(*) &gt; 3</code> finds any (class, semester, year) group with more than 3 subjects, narrowed first with <code>WHERE MALOP IN (SELECT MALOP FROM inserted)</code> so the whole <code>GIANGDAY</code> table doesn't need to be scanned.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>No extra <code>HOCKY</code>/<code>NAM</code> filter is needed in the outer <code>WHERE</code>, since <code>GROUP BY</code> already splits the data correctly by (semester, year) - only the classes that were just assigned something new need to be narrowed down.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 5 (ACADEMIC) · AUTO-UPDATE TRIGGER</p>
+              <p><strong>Exercise:</strong> A class's enrollment count must equal the number of students belonging to that class.</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could affect the value</th></tr>
+                <tr><td><code>HOCVIEN</code></td><td><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></td><td>Adding/removing a student, or changing a student's <code>MALOP</code>, all change the enrollment count of the class(es) involved.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOCVIEN_CAPNHAT_SISO
+ON HOCVIEN
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    UPDATE l
+    SET SISO = (
+        SELECT COUNT(*) FROM HOCVIEN hv WHERE hv.MALOP = l.MALOP
+    )
+    FROM LOP l
+    WHERE l.MALOP IN (
+        SELECT MALOP FROM inserted
+        UNION
+        SELECT MALOP FROM deleted
+    );
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 student)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_HOCVIEN_CAPNHAT_SISO_BIENTAM
+ON HOCVIEN
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    DECLARE @MALOP CHAR(3);
+
+    SELECT @MALOP = MALOP FROM inserted;
+    IF (@MALOP IS NULL) SELECT @MALOP = MALOP FROM deleted;
+
+    UPDATE LOP
+    SET SISO = (SELECT COUNT(*) FROM HOCVIEN WHERE MALOP = @MALOP)
+    WHERE MALOP = @MALOP;
+END;</code></pre></div>
+                <p>Misses the old class when <code>UPDATE</code> changes a student's <code>MALOP</code> - this local-variable version only updates the <strong>new</strong> class's enrollment (taken from <code>inserted</code>), never the <strong>old</strong> class (which has to come from <code>deleted</code>) that student just left. This is exactly why the <code>IF EXISTS</code>/<code>UNION</code> version above is the safer choice.</p>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Recomputes <code>SISO</code> with a direct <code>COUNT(*)</code> on <code>HOCVIEN</code> for every affected class, identified via <code>UNION</code> between <code>inserted</code> and <code>deleted</code> - the same technique used in Sales Management Questions 3 and 4.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>When an <code>UPDATE</code> changes a student's <code>MALOP</code>, <strong>both the old and new class</strong> need their enrollment recomputed - <code>UNION</code> between <code>inserted</code> (new class) and <code>deleted</code> (old class) guarantees neither one is missed.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 6 (ACADEMIC) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Exercise:</strong> In the relation <code>DIEUKIEN</code>, the values of <code>MAMH</code> and <code>MAMH_TRUOC</code> within the same tuple may not be identical ("A","A"), and there may also not exist both the tuple ("A","B") and the tuple ("B","A").</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>DIEUKIEN</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Adding/updating a row that forms an (A,A) pair, or forms the mirrored pair of an existing row.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_DIEUKIEN_KIEMTRA
+ON DIEUKIEN
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (SELECT * FROM inserted WHERE MAMH = MAMH_TRUOC)
+    BEGIN
+        RAISERROR(N'Một môn học không thể là điều kiện tiên quyết của chính nó.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+
+    IF EXISTS (
+        SELECT * FROM inserted i
+        JOIN DIEUKIEN dk ON dk.MAMH = i.MAMH_TRUOC AND dk.MAMH_TRUOC = i.MAMH
+    )
+    BEGIN
+        RAISERROR(N'Không được tồn tại đồng thời (A,B) và (B,A) trong DIEUKIEN.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 row)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_DIEUKIEN_KIEMTRA_BIENTAM
+ON DIEUKIEN
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MAMH CHAR(10), @MAMH_TRUOC CHAR(10);
+
+    SELECT @MAMH = MAMH, @MAMH_TRUOC = MAMH_TRUOC FROM inserted;
+
+    IF (@MAMH = @MAMH_TRUOC)
+    BEGIN
+        RAISERROR(N'Một môn học không thể là điều kiện tiên quyết của chính nó.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+
+    IF EXISTS (SELECT * FROM DIEUKIEN WHERE MAMH = @MAMH_TRUOC AND MAMH_TRUOC = @MAMH)
+    BEGIN
+        RAISERROR(N'Không được tồn tại đồng thời (A,B) và (B,A) trong DIEUKIEN.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>The first <code>IF</code> blocks an (A,A) pair right within <code>inserted</code>; the second <code>IF</code> self-joins <code>DIEUKIEN</code> against itself (via the <code>inserted</code> virtual table) to find a mirrored (B,A) row already present that matches a newly inserted (A,B).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>These are 2 independent conditions, so they're split into 2 separate <code>IF</code> blocks, each with its own clear error message - combining them into a single <code>IF ... OR ...</code> would make the error message ambiguous about which violation actually occurred.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 7 (ACADEMIC) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Exercise:</strong> Teachers with the same degree, academic rank, and salary coefficient must have the same salary.</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>GIAOVIEN</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Adding/updating a teacher with a salary that differs from another teacher sharing the same (degree, rank, coefficient).</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIAOVIEN_KIEMTRA_MUCLUONG
+ON GIAOVIEN
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN GIAOVIEN gv
+          ON gv.HOCVI = i.HOCVI
+         AND ISNULL(gv.HOCHAM, N'') = ISNULL(i.HOCHAM, N'')
+         AND gv.HESO = i.HESO
+         AND gv.MAGV <> i.MAGV
+        WHERE gv.MUCLUONG <> i.MUCLUONG
+    )
+    BEGIN
+        RAISERROR(N'Giáo viên có cùng học vị, học hàm, hệ số lương thì mức lương phải bằng nhau.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 teacher)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIAOVIEN_KIEMTRA_MUCLUONG_BIENTAM
+ON GIAOVIEN
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MAGV CHAR(4), @HOCVI VARCHAR(10), @HOCHAM VARCHAR(10),
+            @HESO NUMERIC(4,2), @MUCLUONG MONEY;
+
+    SELECT @MAGV = MAGV, @HOCVI = HOCVI, @HOCHAM = HOCHAM,
+           @HESO = HESO, @MUCLUONG = MUCLUONG
+    FROM inserted;
+
+    IF EXISTS (
+        SELECT * FROM GIAOVIEN
+        WHERE HOCVI = @HOCVI
+          AND ISNULL(HOCHAM, N'') = ISNULL(@HOCHAM, N'')
+          AND HESO = @HESO
+          AND MAGV <> @MAGV
+          AND MUCLUONG <> @MUCLUONG
+    )
+    BEGIN
+        RAISERROR(N'Giáo viên có cùng học vị, học hàm, hệ số lương thì mức lương phải bằng nhau.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN GIAOVIEN</code> against itself (via <code>inserted</code>) to match on the 3 criteria <code>HOCVI</code>, <code>HOCHAM</code>, <code>HESO</code>; if another teacher (<code>MAGV &lt;&gt; i.MAGV</code>) matches all 3 but has a different <code>MUCLUONG</code>, that's a violation.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>HOCHAM</code> can be <code>NULL</code> (a teacher without an academic rank yet) - in SQL, <code>NULL = NULL</code> doesn't evaluate to <code>TRUE</code>, it's <em>unknown</em>, so comparing <code>gv.HOCHAM = i.HOCHAM</code> directly would wrongly treat 2 teachers who both lack an academic rank as "different" and skip the match. Wrapping both sides in <code>ISNULL(..., N'')</code> converts <code>NULL</code> to an empty string before comparing, so 2 <code>NULL</code> values are correctly treated as equal.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 8 (ACADEMIC) · TRIGGER AFTER INSERT</p>
+              <p><strong>Exercise:</strong> A student may only retake an exam (attempt &gt;1) if the score from the previous attempt was below 5.</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>KETQUATHI</code></td><td><code>INSERT</code></td><td>Adding a retake (<code>LANTHI &gt; 1</code>) while the immediately preceding attempt already passed (<code>DIEM &gt;= 5</code>).</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_THILAI
+ON KETQUATHI
+AFTER INSERT
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        WHERE i.LANTHI > 1
+          AND NOT EXISTS (
+              SELECT * FROM KETQUATHI kq
+              WHERE kq.MAHV = i.MAHV AND kq.MAMH = i.MAMH
+                AND kq.LANTHI = i.LANTHI - 1 AND kq.DIEM < 5
+          )
+    )
+    BEGIN
+        RAISERROR(N'Học viên chỉ được thi lại khi điểm lần thi trước đó dưới 5.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 exam result)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_THILAI_BIENTAM
+ON KETQUATHI
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @MAHV CHAR(5), @MAMH CHAR(10), @LANTHI TINYINT, @DiemLanTruoc NUMERIC(4,2);
+
+    SELECT @MAHV = MAHV, @MAMH = MAMH, @LANTHI = LANTHI FROM inserted;
+
+    IF (@LANTHI > 1)
+    BEGIN
+        SELECT @DiemLanTruoc = DIEM FROM KETQUATHI
+        WHERE MAHV = @MAHV AND MAMH = @MAMH AND LANTHI = @LANTHI - 1;
+
+        IF (@DiemLanTruoc IS NULL OR @DiemLanTruoc >= 5)
+        BEGIN
+            RAISERROR(N'Học viên chỉ được thi lại khi điểm lần thi trước đó dưới 5.', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>Only checks when <code>LANTHI &gt; 1</code> (the very first attempt has no condition to meet); <code>NOT EXISTS</code> looks for the immediately preceding attempt (<code>LANTHI - 1</code>) with <code>DIEM &lt; 5</code> - if no such row is found (meaning the previous attempt passed, or there simply is no previous attempt), that's a violation.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><code>NOT EXISTS</code> automatically also handles the case where the previous attempt <strong>doesn't even exist</strong> (e.g. inserting <code>LANTHI = 3</code> directly while skipping <code>LANTHI = 2</code>) - the local-variable version has to add an explicit <code>@DiemLanTruoc IS NULL</code> check to handle that correctly, showing that <code>NOT EXISTS</code> is both more compact and less prone to gaps.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 9 (ACADEMIC) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Exercise:</strong> The exam date of a later attempt must be later than the exam date of the previous attempt (for the same student, same subject).</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>KETQUATHI</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Adding/updating <code>NGTHI</code> in a way that breaks the increasing order of exam dates across <code>LANTHI</code>.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_NGTHI
+ON KETQUATHI
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN KETQUATHI kq
+          ON kq.MAHV = i.MAHV AND kq.MAMH = i.MAMH AND kq.LANTHI <> i.LANTHI
+        WHERE (kq.LANTHI < i.LANTHI AND kq.NGTHI >= i.NGTHI)
+           OR (kq.LANTHI > i.LANTHI AND kq.NGTHI <= i.NGTHI)
+    )
+    BEGIN
+        RAISERROR(N'Ngày thi của lần thi sau phải lớn hơn ngày thi của lần thi trước.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 exam result)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_KETQUATHI_KIEMTRA_NGTHI_BIENTAM
+ON KETQUATHI
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MAHV CHAR(5), @MAMH CHAR(10), @LANTHI TINYINT, @NGTHI SMALLDATETIME;
+
+    SELECT @MAHV = MAHV, @MAMH = MAMH, @LANTHI = LANTHI, @NGTHI = NGTHI FROM inserted;
+
+    IF EXISTS (
+        SELECT * FROM KETQUATHI
+        WHERE MAHV = @MAHV AND MAMH = @MAMH AND LANTHI <> @LANTHI
+          AND (
+              (LANTHI < @LANTHI AND NGTHI >= @NGTHI)
+              OR (LANTHI > @LANTHI AND NGTHI <= @NGTHI)
+          )
+    )
+    BEGIN
+        RAISERROR(N'Ngày thi của lần thi sau phải lớn hơn ngày thi của lần thi trước.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN</code>s each row just added/updated with the <strong>other</strong> attempts of the same student and subject (<code>kq.LANTHI &lt;&gt; i.LANTHI</code>); the 2 conditions in <code>WHERE</code> check both directions - an earlier attempt whose exam date isn't earlier than the current one, or a later attempt whose exam date isn't later.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p><strong>Both directions</strong> (earlier attempts and later attempts relative to the row being added/updated) must be checked, because <code>UPDATE</code> could edit the exam date of any attempt, not necessarily the last one - checking only against "the immediately preceding attempt" like Question 8 would miss the case of editing a middle attempt in a way that breaks order with the attempt after it.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 10 (ACADEMIC) · SAME CONSTRAINT AS QUESTION 3</p>
+              <p><strong>Exercise:</strong> A student may only take an exam for subjects their class has already finished studying.</p>
+              <div class="inline-ok">This is the <strong>same business rule</strong> as Question 3 ("A student may only take an exam for a subject once their class has finished studying that subject") - just worded differently. The <code>TRG_KETQUATHI_KIEMTRA_DAHOC</code> Trigger created for Question 3 already fully handles this constraint - <strong>no new Trigger needs to be created</strong>. Creating a duplicate would just run 2 Triggers on the same event, which isn't wrong but is redundant and harder to maintain.</div>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p>No new SQL answer - see the <code>TRG_KETQUATHI_KIEMTRA_DAHOC</code> Trigger from Question 3.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>Before writing a Trigger, it's worth quickly cross-checking against questions already answered earlier in the same exercise set - spotting that 2 questions share the same constraint avoids duplicate work, and doubles as a useful sanity check that the question wasn't misread.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 11 (ACADEMIC) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Exercise:</strong> When assigning a subject to be taught, the prerequisite order between subjects must be respected (a subject may only be taught after its prerequisite subjects have been completed).</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>GIANGDAY</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Assigning subject X to a class that hasn't yet finished the prerequisite(s) of X.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_KIEMTRA_TIENQUYET
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN DIEUKIEN dk ON dk.MAMH = i.MAMH
+        WHERE NOT EXISTS (
+            SELECT * FROM GIANGDAY gd
+            WHERE gd.MALOP = i.MALOP
+              AND gd.MAMH = dk.MAMH_TRUOC
+              AND gd.DENNGAY <= i.TUNGAY
+        )
+    )
+    BEGIN
+        RAISERROR(N'Lớp phải học xong các môn tiên quyết trước khi được phân công học môn liền sau.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 assignment)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_KIEMTRA_TIENQUYET_BIENTAM
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MALOP CHAR(3), @MAMH CHAR(10), @TUNGAY SMALLDATETIME;
+
+    SELECT @MALOP = MALOP, @MAMH = MAMH, @TUNGAY = TUNGAY FROM inserted;
+
+    IF EXISTS (
+        SELECT * FROM DIEUKIEN dk
+        WHERE dk.MAMH = @MAMH
+          AND NOT EXISTS (
+              SELECT * FROM GIANGDAY gd
+              WHERE gd.MALOP = @MALOP AND gd.MAMH = dk.MAMH_TRUOC AND gd.DENNGAY <= @TUNGAY
+          )
+    )
+    BEGIN
+        RAISERROR(N'Lớp phải học xong các môn tiên quyết trước khi được phân công học môn liền sau.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN DIEUKIEN</code> to pull every prerequisite of the subject just assigned; the inner <code>NOT EXISTS</code> checks whether that class already has a <code>GIANGDAY</code> row showing each prerequisite was finished (<code>DENNGAY &lt;= TUNGAY</code> of the new subject).</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>A subject can have <strong>more than 1</strong> prerequisite (e.g. the CSDL subject in the sample data requires both CTRR and CTDLGT) - the class must have finished <em>every</em> one of those prerequisites, not just any one of them, so <code>NOT EXISTS</code> is needed to guarantee none is still missing.</p></div>
+              </div>
+            </div>
+
+            <div class="qa-block">
+              <p class="eyebrow">QUESTION 12 (ACADEMIC) · TRIGGER AFTER INSERT, UPDATE</p>
+              <p><strong>Exercise:</strong> A teacher may only be assigned to teach subjects belonging to the department they are responsible for.</p>
+              <h4>Impact Scope Table</h4>
+              <div class="table-wrap"><table class="ref-table">
+                <tr><th>Table</th><th>Operation to catch</th><th>Why it could violate the rule</th></tr>
+                <tr><td><code>GIANGDAY</code></td><td><code>INSERT</code>, <code>UPDATE</code></td><td>Assigning a teacher to a subject that doesn't belong to that teacher's department.</td></tr>
+              </table></div>
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_KIEMTRA_KHOA
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM inserted i
+        JOIN GIAOVIEN gv ON gv.MAGV = i.MAGV
+        JOIN MONHOC mh ON mh.MAMH = i.MAMH
+        WHERE gv.MAKHOA <> mh.MAKHOA
+    )
+    BEGIN
+        RAISERROR(N'Giáo viên chỉ được phân công dạy những môn học thuộc khoa mình phụ trách.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              <details><summary>Alternative approach (local variable - Only correct for exactly 1 assignment)</summary>
+                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TRIGGER TRG_GIANGDAY_KIEMTRA_KHOA_BIENTAM
+ON GIANGDAY
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    DECLARE @MAGV CHAR(4), @MAMH CHAR(10), @MAKHOA_GV CHAR(4), @MAKHOA_MH CHAR(4);
+
+    SELECT @MAGV = MAGV, @MAMH = MAMH FROM inserted;
+    SELECT @MAKHOA_GV = MAKHOA FROM GIAOVIEN WHERE MAGV = @MAGV;
+    SELECT @MAKHOA_MH = MAKHOA FROM MONHOC WHERE MAMH = @MAMH;
+
+    IF (@MAKHOA_GV <> @MAKHOA_MH)
+    BEGIN
+        RAISERROR(N'Giáo viên chỉ được phân công dạy những môn học thuộc khoa mình phụ trách.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
+END;</code></pre></div>
+              </details>
+              <div class="qa-explain">
+                <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>JOIN</code>s both <code>GIAOVIEN</code> (to get the teacher's department) and <code>MONHOC</code> (to get the subject's department) at once, comparing the 2 department codes directly - a mismatch means a violation.</p></div>
+                <div><span class="qa-explain-label">WHY?</span><p>This is the simplest constraint in the Academic Affairs Management set - it only needs to match 2 <code>MAKHOA</code> columns from 2 different tables, with no <code>NOT EXISTS</code> or <code>GROUP BY</code> required, so a direct <code>JOIN</code> is the most compact and readable choice.</p></div>
               </div>
             </div>
 

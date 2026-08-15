@@ -70,15 +70,15 @@
 
           <h3>Không có Trigger, so với có Trigger</h3>
           <div class="flow-diagram">
-            <span class="flow-box">Người dùng</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6.5" r="3"/><path d="M4 17c0-3.5 2.7-6 6-6s6 2.5 6 6"/></svg> Người dùng</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">INSERT / UPDATE / DELETE</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 3.5l3 3-9 9-3.6.8.8-3.6z"/></svg> INSERT / UPDATE / DELETE</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">Trigger được kích hoạt</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 4 12h5l-1 6 8-11h-5l1-5z" stroke-linejoin="round"/></svg> Trigger được kích hoạt</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">Kiểm tra / xử lý / thông báo</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5 16.5 5v5.5c0 4-3 7-6.5 8-3.5-1-6.5-4-6.5-8V5z" stroke-linejoin="round"/><path d="M7 10l2 2 4-4.5"/></svg> Kiểm tra / xử lý / thông báo</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">Dữ liệu được cập nhật</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="4.8" rx="6" ry="2.2"/><path d="M4 4.8v10.4c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2V4.8"/><path d="M4 10c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2"/></svg> Dữ liệu được cập nhật</span>
           </div>
           <p>Ví dụ: "không cho phép số lượng sản phẩm nhỏ hơn 0." Khi người dùng chạy <code>UPDATE SANPHAM SET SOLUONG = -10 WHERE MASP = 'SP01';</code>, Trigger phát hiện <code>SOLUONG &lt; 0</code> ➜ Báo lỗi ➜ <code>ROLLBACK</code> ➜ Hủy thao tác.</p>
 
@@ -421,17 +421,17 @@ END</code></pre></div>
           <h2>Quy trình 6 bước</h2>
           <p>Khi gặp bài tập Trigger, có thể làm theo 6 bước:</p>
           <div class="flow-diagram">
-            <span class="flow-box">1. Xác định sự kiện: INSERT / UPDATE / DELETE</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2 4 12h5l-1 6 8-11h-5l1-5z" stroke-linejoin="round"/></svg> 1. Xác định sự kiện: INSERT / UPDATE / DELETE</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">2. Xác định bảng: ON ...</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="4.8" rx="6" ry="2.2"/><path d="M4 4.8v10.4c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2V4.8"/><path d="M4 10c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2"/></svg> 2. Xác định bảng: ON ...</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">3. Xác định loại: AFTER hay INSTEAD OF</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="14" height="6" rx="3"/><circle cx="7" cy="10" r="2" fill="currentColor" stroke="none"/></svg> 3. Xác định loại: AFTER hay INSTEAD OF</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">4. Xác định dữ liệu cần kiểm tra: INSERTED / DELETED / bảng khác</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l4 4"/></svg> 4. Xác định dữ liệu cần kiểm tra: INSERTED / DELETED / bảng khác</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">5. Viết điều kiện: IF EXISTS / IF NOT EXISTS</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5 3 10l4 5"/><path d="M13 5l4 5-4 5"/></svg> 5. Viết điều kiện: IF EXISTS / IF NOT EXISTS</span>
             <span class="flow-arrow">↓</span>
-            <span class="flow-box">6. Xử lý: PRINT / RAISERROR / ROLLBACK / INSERT / UPDATE / DELETE</span>
+            <span class="flow-box"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="3"/><path d="M10 3v2M10 15v2M17 10h-2M5 10H3M15.1 4.9l-1.4 1.4M6.3 13.7l-1.4 1.4M15.1 15.1l-1.4-1.4M6.3 6.3L4.9 4.9"/></svg> 6. Xử lý: PRINT / RAISERROR / ROLLBACK / INSERT / UPDATE / DELETE</span>
           </div>
 
           <h3>Quản lý Trigger</h3>

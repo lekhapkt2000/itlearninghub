@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../assets/css/base.css?v=21">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=48">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=49">
 </head>
 <body>
   <header class="topbar">
@@ -371,20 +371,84 @@ lọc nhóm</div>
           <p class="eyebrow">04 · CÁC PHÉP KẾT JOIN</p>
           <h2>JOIN</h2>
           <div class="definition"><code>JOIN</code> dùng để kết hợp dữ liệu từ hai hoặc nhiều bảng dựa trên một điều kiện liên quan giữa các bảng.</div>
-          <div class="er-side-by-side">
-            <div class="table-wrap"><table class="ref-table">
-              <tr><th>NhanVien</th></tr>
-              <tr><td>MaNV</td></tr>
-              <tr><td>HoTen</td></tr>
-              <tr><td>MaPB</td></tr>
-            </table></div>
-            <div class="table-wrap"><table class="ref-table">
-              <tr><th>PhongBan</th></tr>
-              <tr><td>MaPB</td></tr>
-              <tr><td>TenPB</td></tr>
-            </table></div>
+
+          <div class="er-diagram">
+            <svg viewBox="0 0 300 90" role="img" aria-label="NhanVien.MaPB tham chiếu đến PhongBan.MaPB">
+              <defs>
+                <marker id="w2ArrowPB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0L10 5L0 10Z" style="fill:var(--primary)"/>
+                </marker>
+                <clipPath id="w2CardNV"><rect x="10" y="17" width="130" height="56" rx="8"/></clipPath>
+                <clipPath id="w2CardPB"><rect x="160" y="17" width="130" height="56" rx="8"/></clipPath>
+              </defs>
+
+              <line x1="140" y1="45" x2="156" y2="45" style="stroke:var(--primary);stroke-width:2" marker-end="url(#w2ArrowPB)"/>
+              <text x="150" y="38" text-anchor="middle" style="font-family:var(--font-mono);font-size:9px;font-weight:700;fill:var(--muted)">FK</text>
+
+              <g clip-path="url(#w2CardNV)">
+                <rect x="10" y="17" width="130" height="56" style="fill:var(--surface)"/>
+                <rect x="10" y="17" width="130" height="26" style="fill:var(--primary)"/>
+              </g>
+              <rect x="10" y="17" width="130" height="56" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="75" y="34" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:#fff">NhanVien</text>
+              <text x="75" y="55" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">MaPB (FK)</text>
+
+              <g clip-path="url(#w2CardPB)">
+                <rect x="160" y="17" width="130" height="56" style="fill:var(--surface)"/>
+                <rect x="160" y="17" width="130" height="26" style="fill:var(--primary)"/>
+              </g>
+              <rect x="160" y="17" width="130" height="56" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="225" y="34" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:#fff">PhongBan</text>
+              <text x="225" y="55" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">MaPB (PK)</text>
+            </svg>
           </div>
-          <p class="er-relation">NhanVien.MaPB = PhongBan.MaPB</p>
+          <p class="er-relation">NhanVien.MaPB (FK) ➜ PhongBan.MaPB (PK): Mỗi nhân viên thuộc về đúng 1 phòng ban.</p>
+
+          <p class="ascii-label">4 PHÉP JOIN CHÍNH - VÙNG XANH LÀ DỮ LIỆU ĐƯỢC GIỮ LẠI</p>
+          <div class="venn-grid">
+            <div class="venn-card">
+              <svg viewBox="0 0 140 90" role="img" aria-label="INNER JOIN: chỉ giữ phần giao nhau">
+                <defs><clipPath id="w2VennInnerB"><circle cx="88" cy="45" r="28"/></clipPath></defs>
+                <circle cx="52" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35" clip-path="url(#w2VennInnerB)"/>
+                <circle cx="52" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <circle cx="88" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <text x="24" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">A</text>
+                <text x="108" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">B</text>
+              </svg>
+              <span class="venn-label">INNER JOIN</span>
+            </div>
+            <div class="venn-card">
+              <svg viewBox="0 0 140 90" role="img" aria-label="LEFT JOIN: giữ toàn bộ A, phần giao với B">
+                <circle cx="52" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35"/>
+                <circle cx="52" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <circle cx="88" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <text x="24" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">A</text>
+                <text x="108" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">B</text>
+              </svg>
+              <span class="venn-label">LEFT JOIN</span>
+            </div>
+            <div class="venn-card">
+              <svg viewBox="0 0 140 90" role="img" aria-label="RIGHT JOIN: giữ toàn bộ B, phần giao với A">
+                <circle cx="88" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35"/>
+                <circle cx="52" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <circle cx="88" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <text x="24" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">A</text>
+                <text x="108" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">B</text>
+              </svg>
+              <span class="venn-label">RIGHT JOIN</span>
+            </div>
+            <div class="venn-card">
+              <svg viewBox="0 0 140 90" role="img" aria-label="FULL OUTER JOIN: giữ toàn bộ cả A và B">
+                <circle cx="52" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35"/>
+                <circle cx="88" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35"/>
+                <circle cx="52" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <circle cx="88" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <text x="24" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">A</text>
+                <text x="108" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">B</text>
+              </svg>
+              <span class="venn-label">FULL OUTER</span>
+            </div>
+          </div>
 
           <h3>INNER JOIN</h3>
           <p>Chỉ lấy những dòng <strong>có dữ liệu khớp ở cả hai bảng</strong>:</p>
@@ -462,6 +526,44 @@ WHERE nv.MaPB = pb.MaPB;</code></pre></div>
           <p class="eyebrow">05 · CÁC PHÉP TOÁN TẬP HỢP</p>
           <h2>Set Operations</h2>
           <p>Có 3 phép chính, dùng để kết hợp <strong>kết quả của nhiều truy vấn</strong>:</p>
+
+          <p class="ascii-label">A = KẾT QUẢ TRUY VẤN 1 · B = KẾT QUẢ TRUY VẤN 2</p>
+          <div class="venn-grid">
+            <div class="venn-card">
+              <svg viewBox="0 0 140 90" role="img" aria-label="UNION: giữ toàn bộ A và B">
+                <circle cx="52" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35"/>
+                <circle cx="88" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35"/>
+                <circle cx="52" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <circle cx="88" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <text x="24" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">A</text>
+                <text x="108" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">B</text>
+              </svg>
+              <span class="venn-label">UNION</span>
+            </div>
+            <div class="venn-card">
+              <svg viewBox="0 0 140 90" role="img" aria-label="INTERSECT: chỉ giữ phần giao nhau">
+                <defs><clipPath id="w2VennIntersectB"><circle cx="88" cy="45" r="28"/></clipPath></defs>
+                <circle cx="52" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35" clip-path="url(#w2VennIntersectB)"/>
+                <circle cx="52" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <circle cx="88" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <text x="24" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">A</text>
+                <text x="108" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">B</text>
+              </svg>
+              <span class="venn-label">INTERSECT</span>
+            </div>
+            <div class="venn-card">
+              <svg viewBox="0 0 140 90" role="img" aria-label="EXCEPT: giữ A nhưng loại phần giao với B">
+                <defs><mask id="w2VennExceptMask"><rect x="0" y="0" width="140" height="90" fill="white"/><circle cx="88" cy="45" r="28" fill="black"/></mask></defs>
+                <circle cx="52" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35" mask="url(#w2VennExceptMask)"/>
+                <circle cx="52" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <circle cx="88" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <text x="24" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">A</text>
+                <text x="108" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">B</text>
+              </svg>
+              <span class="venn-label">EXCEPT</span>
+            </div>
+          </div>
+
           <div class="ascii-block">UNION
 INTERSECT
 EXCEPT</div>

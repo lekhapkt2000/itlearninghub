@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../assets/css/base.css?v=21">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=49">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=50">
 </head>
 <body>
   <header class="topbar">
@@ -99,12 +99,15 @@
             <tr><td>KH03</td><td>SP03</td></tr>
           </table></div>
           <p>Ta cần tìm: <strong>khách hàng đã mua tất cả sản phẩm.</strong></p>
-          <div class="ascii-block">Tất cả sản phẩm: SP01, SP02, SP03
-
-KH01: ✓SP01 ✓SP02 ✓SP03 ➜ Đạt
-KH02: ✓SP01 ✓SP02 ✗SP03 ➜ Không đạt
-KH03: ✓SP01 ✗SP02 ✓SP03 ➜ Không đạt</div>
-          <p>Kết quả: <code>KH01</code>. Đây chính là tư duy của phép chia.</p>
+          <div class="division-matrix">
+            <table class="division-table">
+              <tr><th></th><th>SP01</th><th>SP02</th><th>SP03</th><th>Kết quả</th></tr>
+              <tr class="is-pass"><th>KH01</th><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="verdict pass">✓ Đạt</td></tr>
+              <tr><th>KH02</th><td class="yes">✓</td><td class="yes">✓</td><td class="no">✗</td><td class="verdict fail">Không đạt</td></tr>
+              <tr><th>KH03</th><td class="yes">✓</td><td class="no">✗</td><td class="yes">✓</td><td class="verdict fail">Không đạt</td></tr>
+            </table>
+          </div>
+          <p>Kết quả: <code>KH01</code> - Hàng duy nhất có đủ dấu ✓ ở mọi cột sản phẩm. Đây chính là tư duy của phép chia.</p>
 
           <h3>Tư duy cốt lõi</h3>
           <p>Bài toán "Tìm A đã thực hiện tất cả B" có thể hiểu thành:</p>
@@ -492,6 +495,40 @@ WHERE PC.MaDA IS NULL;</code></pre></div>
             <tr><td><code>RIGHT JOIN</code></td><td>Tất cả bảng phải</td></tr>
             <tr><td><code>FULL OUTER JOIN</code></td><td>Tất cả hai bên</td></tr>
           </table></div>
+
+          <div class="venn-grid">
+            <div class="venn-card">
+              <svg viewBox="0 0 140 90" role="img" aria-label="LEFT JOIN: giữ toàn bộ bảng trái">
+                <circle cx="52" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35"/>
+                <circle cx="52" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <circle cx="88" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <text x="24" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">Trái</text>
+                <text x="98" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">Phải</text>
+              </svg>
+              <span class="venn-label">LEFT JOIN</span>
+            </div>
+            <div class="venn-card">
+              <svg viewBox="0 0 140 90" role="img" aria-label="RIGHT JOIN: giữ toàn bộ bảng phải">
+                <circle cx="88" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35"/>
+                <circle cx="52" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <circle cx="88" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <text x="24" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">Trái</text>
+                <text x="98" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">Phải</text>
+              </svg>
+              <span class="venn-label">RIGHT JOIN</span>
+            </div>
+            <div class="venn-card">
+              <svg viewBox="0 0 140 90" role="img" aria-label="FULL OUTER JOIN: giữ toàn bộ cả hai bên">
+                <circle cx="52" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35"/>
+                <circle cx="88" cy="45" r="28" style="fill:var(--primary);fill-opacity:.35"/>
+                <circle cx="52" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <circle cx="88" cy="45" r="28" style="fill:none;stroke:var(--primary);stroke-width:1.5"/>
+                <text x="24" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">Trái</text>
+                <text x="98" y="20" style="font:700 10px var(--font-mono);fill:var(--muted)">Phải</text>
+              </svg>
+              <span class="venn-label">FULL OUTER</span>
+            </div>
+          </div>
         </section>
 
         <!-- 08 - Cheat sheet -->

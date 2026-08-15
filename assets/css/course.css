@@ -228,6 +228,20 @@
 .venn-card svg{width:100%;max-width:110px;height:auto}
 .venn-card .venn-label{font:700 10.5px var(--font-mono);color:var(--ink);letter-spacing:.02em;text-align:center}
 
+/* Division-matrix (SQL "phép chia"): a rows-x-columns grid of yes/no
+   marks, with the passing row highlighted - makes "has ALL of these"
+   visible at a glance instead of reading a text checklist. */
+.division-matrix{margin:16px 0;overflow-x:auto}
+.division-table{border-collapse:separate;border-spacing:0;font-size:13px}
+.division-table th,.division-table td{padding:10px 16px;text-align:center;border:1px solid var(--line)}
+.division-table th{background:var(--bg);color:var(--muted);font:700 11px var(--font-mono);white-space:nowrap}
+.division-table td.yes{color:#16a34a;font-weight:800;background:#f0fdf4}
+.division-table td.no{color:#dc2626;font-weight:800;background:#fef2f2}
+.division-table td.verdict{font:700 11px var(--font-mono);white-space:nowrap}
+.division-table td.verdict.pass{color:#166534}
+.division-table td.verdict.fail{color:var(--muted)}
+.division-table tr.is-pass th:first-child{background:var(--primary);color:#fff}
+
 .checklist-progress{margin:16px 0 20px}
 .checklist-progress-bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:8px}
 .checklist-progress-bar b{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--primary),#60a5fa);width:0%;transition:width .3s}

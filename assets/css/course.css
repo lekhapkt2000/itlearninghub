@@ -120,13 +120,29 @@
 .week-status.current{background:var(--tint);color:var(--primary-ink)}
 .week-status.done{background:var(--tint);color:var(--primary-ink)}
 
-.week-header{position:relative;overflow:hidden;margin-top:8px;padding:32px 36px;background:linear-gradient(135deg,var(--tint) 0%,var(--surface) 65%);border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:14px}
+.week-header{position:relative;overflow:hidden;display:flex;align-items:center;gap:28px;margin-top:8px;padding:32px 36px;background:linear-gradient(135deg,var(--tint) 0%,var(--surface) 65%);border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:14px}
 .week-header::before{content:'';position:absolute;top:-70px;right:-70px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgb(37 99 235 / .12),transparent 70%)}
-.week-header .week-tag,.week-header h1,.week-header .week-meta,.week-header>p{position:relative;z-index:1}
+.week-header-content{flex:1;min-width:0;position:relative;z-index:1}
 .week-header .week-tag{display:inline-flex;align-items:center;gap:7px;color:var(--primary);font:700 12px var(--font-mono);letter-spacing:.1em}
 .week-header h1{display:table;margin:10px 0 8px -12px;padding:2px 12px;background:var(--tint);border-radius:8px;font-size:clamp(28px,4vw,40px)}
 .week-header .week-meta{display:flex;flex-wrap:wrap;gap:14px;margin-top:2px;color:var(--muted);font-size:13px}
 .week-header .week-meta span{padding:4px 11px;background:var(--surface);border:1px solid var(--line);border-radius:99px;font-weight:700;font-size:11px;color:var(--ink)}
+
+/* Decorative "floating data card" illustration on the right side of
+   the week header - purely ornamental, same motif reused on every
+   week across every course (not tied to a specific week's content). */
+.week-header-illustration{position:relative;z-index:1;flex-shrink:0;width:130px;height:110px;display:none}
+@media(min-width:860px){.week-header-illustration{display:block}}
+.whi-card{position:absolute;border-radius:12px;background:var(--surface);border:1px solid var(--line);box-shadow:0 16px 30px -16px rgb(15 23 42 / .25)}
+.whi-card-back{top:18px;left:22px;width:92px;height:78px;opacity:.55;transform:rotate(-6deg)}
+.whi-card-front{top:2px;left:6px;width:104px;height:90px;padding:12px;transform:rotate(3deg)}
+.whi-table{display:flex;flex-direction:column;gap:6px}
+.whi-row{display:flex;gap:4px}
+.whi-row span{flex:1;height:7px;border-radius:2px;background:var(--tint)}
+.whi-row-head span{background:var(--primary)}
+.whi-badge{position:absolute;bottom:-10px;right:-12px;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#1d4ed8);display:grid;place-items:center;box-shadow:0 10px 20px -6px rgb(37 99 235 / .55);z-index:2}
+.whi-badge svg{width:16px;height:16px;color:#fff}
+
 @media(max-width:600px){.week-header{padding:26px 22px}}
 
 /* 3-column lesson layout: TOC | content | learning panel */

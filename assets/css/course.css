@@ -242,6 +242,27 @@
 .division-table td.verdict.fail{color:var(--muted)}
 .division-table tr.is-pass th:first-child{background:var(--primary);color:#fff}
 
+/* Tier ladder (CASE WHEN classification, e.g. VIP/Thân thiết/Thường):
+   stacked bands, darkest/strongest condition on top, so "check order
+   = ladder order" is felt rather than read as a bullet list. */
+.tier-ladder{margin:16px 0;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.tier-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px}
+.tier-row .tier-name{font:800 13px var(--font-sans);color:#fff}
+.tier-row .tier-cond{font:600 12px var(--font-mono);color:rgb(255 255 255 / .85);text-align:right}
+.tier-row.is-tier1{background:var(--primary)}
+.tier-row.is-tier2{background:#60a5fa}
+.tier-row.is-tier3{background:var(--muted)}
+
+/* Character-strip highlight (LEFT()/RIGHT() and similar string
+   functions): shows exactly which characters a function picks out of
+   the source string. */
+.char-strip{display:flex;align-items:center;gap:12px;margin:14px 0;flex-wrap:wrap}
+.char-strip-label{font:700 11px var(--font-mono);color:var(--muted);min-width:130px}
+.char-strip-chars{display:flex;gap:2px}
+.char-strip-chars .ch{display:inline-flex;align-items:center;justify-content:center;width:24px;height:28px;border-radius:4px;background:var(--tint);color:var(--muted);font:700 13px var(--font-mono);transition:.2s}
+.char-strip-chars .ch.is-picked{background:var(--primary);color:#fff}
+.char-strip-result{font:700 12px var(--font-mono);color:var(--primary-ink)}
+
 .checklist-progress{margin:16px 0 20px}
 .checklist-progress-bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:8px}
 .checklist-progress-bar b{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--primary),#60a5fa);width:0%;transition:width .3s}

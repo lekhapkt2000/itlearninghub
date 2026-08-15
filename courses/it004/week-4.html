@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../assets/css/base.css?v=21">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=50">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=51">
 </head>
 <body>
   <header class="topbar">
@@ -173,14 +173,27 @@ FROM SinhVien;</code></pre></div>
 FROM SinhVien;</code></pre></div>
           <p>Với <code>MaSV = 22520001</code>: <code>Khoa = 225</code>, <code>SoThuTu = 001</code>.</p>
 
+          <div class="char-strip">
+            <span class="char-strip-label">LEFT(MaSV, 3)</span>
+            <div class="char-strip-chars">
+              <span class="ch is-picked">2</span><span class="ch is-picked">2</span><span class="ch is-picked">5</span><span class="ch">2</span><span class="ch">0</span><span class="ch">0</span><span class="ch">0</span><span class="ch">1</span>
+            </div>
+            <span class="char-strip-result">➜ 225</span>
+          </div>
+          <div class="char-strip">
+            <span class="char-strip-label">RIGHT(MaSV, 3)</span>
+            <div class="char-strip-chars">
+              <span class="ch">2</span><span class="ch">2</span><span class="ch">5</span><span class="ch">2</span><span class="ch">0</span><span class="ch is-picked">0</span><span class="ch is-picked">0</span><span class="ch is-picked">1</span>
+            </div>
+            <span class="char-strip-result">➜ 001</span>
+          </div>
+
           <h3>So sánh nhanh</h3>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Hàm</th><th>Lấy từ</th><th>Ví dụ</th><th>Kết quả</th></tr>
             <tr><td><code>LEFT()</code></td><td>Bên trái</td><td><code>LEFT('abcdef',3)</code></td><td><code>abc</code></td></tr>
             <tr><td><code>RIGHT()</code></td><td>Bên phải</td><td><code>RIGHT('abcdef',3)</code></td><td><code>def</code></td></tr>
           </table></div>
-          <div class="ascii-block">LEFT  ← ← ←
-RIGHT ➜ ➜ ➜</div>
         </section>
 
         <!-- 05 - CASE -->
@@ -207,6 +220,14 @@ FROM NhanVien;</code></pre></div>
 
           <h3>Ví dụ phân loại khách hàng</h3>
           <p>Phân loại theo <code>TongChiTieu</code>: ≥ 10.000.000 ➜ VIP, ≥ 5.000.000 ➜ Thân thiết, còn lại ➜ Thường.</p>
+
+          <div class="tier-ladder">
+            <div class="tier-row is-tier1"><span class="tier-name">VIP</span><span class="tier-cond">TongChiTieu ≥ 10.000.000</span></div>
+            <div class="tier-row is-tier2"><span class="tier-name">Thân thiết</span><span class="tier-cond">TongChiTieu ≥ 5.000.000</span></div>
+            <div class="tier-row is-tier3"><span class="tier-name">Thường</span><span class="tier-cond">Còn lại</span></div>
+          </div>
+          <p class="er-relation">CASE kiểm tra theo đúng thứ tự từ trên xuống - dừng lại ở điều kiện đầu tiên đúng, giống thứ tự các băng ở trên.</p>
+
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT
     MaKH,
     HoTen,

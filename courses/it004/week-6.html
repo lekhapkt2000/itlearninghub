@@ -177,11 +177,59 @@ GIANGVIEN</div>
           <p class="eyebrow">04 · ÔN TẬP TẠO CƠ SỞ DỮ LIỆU &amp; INSERT</p>
           <h2>Tạo CSDL &amp; INSERT</h2>
           <p>Ví dụ xây dựng CSDL <strong>Quản lý sinh viên và kết quả học tập</strong>, gồm 4 bảng <code>LOP</code>, <code>SINHVIEN</code>, <code>MONHOC</code>, <code>KETQUA</code> với quan hệ:</p>
-          <div class="ascii-block">LOP 1 ─────── N SINHVIEN
 
-SINHVIEN 1 ─────── N KETQUA
+          <div class="er-diagram">
+            <svg viewBox="0 0 460 280" role="img" aria-label="LOP (1) tham chiếu SINHVIEN (N); SINHVIEN và MONHOC cùng được tham chiếu bởi KETQUA (N)">
+              <defs>
+                <marker id="w6Arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0L10 5L0 10Z" style="fill:var(--primary)"/>
+                </marker>
+                <clipPath id="w6CardLOP"><rect x="20" y="10" width="150" height="56" rx="8"/></clipPath>
+                <clipPath id="w6CardSV"><rect x="20" y="112" width="150" height="56" rx="8"/></clipPath>
+                <clipPath id="w6CardMH"><rect x="290" y="10" width="150" height="56" rx="8"/></clipPath>
+                <clipPath id="w6CardKQ"><rect x="155" y="204" width="150" height="56" rx="8"/></clipPath>
+              </defs>
 
-MONHOC 1 ─────── N KETQUA</div>
+              <line x1="95" y1="66" x2="95" y2="108" style="stroke:var(--primary);stroke-width:2" marker-end="url(#w6Arrow)"/>
+              <line x1="168" y1="152" x2="205" y2="200" style="stroke:var(--primary);stroke-width:2" marker-end="url(#w6Arrow)"/>
+              <line x1="360" y1="66" x2="278" y2="200" style="stroke:var(--primary);stroke-width:2" marker-end="url(#w6Arrow)"/>
+
+              <g clip-path="url(#w6CardLOP)">
+                <rect x="20" y="10" width="150" height="56" style="fill:var(--surface)"/>
+                <rect x="20" y="10" width="150" height="26" style="fill:var(--primary)"/>
+              </g>
+              <rect x="20" y="10" width="150" height="56" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="95" y="27" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:#fff">LOP</text>
+              <text x="95" y="48" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">MaLop (PK)</text>
+
+              <g clip-path="url(#w6CardSV)">
+                <rect x="20" y="112" width="150" height="56" style="fill:var(--surface)"/>
+                <rect x="20" y="112" width="150" height="26" style="fill:var(--primary)"/>
+              </g>
+              <rect x="20" y="112" width="150" height="56" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="95" y="129" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:#fff">SINHVIEN</text>
+              <text x="95" y="150" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">MaLop (FK)</text>
+
+              <g clip-path="url(#w6CardMH)">
+                <rect x="290" y="10" width="150" height="56" style="fill:var(--surface)"/>
+                <rect x="290" y="10" width="150" height="26" style="fill:var(--primary)"/>
+              </g>
+              <rect x="290" y="10" width="150" height="56" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="365" y="27" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:#fff">MONHOC</text>
+              <text x="365" y="48" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">MaMH (PK)</text>
+
+              <g clip-path="url(#w6CardKQ)">
+                <rect x="155" y="204" width="150" height="56" style="fill:var(--surface)"/>
+                <rect x="155" y="204" width="150" height="26" style="fill:var(--primary)"/>
+              </g>
+              <rect x="155" y="204" width="150" height="56" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="230" y="221" text-anchor="middle" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:#fff">KETQUA</text>
+              <text x="230" y="242" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">MaSV, MaMH (FK)</text>
+            </svg>
+          </div>
+          <p class="er-relation">LOP (1) ➜ SINHVIEN (N): Một lớp có nhiều sinh viên.</p>
+          <p class="er-relation">SINHVIEN (1) ➜ KETQUA (N): Một sinh viên có nhiều kết quả học tập.</p>
+          <p class="er-relation">MONHOC (1) ➜ KETQUA (N): Một môn học có nhiều kết quả học tập.</p>
 
           <h3>Tạo bảng</h3>
           <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">CREATE TABLE Lop (

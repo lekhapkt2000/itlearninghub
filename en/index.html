@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../assets/css/base.css?v=22">
-  <link rel="stylesheet" href="../assets/css/home.css?v=23">
+  <link rel="stylesheet" href="../assets/css/home.css?v=26">
 </head>
 <body>
   <header class="topbar">
@@ -31,6 +31,7 @@
 
   <main id="top">
     <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
       <canvas class="bg-canvas" aria-hidden="true"></canvas>
       <div class="hero-inner">
         <div class="hero-copy">
@@ -42,16 +43,27 @@
             <a class="primary-button" href="../courses/it004/index.html">Start Learning <span>›</span></a>
             <a class="outline-button" href="#courses">Browse All Courses</a>
           </div>
+          <div class="hero-proof">
+            <span><strong id="hub-proof-count">2</strong> courses open</span>
+            <span class="hero-proof-sep"></span>
+            <span><strong>12+</strong> weeks of material</span>
+            <span class="hero-proof-sep"></span>
+            <span><strong>100%</strong> free</span>
+          </div>
         </div>
         <div class="hero-visual" aria-label="Course system illustration">
           <div class="visual-grid"></div>
           <div class="hub-card-float">
             <div class="float-label"><span class="status-dot"></span> LEARNING PATH</div>
             <ul class="hub-course-list" id="hub-course-list"></ul>
+            <div class="hub-card-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10.5 8.5 14 15 6"/></svg></div>
           </div>
-          <div class="visual-note">SELECT *<br><span>FROM</span> knowledge;</div>
-          <div class="visual-orbit orbit-one"></div>
-          <div class="visual-orbit orbit-two"></div>
+          <div class="visual-note">
+            <span class="visual-note-line"><em>SELECT</em> * <span>FROM</span> knowledge</span>
+            <span class="visual-note-line"><em>WHERE</em> effort = <b>true</b>;</span>
+          </div>
+          <div class="visual-orbit orbit-one"><span class="orbit-dot"></span></div>
+          <div class="visual-orbit orbit-two"><span class="orbit-dot"></span></div>
         </div>
       </div>
     </section>
@@ -196,6 +208,10 @@
     var courseCountText = COURSES.length < 10 ? '0' + COURSES.length : String(COURSES.length);
     var hubCount2 = document.getElementById('hub-course-count-2');
     if (hubCount2) { hubCount2.textContent = courseCountText; }
+
+    var activeCourseCount = COURSES.filter(function (c) { return c.status === 'active'; }).length;
+    var hubProofCount = document.getElementById('hub-proof-count');
+    if (hubProofCount) { hubProofCount.textContent = String(activeCourseCount); }
 
     var hubList = document.getElementById('hub-course-list');
     if (hubList) {

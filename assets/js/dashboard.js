@@ -36,4 +36,3 @@ function renderCourses() {
 }
 
 renderCourses();
-</content>

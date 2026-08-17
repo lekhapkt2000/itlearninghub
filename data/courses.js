@@ -54,4 +54,3 @@ window.COURSES = [
     path: 'courses/is355/index.html',
   },
 ];
-</content>

@@ -21,7 +21,7 @@
 .hub-course-dot.is-active{background:var(--primary)}
 .hub-course-code{color:var(--ink);font:700 13px var(--font-mono)}
 .hub-course-state{margin-left:auto;color:var(--muted);font-size:10px}
-.visual-note{position:absolute;right:6%;top:11%;z-index:2;padding:16px 20px 18px;border-radius:10px;background:#0f172a;box-shadow:0 18px 34px -12px rgb(15 23 42 / .4);color:#e2e8f0;font:600 12px/1.7 var(--font-mono);white-space:nowrap}
+.visual-note{position:absolute;right:6%;top:11%;z-index:2;padding:16px 20px 18px;border-radius:10px;background:var(--ink-solid);box-shadow:0 18px 34px -12px rgb(15 23 42 / .4);color:#e2e8f0;font:600 12px/1.7 var(--font-mono);white-space:nowrap}
 .visual-note::before{content:'';display:block;width:7px;height:7px;margin-bottom:12px;border-radius:50%;background:#f87171;box-shadow:13px 0 0 #fbbf24,26px 0 0 #34d399}
 .visual-note span{color:#60a5fa}
 .visual-note::after{content:'|';margin-left:1px;color:#60a5fa;font-weight:400;animation:blink-caret 1s step-end infinite}
@@ -54,8 +54,8 @@
 .course-card-body h3{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px}
 .course-card-body .course-en{color:var(--muted);font-size:11px}
 .course-card-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:10px;font-weight:600}
-.course-cta{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:9px;background:var(--primary);color:#fff;font-size:10px;font-weight:700;transition:background .2s}
-.course-cta:hover{background:var(--primary-ink)}
+.course-cta{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:9px;background:var(--primary);color:#fff;font-size:10px;font-weight:700;transition:filter .2s}
+.course-cta:hover{filter:brightness(.88)}
 .course-cta.is-disabled{background:var(--line);color:var(--muted)}
 .course-card.is-soon{opacity:.75}
 .course-card.is-soon:hover{transform:none;box-shadow:0 1px 2px rgb(15 23 42 / .03),0 12px 28px -22px rgb(15 23 42 / .12)}
@@ -131,4 +131,3 @@
   .instructor-visual{padding:16px 0 0}
   .mini-roadmap-track{max-width:280px;margin:0 auto 22px}
 }
-</content>

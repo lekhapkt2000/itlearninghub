@@ -94,6 +94,15 @@
             <tr><td>Ứng dụng tiêu biểu</td><td>Carbon Credit, Stablecoin, Payment</td><td>Green Certificate, RWA, Supply Chain Batch</td></tr>
             <tr><td>Quản lý dữ liệu</td><td><code>balanceOf[address]</code></td><td><code>ownerOf[tokenId]</code>, <code>tokenURI[tokenId]</code></td></tr>
           </table></div>
+          <p>Các hàm cốt lõi mà một Smart Contract ERC-721 cần triển khai:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Hàm / Sự kiện</th><th>Vai trò</th></tr>
+            <tr><td><code>ownerOf(tokenId)</code></td><td>Tra cứu địa chỉ đang sở hữu <code>tokenId</code> cụ thể</td></tr>
+            <tr><td><code>tokenURI(tokenId)</code></td><td>Trả về đường dẫn Metadata (thường là <code>ipfs://...</code>) mô tả tài sản gắn với <code>tokenId</code></td></tr>
+            <tr><td><code>approve(to, tokenId)</code></td><td>Cho phép địa chỉ <code>to</code> thay mặt chủ sở hữu chuyển nhượng đúng 1 <code>tokenId</code></td></tr>
+            <tr><td><code>transferFrom(from, to, tokenId)</code></td><td>Chuyển quyền sở hữu <code>tokenId</code> từ <code>from</code> sang <code>to</code></td></tr>
+            <tr><td><code>event Transfer</code> / <code>event CertificateIssued</code></td><td>Ghi log mint/chuyển nhượng để truy vết lịch sử Chain of Custody</td></tr>
+          </table></div>
         </section>
 
         <!-- 02 - RWA -->
@@ -109,6 +118,15 @@
             <span class="flow-box">Blockchain Record</span>
           </div>
           <div class="inline-warning"><strong>Lưu ý nguyên tắc:</strong> Token hóa không nghiễm nhiên mang lại giá trị pháp lý off-chain nếu thiếu hành lang pháp luật và đơn vị xác minh độc lập. Cần có cơ chế pháp lý, quy định quyền sở hữu, đơn vị xác minh, Smart Contract và quy trình quản lý tài sản off-chain đi kèm. Tokenization là bài toán <strong>công nghệ + pháp lý + quản trị + xác minh</strong>, không phải chỉ là bài toán công nghệ.</div>
+          <h3>Ứng dụng thực tế</h3>
+          <p>Token hóa tài sản thực và chuỗi cung ứng minh bạch đã được nhiều tổ chức triển khai ở quy mô doanh nghiệp:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Dự án / Tổ chức</th><th>Lĩnh vực</th><th>Mô tả</th></tr>
+            <tr><td>Centrifuge</td><td>RWA Lending</td><td>Token hóa hóa đơn, bất động sản, tài sản thực làm tài sản thế chấp cho vay DeFi, từng tích hợp trực tiếp vào kho bạc MakerDAO (RWA Vault)</td></tr>
+            <tr><td>Everledger</td><td>Chứng nhận nguồn gốc</td><td>Dùng Blockchain để xác thực nguồn gốc và lịch sử sở hữu kim cương, đá quý và hàng hóa giá trị cao</td></tr>
+            <tr><td>VeChain</td><td>Chuỗi cung ứng &amp; Carbon</td><td>Nền tảng Blockchain doanh nghiệp theo dõi chuỗi cung ứng thực phẩm và phát thải Carbon, hợp tác với Walmart China và nhiều nhà sản xuất</td></tr>
+            <tr><td>Provenance.org</td><td>Truy xuất nguồn gốc</td><td>Nền tảng minh bạch chuỗi cung ứng hàng tiêu dùng, nổi bật với dự án truy xuất nguồn gốc hải sản chống đánh bắt trái phép</td></tr>
+          </table></div>
         </section>
 
         <!-- 03 - Metadata & IPFS -->
@@ -316,6 +334,13 @@ def main():
             <li>Điền <code>image_cid</code> vào <code>metadata.json</code> ➜ upload <code>metadata.json</code> ➜ Nhận <code>metadata_cid</code></li>
             <li>Truyền <code>ipfs://&lt;metadata_cid&gt;</code> vào hàm <code>mint()</code> trên Smart Contract</li>
           </ol>
+          <p>So sánh nhanh các dịch vụ Pinning phổ biến cho bài tập:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Dịch vụ</th><th>Gói miễn phí</th><th>Phù hợp cho</th></tr>
+            <tr><td>Pinata</td><td>~1GB lưu trữ</td><td>Dashboard trực quan, dễ thao tác thủ công khi mới học</td></tr>
+            <tr><td>Infura IPFS</td><td>Giới hạn theo request/tháng</td><td>Tích hợp cùng RPC Node (đã dùng ở Tuần 1) trong 1 tài khoản</td></tr>
+            <tr><td>web3.storage / NFT.Storage</td><td>Miễn phí, tối ưu cho NFT</td><td>Upload bằng API/script Python trong quy trình tự động hóa</td></tr>
+          </table></div>
         </section>
 
         <!-- 08 - Graph Analytics -->

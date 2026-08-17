@@ -130,6 +130,15 @@
             <span class="flow-arrow">↓</span>
             <span class="flow-box">Trade / Offset</span>
           </div>
+          <h3>Real-world applications</h3>
+          <p>Digitizing Carbon Credits on Blockchain is no longer just a theoretical idea - several projects have already put it into practice:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Project / Organization</th><th>Blockchain</th><th>Description</th></tr>
+            <tr><td>Toucan Protocol</td><td>Polygon</td><td>Converts verified (off-chain) Carbon Credits into on-chain TCO2 tokens, enabling transparent trading and retirement</td></tr>
+            <tr><td>KlimaDAO</td><td>Polygon</td><td>A DeFi protocol that uses Carbon Credits as reserve assets backing the KLIMA token, driving demand for Carbon Credit purchases</td></tr>
+            <tr><td>Regen Network</td><td>Cosmos</td><td>Issues Ecocredits for regenerative agriculture projects verified through MRV (Measurement, Reporting, Verification)</td></tr>
+            <tr><td>World Bank "bond-i"</td><td>Ethereum (private)</td><td>The first bond created, allocated, and managed through its entire lifecycle using Blockchain (World Bank with Commonwealth Bank of Australia, 2018)</td></tr>
+          </table></div>
         </section>
 
         <!-- 04 - Blockchain, crypto, consensus -->
@@ -165,7 +174,24 @@
             <tr><td>Consensus</td><td>Not required</td><td>Mandatory (PoW, PoS...)</td></tr>
             <tr><td>Transparency &amp; Audit</td><td>Depends on the system log</td><td>Transparent, publicly encoded</td></tr>
           </table></div>
-          <div class="inline-warning"><strong>A system design principle:</strong> Don't adopt Blockchain just because it's trendy. It must start from <code>Problem Statement</code> ➜ <code>Requirement Analysis</code> ➜ <code>Blockchain Suitability</code>.</div>
+          <h3>Data storage: Centralized (SQL Server, MySQL) vs Distributed (Blockchain)</h3>
+          <p>With SQL Server or MySQL, all the data lives in <strong>one place</strong> (or one server cluster fully controlled by a single organization): the client sends a query, the server processes it, and the result comes from exactly one copy of the data. With Blockchain, every Node in the network keeps <strong>its own full copy</strong> of the data, and that copy is only updated once a majority of Nodes reach consensus.</p>
+          <div class="ascii-block">CENTRALIZED (SQL Server, MySQL...)
+Client ──▶ 1 Server ──▶ 1 single copy of the data
+                (Admin/DBA has full UPDATE, DELETE rights)
+
+DISTRIBUTED (Blockchain)
+Client ──▶ Node 1 ─┐
+           Node 2 ─┼─ Consensus (PoW/PoS) ──▶ Every Node holds an identical copy
+           Node 3 ─┘        (No single party can unilaterally change it)</div>
+          <p>Direct consequences of these two storage models:</p>
+          <ul>
+            <li><strong>Single point of failure:</strong> if SQL Server/MySQL goes down, the whole system stops; Blockchain keeps running because thousands of other Nodes still hold a copy of the data.</li>
+            <li><strong>Trust model:</strong> with MySQL, users have to trust the Admin/DBA of the organization that owns the server not to quietly alter the data; with Blockchain, no single party needs to be trusted - data is only recorded once a majority of Nodes in the network reach consensus.</li>
+            <li><strong>Ability to modify/delete data:</strong> <code>UPDATE</code>/<code>DELETE</code> work normally on MySQL; Blockchain only supports appending (<code>INSERT</code>, append-only) - "correcting" a past transaction means writing a new transaction that reverses it, while the original data stays in the history.</li>
+            <li><strong>Performance &amp; storage cost:</strong> MySQL writes once on one server, so it's fast and cheap; Blockchain has to replicate data across every Node and run a consensus mechanism before writing, making it slower and far more expensive to store.</li>
+          </ul>
+          <div class="inline-warning"><strong>A system design principle:</strong> Don't adopt Blockchain just because it's trendy. It must start from <code>Problem Statement</code> ➜ <code>Requirement Analysis</code> ➜ <code>Blockchain Suitability</code> - if the problem doesn't genuinely need decentralization or tamper-resistance, a centralized database like MySQL is still the cheaper, faster choice.</div>
 
           <h3>Asymmetric-key cryptography &amp; Digital Signatures</h3>
           <p>User authentication relies on a key pair: a <strong>Private Key</strong> (kept secret, used to sign transactions) and a <strong>Public Key</strong> (public, used by the network to verify).</p>

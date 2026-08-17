@@ -94,6 +94,15 @@
             <tr><td>Typical use</td><td>Carbon Credit, Stablecoin, Payment</td><td>Green Certificate, RWA, Supply Chain Batch</td></tr>
             <tr><td>Data management</td><td><code>balanceOf[address]</code></td><td><code>ownerOf[tokenId]</code>, <code>tokenURI[tokenId]</code></td></tr>
           </table></div>
+          <p>The core functions an ERC-721 Smart Contract needs to implement:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Function / Event</th><th>Role</th></tr>
+            <tr><td><code>ownerOf(tokenId)</code></td><td>Looks up the address currently owning a specific <code>tokenId</code></td></tr>
+            <tr><td><code>tokenURI(tokenId)</code></td><td>Returns the Metadata path (usually <code>ipfs://...</code>) describing the asset tied to <code>tokenId</code></td></tr>
+            <tr><td><code>approve(to, tokenId)</code></td><td>Lets address <code>to</code> transfer this one specific <code>tokenId</code> on the owner's behalf</td></tr>
+            <tr><td><code>transferFrom(from, to, tokenId)</code></td><td>Transfers ownership of <code>tokenId</code> from <code>from</code> to <code>to</code></td></tr>
+            <tr><td><code>event Transfer</code> / <code>event CertificateIssued</code></td><td>Logs mints/transfers to trace the Chain of Custody history</td></tr>
+          </table></div>
         </section>
 
         <!-- 02 - RWA -->
@@ -109,6 +118,15 @@
             <span class="flow-box">Blockchain Record</span>
           </div>
           <div class="inline-warning"><strong>A key principle:</strong> Tokenization does not automatically carry off-chain legal value if there is no legal framework and independent verifier. It requires an accompanying legal mechanism, ownership regulations, a verification body, a Smart Contract, and an off-chain asset management process. Tokenization is a <strong>technology + legal + governance + verification</strong> problem, not merely a technology problem.</div>
+          <h3>Real-world applications</h3>
+          <p>Tokenizing real-world assets and building transparent supply chains has already been deployed by several organizations at enterprise scale:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Project / Organization</th><th>Domain</th><th>Description</th></tr>
+            <tr><td>Centrifuge</td><td>RWA Lending</td><td>Tokenizes invoices, real estate, and other real-world assets as DeFi loan collateral, formerly integrated directly into MakerDAO's treasury (RWA Vault)</td></tr>
+            <tr><td>Everledger</td><td>Provenance certification</td><td>Uses Blockchain to verify the origin and ownership history of diamonds, gemstones, and other high-value goods</td></tr>
+            <tr><td>VeChain</td><td>Supply chain &amp; Carbon</td><td>An enterprise Blockchain platform tracking food supply chains and Carbon emissions, partnered with Walmart China and other manufacturers</td></tr>
+            <tr><td>Provenance.org</td><td>Traceability</td><td>A supply-chain transparency platform for consumer goods, notable for a seafood traceability project fighting illegal fishing</td></tr>
+          </table></div>
         </section>
 
         <!-- 03 - Metadata & IPFS -->
@@ -316,6 +334,13 @@ def main():
             <li>Fill in <code>image_cid</code> inside <code>metadata.json</code> ➜ upload <code>metadata.json</code> ➜ receive a <code>metadata_cid</code></li>
             <li>Pass <code>ipfs://&lt;metadata_cid&gt;</code> into the <code>mint()</code> function on the Smart Contract</li>
           </ol>
+          <p>A quick comparison of common Pinning services for this exercise:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Service</th><th>Free tier</th><th>Best for</th></tr>
+            <tr><td>Pinata</td><td>~1GB storage</td><td>Visual dashboard, easy manual use for beginners</td></tr>
+            <tr><td>Infura IPFS</td><td>Limited by monthly requests</td><td>Bundling with the RPC Node (from Week 1) under one account</td></tr>
+            <tr><td>web3.storage / NFT.Storage</td><td>Free, optimized for NFTs</td><td>Uploading via API/Python script in an automated pipeline</td></tr>
+          </table></div>
         </section>
 
         <!-- 08 - Graph Analytics -->

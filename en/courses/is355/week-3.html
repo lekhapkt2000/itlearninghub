@@ -119,6 +119,14 @@
           <div class="definition"><strong>Carbon Credit ≠ Carbon Token:</strong> A Carbon Credit is a legal/environmental certificate tied to an off-chain verification standard. A Carbon Token is merely the vehicle that represents that asset on the Blockchain.</div>
           <div class="inline-warning"><strong>"Garbage In, Garbage Out" risk:</strong> Blockchain guarantees data cannot be altered once written, but it does not itself verify the correctness of the input data. If a company overstates its emission reductions, the Blockchain will store that fabricated figure with perfect accuracy.</div>
           <p><strong>Solution:</strong> Must combine independent auditing (Auditor), Certification, and an Oracle layer to verify data before minting Tokens.</p>
+          <h3>Real-world applications &amp; related research</h3>
+          <p>The "Garbage In, Garbage Out" risk above is not hypothetical - it's a real problem that Carbon Credit tokenization projects have faced:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Project / Research</th><th>Real-world record</th></tr>
+            <tr><td>Flowcarbon (Goddess Nature Token)</td><td>A Voluntary Carbon Market tokenization project that raised funding from a16z in 2022 but ran into implementation difficulties, illustrating the legal/operational risk of Tokenization</td></tr>
+            <tr><td>Toucan Protocol &amp; KlimaDAO (introduced in Week 1)</td><td>Criticized by environmental researchers for bulk-buying and tokenizing cheap, low-quality Carbon Credits, raising controversy over the environmental integrity of Carbon Tokens</td></tr>
+            <tr><td>Berkeley Carbon Trading Project (UC Berkeley)</td><td>Academic research independently assessing the quality of forest Carbon Credits (REDD+) - a good reference for a project analyzing Carbon Token input-data risk</td></tr>
+          </table></div>
         </section>
 
         <!-- 04 - ERC-20 -->
@@ -126,22 +134,36 @@
           <p class="eyebrow">04 · THE ERC-20 STANDARD</p>
           <h2>The ERC-20 standard and its core functions</h2>
           <p>The ERC-20 standard defines the required interface for a Fungible Token:</p>
-          <ul>
-            <li><code>balanceOf(account)</code>: Looks up the balance of the <code>account</code> address</li>
-            <li><code>transfer(to, amount)</code>: Transfers <code>amount</code> tokens from the function caller (<code>msg.sender</code>) to <code>to</code></li>
-            <li><code>approve(spender, amount)</code> &amp; <code>transferFrom(sender, recipient, amount)</code>: The allowance mechanism, letting wallet A authorize contract B to spend up to a set amount of Token on its behalf - The foundation for DeFi, DEX, Staking, and Carbon payment gateway applications</li>
-          </ul>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Function / Event</th><th>Role</th><th>Who can call it</th></tr>
+            <tr><td><code>balanceOf(account)</code></td><td>Looks up the Token balance of the <code>account</code> address</td><td>Anyone (read-only)</td></tr>
+            <tr><td><code>transfer(to, amount)</code></td><td>Transfers <code>amount</code> tokens from the function caller (<code>msg.sender</code>) to <code>to</code></td><td>Token holder</td></tr>
+            <tr><td><code>approve(spender, amount)</code></td><td>Authorizes <code>spender</code> to spend up to <code>amount</code> tokens on the caller's behalf</td><td>Token holder</td></tr>
+            <tr><td><code>transferFrom(sender, recipient, amount)</code></td><td>Executes a previously approved allowance, moving tokens from <code>sender</code> to <code>recipient</code></td><td>An address that was <code>approve</code>d</td></tr>
+            <tr><td><code>event Transfer</code> / <code>event Approval</code></td><td>Logs every transfer/approval so dashboards, wallets, and explorers can track them</td><td>Emitted by the Smart Contract itself</td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>Why have <code>approve</code>/<code>transferFrom</code> instead of just <code>transfer</code>?</strong> This is the foundation for DeFi, DEX, Staking, and Carbon payment gateway applications - for example, a Carbon Token exchange needs the user's wallet to <code>approve</code> it first before it can <code>transferFrom</code> to settle a trade on the user's behalf.</div>
         </section>
 
         <!-- 05 - Mint, Burn, Retire -->
         <section class="lesson-section" id="mint-burn-retire">
           <p class="eyebrow">05 · MINT, BURN &amp; CARBON RETIREMENT</p>
           <h2>Mint, Burn, and Carbon Retirement mechanics</h2>
-          <ul>
-            <li><strong>Mint (Issuance):</strong> Creates new Tokens when a project adds a newly verified Carbon Credit (Total Supply increases)</li>
-            <li><strong>Burn / Retire:</strong> When a company uses a Carbon Token to Offset emissions, that Token must be burned out of circulation (Total Supply decreases)</li>
-          </ul>
-          <div class="inline-ok"><strong>Why it matters:</strong> This entirely eliminates the risk of Double Counting/Double Use - The same credit being used to offset for multiple different parties.</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Operation</th><th>Meaning</th><th>Effect on Total Supply</th></tr>
+            <tr><td><strong>Mint (Issuance)</strong></td><td>Creates new Tokens when a project adds a newly verified Carbon Credit</td><td>Increases</td></tr>
+            <tr><td><strong>Transfer</strong></td><td>Token changes hands through a purchase/gift</td><td>Unchanged</td></tr>
+            <tr><td><strong>Burn / Retire</strong></td><td>A company uses a Carbon Token to offset emissions; the Token is permanently removed from circulation</td><td>Decreases</td></tr>
+          </table></div>
+          <p>The lifecycle of a single Carbon Token, illustrated with numbers:</p>
+          <div class="ascii-block">Mint 1,000 GCT (project verifies 1,000 tCO₂e)
+        ↓
+Transfer 300 GCT (Alice sells to Bob on a Carbon exchange)
+        ↓
+Retire 300 GCT (Bob uses it to offset his factory's Q3 2026 emissions)
+        ↓
+Circulating Total Supply = 1,000 - 300 = 700 GCT</div>
+          <div class="inline-ok"><strong>Why it matters:</strong> This entirely eliminates the risk of Double Counting/Double Use - The same credit being used to offset for multiple different parties. Because Total Supply only drops when <code>burn()</code>/<code>retireCarbon()</code> is called, anyone can verify on-chain that Bob's retired 300 GCT can never be reused by him a second time.</div>
         </section>
 
         <!-- 06 - Thuc hanh Smart Contract -->

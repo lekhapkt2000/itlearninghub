@@ -119,6 +119,14 @@
           <div class="definition"><strong>Carbon Credit ≠ Carbon Token:</strong> Carbon Credit là chứng chỉ pháp lý/môi trường gắn liền với tiêu chuẩn xác minh off-chain. Carbon Token chỉ là phương tiện biểu diễn tài sản đó trên Blockchain.</div>
           <div class="inline-warning"><strong>Rủi ro "Garbage In, Garbage Out":</strong> Blockchain đảm bảo dữ liệu không thể bị sửa đổi sau khi ghi, nhưng không tự kiểm chứng độ đúng đắn của dữ liệu đầu vào. Nếu doanh nghiệp khai khống lượng giảm phát thải, Blockchain sẽ lưu trữ một con số giả mạo một cách vô cùng chính xác.</div>
           <p><strong>Giải pháp:</strong> Phải kết hợp quy trình kiểm toán độc lập (Auditor), chứng nhận (Certification) và hạ tầng Oracle để xác minh dữ liệu trước khi thực hiện mint Token.</p>
+          <h3>Ứng dụng thực tế &amp; nghiên cứu liên quan</h3>
+          <p>Rủi ro "Garbage In, Garbage Out" ở trên không phải giả định - Đây là vấn đề thực tế mà các dự án Tokenize Carbon Credit đã và đang gặp phải:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Dự án / Nghiên cứu</th><th>Ghi nhận thực tế</th></tr>
+            <tr><td>Flowcarbon (Goddess Nature Token)</td><td>Dự án Token hóa tín chỉ Carbon tự nguyện (Voluntary Carbon Market), gọi vốn từ a16z năm 2022 nhưng gặp khó khăn khi triển khai, minh họa rủi ro pháp lý/vận hành của Tokenization</td></tr>
+            <tr><td>Toucan Protocol &amp; KlimaDAO (đã giới thiệu ở Tuần 1)</td><td>Từng bị giới nghiên cứu môi trường chỉ trích vì mua và Token hóa hàng loạt tín chỉ Carbon giá rẻ/chất lượng thấp, gây tranh cãi về tính toàn vẹn môi trường của Carbon Token</td></tr>
+            <tr><td>Berkeley Carbon Trading Project (UC Berkeley)</td><td>Nghiên cứu học thuật đánh giá độc lập chất lượng của các tín chỉ Carbon rừng (REDD+) - Nguồn tham khảo tốt cho đồ án phân tích rủi ro dữ liệu đầu vào của Carbon Token</td></tr>
+          </table></div>
         </section>
 
         <!-- 04 - ERC-20 -->
@@ -126,22 +134,36 @@
           <p class="eyebrow">04 · CHUẨN ERC-20</p>
           <h2>Chuẩn ERC-20 và các hàm cốt lõi</h2>
           <p>Chuẩn ERC-20 định nghĩa các giao diện bắt buộc cho một Fungible Token (Token thay thế được):</p>
-          <ul>
-            <li><code>balanceOf(account)</code>: Tra cứu số dư của địa chỉ <code>account</code></li>
-            <li><code>transfer(to, amount)</code>: Chuyển <code>amount</code> token từ người gọi hàm (<code>msg.sender</code>) tới <code>to</code></li>
-            <li><code>approve(spender, amount)</code> &amp; <code>transferFrom(sender, recipient, amount)</code>: Cơ chế ủy quyền, cho phép ví A duyệt cho hợp đồng B được chi tiêu tối đa một số Token nhất định - Nền tảng cho các ứng dụng DeFi, DEX, Staking và cổng thanh toán Carbon</li>
-          </ul>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Hàm / Sự kiện</th><th>Vai trò</th><th>Ai được phép gọi</th></tr>
+            <tr><td><code>balanceOf(account)</code></td><td>Tra cứu số dư Token của địa chỉ <code>account</code></td><td>Bất kỳ ai (chỉ đọc)</td></tr>
+            <tr><td><code>transfer(to, amount)</code></td><td>Chuyển <code>amount</code> Token từ người gọi hàm (<code>msg.sender</code>) tới <code>to</code></td><td>Chủ sở hữu Token</td></tr>
+            <tr><td><code>approve(spender, amount)</code></td><td>Ủy quyền cho <code>spender</code> được chi tiêu tối đa <code>amount</code> Token thay mình</td><td>Chủ sở hữu Token</td></tr>
+            <tr><td><code>transferFrom(sender, recipient, amount)</code></td><td>Thực thi khoản đã được ủy quyền, chuyển Token từ <code>sender</code> sang <code>recipient</code></td><td>Địa chỉ đã được <code>approve</code></td></tr>
+            <tr><td><code>event Transfer</code> / <code>event Approval</code></td><td>Ghi log mỗi lần chuyển Token/cấp quyền để Dashboard, Ví, Explorer theo dõi</td><td>Smart Contract tự phát ra</td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>Vì sao cần <code>approve</code>/<code>transferFrom</code> riêng thay vì chỉ <code>transfer</code>?</strong> Đây là nền tảng cho các ứng dụng DeFi, DEX, Staking và cổng thanh toán Carbon - Ví dụ 1 sàn giao dịch Carbon Token cần được ví người dùng <code>approve</code> trước, rồi mới có quyền <code>transferFrom</code> thực hiện khớp lệnh thay người dùng.</div>
         </section>
 
         <!-- 05 - Mint, Burn, Retire -->
         <section class="lesson-section" id="mint-burn-retire">
           <p class="eyebrow">05 · MINT, BURN &amp; CARBON RETIREMENT</p>
           <h2>Cơ chế Mint, Burn và Bù trừ Carbon (Carbon Retirement)</h2>
-          <ul>
-            <li><strong>Mint (Phát hành):</strong> Tạo mới Token khi dự án bổ sung Tín chỉ Carbon đã xác thực (Total Supply tăng)</li>
-            <li><strong>Burn / Retire (Tiêu hủy / Bù trừ):</strong> Khi doanh nghiệp dùng Carbon Token để thực hiện bù trừ phát thải (Offset), Token đó phải bị tiêu hủy (burn) khỏi lưu thông (Total Supply giảm)</li>
-          </ul>
-          <div class="inline-ok"><strong>Tầm quan trọng:</strong> Loại bỏ hoàn toàn rủi ro Double Counting/Double Use - Một tín chỉ bị sử dụng bù trừ cho nhiều bên khác nhau.</div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Thao tác</th><th>Ý nghĩa</th><th>Tác động Total Supply</th></tr>
+            <tr><td><strong>Mint (Phát hành)</strong></td><td>Tạo mới Token khi dự án bổ sung Tín chỉ Carbon đã xác thực</td><td>Tăng</td></tr>
+            <tr><td><strong>Transfer (Chuyển nhượng)</strong></td><td>Token đổi chủ sở hữu qua giao dịch mua bán/tặng</td><td>Không đổi</td></tr>
+            <tr><td><strong>Burn / Retire (Tiêu hủy / Bù trừ)</strong></td><td>Doanh nghiệp dùng Carbon Token để bù trừ phát thải (Offset), Token bị loại khỏi lưu thông vĩnh viễn</td><td>Giảm</td></tr>
+          </table></div>
+          <p>Vòng đời của 1 Carbon Token minh họa bằng ví dụ số:</p>
+          <div class="ascii-block">Mint 1,000 GCT (dự án xác thực 1,000 tCO₂e)
+        ↓
+Transfer 300 GCT (Alice bán cho Bob trên sàn Carbon)
+        ↓
+Retire 300 GCT (Bob dùng để offset phát thải nhà máy Q3/2026)
+        ↓
+Total Supply còn lưu thông = 1,000 - 300 = 700 GCT</div>
+          <div class="inline-ok"><strong>Tầm quan trọng:</strong> Loại bỏ hoàn toàn rủi ro Double Counting/Double Use - Một tín chỉ bị sử dụng bù trừ cho nhiều bên khác nhau. Vì Total Supply chỉ giảm khi <code>burn()</code>/<code>retireCarbon()</code> được gọi, ai cũng có thể kiểm tra on-chain rằng 300 GCT đã retire không thể bị Bob dùng lại lần thứ 2.</div>
         </section>
 
         <!-- 06 - Thuc hanh Smart Contract -->

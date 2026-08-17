@@ -96,7 +96,16 @@
             <tr><td>Transparency</td><td>Depends on the institution</td><td>On-chain data is auditable</td></tr>
             <tr><td>Risk</td><td>Bank/Credit Risk</td><td>Smart Contract/Oracle/Liquidity Risk</td></tr>
           </table></div>
-          <div class="inline-warning"><strong>DeFi does not mean risk-free</strong> - It shifts part of the risk from a financial intermediary onto code, the market, and Blockchain mechanics (Smart Contract Risk, Liquidity Risk, Default Risk, Liquidation Risk, Oracle Risk).</div>
+          <div class="inline-warning"><strong>DeFi does not mean risk-free</strong> - It shifts part of the risk from a financial intermediary onto code, the market, and Blockchain mechanics.</div>
+          <p>5 main risk categories to analyze when designing any DeFi Lending product:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Risk type</th><th>Cause</th><th>Example from this course</th></tr>
+            <tr><td>Smart Contract Risk</td><td>Logic errors/vulnerabilities in the contract code</td><td>Forgetting the Access Control <code>assert</code> in <code>mint()</code> (Week 3)</td></tr>
+            <tr><td>Liquidity Risk</td><td>The pool lacks enough liquidity to meet withdrawals</td><td>Many Borrowers draw loans at once, draining the Liquidity Pool</td></tr>
+            <tr><td>Default Risk</td><td>A borrower fails to repay</td><td>A Borrower defaults on a Green Lending loan</td></tr>
+            <tr><td>Liquidation Risk</td><td>Collateral value drops sharply</td><td>Collateral Ratio falls below the Liquidation Threshold (section 05)</td></tr>
+            <tr><td>Oracle Risk</td><td>Off-chain data (price, ESG Score) is delayed or manipulated</td><td>An Oracle reports the wrong ESG Score, mispricing the interest rate (section 07)</td></tr>
+          </table></div>
         </section>
 
         <!-- 02 - Liquidity Pool -->
@@ -171,6 +180,16 @@
             <tr><td>Social</td><td>75</td></tr>
             <tr><td>Governance</td><td>80</td></tr>
             <tr><td><strong>Composite ESG Score</strong></td><td><strong>82</strong></td></tr>
+          </table></div>
+          <h3>Real-world applications</h3>
+          <p>Both traditional DeFi Lending and on-chain Green Banking already have notable real-world deployments:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Project / Organization</th><th>Description</th></tr>
+            <tr><td>Aave, Compound</td><td>The two largest Overcollateralized DeFi Lending protocols, laying the groundwork for the Liquidity Pool and Liquidation model covered in sections 02/05</td></tr>
+            <tr><td>MakerDAO (RWA Vault)</td><td>Shifted part of the collateral backing the DAI stablecoin into US Treasuries through RWA partners, blending traditional DeFi with real financial assets</td></tr>
+            <tr><td>Goldfinch</td><td>An Undercollateralized lending protocol for real businesses in emerging markets, using a "Trust through Consensus" model instead of crypto collateral</td></tr>
+            <tr><td>Hong Kong SAR Government - Tokenized Green Bond</td><td>Issued an HK$800 million green bond entirely on Blockchain (2023) - a Green Banking example at government scale</td></tr>
+            <tr><td>MAS Project Guardian (Singapore)</td><td>A pilot program by Singapore's Monetary Authority with JPMorgan and DBS, trialing DeFi for FX and government bond trading on the Polygon network</td></tr>
           </table></div>
         </section>
 

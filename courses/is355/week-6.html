@@ -292,6 +292,14 @@ Abnormal:
 
           <h3>Feature Engineering</h3>
           <p>Từ dữ liệu giao dịch thô, tổng hợp thành một Feature Vector theo từng địa chỉ:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Feature</th><th>Cách tính</th><th>Ý nghĩa phát hiện bất thường</th></tr>
+            <tr><td><code>Tx_Count</code></td><td>Số giao dịch trong khung thời gian khảo sát</td><td>Tần suất bất thường cao (spam, bot)</td></tr>
+            <tr><td><code>Avg_Value</code></td><td>Trung bình giá trị mỗi giao dịch</td><td>Giá trị giao dịch lệch xa mức thông thường của địa chỉ</td></tr>
+            <tr><td><code>Unique_Addresses</code></td><td>Số địa chỉ đối tác khác nhau đã giao dịch cùng</td><td>Địa chỉ trung tâm gom/rải tiền (Hub Address)</td></tr>
+            <tr><td><code>Avg_Interval</code></td><td>Khoảng thời gian trung bình giữa 2 giao dịch liên tiếp</td><td>Nhịp giao dịch quá đều hoặc quá dồn dập (dấu hiệu tự động hóa)</td></tr>
+          </table></div>
+          <p>Ví dụ Feature Vector tổng hợp cho 1 địa chỉ:</p>
           <div class="ascii-block">Address A
 
 Tx Count = 150
@@ -333,6 +341,15 @@ Avg Interval = 2.5h</div>
             <tr><td>0 - 0.3</td><td>LOW</td></tr>
             <tr><td>0.3 - 0.7</td><td>MEDIUM</td></tr>
             <tr><td>0.7 - 1.0</td><td>HIGH</td></tr>
+          </table></div>
+          <h3>Ứng dụng thực tế &amp; nghiên cứu liên quan</h3>
+          <p>Graph Analytics và AML trên Blockchain không chỉ là bài tập trong lớp - Đây là ngành công nghiệp và hướng nghiên cứu học thuật đang hoạt động thực sự:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Tổ chức / Nghiên cứu</th><th>Mô tả</th></tr>
+            <tr><td>Chainalysis</td><td>Công ty phân tích Blockchain hàng đầu, cung cấp công cụ AML/Compliance cho chính phủ, sàn giao dịch và ngân hàng trên toàn cầu</td></tr>
+            <tr><td>Elliptic</td><td>Công ty Blockchain Analytics, công bố bộ dữ liệu "Elliptic Dataset" gồm hơn 200.000 giao dịch Bitcoin đã gán nhãn hợp pháp/bất hợp pháp, dùng rộng rãi trong nghiên cứu học thuật</td></tr>
+            <tr><td>Weber et al. (2019) - "Anti-Money Laundering in Bitcoin"</td><td>Nghiên cứu học thuật nổi bật dùng Graph Convolutional Network (GCN) trên bộ dữ liệu Elliptic để phát hiện giao dịch rửa tiền - Hướng nghiên cứu rất gần với Graph Analytics ở mục 06</td></tr>
+            <tr><td>TRM Labs</td><td>Công ty tình báo Blockchain (Blockchain Intelligence), hỗ trợ điều tra gian lận và tuân thủ quy định cho tổ chức tài chính</td></tr>
           </table></div>
         </section>
 

@@ -292,6 +292,14 @@ Abnormal:
 
           <h3>Feature Engineering</h3>
           <p>From raw transaction data, aggregate into a Feature Vector for each address:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Feature</th><th>How it's computed</th><th>What it flags</th></tr>
+            <tr><td><code>Tx_Count</code></td><td>Number of transactions within the observation window</td><td>Unusually high frequency (spam, bots)</td></tr>
+            <tr><td><code>Avg_Value</code></td><td>Average value per transaction</td><td>Transaction value far outside the address's usual range</td></tr>
+            <tr><td><code>Unique_Addresses</code></td><td>Number of distinct counterparties transacted with</td><td>A central Hub Address collecting/dispersing funds</td></tr>
+            <tr><td><code>Avg_Interval</code></td><td>Average time between consecutive transactions</td><td>A rhythm that's too regular or too rapid (a sign of automation)</td></tr>
+          </table></div>
+          <p>Example aggregated Feature Vector for one address:</p>
           <div class="ascii-block">Address A
 
 Tx Count = 150
@@ -333,6 +341,15 @@ Avg Interval = 2.5h</div>
             <tr><td>0 - 0.3</td><td>LOW</td></tr>
             <tr><td>0.3 - 0.7</td><td>MEDIUM</td></tr>
             <tr><td>0.7 - 1.0</td><td>HIGH</td></tr>
+          </table></div>
+          <h3>Real-world applications &amp; related research</h3>
+          <p>Graph Analytics and AML on Blockchain aren't just a classroom exercise - this is an active industry and a live academic research direction:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Organization / Research</th><th>Description</th></tr>
+            <tr><td>Chainalysis</td><td>A leading Blockchain analytics company, providing AML/Compliance tools to governments, exchanges, and banks worldwide</td></tr>
+            <tr><td>Elliptic</td><td>A Blockchain analytics company that published the "Elliptic Dataset" - over 200,000 labeled Bitcoin transactions (licit/illicit), widely used in academic research</td></tr>
+            <tr><td>Weber et al. (2019) - "Anti-Money Laundering in Bitcoin"</td><td>A prominent academic study using a Graph Convolutional Network (GCN) on the Elliptic dataset to detect money-laundering transactions - closely related to the Graph Analytics in section 06</td></tr>
+            <tr><td>TRM Labs</td><td>A Blockchain intelligence company supporting fraud investigation and regulatory compliance for financial institutions</td></tr>
           </table></div>
         </section>
 

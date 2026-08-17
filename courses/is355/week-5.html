@@ -96,7 +96,16 @@
             <tr><td>Minh bạch</td><td>Phụ thuộc tổ chức</td><td>Dữ liệu On-chain có thể kiểm tra</td></tr>
             <tr><td>Rủi ro</td><td>Bank/Credit Risk</td><td>Smart Contract/Oracle/Liquidity Risk</td></tr>
           </table></div>
-          <div class="inline-warning"><strong>DeFi không có nghĩa là không có rủi ro</strong> - Nó chuyển một phần rủi ro từ trung gian tài chính sang code, thị trường và cơ chế Blockchain (Smart Contract Risk, Liquidity Risk, Default Risk, Liquidation Risk, Oracle Risk).</div>
+          <div class="inline-warning"><strong>DeFi không có nghĩa là không có rủi ro</strong> - Nó chuyển một phần rủi ro từ trung gian tài chính sang code, thị trường và cơ chế Blockchain.</div>
+          <p>5 nhóm rủi ro chính cần phân tích khi thiết kế bất kỳ sản phẩm DeFi Lending nào:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loại rủi ro</th><th>Nguyên nhân</th><th>Ví dụ trong môn học</th></tr>
+            <tr><td>Smart Contract Risk</td><td>Lỗi logic/lỗ hổng trong code hợp đồng</td><td>Quên <code>assert</code> Access Control trong <code>mint()</code> (Tuần 3)</td></tr>
+            <tr><td>Liquidity Risk</td><td>Pool không đủ thanh khoản để đáp ứng rút tiền</td><td>Nhiều Borrower vay cùng lúc, Liquidity Pool cạn</td></tr>
+            <tr><td>Default Risk</td><td>Người vay không trả được nợ</td><td>Borrower mất khả năng thanh toán khoản vay Green Lending</td></tr>
+            <tr><td>Liquidation Risk</td><td>Giá tài sản thế chấp giảm đột ngột</td><td>Collateral Ratio tụt dưới Liquidation Threshold (mục 05)</td></tr>
+            <tr><td>Oracle Risk</td><td>Dữ liệu off-chain (giá, ESG Score) bị trễ hoặc bị thao túng</td><td>Oracle báo sai ESG Score khiến lãi suất tính sai (mục 07)</td></tr>
+          </table></div>
         </section>
 
         <!-- 02 - Liquidity Pool -->
@@ -171,6 +180,16 @@
             <tr><td>Social</td><td>75</td></tr>
             <tr><td>Governance</td><td>80</td></tr>
             <tr><td><strong>ESG Score tổng hợp</strong></td><td><strong>82</strong></td></tr>
+          </table></div>
+          <h3>Ứng dụng thực tế</h3>
+          <p>Cả DeFi Lending truyền thống lẫn Green Banking trên Blockchain đều đã có những triển khai thực tế đáng chú ý:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Dự án / Tổ chức</th><th>Mô tả</th></tr>
+            <tr><td>Aave, Compound</td><td>Hai giao thức DeFi Lending Overcollateralized lớn nhất, đặt nền móng cho mô hình Liquidity Pool và Liquidation đã học ở mục 02/05</td></tr>
+            <tr><td>MakerDAO (RWA Vault)</td><td>Chuyển một phần tài sản thế chấp cho DAI Stablecoin sang trái phiếu kho bạc Mỹ (US Treasuries) thông qua các đối tác RWA, kết hợp DeFi truyền thống với tài sản tài chính thực</td></tr>
+            <tr><td>Goldfinch</td><td>Giao thức cho vay Undercollateralized cho doanh nghiệp thực ở thị trường mới nổi, dùng mô hình "Trust through Consensus" thay vì thế chấp Crypto</td></tr>
+            <tr><td>Chính quyền Hong Kong - Tokenized Green Bond</td><td>Phát hành trái phiếu xanh trị giá 800 triệu HKD hoàn toàn trên Blockchain (2023) - Ví dụ Green Banking ở cấp chính phủ</td></tr>
+            <tr><td>MAS Project Guardian (Singapore)</td><td>Chương trình thí điểm của Cơ quan Tiền tệ Singapore cùng JPMorgan, DBS thử nghiệm DeFi cho giao dịch ngoại hối và trái phiếu chính phủ trên mạng Polygon</td></tr>
           </table></div>
         </section>
 

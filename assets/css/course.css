@@ -387,6 +387,7 @@
 .resource-list .icon{color:var(--primary)}
 .note-box{display:flex;gap:8px;color:#78350f;background:#fffbeb;border:1px solid #fde68a;font-size:12px;line-height:1.6}
 .note-box .icon{flex-shrink:0;margin-top:2px;color:#d97706}
+.note-box>span:last-child{min-width:0;overflow-wrap:break-word}
 
 .color-legend-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
 .color-legend-list li{display:flex;align-items:flex-start;gap:8px;color:var(--muted);font-size:11.5px;line-height:1.5}

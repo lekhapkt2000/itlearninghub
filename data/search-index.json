@@ -1,0 +1,3962 @@
+[
+    {
+        "url":  "courses/is201/index.html",
+        "lang":  "vi",
+        "course":  "IS201",
+        "label":  "",
+        "title":  "IS201 · Phân tích thiết kế hệ thống thông tin - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is208/index.html",
+        "lang":  "vi",
+        "course":  "IS208",
+        "label":  "",
+        "title":  "IS208 · Quản lý dự án công nghệ thông tin - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is210/index.html",
+        "lang":  "vi",
+        "course":  "IS210",
+        "label":  "",
+        "title":  "IS210 · Hệ quản trị cơ sở dữ liệu - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is336/index.html",
+        "lang":  "vi",
+        "course":  "IS336",
+        "label":  "",
+        "title":  "IS336 · Hoạch định nguồn lực doanh nghiệp - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is355/index.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "",
+        "title":  "IS355 · Công nghệ Blockchain - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Giới thiệu",
+        "id":  "gioi-thieu"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Chủ đề đồ án",
+        "id":  "chu-de"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Đăng ký đề tài",
+        "id":  "dang-ky-de-tai"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "5 thành phần chính",
+        "id":  "thanh-phan-bat-buoc"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Yêu cầu về dữ liệu",
+        "id":  "yeu-cau-du-lieu"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Kiến trúc hệ thống",
+        "id":  "kien-truc"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Quy trình thực hiện đồ án",
+        "id":  "quy-trinh"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Kiểm thử Smart Contract",
+        "id":  "kiem-thu"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Đánh giá hiệu năng",
+        "id":  "hieu-nang"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Yêu cầu bảo mật",
+        "id":  "bao-mat"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Sản phẩm phải nộp",
+        "id":  "san-pham-nop"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Cấu trúc báo cáo",
+        "id":  "cau-truc-bao-cao"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Yêu cầu về demo",
+        "id":  "demo"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Câu hỏi bảo vệ",
+        "id":  "cau-hoi-bao-ve"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Tiêu chí đánh giá",
+        "id":  "tieu-chi"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Mức độ đồ án",
+        "id":  "muc-do"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Yêu cầu tối thiểu để được xem là hoàn thành đồ án",
+        "id":  "toi-thieu"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Dev Stack khuyến nghị",
+        "id":  "dev-stack"
+    },
+    {
+        "url":  "courses/is355/project-lab.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · ĐỒ ÁN CUỐI KỲ",
+        "title":  "Project Lab · Đồ án cuối kỳ - IS355",
+        "heading":  "Định hướng sản phẩm cuối cùng",
+        "id":  "dinh-huong-cuoi"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Bối cảnh: Tài chính hướng đến phát triển bền vững (ESG)",
+        "id":  "boi-canh"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Tài chính xanh \u0026 Bài toán Dữ liệu (ESG Data)",
+        "id":  "tai-chinh-xanh"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Tín chỉ Carbon (Carbon Credit)",
+        "id":  "carbon-credit"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Blockchain là gì? Mật mã học \u0026 Cơ chế Đồng thuận",
+        "id":  "blockchain-co-so"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Thiết lập môi trường Python, OpenSSL \u0026 Web3.py",
+        "id":  "thuc-hanh-moi-truong"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Demo Mật mã học: Tạo Block \u0026 Chữ ký số trong Python",
+        "id":  "demo-crypto"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Tương tác mạng Testnet bằng Python (web3.py)",
+        "id":  "ket-noi-testnet"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Vyper: Cú pháp cơ bản \u0026 Kiểu dữ liệu",
+        "id":  "vyper-co-ban"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Vyper: Tầm vực \u0026 Khả năng biến đổi (Mutability Annotations)",
+        "id":  "vyper-mutability"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Vyper: Biến môi trường \u0026 Event Logging",
+        "id":  "vyper-event"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Mô hình hóa bài toán dự báo Carbon Footprint từ dữ liệu On-chain",
+        "id":  "data-research"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Bài tập về nhà",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Liên hệ đồ án",
+        "id":  "lien-he-do-an"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Câu hỏi thảo luận",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "courses/is355/week-1.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Tuần 1 · Tổng quan Tài chính Xanh \u0026 Cơ sở Blockchain - IS355",
+        "heading":  "Tự kiểm tra",
+        "id":  "checklist"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Bài toán bảo mật danh tính trong tài chính số",
+        "id":  "bao-mat-danh-tinh"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Ba trụ cột bảo mật dữ liệu (CIA Model)",
+        "id":  "cia-model"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Mã hóa đối xứng vs Mã hóa bất đối xứng",
+        "id":  "ma-hoa"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Khóa \u0026 Địa chỉ trong Blockchain",
+        "id":  "khoa-dia-chi"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Hàm Hash \u0026 phân biệt Encryption vs Hash",
+        "id":  "hash-vs-encryption"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Chữ ký số (Digital Signature)",
+        "id":  "chu-ky-so"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Zero-Knowledge Proof (ZKP)",
+        "id":  "zkp"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Thực hành 1: Tạo \u0026 Xác thực chữ ký số (Python Cryptography)",
+        "id":  "thuc-hanh-chu-ky"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Thực hành 2: Smart Contract ESGCertificate với Event Logs \u0026 Access Control (Vyper)",
+        "id":  "thuc-hanh-smart-contract"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Thực hành 3: Deploy \u0026 kiểm thử với Ape Framework và Geth Local",
+        "id":  "thuc-hanh-deploy"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Hai hướng nghiên cứu của Tuần 2",
+        "id":  "data-research"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Bài tập về nhà",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Liên hệ đồ án",
+        "id":  "lien-he-do-an"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Câu hỏi thảo luận",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "courses/is355/week-2.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Tuần 2 · Bảo mật Danh tính \u0026 An toàn Dữ liệu Tài chính - IS355",
+        "heading":  "Tự kiểm tra",
+        "id":  "checklist"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Từ tài sản thực đến tài sản số (Tokenization)",
+        "id":  "tokenization"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Phân biệt Coin vs Token",
+        "id":  "coin-vs-token"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Carbon Credit vs Carbon Token \u0026 \"Garbage In, Garbage Out\"",
+        "id":  "carbon-credit-vs-token"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Chuẩn ERC-20 và các hàm cốt lõi",
+        "id":  "erc20"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Cơ chế Mint, Burn và Bù trừ Carbon (Carbon Retirement)",
+        "id":  "mint-burn-retire"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Cấu trúc Smart Contract GreenCarbonToken.vy",
+        "id":  "thuc-hanh-contract"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Kịch bản kiểm thử \u0026 tương tác (Ape Framework Script)",
+        "id":  "thuc-hanh-ape"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Nghiên cứu 1: Dự báo giá Tín chỉ Carbon",
+        "id":  "carbon-price-forecast"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Nghiên cứu 2: Adaptive Carbon Token Issuance",
+        "id":  "adaptive-issuance"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Bài tập về nhà",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Liên hệ đồ án",
+        "id":  "lien-he-do-an"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Câu hỏi thảo luận",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "courses/is355/week-3.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Tuần 3 · Số hóa Tài sản Xanh - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Tự kiểm tra",
+        "id":  "checklist"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Từ ERC-20 (Tuần 3) đến ERC-721 (Tuần 4)",
+        "id":  "erc20-den-erc721"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Real-World Assets (RWA) và ranh giới \"Token ≠ Tài sản thực\"",
+        "id":  "rwa"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Cấu trúc Metadata, IPFS \u0026 Kiến trúc Bất biến",
+        "id":  "metadata-ipfs"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Vấn đề Greenwashing \u0026 Chain of Custody trong chuỗi cung ứng",
+        "id":  "greenwashing"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Smart Contract GreenCertificateNFT.vy",
+        "id":  "thuc-hanh-contract"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Kịch bản kiểm thử tương tác (Ape Framework)",
+        "id":  "thuc-hanh-ape"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Tạo Metadata \u0026 upload lên IPFS",
+        "id":  "thuc-hanh-ipfs"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Graph Analytics trong chuỗi cung ứng On-chain",
+        "id":  "graph-analytics"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Kết hợp IoT Sensors + Oracle + Smart Contract",
+        "id":  "iot-oracle"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Bài tập về nhà",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Câu hỏi thảo luận",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "courses/is355/week-4.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Tuần 4 · Real-World Assets (RWA) \u0026 NFT Chuỗi Cung Ứng Bền Vững - IS355",
+        "heading":  "Tự kiểm tra",
+        "id":  "checklist"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "DeFi là gì?",
+        "id":  "defi-la-gi"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Liquidity Pool",
+        "id":  "liquidity-pool"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "DeFi Lending \u0026 P2P Lending",
+        "id":  "p2p-lending"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Tài sản thế chấp \u0026 Collateral Ratio",
+        "id":  "collateral"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Liquidation",
+        "id":  "liquidation"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Green Banking \u0026 ESG Score",
+        "id":  "green-banking"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "ESG-based Lending, tự động hóa \u0026 vấn đề Oracle",
+        "id":  "esg-lending"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Smart Contract GreenLending.vy",
+        "id":  "thuc-hanh-contract"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Bộ khung kiểm thử liquidateLoan \u0026 ESG Oracle bằng pytest",
+        "id":  "thuc-hanh-pytest"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Bài tập về nhà",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Data \u0026 Machine Learning",
+        "id":  "data-ml"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Mini Project: Green Lending Protocol",
+        "id":  "mini-project"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Định hướng đồ án từ Tuần 5",
+        "id":  "dinh-huong-do-an"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Câu hỏi thảo luận",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "courses/is355/week-5.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Tuần 5 · Tài chính Phi tập trung (DeFi) \u0026 Ngân hàng Xanh - IS355",
+        "heading":  "Tự kiểm tra",
+        "id":  "checklist"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "On-chain Data là gì?",
+        "id":  "on-chain-data"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Event Logs",
+        "id":  "event-logs"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Blockchain Analytics",
+        "id":  "blockchain-analytics"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Data Pipeline: Kết nối Blockchain bằng Web3.py",
+        "id":  "ket-noi-web3py"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Machine Learning cho Blockchain",
+        "id":  "machine-learning"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Graph Analytics \u0026 AML",
+        "id":  "graph-aml"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Smart Contract Security",
+        "id":  "smart-contract-security"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Kiến trúc DApp",
+        "id":  "kien-truc-dapp"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Thực hành: Green Finance Analytics DApp",
+        "id":  "thuc-hanh-dapp"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Mini Project: Green Finance Analytics DApp",
+        "id":  "mini-project"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Bài tập nâng cao",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Định hướng đồ án từ Tuần 6",
+        "id":  "dinh-huong-do-an"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Câu hỏi thảo luận",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "courses/is355/week-6.html",
+        "lang":  "vi",
+        "course":  "IS355",
+        "label":  "TUẦN 06 · INTEGRATION WEEK",
+        "title":  "Tuần 6 · AI, Phân tích Giao dịch \u0026 Tích hợp DApp Xanh - IS355",
+        "heading":  "Tự kiểm tra",
+        "id":  "checklist"
+    },
+    {
+        "url":  "courses/it004/index.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "",
+        "title":  "IT004 · Cơ sở dữ liệu - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý bán hàng - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý bán hàng - IT004",
+        "heading":  "Cho cơ sở dữ liệu quản lý bán hàng gồm có các quan hệ sau",
+        "id":  "tong-quan"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý bán hàng - IT004",
+        "heading":  "KHACHHANG",
+        "id":  "khachhang"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý bán hàng - IT004",
+        "heading":  "NHANVIEN",
+        "id":  "nhanvien"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý bán hàng - IT004",
+        "heading":  "SANPHAM",
+        "id":  "sanpham"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý bán hàng - IT004",
+        "heading":  "HOADON",
+        "id":  "hoadon"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý bán hàng - IT004",
+        "heading":  "CTHD (Chi tiết hóa đơn)",
+        "id":  "cthd"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý bán hàng - IT004",
+        "heading":  "Tạo CSDL và nạp dữ liệu mẫu",
+        "id":  "script"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "Cho cơ sở dữ liệu quản lý giáo vụ gồm có các quan hệ sau",
+        "id":  "tong-quan"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "HOCVIEN",
+        "id":  "hocvien"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "LOP",
+        "id":  "lop"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "KHOA",
+        "id":  "khoa"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "MONHOC",
+        "id":  "monhoc"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "DIEUKIEN",
+        "id":  "dieukien"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "GIAOVIEN",
+        "id":  "giaovien"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "GIANGDAY",
+        "id":  "giangday"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "KETQUATHI",
+        "id":  "ketquathi"
+    },
+    {
+        "url":  "courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "LƯỢC ĐỒ DÙNG CHUNG · IT004",
+        "title":  "Lược đồ Quản lý giáo vụ - IT004",
+        "heading":  "Tạo CSDL và nạp dữ liệu mẫu",
+        "id":  "script"
+    },
+    {
+        "url":  "courses/it004/thi-thu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THI THỬ THỰC HÀNH · IT004",
+        "title":  "Thi thử thực hành · IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/thi-thu.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THI THỬ THỰC HÀNH · IT004",
+        "title":  "Thi thử thực hành · IT004",
+        "heading":  "Xem đề thi",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "courses/it004/week-1-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 1 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 1 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-1-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 1 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 1 - IT004",
+        "heading":  "Trung tâm Thể dục Thể thao (TrungTam_TDTT)",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "courses/it004/week-1-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 1 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 1 - IT004",
+        "heading":  "Xem đáp án",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "courses/it004/week-1.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 01 · BTHT1",
+        "title":  "Tuần 1 · Nền tảng cơ sở dữ liệu - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-1.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 01 · BTHT1",
+        "title":  "Tuần 1 · Nền tảng cơ sở dữ liệu - IT004",
+        "heading":  "Cơ sở dữ liệu là gì?",
+        "id":  "tong-quan"
+    },
+    {
+        "url":  "courses/it004/week-1.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 01 · BTHT1",
+        "title":  "Tuần 1 · Nền tảng cơ sở dữ liệu - IT004",
+        "heading":  "Cài đặt SQL Server \u0026 SSMS",
+        "id":  "ssms"
+    },
+    {
+        "url":  "courses/it004/week-1.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 01 · BTHT1",
+        "title":  "Tuần 1 · Nền tảng cơ sở dữ liệu - IT004",
+        "heading":  "Kiểu dữ liệu trong SQL",
+        "id":  "data-types"
+    },
+    {
+        "url":  "courses/it004/week-1.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 01 · BTHT1",
+        "title":  "Tuần 1 · Nền tảng cơ sở dữ liệu - IT004",
+        "heading":  "Database",
+        "id":  "database"
+    },
+    {
+        "url":  "courses/it004/week-1.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 01 · BTHT1",
+        "title":  "Tuần 1 · Nền tảng cơ sở dữ liệu - IT004",
+        "heading":  "Table",
+        "id":  "table"
+    },
+    {
+        "url":  "courses/it004/week-1.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 01 · BTHT1",
+        "title":  "Tuần 1 · Nền tảng cơ sở dữ liệu - IT004",
+        "heading":  "Constraints",
+        "id":  "constraints"
+    },
+    {
+        "url":  "courses/it004/week-1.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 01 · BTHT1",
+        "title":  "Tuần 1 · Nền tảng cơ sở dữ liệu - IT004",
+        "heading":  "Data Manipulation Language",
+        "id":  "dml"
+    },
+    {
+        "url":  "courses/it004/week-1.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 01 · BTHT1",
+        "title":  "Tuần 1 · Nền tảng cơ sở dữ liệu - IT004",
+        "heading":  "Thực hành tổng hợp",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/it004/week-1.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 01 · BTHT1",
+        "title":  "Tuần 1 · Nền tảng cơ sở dữ liệu - IT004",
+        "heading":  "Tự kiểm tra kiến thức",
+        "id":  "checklist"
+    },
+    {
+        "url":  "courses/it004/week-2-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 2 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 2 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-2-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 2 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 2 - IT004",
+        "heading":  "Quản lý bán hàng - Câu 1 ➜ 25",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "courses/it004/week-2-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 2 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 2 - IT004",
+        "heading":  "Xem đáp án",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "courses/it004/week-2.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 02 · BTHT2",
+        "title":  "Tuần 2 · Truy vấn dữ liệu với SQL - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-2.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 02 · BTHT2",
+        "title":  "Tuần 2 · Truy vấn dữ liệu với SQL - IT004",
+        "heading":  "Toán tử",
+        "id":  "toan-tu"
+    },
+    {
+        "url":  "courses/it004/week-2.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 02 · BTHT2",
+        "title":  "Tuần 2 · Truy vấn dữ liệu với SQL - IT004",
+        "heading":  "Hàm trong SQL",
+        "id":  "ham"
+    },
+    {
+        "url":  "courses/it004/week-2.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 02 · BTHT2",
+        "title":  "Tuần 2 · Truy vấn dữ liệu với SQL - IT004",
+        "heading":  "SELECT",
+        "id":  "select"
+    },
+    {
+        "url":  "courses/it004/week-2.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 02 · BTHT2",
+        "title":  "Tuần 2 · Truy vấn dữ liệu với SQL - IT004",
+        "heading":  "JOIN",
+        "id":  "join"
+    },
+    {
+        "url":  "courses/it004/week-2.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 02 · BTHT2",
+        "title":  "Tuần 2 · Truy vấn dữ liệu với SQL - IT004",
+        "heading":  "Set Operations",
+        "id":  "set-operations"
+    },
+    {
+        "url":  "courses/it004/week-2.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 02 · BTHT2",
+        "title":  "Tuần 2 · Truy vấn dữ liệu với SQL - IT004",
+        "heading":  "Subquery",
+        "id":  "subquery"
+    },
+    {
+        "url":  "courses/it004/week-2.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 02 · BTHT2",
+        "title":  "Tuần 2 · Truy vấn dữ liệu với SQL - IT004",
+        "heading":  "Chọn công cụ nào?",
+        "id":  "tong-hop"
+    },
+    {
+        "url":  "courses/it004/week-2.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 02 · BTHT2",
+        "title":  "Tuần 2 · Truy vấn dữ liệu với SQL - IT004",
+        "heading":  "Thực hành tổng hợp",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/it004/week-3-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 3 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 3 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-3-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 3 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 3 - IT004",
+        "heading":  "Quản lý bán hàng - Câu 26 ➜ 53",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "courses/it004/week-3-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 3 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 3 - IT004",
+        "heading":  "Xem đáp án",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "courses/it004/week-3.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 03 · BTHT3",
+        "title":  "Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-3.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 03 · BTHT3",
+        "title":  "Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004",
+        "heading":  "Phép chia là gì?",
+        "id":  "phep-chia"
+    },
+    {
+        "url":  "courses/it004/week-3.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 03 · BTHT3",
+        "title":  "Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004",
+        "heading":  "Phép chia cơ bản",
+        "id":  "chia-co-ban"
+    },
+    {
+        "url":  "courses/it004/week-3.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 03 · BTHT3",
+        "title":  "Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004",
+        "heading":  "Phép chia có điều kiện",
+        "id":  "chia-dieu-kien"
+    },
+    {
+        "url":  "courses/it004/week-3.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 03 · BTHT3",
+        "title":  "Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004",
+        "heading":  "Phép chia với NOT EXISTS",
+        "id":  "chia-not-exists"
+    },
+    {
+        "url":  "courses/it004/week-3.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 03 · BTHT3",
+        "title":  "Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004",
+        "heading":  "Aggregate Functions",
+        "id":  "aggregate"
+    },
+    {
+        "url":  "courses/it004/week-3.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 03 · BTHT3",
+        "title":  "Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004",
+        "heading":  "SELECT TOP",
+        "id":  "select-top"
+    },
+    {
+        "url":  "courses/it004/week-3.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 03 · BTHT3",
+        "title":  "Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004",
+        "heading":  "Phép kết ngoài",
+        "id":  "outer-join"
+    },
+    {
+        "url":  "courses/it004/week-3.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 03 · BTHT3",
+        "title":  "Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004",
+        "heading":  "SQL Week 3 Cheat Sheet",
+        "id":  "cheat-sheet"
+    },
+    {
+        "url":  "courses/it004/week-3.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 03 · BTHT3",
+        "title":  "Tuần 3 · Phép chia, gom nhóm và kết ngoài - IT004",
+        "heading":  "Thực hành tổng hợp",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/it004/week-4-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 4 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 4 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-4-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 4 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 4 - IT004",
+        "heading":  "Quản lý giáo vụ - Câu 1 ➜ 50",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "courses/it004/week-4-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 4 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 4 - IT004",
+        "heading":  "Xem đáp án",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "courses/it004/week-4.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 04 · BTHT4",
+        "title":  "Tuần 4 · Hàm mở rộng, CASE \u0026 Subquery - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-4.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 04 · BTHT4",
+        "title":  "Tuần 4 · Hàm mở rộng, CASE \u0026 Subquery - IT004",
+        "heading":  "Từ truy vấn dữ liệu đến xử lý dữ liệu",
+        "id":  "tong-quan"
+    },
+    {
+        "url":  "courses/it004/week-4.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 04 · BTHT4",
+        "title":  "Tuần 4 · Hàm mở rộng, CASE \u0026 Subquery - IT004",
+        "heading":  "CAST()",
+        "id":  "cast"
+    },
+    {
+        "url":  "courses/it004/week-4.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 04 · BTHT4",
+        "title":  "Tuần 4 · Hàm mở rộng, CASE \u0026 Subquery - IT004",
+        "heading":  "GETDATE()",
+        "id":  "getdate"
+    },
+    {
+        "url":  "courses/it004/week-4.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 04 · BTHT4",
+        "title":  "Tuần 4 · Hàm mở rộng, CASE \u0026 Subquery - IT004",
+        "heading":  "LEFT() và RIGHT()",
+        "id":  "left-right"
+    },
+    {
+        "url":  "courses/it004/week-4.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 04 · BTHT4",
+        "title":  "Tuần 4 · Hàm mở rộng, CASE \u0026 Subquery - IT004",
+        "heading":  "CASE...END",
+        "id":  "case"
+    },
+    {
+        "url":  "courses/it004/week-4.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 04 · BTHT4",
+        "title":  "Tuần 4 · Hàm mở rộng, CASE \u0026 Subquery - IT004",
+        "heading":  "Alias và Subquery cơ bản",
+        "id":  "alias-subquery"
+    },
+    {
+        "url":  "courses/it004/week-4.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 04 · BTHT4",
+        "title":  "Tuần 4 · Hàm mở rộng, CASE \u0026 Subquery - IT004",
+        "heading":  "Subquery nâng cao",
+        "id":  "subquery-nang-cao"
+    },
+    {
+        "url":  "courses/it004/week-4.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 04 · BTHT4",
+        "title":  "Tuần 4 · Hàm mở rộng, CASE \u0026 Subquery - IT004",
+        "heading":  "Nhận diện từ khóa \u0026 Cheat Sheet",
+        "id":  "cheat-sheet"
+    },
+    {
+        "url":  "courses/it004/week-4.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 04 · BTHT4",
+        "title":  "Tuần 4 · Hàm mở rộng, CASE \u0026 Subquery - IT004",
+        "heading":  "Thực hành tổng hợp",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/it004/week-5-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 5 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 5 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-5-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 5 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 5 - IT004",
+        "heading":  "Bài tập Trigger",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "courses/it004/week-5-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 5 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 5 - IT004",
+        "heading":  "Xem đáp án",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "courses/it004/week-5.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 05 · BTHT5",
+        "title":  "Tuần 5 · Trigger - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-5.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 05 · BTHT5",
+        "title":  "Tuần 5 · Trigger - IT004",
+        "heading":  "Trigger là gì?",
+        "id":  "trigger-la-gi"
+    },
+    {
+        "url":  "courses/it004/week-5.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 05 · BTHT5",
+        "title":  "Tuần 5 · Trigger - IT004",
+        "heading":  "AFTER và INSTEAD OF",
+        "id":  "loai-trigger"
+    },
+    {
+        "url":  "courses/it004/week-5.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 05 · BTHT5",
+        "title":  "Tuần 5 · Trigger - IT004",
+        "heading":  "Cú pháp tạo Trigger",
+        "id":  "cu-phap"
+    },
+    {
+        "url":  "courses/it004/week-5.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 05 · BTHT5",
+        "title":  "Tuần 5 · Trigger - IT004",
+        "heading":  "Trigger kiểm tra dữ liệu",
+        "id":  "kiem-tra-loi"
+    },
+    {
+        "url":  "courses/it004/week-5.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 05 · BTHT5",
+        "title":  "Tuần 5 · Trigger - IT004",
+        "heading":  "INSERTED và DELETED",
+        "id":  "inserted-deleted"
+    },
+    {
+        "url":  "courses/it004/week-5.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 05 · BTHT5",
+        "title":  "Tuần 5 · Trigger - IT004",
+        "heading":  "Ứng dụng thực tế của Trigger",
+        "id":  "ung-dung"
+    },
+    {
+        "url":  "courses/it004/week-5.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 05 · BTHT5",
+        "title":  "Tuần 5 · Trigger - IT004",
+        "heading":  "Trigger nên tư duy theo tập dữ liệu",
+        "id":  "nhieu-dong"
+    },
+    {
+        "url":  "courses/it004/week-5.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 05 · BTHT5",
+        "title":  "Tuần 5 · Trigger - IT004",
+        "heading":  "Quy trình 6 bước",
+        "id":  "quy-trinh"
+    },
+    {
+        "url":  "courses/it004/week-5.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "THỰC HÀNH 05 · BTHT5",
+        "title":  "Tuần 5 · Trigger - IT004",
+        "heading":  "Thực hành tổng hợp",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "courses/it004/week-6-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 6 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 6 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-6-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 6 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 6 - IT004",
+        "heading":  "Yêu cầu thực hành - Quản lý hàng hóa (36 câu)",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "courses/it004/week-6-bai-tap.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "TUẦN 6 · BÀI TẬP THỰC HÀNH",
+        "title":  "Bài tập · Tuần 6 - IT004",
+        "heading":  "Xem đáp án",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "Mục tiêu",
+        "id":  "tong-quan"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "Mô hình dữ liệu",
+        "id":  "mo-hinh-du-lieu"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "Khóa trong CSDL",
+        "id":  "khoa"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "Tạo CSDL \u0026 INSERT",
+        "id":  "tao-csdl-insert"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "SELECT, WHERE \u0026 LIKE",
+        "id":  "select-where-like"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "ORDER BY \u0026 hàm tổng hợp",
+        "id":  "order-ham"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "GROUP BY \u0026 HAVING",
+        "id":  "group-having"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "JOIN",
+        "id":  "join"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "Subquery",
+        "id":  "subquery"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "UPDATE \u0026 DELETE",
+        "id":  "update-delete"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "Yêu cầu thực hành",
+        "id":  "yeu-cau-thuc-hanh"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "Bài tập thách thức",
+        "id":  "bai-tap-thach-thuc"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "Các lỗi thường gặp",
+        "id":  "loi-thuong-gap"
+    },
+    {
+        "url":  "courses/it004/week-6.html",
+        "lang":  "vi",
+        "course":  "IT004",
+        "label":  "ÔN TẬP 06 · TỔNG HỢP THỰC HÀNH",
+        "title":  "Tuần 6 · Ôn tập thực hành Cơ sở dữ liệu - IT004",
+        "heading":  "Checklist ôn tập",
+        "id":  "checklist"
+    },
+    {
+        "url":  "en/courses/is201/index.html",
+        "lang":  "en",
+        "course":  "IS201",
+        "label":  "",
+        "title":  "IS201 · Information Systems Analysis and Design - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is208/index.html",
+        "lang":  "en",
+        "course":  "IS208",
+        "label":  "",
+        "title":  "IS208 · IT Project Management - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is210/index.html",
+        "lang":  "en",
+        "course":  "IS210",
+        "label":  "",
+        "title":  "IS210 · Database Management Systems - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is336/index.html",
+        "lang":  "en",
+        "course":  "IS336",
+        "label":  "",
+        "title":  "IS336 · Enterprise Resource Planning - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is355/index.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "",
+        "title":  "IS355 · Blockchain Technology - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Introduction",
+        "id":  "gioi-thieu"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Project topics",
+        "id":  "chu-de"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Topic registration",
+        "id":  "dang-ky-de-tai"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "5 main components",
+        "id":  "thanh-phan-bat-buoc"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Data requirements",
+        "id":  "yeu-cau-du-lieu"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "System architecture",
+        "id":  "kien-truc"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Project execution process",
+        "id":  "quy-trinh"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Smart Contract testing",
+        "id":  "kiem-thu"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Performance evaluation",
+        "id":  "hieu-nang"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Security requirements",
+        "id":  "bao-mat"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Deliverables",
+        "id":  "san-pham-nop"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Report structure",
+        "id":  "cau-truc-bao-cao"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Demo requirements",
+        "id":  "demo"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Defense questions",
+        "id":  "cau-hoi-bao-ve"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Grading criteria",
+        "id":  "tieu-chi"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Project levels",
+        "id":  "muc-do"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Minimum requirements to be considered complete",
+        "id":  "toi-thieu"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Recommended dev stack",
+        "id":  "dev-stack"
+    },
+    {
+        "url":  "en/courses/is355/project-lab.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "PROJECT LAB · FINAL PROJECT",
+        "title":  "Project Lab · Final Project - IS355",
+        "heading":  "Final product direction",
+        "id":  "dinh-huong-cuoi"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Context: Finance oriented toward sustainable development (ESG)",
+        "id":  "boi-canh"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Green Finance \u0026 the Data Problem (ESG Data)",
+        "id":  "tai-chinh-xanh"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Carbon Credit",
+        "id":  "carbon-credit"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "What is Blockchain? Cryptography \u0026 Consensus Mechanisms",
+        "id":  "blockchain-co-so"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Setting up a Python, OpenSSL \u0026 Web3.py environment",
+        "id":  "thuc-hanh-moi-truong"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Cryptography demo: Creating a Block \u0026 a digital signature in Python",
+        "id":  "demo-crypto"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Interacting with a Testnet using Python (web3.py)",
+        "id":  "ket-noi-testnet"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Vyper: Basic syntax \u0026 data types",
+        "id":  "vyper-co-ban"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Vyper: Scope \u0026 Mutability Annotations",
+        "id":  "vyper-mutability"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Vyper: Environment variables \u0026 Event Logging",
+        "id":  "vyper-event"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Modeling a Carbon Footprint forecasting problem from On-chain data",
+        "id":  "data-research"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Homework",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Project connection",
+        "id":  "lien-he-do-an"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Discussion questions",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "en/courses/is355/week-1.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 01 · GREEN FINANCE \u0026 BLOCKCHAIN",
+        "title":  "Week 1 · Green Finance Overview \u0026 Blockchain Basics - IS355",
+        "heading":  "Self-check",
+        "id":  "checklist"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "The identity security problem in digital finance",
+        "id":  "bao-mat-danh-tinh"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "The three pillars of data security (CIA Model)",
+        "id":  "cia-model"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Symmetric encryption vs Asymmetric encryption",
+        "id":  "ma-hoa"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Keys \u0026 Addresses in Blockchain",
+        "id":  "khoa-dia-chi"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Hash functions \u0026 distinguishing Encryption from Hash",
+        "id":  "hash-vs-encryption"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Digital Signature",
+        "id":  "chu-ky-so"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Zero-Knowledge Proof (ZKP)",
+        "id":  "zkp"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Practice 1: Create \u0026 Verify a digital signature (Python Cryptography)",
+        "id":  "thuc-hanh-chu-ky"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Practice 2: ESGCertificate Smart Contract with Event Logs \u0026 Access Control (Vyper)",
+        "id":  "thuc-hanh-smart-contract"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Practice 3: Deploy \u0026 test with Ape Framework and local Geth",
+        "id":  "thuc-hanh-deploy"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Two research directions for Week 2",
+        "id":  "data-research"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Homework",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Project connection",
+        "id":  "lien-he-do-an"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Discussion questions",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "en/courses/is355/week-2.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 02 · IDENTITY SECURITY \u0026 DATA PROTECTION",
+        "title":  "Week 2 · Identity Security \u0026 Financial Data Protection - IS355",
+        "heading":  "Self-check",
+        "id":  "checklist"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "From real assets to digital assets (Tokenization)",
+        "id":  "tokenization"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Distinguishing Coin from Token",
+        "id":  "coin-vs-token"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Carbon Credit vs Carbon Token \u0026 \"Garbage In, Garbage Out\"",
+        "id":  "carbon-credit-vs-token"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "The ERC-20 standard and its core functions",
+        "id":  "erc20"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Mint, Burn, and Carbon Retirement mechanics",
+        "id":  "mint-burn-retire"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "The GreenCarbonToken.vy Smart Contract structure",
+        "id":  "thuc-hanh-contract"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Test \u0026 interaction script (Ape Framework Script)",
+        "id":  "thuc-hanh-ape"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Research 1: Forecasting Carbon Credit prices",
+        "id":  "carbon-price-forecast"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Research 2: Adaptive Carbon Token Issuance",
+        "id":  "adaptive-issuance"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Homework",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Project connection",
+        "id":  "lien-he-do-an"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Discussion questions",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "en/courses/is355/week-3.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 03 · TOKENIZATION \u0026 CARBON CREDIT",
+        "title":  "Week 3 · Digitizing Green Assets - ERC-20 \u0026 Carbon Credit - IS355",
+        "heading":  "Self-check",
+        "id":  "checklist"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "From ERC-20 (Week 3) to ERC-721 (Week 4)",
+        "id":  "erc20-den-erc721"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "Real-World Assets (RWA) and the \"Token ≠ real asset\" boundary",
+        "id":  "rwa"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "Metadata structure, IPFS \u0026 Immutable Architecture",
+        "id":  "metadata-ipfs"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "The Greenwashing problem \u0026 Chain of Custody in supply chains",
+        "id":  "greenwashing"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "The GreenCertificateNFT.vy Smart Contract",
+        "id":  "thuc-hanh-contract"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "Interaction test script (Ape Framework)",
+        "id":  "thuc-hanh-ape"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "Creating Metadata \u0026 uploading to IPFS",
+        "id":  "thuc-hanh-ipfs"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "Graph Analytics for the On-chain supply chain",
+        "id":  "graph-analytics"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "Combining IoT Sensors + Oracle + Smart Contract",
+        "id":  "iot-oracle"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "Homework",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "Discussion questions",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "en/courses/is355/week-4.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 04 · RWA \u0026 NFT SUPPLY CHAIN",
+        "title":  "Week 4 · Real-World Assets (RWA) \u0026 NFT for Sustainable Supply Chains - IS355",
+        "heading":  "Self-check",
+        "id":  "checklist"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "What is DeFi?",
+        "id":  "defi-la-gi"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "Liquidity Pool",
+        "id":  "liquidity-pool"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "DeFi Lending \u0026 P2P Lending",
+        "id":  "p2p-lending"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "Collateral \u0026 the Collateral Ratio",
+        "id":  "collateral"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "Liquidation",
+        "id":  "liquidation"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "Green Banking \u0026 ESG Score",
+        "id":  "green-banking"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "ESG-based Lending, automation \u0026 the Oracle problem",
+        "id":  "esg-lending"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "The GreenLending.vy Smart Contract",
+        "id":  "thuc-hanh-contract"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "A liquidateLoan \u0026 ESG Oracle test suite with pytest",
+        "id":  "thuc-hanh-pytest"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "Homework",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "Data \u0026 Machine Learning",
+        "id":  "data-ml"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "Mini Project: Green Lending Protocol",
+        "id":  "mini-project"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "Project directions from Week 5",
+        "id":  "dinh-huong-do-an"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "Discussion questions",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "en/courses/is355/week-5.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 05 · DEFI \u0026 GREEN BANKING",
+        "title":  "Week 5 · Decentralized Finance (DeFi) \u0026 Green Banking - IS355",
+        "heading":  "Self-check",
+        "id":  "checklist"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "What is On-chain Data?",
+        "id":  "on-chain-data"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Event Logs",
+        "id":  "event-logs"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Blockchain Analytics",
+        "id":  "blockchain-analytics"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Data Pipeline: Connecting to Blockchain with Web3.py",
+        "id":  "ket-noi-web3py"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Machine Learning for Blockchain",
+        "id":  "machine-learning"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Graph Analytics \u0026 AML",
+        "id":  "graph-aml"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Smart Contract Security",
+        "id":  "smart-contract-security"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "DApp Architecture",
+        "id":  "kien-truc-dapp"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Practice: Green Finance Analytics DApp",
+        "id":  "thuc-hanh-dapp"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Mini Project: Green Finance Analytics DApp",
+        "id":  "mini-project"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Advanced exercises",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Project directions from Week 6",
+        "id":  "dinh-huong-do-an"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Discussion questions",
+        "id":  "thao-luan"
+    },
+    {
+        "url":  "en/courses/is355/week-6.html",
+        "lang":  "en",
+        "course":  "IS355",
+        "label":  "WEEK 06 · INTEGRATION WEEK",
+        "title":  "Week 6 · AI, Transaction Analytics \u0026 Green DApp Integration - IS355",
+        "heading":  "Self-check",
+        "id":  "checklist"
+    },
+    {
+        "url":  "en/courses/it004/index.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "",
+        "title":  "IT004 · Database - IT Learning Hub",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Sales Management Schema - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Sales Management Schema - IT004",
+        "heading":  "The sales management database consists of the following relations",
+        "id":  "tong-quan"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Sales Management Schema - IT004",
+        "heading":  "KHACHHANG",
+        "id":  "khachhang"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Sales Management Schema - IT004",
+        "heading":  "NHANVIEN",
+        "id":  "nhanvien"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Sales Management Schema - IT004",
+        "heading":  "SANPHAM",
+        "id":  "sanpham"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Sales Management Schema - IT004",
+        "heading":  "HOADON",
+        "id":  "hoadon"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Sales Management Schema - IT004",
+        "heading":  "CTHD (Invoice Line Items)",
+        "id":  "cthd"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-ban-hang.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Sales Management Schema - IT004",
+        "heading":  "Create the database and load sample data",
+        "id":  "script"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "The academic affairs management database consists of the following relations",
+        "id":  "tong-quan"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "HOCVIEN",
+        "id":  "hocvien"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "LOP",
+        "id":  "lop"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "KHOA",
+        "id":  "khoa"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "MONHOC",
+        "id":  "monhoc"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "DIEUKIEN",
+        "id":  "dieukien"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "GIAOVIEN",
+        "id":  "giaovien"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "GIANGDAY",
+        "id":  "giangday"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "KETQUATHI",
+        "id":  "ketquathi"
+    },
+    {
+        "url":  "en/courses/it004/schema-quan-ly-giao-vu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "SHARED SCHEMA · IT004",
+        "title":  "Academic Affairs Schema - IT004",
+        "heading":  "Create the database and load sample data",
+        "id":  "script"
+    },
+    {
+        "url":  "en/courses/it004/thi-thu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "DATABASE PRACTICE MOCK EXAM · IT004",
+        "title":  "Mock Exam · IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/thi-thu.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "DATABASE PRACTICE MOCK EXAM · IT004",
+        "title":  "Mock Exam · IT004",
+        "heading":  "View the exam paper",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "en/courses/it004/week-1-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 1 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 1 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-1-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 1 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 1 - IT004",
+        "heading":  "Fitness \u0026 Sports Center (TrungTam_TDTT)",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "en/courses/it004/week-1-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 1 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 1 - IT004",
+        "heading":  "View answer",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "en/courses/it004/week-1.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 01 · BTHT1",
+        "title":  "Week 1 · Database Fundamentals - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-1.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 01 · BTHT1",
+        "title":  "Week 1 · Database Fundamentals - IT004",
+        "heading":  "What Is a Database?",
+        "id":  "tong-quan"
+    },
+    {
+        "url":  "en/courses/it004/week-1.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 01 · BTHT1",
+        "title":  "Week 1 · Database Fundamentals - IT004",
+        "heading":  "Installing SQL Server \u0026 SSMS",
+        "id":  "ssms"
+    },
+    {
+        "url":  "en/courses/it004/week-1.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 01 · BTHT1",
+        "title":  "Week 1 · Database Fundamentals - IT004",
+        "heading":  "Data Types in SQL",
+        "id":  "data-types"
+    },
+    {
+        "url":  "en/courses/it004/week-1.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 01 · BTHT1",
+        "title":  "Week 1 · Database Fundamentals - IT004",
+        "heading":  "Database",
+        "id":  "database"
+    },
+    {
+        "url":  "en/courses/it004/week-1.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 01 · BTHT1",
+        "title":  "Week 1 · Database Fundamentals - IT004",
+        "heading":  "Table",
+        "id":  "table"
+    },
+    {
+        "url":  "en/courses/it004/week-1.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 01 · BTHT1",
+        "title":  "Week 1 · Database Fundamentals - IT004",
+        "heading":  "Constraints",
+        "id":  "constraints"
+    },
+    {
+        "url":  "en/courses/it004/week-1.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 01 · BTHT1",
+        "title":  "Week 1 · Database Fundamentals - IT004",
+        "heading":  "Data Manipulation Language",
+        "id":  "dml"
+    },
+    {
+        "url":  "en/courses/it004/week-1.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 01 · BTHT1",
+        "title":  "Week 1 · Database Fundamentals - IT004",
+        "heading":  "Comprehensive Practice",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/it004/week-1.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 01 · BTHT1",
+        "title":  "Week 1 · Database Fundamentals - IT004",
+        "heading":  "Self-Check",
+        "id":  "checklist"
+    },
+    {
+        "url":  "en/courses/it004/week-2-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 2 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 2 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-2-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 2 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 2 - IT004",
+        "heading":  "Sales Management - Questions 1 ➜ 25",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "en/courses/it004/week-2-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 2 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 2 - IT004",
+        "heading":  "View answer",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "en/courses/it004/week-2.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 02 · BTHT2",
+        "title":  "Week 2 · Querying Data with SQL - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-2.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 02 · BTHT2",
+        "title":  "Week 2 · Querying Data with SQL - IT004",
+        "heading":  "Operators",
+        "id":  "toan-tu"
+    },
+    {
+        "url":  "en/courses/it004/week-2.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 02 · BTHT2",
+        "title":  "Week 2 · Querying Data with SQL - IT004",
+        "heading":  "Functions in SQL",
+        "id":  "ham"
+    },
+    {
+        "url":  "en/courses/it004/week-2.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 02 · BTHT2",
+        "title":  "Week 2 · Querying Data with SQL - IT004",
+        "heading":  "SELECT",
+        "id":  "select"
+    },
+    {
+        "url":  "en/courses/it004/week-2.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 02 · BTHT2",
+        "title":  "Week 2 · Querying Data with SQL - IT004",
+        "heading":  "JOIN",
+        "id":  "join"
+    },
+    {
+        "url":  "en/courses/it004/week-2.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 02 · BTHT2",
+        "title":  "Week 2 · Querying Data with SQL - IT004",
+        "heading":  "Set Operations",
+        "id":  "set-operations"
+    },
+    {
+        "url":  "en/courses/it004/week-2.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 02 · BTHT2",
+        "title":  "Week 2 · Querying Data with SQL - IT004",
+        "heading":  "Subquery",
+        "id":  "subquery"
+    },
+    {
+        "url":  "en/courses/it004/week-2.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 02 · BTHT2",
+        "title":  "Week 2 · Querying Data with SQL - IT004",
+        "heading":  "Which Tool to Use?",
+        "id":  "tong-hop"
+    },
+    {
+        "url":  "en/courses/it004/week-2.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 02 · BTHT2",
+        "title":  "Week 2 · Querying Data with SQL - IT004",
+        "heading":  "Comprehensive Practice",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/it004/week-3-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 3 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 3 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-3-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 3 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 3 - IT004",
+        "heading":  "Sales Management - Questions 26 ➜ 53",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "en/courses/it004/week-3-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 3 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 3 - IT004",
+        "heading":  "View answer",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "en/courses/it004/week-3.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 03 · BTHT3",
+        "title":  "Week 3 · Division, Grouping \u0026 Outer Joins - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-3.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 03 · BTHT3",
+        "title":  "Week 3 · Division, Grouping \u0026 Outer Joins - IT004",
+        "heading":  "What Is Division?",
+        "id":  "phep-chia"
+    },
+    {
+        "url":  "en/courses/it004/week-3.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 03 · BTHT3",
+        "title":  "Week 3 · Division, Grouping \u0026 Outer Joins - IT004",
+        "heading":  "Basic Division",
+        "id":  "chia-co-ban"
+    },
+    {
+        "url":  "en/courses/it004/week-3.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 03 · BTHT3",
+        "title":  "Week 3 · Division, Grouping \u0026 Outer Joins - IT004",
+        "heading":  "Conditional Division",
+        "id":  "chia-dieu-kien"
+    },
+    {
+        "url":  "en/courses/it004/week-3.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 03 · BTHT3",
+        "title":  "Week 3 · Division, Grouping \u0026 Outer Joins - IT004",
+        "heading":  "Division with NOT EXISTS",
+        "id":  "chia-not-exists"
+    },
+    {
+        "url":  "en/courses/it004/week-3.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 03 · BTHT3",
+        "title":  "Week 3 · Division, Grouping \u0026 Outer Joins - IT004",
+        "heading":  "Aggregate Functions",
+        "id":  "aggregate"
+    },
+    {
+        "url":  "en/courses/it004/week-3.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 03 · BTHT3",
+        "title":  "Week 3 · Division, Grouping \u0026 Outer Joins - IT004",
+        "heading":  "SELECT TOP",
+        "id":  "select-top"
+    },
+    {
+        "url":  "en/courses/it004/week-3.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 03 · BTHT3",
+        "title":  "Week 3 · Division, Grouping \u0026 Outer Joins - IT004",
+        "heading":  "Outer Joins",
+        "id":  "outer-join"
+    },
+    {
+        "url":  "en/courses/it004/week-3.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 03 · BTHT3",
+        "title":  "Week 3 · Division, Grouping \u0026 Outer Joins - IT004",
+        "heading":  "SQL Week 3 Cheat Sheet",
+        "id":  "cheat-sheet"
+    },
+    {
+        "url":  "en/courses/it004/week-3.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 03 · BTHT3",
+        "title":  "Week 3 · Division, Grouping \u0026 Outer Joins - IT004",
+        "heading":  "Comprehensive Practice",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/it004/week-4-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 4 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 4 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-4-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 4 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 4 - IT004",
+        "heading":  "Academic Affairs Management - Questions 1 ➜ 50",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "en/courses/it004/week-4-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 4 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 4 - IT004",
+        "heading":  "View answer",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "en/courses/it004/week-4.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 04 · BTHT4",
+        "title":  "Week 4 · Extended Functions, CASE \u0026 Subquery - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-4.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 04 · BTHT4",
+        "title":  "Week 4 · Extended Functions, CASE \u0026 Subquery - IT004",
+        "heading":  "From Querying Data to Processing Data",
+        "id":  "tong-quan"
+    },
+    {
+        "url":  "en/courses/it004/week-4.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 04 · BTHT4",
+        "title":  "Week 4 · Extended Functions, CASE \u0026 Subquery - IT004",
+        "heading":  "CAST()",
+        "id":  "cast"
+    },
+    {
+        "url":  "en/courses/it004/week-4.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 04 · BTHT4",
+        "title":  "Week 4 · Extended Functions, CASE \u0026 Subquery - IT004",
+        "heading":  "GETDATE()",
+        "id":  "getdate"
+    },
+    {
+        "url":  "en/courses/it004/week-4.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 04 · BTHT4",
+        "title":  "Week 4 · Extended Functions, CASE \u0026 Subquery - IT004",
+        "heading":  "LEFT() and RIGHT()",
+        "id":  "left-right"
+    },
+    {
+        "url":  "en/courses/it004/week-4.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 04 · BTHT4",
+        "title":  "Week 4 · Extended Functions, CASE \u0026 Subquery - IT004",
+        "heading":  "CASE...END",
+        "id":  "case"
+    },
+    {
+        "url":  "en/courses/it004/week-4.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 04 · BTHT4",
+        "title":  "Week 4 · Extended Functions, CASE \u0026 Subquery - IT004",
+        "heading":  "Alias and Basic Subquery",
+        "id":  "alias-subquery"
+    },
+    {
+        "url":  "en/courses/it004/week-4.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 04 · BTHT4",
+        "title":  "Week 4 · Extended Functions, CASE \u0026 Subquery - IT004",
+        "heading":  "Advanced Subquery",
+        "id":  "subquery-nang-cao"
+    },
+    {
+        "url":  "en/courses/it004/week-4.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 04 · BTHT4",
+        "title":  "Week 4 · Extended Functions, CASE \u0026 Subquery - IT004",
+        "heading":  "Keyword Recognition \u0026 Cheat Sheet",
+        "id":  "cheat-sheet"
+    },
+    {
+        "url":  "en/courses/it004/week-4.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 04 · BTHT4",
+        "title":  "Week 4 · Extended Functions, CASE \u0026 Subquery - IT004",
+        "heading":  "Comprehensive Practice",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/it004/week-5-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 5 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 5 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-5-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 5 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 5 - IT004",
+        "heading":  "Trigger Exercises",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "en/courses/it004/week-5-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 5 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 5 - IT004",
+        "heading":  "View answer",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "en/courses/it004/week-5.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 05 · BTHT5",
+        "title":  "Week 5 · Trigger - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-5.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 05 · BTHT5",
+        "title":  "Week 5 · Trigger - IT004",
+        "heading":  "What Is a Trigger?",
+        "id":  "trigger-la-gi"
+    },
+    {
+        "url":  "en/courses/it004/week-5.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 05 · BTHT5",
+        "title":  "Week 5 · Trigger - IT004",
+        "heading":  "AFTER and INSTEAD OF",
+        "id":  "loai-trigger"
+    },
+    {
+        "url":  "en/courses/it004/week-5.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 05 · BTHT5",
+        "title":  "Week 5 · Trigger - IT004",
+        "heading":  "CREATE TRIGGER Syntax",
+        "id":  "cu-phap"
+    },
+    {
+        "url":  "en/courses/it004/week-5.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 05 · BTHT5",
+        "title":  "Week 5 · Trigger - IT004",
+        "heading":  "A Data-Validating Trigger",
+        "id":  "kiem-tra-loi"
+    },
+    {
+        "url":  "en/courses/it004/week-5.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 05 · BTHT5",
+        "title":  "Week 5 · Trigger - IT004",
+        "heading":  "INSERTED and DELETED",
+        "id":  "inserted-deleted"
+    },
+    {
+        "url":  "en/courses/it004/week-5.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 05 · BTHT5",
+        "title":  "Week 5 · Trigger - IT004",
+        "heading":  "Real-World Applications of Triggers",
+        "id":  "ung-dung"
+    },
+    {
+        "url":  "en/courses/it004/week-5.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 05 · BTHT5",
+        "title":  "Week 5 · Trigger - IT004",
+        "heading":  "Triggers Should Think in Terms of Sets",
+        "id":  "nhieu-dong"
+    },
+    {
+        "url":  "en/courses/it004/week-5.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 05 · BTHT5",
+        "title":  "Week 5 · Trigger - IT004",
+        "heading":  "The 6-Step Process",
+        "id":  "quy-trinh"
+    },
+    {
+        "url":  "en/courses/it004/week-5.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "PRACTICE 05 · BTHT5",
+        "title":  "Week 5 · Trigger - IT004",
+        "heading":  "Comprehensive Practice",
+        "id":  "bai-tap"
+    },
+    {
+        "url":  "en/courses/it004/week-6-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 6 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 6 - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-6-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 6 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 6 - IT004",
+        "heading":  "Practice requirements - Goods Management (36 questions)",
+        "id":  "de-bai"
+    },
+    {
+        "url":  "en/courses/it004/week-6-bai-tap.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "WEEK 6 · PRACTICE EXERCISES",
+        "title":  "Exercises · Week 6 - IT004",
+        "heading":  "View answer",
+        "id":  "dap-an"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "Objectives",
+        "id":  "tong-quan"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "Data Model",
+        "id":  "mo-hinh-du-lieu"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "Keys in a Database",
+        "id":  "khoa"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "Creating a Database \u0026 INSERT",
+        "id":  "tao-csdl-insert"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "SELECT, WHERE \u0026 LIKE",
+        "id":  "select-where-like"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "ORDER BY \u0026 Aggregate Functions",
+        "id":  "order-ham"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "GROUP BY \u0026 HAVING",
+        "id":  "group-having"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "JOIN",
+        "id":  "join"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "Subquery",
+        "id":  "subquery"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "UPDATE \u0026 DELETE",
+        "id":  "update-delete"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "Practice Requirements",
+        "id":  "yeu-cau-thuc-hanh"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "Challenge Problems",
+        "id":  "bai-tap-thach-thuc"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "Common Mistakes",
+        "id":  "loi-thuong-gap"
+    },
+    {
+        "url":  "en/courses/it004/week-6.html",
+        "lang":  "en",
+        "course":  "IT004",
+        "label":  "REVIEW 06 · COMPREHENSIVE PRACTICE",
+        "title":  "Week 6 · Database Practice Review - IT004",
+        "heading":  "Review Checklist",
+        "id":  "checklist"
+    },
+    {
+        "url":  "index.html",
+        "lang":  "vi",
+        "course":  "",
+        "label":  "",
+        "title":  "IT Learning Hub · Kho học liệu CNTT",
+        "heading":  "",
+        "id":  ""
+    },
+    {
+        "url":  "en/index.html",
+        "lang":  "en",
+        "course":  "",
+        "label":  "",
+        "title":  "IT Learning Hub · IT Learning Resources",
+        "heading":  "",
+        "id":  ""
+    }
+]

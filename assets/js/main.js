@@ -1,4 +1,17 @@
 (() => {
+  const main = document.querySelector('main');
+  if (!main) return;
+  if (!main.id) main.id = 'main-content';
+  if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+
+  const skipLink = document.createElement('a');
+  skipLink.href = '#' + main.id;
+  skipLink.className = 'skip-link';
+  skipLink.textContent = document.documentElement.lang === 'en' ? 'Skip to main content' : 'Bỏ qua, đến nội dung chính';
+  document.body.insertBefore(skipLink, document.body.firstChild);
+})();
+
+(() => {
   const THEME_KEY = 'theme';
   const isEnPage = document.documentElement.lang === 'en';
 
@@ -193,6 +206,116 @@
     } else if (e.key === 'Escape' && !overlay.hidden) {
       closeSearch();
     }
+  });
+
+  // Keep Tab/Shift+Tab cycling within the panel while it's open, instead of
+  // escaping to the page content sitting behind the overlay.
+  overlay.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    const focusables = panel.querySelectorAll('input, a[href]');
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+})();
+
+(() => {
+  // The old "Liên hệ"/"Contact" nav item (topbar + footer) now opens a
+  // schedule notice instead of jumping to the footer - there's no contact
+  // form/section on this site. Once real per-class schedules exist, swap
+  // the CLASSES array below for real entries and this same modal renders
+  // them instead of the empty-state message.
+  const links = document.querySelectorAll('a[href$="#lien-he"], a[href$="#contact"]');
+  if (!links.length) return;
+
+  const isEnPage = document.documentElement.lang === 'en';
+  const CLASSES = []; // e.g. { code: 'IT004.O21', day: 'Thứ 3', time: '13:00 - 15:30', room: 'B4-403' }
+
+  const T = isEnPage
+    ? {
+        nav: 'Class Schedule', title: 'Class Schedule',
+        empty: 'The official schedule (class codes and session times) for each class hasn’t been finalized yet. It will be published here as soon as it’s available.',
+        close: 'Got it'
+      }
+    : {
+        nav: 'Lịch học', title: 'Lịch học',
+        empty: 'Lịch học chính thức (mã lớp và giờ học) từng lớp hiện chưa có - Sẽ được cập nhật đầy đủ tại đây ngay khi có lịch.',
+        close: 'Đã hiểu'
+      };
+
+  links.forEach((a) => {
+    a.textContent = T.nav;
+    a.removeAttribute('href');
+    a.classList.add('schedule-trigger');
+    a.setAttribute('role', 'button');
+    a.tabIndex = 0;
+  });
+
+  const bodyHtml = CLASSES.length
+    ? '<ul class="schedule-list">' + CLASSES.map((c) =>
+        '<li><span class="schedule-code">' + c.code + '</span><span class="schedule-time">' + c.day + ' · ' + c.time + (c.room ? ' · ' + c.room : '') + '</span></li>'
+      ).join('') + '</ul>'
+    : '<p>' + T.empty + '</p>';
+
+  const overlay = document.createElement('div');
+  overlay.className = 'schedule-overlay';
+  overlay.hidden = true;
+  overlay.innerHTML =
+    '<div class="schedule-panel" role="dialog" aria-modal="true" aria-label="' + T.title + '">' +
+    '<div class="schedule-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="13" height="13" rx="1.4"/><path d="M3.5 8h13"/><path d="M7 2.5v3M13 2.5v3"/></svg></div>' +
+    '<h3>' + T.title + '</h3>' +
+    bodyHtml +
+    '<button type="button" class="ghost-button schedule-close">' + T.close + '</button>' +
+    '</div>';
+  document.body.appendChild(overlay);
+
+  const panel = overlay.querySelector('.schedule-panel');
+  const closeBtn = overlay.querySelector('.schedule-close');
+  let lastFocused = null;
+
+  function openSchedule(trigger) {
+    lastFocused = trigger || document.activeElement;
+    overlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeSchedule() {
+    overlay.hidden = true;
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+
+  links.forEach((a) => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      openSchedule(a);
+    });
+    a.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openSchedule(a);
+      }
+    });
+  });
+
+  closeBtn.addEventListener('click', closeSchedule);
+  overlay.addEventListener('mousedown', (e) => {
+    if (!panel.contains(e.target)) closeSchedule();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !overlay.hidden) closeSchedule();
+  });
+  overlay.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab') return;
+    e.preventDefault();
+    closeBtn.focus();
   });
 })();
 

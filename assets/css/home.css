@@ -50,7 +50,7 @@
 .orbit-two .orbit-dot{background:var(--accent);box-shadow:0 0 8px 2px rgb(126 34 206 / .4)}
 
 @media(prefers-reduced-motion:reduce){
-  .hero-copy,.hero-visual,.hub-card-float,.orbit-one,.orbit-two,.visual-note::after,.hero-glow::before,.hero-glow::after{animation:none}
+  .hero-copy,.hero-visual,.hub-card-float,.orbit-one,.orbit-two,.visual-note::after,.hero-glow::before,.hero-glow::after,.instructor-card::before{animation:none}
 }
 
 .course-section{max-width:1320px;padding:86px 32px;margin:auto}
@@ -59,10 +59,10 @@
 .section-intro{color:var(--muted);font-size:13px;line-height:1.7}
 .course-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 
-.course-card{display:flex;flex-direction:column;justify-content:space-between;gap:22px;padding:26px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 2px rgb(15 23 42 / .03),0 12px 28px -22px rgb(15 23 42 / .12);transition:transform .2s,box-shadow .2s,border-color .2s}
-.course-card:hover{transform:translateY(-3px);box-shadow:0 1px 2px rgb(15 23 42 / .04),0 18px 34px -18px rgb(15 23 42 / .18)}
+.course-card{display:flex;flex-direction:column;justify-content:space-between;gap:22px;padding:26px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 2px rgb(15 23 42 / .03),0 12px 28px -22px rgb(15 23 42 / .12);transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease)}
+.course-card:hover{transform:translateY(-5px);border-color:rgb(var(--primary-rgb) / .35);box-shadow:0 0 0 1px rgb(var(--primary-rgb) / .12),0 8px 16px -8px rgb(var(--primary-rgb) / .18),0 26px 48px -20px rgb(15 23 42 / .22)}
 .course-card.is-active{border-color:var(--primary);box-shadow:0 1px 2px rgb(37 99 235 / .06),0 14px 30px -14px rgb(37 99 235 / .3)}
-.course-card.is-active:hover{box-shadow:0 1px 2px rgb(37 99 235 / .08),0 20px 38px -14px rgb(37 99 235 / .38)}
+.course-card.is-active:hover{transform:translateY(-5px);box-shadow:0 0 0 1px rgb(var(--primary-rgb) / .25),0 10px 20px -8px rgb(var(--primary-rgb) / .3),0 30px 54px -18px rgb(var(--primary-rgb) / .4)}
 .course-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .course-category{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.1em}
 .status-pill{padding:5px 11px;border-radius:99px;background:var(--tint);color:var(--primary-ink);font-size:10px;font-weight:700}
@@ -85,8 +85,8 @@
 .course-card-placeholder .course-en{color:var(--muted);opacity:.8}
 
 .instructor-section{max-width:1320px;margin:0 auto;padding:0 32px 100px}
-.instructor-card{position:relative;overflow:hidden;display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:center;padding:44px;background:linear-gradient(135deg,var(--tint) 0%,var(--surface) 55%);border:1px solid var(--line)}
-.instructor-card::before{content:'';position:absolute;top:-70px;right:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgb(37 99 235 / .12),transparent 70%)}
+.instructor-card{position:relative;overflow:hidden;display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:center;padding:44px;background:linear-gradient(135deg,var(--tint) 0%,var(--surface) 55%);border:1px solid var(--line);box-shadow:0 1px 2px rgb(15 23 42 / .03),0 24px 48px -30px rgb(15 23 42 / .18)}
+.instructor-card::before{content:'';position:absolute;top:-70px;right:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgb(var(--primary-rgb) / .14),transparent 70%);animation:glow-drift-1 18s var(--ease) infinite}
 .instructor-content{position:relative;z-index:1}
 .instructor-heading{display:flex;align-items:center;gap:14px;margin-bottom:14px}
 .instructor-avatar{position:relative;z-index:1;display:grid;place-items:center;width:44px;height:44px;flex-shrink:0;border-radius:50%;background:var(--primary);color:#fff;box-shadow:0 10px 22px -8px rgb(37 99 235 / .4)}
@@ -101,15 +101,15 @@
 .instructor-visual{position:relative;z-index:1;display:flex;align-items:stretch;padding:8px}
 .mini-roadmap{width:100%;padding:26px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
 .mini-roadmap-tabs{display:flex;gap:6px;margin-bottom:14px}
-.mini-roadmap-tab{padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--tint);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.15s}
-.mini-roadmap-tab:hover{border-color:var(--primary-ink);color:var(--ink)}
-.mini-roadmap-tab.is-active{background:var(--primary);border-color:var(--primary);color:#fff}
+.mini-roadmap-tab{padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--tint);color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;transition:.2s var(--ease)}
+.mini-roadmap-tab:hover{border-color:var(--primary-ink);color:var(--ink);transform:translateY(-1px)}
+.mini-roadmap-tab.is-active{background:var(--primary);border-color:var(--primary);color:#fff;box-shadow:0 6px 14px -6px rgb(var(--primary-rgb) / .5)}
 .mini-roadmap>.side-label{display:block;margin-bottom:18px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.12em}
 .mini-roadmap-track{position:relative;display:flex;justify-content:space-between;margin-bottom:22px}
 .mini-roadmap-track::before{content:'';position:absolute;top:50%;left:4px;right:4px;height:2px;background:var(--line);transform:translateY(-50%);z-index:0}
-.mini-roadmap-node{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--surface);border:2px solid var(--primary);color:var(--primary-ink);font:800 12px var(--font-mono);cursor:pointer;transition:.15s}
-.mini-roadmap-node:hover{border-color:var(--primary-ink)}
-.mini-roadmap-node.is-active{background:var(--primary);border-color:var(--primary);color:#fff;transform:scale(1.1)}
+.mini-roadmap-node{position:relative;z-index:1;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--surface);border:2px solid var(--primary);color:var(--primary-ink);font:800 12px var(--font-mono);cursor:pointer;transition:.2s var(--ease)}
+.mini-roadmap-node:hover{border-color:var(--primary-ink);transform:scale(1.08)}
+.mini-roadmap-node.is-active{background:var(--primary);border-color:var(--primary);color:#fff;transform:scale(1.15);box-shadow:0 6px 14px -6px rgb(var(--primary-rgb) / .5)}
 .mini-roadmap-preview{padding-top:18px;border-top:1px solid var(--line)}
 .mini-roadmap-preview-label{display:block;margin-bottom:6px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.08em}
 .mini-roadmap-preview-label b{color:var(--primary)}
@@ -121,13 +121,16 @@
 .info-section{max-width:1320px;margin:0 auto;padding:0 32px 100px}
 
 .process-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
-.process-step{padding:24px 22px 22px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
-.process-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;margin-bottom:14px;border-radius:50%;background:var(--tint);color:var(--primary-ink);font:800 12px var(--font-mono)}
+.process-step{padding:24px 22px 22px;background:var(--surface);border:1px solid var(--line);border-radius:12px;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
+.process-step:hover{transform:translateY(-4px);border-color:rgb(var(--primary-rgb) / .3);box-shadow:0 16px 32px -18px rgb(15 23 42 / .2)}
+.process-num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;margin-bottom:14px;border-radius:50%;background:var(--tint);color:var(--primary-ink);font:800 12px var(--font-mono);transition:.3s var(--ease)}
+.process-step:hover .process-num{background:var(--primary);color:#fff}
 .process-step h4{font-size:14px;margin-bottom:6px}
 .process-step p{margin:0;color:var(--muted);font-size:12px;line-height:1.65}
 
 .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.info-card{padding:32px 26px;background:var(--tint)}
+.info-card{padding:32px 26px;background:var(--tint);border-radius:14px;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.info-card:hover{transform:translateY(-4px);box-shadow:0 18px 34px -18px rgb(var(--primary-rgb) / .3)}
 .info-card .icon{font-size:26px;color:var(--primary)}
 .info-card h3{margin:16px 0 8px;font-size:16px}
 .info-card p{color:var(--muted);font-size:12px;line-height:1.7}

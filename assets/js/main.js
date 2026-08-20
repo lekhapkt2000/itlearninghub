@@ -12,6 +12,46 @@
 })();
 
 (() => {
+  // Swap the compact icon + "IT Learning Hub" text for the full theme-aware
+  // logo lockup (wordmark baked into the image), and keep it in sync with
+  // the theme toggle - no separate text needed once the image carries it.
+  const brandMarks = document.querySelectorAll('.brand-mark');
+  if (!brandMarks.length) return;
+
+  function effectiveTheme() {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark' || stored === 'light') return stored;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  brandMarks.forEach((img) => {
+    const prefix = img.getAttribute('src').replace(/assets\/img\/logo-(light|dark)\.png.*$/, '');
+    img.dataset.light = prefix + 'assets/img/logo-light.png?v=1';
+    img.dataset.dark = prefix + 'assets/img/logo-dark.png?v=1';
+    img.alt = 'IT Learning Hub';
+  });
+
+  function syncBrandLogo() {
+    const isDark = effectiveTheme() === 'dark';
+    brandMarks.forEach((img) => {
+      img.src = isDark ? img.dataset.dark : img.dataset.light;
+    });
+  }
+  syncBrandLogo();
+
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (!localStorage.getItem('theme')) syncBrandLogo();
+    });
+  }
+
+  new MutationObserver(syncBrandLogo).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+})();
+
+(() => {
   const THEME_KEY = 'theme';
   const isEnPage = document.documentElement.lang === 'en';
 

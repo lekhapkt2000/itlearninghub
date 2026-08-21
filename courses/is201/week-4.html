@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS201 Tuần 4 - Sequence Diagram: Actor/Boundary/Controller/Entity, Lifeline, các loại thông điệp (Synchronous, Asynchronous, Create, Destroy...), Combined Fragment (alt/opt/loop/par...) và ví dụ minh họa.">
+  <title>Tuần 4 · Sequence Diagram - IS201</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=3">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=30">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=56">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><picture><source srcset="../../assets/img/logo-mark.png?v=1" media="(max-width: 760px)"><source srcset="../../assets/img/logo-dark.png?v=1" media="(prefers-color-scheme: dark)"><img class="brand-mark" src="../../assets/img/logo-light.png?v=1" alt="IT Learning Hub"></picture><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-4.html" class="active">VI</a><a href="../../en/courses/is201/week-4.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS201 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS201</a><span>/</span>Tuần 4</p>
+
+    <div class="week-header">
+      <div class="week-header-content">
+        <span class="week-tag">THỰC HÀNH 04 · BTHT4</span>
+        <h1>Sequence Diagram</h1>
+        <div class="week-meta"><span>5 tiết</span><span>Lifeline &amp; Message</span><span>Combined Fragment</span></div>
+        <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hiểu vai trò của Sequence Diagram; phân biệt Actor/Boundary/Controller/Entity; nhận diện đúng 8 loại thông điệp và 8 loại Combined Fragment; vẽ được sơ đồ tuần tự hoàn chỉnh bằng StarUML.</p>
+      </div>
+      <div class="week-header-illustration" aria-hidden="true">
+        <div class="whi-card whi-card-back"></div>
+        <div class="whi-card whi-card-front">
+          <div class="whi-table">
+            <div class="whi-row whi-row-head"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+          </div>
+          <div class="whi-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="3.5"/><path d="M10 10l7.5 7.5"/><path d="M15 13l2-2"/><path d="M16.5 15.5l1.5-1.5"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS201">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html" class="active">Tuần 4</a>
+      <a href="week-5.html">Tuần 5</a>
+      <a href="week-6.html">Tuần 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Báo cáo đồ án <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 4">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#khai-niem" data-toc><b>01</b> Khái niệm &amp; quy trình vẽ</a>
+        <a href="#thanh-phan" data-toc><b>02</b> Thành phần</a>
+        <a href="#thong-diep" data-toc><b>03</b> Các loại thông điệp</a>
+        <a href="#fragment" data-toc><b>04</b> Combined Fragment</a>
+        <a href="#vi-du" data-toc><b>05</b> Ví dụ minh họa</a>
+        <a href="#bai-tap" data-toc><b>06</b> Bài tập thực hành</a>
+        <a href="#checklist" data-toc><b>07</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Khái niệm & quy trình -->
+        <section class="lesson-section" id="khai-niem">
+          <p class="eyebrow">01 · KHÁI NIỆM &amp; QUY TRÌNH VẼ</p>
+          <h2>Sequence Diagram là gì?</h2>
+          <div class="definition"><strong>Sequence Diagram (Sơ đồ tuần tự)</strong> là một loại sơ đồ trong UML mô tả cách các đối tượng trong hệ thống <strong>tương tác với nhau qua thời gian</strong> - tập trung vào thứ tự thời gian của các thông điệp được gửi và nhận giữa các đối tượng.</div>
+          <p>Nếu Activity Diagram (Tuần 3) trả lời "các bước xử lý diễn ra như thế nào", thì Sequence Diagram trả lời tiếp "đối tượng nào gọi đối tượng nào, theo thứ tự nào, để thực hiện các bước đó".</p>
+
+          <h3>Chức năng</h3>
+          <ul>
+            <li>Mô tả các tình huống sử dụng (Usage Scenarios) của hệ thống.</li>
+            <li>Phân tích logic của các phương thức (Methods), dịch vụ (Services) và quy trình hoạt động trong hệ thống.</li>
+          </ul>
+
+          <h3>7 bước vẽ Sequence Diagram</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Bước</th><th>Nội dung</th><th>Mục đích</th></tr>
+            <tr><td>1. Xác định Object &amp; Actor</td><td>Actor đặt ngoài cùng bên trái; Object (lớp/thực thể) xếp theo sau</td><td>Xác định các thành phần sẽ tham gia kịch bản</td></tr>
+            <tr><td>2. Xác định các thông điệp</td><td>Liệt kê hành động/yêu cầu trao đổi giữa các đối tượng, đúng thứ tự thời gian</td><td>Có cái nhìn tổng quan cách các đối tượng giao tiếp</td></tr>
+            <tr><td>3. Vẽ Object &amp; Actor</td><td>Object: hình chữ nhật, tên gạch dưới. Actor: hình người, tên không gạch dưới</td><td>Người xem dễ nhận biết đối tượng và tác nhân</td></tr>
+            <tr><td>4. Vẽ Lifeline</td><td>Đường thẳng đứng kéo dài từ mỗi đối tượng</td><td>Thể hiện sự tồn tại của đối tượng suốt quá trình tương tác</td></tr>
+            <tr><td>5. Vẽ thông điệp</td><td>Chọn đúng loại: đồng bộ, không đồng bộ, hoặc trả về (xem mục 03)</td><td>Mô phỏng cuộc gọi và phản hồi giữa các đối tượng</td></tr>
+            <tr><td>6. Thêm Fragment nếu cần</td><td>Dùng alt/opt/loop... để nhóm thông điệp có điều kiện, lặp, thay thế (xem mục 04)</td><td>Làm rõ các tình huống rẽ nhánh trong tương tác</td></tr>
+            <tr><td>7. Đánh số &amp; hoàn thiện</td><td>Đánh số thứ tự thông điệp, đối chiếu lại với kịch bản thực tế</td><td>Đảm bảo hành động đúng trình tự, dễ kiểm tra lại</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 02 - Thành phần -->
+        <section class="lesson-section" id="thanh-phan">
+          <p class="eyebrow">02 · THÀNH PHẦN CỦA SEQUENCE DIAGRAM</p>
+          <h2>Actor, Object &amp; mô hình Boundary - Controller - Entity</h2>
+          <p><strong>Actor</strong> (người/hệ thống tham gia, đặt ngoài cùng bên trái) và <strong>Object</strong> (thành phần của hệ thống - đối tượng, lớp, thực thể) là hai loại tham gia cơ bản. Để phân tích chi tiết hơn, Object thường được chia theo mô hình <strong>Boundary - Controller - Entity (BCE)</strong>:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 620 130" role="img" aria-label="Ký hiệu Actor, Boundary, Controller, Entity">
+              <defs><marker id="w4ArrowBCE" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--ink)"/></marker></defs>
+
+              <g style="stroke:var(--ink);stroke-width:1.6">
+                <circle cx="60" cy="30" r="8" fill="none"/>
+                <line x1="60" y1="38" x2="60" y2="60"/>
+                <line x1="48" y1="45" x2="72" y2="45"/>
+                <line x1="60" y1="60" x2="48" y2="78"/>
+                <line x1="60" y1="60" x2="72" y2="78"/>
+              </g>
+              <text x="60" y="98" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Actor</text>
+
+              <circle cx="220" cy="35" r="15" style="fill:none;stroke:var(--ink);stroke-width:1.6"/>
+              <line x1="197" y1="24" x2="197" y2="46" style="stroke:var(--ink);stroke-width:1.6"/>
+              <line x1="197" y1="35" x2="188" y2="35" style="stroke:var(--ink);stroke-width:1.6"/>
+              <text x="220" y="98" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Boundary</text>
+
+              <circle cx="370" cy="35" r="15" style="fill:none;stroke:var(--ink);stroke-width:1.6"/>
+              <path d="M362 21 A 12 12 0 1 1 359 30" style="fill:none;stroke:var(--ink);stroke-width:1.6" marker-end="url(#w4ArrowBCE)"/>
+              <text x="370" y="98" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Controller</text>
+
+              <circle cx="520" cy="35" r="15" style="fill:none;stroke:var(--ink);stroke-width:1.6"/>
+              <line x1="505" y1="52" x2="535" y2="52" style="stroke:var(--ink);stroke-width:1.6"/>
+              <text x="520" y="98" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Entity</text>
+            </svg>
+          </div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Thành phần</th><th>Vai trò</th></tr>
+            <tr><td>Boundary <span class="table-tag">Ranh giới</span></td><td>Chịu trách nhiệm giao tiếp giữa hệ thống và tác nhân bên ngoài - thường là giao diện người dùng hoặc hệ thống phụ</td></tr>
+            <tr><td>Controller <span class="table-tag">Điều khiển</span></td><td>Điều phối, kiểm soát các hành động trong hệ thống (lớp xử lý nghiệp vụ, đứng giữa giao diện và dữ liệu)</td></tr>
+            <tr><td>Entity <span class="table-tag">Thực thể</span></td><td>Chịu trách nhiệm lưu trữ và xử lý dữ liệu (tương ứng các bảng/table trong database)</td></tr>
+          </table></div>
+          <div class="inline-ok"><strong>Cách đặt tên theo StarUML:</strong> Object viết dạng <code>:TênLớp</code> (không có tên riêng) hoặc <code>tênĐốiTượng:TênLớp</code> - luôn có dấu <code>:</code> và gạch dưới toàn bộ, ví dụ <code>:LoginController</code>, <code>editDialog:Boundary</code>.</div>
+          <p>Sequence Diagram thiên về góc nhìn kỹ thuật hơn Use-Case hay Activity Diagram, nên trong nhiều tổ chức, đây là loại sơ đồ do kiến trúc sư/lập trình viên vẽ chi tiết. Tuy vậy, một BA vẫn cần <strong>đọc hiểu</strong> được sơ đồ này để phản biện: mô hình BCE giúp BA nhanh chóng kiểm tra xem logic nghiệp vụ (Controller) có đang bị trộn lẫn vào giao diện (Boundary) hay không - một dấu hiệu thiết kế xấu khiến sau này khó thay đổi quy tắc nghiệp vụ mà không phải sửa giao diện.</p>
+
+          <h3>Lifeline &amp; Execution Occurrence</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Thành phần</th><th>Mô tả</th></tr>
+            <tr><td>Lifeline <span class="table-tag">Đường sinh</span></td><td>Đường thẳng đứng nét đứt kéo dài từ mỗi đối tượng, thể hiện sự tồn tại của đối tượng suốt quá trình tương tác</td></tr>
+            <tr><td>Execution Occurrence <span class="table-tag">Kích hoạt</span></td><td>Hình chữ nhật hẹp nằm trên lifeline - độ dài thể hiện khoảng thời gian đối tượng đang xử lý (còn gọi là activation)</td></tr>
+            <tr><td>State Invariant / Continuation</td><td>Điều kiện bắt buộc hoặc bước tiếp theo trong quá trình tương tác, ghi trong dấu <code>[...]</code> ngay trên lifeline</td></tr>
+            <tr><td>Destruction Event <span class="table-tag">Sự kiện hủy</span></td><td>Dấu chéo <code>X</code> ở cuối lifeline - đối tượng bị hủy, không còn tồn tại sau đó</td></tr>
+            <tr><td>Ref <span class="table-tag">Tham chiếu</span></td><td>Một ô hình chữ nhật nhãn <code>ref</code>, trỏ đến một sơ đồ tương tác khác (VD: tách luồng thanh toán thành sơ đồ "Checkout" riêng)</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 03 - Các loại thông điệp -->
+        <section class="lesson-section" id="thong-diep">
+          <p class="eyebrow">03 · CÁC LOẠI THÔNG ĐIỆP</p>
+          <h2>8 loại thông điệp trong Sequence Diagram</h2>
+          <p>Thông điệp (Message) là hành động hoặc yêu cầu được gửi giữa các đối tượng, luôn được vẽ giữa hai lifeline. Mỗi loại có ký hiệu mũi tên riêng:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 620 430" role="img" aria-label="8 loại thông điệp trong Sequence Diagram với ký hiệu mũi tên riêng">
+              <defs>
+                <marker id="w4ArrowSolid" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--ink)"/></marker>
+                <marker id="w4ArrowOpen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" style="fill:none;stroke:var(--ink);stroke-width:1.4"/></marker>
+              </defs>
+
+              <line x1="40" y1="30" x2="280" y2="30" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
+              <text x="300" y="34" style="font-size:12px;font-weight:600;fill:var(--ink)">Synchronous - đầu mũi tên đặc, chờ phản hồi</text>
+
+              <line x1="40" y1="70" x2="280" y2="70" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowOpen)"/>
+              <text x="300" y="74" style="font-size:12px;font-weight:600;fill:var(--ink)">Asynchronous - đầu mũi tên rộng/hở, không chờ</text>
+
+              <line x1="40" y1="110" x2="280" y2="110" style="stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 4" marker-end="url(#w4ArrowOpen)"/>
+              <text x="300" y="106" style="font-size:12px;font-weight:600;fill:var(--ink)">Creation</text>
+              <text x="300" y="120" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">«create» - tạo đối tượng mới</text>
+
+              <line x1="40" y1="150" x2="280" y2="150" style="stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 4" marker-end="url(#w4ArrowOpen)"/>
+              <circle cx="284" cy="150" r="7" style="fill:none;stroke:var(--ink);stroke-width:1.4"/>
+              <line x1="279" y1="145" x2="289" y2="155" style="stroke:var(--ink);stroke-width:1.2"/>
+              <line x1="279" y1="155" x2="289" y2="145" style="stroke:var(--ink);stroke-width:1.2"/>
+              <text x="305" y="146" style="font-size:12px;font-weight:600;fill:var(--ink)">Destructor</text>
+              <text x="305" y="160" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">«destroy» - hủy đối tượng, kết thúc bằng X</text>
+
+              <line x1="40" y1="200" x2="280" y2="185" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
+              <text x="300" y="196" style="font-size:12px;font-weight:600;fill:var(--ink)">Non-instantaneous - mũi tên nghiêng, có độ trễ</text>
+
+              <line x1="280" y1="230" x2="40" y2="230" style="stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 4" marker-end="url(#w4ArrowOpen)"/>
+              <text x="300" y="234" style="font-size:12px;font-weight:600;fill:var(--ink)">Return/Reply - mũi tên ngược, nét đứt</text>
+
+              <path d="M60 270 h60 v25 h-40" style="fill:none;stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
+              <line x1="55" y1="260" x2="55" y2="310" style="stroke:var(--muted);stroke-width:1.3;stroke-dasharray:3 3"/>
+              <text x="300" y="288" style="font-size:12px;font-weight:600;fill:var(--ink)">Self message - vòng lặp nhỏ về chính lifeline</text>
+
+              <path d="M60 340 h40 v18 h-25" style="fill:none;stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
+              <rect x="55" y="335" width="8" height="55" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.3"/>
+              <rect x="63" y="352" width="8" height="30" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.3"/>
+              <text x="300" y="365" style="font-size:12px;font-weight:600;fill:var(--ink)">Recursive self - vòng lặp lồng, execution</text>
+              <text x="300" y="380" style="font-size:12px;font-weight:600;fill:var(--ink)">occurrence lệch sang phải mỗi lần gọi lại</text>
+            </svg>
+          </div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loại</th><th>Chức năng</th></tr>
+            <tr><td>Synchronous</td><td>Đối tượng gửi dừng lại, chờ phản hồi trước khi tiếp tục - đảm bảo yêu cầu được xử lý hoàn toàn</td></tr>
+            <tr><td>Asynchronous</td><td>Đối tượng gửi không chờ phản hồi, tiếp tục hoạt động khác - cho phép xử lý đồng thời</td></tr>
+            <tr><td>Creation</td><td>Khởi tạo một đối tượng mới trong quá trình tương tác, có thể kèm dữ liệu cấu hình ban đầu</td></tr>
+            <tr><td>Destructor</td><td>Hủy đối tượng không còn cần thiết - dùng để quản lý bộ nhớ và tài nguyên hệ thống</td></tr>
+            <tr><td>Non-instantaneous</td><td>Thông điệp có độ trễ (VD: gửi email, tải dữ liệu) - hệ thống có thể tiếp tục tác vụ khác trong lúc chờ</td></tr>
+            <tr><td>Return/Reply</td><td>Thể hiện kết quả trả về từ đối tượng nhận sau khi xử lý xong, hoàn thành chuỗi tương tác</td></tr>
+            <tr><td>Self message</td><td>Đối tượng gửi cho chính nó để thực hiện hành động/gọi lại phương thức nội bộ</td></tr>
+            <tr><td>Recursive self</td><td>Đối tượng tự gọi chính nó lặp lại theo chu kỳ, dùng cho các thuật toán đệ quy</td></tr>
+          </table></div>
+
+          <div class="quick-check">
+            <p class="eyebrow">KIỂM TRA NHANH</p>
+            <p class="qc-question">Hệ thống gửi email xác nhận đơn hàng nhưng không cần đợi email gửi xong mới hiển thị trang cảm ơn cho khách. Đây là loại thông điệp nào?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">Synchronous</button>
+              <button class="qc-option" type="button" data-correct="true">Asynchronous / Non-instantaneous</button>
+              <button class="qc-option" type="button" data-correct="false">Return</button>
+              <button class="qc-option" type="button" data-correct="false">Self message</button>
+            </div>
+            <div class="qc-feedback correct">✓ Chính xác! Gửi email là tác vụ có độ trễ mà hệ thống không cần chờ - đây là thông điệp không đồng bộ (Asynchronous), thường được vẽ dạng Non-instantaneous nếu muốn nhấn mạnh độ trễ xử lý.</div>
+          </div>
+        </section>
+
+        <!-- 04 - Combined Fragment -->
+        <section class="lesson-section" id="fragment">
+          <p class="eyebrow">04 · COMBINED FRAGMENT</p>
+          <h2>8 loại Fragment</h2>
+          <div class="definition">Combined Fragment nhóm các thông điệp có liên quan lại với nhau, thể hiện cấu trúc điều kiện, vòng lặp hoặc lựa chọn thay thế. Ký hiệu là một hộp chứa với nhãn toán tử (operator) ở góc trên bên trái, dạng hình ngũ giác nhỏ.</div>
+
+          <div class="er-diagram">
+            <svg viewBox="0 0 620 300" role="img" aria-label="Ký hiệu Combined Fragment alt, loop, opt">
+              <polygon points="20,20 250,20 250,42 240,50 20,50" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+              <text x="30" y="38" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">alt</text>
+              <rect x="20" y="20" width="230" height="130" style="fill:none;stroke:var(--ink);stroke-width:1.5"/>
+              <text x="60" y="65" style="font-size:11px;fill:var(--muted)">[điều kiện A]</text>
+              <text x="60" y="82" style="font-size:11px;fill:var(--ink)">thongDiep1()</text>
+              <line x1="20" y1="100" x2="250" y2="100" style="stroke:var(--muted);stroke-width:1.2;stroke-dasharray:5 3"/>
+              <text x="60" y="118" style="font-size:11px;fill:var(--muted)">[else]</text>
+              <text x="60" y="135" style="font-size:11px;fill:var(--ink)">thongDiep2()</text>
+
+              <polygon points="340,20 480,20 480,42 470,50 340,50" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+              <text x="350" y="38" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">loop(1,10)</text>
+              <rect x="340" y="20" width="230" height="80" style="fill:none;stroke:var(--ink);stroke-width:1.5"/>
+              <text x="380" y="70" style="font-size:11px;fill:var(--ink)">tinhGiaTri()</text>
+
+              <polygon points="20,180 130,180 130,202 120,210 20,210" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+              <text x="30" y="198" style="font-family:var(--font-mono);font-size:12px;font-weight:700;fill:var(--ink)">opt</text>
+              <rect x="20" y="180" width="230" height="80" style="fill:none;stroke:var(--ink);stroke-width:1.5"/>
+              <text x="60" y="225" style="font-size:11px;fill:var(--muted)">[cần xác nhận]</text>
+              <text x="60" y="242" style="font-size:11px;fill:var(--ink)">guiXacNhan()</text>
+            </svg>
+          </div>
+          <p class="er-relation">Cả 8 loại Fragment đều dùng chung ký hiệu "hộp + nhãn ngũ giác" này - chỉ khác nhau ở từ khóa toán tử ghi trong nhãn và số lượng/ý nghĩa các ngăn bên trong.</p>
+
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Fragment</th><th>Ý nghĩa</th><th>Ví dụ</th></tr>
+            <tr><td>alt</td><td>Nhiều lựa chọn thay thế, chỉ 1 nhánh thực thi theo điều kiện đúng</td><td>Tài khoản hợp lệ → đăng nhập, ngược lại → báo lỗi</td></tr>
+            <tr><td>opt</td><td>Giống alt nhưng chỉ có 1 nhánh - thực thi nếu điều kiện đúng, không thì bỏ qua</td><td>Chỉ gửi email xác nhận nếu người dùng chọn "Gửi thông báo"</td></tr>
+            <tr><td>loop</td><td>Lặp lại một hành động/nhóm hành động nhiều lần</td><td>Kiểm tra từng sản phẩm trong giỏ hàng để tính tổng tiền</td></tr>
+            <tr><td>break</td><td>Dừng các hành động còn lại nếu điều kiện thỏa mãn</td><td>Ngừng xử lý nếu không tìm thấy sản phẩm trong kho</td></tr>
+            <tr><td>par</td><td>Các hành động thực hiện song song, không phụ thuộc lẫn nhau</td><td>Gửi yêu cầu đến 2 hệ thống khác nhau cùng lúc</td></tr>
+            <tr><td>strict</td><td>Thứ tự thực thi nghiêm ngặt, không được thay đổi</td><td>Phải kiểm tra hợp lệ sản phẩm trước khi thanh toán</td></tr>
+            <tr><td>ignore</td><td>Bỏ qua một số thông điệp không cần thiết trong tình huống cụ thể</td><td>Bỏ qua bước xác minh nếu dữ liệu đã được xác thực trước đó</td></tr>
+            <tr><td>neg</td><td>Biểu thị một tương tác không hợp lệ / đã thất bại</td><td>Trả về lỗi khi người dùng nhập sai mật khẩu</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 05 - Ví dụ minh họa -->
+        <section class="lesson-section" id="vi-du">
+          <p class="eyebrow">05 · VÍ DỤ MINH HỌA</p>
+          <h2>Sequence Diagram: Đăng nhập</h2>
+          <p>Ví dụ kết hợp đủ mô hình Boundary - Controller - Entity, thông điệp Synchronous/Return và Fragment <code>alt</code>:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 640 420" role="img" aria-label="Sequence diagram minh họa đăng nhập với Actor, Boundary, Controller, Entity, thông điệp đồng bộ, trả về và fragment alt">
+              <defs>
+                <marker id="w4ArrowEx" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--ink)"/></marker>
+                <marker id="w4ArrowExOpen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" style="fill:none;stroke:var(--ink);stroke-width:1.3"/></marker>
+              </defs>
+
+              <g style="stroke:var(--ink);stroke-width:1.4">
+                <circle cx="40" cy="24" r="7" fill="none"/>
+                <line x1="40" y1="31" x2="40" y2="50"/>
+                <line x1="30" y1="37" x2="50" y2="37"/>
+                <line x1="40" y1="50" x2="30" y2="64"/>
+                <line x1="40" y1="50" x2="50" y2="64"/>
+              </g>
+              <text x="40" y="80" text-anchor="middle" style="font-size:10.5px;font-weight:700;fill:var(--ink)">Người dùng</text>
+              <line x1="40" y1="88" x2="40" y2="400" style="stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 3"/>
+
+              <rect x="180" y="55" width="90" height="26" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="225" y="72" text-anchor="middle" style="font-size:10.5px;fill:var(--ink);text-decoration:underline">:LoginForm</text>
+              <line x1="225" y1="81" x2="225" y2="400" style="stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 3"/>
+
+              <rect x="360" y="55" width="120" height="26" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="420" y="72" text-anchor="middle" style="font-size:10.5px;fill:var(--ink);text-decoration:underline">:LoginController</text>
+              <line x1="420" y1="81" x2="420" y2="400" style="stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 3"/>
+
+              <rect x="540" y="55" width="90" height="26" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="585" y="72" text-anchor="middle" style="font-size:10.5px;fill:var(--ink);text-decoration:underline">:TaiKhoan</text>
+              <line x1="585" y1="81" x2="585" y2="400" style="stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 3"/>
+
+              <rect x="36" y="105" width="8" height="270" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.2"/>
+              <rect x="221" y="120" width="8" height="230" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.2"/>
+              <rect x="416" y="145" width="8" height="170" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.2"/>
+              <rect x="581" y="175" width="8" height="40" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.2"/>
+
+              <line x1="44" y1="120" x2="219" y2="120" style="stroke:var(--ink);stroke-width:1.3" marker-end="url(#w4ArrowEx)"/>
+              <text x="60" y="115" style="font-size:10px;fill:var(--muted)">1: nhập tài khoản, mật khẩu</text>
+
+              <line x1="229" y1="145" x2="414" y2="145" style="stroke:var(--ink);stroke-width:1.3" marker-end="url(#w4ArrowEx)"/>
+              <text x="245" y="140" style="font-size:10px;fill:var(--muted)">2: dangNhap(user, pass)</text>
+
+              <line x1="424" y1="175" x2="579" y2="175" style="stroke:var(--ink);stroke-width:1.3" marker-end="url(#w4ArrowEx)"/>
+              <text x="440" y="170" style="font-size:10px;fill:var(--muted)">3: timTaiKhoan(user)</text>
+
+              <line x1="581" y1="210" x2="426" y2="210" style="stroke:var(--muted);stroke-width:1.2;stroke-dasharray:5 3" marker-end="url(#w4ArrowExOpen)"/>
+              <text x="440" y="205" style="font-size:10px;fill:var(--muted)">4: return taiKhoan</text>
+
+              <polygon points="360,230 470,230 470,250 462,257 360,257" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="368" y="246" style="font-family:var(--font-mono);font-size:11px;font-weight:700;fill:var(--ink)">alt</text>
+              <rect x="360" y="230" width="230" height="120" style="fill:none;stroke:var(--ink);stroke-width:1.4"/>
+              <text x="400" y="272" style="font-size:10px;fill:var(--muted)">[mật khẩu đúng]</text>
+              <line x1="420" y1="280" x2="232" y2="280" style="stroke:var(--muted);stroke-width:1.2;stroke-dasharray:5 3" marker-end="url(#w4ArrowExOpen)"/>
+              <text x="250" y="276" style="font-size:10px;fill:var(--muted)">5: return thành công</text>
+              <line x1="360" y1="300" x2="590" y2="300" style="stroke:var(--muted);stroke-width:1.2;stroke-dasharray:5 3"/>
+              <text x="400" y="317" style="font-size:10px;fill:var(--muted)">[else]</text>
+              <line x1="420" y1="325" x2="232" y2="325" style="stroke:var(--muted);stroke-width:1.2;stroke-dasharray:5 3" marker-end="url(#w4ArrowExOpen)"/>
+              <text x="250" y="321" style="font-size:10px;fill:var(--muted)">6: return báo lỗi</text>
+            </svg>
+          </div>
+          <p class="er-relation">Người dùng (Actor) → LoginForm (Boundary) → LoginController (Controller) → TaiKhoan (Entity): đúng mô hình BCE. Bước 4 là thông điệp Return (nét đứt). Fragment <code>alt</code> rẽ 2 nhánh dựa trên kết quả kiểm tra mật khẩu, mỗi nhánh trả kết quả khác nhau về LoginForm.</p>
+        </section>
+
+        <!-- 06 - Bài tập thực hành -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">06 · BÀI TẬP THỰC HÀNH</p>
+          <h2>Thực hành trên đề tài Gym</h2>
+          <p>Sử dụng <strong>StarUML</strong>, thiết kế Sequence Diagram cho hai Use-Case đã đặc tả ở Tuần 3:</p>
+
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> BÀI 1 · QUẢN LÝ THÔNG TIN HỘI VIÊN</p>
+            <p>Khách hàng có thể đăng ký làm hội viên của trung tâm. Khi đăng ký, khách hàng cung cấp cho nhân viên các thông tin: họ tên, giới tính, ngày sinh, điện thoại, địa chỉ, email. Nhân viên được phép cập nhật hoặc xóa thông tin hội viên. Khi cập nhật/xóa thông tin hội viên, nhân viên có thể sử dụng chức năng tra cứu.</p>
+            <ol>
+              <li>Thiết kế Sequence Diagram cho từng chức năng: thêm, xóa, sửa, tìm kiếm thông tin hội viên</li>
+            </ol>
+          </div>
+
+          <div class="practice-lab" style="margin-top:18px">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> BÀI 2 · ĐĂNG KÝ KHÓA TẬP, DỊCH VỤ</p>
+            <p>Khách hàng có thể mua vé tập theo ngày hoặc đăng ký các dịch vụ tập tại trung tâm. Để đăng ký dịch vụ, khách hàng cung cấp cho nhân viên các thông tin: môn tập, gói dịch vụ tương ứng, ngày bắt đầu. Hệ thống tính và hiển thị tổng số tiền phải thanh toán. Sau khi khách hàng xác nhận và thanh toán, hệ thống lưu thông tin đăng ký và xuất hóa đơn. Trong quá trình đăng ký, nhân viên có thể sử dụng chức năng tra cứu thông tin khi cần.</p>
+            <p>Khi đăng ký dịch vụ thành công, khách hàng được cấp thẻ từ lưu trữ thông tin dịch vụ. Mỗi lần đến trung tâm, khách hàng quẹt thẻ vào máy đọc thẻ từ, hệ thống ghi nhận và theo dõi thời gian tập.</p>
+            <ol>
+              <li>Thiết kế Sequence Diagram cho Use-Case trên</li>
+            </ol>
+          </div>
+
+          <div class="inline-ok"><strong>Gợi ý:</strong> Áp dụng mô hình BCE - Boundary là màn hình đăng ký/tra cứu, Controller xử lý logic tính tiền/kiểm tra hợp lệ, Entity là các thực thể Hội viên/Đăng ký/Thẻ từ. Dùng Fragment <code>opt</code> cho bước "tra cứu nếu cần" và <code>alt</code> cho các nhánh thanh toán thành công/thất bại.</div>
+        </section>
+
+        <!-- 07 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">07 · CHECKLIST CUỐI TUẦN 4</p>
+          <h2>Tự kiểm tra kiến thức</h2>
+          <ul class="lesson-checklist">
+            <li>Hiểu Sequence Diagram mô tả tương tác giữa các đối tượng theo thời gian</li>
+            <li>Nhớ 7 bước vẽ, đặc biệt thứ tự Object/Actor → Message → Lifeline → Fragment</li>
+            <li>Phân biệt Boundary, Controller, Entity và vai trò của từng loại</li>
+            <li>Vẽ đúng ký hiệu Lifeline, Execution Occurrence, Destruction Event</li>
+            <li>Phân biệt 8 loại thông điệp, đặc biệt Synchronous (đầu đặc) và Asynchronous (đầu hở)</li>
+            <li>Biết khi nào dùng alt, opt, loop, par, break, strict, ignore, neg</li>
+            <li>Hoàn thành Sequence Diagram cho 2 Use-Case của đề tài Gym</li>
+          </ul>
+
+          <h3>Kiến thức cốt lõi cần nhớ</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Xác định Object/Actor</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Vẽ Lifeline</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Vẽ Message đúng loại</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Thêm Fragment nếu có rẽ nhánh/lặp</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Đánh số &amp; hoàn thiện</span>
+          </div>
+          <p>Sequence Diagram mô tả hành vi theo góc nhìn "đối tượng nào gọi đối tượng nào". Sang <strong>Tuần 5</strong>, sinh viên chuyển sang Class Diagram - mô tả <strong>cấu trúc tĩnh</strong> của chính các đối tượng đó: thuộc tính, phương thức và mối quan hệ Association/Aggregation/Composition/Generalization giữa các lớp.</p>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần">
+          <a href="week-3.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 3: Đặc tả Use-Case &amp; Activity Diagram</span></a>
+          <a href="week-5.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 5: Class Diagram</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">TIẾN ĐỘ</span>
+          <strong>4<span>/6 tuần</span></strong>
+          <div class="mini-progress"><b style="width:67%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="khai-niem"><b>○</b> Khái niệm &amp; quy trình vẽ</li>
+            <li data-section="thanh-phan"><b>○</b> Thành phần</li>
+            <li data-section="thong-diep"><b>○</b> Các loại thông điệp</li>
+            <li data-section="fragment"><b>○</b> Combined Fragment</li>
+            <li data-section="vi-du"><b>○</b> Ví dụ minh họa</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập thực hành</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> StarUML</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Đầu mũi tên đặc = đồng bộ, đầu hở = không đồng bộ - vẽ sai chiều đầu mũi tên sẽ bị trừ điểm.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><picture><source srcset="../../assets/img/logo-mark.png?v=1" media="(max-width: 760px)"><source srcset="../../assets/img/logo-dark.png?v=1" media="(prefers-color-scheme: dark)"><img class="brand-mark" src="../../assets/img/logo-light.png?v=1" alt="IT Learning Hub"></picture><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=11"></script>
+  <script src="../../assets/js/progress.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=16"></script>
+</body>
+</html>

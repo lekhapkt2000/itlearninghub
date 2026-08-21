@@ -53,10 +53,10 @@
       <a href="index.html">Tổng quan</a>
       <a href="week-1.html" class="active">Tuần 1</a>
       <a href="week-2.html">Tuần 2</a>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 3 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 4 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 5 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html">Tuần 4</a>
+      <a href="week-5.html">Tuần 5</a>
+      <a href="week-6.html">Tuần 6</a>
       <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Báo cáo đồ án <small>Sắp mở</small></span>
     </nav>
 
@@ -113,6 +113,17 @@
           <p><strong>Yêu cầu là gì?</strong> Có thể hình dung đó là một tuyên bố về những gì hệ thống phải làm, hoặc một đặc điểm mà hệ thống phải có. Yêu cầu sau này sẽ được phát triển thành một mô tả kỹ thuật về cách hệ thống được triển khai. Kết quả của bước xác định yêu cầu là <strong>hồ sơ phân tích yêu cầu</strong>.</p>
           <p>Yêu cầu được chia thành hai nhóm: <strong>yêu cầu chức năng</strong> (liên quan đến quy trình, dữ liệu) và <strong>yêu cầu phi chức năng</strong> (liên quan đến hiệu suất, khả năng sử dụng).</p>
 
+          <h3>Phân loại yêu cầu theo chuẩn BABOK</h3>
+          <p>Trong nghề Business Analyst (BA) chuyên nghiệp, ngoài cách chia "chức năng / phi chức năng" ở trên, <strong>BABOK</strong> (Business Analysis Body of Knowledge - khung kiến thức chuẩn quốc tế cho nghề BA, do IIBA phát hành) còn phân loại yêu cầu theo 4 cấp, đi từ mục tiêu kinh doanh cấp cao xuống tới chi tiết triển khai:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Cấp yêu cầu</th><th>Mô tả</th><th>Ví dụ</th></tr>
+            <tr><td>Business Requirements <span class="table-tag">Yêu cầu nghiệp vụ</span></td><td>Mục tiêu chiến lược cấp cao của tổ chức - lý do dự án tồn tại</td><td>"Giảm thời gian xử lý đăng ký hội viên xuống dưới 5 phút"</td></tr>
+            <tr><td>Stakeholder Requirements <span class="table-tag">Yêu cầu các bên liên quan</span></td><td>Nhu cầu của một nhóm người dùng cụ thể, cầu nối giữa mục tiêu kinh doanh và giải pháp</td><td>"Nhân viên lễ tân cần tra cứu được hội viên chỉ trong 1 thao tác"</td></tr>
+            <tr><td>Solution Requirements <span class="table-tag">Yêu cầu giải pháp</span></td><td>Đặc điểm hệ thống phải có để đáp ứng - <strong>chính là yêu cầu chức năng và phi chức năng</strong> đã học ở trên</td><td>"Hệ thống cho phép tìm kiếm hội viên theo số điện thoại"</td></tr>
+            <tr><td>Transition Requirements <span class="table-tag">Yêu cầu chuyển đổi</span></td><td>Điều kiện cần để chuyển từ hệ thống cũ sang hệ thống mới - chỉ tồn tại trong giai đoạn triển khai</td><td>"Cần import toàn bộ dữ liệu hội viên từ file Excel hiện tại"</td></tr>
+          </table></div>
+          <p class="er-relation">Yêu cầu chức năng/phi chức năng chỉ là <strong>một cấp</strong> (Solution Requirements) trong 4 cấp trên. Khi khảo sát thực tế, BA luôn cần lần ngược lên Stakeholder và Business Requirements để hiểu "vì sao" một yêu cầu chức năng tồn tại - tránh tình trạng cài đặt đúng cái khách yêu cầu nhưng sai mục tiêu kinh doanh thực sự.</p>
+
           <h3>Yêu cầu chức năng</h3>
           <p>Xác định những hành vi cơ bản mà hệ thống cần có - các tính năng, chức năng của sản phẩm mà nhóm phát triển phải triển khai, tập trung vào yêu cầu của người dùng. Thường bao gồm:</p>
           <div class="example-grid">
@@ -163,7 +174,10 @@
             <tr><td>Bảng hỏi</td><td>Trình bày rõ ràng, có hướng dẫn cách điền và thời hạn thu thập; câu hỏi ngắn gọn; nên làm bằng MS Form hoặc Google Form để dễ xử lý tự động; dành thêm chỗ để người trả lời ghi ý kiến bổ sung</td></tr>
             <tr><td>Nghiên cứu tài liệu</td><td>Các văn bản chung, quy định của công ty, báo cáo liên quan, tài liệu dự án tương tự, quy định về quy trình nghiệp vụ</td></tr>
             <tr><td>Quan sát thực tế</td><td>Thường tiến hành sau cùng (nếu cần), để kiểm tra lại: đã hiểu đúng nghiệp vụ hiện tại chưa, có trường hợp ngoại lệ nào không, và phát hiện những khó khăn/lỗ hổng trong quy trình nghiệp vụ</td></tr>
+            <tr><td>Workshop <span class="table-tag">Hội thảo nhóm</span></td><td>Tập hợp nhiều bên liên quan cùng một buổi để thống nhất yêu cầu ngay tại chỗ - nhanh hơn phỏng vấn từng người riêng lẻ, tránh tình trạng mỗi người trả lời một kiểu</td></tr>
+            <tr><td>Prototype <span class="table-tag">Làm mẫu thử</span></td><td>Dựng nhanh giao diện/luồng demo (chưa cần code thật) để người dùng hình dung và góp ý sớm - giảm rủi ro hiểu sai yêu cầu trước khi bắt tay code chính thức</td></tr>
           </table></div>
+          <p class="er-relation">4 kỹ thuật đầu là nội dung chính thức của môn học; <strong>Workshop</strong> và <strong>Prototype</strong> là hai kỹ thuật elicitation (thu thập yêu cầu) rất phổ biến trong công việc BA thực tế, được bổ sung để nhóm có thêm lựa chọn phù hợp khi khảo sát đề tài đồ án.</p>
         </section>
 
         <!-- 04 - SOW -->
@@ -171,6 +185,7 @@
           <p class="eyebrow">04 · BẢNG PHÁT BIỂU CÔNG VIỆC (SOW)</p>
           <h2>Bảng phát biểu công việc (Statement of Work)</h2>
           <div class="definition">Sau khi khảo sát hiện trạng và xác định yêu cầu, kết quả được tổng hợp lại thành <strong>SOW</strong> - một văn bản thống nhất giữa các bên liên quan trong dự án, làm nền tảng cho sự giao tiếp giữa các bên, bao gồm các phát biểu và chỉ đạo trong suốt quá trình hoạt động của dự án.</div>
+          <p>Trong công việc BA chuyên nghiệp, SOW thường đi kèm hoặc đóng vai trò tương đương <strong>Business Case</strong> / <strong>Project Charter</strong> - tài liệu cần được các bên liên quan <strong>phê duyệt chính thức</strong> trước khi dự án bắt đầu, làm cơ sở về phạm vi, ngân sách và trách nhiệm cho toàn bộ quá trình phân tích thiết kế sau đó.</p>
           <p>SOW giúp trả lời những câu hỏi cốt lõi trước khi bắt tay thực hiện dự án:</p>
           <div class="ascii-block">Mục tiêu của dự án là gì?             Ai tham gia chủ yếu vào dự án?
 Sản phẩm/dịch vụ nào được thực hiện?  Thời gian bắt đầu, kết thúc?

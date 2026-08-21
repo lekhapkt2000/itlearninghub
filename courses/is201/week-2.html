@@ -54,9 +54,9 @@
       <a href="week-1.html">Tuần 1</a>
       <a href="week-2.html" class="active">Tuần 2</a>
       <a href="week-3.html">Tuần 3</a>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 4 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 5 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <a href="week-4.html">Tuần 4</a>
+      <a href="week-5.html">Tuần 5</a>
+      <a href="week-6.html">Tuần 6</a>
       <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Báo cáo đồ án <small>Sắp mở</small></span>
     </nav>
 
@@ -145,6 +145,15 @@
             <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5 3 10l4 5"/><path d="M13 5l4 5-4 5"/></svg></span><strong>Phát triển đúng hướng</strong><span>Đội phát triển hiểu hệ thống cần làm gì; Tester/QA tạo kịch bản kiểm thử dựa trên Use-Case</span></div>
             <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="12" rx="1"/><path d="M3 8.5h14M7.3 8.5v7.5"/></svg></span><strong>Hỗ trợ quản lý dự án</strong><span>Chia nhỏ từng Use-Case theo giai đoạn; là bước đệm để thiết kế Class Diagram, Sequence Diagram sau này</span></div>
           </div>
+
+          <h3>Business Use-Case và System Use-Case</h3>
+          <p>Trong công việc BA chuyên nghiệp, Use-Case còn được phân biệt theo <strong>2 tầng</strong> - việc nhầm lẫn hai tầng này là lỗi rất phổ biến khi mới học phân tích hệ thống:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loại</th><th>Mô tả</th><th>Ví dụ</th></tr>
+            <tr><td>Business Use-Case <span class="table-tag">Tầng nghiệp vụ</span></td><td>Mô tả một quy trình nghiệp vụ ở mức tổ chức, <strong>không phụ thuộc</strong> việc có phần mềm hỗ trợ hay không - vẫn tồn tại kể cả khi làm thủ công bằng giấy tờ</td><td>"Đăng ký hội viên" (mức nghiệp vụ - có thể làm bằng sổ sách)</td></tr>
+            <tr><td>System Use-Case <span class="table-tag">Tầng hệ thống</span></td><td>Mô tả tương tác cụ thể giữa Actor và <strong>một hệ thống phần mềm cụ thể</strong> - đây là loại Use-Case môn học tập trung xây dựng</td><td>"Đăng ký hội viên" (mức hệ thống - Nhân viên nhập liệu qua màn hình phần mềm quản lý Gym)</td></tr>
+          </table></div>
+          <p class="er-relation">Khi khảo sát hiện trạng ở Tuần 1, nhóm thường gặp Business Use-Case trước (mô tả cách tổ chức đang vận hành). Nhiệm vụ của sơ đồ Use-Case tuần này là <strong>chuyển hóa</strong> các Business Use-Case đó thành System Use-Case gắn với hệ thống sắp xây dựng - đây chính xác là công việc "cầu nối giữa nghiệp vụ và giải pháp" mà một BA đảm nhiệm.</p>
         </section>
 
         <!-- 02 - Actor & Use-Case -->

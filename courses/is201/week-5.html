@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS201 Tuần 5 - Class Diagram: cấu trúc lớp UML (thuộc tính, phương thức, constructor), các mối quan hệ Association/Aggregation/Composition/Generalization/Association Class và ký hiệu chuẩn UML.">
+  <title>Tuần 5 · Class Diagram - IS201</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=3">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=30">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=56">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><picture><source srcset="../../assets/img/logo-mark.png?v=1" media="(max-width: 760px)"><source srcset="../../assets/img/logo-dark.png?v=1" media="(prefers-color-scheme: dark)"><img class="brand-mark" src="../../assets/img/logo-light.png?v=1" alt="IT Learning Hub"></picture><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-5.html" class="active">VI</a><a href="../../en/courses/is201/week-5.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS201 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS201</a><span>/</span>Tuần 5</p>
+
+    <div class="week-header">
+      <div class="week-header-content">
+        <span class="week-tag">THỰC HÀNH 05 · BTHT5</span>
+        <h1>Class Diagram</h1>
+        <div class="week-meta"><span>5 tiết</span><span>Cấu trúc lớp</span><span>Association/Aggregation/Composition</span></div>
+        <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hiểu cấu trúc 3 ngăn của một lớp UML; phân biệt Association, Aggregation, Composition, Generalization, Association Class; vẽ đúng ký hiệu chuẩn UML cho từng mối quan hệ bằng StarUML.</p>
+      </div>
+      <div class="week-header-illustration" aria-hidden="true">
+        <div class="whi-card whi-card-back"></div>
+        <div class="whi-card whi-card-front">
+          <div class="whi-table">
+            <div class="whi-row whi-row-head"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+          </div>
+          <div class="whi-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="3.5"/><path d="M10 10l7.5 7.5"/><path d="M15 13l2-2"/><path d="M16.5 15.5l1.5-1.5"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS201">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html">Tuần 4</a>
+      <a href="week-5.html" class="active">Tuần 5</a>
+      <a href="week-6.html">Tuần 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Báo cáo đồ án <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 5">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#khai-niem" data-toc><b>01</b> Khái niệm &amp; vai trò</a>
+        <a href="#cau-truc" data-toc><b>02</b> Cấu trúc lớp</a>
+        <a href="#quan-he" data-toc><b>03</b> Mối quan hệ &amp; ký hiệu UML</a>
+        <a href="#vi-du" data-toc><b>04</b> Ví dụ minh họa</a>
+        <a href="#bai-tap" data-toc><b>05</b> Bài tập thực hành</a>
+        <a href="#checklist" data-toc><b>06</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Khái niệm & vai trò -->
+        <section class="lesson-section" id="khai-niem">
+          <p class="eyebrow">01 · KHÁI NIỆM &amp; VAI TRÒ</p>
+          <h2>Class Diagram là gì?</h2>
+          <div class="definition"><strong>Class Diagram (Sơ đồ lớp)</strong> là mô hình biểu diễn <strong>cấu trúc tĩnh</strong> của hệ thống phần mềm trong UML - mô tả các lớp (class), thuộc tính (attribute), phương thức (operation) cùng các mối quan hệ (relationship) giữa các lớp. Mỗi lớp đại diện cho một kiểu đối tượng trong hệ thống, phản ánh thông tin cần lưu trữ và hành vi tương ứng.</div>
+          <p><strong>Ví dụ:</strong> Trong hệ thống quản lý đào tạo, có các lớp như <code>SinhVien</code>, <code>GiangVien</code>, <code>MonHoc</code> - trong đó <code>SinhVien</code> có thuộc tính như <code>maSV</code>, <code>hoTen</code> và phương thức <code>dangKyHocPhan()</code>.</p>
+
+          <h3>Vai trò của Class Diagram</h3>
+          <div class="example-grid">
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4v12M3 4h11l3 3-3 3H3"/></svg></span><strong>Mô hình hóa yêu cầu</strong><span>Trừu tượng hóa thành phần chính từ yêu cầu người dùng thành các lớp có quan hệ rõ ràng</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5a5 5 0 0 0-3 9v2.5h6V11.5a5 5 0 0 0-3-9Z"/><path d="M8 17h4"/></svg></span><strong>Cơ sở thiết kế phần mềm</strong><span>Là bước trung gian giữa đặc tả nghiệp vụ và mã nguồn - lập trình viên dễ dàng triển khai</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7" r="2.6"/><path d="M2 17a5.2 5.2 0 0 1 10.4 0"/><circle cx="14.6" cy="8.2" r="2"/><path d="M11 17a4 4 0 0 1 7.6 0"/></svg></span><strong>Giao tiếp giữa các bên</strong><span>Công cụ trực quan giúp phân tích viên, thiết kế viên, lập trình viên thống nhất cách hiểu hệ thống</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6"/></svg></span><strong>Tài liệu hóa &amp; bảo trì</strong><span>Tài liệu kỹ thuật để tra cứu khi bảo trì/nâng cấp - VD: xem HoaDon liên kết KhachHang, SanPham thế nào</span></div>
+          </div>
+
+          <h3>Khi nào cần xây dựng Class Diagram?</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Giai đoạn</th><th>Vai trò</th></tr>
+            <tr><td>Phân tích yêu cầu</td><td>Xác định các lớp đối tượng cần thiết từ bài toán thực tế</td></tr>
+            <tr><td>Thiết kế</td><td>Công cụ chính xác định cấu trúc hệ thống trước khi lập trình</td></tr>
+            <tr><td>Tài liệu hóa</td><td>Ghi lại thiết kế để phục vụ kiểm thử, chuyển giao, bảo trì</td></tr>
+            <tr><td>Khi mở rộng hệ thống</td><td>Dễ dàng đánh giá ảnh hưởng của việc thêm chức năng hoặc thay đổi logic</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 02 - Cấu trúc lớp -->
+        <section class="lesson-section" id="cau-truc">
+          <p class="eyebrow">02 · CẤU TRÚC LỚP TRONG UML</p>
+          <h2>3 ngăn của một lớp</h2>
+          <p>Trong UML, một lớp được biểu diễn bằng hình chữ nhật chia thành ba ngăn (compartment):</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 320 220" role="img" aria-label="Cấu trúc 3 ngăn của lớp SinhVien: tên lớp, thuộc tính, phương thức">
+              <rect x="20" y="10" width="280" height="200" style="fill:none;stroke:var(--ink);stroke-width:1.6"/>
+              <line x1="20" y1="46" x2="300" y2="46" style="stroke:var(--ink);stroke-width:1.4"/>
+              <line x1="20" y1="140" x2="300" y2="140" style="stroke:var(--ink);stroke-width:1.4"/>
+              <text x="160" y="33" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--ink)">SinhVien</text>
+              <text x="32" y="66" style="font-family:var(--font-mono);font-size:11.5px;fill:var(--ink)">- maSV: String</text>
+              <text x="32" y="86" style="font-family:var(--font-mono);font-size:11.5px;fill:var(--ink)">+ hoTen: String</text>
+              <text x="32" y="106" style="font-family:var(--font-mono);font-size:11.5px;fill:var(--ink)">- diemTB: float = 0</text>
+              <text x="32" y="126" style="font-family:var(--font-mono);font-size:11.5px;fill:var(--ink);text-decoration:underline">- soLuong: int</text>
+              <text x="32" y="160" style="font-family:var(--font-mono);font-size:11.5px;font-weight:700;fill:var(--ink)">+ SinhVien(id: String)</text>
+              <text x="32" y="180" style="font-family:var(--font-mono);font-size:11.5px;fill:var(--ink)">+ getHoTen(): String</text>
+              <text x="32" y="200" style="font-family:var(--font-mono);font-size:11.5px;fill:var(--ink);font-style:italic"># tinhDiem(): float</text>
+            </svg>
+          </div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Ngăn</th><th>Cú pháp</th><th>Ghi chú</th></tr>
+            <tr><td>1. Tên lớp</td><td><code>TênLớp</code></td><td>Danh từ, viết hoa chữ đầu. Lớp trừu tượng: <em>in nghiêng</em> hoặc <code>&lt;&lt;abstract&gt;&gt;</code>. Interface: <code>&lt;&lt;interface&gt;&gt;</code></td></tr>
+            <tr><td>2. Thuộc tính</td><td><code>visibility tên: KiểuDữLiệu [= mặc định]</code></td><td>Tương ứng biến thành viên trong lập trình</td></tr>
+            <tr><td>3. Phương thức</td><td><code>visibility tên(tham_số): KiểuTrảVề</code></td><td>Không trả về giá trị thì dùng <code>: void</code>. Phương thức trừu tượng in nghiêng</td></tr>
+          </table></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Ký hiệu</th><th>Ý nghĩa</th></tr>
+            <tr><td><code>+</code></td><td>public - công khai</td></tr>
+            <tr><td><code>-</code></td><td>private - riêng tư</td></tr>
+            <tr><td><code>#</code></td><td>protected - được kế thừa</td></tr>
+            <tr><td>Gạch chân</td><td>Thành phần tĩnh (static) - dùng chung cho mọi đối tượng của lớp</td></tr>
+          </table></div>
+
+          <h3>Constructor &amp; Destructor</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Thành phần</th><th>Mô tả</th></tr>
+            <tr><td>Constructor <span class="table-tag">Hàm tạo</span></td><td>Phương thức đặc biệt được gọi khi tạo đối tượng mới - tên trùng tên lớp hoặc đánh dấu <code>&lt;&lt;create&gt;&gt;</code>. Không có kiểu trả về. Một lớp có thể có nhiều constructor (overloading). VD: <code>SinhVien(name: String, id: String)</code></td></tr>
+            <tr><td>Destructor <span class="table-tag">Hàm hủy</span></td><td>Phương thức được gọi khi đối tượng bị hủy, giải phóng tài nguyên (file, kết nối, bộ nhớ động...) - trong C++ có tên bắt đầu bằng <code>~</code>, trong UML đánh dấu <code>&lt;&lt;destroy&gt;&gt;</code>. Java/C# dùng garbage collector nên ít khi định nghĩa tường minh</td></tr>
+          </table></div>
+          <p>Danh sách thuộc tính của mỗi lớp trên Class Diagram chính là phần kỹ thuật hóa của một tài liệu mà BA thường lập song song: <strong>Data Dictionary</strong> (Từ điển dữ liệu) - bảng liệt kê mọi thuật ngữ nghiệp vụ (tên gọi, kiểu dữ liệu, ràng buộc, ví dụ giá trị) đã thống nhất với stakeholder. Khi lập trình viên đặt tên thuộc tính bằng tiếng Anh viết tắt (VD: <code>dob</code> thay vì "ngày sinh"), Data Dictionary là nơi tra cứu để đảm bảo cả đội hiểu đúng và thống nhất một nghĩa.</p>
+        </section>
+
+        <!-- 03 - Mối quan hệ & ký hiệu -->
+        <section class="lesson-section" id="quan-he">
+          <p class="eyebrow">03 · CÁC MỐI QUAN HỆ &amp; KÝ HIỆU CHUẨN UML</p>
+          <h2>6 loại mối quan hệ</h2>
+          <p>Ký hiệu vẽ đúng theo chuẩn UML - lưu ý phân biệt <strong>hình thoi rỗng (Aggregation)</strong> với <strong>hình thoi đặc (Composition)</strong>, và <strong>tam giác rỗng nét liền (Generalization)</strong> với <strong>tam giác rỗng nét đứt (Realization)</strong>:</p>
+
+          <div class="er-diagram">
+            <svg viewBox="0 0 600 470" role="img" aria-label="Ký hiệu UML của Association, Aggregation, Composition, Generalization, Realization, Dependency">
+              <defs>
+                <marker id="w5ArrowOpen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" style="fill:none;stroke:var(--ink);stroke-width:1.3"/></marker>
+                <marker id="w5Triangle" viewBox="0 0 16 12" refX="14" refY="6" markerWidth="14" markerHeight="11" orient="auto-start-reverse"><path d="M1 1L15 6L1 11Z" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.3"/></marker>
+                <marker id="w5DiamondHollow" viewBox="0 0 18 12" refX="16" refY="6" markerWidth="15" markerHeight="10" orient="auto-start-reverse"><path d="M1 6L9 1L17 6L9 11Z" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.3"/></marker>
+                <marker id="w5DiamondFull" viewBox="0 0 18 12" refX="16" refY="6" markerWidth="15" markerHeight="10" orient="auto-start-reverse"><path d="M1 6L9 1L17 6L9 11Z" style="fill:var(--ink)"/></marker>
+              </defs>
+
+              <rect x="20" y="20" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="75" y="40" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">ClassA</text>
+              <rect x="470" y="20" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="525" y="40" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">ClassB</text>
+              <line x1="130" y1="35" x2="468" y2="35" style="stroke:var(--ink);stroke-width:1.4" marker-end="url(#w5ArrowOpen)"/>
+              <text x="300" y="60" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">Association - đường thẳng, có thể một chiều/hai chiều</text>
+
+              <rect x="20" y="95" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="75" y="115" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Part</text>
+              <rect x="470" y="95" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="525" y="115" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Whole</text>
+              <line x1="130" y1="110" x2="468" y2="110" style="stroke:var(--ink);stroke-width:1.4" marker-end="url(#w5DiamondHollow)"/>
+              <text x="300" y="135" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">Aggregation - hình thoi RỖNG tại lớp "toàn thể"</text>
+
+              <rect x="20" y="170" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="75" y="190" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Part</text>
+              <rect x="470" y="170" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="525" y="190" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Whole</text>
+              <line x1="130" y1="185" x2="468" y2="185" style="stroke:var(--ink);stroke-width:1.4" marker-end="url(#w5DiamondFull)"/>
+              <text x="300" y="210" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">Composition - hình thoi ĐẶC (tô đen) tại lớp "toàn thể"</text>
+
+              <rect x="20" y="245" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="75" y="265" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Con</text>
+              <rect x="470" y="245" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="525" y="265" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Cha</text>
+              <line x1="130" y1="260" x2="465" y2="260" style="stroke:var(--ink);stroke-width:1.4" marker-end="url(#w5Triangle)"/>
+              <text x="300" y="285" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">Generalization - tam giác RỖNG, nét LIỀN (kế thừa lớp)</text>
+
+              <rect x="20" y="320" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="75" y="340" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">LopA</text>
+              <rect x="470" y="320" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="525" y="340" text-anchor="middle" style="font-size:10px;font-weight:700;fill:var(--ink)">«interface»</text>
+              <line x1="130" y1="335" x2="465" y2="335" style="stroke:var(--ink);stroke-width:1.4;stroke-dasharray:6 4" marker-end="url(#w5Triangle)"/>
+              <text x="300" y="360" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">Realization - tam giác RỖNG, nét ĐỨT (hiện thực giao diện)</text>
+
+              <rect x="20" y="395" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="75" y="415" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">LopA</text>
+              <rect x="470" y="395" width="110" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="525" y="415" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">LopB</text>
+              <line x1="130" y1="410" x2="468" y2="410" style="stroke:var(--ink);stroke-width:1.4;stroke-dasharray:6 4" marker-end="url(#w5ArrowOpen)"/>
+              <text x="300" y="435" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">Dependency - mũi tên hở, nét ĐỨT (phụ thuộc tạm thời)</text>
+            </svg>
+          </div>
+
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Quan hệ</th><th>Ý nghĩa</th><th>Ví dụ</th></tr>
+            <tr><td>Association</td><td>Hai lớp biết đến nhau, không lớp nào sở hữu lớp nào, vòng đời độc lập. Bội số (Multiplicity): <code>1</code>, <code>0..1</code>, <code>1..*</code>, <code>0..*</code></td><td><code>KhachHang</code> đặt nhiều <code>DonHang</code> (1-nhiều)</td></tr>
+            <tr><td>Aggregation</td><td>Quan hệ "có chứa" lỏng lẻo (shared ownership) - thành phần vẫn tồn tại độc lập nếu toàn thể bị hủy</td><td><code>LopHoc</code> ◇── <code>SinhVien</code>: sinh viên vẫn có thể chuyển lớp</td></tr>
+            <tr><td>Composition</td><td>Quan hệ sở hữu chặt - "sống chết cùng nhau", thành phần bị hủy theo khi toàn thể bị xóa</td><td><code>House</code> ◆── <code>Room</code>: phòng không tồn tại độc lập với nhà</td></tr>
+            <tr><td>Generalization</td><td>Quan hệ kế thừa (is-a) - lớp con kế thừa thuộc tính/phương thức lớp cha, giúp tái sử dụng mã</td><td><code>Student</code> ▷ <code>Person</code></td></tr>
+            <tr><td>Realization</td><td>Lớp hiện thực (implement) một interface hoặc kế thừa lớp trừu tượng</td><td><code>LoginController</code> hiện thực <code>&lt;&lt;interface&gt;&gt; IAuthenticatable</code></td></tr>
+            <tr><td>Dependency</td><td>Phụ thuộc tạm thời, thường chỉ xuất hiện trong tham số hoặc kiểu trả về của một phương thức</td><td><code>HoaDon</code> phụ thuộc <code>MaHoaGia</code> chỉ trong một phương thức tính thuế</td></tr>
+          </table></div>
+
+          <h3>Association Class - Lớp kết hợp</h3>
+          <div class="definition">Dùng khi một Association giữa hai lớp cần mang thêm thông tin riêng (thuộc tính/phương thức) - thường gặp ở quan hệ <strong>nhiều-nhiều</strong>. Ký hiệu: một hình chữ nhật nối vào đường Association bằng nét đứt.</div>
+          <div class="er-diagram">
+            <svg viewBox="0 0 460 190" role="img" aria-label="Association Class Enrollment gắn với quan hệ nhiều-nhiều giữa Student và Course">
+              <rect x="20" y="20" width="120" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="80" y="40" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Student</text>
+              <rect x="320" y="20" width="120" height="30" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="380" y="40" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Course</text>
+              <line x1="140" y1="35" x2="320" y2="35" style="stroke:var(--ink);stroke-width:1.4"/>
+              <text x="150" y="28" style="font-size:10px;fill:var(--muted)">0..*</text>
+              <text x="290" y="28" style="font-size:10px;fill:var(--muted)">0..*</text>
+              <line x1="230" y1="35" x2="230" y2="110" style="stroke:var(--muted);stroke-width:1.2;stroke-dasharray:5 3"/>
+              <rect x="170" y="110" width="120" height="60" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="230" y="128" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Enrollment</text>
+              <line x1="170" y1="135" x2="290" y2="135" style="stroke:var(--ink);stroke-width:1"/>
+              <text x="180" y="150" style="font-family:var(--font-mono);font-size:10px;fill:var(--ink)">- ngayDangKy: Date</text>
+              <text x="180" y="164" style="font-family:var(--font-mono);font-size:10px;fill:var(--ink)">- diem: float</text>
+            </svg>
+          </div>
+
+          <div class="quick-check">
+            <p class="eyebrow">KIỂM TRA NHANH</p>
+            <p class="qc-question">"Bảng điểm (Transcript) không thể tồn tại nếu sinh viên bị xóa khỏi hệ thống." Đây là quan hệ gì?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">Aggregation - hình thoi rỗng</button>
+              <button class="qc-option" type="button" data-correct="true">Composition - hình thoi đặc</button>
+              <button class="qc-option" type="button" data-correct="false">Generalization - tam giác rỗng</button>
+              <button class="qc-option" type="button" data-correct="false">Dependency - nét đứt</button>
+            </div>
+            <div class="qc-feedback correct">✓ Chính xác! Bảng điểm "sống chết cùng" sinh viên - đây là quan hệ Composition, vẽ hình thoi ĐẶC (tô đen) tại phía lớp Student.</div>
+          </div>
+        </section>
+
+        <!-- 04 - Ví dụ minh họa -->
+        <section class="lesson-section" id="vi-du">
+          <p class="eyebrow">04 · VÍ DỤ MINH HỌA</p>
+          <h2>Kết hợp nhiều mối quan hệ trong một sơ đồ</h2>
+          <p>Hệ thống quản lý đào tạo - kết hợp Generalization, Association, Association Class, Aggregation và Composition:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 700 460" role="img" aria-label="Class diagram hệ thống quản lý đào tạo với đầy đủ các mối quan hệ">
+              <defs>
+                <marker id="w5Triangle2" viewBox="0 0 16 12" refX="14" refY="6" markerWidth="14" markerHeight="11" orient="auto-start-reverse"><path d="M1 1L15 6L1 11Z" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.3"/></marker>
+                <marker id="w5DiamondHollow2" viewBox="0 0 18 12" refX="16" refY="6" markerWidth="15" markerHeight="10" orient="auto-start-reverse"><path d="M1 6L9 1L17 6L9 11Z" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.3"/></marker>
+                <marker id="w5DiamondFull2" viewBox="0 0 18 12" refX="16" refY="6" markerWidth="15" markerHeight="10" orient="auto-start-reverse"><path d="M1 6L9 1L17 6L9 11Z" style="fill:var(--ink)"/></marker>
+              </defs>
+
+              <rect x="280" y="15" width="140" height="36" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="350" y="38" text-anchor="middle" style="font-size:12px;font-weight:700;font-style:italic;fill:var(--ink)">Person</text>
+
+              <rect x="40" y="110" width="150" height="60" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="115" y="128" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">SinhVien</text>
+              <line x1="40" y1="135" x2="190" y2="135" style="stroke:var(--ink);stroke-width:1"/>
+              <text x="50" y="150" style="font-family:var(--font-mono);font-size:9.5px;fill:var(--ink)">- maSV: String</text>
+              <text x="50" y="163" style="font-family:var(--font-mono);font-size:9.5px;fill:var(--ink)">+ dangKy()</text>
+              <line x1="115" y1="110" x2="315" y2="55" style="stroke:var(--ink);stroke-width:1.4" marker-end="url(#w5Triangle2)"/>
+
+              <rect x="510" y="110" width="150" height="60" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="585" y="128" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">GiangVien</text>
+              <line x1="510" y1="135" x2="660" y2="135" style="stroke:var(--ink);stroke-width:1"/>
+              <text x="520" y="150" style="font-family:var(--font-mono);font-size:9.5px;fill:var(--ink)">- maGV: String</text>
+              <text x="520" y="163" style="font-family:var(--font-mono);font-size:9.5px;fill:var(--ink)">+ giangDay()</text>
+              <line x1="585" y1="110" x2="385" y2="55" style="stroke:var(--ink);stroke-width:1.4" marker-end="url(#w5Triangle2)"/>
+
+              <rect x="270" y="220" width="160" height="60" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="350" y="238" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">MonHoc</text>
+              <line x1="270" y1="245" x2="430" y2="245" style="stroke:var(--ink);stroke-width:1"/>
+              <text x="280" y="260" style="font-family:var(--font-mono);font-size:9.5px;fill:var(--ink)">- maMH: String</text>
+              <text x="280" y="273" style="font-family:var(--font-mono);font-size:9.5px;fill:var(--ink)">- tenMH: String</text>
+
+              <line x1="190" y1="160" x2="272" y2="235" style="stroke:var(--ink);stroke-width:1.4"/>
+              <text x="200" y="185" style="font-size:9px;fill:var(--muted)">0..*</text>
+              <text x="245" y="220" style="font-size:9px;fill:var(--muted)">0..*</text>
+              <line x1="230" y1="197" x2="230" y2="300" style="stroke:var(--muted);stroke-width:1.1;stroke-dasharray:5 3"/>
+              <rect x="150" y="300" width="160" height="55" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="230" y="318" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">DangKy</text>
+              <line x1="150" y1="325" x2="310" y2="325" style="stroke:var(--ink);stroke-width:1"/>
+              <text x="160" y="340" style="font-family:var(--font-mono);font-size:9.5px;fill:var(--ink)">- ngayDangKy: Date</text>
+              <text x="160" y="350" style="font-family:var(--font-mono);font-size:9.5px;fill:var(--ink)">- diem: float</text>
+
+              <rect x="510" y="220" width="140" height="46" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="580" y="248" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">Khoa</text>
+              <line x1="585" y1="170" x2="580" y2="220" style="stroke:var(--ink);stroke-width:1.4" marker-end="url(#w5DiamondHollow2)"/>
+
+              <rect x="270" y="360" width="160" height="46" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.4"/>
+              <text x="350" y="388" text-anchor="middle" style="font-size:11.5px;font-weight:700;fill:var(--ink)">BuoiHoc</text>
+              <line x1="350" y1="360" x2="350" y2="280" style="stroke:var(--ink);stroke-width:1.4" marker-end="url(#w5DiamondFull2)"/>
+            </svg>
+          </div>
+          <p class="er-relation"><strong>Generalization:</strong> SinhVien, GiangVien kế thừa Person. <strong>Association + Association Class:</strong> SinhVien - MonHoc (nhiều-nhiều), chi tiết lưu ở DangKy. <strong>Aggregation:</strong> Khoa ◇── GiangVien (giảng viên có thể chuyển khoa). <strong>Composition:</strong> MonHoc ◆── BuoiHoc (buổi học không tồn tại nếu môn học bị xóa).</p>
+        </section>
+
+        <!-- 05 - Bài tập thực hành -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">05 · BÀI TẬP THỰC HÀNH</p>
+          <h2>Thực hành trên đề tài Gym</h2>
+          <p>Sử dụng <strong>StarUML</strong>, thiết kế Class Diagram cho hai Use-Case đã làm việc xuyên suốt các tuần trước:</p>
+
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> BÀI 1 · QUẢN LÝ THÔNG TIN HỘI VIÊN</p>
+            <p>Khách hàng có thể đăng ký làm hội viên của trung tâm. Khi đăng ký, khách hàng cung cấp cho nhân viên các thông tin: họ tên, giới tính, ngày sinh, điện thoại, địa chỉ, email. Nhân viên được phép cập nhật hoặc xóa thông tin hội viên. Khi cập nhật/xóa thông tin hội viên, nhân viên có thể sử dụng chức năng tra cứu.</p>
+            <ol>
+              <li>Thiết kế Class Diagram cho Use-Case <strong>thêm mới hội viên</strong></li>
+            </ol>
+          </div>
+
+          <div class="practice-lab" style="margin-top:18px">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> BÀI 2 · ĐĂNG KÝ KHÓA TẬP, DỊCH VỤ</p>
+            <p>Khách hàng có thể mua vé tập theo ngày hoặc đăng ký các dịch vụ tập tại trung tâm. Để đăng ký dịch vụ, khách hàng cung cấp cho nhân viên các thông tin: môn tập, gói dịch vụ tương ứng, ngày bắt đầu. Hệ thống tính và hiển thị tổng số tiền phải thanh toán. Sau khi khách hàng xác nhận và thanh toán, hệ thống lưu thông tin đăng ký và xuất hóa đơn. Khi đăng ký thành công, khách hàng được cấp thẻ từ lưu trữ thông tin dịch vụ; mỗi lần đến tập, khách hàng quẹt thẻ để hệ thống ghi nhận thời gian tập.</p>
+            <ol>
+              <li>Thiết kế Class Diagram cho Use-Case trên</li>
+            </ol>
+          </div>
+
+          <div class="inline-ok"><strong>Gợi ý:</strong> HoiVien - DangKy - DichVu là quan hệ nhiều-nhiều, cân nhắc dùng Association Class để lưu ngày bắt đầu và số tiền của từng lần đăng ký. TheTu gắn chặt vòng đời với HoiVien (mất hội viên thì thẻ cũng vô nghĩa) - đây là gợi ý để chọn giữa Aggregation và Composition.</div>
+        </section>
+
+        <!-- 06 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">06 · CHECKLIST CUỐI TUẦN 5</p>
+          <h2>Tự kiểm tra kiến thức</h2>
+          <ul class="lesson-checklist">
+            <li>Hiểu Class Diagram mô tả cấu trúc tĩnh: lớp, thuộc tính, phương thức, quan hệ</li>
+            <li>Nhớ cú pháp thuộc tính/phương thức và 3 mức visibility (+/-/#)</li>
+            <li>Phân biệt Constructor và Destructor</li>
+            <li>Vẽ đúng ký hiệu Association, Generalization (tam giác rỗng liền), Realization (tam giác rỗng đứt)</li>
+            <li>Phân biệt Aggregation (thoi rỗng) và Composition (thoi đặc)</li>
+            <li>Biết khi nào cần dùng Association Class</li>
+            <li>Hoàn thành Class Diagram cho 2 Use-Case của đề tài Gym</li>
+          </ul>
+
+          <h3>Kiến thức cốt lõi cần nhớ</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Xác định lớp</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Thuộc tính &amp; phương thức</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Xác định quan hệ</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Vẽ đúng ký hiệu UML</span>
+          </div>
+          <p>Class Diagram mô tả cấu trúc <strong>tĩnh</strong> của hệ thống. Sang <strong>Tuần 6</strong>, sinh viên học State Diagram - mô tả <strong>vòng đời động</strong> của một đối tượng cụ thể: các trạng thái nó có thể ở, và sự kiện nào khiến nó chuyển từ trạng thái này sang trạng thái khác.</p>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần">
+          <a href="week-4.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 4: Sequence Diagram</span></a>
+          <a href="week-6.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 6: State Diagram</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">TIẾN ĐỘ</span>
+          <strong>5<span>/6 tuần</span></strong>
+          <div class="mini-progress"><b style="width:83%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="khai-niem"><b>○</b> Khái niệm &amp; vai trò</li>
+            <li data-section="cau-truc"><b>○</b> Cấu trúc lớp</li>
+            <li data-section="quan-he"><b>○</b> Mối quan hệ &amp; ký hiệu UML</li>
+            <li data-section="vi-du"><b>○</b> Ví dụ minh họa</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập thực hành</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> StarUML</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Thoi rỗng vs thoi đặc, tam giác liền vs tam giác đứt - vẽ nhầm là mất điểm ký hiệu.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><picture><source srcset="../../assets/img/logo-mark.png?v=1" media="(max-width: 760px)"><source srcset="../../assets/img/logo-dark.png?v=1" media="(prefers-color-scheme: dark)"><img class="brand-mark" src="../../assets/img/logo-light.png?v=1" alt="IT Learning Hub"></picture><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=11"></script>
+  <script src="../../assets/js/progress.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=16"></script>
+</body>
+</html>

@@ -54,9 +54,9 @@
       <a href="week-1.html">Tuần 1</a>
       <a href="week-2.html">Tuần 2</a>
       <a href="week-3.html" class="active">Tuần 3</a>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 4 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 5 <small>Sắp mở</small></span>
-      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <a href="week-4.html">Tuần 4</a>
+      <a href="week-5.html">Tuần 5</a>
+      <a href="week-6.html">Tuần 6</a>
       <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Báo cáo đồ án <small>Sắp mở</small></span>
     </nav>
 
@@ -119,6 +119,7 @@
             <tr><td>Exception flow <span class="table-tag">Luồng ngoại lệ</span></td><td>Các tình huống khiến Use-Case thất bại hoặc không thể hoàn thành</td></tr>
           </table></div>
           <div class="inline-ok"><strong>Cách đánh số các bước rẽ nhánh:</strong> Nếu luồng chính có bước 1-7, một nhánh thay thế tách ra ngay tại bước 4 được đặt mã <code>4a</code>; nếu nhánh đó có bước phụ tiếp theo thì đánh số <code>4a1</code>, <code>4a2</code>... Cách đánh số này giúp người đọc biết chính xác nhánh thay thế tách ra từ đâu trong luồng chính. Xem ví dụ áp dụng thực tế ở mục 05.</div>
+          <p>Trong công việc BA thực tế, Basic/Alternative/Exception Flow còn được dùng trực tiếp làm <strong>Acceptance Criteria</strong> (tiêu chí nghiệm thu) - danh sách điều kiện để xác nhận một chức năng đã cài đặt đúng. Tester dựa vào từng bước của Basic Flow để viết test case "đường đi đúng" (happy path), còn Alternative/Exception Flow trở thành các test case kiểm tra ngoại lệ - đây là lý do đặc tả Use-Case càng chi tiết thì việc kiểm thử càng chính xác.</p>
 
           <h4>Thông tin bổ sung (Additional Information)</h4>
           <div class="table-wrap"><table class="ref-table">
@@ -126,6 +127,7 @@
             <tr><td>Business Rule <span class="table-tag">Quy tắc nghiệp vụ</span></td><td>Các quy định về mặt nghiệp vụ mà hệ thống phải tuân theo</td></tr>
             <tr><td>NFRs <span class="table-tag">Yêu cầu phi chức năng</span></td><td>Hiệu suất, bảo mật, tính sẵn sàng... (xem lại Tuần 1)</td></tr>
           </table></div>
+          <p><strong>Business Rule</strong> là một kỹ thuật phân tích riêng trong BABOK (<em>Business Rules Analysis</em>) - tách các ràng buộc nghiệp vụ ra khỏi luồng xử lý để dễ bảo trì khi chính sách thay đổi. Ví dụ với Use-Case "Đăng ký": <em>"Mật khẩu phải từ 8 ký tự trở lên, có ít nhất 1 chữ số"</em> hay <em>"Một tài khoản chỉ được đăng ký với một email duy nhất"</em> là Business Rule - nếu công ty đổi chính sách mật khẩu, chỉ cần sửa quy tắc này mà không phải vẽ lại toàn bộ Basic Flow.</p>
         </section>
 
         <!-- 02 - Activity Diagram khái niệm -->
@@ -459,7 +461,7 @@
 
         <nav class="week-nav-links" aria-label="Điều hướng tuần">
           <a href="week-2.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 2: Sơ đồ Use-Case</span></a>
-          <span class="nav-disabled next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 4: Sequence Diagram <small>(Sắp mở)</small></span></span>
+          <a href="week-4.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 4: Sequence Diagram</span></a>
         </nav>
       </div>
 

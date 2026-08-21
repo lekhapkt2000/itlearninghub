@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS201 Tuần 6 - State Diagram: khái niệm, thành phần và ký hiệu chuẩn UML (State, Initial/Final State, Transition, Event, Action), ví dụ minh họa và bài tập cuối môn.">
+  <title>Tuần 6 · State Diagram - IS201</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=3">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=30">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=56">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><picture><source srcset="../../assets/img/logo-mark.png?v=1" media="(max-width: 760px)"><source srcset="../../assets/img/logo-dark.png?v=1" media="(prefers-color-scheme: dark)"><img class="brand-mark" src="../../assets/img/logo-light.png?v=1" alt="IT Learning Hub"></picture><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-6.html" class="active">VI</a><a href="../../en/courses/is201/week-6.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS201 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS201</a><span>/</span>Tuần 6</p>
+
+    <div class="week-header">
+      <div class="week-header-content">
+        <span class="week-tag">THỰC HÀNH 06 · BTHT6</span>
+        <h1>State Diagram</h1>
+        <div class="week-meta"><span>5 tiết</span><span>Vòng đời đối tượng</span><span>Transition</span></div>
+        <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hiểu vai trò của State Diagram trong mô tả vòng đời một đối tượng; nhận diện đúng ký hiệu State, Initial/Final State, Transition, Event, Action; vẽ được sơ đồ trạng thái hoàn chỉnh bằng StarUML.</p>
+      </div>
+      <div class="week-header-illustration" aria-hidden="true">
+        <div class="whi-card whi-card-back"></div>
+        <div class="whi-card whi-card-front">
+          <div class="whi-table">
+            <div class="whi-row whi-row-head"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+          </div>
+          <div class="whi-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="3.5"/><path d="M10 10l7.5 7.5"/><path d="M15 13l2-2"/><path d="M16.5 15.5l1.5-1.5"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS201">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <a href="week-4.html">Tuần 4</a>
+      <a href="week-5.html">Tuần 5</a>
+      <a href="week-6.html" class="active">Tuần 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Báo cáo đồ án <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 6">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#khai-niem" data-toc><b>01</b> Khái niệm &amp; vai trò</a>
+        <a href="#thanh-phan" data-toc><b>02</b> Thành phần &amp; ký hiệu</a>
+        <a href="#vi-du" data-toc><b>03</b> Ví dụ minh họa</a>
+        <a href="#bai-tap" data-toc><b>04</b> Bài tập thực hành</a>
+        <a href="#checklist" data-toc><b>05</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Khái niệm & vai trò -->
+        <section class="lesson-section" id="khai-niem">
+          <p class="eyebrow">01 · KHÁI NIỆM &amp; VAI TRÒ</p>
+          <h2>State Diagram là gì?</h2>
+          <div class="definition"><strong>State Diagram (Sơ đồ trạng thái)</strong> là một loại biểu đồ UML mô tả <strong>hành vi của một đối tượng</strong> theo từng trạng thái cụ thể, và cách chuyển đổi giữa các trạng thái đó dựa trên các sự kiện xảy ra trong hệ thống. Mỗi trạng thái biểu thị một giai đoạn trong vòng đời của đối tượng; các mũi tên chỉ ra sự chuyển tiếp khi một sự kiện hoặc điều kiện nhất định xảy ra.</div>
+          <p><strong>Ví dụ:</strong> Trong hệ thống giao hàng, một đơn hàng có thể chuyển qua các trạng thái: <code>Đã tạo</code> → <code>Đang xử lý</code> → <code>Đã giao hàng</code>, hoặc <code>Đã hủy</code>.</p>
+
+          <h3>Vai trò của State Diagram</h3>
+          <ul>
+            <li>Mô hình hóa hành vi động của đối tượng trong hệ thống.</li>
+            <li>Giúp hiểu rõ trình tự hoạt động và các tình huống có thể xảy ra với đối tượng.</li>
+            <li>Hữu ích cho các hệ thống có vòng đời phức tạp hoặc yêu cầu theo dõi trạng thái theo thời gian.</li>
+            <li>Dễ dàng kiểm tra logic và mô phỏng hành vi thực tế trước khi triển khai.</li>
+          </ul>
+          <div class="inline-ok"><strong>Ví dụ khác:</strong> Trong hệ thống ATM, thẻ ngân hàng có thể ở các trạng thái như: <code>Idle</code>, <code>Xác thực PIN</code>, <code>Chờ chọn giao dịch</code>, <code>Kết thúc giao dịch</code>.</div>
+
+          <p>So với các sơ đồ đã học, State Diagram khác Activity Diagram (Tuần 3) ở góc nhìn: Activity Diagram mô tả <strong>quy trình xử lý</strong> (chuỗi hành động), còn State Diagram mô tả <strong>vòng đời của một đối tượng cụ thể</strong> - đối tượng đó đang "ở trạng thái nào" tại từng thời điểm.</p>
+          <p>Với BA, State Diagram là công cụ rất tự nhiên để mô hình hóa các <strong>quy trình phê duyệt (workflow)</strong> trong nghiệp vụ - ví dụ vòng đời một đơn xin nghỉ phép: <code>Chờ duyệt</code> → <code>Đã duyệt</code> hoặc <code>Bị từ chối</code> → <code>Đã hủy</code>. Khi phỏng vấn stakeholder để xác định "đối tượng này có thể ở những trạng thái nào, ai được phép chuyển trạng thái nào", BA thực chất đang thu thập chính xác dữ liệu cần thiết để vẽ một State Diagram.</p>
+        </section>
+
+        <!-- 02 - Thành phần & ký hiệu -->
+        <section class="lesson-section" id="thanh-phan">
+          <p class="eyebrow">02 · THÀNH PHẦN &amp; KÝ HIỆU CHUẨN UML</p>
+          <h2>6 thành phần của State Diagram</h2>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Thành phần</th><th>Ý nghĩa</th></tr>
+            <tr><td>State</td><td>Trạng thái của đối tượng (VD: Idle, Active, Completed)</td></tr>
+            <tr><td>Initial State</td><td>Trạng thái khởi đầu - chỉ có duy nhất 1 cho mỗi sơ đồ</td></tr>
+            <tr><td>Final State</td><td>Trạng thái kết thúc - không bắt buộc phải có, tùy ngữ cảnh bài toán</td></tr>
+            <tr><td>Transition</td><td>Chuyển tiếp giữa các trạng thái, thường có điều kiện hoặc sự kiện</td></tr>
+            <tr><td>Event</td><td>Sự kiện kích hoạt chuyển tiếp - không có sự kiện thì không có chuyển đổi</td></tr>
+            <tr><td>Action</td><td>Hành động xảy ra khi chuyển trạng thái, hoặc khi vào/đang/thoát khỏi một trạng thái</td></tr>
+          </table></div>
+
+          <h3 id="ss-state">State (Trạng thái)</h3>
+          <p>Đại diện cho một giai đoạn cụ thể trong vòng đời của đối tượng. Biểu diễn bằng hình chữ nhật <strong>bo tròn góc</strong>, tên trạng thái viết ở giữa.</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 320 150" role="img" aria-label="Ký hiệu State - hình chữ nhật bo tròn góc chứa tên trạng thái">
+              <rect x="70" y="45" width="180" height="60" rx="26" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.6"/>
+              <text x="160" y="82" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--ink)">Tên trạng thái</text>
+              <text x="160" y="130" text-anchor="middle" style="font-size:11.5px;fill:var(--muted)">Ví dụ: Idle, Processing, Completed</text>
+            </svg>
+          </div>
+
+          <h4>Hành động bên trong một State</h4>
+          <p>Một State có thể kèm theo 3 loại hành động, ghi ngay trong ngăn dưới tên trạng thái:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 400 220" role="img" aria-label="State DangXuLy với entry, do, exit action">
+              <rect x="40" y="20" width="320" height="180" rx="22" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.6"/>
+              <text x="200" y="52" text-anchor="middle" style="font-size:14px;font-weight:700;fill:var(--ink)">DangXuLy</text>
+              <line x1="40" y1="66" x2="360" y2="66" style="stroke:var(--ink);stroke-width:1.2"/>
+              <text x="60" y="98" style="font-family:var(--font-mono);font-size:12px;fill:var(--ink)">entry / xacThucThanhToan()</text>
+              <text x="60" y="128" style="font-family:var(--font-mono);font-size:12px;fill:var(--ink)">do / kiemTraKho()</text>
+              <text x="60" y="158" style="font-family:var(--font-mono);font-size:12px;fill:var(--ink)">exit / guiEmailXacNhan()</text>
+            </svg>
+          </div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loại hành động</th><th>Xảy ra khi nào</th></tr>
+            <tr><td><code>entry / hành động</code></td><td>Ngay khi đối tượng <strong>vừa vào</strong> trạng thái này</td></tr>
+            <tr><td><code>do / hành động</code></td><td>Liên tục trong suốt thời gian đối tượng <strong>đang ở</strong> trạng thái này</td></tr>
+            <tr><td><code>exit / hành động</code></td><td>Ngay trước khi đối tượng <strong>rời khỏi</strong> trạng thái này</td></tr>
+          </table></div>
+
+          <h3 id="ss-initial-final">Initial State &amp; Final State</h3>
+          <p>Hai trạng thái đặc biệt đánh dấu điểm bắt đầu và kết thúc vòng đời - dễ nhầm lẫn nếu không để ý kỹ vì cùng là hình tròn màu đen:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 440 190" role="img" aria-label="So sánh Initial State (chấm đặc) và Final State (vòng tròn có chấm bên trong)">
+              <circle cx="110" cy="70" r="16" style="fill:var(--ink)"/>
+              <text x="110" y="120" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Initial State</text>
+              <text x="110" y="140" text-anchor="middle" style="font-size:11px;fill:var(--muted)">Chấm đặc - KHÔNG có viền ngoài</text>
+              <text x="110" y="158" text-anchor="middle" style="font-size:11px;fill:var(--muted)">Duy nhất 1 cho mỗi sơ đồ</text>
+
+              <circle cx="330" cy="70" r="18" style="fill:none;stroke:var(--ink);stroke-width:2"/>
+              <circle cx="330" cy="70" r="8" style="fill:var(--ink)"/>
+              <text x="330" y="120" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Final State</text>
+              <text x="330" y="140" text-anchor="middle" style="font-size:11px;fill:var(--muted)">Vòng tròn viền NGOÀI + chấm đặc bên trong</text>
+              <text x="330" y="158" text-anchor="middle" style="font-size:11px;fill:var(--muted)">Có thể có nhiều, không bắt buộc phải có</text>
+            </svg>
+          </div>
+          <div class="inline-warning"><strong>Dễ nhầm:</strong> Ký hiệu Final State (vòng ngoài + chấm trong) giống hệt Activity Final node đã học ở Tuần 3. Đừng nhầm với Initial State - Initial State <strong>không có vòng tròn viền ngoài</strong>, chỉ là một chấm đặc duy nhất.</div>
+
+          <h3 id="ss-transition">Transition (Chuyển tiếp)</h3>
+          <p>Mũi tên nối hai trạng thái, thể hiện sự chuyển đổi khi có sự kiện xảy ra. Cú pháp đầy đủ ghi trên mũi tên:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 560 190" role="img" aria-label="Transition từ Trạng thái A sang Trạng thái B với cú pháp Event Condition Action">
+              <defs><marker id="w6ArrowT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--ink)"/></marker></defs>
+              <rect x="30" y="70" width="150" height="55" rx="24" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.6"/>
+              <text x="105" y="103" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Trạng thái A</text>
+              <rect x="380" y="70" width="150" height="55" rx="24" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.6"/>
+              <text x="455" y="103" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Trạng thái B</text>
+              <line x1="180" y1="97" x2="378" y2="97" style="stroke:var(--ink);stroke-width:1.6" marker-end="url(#w6ArrowT)"/>
+              <text x="280" y="80" text-anchor="middle" style="font-family:var(--font-mono);font-size:13px;font-weight:700;fill:var(--primary-ink)">Event [Condition] / Action</text>
+              <text x="105" y="150" text-anchor="middle" style="font-size:10.5px;fill:var(--muted)">Sự kiện</text>
+              <text x="280" y="150" text-anchor="middle" style="font-size:10.5px;fill:var(--muted)">Điều kiện (guard)</text>
+              <text x="455" y="150" text-anchor="middle" style="font-size:10.5px;fill:var(--muted)">Hành động</text>
+              <line x1="140" y1="128" x2="140" y2="140" style="stroke:var(--muted);stroke-width:1"/>
+              <line x1="280" y1="128" x2="280" y2="140" style="stroke:var(--muted);stroke-width:1"/>
+              <line x1="440" y1="128" x2="440" y2="140" style="stroke:var(--muted);stroke-width:1"/>
+            </svg>
+          </div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Phần</th><th>Bắt buộc?</th><th>Ý nghĩa</th></tr>
+            <tr><td>Event</td><td>Có</td><td>Sự kiện kích hoạt chuyển tiếp - không có sự kiện thì không có chuyển đổi</td></tr>
+            <tr><td><code>[Condition]</code></td><td>Không</td><td>Điều kiện (guard) - chỉ chuyển tiếp nếu điều kiện trong <code>[]</code> đúng</td></tr>
+            <tr><td><code>/ Action</code></td><td>Không</td><td>Hành động thực hiện ngay khi chuyển tiếp xảy ra</td></tr>
+          </table></div>
+          <p class="er-relation">Ví dụ đọc cú pháp: <code>hetHang [khongConHang] / hoanTien()</code> nghĩa là "khi sự kiện <strong>hết hàng</strong> xảy ra, <strong>nếu</strong> không còn hàng trong kho, thì thực hiện <strong>hoàn tiền</strong> rồi mới chuyển trạng thái".</p>
+
+          <h3 id="ss-event-action">Event &amp; Action</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Thành phần</th><th>Mô tả</th></tr>
+            <tr><td>Event <span class="table-tag">Sự kiện</span></td><td>Tác nhân kích hoạt quá trình chuyển trạng thái - có thể do người dùng, hệ thống, cảm biến, hoặc thời gian. Luôn đi kèm với Transition</td></tr>
+            <tr><td>Action <span class="table-tag">Hành động</span></td><td>Có 2 dạng: entry/do/exit action (gắn bên trong một State, xem mục "Hành động bên trong một State" ở trên) và Transition action (phần <code>/ Action</code> gắn trên mũi tên, xem mục Transition ở trên)</td></tr>
+          </table></div>
+        </section>
+
+        <!-- 03 - Ví dụ minh họa -->
+        <section class="lesson-section" id="vi-du">
+          <p class="eyebrow">03 · VÍ DỤ MINH HỌA</p>
+          <h2>Hai ví dụ State Diagram</h2>
+
+          <h3>Ví dụ 1 - Vòng đời đơn hàng (rẽ nhánh, nhiều Final State)</h3>
+          <p>Một đơn hàng trong hệ thống bán hàng - kết hợp Initial State, State, Transition có điều kiện, rẽ nhánh và 2 Final State:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 640 400" role="img" aria-label="State diagram vòng đời đơn hàng: Đã tạo, Đang xử lý, Đã giao hàng, Đã hủy, kết thúc bằng 2 Final State riêng biệt">
+              <defs><marker id="w6ArrowEx" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--ink)"/></marker></defs>
+
+              <circle cx="35" cy="92" r="10" style="fill:var(--ink)"/>
+              <line x1="45" y1="92" x2="88" y2="92" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowEx)"/>
+
+              <rect x="90" y="65" width="140" height="55" rx="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.6"/>
+              <text x="160" y="98" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Đã tạo</text>
+
+              <rect x="330" y="65" width="160" height="55" rx="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.6"/>
+              <text x="410" y="90" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Đang xử lý</text>
+              <text x="410" y="107" text-anchor="middle" style="font-family:var(--font-mono);font-size:10px;fill:var(--muted)">do / kiemTraKho()</text>
+              <line x1="230" y1="92" x2="328" y2="92" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowEx)"/>
+              <text x="279" y="78" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--muted)">xacNhanTT()</text>
+
+              <rect x="330" y="180" width="160" height="55" rx="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.6"/>
+              <text x="410" y="213" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Đã giao hàng</text>
+              <line x1="410" y1="120" x2="410" y2="178" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowEx)"/>
+              <text x="475" y="152" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--muted)">giaoThanhCong()</text>
+
+              <rect x="90" y="270" width="150" height="55" rx="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.6"/>
+              <text x="165" y="303" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Đã hủy</text>
+              <line x1="163" y1="120" x2="165" y2="268" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowEx)"/>
+              <text x="90" y="180" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--muted)">huy()</text>
+              <text x="90" y="196" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--muted)">[chưa TT]</text>
+
+              <line x1="345" y1="120" x2="248" y2="272" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowEx)"/>
+              <text x="330" y="220" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--muted)">hetHang()</text>
+              <text x="330" y="236" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--muted)">/ hoanTien()</text>
+
+              <circle cx="410" cy="360" r="15" style="fill:none;stroke:var(--ink);stroke-width:2"/>
+              <circle cx="410" cy="360" r="7" style="fill:var(--ink)"/>
+              <line x1="410" y1="235" x2="410" y2="343" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowEx)"/>
+
+              <circle cx="165" cy="378" r="15" style="fill:none;stroke:var(--ink);stroke-width:2"/>
+              <circle cx="165" cy="378" r="7" style="fill:var(--ink)"/>
+              <line x1="165" y1="325" x2="165" y2="361" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowEx)"/>
+            </svg>
+          </div>
+          <p class="er-relation">Từ "Đã tạo", đơn hàng đi tiếp bằng <code>xacNhanTT()</code> hoặc bị hủy sớm bằng <code>huy() [chưa TT]</code> nếu khách chưa thanh toán. Từ "Đang xử lý", đơn hàng có thể giao thành công hoặc chuyển sang "Đã hủy" nếu <code>hetHang()</code> (kèm hành động <code>hoanTien()</code>). Cả "Đã giao hàng" và "Đã hủy" đều dẫn tới Final State riêng - vòng đời đơn hàng kết thúc theo hai cách khác nhau.</p>
+
+          <div class="quick-check">
+            <p class="eyebrow">KIỂM TRA NHANH</p>
+            <p class="qc-question">Vì sao sơ đồ trên có 2 Final State (ở nhánh "Đã giao hàng" và "Đã hủy") thay vì chỉ 1?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">Vì mỗi sơ đồ trạng thái bắt buộc phải có ít nhất 2 Final State</button>
+              <button class="qc-option" type="button" data-correct="true">Vì một sơ đồ có thể có nhiều Final State - mỗi cách kết thúc vòng đời khác nhau có thể có điểm kết thúc riêng</button>
+              <button class="qc-option" type="button" data-correct="false">Vì đây là lỗi vẽ sai, đúng ra chỉ nên có 1 Final State duy nhất</button>
+            </div>
+            <div class="qc-feedback correct">✓ Chính xác! Không giống Initial State (bắt buộc duy nhất 1), một sơ đồ trạng thái có thể có <strong>nhiều Final State</strong> - miễn là mỗi nhánh dẫn tới đúng một điểm kết thúc hợp lệ cho vòng đời đối tượng.</div>
+          </div>
+
+          <h3>Ví dụ 2 - Thẻ ATM (có vòng lặp quay lại)</h3>
+          <p>Khác với đơn hàng (đi thẳng tới kết thúc), nhiều đối tượng quay vòng lại trạng thái ban đầu sau khi hoàn tất - ví dụ thẻ ngân hàng tại máy ATM, sau mỗi giao dịch lại quay về <code>Idle</code> chờ khách tiếp theo:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 700 380" role="img" aria-label="State diagram thẻ ATM: Idle, Xác thực PIN, Chờ chọn giao dịch, Kết thúc giao dịch quay vòng lại Idle, và nhánh Khóa thẻ dẫn tới Final State">
+              <defs><marker id="w6ArrowAtm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--ink)"/></marker></defs>
+
+              <circle cx="35" cy="95" r="10" style="fill:var(--ink)"/>
+              <line x1="45" y1="95" x2="88" y2="95" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowAtm)"/>
+
+              <rect x="90" y="68" width="110" height="55" rx="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.6"/>
+              <text x="145" y="101" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Idle</text>
+
+              <rect x="270" y="68" width="150" height="55" rx="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.6"/>
+              <text x="345" y="101" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Xác thực PIN</text>
+              <line x1="200" y1="95" x2="268" y2="95" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowAtm)"/>
+              <text x="234" y="80" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--muted)">cheThe()</text>
+
+              <rect x="490" y="68" width="170" height="55" rx="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.6"/>
+              <text x="575" y="101" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Chờ chọn giao dịch</text>
+              <line x1="420" y1="95" x2="488" y2="95" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowAtm)"/>
+              <text x="454" y="80" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--muted)">dungPIN()</text>
+
+              <rect x="490" y="220" width="170" height="55" rx="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.6"/>
+              <text x="575" y="253" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Kết thúc giao dịch</text>
+              <line x1="575" y1="123" x2="575" y2="218" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowAtm)"/>
+              <text x="640" y="172" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--muted)">hoanTat()</text>
+              <text x="640" y="188" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--muted)">/ inBienLai()</text>
+
+              <rect x="270" y="220" width="150" height="55" rx="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.6"/>
+              <text x="345" y="253" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink)">Khóa thẻ</text>
+              <line x1="330" y1="123" x2="345" y2="218" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowAtm)"/>
+              <text x="255" y="172" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--muted)">saiPIN()</text>
+              <text x="255" y="188" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--muted)">[sai 3 lần]</text>
+
+              <path d="M 575 275 L 575 340 L 145 340 L 145 125" style="fill:none;stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowAtm)"/>
+              <text x="360" y="356" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--muted)">rutThe() - quay lại chờ khách tiếp theo</text>
+
+              <circle cx="345" cy="345" r="15" style="fill:none;stroke:var(--ink);stroke-width:2"/>
+              <circle cx="345" cy="345" r="7" style="fill:var(--ink)"/>
+              <line x1="345" y1="275" x2="345" y2="328" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w6ArrowAtm)"/>
+            </svg>
+          </div>
+          <p class="er-relation">Điểm khác biệt với ví dụ 1: sau khi <code>hoanTat()</code> giao dịch, thẻ không kết thúc vòng đời mà <code>rutThe()</code> để <strong>quay ngược lại</strong> "Idle" - sẵn sàng phục vụ khách tiếp theo. Chỉ khi nhập sai PIN 3 lần, thẻ mới đi vào nhánh "Khóa thẻ" và kết thúc thật sự bằng Final State. Một Transition hoàn toàn có thể quay lại một trạng thái đã đi qua trước đó, miễn là hợp lý với nghiệp vụ.</p>
+        </section>
+
+        <!-- 04 - Bài tập thực hành -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">04 · BÀI TẬP THỰC HÀNH</p>
+          <h2>Thực hành trên đề tài Gym</h2>
+          <p>Sử dụng <strong>StarUML</strong>, thiết kế State Diagram cho đối tượng cuối cùng của đề tài Gym:</p>
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> ĐỀ TÀI 4 · ĐỐI TƯỢNG "THẺ TẬP"</p>
+            <p>Nhớ lại: khi đăng ký dịch vụ thành công (Tuần 2-5), khách hàng được cấp <strong>thẻ từ</strong> lưu trữ thông tin dịch vụ. Mỗi lần đến trung tâm tập, khách hàng quẹt thẻ vào máy đọc thẻ từ để hệ thống ghi nhận thời gian tập.</p>
+            <ol>
+              <li>Thiết kế State Diagram cho đối tượng <strong>"Thẻ tập"</strong></li>
+            </ol>
+          </div>
+          <div class="inline-ok"><strong>Gợi ý:</strong> Thẻ tập có thể trải qua các trạng thái như: chưa kích hoạt (mới cấp), đang hoạt động (còn hạn dịch vụ), hết hạn (dịch vụ đã kết thúc), tạm khóa (nếu trung tâm có chính sách khóa thẻ)... Hãy tự xác định sự kiện (event) nào khiến thẻ chuyển giữa các trạng thái này, dựa trên ngữ cảnh nghiệp vụ đã khảo sát từ Tuần 2.</div>
+        </section>
+
+        <!-- 05 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">05 · CHECKLIST CUỐI TUẦN 6</p>
+          <h2>Tự kiểm tra kiến thức</h2>
+          <ul class="lesson-checklist">
+            <li>Hiểu State Diagram mô tả vòng đời của một đối tượng, khác với Activity Diagram mô tả quy trình xử lý</li>
+            <li>Vẽ đúng ký hiệu Initial State (chấm đặc) và Final State (vòng tròn có chấm)</li>
+            <li>Không nhầm Initial State với Final State</li>
+            <li>Biết cú pháp Transition đầy đủ: <code>Event [Condition] / Action</code></li>
+            <li>Biết dùng entry/do/exit action bên trong một State</li>
+            <li>Biết một sơ đồ có thể có nhiều Final State nhưng chỉ 1 Initial State</li>
+            <li>Hoàn thành State Diagram cho đối tượng "Thẻ tập" của đề tài Gym</li>
+          </ul>
+
+          <h3>Kiến thức cốt lõi cần nhớ</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Initial State</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">State + entry/do/exit</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Transition: Event [Guard] / Action</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Final State</span>
+          </div>
+          <p>State Diagram khép lại chuỗi 6 tuần mô hình hóa UML của IS201 - từ Use-Case (chức năng hệ thống), Activity (quy trình xử lý), Sequence (tương tác giữa đối tượng), Class (cấu trúc tĩnh) đến State (vòng đời động của một đối tượng). Toàn bộ các sơ đồ này của đề tài tự chọn sẽ được tổng hợp lại thành bộ hồ sơ phân tích thiết kế hoàn chỉnh, trình bày tại <strong>buổi Báo cáo đồ án</strong>.</p>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần">
+          <a href="week-5.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 5: Class Diagram</span></a>
+          <span class="nav-disabled next"><span class="nav-dir">TIẾP THEO ›</span><span class="nav-title">Báo cáo đồ án <small>(Sắp mở)</small></span></span>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">TIẾN ĐỘ</span>
+          <strong>6<span>/6 tuần</span></strong>
+          <div class="mini-progress"><b style="width:100%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="khai-niem"><b>○</b> Khái niệm &amp; vai trò</li>
+            <li data-section="thanh-phan"><b>○</b> Thành phần &amp; ký hiệu</li>
+            <li data-section="vi-du"><b>○</b> Ví dụ minh họa</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập thực hành</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> StarUML</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Đây là tuần thực hành cuối cùng - hãy tổng hợp lại 5 loại sơ đồ đã học cho đồ án của nhóm.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><picture><source srcset="../../assets/img/logo-mark.png?v=1" media="(max-width: 760px)"><source srcset="../../assets/img/logo-dark.png?v=1" media="(prefers-color-scheme: dark)"><img class="brand-mark" src="../../assets/img/logo-light.png?v=1" alt="IT Learning Hub"></picture><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=11"></script>
+  <script src="../../assets/js/progress.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=16"></script>
+</body>
+</html>

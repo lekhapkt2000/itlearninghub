@@ -124,8 +124,10 @@ footer .brand{color:var(--ink);font-size:16px}
 
 @media(max-width:760px){
   .topbar-inner{min-height:64px;padding:0 20px}
+  .brand-mark{height:34px}
   .main-nav{position:absolute;top:64px;left:0;right:0;z-index:9;display:flex;flex-direction:column;align-items:flex-start;padding:20px;background:var(--bg);border-bottom:1px solid var(--line);opacity:0;visibility:hidden;transform:translateY(-6px);pointer-events:none;transition:opacity .2s,transform .2s,visibility .2s}
   .main-nav.is-open{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+  .topbar-actions{margin-left:auto}
   .mobile-toggle{display:block}
   .outline-button{display:none}
   footer{padding:40px 20px 24px}

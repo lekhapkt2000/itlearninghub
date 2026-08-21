@@ -3,11 +3,11 @@
 .breadcrumb a:hover{color:var(--primary)}
 .breadcrumb span{margin:0 6px;color:var(--faint)}
 
-.course-header{display:flex;align-items:flex-start;justify-content:space-between;gap:32px;padding:36px;background:var(--surface);border:1px solid var(--line);border-radius:16px}
+.course-header{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:20px 32px;padding:36px;background:var(--surface);border:1px solid var(--line);border-radius:16px}
 .course-header .course-code{color:var(--primary);font:700 11px var(--font-mono);letter-spacing:.1em}
 .course-header h1{margin:10px 0 6px;font-size:clamp(30px,4vw,42px);font-weight:800;letter-spacing:-.02em}
 .course-header .course-en{color:var(--muted);font-size:13px}
-.course-header-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
+.course-header-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px;margin-left:auto}
 .stat-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 .stat-card{display:flex;align-items:center;gap:10px;min-width:112px;padding:14px 16px;background:var(--bg);border:1px solid var(--line);border-radius:12px;box-shadow:0 3px 10px -6px rgb(15 23 42 / .12);transition:.3s var(--ease)}
 .stat-card:hover{transform:translateY(-3px);border-color:rgb(var(--primary-rgb) / .3);box-shadow:0 16px 28px -14px rgb(15 23 42 / .25)}

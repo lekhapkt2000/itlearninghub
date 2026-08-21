@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IS201 Tuần 2 - Sơ đồ Use-Case: khái niệm, Actor, Use-Case, các mối quan hệ Association/Include/Extend/Generalization, quy trình xây dựng sơ đồ và ví dụ minh họa.">
+  <title>Tuần 2 · Sơ đồ Use-Case - IS201</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=3">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/img/apple-touch-icon.png?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../assets/css/base.css?v=29">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=56">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../index.html" aria-label="IT Learning Hub trang chủ"><picture><source srcset="../../assets/img/logo-dark.png?v=1" media="(prefers-color-scheme: dark)"><img class="brand-mark" src="../../assets/img/logo-light.png?v=1" alt="IT Learning Hub"></picture><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="week-2.html" class="active">VI</a><a href="../../en/courses/is201/week-2.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="index.html">Tổng quan IS201 <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../index.html">Trang chủ</a><span>/</span><a href="index.html">IS201</a><span>/</span>Tuần 2</p>
+
+    <div class="week-header">
+      <div class="week-header-content">
+        <span class="week-tag">THỰC HÀNH 02 · BTHT2</span>
+        <h1>Sơ đồ Use-Case</h1>
+        <div class="week-meta"><span>5 tiết</span><span>Actor &amp; Use-Case</span><span>StarUML</span></div>
+        <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Hiểu vai trò của sơ đồ Use-Case trong phân tích hệ thống; nhận diện Actor và Use-Case; phân biệt bốn mối quan hệ Association, Include, Extend, Generalization; và vẽ được sơ đồ Use-Case hoàn chỉnh bằng StarUML.</p>
+      </div>
+      <div class="week-header-illustration" aria-hidden="true">
+        <div class="whi-card whi-card-back"></div>
+        <div class="whi-card whi-card-front">
+          <div class="whi-table">
+            <div class="whi-row whi-row-head"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+            <div class="whi-row"><span></span><span></span><span></span></div>
+          </div>
+          <div class="whi-badge"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="3.5"/><path d="M10 10l7.5 7.5"/><path d="M15 13l2-2"/><path d="M16.5 15.5l1.5-1.5"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="course-nav" aria-label="Điều hướng IS201">
+      <a href="index.html">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html" class="active">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 4 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 5 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Báo cáo đồ án <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="lesson-layout">
+      <nav class="lesson-toc" aria-label="Mục lục Tuần 2">
+        <span class="side-label">TRONG TUẦN NÀY</span>
+        <a href="#khai-niem" data-toc><b>01</b> Khái niệm &amp; vai trò</a>
+        <a href="#actor-usecase" data-toc><b>02</b> Actor &amp; Use-Case</a>
+        <a href="#moi-quan-he" data-toc><b>03</b> Các mối quan hệ</a>
+        <a href="#quy-trinh" data-toc><b>04</b> Quy trình xây dựng</a>
+        <a href="#vi-du" data-toc><b>05</b> Ví dụ minh họa</a>
+        <a href="#bai-tap" data-toc><b>06</b> Bài tập thực hành</a>
+        <a href="#checklist" data-toc><b>07</b> Checklist</a>
+      </nav>
+
+      <div class="lesson-content">
+
+        <!-- 01 - Khái niệm & vai trò -->
+        <section class="lesson-section" id="khai-niem">
+          <p class="eyebrow">01 · KHÁI NIỆM &amp; VAI TRÒ</p>
+          <h2>Sơ đồ Use-Case là gì?</h2>
+          <div class="definition"><strong>Sơ đồ Use-Case</strong> là một mô hình quan trọng trong phân tích và thiết kế hệ thống phần mềm, mô tả các chức năng của hệ thống thông qua tương tác giữa <strong>người dùng</strong> và <strong>hệ thống</strong>. Người dùng trở thành một tác nhân (<strong>Actor</strong>) với một vai trò cụ thể, mô tả cách họ tương tác với hệ thống.</div>
+
+          <p class="ascii-label">VÍ DỤ - HỆ THỐNG ĐẶT LỊCH KHÁM BỆNH</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 600 260" role="img" aria-label="Sơ đồ Use-Case hệ thống đặt lịch khám bệnh với 3 actor và 3 use-case">
+              <defs>
+                <marker id="w2ArrowConcept" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--muted)"/></marker>
+              </defs>
+              <rect x="170" y="15" width="340" height="230" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="340" y="34" text-anchor="middle" style="font-family:var(--font-mono);font-size:11px;font-weight:700;fill:var(--muted)">HỆ THỐNG ĐẶT LỊCH KHÁM BỆNH</text>
+
+              <ellipse cx="300" cy="80" rx="95" ry="26" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="300" y="84" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Quản lý lịch cá nhân</text>
+
+              <ellipse cx="300" cy="170" rx="90" ry="26" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="300" y="174" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Quản lý lịch chung</text>
+
+              <ellipse cx="440" cy="125" rx="55" ry="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="440" y="129" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Tra cứu</text>
+
+              <g style="stroke:var(--muted);stroke-width:1.4">
+                <circle cx="45" cy="70" r="7" fill="none"/>
+                <line x1="45" y1="77" x2="45" y2="98"/>
+                <line x1="34" y1="84" x2="56" y2="84"/>
+                <line x1="45" y1="98" x2="35" y2="116"/>
+                <line x1="45" y1="98" x2="55" y2="116"/>
+                <line x1="52" y1="72" x2="205" y2="76" marker-end="url(#w2ArrowConcept)"/>
+              </g>
+              <text x="45" y="132" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Bệnh nhân</text>
+
+              <g style="stroke:var(--muted);stroke-width:1.4">
+                <circle cx="45" cy="165" r="7" fill="none"/>
+                <line x1="45" y1="172" x2="45" y2="193"/>
+                <line x1="34" y1="179" x2="56" y2="179"/>
+                <line x1="45" y1="193" x2="35" y2="211"/>
+                <line x1="45" y1="193" x2="55" y2="211"/>
+                <line x1="53" y1="170" x2="207" y2="100" marker-end="url(#w2ArrowConcept)"/>
+                <line x1="53" y1="172" x2="211" y2="167" marker-end="url(#w2ArrowConcept)"/>
+              </g>
+              <text x="45" y="227" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Chuyên viên</text>
+
+              <g style="stroke:var(--muted);stroke-width:1.4">
+                <circle cx="550" cy="120" r="7" fill="none"/>
+                <line x1="550" y1="127" x2="550" y2="148"/>
+                <line x1="539" y1="134" x2="561" y2="134"/>
+                <line x1="550" y1="148" x2="540" y2="166"/>
+                <line x1="550" y1="148" x2="560" y2="166"/>
+                <line x1="543" y1="122" x2="497" y2="123" marker-end="url(#w2ArrowConcept)"/>
+              </g>
+              <text x="550" y="182" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Bác sĩ</text>
+            </svg>
+          </div>
+          <p class="er-relation">Bệnh nhân và Chuyên viên đều thao tác "Quản lý lịch cá nhân"; riêng Chuyên viên còn quản lý "Quản lý lịch chung"; Bác sĩ chỉ cần "Tra cứu". Sơ đồ này sẽ được mở rộng thêm quan hệ Include/Extend/Generalization ở mục 05.</p>
+
+          <h3>Mục đích chính</h3>
+          <ul>
+            <li>Xác định yêu cầu hệ thống theo cách đơn giản, dễ hiểu.</li>
+            <li>Mô tả cách người dùng tương tác với hệ thống mà không cần biết chi tiết kỹ thuật.</li>
+            <li>Giúp lập trình viên, tester và nhà quản lý hiểu rõ chức năng hệ thống trước khi phát triển.</li>
+          </ul>
+
+          <h3>Tầm quan trọng trong phân tích &amp; thiết kế hệ thống</h3>
+          <div class="example-grid">
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M17 17l-4.5-4.5"/></svg></span><strong>Xác định yêu cầu rõ ràng</strong><span>Nhà phân tích làm việc với khách hàng không cần kiến thức lập trình; business analyst, dev, tester, PM đều hiểu chung một sơ đồ</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5 3 10l4 5"/><path d="M13 5l4 5-4 5"/></svg></span><strong>Phát triển đúng hướng</strong><span>Đội phát triển hiểu hệ thống cần làm gì; Tester/QA tạo kịch bản kiểm thử dựa trên Use-Case</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="12" rx="1"/><path d="M3 8.5h14M7.3 8.5v7.5"/></svg></span><strong>Hỗ trợ quản lý dự án</strong><span>Chia nhỏ từng Use-Case theo giai đoạn; là bước đệm để thiết kế Class Diagram, Sequence Diagram sau này</span></div>
+          </div>
+        </section>
+
+        <!-- 02 - Actor & Use-Case -->
+        <section class="lesson-section" id="actor-usecase">
+          <p class="eyebrow">02 · THÀNH PHẦN CHÍNH</p>
+          <h2>Actor &amp; Use-Case</h2>
+          <p>Ba thành phần chính tạo nên một sơ đồ Use-Case: <strong>Actor</strong> (người hoặc hệ thống tương tác với phần mềm), <strong>Use-Case</strong> (các hành động mà hệ thống cung cấp cho Actor), và <strong>mối quan hệ</strong> (liên kết giữa Actor - Use-Case hoặc giữa các Use-Case với nhau, xem chi tiết ở mục 03).</p>
+
+          <h3>Actor (Tác nhân)</h3>
+          <p>Là những đối tượng <strong>bên ngoài</strong> tương tác với hệ thống - có thể là người dùng hoặc một hệ thống khác. Actor được phân làm 3 loại:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Phân loại</th><th>Mô tả</th></tr>
+            <tr><td>Primary Actor <span class="table-tag">Tác nhân chính</span></td><td>Người trực tiếp sử dụng chức năng chính của hệ thống</td></tr>
+            <tr><td>Supporting Actor <span class="table-tag">Tác nhân phụ</span></td><td>Admin - người cài đặt, quản lý và bảo trì hệ thống</td></tr>
+            <tr><td>External System <span class="table-tag">Hệ thống bên ngoài</span></td><td>Một hệ thống khác mà hệ thống đang xây dựng cần tương tác (VD: cổng thanh toán)</td></tr>
+          </table></div>
+          <p>Ví dụ Actor trong một hệ thống website bán hàng:</p>
+          <div class="example-grid">
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6.5" r="3.2"/><path d="M4 17c0-3.6 2.7-6 6-6s6 2.4 6 6"/></svg></span><strong>Khách hàng</strong><span>Primary Actor - đặt hàng, thanh toán</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 10 3l7 5.5"/><path d="M4.5 8.5V17h11V8.5"/><path d="M8.3 17v-5h3.4v5"/></svg></span><strong>Chủ cửa hàng</strong><span>Supporting Actor - quản lý sản phẩm, đơn hàng</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6.5" r="3.2"/><path d="M4 17c0-3.6 2.7-6 6-6s6 2.4 6 6"/></svg></span><strong>Nhân viên thanh toán</strong><span>Primary Actor - xác nhận đơn, xử lý thanh toán tại quầy</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span><strong>Hệ thống thanh toán</strong><span>External System - cổng thanh toán bên thứ ba</span></div>
+          </div>
+          <p>Một số câu hỏi giúp xác định Actor trong hệ thống:</p>
+          <ol class="question-list">
+            <li>Ai là người sử dụng chức năng chính của hệ thống? <em>(Primary Actor)</em></li>
+            <li>Ai sẽ là admin - người cài đặt, quản lý và bảo trì hệ thống? <em>(Supporting Actor)</em></li>
+            <li>Ai sẽ cần hệ thống hỗ trợ để thực hiện các tác vụ hằng ngày?</li>
+            <li>Hệ thống này có cần tương tác với hệ thống nào khác không?</li>
+            <li>Ai là người nhập dữ liệu vào hệ thống? (trường hợp hệ thống lưu trữ dữ liệu)</li>
+            <li>Ai hay cái gì quan tâm đến giá trị mà hệ thống sẽ mang lại?</li>
+          </ol>
+          <p>Ký hiệu Actor trong sơ đồ - hình que (stick figure) với tên Actor ghi bên dưới:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 120 100" role="img" aria-label="Ký hiệu Actor hình que">
+              <g style="stroke:var(--ink);stroke-width:1.6">
+                <circle cx="60" cy="20" r="9" fill="none"/>
+                <line x1="60" y1="29" x2="60" y2="58"/>
+                <line x1="44" y1="38" x2="76" y2="38"/>
+                <line x1="60" y1="58" x2="45" y2="82"/>
+                <line x1="60" y1="58" x2="75" y2="82"/>
+              </g>
+              <text x="60" y="97" text-anchor="middle" style="font-family:var(--font-mono);font-size:11px;fill:var(--muted)">Tên Actor</text>
+            </svg>
+          </div>
+
+          <h3>Use-Case (Chức năng)</h3>
+          <p>Là các chức năng hoặc nghiệp vụ mà hệ thống cung cấp cho Actor, ký hiệu bằng <strong>hình oval (ellipse)</strong> với tên Use-Case viết bên trong. Có thể phân loại Use-Case dựa trên mối quan hệ:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loại Use-Case</th><th>Mô tả</th><th>Ví dụ</th></tr>
+            <tr><td>Cơ bản</td><td>Chức năng độc lập</td><td>"Đăng nhập"</td></tr>
+            <tr><td>Mở rộng <span class="table-tag">&lt;&lt;extend&gt;&gt;</span></td><td>Chức năng có thể có hoặc không</td><td>"Quên mật khẩu" trong hệ thống đăng nhập</td></tr>
+            <tr><td>Bắt buộc <span class="table-tag">&lt;&lt;include&gt;&gt;</span></td><td>Chức năng phải thực hiện trước hoặc trong một Use-Case khác</td><td>"Xác thực tài khoản" trước khi "Rút tiền ATM"</td></tr>
+          </table></div>
+          <p>Một số câu hỏi giúp xác định Use-Case trong hệ thống:</p>
+          <ol class="question-list">
+            <li>Actor cần những chức năng nào của hệ thống?</li>
+            <li>Hành động chính của Actor là gì?</li>
+            <li>Actor có cần đọc, thêm mới, hủy bỏ, chỉnh sửa hay lưu trữ loại thông tin nào không?</li>
+            <li>Hệ thống có cần thông báo những thay đổi bất ngờ trong nội bộ cho Actor không?</li>
+            <li>Công việc hằng ngày của Actor có thể được đơn giản hóa hoặc hiệu quả hơn qua hệ thống không?</li>
+            <li>Use-Case có thể được tạo ra bởi sự kiện nào khác không?</li>
+          </ol>
+        </section>
+
+        <!-- 03 - Các mối quan hệ -->
+        <section class="lesson-section" id="moi-quan-he">
+          <p class="eyebrow">03 · CÁC MỐI QUAN HỆ TRONG SƠ ĐỒ USE-CASE</p>
+          <h2>4 loại mối quan hệ</h2>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Quan hệ</th><th>Giữa</th><th>Ý nghĩa</th></tr>
+            <tr><td>Association</td><td>Actor - Use-Case</td><td>Actor thực hiện/tương tác với Use-Case</td></tr>
+            <tr><td>Include</td><td>Use-Case - Use-Case</td><td>Use-Case A luôn cần thực hiện Use-Case B</td></tr>
+            <tr><td>Extend</td><td>Use-Case - Use-Case</td><td>Use-Case B chỉ thực hiện thêm trong một số trường hợp của Use-Case A</td></tr>
+            <tr><td>Generalization</td><td>Actor - Actor hoặc Use-Case - Use-Case</td><td>Kế thừa đặc điểm từ Actor/Use-Case cha</td></tr>
+          </table></div>
+
+          <h3>Association - Quan hệ kết hợp</h3>
+          <p>Sự tương tác giữa một Actor và một Use-Case. Nếu Actor thực hiện Use-Case, hoặc Use-Case cung cấp chức năng cho Actor, thì chúng được nối bằng một đường thẳng (có thể có mũi tên).</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 340 150" role="img" aria-label="Association giữa Khách hàng và hai Use-Case Xem tài khoản, Chuyển tiền">
+              <defs><marker id="w2ArrowAssoc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--primary)"/></marker></defs>
+              <ellipse cx="230" cy="35" rx="90" ry="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="230" y="39" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Xem tài khoản</text>
+              <ellipse cx="230" cy="112" rx="80" ry="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="230" y="116" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Chuyển tiền</text>
+              <g style="stroke:var(--muted);stroke-width:1.4">
+                <circle cx="45" cy="70" r="8" fill="none"/>
+                <line x1="45" y1="78" x2="45" y2="102"/>
+                <line x1="32" y1="86" x2="58" y2="86"/>
+                <line x1="45" y1="102" x2="32" y2="122"/>
+                <line x1="45" y1="102" x2="58" y2="122"/>
+                <line x1="53" y1="72" x2="138" y2="42" marker-end="url(#w2ArrowAssoc)"/>
+                <line x1="53" y1="82" x2="148" y2="105" marker-end="url(#w2ArrowAssoc)"/>
+              </g>
+              <text x="45" y="140" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Khách hàng</text>
+            </svg>
+          </div>
+
+          <h3>Include - Quan hệ bao hàm</h3>
+          <p>Một Use-Case <strong>bắt buộc</strong> phải sử dụng một Use-Case khác để hoàn thành chức năng của nó: <code>Use-Case A &lt;&lt;include&gt;&gt; Use-Case B</code> - trong quá trình thực thi, A sẽ <strong>luôn luôn</strong> cần thực hiện B. Ký hiệu bằng mũi tên nét đứt từ Use-Case chính đến Use-Case được bao hàm, kèm nhãn <code>&lt;&lt;include&gt;&gt;</code>.</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 480 170" role="img" aria-label="Chuyển tiền và Xem số dư đều include Tìm kiếm tài khoản">
+              <defs><marker id="w2ArrowInclude" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--muted)"/></marker></defs>
+              <ellipse cx="100" cy="35" rx="80" ry="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="100" y="39" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Chuyển tiền</text>
+              <ellipse cx="100" cy="130" rx="80" ry="24" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="100" y="134" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Xem số dư</text>
+              <ellipse cx="380" cy="82" rx="90" ry="26" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="380" y="86" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Tìm kiếm tài khoản</text>
+              <g style="stroke:var(--muted);stroke-width:1.4;stroke-dasharray:5 4">
+                <line x1="176" y1="45" x2="298" y2="70" marker-end="url(#w2ArrowInclude)"/>
+                <line x1="176" y1="120" x2="298" y2="95" marker-end="url(#w2ArrowInclude)"/>
+              </g>
+              <text x="238" y="48" text-anchor="middle" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">«include»</text>
+              <text x="238" y="118" text-anchor="middle" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">«include»</text>
+            </svg>
+          </div>
+          <p>Dù khách hàng chuyển tiền hay chỉ xem số dư, hệ thống đều <strong>luôn</strong> phải tìm được tài khoản trước - nên "Tìm kiếm tài khoản" được include ở cả hai Use-Case.</p>
+
+          <h3>Extend - Quan hệ mở rộng</h3>
+          <p>Một Use-Case có thể mở rộng thêm chức năng trong một số trường hợp <strong>đặc biệt</strong> - không bắt buộc như Include, chỉ kích hoạt khi một điều kiện cụ thể xảy ra: <code>Use-Case B &lt;&lt;extend&gt;&gt; Use-Case A</code>. Ký hiệu bằng mũi tên nét đứt từ Use-Case mở rộng <strong>đến</strong> Use-Case gốc, kèm nhãn <code>&lt;&lt;extend&gt;&gt;</code>.</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 420 140" role="img" aria-label="In báo cáo số dư extend Xem số dư">
+              <defs><marker id="w2ArrowExtend" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--muted)"/></marker></defs>
+              <ellipse cx="110" cy="75" rx="85" ry="26" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="110" y="79" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Xem số dư</text>
+              <ellipse cx="330" cy="75" rx="80" ry="26" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="330" y="72" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">In báo cáo</text>
+              <text x="330" y="87" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">số dư</text>
+              <line x1="250" y1="75" x2="200" y2="75" style="stroke:var(--muted);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#w2ArrowExtend)"/>
+              <text x="225" y="60" text-anchor="middle" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">«extend»</text>
+            </svg>
+          </div>
+          <p>"In báo cáo số dư" không xảy ra mỗi lần khách hàng xem số dư - chỉ khi khách hàng <strong>chủ động</strong> bấm in, nên đây là quan hệ Extend chứ không phải Include.</p>
+
+          <div class="quick-check">
+            <p class="eyebrow">KIỂM TRA NHANH</p>
+            <p class="qc-question">"Đăng nhập" luôn cần thực hiện "Xác thực mật khẩu" trước khi cho phép vào hệ thống. Đây là quan hệ gì?</p>
+            <div class="qc-options">
+              <button class="qc-option" type="button" data-correct="false">Association</button>
+              <button class="qc-option" type="button" data-correct="true">Include</button>
+              <button class="qc-option" type="button" data-correct="false">Extend</button>
+              <button class="qc-option" type="button" data-correct="false">Generalization</button>
+            </div>
+            <div class="qc-feedback correct">✓ Chính xác! Vì "Xác thực mật khẩu" <strong>luôn luôn bắt buộc</strong> xảy ra trong "Đăng nhập" (không có điều kiện đặc biệt nào), đây là quan hệ <strong>Include</strong>.</div>
+          </div>
+
+          <h3>Generalization - Quan hệ tổng quát hóa</h3>
+          <p>Một Actor hoặc Use-Case có thể <strong>kế thừa</strong> đặc điểm từ một Actor hoặc Use-Case khác - dùng khi có sự phân cấp. Ký hiệu bằng mũi tên <strong>đầu rỗng</strong> từ Actor/Use-Case con đến Actor/Use-Case cha.</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 540 230" role="img" aria-label="Generalization giữa Actor với Actor và giữa Use-Case với Use-Case">
+              <defs><marker id="w2ArrowGen" viewBox="0 0 12 10" refX="10" refY="5" markerWidth="9" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L11 5L0 10Z" style="fill:var(--surface);stroke:var(--muted);stroke-width:1.2"/></marker></defs>
+
+              <g style="stroke:var(--muted);stroke-width:1.4">
+                <circle cx="100" cy="25" r="8" fill="none"/>
+                <line x1="100" y1="33" x2="100" y2="57"/>
+                <line x1="87" y1="41" x2="113" y2="41"/>
+                <line x1="100" y1="57" x2="87" y2="77"/>
+                <line x1="100" y1="57" x2="113" y2="77"/>
+              </g>
+              <text x="100" y="95" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Người dùng</text>
+
+              <g style="stroke:var(--muted);stroke-width:1.4">
+                <circle cx="35" cy="150" r="8" fill="none"/>
+                <line x1="35" y1="158" x2="35" y2="182"/>
+                <line x1="22" y1="166" x2="48" y2="166"/>
+                <line x1="35" y1="182" x2="22" y2="202"/>
+                <line x1="35" y1="182" x2="48" y2="202"/>
+              </g>
+              <text x="35" y="220" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Chủ cửa hàng</text>
+
+              <g style="stroke:var(--muted);stroke-width:1.4">
+                <circle cx="165" cy="150" r="8" fill="none"/>
+                <line x1="165" y1="158" x2="165" y2="182"/>
+                <line x1="152" y1="166" x2="178" y2="166"/>
+                <line x1="165" y1="182" x2="152" y2="202"/>
+                <line x1="165" y1="182" x2="178" y2="202"/>
+              </g>
+              <text x="165" y="220" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Khách hàng</text>
+
+              <line x1="45" y1="148" x2="90" y2="45" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w2ArrowGen)"/>
+              <line x1="160" y1="148" x2="108" y2="45" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w2ArrowGen)"/>
+
+              <line x1="270" y1="115" x2="270" y2="10" style="stroke:var(--line);stroke-width:1"/>
+
+              <ellipse cx="420" cy="35" rx="95" ry="26" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="420" y="39" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Thanh toán hóa đơn</text>
+
+              <ellipse cx="330" cy="160" rx="82" ry="26" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="330" y="164" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--ink)">Thanh toán tiền mặt</text>
+
+              <ellipse cx="490" cy="170" rx="90" ry="26" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="490" y="174" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--ink)">Thanh toán chuyển khoản</text>
+
+              <line x1="355" y1="140" x2="400" y2="58" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w2ArrowGen)"/>
+              <line x1="475" y1="148" x2="435" y2="58" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w2ArrowGen)"/>
+            </svg>
+          </div>
+          <p class="er-relation">Trái - Generalization giữa Actor: "Chủ cửa hàng" và "Khách hàng" đều kế thừa "Người dùng" (đều đăng nhập được như nhau). Phải - Generalization giữa Use-Case: "Thanh toán tiền mặt" và "Thanh toán chuyển khoản" đều là dạng cụ thể của "Thanh toán hóa đơn".</p>
+        </section>
+
+        <!-- 04 - Quy trình xây dựng -->
+        <section class="lesson-section" id="quy-trinh">
+          <p class="eyebrow">04 · QUY TRÌNH XÂY DỰNG SƠ ĐỒ USE-CASE</p>
+          <h2>10 bước, 3 giai đoạn</h2>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Giai đoạn</th><th>Bước</th><th>Mục tiêu</th></tr>
+            <tr><td rowspan="5">Mô hình hóa</td><td>1. Thiết lập ngữ cảnh hệ thống</td><td>Xác định phạm vi hệ thống</td></tr>
+            <tr><td>2. Xác định các Actor</td><td>Tìm ra ai/hệ thống nào tương tác với hệ thống</td></tr>
+            <tr><td>3. Xác định các Use-Case</td><td>Tìm ra các chức năng chính của hệ thống</td></tr>
+            <tr><td>4. Xác định quan hệ Actor - Use-Case</td><td>Xác định sự tương tác giữa Actor và Use-Case</td></tr>
+            <tr><td>5. Chi tiết hóa mối quan hệ</td><td>Bổ sung và hoàn chỉnh sơ đồ</td></tr>
+            <tr><td rowspan="3">Cấu trúc</td><td>6. Xác định quan hệ Include</td><td>Xác định các Use-Case bắt buộc</td></tr>
+            <tr><td>7. Xác định quan hệ Extend</td><td>Xác định các Use-Case mở rộng</td></tr>
+            <tr><td>8. Xác định quan hệ Generalization</td><td>Xác định các Actor và Use-Case kế thừa</td></tr>
+            <tr><td rowspan="2">Review</td><td>9. Kiểm tra tính chính xác <span class="table-tag">Verification</span></td><td>Đảm bảo sơ đồ đúng với tài liệu yêu cầu</td></tr>
+            <tr><td>10. Thẩm định với người dùng <span class="table-tag">Validation</span></td><td>Đảm bảo hệ thống đáp ứng nhu cầu thực tế</td></tr>
+          </table></div>
+
+          <h3>Lưu ý khi vẽ Use-Case Diagram</h3>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Lưu ý</th><th>Giải thích</th></tr>
+            <tr><td>Đặt tên Use-Case ngắn gọn, rõ ràng</td><td>Tránh tên quá dài, khó hiểu - tên phải mô tả rõ chức năng</td></tr>
+            <tr><td>Hạn chế lạm dụng từ "Manage"</td><td>"Manage" quá chung chung - thay bằng hành động cụ thể như "Create", "Update", "Delete"</td></tr>
+            <tr><td>Không thiết kế quá nhiều Use-Case</td><td>Dùng Include, Extend, Generalization để tối ưu hóa, tránh trùng lặp và dư thừa</td></tr>
+            <tr><td>Không lạm dụng CRUD</td><td>Không cần tạo riêng từng Use-Case cho mỗi thao tác Create/Read/Update/Delete - có thể nhóm lại</td></tr>
+            <tr><td>Đảm bảo tính thẩm mỹ, dễ đọc</td><td>Canh chỉnh hợp lý, tránh chồng chéo đường kết nối, dùng màu sắc phân biệt nhóm chức năng</td></tr>
+          </table></div>
+          <div class="inline-warning"><strong>Lỗi thường gặp:</strong> Đặt use-case "Quản lý sản phẩm" rồi vẽ luôn 4 use-case con "Thêm sản phẩm", "Sửa sản phẩm", "Xóa sản phẩm", "Xem sản phẩm" tách rời - vừa lạm dụng "Manage", vừa lạm dụng CRUD. Cách xử lý tốt hơn: giữ một Use-Case "Quản lý sản phẩm" duy nhất và mô tả chi tiết CRUD trong phần đặc tả Use-Case ở Tuần 3, thay vì vẽ tách rời trên sơ đồ.</div>
+        </section>
+
+        <!-- 05 - Ví dụ minh họa -->
+        <section class="lesson-section" id="vi-du">
+          <p class="eyebrow">05 · VÍ DỤ MINH HỌA TỔNG HỢP</p>
+          <h2>Kết hợp cả 4 mối quan hệ</h2>
+          <p>Mở rộng lại đúng sơ đồ "Hệ thống đặt lịch khám bệnh" ở mục 01, bổ sung thêm Include, Extend và Generalization để thấy cả 4 loại quan hệ cùng xuất hiện trong một sơ đồ hoàn chỉnh:</p>
+          <div class="er-diagram">
+            <svg viewBox="0 0 640 320" role="img" aria-label="Sơ đồ Use-Case tổng hợp hệ thống đặt lịch khám bệnh với đầy đủ 4 mối quan hệ">
+              <defs>
+                <marker id="w2ArrowFull1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--muted)"/></marker>
+                <marker id="w2ArrowFullGen" viewBox="0 0 12 10" refX="10" refY="5" markerWidth="9" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L11 5L0 10Z" style="fill:var(--surface);stroke:var(--muted);stroke-width:1.2"/></marker>
+              </defs>
+              <rect x="230" y="15" width="380" height="260" rx="8" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <text x="420" y="34" text-anchor="middle" style="font-family:var(--font-mono);font-size:11px;font-weight:700;fill:var(--muted)">HỆ THỐNG ĐẶT LỊCH KHÁM BỆNH</text>
+
+              <ellipse cx="360" cy="90" rx="95" ry="26" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="360" y="94" text-anchor="middle" style="font-size:12px;font-weight:600;fill:var(--ink)">Đặt lịch khám</text>
+
+              <ellipse cx="360" cy="180" rx="90" ry="26" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="360" y="184" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--ink)">Xác thực tài khoản</text>
+
+              <ellipse cx="550" cy="230" rx="88" ry="30" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.5"/>
+              <text x="550" y="228" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--ink)">Nhắc lịch</text>
+              <text x="550" y="243" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--ink)">qua SMS</text>
+
+              <line x1="360" y1="116" x2="360" y2="154" style="stroke:var(--muted);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#w2ArrowFull1)"/>
+              <text x="410" y="140" text-anchor="middle" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">«include»</text>
+
+              <line x1="480" y1="212" x2="420" y2="105" style="stroke:var(--muted);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#w2ArrowFull1)"/>
+              <text x="500" y="165" text-anchor="middle" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">«extend»</text>
+
+              <g style="stroke:var(--muted);stroke-width:1.4">
+                <circle cx="60" cy="80" r="8" fill="none"/>
+                <line x1="60" y1="88" x2="60" y2="112"/>
+                <line x1="47" y1="96" x2="73" y2="96"/>
+                <line x1="60" y1="112" x2="47" y2="132"/>
+                <line x1="60" y1="112" x2="73" y2="132"/>
+                <line x1="68" y1="82" x2="255" y2="88" marker-end="url(#w2ArrowFull1)"/>
+              </g>
+              <text x="60" y="150" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Bệnh nhân</text>
+
+              <g style="stroke:var(--muted);stroke-width:1.4">
+                <circle cx="60" cy="215" r="8" fill="none"/>
+                <line x1="60" y1="223" x2="60" y2="247"/>
+                <line x1="47" y1="231" x2="73" y2="231"/>
+                <line x1="60" y1="247" x2="47" y2="267"/>
+                <line x1="60" y1="247" x2="73" y2="267"/>
+              </g>
+              <text x="60" y="285" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Bệnh nhân VIP</text>
+              <line x1="72" y1="213" x2="58" y2="90" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w2ArrowFullGen)"/>
+              <text x="115" y="155" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">generalization</text>
+            </svg>
+          </div>
+          <p class="er-relation"><strong>Association:</strong> Bệnh nhân - Đặt lịch khám. <strong>Include:</strong> Đặt lịch khám luôn cần Xác thực tài khoản. <strong>Extend:</strong> Xác thực tài khoản có thể kích hoạt thêm Nhắc lịch qua SMS (chỉ khi bệnh nhân bật tính năng này). <strong>Generalization:</strong> Bệnh nhân VIP kế thừa mọi tương tác của Bệnh nhân, không cần vẽ lại đường Association riêng.</p>
+        </section>
+
+        <!-- 06 - Bài tập thực hành -->
+        <section class="lesson-section" id="bai-tap">
+          <p class="eyebrow">06 · BÀI TẬP THỰC HÀNH</p>
+          <h2>Thực hành trên đề tài Gym</h2>
+          <p>Sử dụng <strong>StarUML</strong>, thực hiện các yêu cầu sau cho ngữ cảnh bài toán:</p>
+          <div class="practice-lab">
+            <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> ĐỀ TÀI 4</p>
+            <h3>Hệ thống quản lý phòng tập Gym</h3>
+            <ol>
+              <li><strong>Bài 1 - Xác định các Actor:</strong> Áp dụng 6 câu hỏi xác định Actor ở mục 02 cho hệ thống Gym</li>
+              <li><strong>Bài 2 - Xác định các Use-Case:</strong> Áp dụng 6 câu hỏi xác định Use-Case ở mục 02, tập trung vào hai nghiệp vụ cốt lõi "Quản lý thông tin hội viên" và "Đăng ký khóa tập, dịch vụ"</li>
+              <li><strong>Bài 3 - Xác định các mối quan hệ:</strong> Association, Generalization (nếu có), <code>&lt;&lt;include&gt;&gt;</code> (nếu có), <code>&lt;&lt;extend&gt;&gt;</code> (nếu có)</li>
+              <li><strong>Bài 4 - Thiết kế sơ đồ Use-Case:</strong> Vẽ hoàn chỉnh bằng StarUML, áp dụng đúng 5 lưu ý khi vẽ ở mục 04</li>
+            </ol>
+          </div>
+          <div class="inline-ok"><strong>Gợi ý tiếp cận:</strong> Bắt đầu từ nghiệp vụ đã xác định ở Tuần 1 (Khảo sát hiện trạng &amp; SOW của chính đề tài Gym), liệt kê Actor trước - phòng gym thường có ít nhất một tác nhân "Hội viên" (Primary) và một "Nhân viên/Lễ tân" (Supporting) - rồi mới suy ra Use-Case từ yêu cầu chức năng đã ghi nhận trước đó.</div>
+        </section>
+
+        <!-- 07 - Checklist -->
+        <section class="lesson-section" id="checklist">
+          <p class="eyebrow">07 · CHECKLIST CUỐI TUẦN 2</p>
+          <h2>Tự kiểm tra kiến thức</h2>
+          <ul class="lesson-checklist">
+            <li>Hiểu khái niệm và mục đích của sơ đồ Use-Case</li>
+            <li>Phân biệt được Primary Actor, Supporting Actor, External System</li>
+            <li>Biết ký hiệu Actor (stick figure) và Use-Case (oval)</li>
+            <li>Phân biệt được Association, Include, Extend, Generalization</li>
+            <li>Biết chiều mũi tên của Include (chính ➜ bao hàm) và Extend (mở rộng ➜ gốc)</li>
+            <li>Biết chiều mũi tên đầu rỗng của Generalization (con ➜ cha)</li>
+            <li>Nhớ quy trình 10 bước, 3 giai đoạn xây dựng sơ đồ Use-Case</li>
+            <li>Biết 5 lưu ý khi vẽ, đặc biệt tránh lạm dụng "Manage" và CRUD</li>
+            <li>Hoàn thành sơ đồ Use-Case cho đề tài Gym bằng StarUML</li>
+          </ul>
+
+          <h3>Kiến thức cốt lõi cần nhớ</h3>
+          <div class="flow-diagram">
+            <span class="flow-box">Xác định Actor</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Xác định Use-Case</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Association</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Include / Extend / Generalization</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Review &amp; hoàn thiện sơ đồ</span>
+          </div>
+          <p>Sơ đồ Use-Case chỉ mới trả lời "hệ thống có những chức năng gì". Sang <strong>Tuần 3</strong>, từng Use-Case sẽ được mô tả chi tiết bằng đặc tả Use-Case (Basic/Alternative/Exception Flow) và Activity Diagram - trả lời tiếp câu hỏi "bên trong mỗi chức năng, các bước diễn ra như thế nào".</p>
+        </section>
+
+        <nav class="week-nav-links" aria-label="Điều hướng tuần">
+          <a href="week-1.html"><span class="nav-dir">‹ TUẦN TRƯỚC</span><span class="nav-title">Tuần 1: Khảo sát hiện trạng &amp; Xác định yêu cầu</span></a>
+          <a href="week-3.html" class="next"><span class="nav-dir">TUẦN TIẾP THEO ›</span><span class="nav-title">Tuần 3: Đặc tả Use-Case &amp; Activity Diagram</span></a>
+        </nav>
+      </div>
+
+      <aside class="learning-panel">
+        <div class="panel-box panel-progress">
+          <span class="side-label">TIẾN ĐỘ</span>
+          <strong>2<span>/6 tuần</span></strong>
+          <div class="mini-progress"><b style="width:33%"></b></div>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">BẠN ĐANG HỌC</span>
+          <ul class="checklist">
+            <li data-section="khai-niem"><b>○</b> Khái niệm &amp; vai trò</li>
+            <li data-section="actor-usecase"><b>○</b> Actor &amp; Use-Case</li>
+            <li data-section="moi-quan-he"><b>○</b> Các mối quan hệ</li>
+            <li data-section="quy-trinh"><b>○</b> Quy trình xây dựng</li>
+            <li data-section="vi-du"><b>○</b> Ví dụ minh họa</li>
+            <li data-section="bai-tap"><b>○</b> Bài tập thực hành</li>
+            <li data-section="checklist"><b>○</b> Checklist</li>
+          </ul>
+        </div>
+        <div class="panel-box">
+          <span class="side-label">TÀI NGUYÊN</span>
+          <ul class="resource-list">
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6M7 15.2h4"/></svg></span> Tài liệu thực hành</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> StarUML</li>
+            <li><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v9.5"/><path d="M6 9l4 4 4-4"/><path d="M4 16.5h12"/></svg></span> <a href="#bai-tap">Bài tập</a></li>
+          </ul>
+        </div>
+        <div class="panel-box note-box">
+          <span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span>
+          <span>Cài StarUML trước khi vào buổi học nếu chưa cài ở Tuần 1.</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><picture><source srcset="../../assets/img/logo-dark.png?v=1" media="(prefers-color-scheme: dark)"><img class="brand-mark" src="../../assets/img/logo-light.png?v=1" alt="IT Learning Hub"></picture><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">Kho học liệu dành cho sinh viên Công nghệ Thông tin</p>
+      </div>
+    <nav class="footer-links"><a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../assets/js/main.js?v=11"></script>
+  <script src="../../assets/js/progress.js?v=5"></script>
+  <script src="../../assets/js/course.js?v=16"></script>
+</body>
+</html>

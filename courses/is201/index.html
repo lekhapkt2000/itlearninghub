@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IS201 Phân tích thiết kế hệ thống thông tin - Nội dung học tập sẽ được cập nhật.">
+  <meta name="description" content="IS201 Phân tích thiết kế hệ thống thông tin - Lộ trình thực hành 6 tuần từ khảo sát hiện trạng, Use-Case, Activity, Sequence, Class đến State Diagram bằng StarUML.">
   <title>IS201 · Phân tích thiết kế hệ thống thông tin - IT Learning Hub</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=3">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=3">
@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../assets/css/base.css?v=29">
-  <link rel="stylesheet" href="../../assets/css/course.css?v=55">
+  <link rel="stylesheet" href="../../assets/css/course.css?v=56">
 </head>
 <body>
   <header class="topbar">
@@ -21,7 +21,7 @@
       <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
         <a href="../../index.html#mon-hoc">Môn học</a><a href="../../index.html#thong-tin">Thông tin</a><a href="../../index.html#lien-he">Liên hệ</a>
       </nav>
-      <div class="topbar-actions"><div class="lang-switch"><a href="index.html" class="active">VI</a><a href="../../en/courses/is201/index.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="../it004/index.html">Học IT004 <span>›</span></a></div>
+      <div class="topbar-actions"><div class="lang-switch"><a href="index.html" class="active">VI</a><a href="../../en/courses/is201/index.html">EN</a></div><button class="mobile-toggle" type="button" aria-label="Mở menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="week-1.html">Vào học Tuần 1 <span>›</span></a></div>
     </div>
   </header>
 
@@ -32,20 +32,197 @@
       <div>
         <span class="course-code">IS201</span>
         <h1>Phân tích thiết kế hệ thống thông tin</h1>
-        <p class="course-en">Information Systems Analysis and Design</p>
+        <p class="course-en">Information Systems Analysis and Design · Học phần thực hành</p>
       </div>
-      <span class="week-status">Sắp ra mắt</span>
+      <div class="course-header-right">
+        <div class="stat-row">
+          <div class="stat-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.2"/><path d="M10 6v4l3 2"/></svg></span><span><strong>30</strong><span>TIẾT HỌC</span></span></div>
+          <div class="stat-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="13" height="13" rx="1.4"/><path d="M3.5 8h13"/><path d="M7 2.5v3M13 2.5v3"/></svg></span><span><strong>6</strong><span>BUỔI</span></span></div>
+          <div class="stat-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16V8M8 16V4M13 16v-9M18 16H2"/></svg></span><span><strong>5</strong><span>TIẾT/BUỔI</span></span></div>
+          <div class="stat-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10a6 6 0 1 0 12 0 6 6 0 0 0-12 0Z"/><path d="M8 10h4M10 8v4"/></svg></span><span><strong>50%</strong><span>ĐIỂM TỔNG KẾT</span></span></div>
+        </div>
+      </div>
     </div>
 
-    <section class="panel">
-      <p class="eyebrow">ĐANG XÂY DỰNG</p>
-      <h2>Nội dung sẽ được cập nhật</h2>
-      <p class="panel-lead">IT Learning Hub đang triển khai đầy đủ IT004 - Cơ sở dữ liệu và IS355 - Công nghệ Blockchain trong học kỳ này. Nội dung học tập theo tuần của IS201 sẽ được triển khai tiếp theo trên cùng cấu trúc đó.</p>
-      <div class="hero-actions" style="margin-top:22px">
-        <a class="ghost-button" href="../it004/index.html">Xem IT004 đã triển khai <span>›</span></a>
-        <a class="ghost-button" href="../is355/index.html">Xem IS355 đã triển khai <span>›</span></a>
-      </div>
-    </section>
+    <nav class="course-nav" aria-label="Điều hướng IS201">
+      <a href="index.html" class="active">Tổng quan</a>
+      <a href="week-1.html">Tuần 1</a>
+      <a href="week-2.html">Tuần 2</a>
+      <a href="week-3.html">Tuần 3</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 4 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 5 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Tuần 6 <small>Sắp mở</small></span>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Báo cáo đồ án <small>Sắp mở</small></span>
+    </nav>
+
+    <div class="course-main">
+        <section class="panel intro-panel">
+          <div class="intro-panel-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3" width="6" height="4.4" rx="1"/><rect x="11.5" y="3" width="6" height="4.4" rx="1"/><rect x="7" y="12.6" width="6" height="4.4" rx="1"/><path d="M5.5 7.4v2.6a2 2 0 0 0 2 2h1M14.5 7.4v2.6a2 2 0 0 1-2 2h-1"/></svg></div>
+          <div class="intro-panel-body">
+            <p class="eyebrow">GIỚI THIỆU MÔN HỌC</p>
+            <h2>IS201 · Phân tích thiết kế hệ thống thông tin</h2>
+            <p class="intro-subtitle">Information Systems Analysis and Design · Học phần thực hành</p>
+            <p class="panel-lead">Trang bị quy trình và kỹ năng phân tích thiết kế hệ thống thông tin hướng đối tượng bằng UML, đi từ khảo sát hiện trạng, xác định yêu cầu đến mô hình hóa bằng Use-Case, Activity, Sequence, Class và State Diagram. Toàn bộ 6 buổi thực hành xoay quanh một đề tài minh họa xuyên suốt - <strong>Hệ thống quản lý phòng tập Gym</strong> - để sinh viên thấy rõ một hệ thống được phân tích và thiết kế nhất quán qua từng loại sơ đồ, trước khi tự chọn đề tài và áp dụng lại toàn bộ quy trình đó cho đồ án cuối kỳ của nhóm mình.</p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">YÊU CẦU CHUNG</p>
+          <h2>Nguyên tắc làm việc nhóm &amp; đồ án</h2>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.2" cy="7" r="2.6"/><path d="M2 17a5.2 5.2 0 0 1 10.4 0"/><circle cx="14.6" cy="8.2" r="2"/><path d="M11 17a4 4 0 0 1 7.6 0"/></svg></span> Thành lập nhóm</h3>
+              <ul>
+                <li>Mỗi nhóm gồm <strong>3-4 sinh viên</strong>, tự chọn đề tài đồ án</li>
+                <li>Đề tài đồ án không được trùng với đề tài minh họa dùng để giảng dạy trên lớp (Gym, đề tài các buổi thực hành)</li>
+                <li>Nhóm trưởng chịu trách nhiệm nộp bài tập và đồ án trên Moodle đúng hạn</li>
+              </ul>
+            </div>
+            <div class="req-card">
+              <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span> Công cụ thực hành</h3>
+              <p>Sinh viên cần cài đặt sẵn <strong>StarUML</strong> trên laptop cá nhân trước buổi Tuần 2, đây là công cụ vẽ sơ đồ UML dùng xuyên suốt từ Use-Case đến State Diagram.</p>
+              <div class="tool-list"><span>StarUML</span><span>Laptop cá nhân</span><span>Moodle</span></div>
+            </div>
+            <div class="req-card">
+              <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5 3 6v5.5c0 4 3 6.6 7 8 4-1.4 7-4 7-8V6Z"/><path d="M7.2 10 9 11.8 13 8"/></svg></span> Phạm vi đồ án</h3>
+              <ul>
+                <li>Đồ án phải đảm bảo đủ <strong>4 nhóm chức năng chính</strong>: Tra cứu, Lưu trữ, Tính toán, Thống kê - Báo cáo</li>
+                <li>Mọi thành viên trong nhóm phải nắm rõ và có khả năng trình bày, bảo vệ toàn bộ nội dung đồ án khi được hỏi</li>
+              </ul>
+            </div>
+          </div>
+          <div class="warning-box">
+            <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span> Quy định chống đạo văn</h3>
+            <p>Nghiêm cấm sao chép đề tài, sơ đồ hoặc bài làm của nhóm khác, hoặc sử dụng lại các đề tài tham khảo có sẵn trên mạng mà không tự phân tích. Nhóm vi phạm bị <strong>0 điểm toàn bộ đồ án</strong>.</p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">THỜI LƯỢNG &amp; ĐÁNH GIÁ</p>
+          <h2>30 tiết · 6 buổi</h2>
+          <p class="panel-lead">Học phần thực hành chiếm 50% điểm tổng kết môn học.</p>
+          <p class="eyebrow" style="margin-top:26px">CƠ CẤU ĐÁNH GIÁ · THỰC HÀNH 50% ĐIỂM TỔNG KẾT</p>
+          <div class="score-grid">
+            <div class="score-card"><strong>20%</strong><span>Bài tập thực hành các tuần</span></div>
+            <div class="score-card"><strong>80%</strong><span>Báo cáo đồ án cuối kỳ</span></div>
+            <div class="score-card"><strong>+1</strong><span>Điểm cộng lớp lý thuyết (tối đa)</span></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">MỤC TIÊU MÔN HỌC</p>
+          <h2>Sau 6 tuần, sinh viên có thể</h2>
+          <div class="req-grid">
+            <div class="req-card">
+              <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4v12M3 4h11l3 3-3 3H3"/></svg></span> Kiến thức nền tảng</h3>
+              <ul>
+                <li>Hiểu quy trình phân tích thiết kế hệ thống thông tin hướng đối tượng</li>
+                <li>Biết khảo sát hiện trạng và xác định yêu cầu chức năng, phi chức năng</li>
+                <li>Xây dựng được bảng phát biểu công việc (SOW) cho một hệ thống</li>
+              </ul>
+            </div>
+            <div class="req-card">
+              <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3" width="6" height="4.4" rx="1"/><rect x="11.5" y="3" width="6" height="4.4" rx="1"/><rect x="7" y="12.6" width="6" height="4.4" rx="1"/><path d="M5.5 7.4v2.6a2 2 0 0 0 2 2h1M14.5 7.4v2.6a2 2 0 0 1-2 2h-1"/></svg></span> Kỹ năng mô hình hóa UML</h3>
+              <ul>
+                <li>Vẽ thành thạo sơ đồ Use-Case, đặc tả Use-Case và Activity Diagram</li>
+                <li>Vẽ được Sequence Diagram và Class Diagram thể hiện đúng các mối quan hệ</li>
+                <li>Mô hình hóa vòng đời một đối tượng bằng State Diagram</li>
+                <li>Sử dụng thành thạo StarUML cho toàn bộ các loại sơ đồ trên</li>
+              </ul>
+            </div>
+            <div class="req-card">
+              <h3><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5a5 5 0 0 0-3 9v2.5h6V11.5a5 5 0 0 0-3-9Z"/><path d="M8 17h4"/><path d="M8.5 14.5h3"/></svg></span> Phát triển đồ án</h3>
+              <ul>
+                <li>Áp dụng toàn bộ quy trình phân tích thiết kế cho một đề tài tự chọn</li>
+                <li>Tổng hợp thành bộ tài liệu và báo cáo đồ án hoàn chỉnh</li>
+                <li>Trình bày và bảo vệ kết quả đồ án trước lớp</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">CÔNG CỤ &amp; CÔNG NGHỆ SỬ DỤNG</p>
+          <h2>Bộ công cụ xuyên suốt 6 tuần</h2>
+          <p class="panel-lead">StarUML là công cụ chính, được dùng liên tục từ Tuần 2 đến Tuần 6 cho tất cả các loại sơ đồ UML.</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Công cụ</th><th>Vai trò</th><th>Xuất hiện từ</th></tr>
+            <tr><td><code>StarUML</code></td><td>Công cụ vẽ chính - Use-Case, Activity, Sequence, Class, State Diagram</td><td>Tuần 2 - Tuần 6</td></tr>
+            <tr><td>PowerDesigner, MS Visio</td><td>Giới thiệu các công cụ mô hình hóa thay thế</td><td>Tuần 1</td></tr>
+            <tr><td>Moodle</td><td>Nộp bài tập thực hành và báo cáo đồ án</td><td>Tuần 1 - Báo cáo đồ án</td></tr>
+            <tr><td>Figma, Adobe XD, HTML-CSS, Visual Studio</td><td>Thiết kế giao diện (UI) minh họa cho use-case của đồ án</td><td>Lab thiết kế giao diện</td></tr>
+          </table></div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">LỘ TRÌNH HỌC TẬP</p>
+          <h2>6 tuần học IS201</h2>
+          <p class="panel-lead">Mỗi tuần đi từ lý thuyết đến ví dụ minh họa trên đề tài Gym, sau đó thực hành trên đề tài đồ án riêng của nhóm - để đến Báo cáo đồ án, bộ sơ đồ của nhóm đã đầy đủ và nhất quán từ Use-Case đến State Diagram.</p>
+          <div class="roadmap">
+            <div class="roadmap-track">
+              <a class="roadmap-step" href="week-1.html">
+                <span class="roadmap-node">01</span>
+                <span class="roadmap-label">TUẦN 01</span>
+                <span class="roadmap-title">Khảo sát hiện trạng &amp; Xác định yêu cầu</span>
+                <span class="roadmap-topics">Hiện trạng tổ chức - nghiệp vụ - tin học · Yêu cầu chức năng/phi chức năng · SOW</span>
+              </a>
+              <a class="roadmap-step" href="week-2.html">
+                <span class="roadmap-node">02</span>
+                <span class="roadmap-label">TUẦN 02</span>
+                <span class="roadmap-title">Sơ đồ Use-Case</span>
+                <span class="roadmap-topics">Actor · Use-Case · Association · Include · Extend · Generalization</span>
+              </a>
+              <a class="roadmap-step" href="week-3.html">
+                <span class="roadmap-node">03</span>
+                <span class="roadmap-label">TUẦN 03</span>
+                <span class="roadmap-title">Đặc tả Use-Case &amp; Activity Diagram</span>
+                <span class="roadmap-topics">Basic/Alternative/Exception Flow · Business Rule · Decision · Fork/Join</span>
+              </a>
+              <div class="roadmap-step">
+                <span class="roadmap-node">04</span>
+                <span class="roadmap-label">TUẦN 04</span>
+                <span class="roadmap-title">Sequence Diagram</span>
+                <span class="roadmap-topics">Lifeline · Message · Combined Fragment (alt/opt/loop/par)</span>
+              </div>
+              <div class="roadmap-step">
+                <span class="roadmap-node">05</span>
+                <span class="roadmap-label">TUẦN 05</span>
+                <span class="roadmap-title">Class Diagram</span>
+                <span class="roadmap-topics">Thuộc tính · Phương thức · Association · Aggregation · Composition</span>
+              </div>
+              <div class="roadmap-step">
+                <span class="roadmap-node">06</span>
+                <span class="roadmap-label">TUẦN 06</span>
+                <span class="roadmap-title">State Diagram</span>
+                <span class="roadmap-topics">State · Initial/Final State · Transition · Event · Action</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <p class="eyebrow">ĐỒ ÁN CUỐI KỲ</p>
+          <h2>Từ khảo sát yêu cầu đến báo cáo hoàn chỉnh</h2>
+          <p class="panel-lead">Nội dung thực hành mỗi tuần hội tụ dần thành đồ án cuối kỳ, hoàn thiện tại buổi báo cáo đồ án:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Khảo sát &amp; SOW</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Use-Case Diagram</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Đặc tả &amp; Activity Diagram</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Sequence Diagram</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Class Diagram</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">State Diagram</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Báo cáo &amp; Bảo vệ</span>
+          </div>
+          <div class="inline-ok"><strong>Ví dụ minh họa xuyên suốt:</strong> Đề tài Gym trong tài liệu thực hành là <strong>"Hệ thống quản lý phòng tập Gym"</strong>, với hai use-case chính được phân tích và thiết kế lại qua từng tuần - "Quản lý thông tin hội viên" và "Đăng ký khóa tập, dịch vụ". Nhóm sẽ theo đúng quy trình này với đề tài tự chọn của mình.</div>
+          <p>Báo cáo đồ án gồm <strong>5 chương</strong>: Chương 1 - Giới thiệu đề tài, Chương 2 - Xác định &amp; phân tích yêu cầu, Chương 3 - Phân tích &amp; thiết kế hệ thống (Use-Case, Activity, Sequence, Class, State Diagram), Chương 4 - Cài đặt (nếu có), Chương 5 - Tổng kết.</p>
+        </section>
+    </div>
   </main>
 
   <footer>

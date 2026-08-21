@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IS201 Tuần 3 - Đặc tả Use-Case và Activity Diagram: cấu trúc đặc tả (Summary/Flow/Additional Info), 14 thành phần và ký hiệu chuẩn UML của sơ đồ hoạt động, quy trình xây dựng và ví dụ minh họa.">
+  <meta name="description" content="IS201 Tuần 3 - Đặc tả Use-Case và Activity Diagram: cấu trúc đặc tả (Summary/Basic Information, Flow, Additional Info), Trigger/Precondition/Postcondition, Business Rule, 14 thành phần và ký hiệu chuẩn UML của sơ đồ hoạt động, quy trình xây dựng và ví dụ minh họa xuyên suốt.">
   <title>Tuần 3 · Đặc tả Use-Case & Activity Diagram - IS201</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=3">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=3">
@@ -33,7 +33,7 @@
         <span class="week-tag">THỰC HÀNH 03 · BTHT3</span>
         <h1>Đặc tả Use-Case &amp; Activity Diagram</h1>
         <div class="week-meta"><span>5 tiết</span><span>Đặc tả Use-Case</span><span>Activity Diagram</span></div>
-        <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Viết được đặc tả chi tiết cho một Use-Case; hiểu vai trò và 14 thành phần của Activity Diagram cùng ký hiệu chuẩn UML; và vẽ được sơ đồ hoạt động hoàn chỉnh bằng StarUML.</p>
+        <p style="max-width:680px;color:var(--muted);font-size:13px;margin-top:10px"><strong>Mục tiêu:</strong> Viết được đặc tả Use-Case với Summary, Basic/Alternative/Exception Flow và Business Rule; chuyển được luồng sự kiện đó thành Activity Diagram đúng ký hiệu chuẩn UML (Decision/Merge, Fork/Join, Activity Final/Flow Final, Swimlane); và áp dụng cho Use-Case của đồ án nhóm bằng StarUML.</p>
       </div>
       <div class="week-header-illustration" aria-hidden="true">
         <div class="whi-card whi-card-back"></div>
@@ -93,12 +93,12 @@
           <h3>Cấu trúc một tài liệu đặc tả Use-Case</h3>
           <p>Gồm 3 phần chính:</p>
           <div class="example-grid">
-            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6"/></svg></span><strong>Tóm tắt</strong><span>Summary - thông tin tổng quan, giúp nắm bắt nhanh nội dung Use-Case</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 2.5h6l3 3v11.5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13.5a1 1 0 0 1 1-1z"/><path d="M11.5 2.5v3h3"/><path d="M7 10h6M7 12.6h6"/></svg></span><strong>Tóm tắt</strong><span>Summary/Basic Information - thông tin cấu trúc, giúp nắm bắt nhanh nội dung Use-Case</span></div>
             <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5 3 10l4 5"/><path d="M13 5l4 5-4 5"/></svg></span><strong>Luồng sự kiện</strong><span>Flow of Events - mô tả chi tiết từng bước thực hiện Use-Case</span></div>
             <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3.2 17.5 16.3H2.7Z" stroke-linejoin="round"/><path d="M10 8v3.6"/><circle cx="10" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg></span><strong>Thông tin bổ sung</strong><span>Additional Information - Business Rule và yêu cầu phi chức năng</span></div>
           </div>
 
-          <h4>Phần tóm tắt (Summary)</h4>
+          <h4>Phần tóm tắt (Summary / Basic Information)</h4>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Thành phần</th><th>Mô tả</th></tr>
             <tr><td>Tên Use-Case</td><td>Định danh rõ ràng, thể hiện chức năng chính</td></tr>
@@ -110,8 +110,16 @@
             <tr><td>Tiền điều kiện</td><td>Điều kiện cần thiết trước khi Use-Case xảy ra</td></tr>
             <tr><td>Hậu điều kiện</td><td>Hành động, sự kiện diễn ra sau khi Use-Case được thực hiện</td></tr>
           </table></div>
+          <p>Ba trường Trigger/Tiền điều kiện/Hậu điều kiện rất dễ nhầm lẫn - phân biệt bằng câu hỏi tương ứng:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Trường</th><th>Câu hỏi</th><th>Ví dụ (Use-Case "Đăng ký")</th></tr>
+            <tr><td>Trigger <span class="table-tag">Kích hoạt</span></td><td>Điều gì khiến Use-Case <strong>bắt đầu</strong>?</td><td>Khách hàng nhấn nút "Đăng ký"</td></tr>
+            <tr><td>Precondition <span class="table-tag">Tiền điều kiện</span></td><td>Điều gì phải <strong>đúng trước khi</strong> Use-Case được phép bắt đầu?</td><td>Email khách hàng nhập chưa tồn tại trong hệ thống</td></tr>
+            <tr><td>Postcondition <span class="table-tag">Hậu điều kiện</span></td><td>Điều gì phải <strong>đúng sau khi</strong> Use-Case kết thúc?</td><td>Tài khoản đã được tạo, khách hàng có thể đăng nhập</td></tr>
+          </table></div>
 
           <h4>Luồng sự kiện (Flow)</h4>
+          <p>Cách phân loại Alternative/Exception có thể khác nhau tùy template hay phương pháp phân tích. <strong>Trong phạm vi môn học, chúng ta quy ước</strong> theo tiêu chí "kết quả cuối cùng của Use-Case":</p>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Loại Flow</th><th>Mô tả</th></tr>
             <tr><td>Basic flow <span class="table-tag">Luồng chính</span></td><td>Các bước, hành động chính của Use-Case khi mọi thứ diễn ra suôn sẻ</td></tr>
@@ -119,7 +127,7 @@
             <tr><td>Exception flow <span class="table-tag">Luồng ngoại lệ</span></td><td>Các tình huống khiến Use-Case thất bại hoặc không thể hoàn thành</td></tr>
           </table></div>
           <div class="inline-ok"><strong>Cách đánh số các bước rẽ nhánh:</strong> Nếu luồng chính có bước 1-7, một nhánh thay thế tách ra ngay tại bước 4 được đặt mã <code>4a</code>; nếu nhánh đó có bước phụ tiếp theo thì đánh số <code>4a1</code>, <code>4a2</code>... Cách đánh số này giúp người đọc biết chính xác nhánh thay thế tách ra từ đâu trong luồng chính. Xem ví dụ áp dụng thực tế ở mục 05.</div>
-          <p>Trong công việc BA thực tế, Basic/Alternative/Exception Flow còn được dùng trực tiếp làm <strong>Acceptance Criteria</strong> (tiêu chí nghiệm thu) - danh sách điều kiện để xác nhận một chức năng đã cài đặt đúng. Tester dựa vào từng bước của Basic Flow để viết test case "đường đi đúng" (happy path), còn Alternative/Exception Flow trở thành các test case kiểm tra ngoại lệ - đây là lý do đặc tả Use-Case càng chi tiết thì việc kiểm thử càng chính xác.</p>
+          <p>Trong công việc BA thực tế, Basic/Alternative/Exception Flow <strong>có thể là nguồn đầu vào quan trọng</strong> để xây dựng <strong>Acceptance Criteria</strong> (tiêu chí nghiệm thu) và test case - dù hai loại tài liệu này không hoàn toàn đồng nhất. Tester thường dựa vào từng bước của Basic Flow để viết test case "đường đi đúng" (happy path), còn Alternative/Exception Flow gợi ý các test case kiểm tra ngoại lệ - đây là lý do đặc tả Use-Case càng chi tiết thì việc kiểm thử càng chính xác.</p>
 
           <h4>Thông tin bổ sung (Additional Information)</h4>
           <div class="table-wrap"><table class="ref-table">
@@ -127,7 +135,14 @@
             <tr><td>Business Rule <span class="table-tag">Quy tắc nghiệp vụ</span></td><td>Các quy định về mặt nghiệp vụ mà hệ thống phải tuân theo</td></tr>
             <tr><td>NFRs <span class="table-tag">Yêu cầu phi chức năng</span></td><td>Hiệu suất, bảo mật, tính sẵn sàng... (xem lại Tuần 1)</td></tr>
           </table></div>
-          <p><strong>Business Rule</strong> là một kỹ thuật phân tích riêng trong BABOK (<em>Business Rules Analysis</em>) - tách các ràng buộc nghiệp vụ ra khỏi luồng xử lý để dễ bảo trì khi chính sách thay đổi. Ví dụ với Use-Case "Đăng ký": <em>"Mật khẩu phải từ 8 ký tự trở lên, có ít nhất 1 chữ số"</em> hay <em>"Một tài khoản chỉ được đăng ký với một email duy nhất"</em> là Business Rule - nếu công ty đổi chính sách mật khẩu, chỉ cần sửa quy tắc này mà không phải vẽ lại toàn bộ Basic Flow.</p>
+          <p><strong>Business Rule</strong> là một kỹ thuật phân tích riêng trong BABOK (<em>Business Rules Analysis</em>) - tách các ràng buộc nghiệp vụ ra khỏi luồng xử lý để dễ bảo trì khi chính sách thay đổi. Ví dụ với Use-Case "Đăng ký": <em>"Một tài khoản chỉ được đăng ký với một email duy nhất"</em> là Business Rule - nếu công ty đổi chính sách này, chỉ cần sửa quy tắc mà không phải vẽ lại toàn bộ Basic Flow.</p>
+          <p>Business Rule rất dễ nhầm với Functional/Non-functional Requirement (Tuần 1) vì cả ba đều "quy định hệ thống phải làm gì" - phân biệt bằng câu hỏi chúng trả lời:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Loại</th><th>Trả lời câu hỏi</th><th>Ví dụ</th></tr>
+            <tr><td>Functional Requirement</td><td>Hệ thống có chức năng gì?</td><td>"Hệ thống cho phép người dùng đăng ký tài khoản"</td></tr>
+            <tr><td>Business Rule</td><td>Ràng buộc nghiệp vụ nào chi phối chức năng đó?</td><td>"Một email chỉ được liên kết với một tài khoản"</td></tr>
+            <tr><td>NFR <span class="table-tag">Security</span></td><td>Chức năng đó phải vận hành ra sao (không phải làm gì)?</td><td>"Mật khẩu phải được lưu dưới dạng hash"</td></tr>
+          </table></div>
         </section>
 
         <!-- 02 - Activity Diagram khái niệm -->
@@ -164,6 +179,7 @@
           <p class="eyebrow">03 · 14 THÀNH PHẦN &amp; KÝ HIỆU CHUẨN UML</p>
           <h2>Các thành phần của Activity Diagram</h2>
           <p>14 thành phần được chia thành 4 nhóm. Ký hiệu dưới đây vẽ đúng theo chuẩn UML - lưu ý phân biệt <strong>Decision</strong> với <strong>Merge</strong> (cùng hình thoi, khác chiều mũi tên) và <strong>Fork</strong> với <strong>Join</strong> (cùng thanh ngang, khác chiều mũi tên).</p>
+          <div class="inline-ok"><strong>Không cần thuộc cả 14 thành phần ở cùng một mức độ quan trọng:</strong> <strong>Core</strong> (bắt buộc dùng cho mọi Activity Diagram của đồ án) gồm Initial, Action, Control flow, Decision, Merge, Activity Final, Swimlane. <strong>Advanced</strong> (dùng khi luồng xử lý thực sự cần) gồm Fork, Join, Flow Final, Object Node, Object Flow. <strong>Extension</strong> (chỉ cần biết để đọc hiểu) gồm Activity (sub-activity) và Interruptible Region. Ưu tiên học chắc nhóm Core trước.</div>
 
           <h3>Nhóm nút điều khiển luồng</h3>
           <div class="er-diagram">
@@ -217,6 +233,11 @@
             <tr><td>Fork node</td><td>Chia một luồng thành nhiều luồng chạy <strong>song song</strong></td></tr>
             <tr><td>Join node</td><td>Đồng bộ - gộp các luồng song song lại thành một trước khi tiếp tục</td></tr>
           </table></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Cặp dễ nhầm</th><th>Ghi nhớ nhanh</th></tr>
+            <tr><td>Decision / Merge</td><td>Decision: <code>1 vào → nhiều ra</code> (rẽ nhánh theo điều kiện). Merge: <code>nhiều vào → 1 ra</code> (gom nhánh lại)</td></tr>
+            <tr><td>Fork / Join</td><td>Fork: <code>1 vào → nhiều ra</code>, chạy song song. Join: <code>nhiều vào → 1 ra</code>, đồng bộ trước khi tiếp tục</td></tr>
+          </table></div>
 
           <h3>Nhóm thành phần xử lý</h3>
           <div class="er-diagram">
@@ -256,6 +277,7 @@
           <h3>Nhóm tổ chức</h3>
           <div class="er-diagram">
             <svg viewBox="0 0 420 150" role="img" aria-label="Ký hiệu Swimlane và Interruptible region">
+              <defs><marker id="w3ArrowInterrupt" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--muted)"/></marker></defs>
               <rect x="30" y="15" width="140" height="95" style="fill:none;stroke:var(--ink);stroke-width:1.5"/>
               <line x1="76.6" y1="15" x2="76.6" y2="110" style="stroke:var(--ink);stroke-width:1"/>
               <line x1="123.3" y1="15" x2="123.3" y2="110" style="stroke:var(--ink);stroke-width:1"/>
@@ -263,8 +285,9 @@
               <text x="100" y="130" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--ink)">Swimlane</text>
 
               <rect x="230" y="15" width="140" height="95" rx="14" style="fill:none;stroke:var(--ink);stroke-width:1.5;stroke-dasharray:6 4"/>
-              <rect x="255" y="50" width="90" height="28" rx="6" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.3"/>
-              <path d="M370 65 l-14 -6 l6 4 l-14 6 l6 4 l-14 -4" style="fill:none;stroke:var(--muted);stroke-width:1.3"/>
+              <rect x="248" y="48" width="80" height="28" rx="6" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.3"/>
+              <path d="M328 62 L341 52 L341 72 L355 62" style="fill:none;stroke:var(--muted);stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round"/>
+              <line x1="355" y1="62" x2="392" y2="62" style="stroke:var(--muted);stroke-width:1.4" marker-end="url(#w3ArrowInterrupt)"/>
               <text x="300" y="130" text-anchor="middle" style="font-size:11px;font-weight:600;fill:var(--ink)">Interruptible region</text>
             </svg>
           </div>
@@ -282,10 +305,10 @@
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Bước</th><th>Nội dung</th><th>Lưu ý</th></tr>
             <tr><td>1. Xác định phạm vi nghiệp vụ</td><td>Phân tích Use-Case Diagram hoặc tài liệu yêu cầu để chọn quy trình cụ thể cần mô hình hóa</td><td>Xác định rõ ranh giới của quy trình (điểm bắt đầu/kết thúc)</td></tr>
-            <tr><td>2. Xác định các thành phần chính</td><td>Đặt Initial node, Activity Final node, Flow Final node</td><td>Mỗi sơ đồ chỉ có 1 Initial node, có thể có nhiều Final node</td></tr>
+            <tr><td>2. Xác định các thành phần chính</td><td>Đặt Initial node, Activity Final node, Flow Final node</td><td>UML cho phép nhiều Initial node, nhưng nên <strong>khuyến nghị dùng một Initial node</strong> để sơ đồ đơn giản, dễ đọc</td></tr>
             <tr><td>3. Liệt kê hành động (Action/Activity)</td><td>Sắp xếp Action theo trình tự thời gian</td><td>Loại bỏ các bước trùng lặp hoặc không cần thiết</td></tr>
             <tr><td>4. Thêm điều kiện rẽ nhánh</td><td>Đặt Decision node và Merge node</td><td>Mỗi Decision phải có ít nhất 2 nhánh ra, các nhánh phải bao phủ mọi trường hợp</td></tr>
-            <tr><td>5. Xử lý luồng song song</td><td>Đặt Fork node và Join node cho các tác vụ chạy đồng thời</td><td>Số luồng vào/ra của Fork và Join phải cân bằng; tránh deadlock</td></tr>
+            <tr><td>5. Xử lý luồng song song</td><td>Đặt Fork node và Join node cho các tác vụ chạy đồng thời</td><td>Fork tạo ra nhiều luồng song song; Join đồng bộ các luồng cần thiết trước khi tiếp tục - <strong>không nhất thiết số luồng vào Join phải bằng số luồng ra của một Fork cụ thể</strong>; tránh deadlock</td></tr>
             <tr><td>6. Kiểm tra và tối ưu</td><td>Đảm bảo mọi Action đều có đường đến Final node, không có "Action mồ côi"</td><td>Nhóm các Action liên quan thành Activity; dùng Swimlane nếu có nhiều Actor</td></tr>
           </table></div>
         </section>
@@ -304,7 +327,7 @@
             <tr><td>Kích hoạt</td><td>Khách hàng nhấn nút "Đăng ký" hoặc "Tạo tài khoản"</td></tr>
             <tr><td>Actors</td><td>Người dùng (khách hàng)</td></tr>
             <tr><td>Use-Case liên quan</td><td>Không có</td></tr>
-            <tr><td>Tiền điều kiện</td><td>Thiết bị của khách hàng cần kết nối Internet</td></tr>
+            <tr><td>Tiền điều kiện</td><td>Khách hàng chưa có tài khoản trong hệ thống</td></tr>
             <tr><td>Hậu điều kiện</td><td>Tài khoản được tạo, khách hàng nhận thông báo thành công và có thể đăng nhập những lần sau</td></tr>
             <tr><td>Basic flow</td><td>
               1. Khách hàng nhấn "Đăng ký" - màn hình trang đăng ký hiển thị.<br>
@@ -323,75 +346,82 @@
           </table></div>
           <p class="er-relation">Cách đọc mã bước: <code>3a</code> là nhánh thay thế tách ra ngay tại bước 3 của luồng chính; nếu nhánh đó có bước con tiếp theo sẽ đánh số <code>3a1</code>, <code>3a2</code>... Đây chính là quy tắc đánh số đã giới thiệu ở mục 01.</p>
 
-          <h3>Activity Diagram hoàn chỉnh: Đổi mật khẩu</h3>
-          <p>Sơ đồ dưới đây dùng 2 Swimlane ("Người dùng" và "Hệ thống") và kết hợp hầu hết các thành phần đã học: Initial, Action, Decision, Flow final, Activity final, Control flow.</p>
+          <h3>Activity Diagram hoàn chỉnh: Đăng ký</h3>
+          <p>Cùng một Use-Case "Đăng ký" vừa đặc tả ở trên, giờ chuyển hóa thành Activity Diagram - đúng tinh thần <strong>một Use-Case sinh ra nhiều loại tài liệu/sơ đồ</strong> xuyên suốt các tuần. Sơ đồ dùng <strong>3 Swimlane</strong> ("Khách hàng", "Hệ thống" và "CSDL") và kết hợp hầu hết các thành phần đã học: Initial, Action, Decision, Flow final, Activity final, Control flow, Object flow, Object node. Lane thứ ba (CSDL) tách riêng để thể hiện rõ bước hệ thống ghi dữ liệu xuống cơ sở dữ liệu bằng <strong>Object flow</strong> (nét đứt) đến một <strong>Object node</strong> - khác với Control flow (nét liền) chỉ thể hiện trình tự thực hiện giữa các Action.</p>
           <div class="er-diagram">
-            <svg viewBox="0 0 620 500" role="img" aria-label="Activity diagram đổi mật khẩu với 2 swimlane Người dùng và Hệ thống">
+            <svg viewBox="0 0 630 500" role="img" aria-label="Activity diagram đăng ký với 3 swimlane Khách hàng, Hệ thống và CSDL">
               <defs><marker id="w3ArrowPwd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--muted)"/></marker></defs>
 
-              <rect x="1" y="1" width="618" height="488" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
-              <line x1="310" y1="1" x2="310" y2="489" style="stroke:var(--line);stroke-width:1.5"/>
-              <rect x="1" y="1" width="309" height="28" style="fill:var(--tint)"/>
-              <rect x="311" y="1" width="308" height="28" style="fill:var(--tint)"/>
-              <text x="155" y="20" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;font-weight:700;fill:var(--muted)">NGƯỜI DÙNG</text>
-              <text x="465" y="20" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;font-weight:700;fill:var(--muted)">HỆ THỐNG</text>
+              <rect x="1" y="1" width="628" height="488" style="fill:none;stroke:var(--line);stroke-width:1.5"/>
+              <line x1="210" y1="1" x2="210" y2="489" style="stroke:var(--line);stroke-width:1.5"/>
+              <line x1="420" y1="1" x2="420" y2="489" style="stroke:var(--line);stroke-width:1.5"/>
+              <rect x="1" y="1" width="209" height="28" style="fill:var(--tint)"/>
+              <rect x="211" y="1" width="209" height="28" style="fill:var(--tint)"/>
+              <rect x="421" y="1" width="208" height="28" style="fill:var(--tint)"/>
+              <text x="105" y="20" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;font-weight:700;fill:var(--muted)">KHÁCH HÀNG</text>
+              <text x="315" y="20" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;font-weight:700;fill:var(--muted)">HỆ THỐNG</text>
+              <text x="525" y="20" text-anchor="middle" style="font-family:var(--font-mono);font-size:10.5px;font-weight:700;fill:var(--muted)">CSDL</text>
 
-              <circle cx="155" cy="55" r="8" style="fill:var(--ink)"/>
-              <line x1="155" y1="63" x2="155" y2="74" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <circle cx="105" cy="55" r="8" style="fill:var(--ink)"/>
+              <line x1="105" y1="63" x2="105" y2="74" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
 
-              <rect x="90" y="75" width="130" height="44" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
-              <text x="155" y="101" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Chọn đổi mật khẩu</text>
+              <rect x="40" y="75" width="130" height="44" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
+              <text x="105" y="101" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Nhấn "Đăng ký"</text>
 
-              <rect x="390" y="75" width="160" height="44" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
-              <text x="470" y="94" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Hiển thị form đổi</text>
-              <text x="470" y="108" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">mật khẩu</text>
-              <line x1="220" y1="97" x2="388" y2="97" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <rect x="235" y="75" width="160" height="44" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
+              <text x="315" y="94" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Hiển thị trang</text>
+              <text x="315" y="108" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">đăng ký</text>
+              <line x1="170" y1="97" x2="233" y2="97" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
 
-              <rect x="90" y="155" width="130" height="44" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
-              <text x="155" y="181" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Điền thông tin</text>
-              <line x1="392" y1="119" x2="158" y2="153" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <rect x="40" y="155" width="130" height="44" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
+              <text x="105" y="181" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Nhập thông tin</text>
+              <line x1="237" y1="119" x2="108" y2="153" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
 
-              <polygon points="155,225 187,255 155,285 123,255" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
-              <text x="155" y="303" text-anchor="middle" style="font-size:10px;font-weight:600;fill:var(--muted)">xác nhận?</text>
-              <line x1="155" y1="199" x2="155" y2="223" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <polygon points="105,225 137,255 105,285 73,255" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+              <text x="105" y="303" text-anchor="middle" style="font-size:10px;font-weight:600;fill:var(--muted)">tiếp tục?</text>
+              <line x1="105" y1="199" x2="105" y2="223" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
 
               <circle cx="45" cy="255" r="10" style="fill:none;stroke:var(--ink);stroke-width:1.5"/>
               <line x1="40" y1="250" x2="50" y2="260" style="stroke:var(--ink);stroke-width:1.2"/>
               <line x1="40" y1="260" x2="50" y2="250" style="stroke:var(--ink);stroke-width:1.2"/>
-              <line x1="121" y1="255" x2="57" y2="255" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
-              <text x="90" y="245" text-anchor="middle" style="font-size:10px;font-weight:700;fill:var(--muted)">hủy</text>
+              <line x1="73" y1="255" x2="57" y2="255" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <text x="65" y="243" text-anchor="middle" style="font-size:10px;font-weight:700;fill:var(--muted)">thoát</text>
 
-              <polygon points="465,225 497,255 465,285 433,255" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
-              <text x="465" y="303" text-anchor="middle" style="font-size:10px;font-weight:600;fill:var(--muted)">hợp lệ?</text>
-              <line x1="189" y1="255" x2="431" y2="255" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
-              <text x="310" y="245" text-anchor="middle" style="font-size:10px;font-weight:700;fill:var(--muted)">xác nhận</text>
+              <polygon points="315,225 347,255 315,285 283,255" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+              <text x="315" y="303" text-anchor="middle" style="font-size:10px;font-weight:600;fill:var(--muted)">hợp lệ?</text>
+              <line x1="137" y1="255" x2="283" y2="255" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <text x="210" y="245" text-anchor="middle" style="font-size:10px;font-weight:700;fill:var(--muted)">xác nhận</text>
 
-              <rect x="390" y="155" width="160" height="40" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
-              <text x="470" y="179" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Thông báo lỗi</text>
-              <line x1="465" y1="223" x2="470" y2="197" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
-              <text x="500" y="215" text-anchor="middle" style="font-size:10px;font-weight:700;fill:var(--muted)">false</text>
-              <line x1="470" y1="155" x2="470" y2="121" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <rect x="235" y="155" width="160" height="40" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
+              <text x="315" y="179" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Thông báo lỗi</text>
+              <line x1="315" y1="223" x2="315" y2="197" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <text x="345" y="215" text-anchor="middle" style="font-size:10px;font-weight:700;fill:var(--muted)">false</text>
+              <line x1="315" y1="155" x2="315" y2="121" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
 
-              <rect x="390" y="320" width="160" height="40" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
-              <text x="470" y="344" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Thay đổi mật khẩu</text>
-              <line x1="465" y1="287" x2="465" y2="318" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
-              <text x="495" y="305" text-anchor="middle" style="font-size:10px;font-weight:700;fill:var(--muted)">true</text>
+              <rect x="235" y="320" width="160" height="40" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
+              <text x="315" y="344" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Lưu &amp; gửi OTP</text>
+              <line x1="315" y1="287" x2="315" y2="318" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <text x="345" y="305" text-anchor="middle" style="font-size:10px;font-weight:700;fill:var(--muted)">true</text>
 
-              <rect x="390" y="390" width="160" height="40" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
-              <text x="470" y="408" text-anchor="middle" style="font-size:10px;font-weight:600;fill:var(--ink)">Thông báo</text>
-              <text x="470" y="421" text-anchor="middle" style="font-size:10px;font-weight:600;fill:var(--ink)">thành công</text>
-              <line x1="470" y1="360" x2="470" y2="388" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <rect x="460" y="320" width="130" height="40" style="fill:var(--surface);stroke:var(--ink);stroke-width:1.5"/>
+              <text x="525" y="344" text-anchor="middle" style="font-size:10.5px;font-weight:600;fill:var(--ink)">Tài khoản</text>
+              <line x1="395" y1="340" x2="458" y2="340" style="stroke:var(--muted);stroke-width:1.3;stroke-dasharray:5 4" marker-end="url(#w3ArrowPwd)"/>
 
-              <circle cx="470" cy="465" r="13" style="fill:none;stroke:var(--ink);stroke-width:1.8"/>
-              <circle cx="470" cy="465" r="6" style="fill:var(--ink)"/>
-              <line x1="470" y1="430" x2="470" y2="450" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+              <rect x="235" y="390" width="160" height="40" rx="10" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.4"/>
+              <text x="315" y="408" text-anchor="middle" style="font-size:10px;font-weight:600;fill:var(--ink)">Thông báo</text>
+              <text x="315" y="421" text-anchor="middle" style="font-size:10px;font-weight:600;fill:var(--ink)">thành công</text>
+              <line x1="315" y1="360" x2="315" y2="388" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
+
+              <circle cx="315" cy="465" r="13" style="fill:none;stroke:var(--ink);stroke-width:1.8"/>
+              <circle cx="315" cy="465" r="6" style="fill:var(--ink)"/>
+              <line x1="315" y1="430" x2="315" y2="450" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w3ArrowPwd)"/>
             </svg>
           </div>
-          <p class="er-relation">Nhánh "hủy" kết thúc sớm bằng <strong>Flow final node</strong> (chỉ dừng nhánh này). Nhánh "xác nhận" đi tiếp sang Hệ thống để kiểm tra: nếu <code>false</code> thì quay lại hiển thị form kèm thông báo lỗi (vòng lặp), nếu <code>true</code> thì đổi mật khẩu và kết thúc toàn bộ hoạt động bằng <strong>Activity final node</strong>.</p>
+          <p class="er-relation">Nhánh "thoát" (khớp với <strong>Exception flow</strong> trong đặc tả: "khách hàng thoát khỏi màn hình đăng ký giữa chừng") kết thúc sớm bằng <strong>Flow final node</strong> - chỉ dừng nhánh này. Nhánh "xác nhận" đi tiếp sang Hệ thống để kiểm tra định dạng và tính duy nhất của email (gộp bước 3-4 của Basic Flow thành một Decision): nếu <code>false</code> thì quay lại hiển thị trang đăng ký kèm thông báo lỗi (khớp Alternative flow 3a/4a, vòng lặp), nếu <code>true</code> thì hệ thống lưu thông tin xuống <strong>CSDL</strong> (Object flow nét đứt đến Object node "Tài khoản"), gửi OTP và kết thúc toàn bộ hoạt động bằng <strong>Activity final node</strong>.</p>
 
           <div class="quick-check">
             <p class="eyebrow">KIỂM TRA NHANH</p>
-            <p class="qc-question">Trong sơ đồ trên, vì sao nhánh "hủy" dùng Flow final node chứ không dùng Activity final node?</p>
+            <p class="qc-question">Trong sơ đồ trên, vì sao nhánh "thoát" dùng Flow final node chứ không dùng Activity final node?</p>
             <div class="qc-options">
               <button class="qc-option" type="button" data-correct="false">Vì Flow final node dùng cho trường hợp lỗi, Activity final node dùng cho trường hợp thành công</button>
               <button class="qc-option" type="button" data-correct="true">Vì Flow final node chỉ dừng nhánh cục bộ đó, không ảnh hưởng đến toàn bộ hoạt động</button>
@@ -411,18 +441,18 @@
             <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> BÀI 1 · QUẢN LÝ THÔNG TIN HỘI VIÊN</p>
             <p>Khách hàng có thể đăng ký làm hội viên của trung tâm. Khi đăng ký, khách hàng cung cấp cho nhân viên các thông tin: họ tên, giới tính, ngày sinh, điện thoại, địa chỉ, email. Nhân viên được phép cập nhật hoặc xóa thông tin hội viên. Khi cập nhật/xóa thông tin hội viên, nhân viên có thể sử dụng chức năng tra cứu.</p>
             <ol>
-              <li>Đặc tả Use-Case "Quản lý thông tin hội viên" (bao gồm thêm, xóa, sửa, tìm kiếm)</li>
-              <li>Thiết kế sơ đồ hoạt động (Activity Diagram)</li>
+              <li>Đặc tả Use-Case "Quản lý thông tin hội viên" - đây là Use-Case cấp chức năng nhóm, đặc tả phải nêu rõ các nhánh Thêm/Sửa/Xóa/Tìm kiếm trong Basic/Alternative flow (không viết thành một đoạn văn dài chung chung)</li>
+              <li>Thiết kế Activity Diagram cho <strong>một nhánh tiêu biểu</strong> - khuyến nghị chọn "Cập nhật thông tin hội viên" (có Decision rõ ràng: tìm thấy hội viên hay không, dữ liệu hợp lệ hay không)</li>
             </ol>
           </div>
 
           <div class="practice-lab" style="margin-top:18px">
             <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> BÀI 2 · ĐĂNG KÝ KHÓA TẬP, DỊCH VỤ</p>
             <p>Khách hàng có thể mua vé tập theo ngày hoặc đăng ký các dịch vụ tập tại trung tâm. Để đăng ký dịch vụ, khách hàng cung cấp cho nhân viên các thông tin: môn tập, gói dịch vụ tương ứng, ngày bắt đầu. Hệ thống tính và hiển thị tổng số tiền phải thanh toán. Sau khi khách hàng xác nhận và thanh toán, hệ thống lưu thông tin đăng ký và xuất hóa đơn. Trong quá trình đăng ký, nhân viên có thể sử dụng chức năng tra cứu thông tin khi cần.</p>
-            <p>Khi đăng ký dịch vụ thành công, khách hàng được cấp thẻ từ lưu trữ thông tin dịch vụ. Mỗi lần đến trung tâm, khách hàng quẹt thẻ vào máy đọc thẻ từ, hệ thống ghi nhận và theo dõi thời gian tập.</p>
+            <p>Khi đăng ký dịch vụ thành công, khách hàng được cấp thẻ từ lưu trữ thông tin dịch vụ. Mỗi lần đến trung tâm, khách hàng quẹt thẻ vào máy đọc thẻ từ, hệ thống ghi nhận và theo dõi thời gian tập. <em>(Phần quẹt thẻ này không thuộc phạm vi Activity Diagram của bài tập - đây là dữ liệu ngữ cảnh cho Tuần 6, khi lập State Diagram cho vòng đời thẻ tập.)</em></p>
             <ol>
               <li>Đặc tả Use-Case "Đăng ký khóa tập, dịch vụ"</li>
-              <li>Thiết kế sơ đồ hoạt động (Activity Diagram)</li>
+              <li>Thiết kế Activity Diagram - <strong>chỉ tập trung vào quy trình "Đăng ký khóa tập, dịch vụ"</strong> (từ chọn gói đến xuất hóa đơn), không vẽ luôn phần quẹt thẻ/ghi nhận thời gian để tránh sơ đồ quá lớn</li>
             </ol>
           </div>
 
@@ -433,17 +463,32 @@
         <section class="lesson-section" id="checklist">
           <p class="eyebrow">07 · CHECKLIST CUỐI TUẦN 3</p>
           <h2>Tự kiểm tra kiến thức</h2>
+          <h3>Know - Tôi hiểu</h3>
           <ul class="lesson-checklist">
             <li>Phân biệt được Use-Case và Đặc tả Use-Case</li>
-            <li>Nhớ 3 phần chính của đặc tả: Summary, Flow, Additional Information</li>
+            <li>Nhớ 3 phần chính của đặc tả: Summary/Basic Information, Flow, Additional Information</li>
+            <li>Phân biệt Trigger, Precondition, Postcondition bằng câu hỏi trước/sau</li>
             <li>Biết cách đánh số các bước rẽ nhánh (3a, 4a, 4a1...)</li>
+            <li>Phân biệt Business Rule với Functional Requirement và NFR</li>
             <li>Hiểu vai trò và khi nào nên dùng Activity Diagram</li>
-            <li>Vẽ đúng ký hiệu Initial, Activity Final, Flow Final node</li>
-            <li>Phân biệt Decision và Merge (cùng hình thoi, khác chiều mũi tên)</li>
-            <li>Phân biệt Fork và Join (cùng thanh ngang, khác chiều mũi tên)</li>
-            <li>Phân biệt Control flow (nét liền) và Object flow (nét đứt)</li>
-            <li>Biết dùng Swimlane khi có nhiều Actor tham gia một quy trình</li>
+            <li>Phân biệt Decision/Merge và Fork/Join bằng số luồng vào/ra</li>
+            <li>Phân biệt Activity Final (dừng toàn bộ) và Flow Final (dừng một nhánh)</li>
+          </ul>
+
+          <h3>Do - Tôi làm được</h3>
+          <ul class="lesson-checklist">
+            <li>Viết được Use-Case Specification đầy đủ Summary, Basic/Alternative/Exception Flow, Business Rule</li>
+            <li>Xác định được Action từ từng bước của Basic Flow</li>
+            <li>Xác định được Decision từ các điểm rẽ nhánh trong Alternative/Exception Flow</li>
+            <li>Vẽ đúng ký hiệu Initial, Activity Final, Flow Final, Control flow/Object flow</li>
+            <li>Dùng Swimlane để thể hiện trách nhiệm của từng Actor/bộ phận/hệ thống</li>
+          </ul>
+
+          <h3>Apply - Tôi áp dụng được</h3>
+          <ul class="lesson-checklist">
             <li>Hoàn thành đặc tả &amp; Activity Diagram cho 2 Use-Case của đề tài Gym</li>
+            <li>Đảm bảo Activity Diagram nhất quán với Use-Case Diagram đã vẽ ở Tuần 2</li>
+            <li>Đảm bảo mọi Action trên Activity Diagram đều có cơ sở từ một bước cụ thể trong Use-Case Specification - không có Action "từ trên trời rơi xuống"</li>
           </ul>
 
           <h3>Kiến thức cốt lõi cần nhớ</h3>
@@ -456,7 +501,7 @@
             <span class="flow-arrow">↓</span>
             <span class="flow-box">Vẽ Activity Diagram hoàn chỉnh</span>
           </div>
-          <p>Đặc tả Use-Case và Activity Diagram vừa mô tả <strong>hành vi động</strong> của hệ thống theo thời gian. Sang <strong>Tuần 4</strong>, sinh viên chuyển sang Sequence Diagram - mô tả cùng luồng xử lý đó nhưng tập trung vào <strong>thứ tự trao đổi thông điệp</strong> giữa các đối tượng cụ thể trong hệ thống (Boundary, Controller, Entity).</p>
+          <p>Chuỗi xuyên suốt 4 tuần đầu: <strong>Tuần 2</strong> trả lời "hệ thống có chức năng gì" (Use-Case Diagram) → <strong>Tuần 3</strong> trả lời "chức năng đó diễn ra thế nào" (Use-Case Specification → Activity Diagram) → <strong>Tuần 4</strong> trả lời "những đối tượng nào trao đổi message để thực hiện luồng đó" (Sequence Diagram). Đặc tả Use-Case và Activity Diagram vừa hoàn thành ở Tuần 3 chính là đầu vào trực tiếp để dựng Sequence Diagram - mỗi Action trên Activity Diagram thường ánh xạ thành một hoặc vài message giữa Boundary, Controller, Entity ở Tuần 4.</p>
         </section>
 
         <nav class="week-nav-links" aria-label="Điều hướng tuần">

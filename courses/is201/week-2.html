@@ -131,6 +131,9 @@
             </svg>
           </div>
           <p class="er-relation">Bệnh nhân và Chuyên viên đều thao tác "Quản lý lịch cá nhân"; riêng Chuyên viên còn quản lý "Quản lý lịch chung"; Bác sĩ chỉ cần "Tra cứu". Sơ đồ này sẽ được mở rộng thêm quan hệ Include/Extend/Generalization ở mục 05.</p>
+          <p><strong>Khung chữ nhật</strong> bao quanh các Use-Case gọi là <strong>System Boundary</strong> (ranh giới hệ thống) - nó phân tách rõ "cái gì thuộc về hệ thống đang xây dựng" (bên trong khung, các Use-Case) với "cái gì ở bên ngoài" (các Actor). Xác định đúng ranh giới này ngay từ đầu giúp nhóm tránh vẽ nhầm một tác vụ nội bộ của Actor (VD: "Bác sĩ ghi chú tay vào sổ khám") thành Use-Case của hệ thống.</p>
+
+          <div class="inline-warning"><strong>Use-Case Diagram không phải Flowchart:</strong> Sơ đồ Use-Case chỉ trả lời <strong>"Ai tương tác với hệ thống, và hệ thống cung cấp những chức năng gì"</strong> - nó không trả lời "người dùng bấm nút nào trước", "hệ thống xử lý theo thứ tự bước 1-2-3 ra sao", hay "điều kiện rẽ nhánh cụ thể là gì". Những câu hỏi về trình tự và luồng xử lý bên trong một Use-Case sẽ được trả lời ở <strong>Tuần 3</strong> bằng đặc tả Use-Case và Activity Diagram.</div>
 
           <h3>Mục đích chính</h3>
           <ul>
@@ -154,6 +157,16 @@
             <tr><td>System Use-Case <span class="table-tag">Tầng hệ thống</span></td><td>Mô tả tương tác cụ thể giữa Actor và <strong>một hệ thống phần mềm cụ thể</strong> - đây là loại Use-Case môn học tập trung xây dựng</td><td>"Đăng ký hội viên" (mức hệ thống - Nhân viên nhập liệu qua màn hình phần mềm quản lý Gym)</td></tr>
           </table></div>
           <p class="er-relation">Khi khảo sát hiện trạng ở Tuần 1, nhóm thường gặp Business Use-Case trước (mô tả cách tổ chức đang vận hành). Nhiệm vụ của sơ đồ Use-Case tuần này là <strong>chuyển hóa</strong> các Business Use-Case đó thành System Use-Case gắn với hệ thống sắp xây dựng - đây chính xác là công việc "cầu nối giữa nghiệp vụ và giải pháp" mà một BA đảm nhiệm.</p>
+
+          <h3>Từ yêu cầu chức năng đến Use-Case</h3>
+          <p>Use-Case không tự nhiên xuất hiện từ trí tưởng tượng - mỗi Use-Case phải suy ra được từ một nghiệp vụ hoặc yêu cầu chức năng đã ghi nhận ở Tuần 1. Ví dụ với hệ thống đặt lịch khám:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Bước</th><th>Nội dung</th></tr>
+            <tr><td>Nghiệp vụ hiện tại</td><td>Nhân viên tiếp nhận yêu cầu đặt lịch → kiểm tra lịch bác sĩ trống → xác nhận thông tin bệnh nhân → ghi lịch hẹn → gửi xác nhận</td></tr>
+            <tr><td>Business Use-Case</td><td><code>Đặt lịch khám</code></td></tr>
+            <tr><td>System Use-Case</td><td><code>Tra cứu lịch bác sĩ trống</code>, <code>Xác thực tài khoản</code>, <code>Đặt lịch khám</code>, <code>Xác nhận &amp; gửi thông báo</code>, <code>Hủy lịch khám</code></td></tr>
+          </table></div>
+          <p class="er-relation">Nguyên tắc xuyên suốt cần nhớ: <strong>không được tự nghĩ ra Use-Case trước rồi quay lại tìm yêu cầu để hợp thức hóa nó</strong>. Chiều đi luôn là Hiện trạng → Vấn đề → Yêu cầu (Tuần 1) → Use-Case (Tuần 2) → Use-Case Specification/Activity (Tuần 3) → Sequence/Class/State (Tuần 4-6).</p>
         </section>
 
         <!-- 02 - Actor & Use-Case -->
@@ -166,26 +179,28 @@
           <p>Là những đối tượng <strong>bên ngoài</strong> tương tác với hệ thống - có thể là người dùng hoặc một hệ thống khác. Actor được phân làm 3 loại:</p>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Phân loại</th><th>Mô tả</th></tr>
-            <tr><td>Primary Actor <span class="table-tag">Tác nhân chính</span></td><td>Người trực tiếp sử dụng chức năng chính của hệ thống</td></tr>
-            <tr><td>Supporting Actor <span class="table-tag">Tác nhân phụ</span></td><td>Admin - người cài đặt, quản lý và bảo trì hệ thống</td></tr>
+            <tr><td>Primary Actor <span class="table-tag">Tác nhân chính</span></td><td>Actor <strong>khởi tạo</strong> Use-Case để đạt được một mục tiêu cụ thể - là người "cần" hệ thống làm gì đó cho mình</td></tr>
+            <tr><td>Supporting Actor <span class="table-tag">Tác nhân phụ</span></td><td>Actor hoặc hệ thống <strong>hỗ trợ, cung cấp dịch vụ</strong> để Use-Case hoàn thành, nhưng không phải người khởi tạo</td></tr>
             <tr><td>External System <span class="table-tag">Hệ thống bên ngoài</span></td><td>Một hệ thống khác mà hệ thống đang xây dựng cần tương tác (VD: cổng thanh toán)</td></tr>
           </table></div>
+          <div class="inline-warning"><strong>Primary/Supporting là vai trò theo từng Use-Case, không phải chức danh cố định:</strong> Không nên học thuộc "Khách hàng luôn là Primary, Admin luôn là Supporting". Cùng một người có thể là Primary Actor ở Use-Case này và Supporting Actor ở Use-Case khác. Ví dụ hệ thống bán hàng: ở Use-Case "Quản lý sản phẩm", <strong>Admin chính là Primary Actor</strong> (Admin khởi tạo, trực tiếp hưởng lợi từ Use-Case); nhưng ở Use-Case "Đặt hàng", Admin (nếu tham gia xác nhận đơn) chỉ đóng vai <strong>Supporting Actor</strong> vì Khách hàng mới là người khởi tạo.</div>
           <p>Ví dụ Actor trong một hệ thống website bán hàng:</p>
           <div class="example-grid">
-            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6.5" r="3.2"/><path d="M4 17c0-3.6 2.7-6 6-6s6 2.4 6 6"/></svg></span><strong>Khách hàng</strong><span>Primary Actor - đặt hàng, thanh toán</span></div>
-            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 10 3l7 5.5"/><path d="M4.5 8.5V17h11V8.5"/><path d="M8.3 17v-5h3.4v5"/></svg></span><strong>Chủ cửa hàng</strong><span>Supporting Actor - quản lý sản phẩm, đơn hàng</span></div>
-            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6.5" r="3.2"/><path d="M4 17c0-3.6 2.7-6 6-6s6 2.4 6 6"/></svg></span><strong>Nhân viên thanh toán</strong><span>Primary Actor - xác nhận đơn, xử lý thanh toán tại quầy</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6.5" r="3.2"/><path d="M4 17c0-3.6 2.7-6 6-6s6 2.4 6 6"/></svg></span><strong>Khách hàng</strong><span>Primary Actor của "Đặt hàng" - khởi tạo đơn hàng, thanh toán</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5 10 3l7 5.5"/><path d="M4.5 8.5V17h11V8.5"/><path d="M8.3 17v-5h3.4v5"/></svg></span><strong>Chủ cửa hàng (Admin)</strong><span>Primary Actor của "Quản lý sản phẩm"; Supporting Actor của "Đặt hàng"</span></div>
+            <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6.5" r="3.2"/><path d="M4 17c0-3.6 2.7-6 6-6s6 2.4 6 6"/></svg></span><strong>Nhân viên thanh toán</strong><span>Primary Actor của "Xử lý thanh toán tại quầy"</span></div>
             <div class="example-card"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="9" rx="1"/><path d="M1.5 16h17"/></svg></span><strong>Hệ thống thanh toán</strong><span>External System - cổng thanh toán bên thứ ba</span></div>
           </div>
           <p>Một số câu hỏi giúp xác định Actor trong hệ thống:</p>
           <ol class="question-list">
-            <li>Ai là người sử dụng chức năng chính của hệ thống? <em>(Primary Actor)</em></li>
-            <li>Ai sẽ là admin - người cài đặt, quản lý và bảo trì hệ thống? <em>(Supporting Actor)</em></li>
+            <li>Ai là người <strong>khởi tạo</strong> và trực tiếp hưởng kết quả từ một chức năng của hệ thống? <em>(Primary Actor của chức năng đó)</em></li>
+            <li>Ai hoặc hệ thống nào <strong>hỗ trợ, cung cấp dịch vụ</strong> để chức năng đó hoàn thành, nhưng không phải người khởi tạo? <em>(Supporting Actor)</em></li>
             <li>Ai sẽ cần hệ thống hỗ trợ để thực hiện các tác vụ hằng ngày?</li>
             <li>Hệ thống này có cần tương tác với hệ thống nào khác không?</li>
             <li>Ai là người nhập dữ liệu vào hệ thống? (trường hợp hệ thống lưu trữ dữ liệu)</li>
             <li>Ai hay cái gì quan tâm đến giá trị mà hệ thống sẽ mang lại?</li>
           </ol>
+          <div class="inline-ok"><strong>Stakeholder ≠ Actor:</strong> Không phải mọi Stakeholder (Tuần 1) đều là Actor. Actor là Stakeholder <strong>hoặc hệ thống bên ngoài có tương tác trực tiếp</strong> với hệ thống - còn Stakeholder chỉ ra quyết định, phê duyệt hoặc bị ảnh hưởng gián tiếp thì không xuất hiện trên sơ đồ Use-Case. Ví dụ hệ thống bán hàng: Khách hàng và Chủ cửa hàng vừa là Stakeholder vừa là Actor; nhưng "Nhà đầu tư" hay "Cơ quan thuế" - dù là Stakeholder quan trọng của dự án - thường không thao tác trực tiếp với hệ thống nên không phải Actor.</div>
           <p>Ký hiệu Actor trong sơ đồ - hình que (stick figure) với tên Actor ghi bên dưới:</p>
           <div class="er-diagram">
             <svg viewBox="0 0 120 100" role="img" aria-label="Ký hiệu Actor hình que">
@@ -254,7 +269,7 @@
           </div>
 
           <h3>Include - Quan hệ bao hàm</h3>
-          <p>Một Use-Case <strong>bắt buộc</strong> phải sử dụng một Use-Case khác để hoàn thành chức năng của nó: <code>Use-Case A &lt;&lt;include&gt;&gt; Use-Case B</code> - trong quá trình thực thi, A sẽ <strong>luôn luôn</strong> cần thực hiện B. Ký hiệu bằng mũi tên nét đứt từ Use-Case chính đến Use-Case được bao hàm, kèm nhãn <code>&lt;&lt;include&gt;&gt;</code>.</p>
+          <p>Một Use-Case <strong>bắt buộc</strong> phải sử dụng một Use-Case khác để hoàn thành chức năng của nó: <code>Use-Case A &lt;&lt;include&gt;&gt; Use-Case B</code> - trong quá trình thực thi, A sẽ <strong>luôn luôn</strong> cần thực hiện B. Nói cách khác: <strong>A không thể hoàn thành nếu thiếu B</strong>. Ký hiệu bằng mũi tên nét đứt từ Use-Case chính đến Use-Case được bao hàm, kèm nhãn <code>&lt;&lt;include&gt;&gt;</code>.</p>
           <div class="er-diagram">
             <svg viewBox="0 0 480 170" role="img" aria-label="Chuyển tiền và Xem số dư đều include Tìm kiếm tài khoản">
               <defs><marker id="w2ArrowInclude" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--muted)"/></marker></defs>
@@ -275,7 +290,7 @@
           <p>Dù khách hàng chuyển tiền hay chỉ xem số dư, hệ thống đều <strong>luôn</strong> phải tìm được tài khoản trước - nên "Tìm kiếm tài khoản" được include ở cả hai Use-Case.</p>
 
           <h3>Extend - Quan hệ mở rộng</h3>
-          <p>Một Use-Case có thể mở rộng thêm chức năng trong một số trường hợp <strong>đặc biệt</strong> - không bắt buộc như Include, chỉ kích hoạt khi một điều kiện cụ thể xảy ra: <code>Use-Case B &lt;&lt;extend&gt;&gt; Use-Case A</code>. Ký hiệu bằng mũi tên nét đứt từ Use-Case mở rộng <strong>đến</strong> Use-Case gốc, kèm nhãn <code>&lt;&lt;extend&gt;&gt;</code>.</p>
+          <p>Một Use-Case có thể mở rộng thêm chức năng trong một số trường hợp <strong>đặc biệt</strong> - không bắt buộc như Include, chỉ kích hoạt khi một điều kiện cụ thể xảy ra: <code>Use-Case B &lt;&lt;extend&gt;&gt; Use-Case A</code>. Nói cách khác: <strong>A vẫn hoàn thành bình thường dù không có B</strong>. Ký hiệu bằng mũi tên nét đứt từ Use-Case mở rộng <strong>đến</strong> Use-Case gốc, kèm nhãn <code>&lt;&lt;extend&gt;&gt;</code>.</p>
           <div class="er-diagram">
             <svg viewBox="0 0 420 140" role="img" aria-label="In báo cáo số dư extend Xem số dư">
               <defs><marker id="w2ArrowExtend" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" style="fill:var(--muted)"/></marker></defs>
@@ -305,7 +320,7 @@
           <h3>Generalization - Quan hệ tổng quát hóa</h3>
           <p>Một Actor hoặc Use-Case có thể <strong>kế thừa</strong> đặc điểm từ một Actor hoặc Use-Case khác - dùng khi có sự phân cấp. Ký hiệu bằng mũi tên <strong>đầu rỗng</strong> từ Actor/Use-Case con đến Actor/Use-Case cha.</p>
           <div class="er-diagram">
-            <svg viewBox="0 0 540 230" role="img" aria-label="Generalization giữa Actor với Actor và giữa Use-Case với Use-Case">
+            <svg viewBox="0 0 610 230" role="img" aria-label="Generalization giữa Actor với Actor và giữa Use-Case với Use-Case">
               <defs><marker id="w2ArrowGen" viewBox="0 0 12 10" refX="10" refY="5" markerWidth="9" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L11 5L0 10Z" style="fill:var(--surface);stroke:var(--muted);stroke-width:1.2"/></marker></defs>
 
               <g style="stroke:var(--muted);stroke-width:1.4">
@@ -354,6 +369,22 @@
             </svg>
           </div>
           <p class="er-relation">Trái - Generalization giữa Actor: "Chủ cửa hàng" và "Khách hàng" đều kế thừa "Người dùng" (đều đăng nhập được như nhau). Phải - Generalization giữa Use-Case: "Thanh toán tiền mặt" và "Thanh toán chuyển khoản" đều là dạng cụ thể của "Thanh toán hóa đơn".</p>
+          <div class="inline-warning"><strong>Generalization chỉ dùng cho quan hệ "is-a" thật sự</strong> - "Thanh toán tiền mặt" <em>là một loại</em> "Thanh toán hóa đơn", không đơn thuần vì hai Use-Case "có cùng mục đích" hoặc "có nhiều cách thực hiện". Sinh viên dễ lạm dụng Generalization cho mọi trường hợp có nhiều phương án - nếu các phương án đó không thực sự kế thừa hành vi của nhau, chỉ cần mô tả sự khác biệt trong đặc tả Use-Case ở Tuần 3, không cần vẽ thêm Generalization trên sơ đồ.</div>
+
+          <h3>Mẹo phân biệt Include / Extend / Generalization</h3>
+          <p>Thay vì nhớ chiều mũi tên, hãy tự hỏi theo thứ tự 3 câu sau:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Câu hỏi</th><th>Nếu "Có"</th></tr>
+            <tr><td>1. A có <strong>luôn luôn</strong> phải thực hiện B không?</td><td>→ <code>Include</code></td></tr>
+            <tr><td>2. A có thể <strong>hoàn thành bình thường mà không cần</strong> B không?</td><td>→ Khả năng là <code>Extend</code></td></tr>
+            <tr><td>3. B có phải là <strong>một biến thể (is-a)</strong> của A không?</td><td>→ Cân nhắc <code>Generalization</code></td></tr>
+          </table></div>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Ví dụ</th><th>Quan hệ</th></tr>
+            <tr><td>Đặt lịch khám → Xác thực tài khoản</td><td>Include - không xác thực thì không đặt lịch được</td></tr>
+            <tr><td>Đặt hàng → Nhập mã giảm giá</td><td>Extend - không nhập mã, đơn hàng vẫn đặt thành công bình thường</td></tr>
+            <tr><td>Thanh toán hóa đơn → Thanh toán tiền mặt / Thanh toán chuyển khoản</td><td>Generalization - mỗi phương thức là một biến thể cụ thể của "Thanh toán hóa đơn"</td></tr>
+          </table></div>
         </section>
 
         <!-- 04 - Quy trình xây dựng -->
@@ -380,10 +411,29 @@
             <tr><td>Đặt tên Use-Case ngắn gọn, rõ ràng</td><td>Tránh tên quá dài, khó hiểu - tên phải mô tả rõ chức năng</td></tr>
             <tr><td>Hạn chế lạm dụng từ "Manage"</td><td>"Manage" quá chung chung - thay bằng hành động cụ thể như "Create", "Update", "Delete"</td></tr>
             <tr><td>Không thiết kế quá nhiều Use-Case</td><td>Dùng Include, Extend, Generalization để tối ưu hóa, tránh trùng lặp và dư thừa</td></tr>
-            <tr><td>Không lạm dụng CRUD</td><td>Không cần tạo riêng từng Use-Case cho mỗi thao tác Create/Read/Update/Delete - có thể nhóm lại</td></tr>
+            <tr><td>Không lạm dụng CRUD</td><td>Không cần tạo riêng từng Use-Case cho mỗi thao tác Create/Read/Update/Delete <strong>nếu chúng cùng một Actor, cùng mục tiêu nghiệp vụ</strong> - có thể nhóm lại</td></tr>
             <tr><td>Đảm bảo tính thẩm mỹ, dễ đọc</td><td>Canh chỉnh hợp lý, tránh chồng chéo đường kết nối, dùng màu sắc phân biệt nhóm chức năng</td></tr>
           </table></div>
           <div class="inline-warning"><strong>Lỗi thường gặp:</strong> Đặt use-case "Quản lý sản phẩm" rồi vẽ luôn 4 use-case con "Thêm sản phẩm", "Sửa sản phẩm", "Xóa sản phẩm", "Xem sản phẩm" tách rời - vừa lạm dụng "Manage", vừa lạm dụng CRUD. Cách xử lý tốt hơn: giữ một Use-Case "Quản lý sản phẩm" duy nhất và mô tả chi tiết CRUD trong phần đặc tả Use-Case ở Tuần 3, thay vì vẽ tách rời trên sơ đồ.</div>
+          <div class="inline-ok"><strong>"Nhóm lại" không có nghĩa là luôn luôn gộp:</strong> Nếu các thao tác CRUD có <strong>actor khác nhau, mục tiêu khác nhau, hoặc business rule khác nhau</strong>, chúng hoàn toàn có thể là hai Use-Case riêng biệt. Ví dụ: "Đặt hàng" và "Hủy đơn hàng" tuy đều thao tác trên cùng dữ liệu đơn hàng, nhưng có actor, điều kiện và luồng xử lý khác nhau đủ nhiều để tách thành hai Use-Case độc lập thay vì gộp vào một "Quản lý đơn hàng" chung chung.</div>
+
+          <h3>Workflow trên StarUML</h3>
+          <p>Môn học tập trung vào <strong>phân tích</strong>, không phải học sâu công cụ - dưới đây là trình tự thao tác cơ bản để dựng nhanh một sơ đồ Use-Case trong StarUML:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Model → Use Case Diagram</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Add Actor</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Add Use Case</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Add Subject / System Boundary</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Association</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">«include» / «extend» / Generalization</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Arrange &amp; Export</span>
+          </div>
         </section>
 
         <!-- 05 - Ví dụ minh họa -->
@@ -413,8 +463,8 @@
               <line x1="360" y1="116" x2="360" y2="154" style="stroke:var(--muted);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#w2ArrowFull1)"/>
               <text x="410" y="140" text-anchor="middle" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">«include»</text>
 
-              <line x1="480" y1="212" x2="420" y2="105" style="stroke:var(--muted);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#w2ArrowFull1)"/>
-              <text x="500" y="165" text-anchor="middle" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">«extend»</text>
+              <line x1="480" y1="212" x2="436" y2="193" style="stroke:var(--muted);stroke-width:1.4;stroke-dasharray:5 4" marker-end="url(#w2ArrowFull1)"/>
+              <text x="490" y="192" text-anchor="middle" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">«extend»</text>
 
               <g style="stroke:var(--muted);stroke-width:1.4">
                 <circle cx="60" cy="80" r="8" fill="none"/>
@@ -435,7 +485,7 @@
               </g>
               <text x="60" y="285" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Bệnh nhân VIP</text>
               <line x1="72" y1="213" x2="58" y2="90" style="stroke:var(--muted);stroke-width:1.3" marker-end="url(#w2ArrowFullGen)"/>
-              <text x="115" y="155" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">generalization</text>
+              <text x="98" y="153" style="font-family:var(--font-mono);font-size:10px;font-weight:700;fill:var(--muted)">«generalization»</text>
             </svg>
           </div>
           <p class="er-relation"><strong>Association:</strong> Bệnh nhân - Đặt lịch khám. <strong>Include:</strong> Đặt lịch khám luôn cần Xác thực tài khoản. <strong>Extend:</strong> Xác thực tài khoản có thể kích hoạt thêm Nhắc lịch qua SMS (chỉ khi bệnh nhân bật tính năng này). <strong>Generalization:</strong> Bệnh nhân VIP kế thừa mọi tương tác của Bệnh nhân, không cần vẽ lại đường Association riêng.</p>
@@ -454,6 +504,7 @@
               <li><strong>Bài 2 - Xác định các Use-Case:</strong> Áp dụng 6 câu hỏi xác định Use-Case ở mục 02, tập trung vào hai nghiệp vụ cốt lõi "Quản lý thông tin hội viên" và "Đăng ký khóa tập, dịch vụ"</li>
               <li><strong>Bài 3 - Xác định các mối quan hệ:</strong> Association, Generalization (nếu có), <code>&lt;&lt;include&gt;&gt;</code> (nếu có), <code>&lt;&lt;extend&gt;&gt;</code> (nếu có)</li>
               <li><strong>Bài 4 - Thiết kế sơ đồ Use-Case:</strong> Vẽ hoàn chỉnh bằng StarUML, áp dụng đúng 5 lưu ý khi vẽ ở mục 04</li>
+              <li><strong>Bài 5 - Nộp kèm bảng giải thích:</strong> Ngoài file sơ đồ, nộp thêm một bảng liệt kê từng thành phần (Actor/Use-Case/Include/Extend/Generalization) và giải thích ngắn gọn lý do phân loại như vậy - sơ đồ đẹp chưa chứng minh được hiểu đúng bản chất, bảng giải thích mới thể hiện rõ tư duy phân tích</li>
             </ol>
           </div>
           <div class="inline-ok"><strong>Gợi ý tiếp cận:</strong> Bắt đầu từ nghiệp vụ đã xác định ở Tuần 1 (Khảo sát hiện trạng &amp; SOW của chính đề tài Gym), liệt kê Actor trước - phòng gym thường có ít nhất một tác nhân "Hội viên" (Primary) và một "Nhân viên/Lễ tân" (Supporting) - rồi mới suy ra Use-Case từ yêu cầu chức năng đã ghi nhận trước đó.</div>
@@ -464,15 +515,16 @@
           <p class="eyebrow">07 · CHECKLIST CUỐI TUẦN 2</p>
           <h2>Tự kiểm tra kiến thức</h2>
           <ul class="lesson-checklist">
-            <li>Hiểu khái niệm và mục đích của sơ đồ Use-Case</li>
-            <li>Phân biệt được Primary Actor, Supporting Actor, External System</li>
+            <li>Hiểu khái niệm, System Boundary và mục đích của sơ đồ Use-Case - phân biệt được với Flowchart</li>
+            <li>Phân biệt Primary Actor/Supporting Actor theo <strong>vai trò trong từng Use-Case</strong>, không theo chức danh cố định</li>
+            <li>Phân biệt được Stakeholder và Actor</li>
             <li>Biết ký hiệu Actor (stick figure) và Use-Case (oval)</li>
-            <li>Phân biệt được Association, Include, Extend, Generalization</li>
+            <li>Phân biệt được Association, Include, Extend, Generalization bằng logic "bắt buộc/tùy chọn/is-a", không chỉ nhớ mũi tên</li>
             <li>Biết chiều mũi tên của Include (chính ➜ bao hàm) và Extend (mở rộng ➜ gốc)</li>
-            <li>Biết chiều mũi tên đầu rỗng của Generalization (con ➜ cha)</li>
+            <li>Biết chiều mũi tên đầu rỗng của Generalization (con ➜ cha) và chỉ dùng cho quan hệ is-a thật sự</li>
             <li>Nhớ quy trình 10 bước, 3 giai đoạn xây dựng sơ đồ Use-Case</li>
-            <li>Biết 5 lưu ý khi vẽ, đặc biệt tránh lạm dụng "Manage" và CRUD</li>
-            <li>Hoàn thành sơ đồ Use-Case cho đề tài Gym bằng StarUML</li>
+            <li>Biết 5 lưu ý khi vẽ, đặc biệt tránh lạm dụng "Manage" và CRUD - nhưng không gộp CRUD một cách máy móc</li>
+            <li>Hoàn thành sơ đồ Use-Case cho đề tài Gym bằng StarUML, kèm bảng giải thích thành phần</li>
           </ul>
 
           <h3>Kiến thức cốt lõi cần nhớ</h3>

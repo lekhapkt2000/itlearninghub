@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="IS201 Tuần 1 - Khảo sát hiện trạng và xác định yêu cầu: hiện trạng tổ chức/nghiệp vụ/tin học, yêu cầu chức năng và phi chức năng, kỹ thuật thu thập yêu cầu và xây dựng bảng phát biểu công việc (SOW).">
+  <meta name="description" content="IS201 Tuần 1 - Khảo sát hiện trạng và xác định yêu cầu: hiện trạng tổ chức/nghiệp vụ/tin học, stakeholder, vấn đề nghiệp vụ, yêu cầu chức năng và phi chức năng theo BABOK, kỹ thuật thu thập yêu cầu và xây dựng bảng phát biểu công việc (SOW).">
   <title>Tuần 1 · Khảo sát hiện trạng & Xác định yêu cầu - IS201</title>
   <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png?v=3">
   <link rel="icon" type="image/png" sizes="512x512" href="../../assets/img/favicon-512.png?v=3">
@@ -64,11 +64,12 @@
       <nav class="lesson-toc" aria-label="Mục lục Tuần 1">
         <span class="side-label">TRONG TUẦN NÀY</span>
         <a href="#khao-sat" data-toc><b>01</b> Khảo sát hiện trạng</a>
-        <a href="#xac-dinh-yeu-cau" data-toc><b>02</b> Xác định yêu cầu</a>
-        <a href="#ky-thuat-thu-thap" data-toc><b>03</b> Kỹ thuật thu thập yêu cầu</a>
-        <a href="#sow" data-toc><b>04</b> Bảng phát biểu công việc (SOW)</a>
-        <a href="#bai-tap" data-toc><b>05</b> Bài tập thực hành</a>
-        <a href="#checklist" data-toc><b>06</b> Checklist</a>
+        <a href="#stakeholder" data-toc><b>02</b> Stakeholder &amp; vấn đề nghiệp vụ</a>
+        <a href="#xac-dinh-yeu-cau" data-toc><b>03</b> Xác định yêu cầu</a>
+        <a href="#ky-thuat-thu-thap" data-toc><b>04</b> Kỹ thuật thu thập yêu cầu</a>
+        <a href="#sow" data-toc><b>05</b> Bảng phát biểu công việc (SOW)</a>
+        <a href="#bai-tap" data-toc><b>06</b> Bài tập thực hành</a>
+        <a href="#checklist" data-toc><b>07</b> Checklist</a>
       </nav>
 
       <div class="lesson-content">
@@ -103,18 +104,78 @@
             <tr><td>Con người</td><td>Trình độ chuyên môn về công nghệ thông tin trong tổ chức</td></tr>
           </table></div>
           <div class="inline-ok"><strong>Vì sao cần khảo sát cả "con người"?</strong> Một hệ thống có giao diện phức tạp sẽ khó triển khai nếu người dùng cuối chưa quen thao tác với máy tính. Mức độ tin học hóa hiện có quyết định cả về yêu cầu phi chức năng (GUI, vận hành) lẫn kế hoạch đào tạo khi triển khai.</div>
+
+          <h3>Mẫu khảo sát hiện trạng</h3>
+          <p>Ba nội dung ở trên (tổ chức - nghiệp vụ - tin học) cần được ghi chép lại thành tài liệu, không chỉ tồn tại trong đầu người khảo sát. Bảng dưới đây là một mẫu khảo sát gọn để nhóm điền trực tiếp khi phỏng vấn hoặc quan sát thực tế:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Nhóm nội dung</th><th>Các mục cần ghi nhận</th></tr>
+            <tr><td>A. Thông tin tổ chức</td><td>Tên đơn vị, lĩnh vực hoạt động, quy mô, cơ cấu tổ chức, các phòng ban liên quan</td></tr>
+            <tr><td>B. Hiện trạng nghiệp vụ</td><td>Với mỗi nghiệp vụ: người thực hiện, input, các bước xử lý, output, tần suất, vấn đề hiện tại</td></tr>
+            <tr><td>C. Hiện trạng tin học</td><td>Phần cứng, phần mềm, CSDL, hạ tầng mạng, trình độ người sử dụng</td></tr>
+            <tr><td>D. Vấn đề hiện tại</td><td>Với mỗi vấn đề: mô tả vấn đề, nguyên nhân, hậu quả, nhu cầu cải tiến</td></tr>
+          </table></div>
+          <p class="er-relation">Mục D là phần dễ bị bỏ qua nhất nhưng lại quan trọng nhất: nếu khảo sát dừng lại ở việc mô tả "hiện trạng đang làm như thế nào" mà không đi tiếp đến "vấn đề - nguyên nhân - nhu cầu", kết quả sẽ chỉ là một bài mô tả tổ chức dài dòng chứ chưa đủ để suy ra yêu cầu. Chuỗi tư duy cần theo là <strong>Hiện trạng → Vấn đề → Nguyên nhân → Nhu cầu → Yêu cầu</strong> - xem ví dụ đầy đủ ở mục Vấn đề nghiệp vụ (Problem Statement) ngay sau đây.</p>
         </section>
 
-        <!-- 02 - Xác định yêu cầu -->
+        <!-- 02 - Stakeholder & vấn đề nghiệp vụ -->
+        <section class="lesson-section" id="stakeholder">
+          <p class="eyebrow">02 · STAKEHOLDER &amp; VẤN ĐỀ NGHIỆP VỤ</p>
+          <h2>Stakeholder là ai, và vấn đề nghiệp vụ thực sự nằm ở đâu?</h2>
+          <div class="definition"><strong>Stakeholder (Các bên liên quan)</strong> là bất kỳ cá nhân, nhóm hoặc tổ chức nào có ảnh hưởng đến, hoặc bị ảnh hưởng bởi, hệ thống sắp xây dựng. Xác định đúng stakeholder ngay từ khi khảo sát hiện trạng giúp nhóm biết cần hỏi ai, và sau này biết hệ thống cần phục vụ ai.</div>
+          <p>Khi khảo sát một tổ chức, cần trả lời 5 câu hỏi để xác định đầy đủ stakeholder:</p>
+          <ul>
+            <li>Ai <strong>sử dụng</strong> hệ thống hằng ngày?</li>
+            <li>Ai <strong>cung cấp thông tin</strong> đầu vào cho hệ thống?</li>
+            <li>Ai <strong>chịu trách nhiệm</strong> về kết quả hệ thống tạo ra?</li>
+            <li>Ai là người <strong>ra quyết định</strong>, phê duyệt yêu cầu?</li>
+            <li>Ai <strong>bị ảnh hưởng</strong> bởi hệ thống dù không trực tiếp thao tác?</li>
+          </ul>
+          <p><strong>Ví dụ:</strong> Với đề tài "Quản lý công tác giảng dạy - Cố vấn học tập" (dùng cho bài tập thực hành Tuần 1), các stakeholder theo cấp bậc gồm:</p>
+          <div class="flow-diagram">
+            <span class="flow-box">Ban giám hiệu</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Phòng đào tạo</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Cố vấn học tập</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Giảng viên</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Sinh viên</span>
+          </div>
+          <div class="inline-ok"><strong>Cầu nối sang Tuần 2:</strong> Trong số các stakeholder trên, những ai <strong>trực tiếp tương tác với hệ thống</strong> (cố vấn học tập, giảng viên, sinh viên) sẽ trở thành <strong>Actor</strong> khi vẽ Use-Case Diagram; những ai chỉ ra quyết định hoặc bị ảnh hưởng gián tiếp (ban giám hiệu) thường không xuất hiện làm Actor nhưng vẫn cần được nêu trong SOW. Đây chính là chuỗi <strong>Stakeholder → Actor → Use-Case</strong> xuyên suốt từ Tuần 1 sang Tuần 2.</div>
+
+          <h3>Vấn đề nghiệp vụ (Problem Statement)</h3>
+          <p>Trước khi liệt kê "hệ thống cần chức năng gì", cần trả lời rõ ràng: <strong>vấn đề hiện tại là gì, do đâu mà có</strong>. Nếu bỏ qua bước này, yêu cầu chức năng dễ trở thành một danh sách tính năng rời rạc, không thực sự giải quyết đúng vấn đề của tổ chức. Ví dụ minh họa với chính đề tài cố vấn học tập:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Bước</th><th>Nội dung</th></tr>
+            <tr><td>1. Hiện trạng</td><td>Cố vấn học tập theo dõi kết quả học tập của sinh viên bằng file Excel cập nhật thủ công</td></tr>
+            <tr><td>2. Vấn đề</td><td>Khó phát hiện sớm sinh viên có nguy cơ nợ môn; dữ liệu cập nhật trễ so với phòng đào tạo</td></tr>
+            <tr><td>3. Nguyên nhân</td><td>Dữ liệu điểm nằm rời rạc ở nhiều file Excel khác nhau, không đồng bộ tự động với phòng đào tạo</td></tr>
+            <tr><td>4. Mục tiêu</td><td>Giúp cố vấn học tập phát hiện sớm sinh viên có nguy cơ học vụ để tư vấn kịp thời</td></tr>
+            <tr><td>5. Yêu cầu</td><td>Hệ thống tự động cảnh báo những sinh viên có điểm trung bình tích lũy dưới ngưỡng quy định</td></tr>
+            <tr><td>6. Use-Case (Tuần 2)</td><td><code>Cảnh báo học vụ</code> - Actor: Cố vấn học tập</td></tr>
+          </table></div>
+          <p class="er-relation">Đây chính là tư duy <strong>Hiện trạng → Vấn đề → Nguyên nhân → Mục tiêu → Yêu cầu → Use-Case</strong> mà một BA luôn đi qua trước khi vẽ bất kỳ sơ đồ UML nào. Khi khảo sát đề tài đồ án của nhóm, hãy thử lập bảng tương tự cho ít nhất một vấn đề chính của tổ chức.</p>
+        </section>
+
+        <!-- 03 - Xác định yêu cầu -->
         <section class="lesson-section" id="xac-dinh-yeu-cau">
-          <p class="eyebrow">02 · XÁC ĐỊNH YÊU CẦU</p>
+          <p class="eyebrow">03 · XÁC ĐỊNH YÊU CẦU</p>
           <h2>Xác định yêu cầu</h2>
           <div class="definition"><strong>Mục đích:</strong> xác định người sử dụng (khách hàng...) muốn gì ở hệ thống sắp xây dựng, từ đó chuyển đổi các yêu cầu bằng lời của nhà kinh doanh, quản lý thành các yêu cầu chi tiết - có thể dùng làm đầu vào để tạo mô hình và thiết kế hệ thống.</div>
           <p><strong>Yêu cầu là gì?</strong> Có thể hình dung đó là một tuyên bố về những gì hệ thống phải làm, hoặc một đặc điểm mà hệ thống phải có. Yêu cầu sau này sẽ được phát triển thành một mô tả kỹ thuật về cách hệ thống được triển khai. Kết quả của bước xác định yêu cầu là <strong>hồ sơ phân tích yêu cầu</strong>.</p>
           <p>Yêu cầu được chia thành hai nhóm: <strong>yêu cầu chức năng</strong> (liên quan đến quy trình, dữ liệu) và <strong>yêu cầu phi chức năng</strong> (liên quan đến hiệu suất, khả năng sử dụng).</p>
 
           <h3>Phân loại yêu cầu theo chuẩn BABOK</h3>
-          <p>Trong nghề Business Analyst (BA) chuyên nghiệp, ngoài cách chia "chức năng / phi chức năng" ở trên, <strong>BABOK</strong> (Business Analysis Body of Knowledge - khung kiến thức chuẩn quốc tế cho nghề BA, do IIBA phát hành) còn phân loại yêu cầu theo 4 cấp, đi từ mục tiêu kinh doanh cấp cao xuống tới chi tiết triển khai:</p>
+          <p>Trong nghề Business Analyst (BA) chuyên nghiệp, ngoài cách chia "chức năng / phi chức năng" ở trên, <strong>BABOK</strong> (Business Analysis Body of Knowledge - khung kiến thức chuẩn quốc tế cho nghề BA, do IIBA phát hành) còn phân loại yêu cầu theo 4 cấp, đi từ mục tiêu kinh doanh cấp cao xuống tới chi tiết triển khai. Cách dễ nhớ nhất là gắn mỗi cấp với một câu hỏi:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Cấp BABOK</th><th>Câu hỏi tương ứng</th></tr>
+            <tr><td>Business</td><td>Vì sao cần hệ thống? (WHY)</td></tr>
+            <tr><td>Stakeholder</td><td>Ai cần gì? (WHO)</td></tr>
+            <tr><td>Solution</td><td>Hệ thống phải đáp ứng gì? (WHAT)</td></tr>
+            <tr><td>Transition</td><td>Cần làm gì để chuyển sang hệ thống mới? (HOW TO TRANSITION)</td></tr>
+          </table></div>
+          <p>Chi tiết hơn của từng cấp:</p>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>Cấp yêu cầu</th><th>Mô tả</th><th>Ví dụ</th></tr>
             <tr><td>Business Requirements <span class="table-tag">Yêu cầu nghiệp vụ</span></td><td>Mục tiêu chiến lược cấp cao của tổ chức - lý do dự án tồn tại</td><td>"Giảm thời gian xử lý đăng ký hội viên xuống dưới 5 phút"</td></tr>
@@ -163,9 +224,9 @@
           </div>
         </section>
 
-        <!-- 03 - Kỹ thuật thu thập yêu cầu -->
+        <!-- 04 - Kỹ thuật thu thập yêu cầu -->
         <section class="lesson-section" id="ky-thuat-thu-thap">
-          <p class="eyebrow">03 · KỸ THUẬT THU THẬP YÊU CẦU</p>
+          <p class="eyebrow">04 · KỸ THUẬT THU THẬP YÊU CẦU</p>
           <h2>Kỹ thuật thu thập yêu cầu</h2>
           <p>Bốn kỹ thuật phổ biến để thu thập thông tin khảo sát và yêu cầu, thường được phối hợp với nhau thay vì chỉ dùng một kỹ thuật duy nhất:</p>
           <div class="table-wrap"><table class="ref-table">
@@ -178,14 +239,26 @@
             <tr><td>Prototype <span class="table-tag">Làm mẫu thử</span></td><td>Dựng nhanh giao diện/luồng demo (chưa cần code thật) để người dùng hình dung và góp ý sớm - giảm rủi ro hiểu sai yêu cầu trước khi bắt tay code chính thức</td></tr>
           </table></div>
           <p class="er-relation">4 kỹ thuật đầu là nội dung chính thức của môn học; <strong>Workshop</strong> và <strong>Prototype</strong> là hai kỹ thuật elicitation (thu thập yêu cầu) rất phổ biến trong công việc BA thực tế, được bổ sung để nhóm có thêm lựa chọn phù hợp khi khảo sát đề tài đồ án.</p>
+
+          <h3>Chọn kỹ thuật nào cho tình huống nào?</h3>
+          <p>Thực tế hiếm khi chỉ dùng một kỹ thuật - nhóm nên chọn phối hợp dựa trên tình huống cụ thể:</p>
+          <div class="table-wrap"><table class="ref-table">
+            <tr><th>Tình huống</th><th>Kỹ thuật phù hợp</th></tr>
+            <tr><td>Cần hiểu mục tiêu chiến lược của lãnh đạo/quản lý</td><td>Phỏng vấn</td></tr>
+            <tr><td>Cần khảo sát số lượng lớn người dùng (VD: hàng trăm sinh viên)</td><td>Bảng hỏi</td></tr>
+            <tr><td>Cần hiểu quy định, quy trình đã ban hành chính thức</td><td>Nghiên cứu tài liệu</td></tr>
+            <tr><td>Muốn kiểm chứng quy trình thực tế có khớp với lời kể không</td><td>Quan sát thực tế</td></tr>
+            <tr><td>Nhiều bên liên quan có ý kiến khác nhau, cần thống nhất ngay</td><td>Workshop</td></tr>
+            <tr><td>Người dùng khó hình dung hệ thống chỉ qua mô tả bằng lời</td><td>Prototype</td></tr>
+          </table></div>
         </section>
 
-        <!-- 04 - SOW -->
+        <!-- 05 - SOW -->
         <section class="lesson-section" id="sow">
-          <p class="eyebrow">04 · BẢNG PHÁT BIỂU CÔNG VIỆC (SOW)</p>
+          <p class="eyebrow">05 · BẢNG PHÁT BIỂU CÔNG VIỆC (SOW)</p>
           <h2>Bảng phát biểu công việc (Statement of Work)</h2>
           <div class="definition">Sau khi khảo sát hiện trạng và xác định yêu cầu, kết quả được tổng hợp lại thành <strong>SOW</strong> - một văn bản thống nhất giữa các bên liên quan trong dự án, làm nền tảng cho sự giao tiếp giữa các bên, bao gồm các phát biểu và chỉ đạo trong suốt quá trình hoạt động của dự án.</div>
-          <p>Trong công việc BA chuyên nghiệp, SOW thường đi kèm hoặc đóng vai trò tương đương <strong>Business Case</strong> / <strong>Project Charter</strong> - tài liệu cần được các bên liên quan <strong>phê duyệt chính thức</strong> trước khi dự án bắt đầu, làm cơ sở về phạm vi, ngân sách và trách nhiệm cho toàn bộ quá trình phân tích thiết kế sau đó.</p>
+          <p>Trong thực tế quản lý dự án, <strong>Business Case</strong>, <strong>Project Charter</strong> và SOW là các loại tài liệu khác nhau, tuy có phần nội dung giao nhau. Trong phạm vi môn học, SOW được sử dụng như tài liệu xác lập phạm vi và định hướng công việc của đồ án, giúp nhóm thống nhất mục tiêu, phạm vi, sản phẩm và trách nhiệm trước khi chuyển sang mô hình hóa UML.</p>
           <p>SOW giúp trả lời những câu hỏi cốt lõi trước khi bắt tay thực hiện dự án:</p>
           <div class="ascii-block">Mục tiêu của dự án là gì?             Ai tham gia chủ yếu vào dự án?
 Sản phẩm/dịch vụ nào được thực hiện?  Thời gian bắt đầu, kết thúc?
@@ -193,17 +266,17 @@ Sản phẩm/dịch vụ nào được thực hiện?  Thời gian bắt đầu,
 Phạm vi của dự án là gì?              Khó khăn, thách thức và giới hạn?</div>
 
           <h3>11 thành phần cơ bản của một SOW</h3>
-          <p>Ví dụ minh họa dưới đây dùng chung một ngữ cảnh - dự án <strong>"Xây dựng hệ thống quản lý đào tạo cho một trường đại học"</strong> - để thấy 11 phần liên kết với nhau như thế nào trong cùng một bộ hồ sơ:</p>
+          <p>Ví dụ minh họa dưới đây dùng chung một ngữ cảnh - dự án <strong>"Xây dựng hệ thống quản lý đào tạo cho một trường đại học"</strong> - để thấy 11 phần liên kết với nhau như thế nào trong cùng một bộ hồ sơ. Các phần đánh dấu <span class="table-tag">Trọng tâm</span> là nơi trọng tâm đánh giá của môn học tập trung vào - cần viết kỹ và chính xác; các phần còn lại là phần hoàn thiện hồ sơ, chỉ cần đủ nội dung, không cần quá chi tiết:</p>
           <div class="table-wrap"><table class="ref-table">
             <tr><th>#</th><th>Thành phần</th><th>Nội dung mẫu</th></tr>
-            <tr><td>1</td><td>Giới thiệu</td><td>Tên dự án, mục tiêu, người tham gia (nhóm dự án, PM, khách hàng, sinh viên...), các bên liên quan, người quản lý dự án, thông tin liên hệ khách hàng, đối tượng phục vụ</td></tr>
-            <tr><td>2</td><td>Phạm vi</td><td>Sản phẩm chính (phần mềm quản lý đào tạo); nội dung dự án phải làm (thiết kế CSDL, đăng nhập, xem thời khóa biểu, đăng ký/xóa/sửa học phần, gửi email giảng viên) và nội dung không làm</td></tr>
-            <tr><td>3</td><td>Các giả định</td><td>Những điều kiện coi là đúng nhưng chưa chắc chắn: người dùng thao tác đúng nghiệp vụ, thiết bị đủ đáp ứng khi bàn giao, CSDL cũ tương thích với thiết kế mới, nhân sự đủ kỹ năng</td></tr>
-            <tr><td>4</td><td>Các ràng buộc</td><td>Giới hạn cụ thể dự án phải tuân theo - ví dụ: thời gian tối đa 2,5 tháng, chi phí tối đa 6.000 USD, nhân sự tối thiểu 4 vai trò (back-end, front-end, triển khai, quản lý), 4 laptop</td></tr>
+            <tr><td>1</td><td>Giới thiệu <span class="table-tag">Trọng tâm</span></td><td>Tên dự án, mục tiêu, người tham gia (nhóm dự án, PM, khách hàng, sinh viên...), các bên liên quan, người quản lý dự án, thông tin liên hệ khách hàng, đối tượng phục vụ</td></tr>
+            <tr><td>2</td><td>Phạm vi <span class="table-tag">Trọng tâm</span></td><td>Sản phẩm chính (phần mềm quản lý đào tạo); nội dung dự án phải làm (thiết kế CSDL, đăng nhập, xem thời khóa biểu, đăng ký/xóa/sửa học phần, gửi email giảng viên) và nội dung không làm</td></tr>
+            <tr><td>3</td><td>Các giả định <span class="table-tag">Trọng tâm</span></td><td>Những điều kiện coi là đúng nhưng chưa chắc chắn: người dùng thao tác đúng nghiệp vụ, thiết bị đủ đáp ứng khi bàn giao, CSDL cũ tương thích với thiết kế mới, nhân sự đủ kỹ năng</td></tr>
+            <tr><td>4</td><td>Các ràng buộc <span class="table-tag">Trọng tâm</span></td><td>Giới hạn cụ thể dự án phải tuân theo - ví dụ: thời gian tối đa 2,5 tháng, chi phí tối đa 6.000 USD, nhân sự tối thiểu 4 vai trò (back-end, front-end, triển khai, quản lý), 4 laptop</td></tr>
             <tr><td>5</td><td>Tiêu chuẩn thực hiện</td><td>Mốc thời gian/chi phí được chấp nhận - ví dụ: bàn giao bản thiết kế sau 10 ngày, bản thử nghiệm sau 20 ngày, cài đặt triển khai không quá 45 ngày kể từ ngày bắt đầu</td></tr>
-            <tr><td>6</td><td>Sản phẩm &amp; mô tả dịch vụ</td><td>Danh sách chi tiết các tính năng của sản phẩm chính - quản lý sinh viên, đăng ký học phần, quản lý giảng viên, đăng ký/hủy học phần, đăng nhập...</td></tr>
+            <tr><td>6</td><td>Sản phẩm &amp; mô tả dịch vụ <span class="table-tag">Trọng tâm</span></td><td>Danh sách chi tiết các tính năng của sản phẩm chính - quản lý sinh viên, đăng ký học phần, quản lý giảng viên, đăng ký/hủy học phần, đăng nhập...</td></tr>
             <tr><td>7</td><td>Lợi ích &amp; nhiệm vụ các bên</td><td>Mỗi bên (khách hàng, người dùng, nhóm dự án) đều có lợi ích nhận được và nhiệm vụ phải thực hiện - ví dụ khách hàng có nhiệm vụ thanh toán đúng hạn và mô tả nghiệp vụ chính xác</td></tr>
-            <tr><td>8</td><td>Các trách nhiệm chính</td><td>Phân công trách nhiệm cụ thể: khách hàng cung cấp thông tin/tài nguyên và thanh toán; trưởng dự án đảm bảo tiến độ - chi phí - phạm vi; nhóm dự án khảo sát, xây dựng, kiểm thử, bàn giao, đào tạo</td></tr>
+            <tr><td>8</td><td>Các trách nhiệm chính <span class="table-tag">Trọng tâm</span></td><td>Phân công trách nhiệm cụ thể: khách hàng cung cấp thông tin/tài nguyên và thanh toán; trưởng dự án đảm bảo tiến độ - chi phí - phạm vi; nhóm dự án khảo sát, xây dựng, kiểm thử, bàn giao, đào tạo</td></tr>
             <tr><td>9</td><td>Tham khảo</td><td>Sơ đồ tổ chức, quy trình đăng ký/hủy học phần, quy trình sắp thời khóa biểu, mô hình phát triển phần mềm, tài liệu của các dự án tương tự</td></tr>
             <tr><td>10</td><td>Sửa đổi, bổ sung</td><td>Nhật ký thay đổi yêu cầu theo thời gian, kèm chữ ký xác nhận của các bên liên quan cho từng lần sửa đổi</td></tr>
             <tr><td>11</td><td>Chữ ký</td><td>Xác nhận chính thức bằng họ tên và chữ ký của khách hàng, chủ đầu tư và đại diện nhóm dự án</td></tr>
@@ -211,9 +284,9 @@ Phạm vi của dự án là gì?              Khó khăn, thách thức và gi�
           <div class="inline-ok"><strong>Áp dụng cho đồ án:</strong> Nhóm không cần lặp lại ví dụ trường đại học ở trên - hãy điền 11 phần này bằng chính ngữ cảnh của đề tài đồ án nhóm tự chọn. SOW của đồ án không cần đầy đủ chữ ký thật, nhưng cần đủ nội dung 11 phần để làm rõ phạm vi công việc trước khi bắt đầu vẽ Use-Case ở Tuần 2.</div>
         </section>
 
-        <!-- 05 - Bài tập thực hành -->
+        <!-- 06 - Bài tập thực hành -->
         <section class="lesson-section" id="bai-tap">
-          <p class="eyebrow">05 · BÀI TẬP THỰC HÀNH</p>
+          <p class="eyebrow">06 · BÀI TẬP THỰC HÀNH</p>
           <h2>Thực hành tổng hợp</h2>
           <p>Áp dụng toàn bộ nội dung Tuần 1 vào một ngữ cảnh cụ thể - đề tài này chỉ dùng để luyện tập trên lớp, không phải đề tài đồ án của nhóm:</p>
           <div class="practice-lab">
@@ -231,29 +304,58 @@ Phạm vi của dự án là gì?              Khó khăn, thách thức và gi�
               <li>Yêu cầu phi chức năng</li>
             </ul>
           </div>
+          <div class="inline-ok"><strong>Output cần nộp sau buổi học:</strong> Mỗi nhóm hoàn thành 8 mục sau cho đề tài luyện tập, dùng làm nền để Tuần 2 chuyển trực tiếp thành Use-Case Diagram:
+            <ol class="question-list">
+              <li>Mô tả hiện trạng tổ chức</li>
+              <li>Danh sách nghiệp vụ</li>
+              <li>1-2 quy trình nghiệp vụ mô tả chi tiết</li>
+              <li>Danh sách stakeholder</li>
+              <li>Business Requirements</li>
+              <li>Functional Requirements</li>
+              <li>Non-functional Requirements</li>
+              <li>SOW phiên bản 1 (đủ 11 phần)</li>
+            </ol>
+          </div>
           <div class="inline-warning"><strong>Song song với đề tài luyện tập:</strong> Nhóm nên tranh thủ buổi thực hành này để khảo sát hiện trạng và xác định yêu cầu sơ bộ cho <strong>đề tài đồ án riêng của nhóm</strong>, làm cơ sở soạn SOW và triển khai Use-Case Diagram ở Tuần 2 - tránh dồn hết việc khảo sát vào sát ngày báo cáo đồ án.</div>
         </section>
 
-        <!-- 06 - Checklist -->
+        <!-- 07 - Checklist -->
         <section class="lesson-section" id="checklist">
-          <p class="eyebrow">06 · CHECKLIST CUỐI TUẦN 1</p>
+          <p class="eyebrow">07 · CHECKLIST CUỐI TUẦN 1</p>
           <h2>Tự kiểm tra kiến thức</h2>
-          <p>Sau khi hoàn thành, sinh viên nên tự kiểm tra:</p>
+          <p>Sau khi hoàn thành, sinh viên nên tự kiểm tra theo 3 mức - từ hiểu khái niệm, đến làm được, đến áp dụng được cho đồ án thật:</p>
+
+          <h3>Know - Tôi hiểu</h3>
           <ul class="lesson-checklist">
-            <li>Biết khảo sát hiện trạng tổ chức, nghiệp vụ và tin học</li>
-            <li>Biết đặt câu hỏi đúng khi khảo sát nghiệp vụ</li>
             <li>Phân biệt được yêu cầu chức năng và yêu cầu phi chức năng</li>
             <li>Nhớ 4 nhóm yêu cầu chức năng: lưu trữ, tra cứu, tính toán, xuất báo cáo</li>
             <li>Nhớ 5 nhóm yêu cầu phi chức năng: GUI, vận hành, hiệu suất, bảo mật, văn hóa - chính trị</li>
-            <li>Biết 4 kỹ thuật thu thập yêu cầu: phỏng vấn, bảng hỏi, nghiên cứu tài liệu, quan sát thực tế</li>
-            <li>Hiểu vai trò của bảng phát biểu công việc (SOW)</li>
-            <li>Nhớ được 11 thành phần cơ bản của một SOW</li>
-            <li>Hoàn thành khảo sát hiện trạng &amp; phân tích yêu cầu cho đề tài luyện tập</li>
+            <li>Hiểu 4 cấp yêu cầu theo BABOK: Business, Stakeholder, Solution, Transition</li>
+            <li>Biết 6 kỹ thuật thu thập yêu cầu: phỏng vấn, bảng hỏi, nghiên cứu tài liệu, quan sát thực tế, workshop, prototype</li>
+            <li>Hiểu vai trò của bảng phát biểu công việc (SOW) và nhớ được 11 thành phần cơ bản</li>
+          </ul>
+
+          <h3>Do - Tôi làm được</h3>
+          <ul class="lesson-checklist">
+            <li>Xác định được stakeholder của một tổ chức theo 5 câu hỏi (dùng/cung cấp/chịu trách nhiệm/quyết định/bị ảnh hưởng)</li>
+            <li>Khảo sát hiện trạng tổ chức, nghiệp vụ và tin học theo mẫu 4 nhóm A-B-C-D</li>
+            <li>Lập được bảng vấn đề nghiệp vụ theo chuỗi Hiện trạng → Vấn đề → Nguyên nhân → Mục tiêu → Yêu cầu</li>
+            <li>Viết được yêu cầu chức năng và yêu cầu phi chức năng rõ ràng, có thể kiểm chứng</li>
+            <li>Soạn được SOW đủ 11 phần cho một hệ thống cụ thể</li>
+          </ul>
+
+          <h3>Apply - Tôi áp dụng được</h3>
+          <ul class="lesson-checklist">
+            <li>Hoàn thành khảo sát hiện trạng &amp; phân tích yêu cầu cho đề tài luyện tập trên lớp</li>
+            <li>Xác định được phạm vi sơ bộ và stakeholder cho đề tài đồ án riêng của nhóm</li>
+            <li>Chuẩn bị được SOW phiên bản 1 và danh sách yêu cầu chức năng làm dữ liệu đầu vào cho Use-Case Diagram ở Tuần 2</li>
           </ul>
 
           <h3>Kiến thức cốt lõi cần nhớ</h3>
           <div class="flow-diagram">
             <span class="flow-box">Khảo sát hiện trạng</span>
+            <span class="flow-arrow">↓</span>
+            <span class="flow-box">Stakeholder &amp; vấn đề nghiệp vụ</span>
             <span class="flow-arrow">↓</span>
             <span class="flow-box">Xác định yêu cầu</span>
             <span class="flow-arrow">↓</span>
@@ -280,6 +382,7 @@ Phạm vi của dự án là gì?              Khó khăn, thách thức và gi�
           <span class="side-label">BẠN ĐANG HỌC</span>
           <ul class="checklist">
             <li data-section="khao-sat"><b>○</b> Khảo sát hiện trạng</li>
+            <li data-section="stakeholder"><b>○</b> Stakeholder &amp; vấn đề nghiệp vụ</li>
             <li data-section="xac-dinh-yeu-cau"><b>○</b> Xác định yêu cầu</li>
             <li data-section="ky-thuat-thu-thap"><b>○</b> Kỹ thuật thu thập yêu cầu</li>
             <li data-section="sow"><b>○</b> Bảng phát biểu công việc</li>

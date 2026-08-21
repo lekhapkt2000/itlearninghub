@@ -80,6 +80,7 @@
           <h2>Sequence Diagram là gì?</h2>
           <div class="definition"><strong>Sequence Diagram (Sơ đồ tuần tự)</strong> là một loại sơ đồ trong UML mô tả cách các đối tượng trong hệ thống <strong>tương tác với nhau qua thời gian</strong> - tập trung vào thứ tự thời gian của các thông điệp được gửi và nhận giữa các đối tượng.</div>
           <p>Nếu Activity Diagram (Tuần 3) trả lời "các bước xử lý diễn ra như thế nào", thì Sequence Diagram trả lời tiếp "đối tượng nào gọi đối tượng nào, theo thứ tự nào, để thực hiện các bước đó".</p>
+          <p>Mỗi <strong>Action</strong> trên Activity Diagram thường ánh xạ thành một hoặc vài <strong>Message</strong> ở đây. Ví dụ với Activity Diagram "Đăng ký" ở Tuần 3: Action "Nhập thông tin" → message <code>dangKy(hoTen, email, ...)</code> gửi từ Boundary sang Controller; Action "Lưu &amp; gửi OTP" → hai message riêng: <code>luuTaiKhoan()</code> (Controller → Entity, có Object flow ghi xuống CSDL) và <code>guiOTP()</code> (Controller gọi dịch vụ gửi email). Nắm được phép ánh xạ này giúp sinh viên không "vẽ Sequence Diagram từ đầu" mà chuyển hóa trực tiếp từ Activity Diagram đã có.</p>
 
           <h3>Chức năng</h3>
           <ul>
@@ -120,7 +121,7 @@
 
               <circle cx="220" cy="35" r="15" style="fill:none;stroke:var(--ink);stroke-width:1.6"/>
               <line x1="197" y1="24" x2="197" y2="46" style="stroke:var(--ink);stroke-width:1.6"/>
-              <line x1="197" y1="35" x2="188" y2="35" style="stroke:var(--ink);stroke-width:1.6"/>
+              <line x1="197" y1="35" x2="205" y2="35" style="stroke:var(--ink);stroke-width:1.6"/>
               <text x="220" y="98" text-anchor="middle" style="font-size:11px;font-weight:700;fill:var(--ink)">Boundary</text>
 
               <circle cx="370" cy="35" r="15" style="fill:none;stroke:var(--ink);stroke-width:1.6"/>
@@ -174,24 +175,23 @@
               <text x="300" y="106" style="font-size:12px;font-weight:600;fill:var(--ink)">Creation</text>
               <text x="300" y="120" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">«create» - tạo đối tượng mới</text>
 
-              <line x1="40" y1="150" x2="280" y2="150" style="stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 4" marker-end="url(#w4ArrowOpen)"/>
-              <circle cx="284" cy="150" r="7" style="fill:none;stroke:var(--ink);stroke-width:1.4"/>
-              <line x1="279" y1="145" x2="289" y2="155" style="stroke:var(--ink);stroke-width:1.2"/>
-              <line x1="279" y1="155" x2="289" y2="145" style="stroke:var(--ink);stroke-width:1.2"/>
+              <line x1="40" y1="150" x2="278" y2="150" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
+              <line x1="283" y1="144" x2="293" y2="156" style="stroke:var(--ink);stroke-width:1.8"/>
+              <line x1="283" y1="156" x2="293" y2="144" style="stroke:var(--ink);stroke-width:1.8"/>
               <text x="305" y="146" style="font-size:12px;font-weight:600;fill:var(--ink)">Destructor</text>
               <text x="305" y="160" style="font-family:var(--font-mono);font-size:10.5px;fill:var(--muted)">«destroy» - hủy đối tượng, kết thúc bằng X</text>
 
-              <line x1="40" y1="200" x2="280" y2="185" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
+              <line x1="40" y1="185" x2="280" y2="200" style="stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
               <text x="300" y="196" style="font-size:12px;font-weight:600;fill:var(--ink)">Non-instantaneous - mũi tên nghiêng, có độ trễ</text>
 
               <line x1="280" y1="230" x2="40" y2="230" style="stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 4" marker-end="url(#w4ArrowOpen)"/>
               <text x="300" y="234" style="font-size:12px;font-weight:600;fill:var(--ink)">Return/Reply - mũi tên ngược, nét đứt</text>
 
-              <path d="M60 270 h60 v25 h-40" style="fill:none;stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
+              <path d="M60 270 h60 v25 h-60" style="fill:none;stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
               <line x1="55" y1="260" x2="55" y2="310" style="stroke:var(--muted);stroke-width:1.3;stroke-dasharray:3 3"/>
               <text x="300" y="288" style="font-size:12px;font-weight:600;fill:var(--ink)">Self message - vòng lặp nhỏ về chính lifeline</text>
 
-              <path d="M60 340 h40 v18 h-25" style="fill:none;stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
+              <path d="M60 340 h40 v18 h-29" style="fill:none;stroke:var(--ink);stroke-width:1.5" marker-end="url(#w4ArrowSolid)"/>
               <rect x="55" y="335" width="8" height="55" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.3"/>
               <rect x="63" y="352" width="8" height="30" style="fill:var(--surface);stroke:var(--primary);stroke-width:1.3"/>
               <text x="300" y="365" style="font-size:12px;font-weight:600;fill:var(--ink)">Recursive self - vòng lặp lồng, execution</text>
@@ -350,9 +350,9 @@
           <div class="practice-lab" style="margin-top:18px">
             <p class="eyebrow"><span class="icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2.5h4"/><path d="M8.5 2.5v6.3L4 15.5a1.6 1.6 0 0 0 1.4 2.4h9.2a1.6 1.6 0 0 0 1.4-2.4l-4.5-6.7V2.5"/><path d="M6.3 12h7.4"/></svg></span> BÀI 2 · ĐĂNG KÝ KHÓA TẬP, DỊCH VỤ</p>
             <p>Khách hàng có thể mua vé tập theo ngày hoặc đăng ký các dịch vụ tập tại trung tâm. Để đăng ký dịch vụ, khách hàng cung cấp cho nhân viên các thông tin: môn tập, gói dịch vụ tương ứng, ngày bắt đầu. Hệ thống tính và hiển thị tổng số tiền phải thanh toán. Sau khi khách hàng xác nhận và thanh toán, hệ thống lưu thông tin đăng ký và xuất hóa đơn. Trong quá trình đăng ký, nhân viên có thể sử dụng chức năng tra cứu thông tin khi cần.</p>
-            <p>Khi đăng ký dịch vụ thành công, khách hàng được cấp thẻ từ lưu trữ thông tin dịch vụ. Mỗi lần đến trung tâm, khách hàng quẹt thẻ vào máy đọc thẻ từ, hệ thống ghi nhận và theo dõi thời gian tập.</p>
+            <p>Khi đăng ký dịch vụ thành công, khách hàng được cấp thẻ từ lưu trữ thông tin dịch vụ. Mỗi lần đến trung tâm, khách hàng quẹt thẻ vào máy đọc thẻ từ, hệ thống ghi nhận và theo dõi thời gian tập. <em>(Phần quẹt thẻ này không thuộc phạm vi bài tập - dữ liệu ngữ cảnh cho Tuần 6, State Diagram vòng đời thẻ tập.)</em></p>
             <ol>
-              <li>Thiết kế Sequence Diagram cho Use-Case trên</li>
+              <li>Thiết kế Sequence Diagram cho quy trình "Đăng ký khóa tập, dịch vụ" (từ chọn gói đến xuất hóa đơn)</li>
             </ol>
           </div>
 
@@ -363,14 +363,27 @@
         <section class="lesson-section" id="checklist">
           <p class="eyebrow">07 · CHECKLIST CUỐI TUẦN 4</p>
           <h2>Tự kiểm tra kiến thức</h2>
+          <h3>Know - Tôi hiểu</h3>
           <ul class="lesson-checklist">
             <li>Hiểu Sequence Diagram mô tả tương tác giữa các đối tượng theo thời gian</li>
-            <li>Nhớ 7 bước vẽ, đặc biệt thứ tự Object/Actor → Message → Lifeline → Fragment</li>
             <li>Phân biệt Boundary, Controller, Entity và vai trò của từng loại</li>
-            <li>Vẽ đúng ký hiệu Lifeline, Execution Occurrence, Destruction Event</li>
             <li>Phân biệt 8 loại thông điệp, đặc biệt Synchronous (đầu đặc) và Asynchronous (đầu hở)</li>
             <li>Biết khi nào dùng alt, opt, loop, par, break, strict, ignore, neg</li>
+            <li>Hiểu mỗi Action ở Activity Diagram (Tuần 3) ánh xạ thành một hoặc vài Message ở đây</li>
+          </ul>
+
+          <h3>Do - Tôi làm được</h3>
+          <ul class="lesson-checklist">
+            <li>Áp dụng đúng 7 bước vẽ, theo thứ tự Object/Actor → Message → Lifeline → Fragment</li>
+            <li>Vẽ đúng ký hiệu Lifeline, Execution Occurrence, Destruction Event (X, không có vòng tròn)</li>
+            <li>Vẽ đúng chiều và kiểu đường của từng loại thông điệp (đặc/hở, liền/đứt)</li>
+            <li>Dùng đúng Fragment cho từng tình huống rẽ nhánh/lặp/song song</li>
+          </ul>
+
+          <h3>Apply - Tôi áp dụng được</h3>
+          <ul class="lesson-checklist">
             <li>Hoàn thành Sequence Diagram cho 2 Use-Case của đề tài Gym</li>
+            <li>Đảm bảo Sequence Diagram nhất quán với Activity Diagram đã vẽ ở Tuần 3 - mỗi Action đều có message tương ứng</li>
           </ul>
 
           <h3>Kiến thức cốt lõi cần nhớ</h3>

@@ -91,7 +91,7 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .schedule-subtitle{margin-bottom:18px!important;font-size:12px!important;font-weight:600;color:var(--primary-ink)!important}
 
 .schedule-groups{margin-top:4px;max-height:60vh;overflow-y:auto;text-align:left;display:flex;flex-direction:column;gap:14px;padding:2px}
-.schedule-group{border:1px solid var(--line);border-left:3px solid var(--group-accent,var(--primary));border-radius:12px;background:var(--tint);overflow:hidden}
+.schedule-group{flex-shrink:0;border:1px solid var(--line);border-left:3px solid var(--group-accent,var(--primary));border-radius:12px;background:var(--tint);overflow:hidden}
 .schedule-group-head{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line)}
 .schedule-group-dot{width:8px;height:8px;flex-shrink:0;border-radius:50%;background:var(--group-accent,var(--primary))}
 .schedule-group-name{flex:1;font-size:12.5px;font-weight:700;color:var(--ink)}

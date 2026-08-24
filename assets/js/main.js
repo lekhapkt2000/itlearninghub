@@ -303,7 +303,7 @@
   const T = isEnPage
     ? {
         nav: 'Class Schedule', title: 'Class Schedule',
-        instructor: 'Lab instructor: Lê Võ Đình Kha',
+        instructor: 'Teaching Assistant: Lê Võ Đình Kha',
         empty: 'The official schedule (class codes and session times) for each class hasn’t been finalized yet. It will be published here as soon as it’s available.',
         close: 'Got it', sections: 'sections', biweekly: 'biweekly'
       }
@@ -336,9 +336,10 @@
         const accent = ACCENT[course] || 'var(--primary)';
         const rows = items.map((c) => {
           const day = isEnPage ? (DAY_EN[c.day] || c.day) : c.day;
+          const period = isEnPage ? c.period.replace('Tiết', 'Period') : c.period;
           return '<li class="schedule-row">' +
             '<div class="schedule-row-top"><span class="schedule-code">' + c.code + '</span><span class="schedule-tag">' + T.biweekly + '</span></div>' +
-            '<div class="schedule-row-meta"><span>' + ICON_DAY + day + ' · ' + c.period + '</span><span>' + ICON_ROOM + c.room + '</span></div>' +
+            '<div class="schedule-row-meta"><span>' + ICON_DAY + day + ' · ' + period + '</span><span>' + ICON_ROOM + c.room + '</span></div>' +
             '<div class="schedule-row-dates">' + c.dates + '</div>' +
           '</li>';
         }).join('');

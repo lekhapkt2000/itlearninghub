@@ -281,7 +281,9 @@
     IT004: { vi: 'IT004 Cơ sở dữ liệu', en: 'IT004 Database' },
     IS355: { vi: 'IS355 Công nghệ Blockchain', en: 'IS355 Blockchain Technology' }
   };
-  const BIWEEKLY = isEnPage ? 'biweekly' : 'cách 2 tuần';
+  const ACCENT = { CS5423: 'var(--accent)', IT004: 'var(--primary)', IS355: 'var(--ok-accent)' };
+  const ICON_DAY = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="13" height="13" rx="1.4"/><path d="M3.5 8h13"/><path d="M7 2.5v3M13 2.5v3"/></svg>';
+  const ICON_ROOM = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17.5s6-5.5 6-10a6 6 0 1 0-12 0c0 4.5 6 10 6 10Z"/><circle cx="10" cy="7.5" r="2"/></svg>';
 
   // CS5423 and IT004 are the same database course - CS5423 (CTTT/advanced-program
   // sections) is taught in English, IT004 in Vietnamese.
@@ -301,13 +303,15 @@
   const T = isEnPage
     ? {
         nav: 'Class Schedule', title: 'Class Schedule',
+        instructor: 'Lab instructor: Lê Võ Đình Kha',
         empty: 'The official schedule (class codes and session times) for each class hasn’t been finalized yet. It will be published here as soon as it’s available.',
-        close: 'Got it'
+        close: 'Got it', sections: 'sections', biweekly: 'biweekly'
       }
     : {
         nav: 'Lịch học', title: 'Lịch học',
+        instructor: 'Hướng dẫn thực hành: Lê Võ Đình Kha',
         empty: 'Lịch học chính thức (mã lớp và giờ học) từng lớp hiện chưa có - Sẽ được cập nhật đầy đủ tại đây ngay khi có lịch.',
-        close: 'Đã hiểu'
+        close: 'Đã hiểu', sections: 'lớp', biweekly: 'cách 2 tuần'
       };
 
   links.forEach((a) => {
@@ -318,15 +322,31 @@
     a.tabIndex = 0;
   });
 
+  const groupOrder = [];
+  const groupMap = {};
+  CLASSES.forEach((c) => {
+    if (!groupMap[c.course]) { groupMap[c.course] = []; groupOrder.push(c.course); }
+    groupMap[c.course].push(c);
+  });
+
   const bodyHtml = CLASSES.length
-    ? '<ul class="schedule-list">' + CLASSES.map((c) => {
-        var day = isEnPage ? (DAY_EN[c.day] || c.day) : c.day;
-        var courseName = COURSE_NAME[c.course] ? COURSE_NAME[c.course][isEnPage ? 'en' : 'vi'] : c.course;
-        return '<li><span class="schedule-code">' + c.code + '</span>' +
-          '<span class="schedule-course">' + courseName + '</span>' +
-          '<span class="schedule-time">' + day + ' · ' + c.period + ' · ' + c.room + ' · ' + BIWEEKLY + '</span>' +
-          '<span class="schedule-dates">' + c.dates + '</span></li>';
-      }).join('') + '</ul>'
+    ? '<div class="schedule-groups">' + groupOrder.map((course) => {
+        const items = groupMap[course];
+        const courseName = COURSE_NAME[course] ? COURSE_NAME[course][isEnPage ? 'en' : 'vi'] : course;
+        const accent = ACCENT[course] || 'var(--primary)';
+        const rows = items.map((c) => {
+          const day = isEnPage ? (DAY_EN[c.day] || c.day) : c.day;
+          return '<li class="schedule-row">' +
+            '<div class="schedule-row-top"><span class="schedule-code">' + c.code + '</span><span class="schedule-tag">' + T.biweekly + '</span></div>' +
+            '<div class="schedule-row-meta"><span>' + ICON_DAY + day + ' · ' + c.period + '</span><span>' + ICON_ROOM + c.room + '</span></div>' +
+            '<div class="schedule-row-dates">' + c.dates + '</div>' +
+          '</li>';
+        }).join('');
+        return '<div class="schedule-group" style="--group-accent:' + accent + '">' +
+          '<div class="schedule-group-head"><span class="schedule-group-dot"></span><span class="schedule-group-name">' + courseName + '</span><span class="schedule-group-count">' + items.length + ' ' + T.sections + '</span></div>' +
+          '<ul class="schedule-rows">' + rows + '</ul>' +
+        '</div>';
+      }).join('') + '</div>'
     : '<p>' + T.empty + '</p>';
 
   const overlay = document.createElement('div');
@@ -336,6 +356,7 @@
     '<div class="schedule-panel" role="dialog" aria-modal="true" aria-label="' + T.title + '">' +
     '<div class="schedule-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="13" height="13" rx="1.4"/><path d="M3.5 8h13"/><path d="M7 2.5v3M13 2.5v3"/></svg></div>' +
     '<h3>' + T.title + '</h3>' +
+    (CLASSES.length ? '<p class="schedule-subtitle">' + T.instructor + '</p>' : '') +
     bodyHtml +
     '<button type="button" class="ghost-button schedule-close">' + T.close + '</button>' +
     '</div>';

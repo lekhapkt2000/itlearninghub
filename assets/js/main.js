@@ -268,15 +268,35 @@
 
 (() => {
   // The old "Liên hệ"/"Contact" nav item (topbar + footer) now opens a
-  // schedule notice instead of jumping to the footer - there's no contact
-  // form/section on this site. Once real per-class schedules exist, swap
-  // the CLASSES array below for real entries and this same modal renders
-  // them instead of the empty-state message.
+  // schedule popup instead of jumping to the footer - there's no contact
+  // form/section on this site. Update the CLASSES array below each semester.
   const links = document.querySelectorAll('a[href$="#lien-he"], a[href$="#contact"]');
   if (!links.length) return;
 
   const isEnPage = document.documentElement.lang === 'en';
-  const CLASSES = []; // e.g. { code: 'IT004.O21', day: 'Thứ 3', time: '13:00 - 15:30', room: 'B4-403' }
+
+  const DAY_EN = { 'Thứ 2': 'Mon', 'Thứ 3': 'Tue', 'Thứ 4': 'Wed', 'Thứ 5': 'Thu', 'Thứ 6': 'Fri', 'Thứ 7': 'Sat', 'Chủ nhật': 'Sun' };
+  const COURSE_NAME = {
+    CS5423: { vi: 'CS5423 Nguyên lý các hệ cơ sở dữ liệu', en: 'CS5423 Principles of Database Systems' },
+    IT004: { vi: 'IT004 Cơ sở dữ liệu', en: 'IT004 Database' },
+    IS355: { vi: 'IS355 Công nghệ Blockchain', en: 'IS355 Blockchain Technology' }
+  };
+  const BIWEEKLY = isEnPage ? 'biweekly' : 'cách 2 tuần';
+
+  // CS5423 and IT004 are the same database course - CS5423 (CTTT/advanced-program
+  // sections) is taught in English, IT004 in Vietnamese.
+  const CLASSES = [
+    { code: 'CS5423.R11.CTTT.1', course: 'CS5423', day: 'Thứ 2', period: 'Tiết 6-10', room: 'B4.06', dates: '21/09/2026 – 19/12/2026' },
+    { code: 'CS5423.R11.CTTT.2', course: 'CS5423', day: 'Thứ 2', period: 'Tiết 6-10', room: 'B4.06', dates: '28/09/2026 – 12/12/2026' },
+    { code: 'IT004.R17.1', course: 'IT004', day: 'Thứ 3', period: 'Tiết 1-5', room: 'B3.08', dates: '21/09/2026 – 19/12/2026' },
+    { code: 'IT004.R17.2', course: 'IT004', day: 'Thứ 3', period: 'Tiết 1-5', room: 'B3.08', dates: '28/09/2026 – 12/12/2026' },
+    { code: 'IT004.R16.1', course: 'IT004', day: 'Thứ 3', period: 'Tiết 6-10', room: 'B2.10', dates: '21/09/2026 – 19/12/2026' },
+    { code: 'IT004.R16.2', course: 'IT004', day: 'Thứ 3', period: 'Tiết 6-10', room: 'B2.10', dates: '28/09/2026 – 12/12/2026' },
+    { code: 'IS355.R11.CTTT.1', course: 'IS355', day: 'Thứ 6', period: 'Tiết 6-10', room: 'B2.02', dates: '21/09/2026 – 19/12/2026' },
+    { code: 'IS355.R11.CTTT.2', course: 'IS355', day: 'Thứ 6', period: 'Tiết 6-10', room: 'B2.02', dates: '28/09/2026 – 12/12/2026' },
+    { code: 'IT004.R121.1', course: 'IT004', day: 'Thứ 7', period: 'Tiết 6-10', room: 'B4.06', dates: '21/09/2026 – 19/12/2026' },
+    { code: 'IT004.R121.2', course: 'IT004', day: 'Thứ 7', period: 'Tiết 6-10', room: 'B4.06', dates: '28/09/2026 – 12/12/2026' }
+  ];
 
   const T = isEnPage
     ? {
@@ -299,9 +319,14 @@
   });
 
   const bodyHtml = CLASSES.length
-    ? '<ul class="schedule-list">' + CLASSES.map((c) =>
-        '<li><span class="schedule-code">' + c.code + '</span><span class="schedule-time">' + c.day + ' · ' + c.time + (c.room ? ' · ' + c.room : '') + '</span></li>'
-      ).join('') + '</ul>'
+    ? '<ul class="schedule-list">' + CLASSES.map((c) => {
+        var day = isEnPage ? (DAY_EN[c.day] || c.day) : c.day;
+        var courseName = COURSE_NAME[c.course] ? COURSE_NAME[c.course][isEnPage ? 'en' : 'vi'] : c.course;
+        return '<li><span class="schedule-code">' + c.code + '</span>' +
+          '<span class="schedule-course">' + courseName + '</span>' +
+          '<span class="schedule-time">' + day + ' · ' + c.period + ' · ' + c.room + ' · ' + BIWEEKLY + '</span>' +
+          '<span class="schedule-dates">' + c.dates + '</span></li>';
+      }).join('') + '</ul>'
     : '<p>' + T.empty + '</p>';
 
   const overlay = document.createElement('div');

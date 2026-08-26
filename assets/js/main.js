@@ -285,40 +285,63 @@
   const ICON_DAY = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="13" height="13" rx="1.4"/><path d="M3.5 8h13"/><path d="M7 2.5v3M13 2.5v3"/></svg>';
   const ICON_ROOM = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17.5s6-5.5 6-10a6 6 0 1 0-12 0c0 4.5 6 10 6 10Z"/><circle cx="10" cy="7.5" r="2"/></svg>';
 
+  // Week-by-week topic summary for each course, taken from the actual authored
+  // lesson pages (courses/<course>/week-N.html) - session N in a class maps to
+  // Week N here in teaching order. CS5423 reuses IT004's material (English track).
+  const WEEK_CONTENT = {
+    IT004: [
+      { vi: 'Nền tảng cơ sở dữ liệu', en: 'Database Fundamentals', viTopics: 'SSMS · Data Types · Table · Constraints · DML', enTopics: 'SSMS · Data Types · Table · Constraints · DML' },
+      { vi: 'Truy vấn dữ liệu với SQL', en: 'Querying Data with SQL', viTopics: 'Toán tử · Hàm · SELECT · JOIN · Subquery', enTopics: 'Operators · Functions · SELECT · JOIN · Subquery' },
+      { vi: 'Phép chia & gom nhóm', en: 'Division & Grouping', viTopics: 'Phép chia · GROUP BY · TOP · Kết ngoài', enTopics: 'Division · GROUP BY · TOP · Outer Join' },
+      { vi: 'Hàm mở rộng, CASE & Subquery', en: 'Extended Functions, CASE & Subquery', viTopics: 'CAST · CASE · Alias · Subquery', enTopics: 'CAST · CASE · Alias · Subquery' },
+      { vi: 'Trigger', en: 'Trigger', viTopics: 'Cú pháp · AFTER · INSTEAD OF · Inserted/Deleted', enTopics: 'Syntax · AFTER · INSTEAD OF · Inserted/Deleted' },
+      { vi: 'Ôn tập thực hành Cơ sở dữ liệu', en: 'Database Review & Practice', viTopics: 'Mô hình dữ liệu · JOIN · Subquery · Bài tập tổng hợp', enTopics: 'Data Modeling · JOIN · Subquery · Comprehensive Exercises' }
+    ],
+    IS355: [
+      { vi: 'Tổng quan Tài chính Xanh & Cơ sở Blockchain', en: 'Green Finance Overview & Blockchain Basics', viTopics: 'ESG · Tín chỉ Carbon · Blockchain & Mật mã học · Vyper cơ bản', enTopics: 'ESG · Carbon Credits · Blockchain & Cryptography · Vyper Basics' },
+      { vi: 'Bảo mật Danh tính & An toàn Dữ liệu Tài chính', en: 'Identity Security & Financial Data Protection', viTopics: 'CIA Model · Mã hóa đối xứng/bất đối xứng · ZKP · Smart Contract ESG', enTopics: 'CIA Model · Symmetric/Asymmetric Encryption · ZKP · ESG Smart Contract' },
+      { vi: 'Số hóa Tài sản Xanh - ERC-20 & Carbon Credit', en: 'Digitizing Green Assets - ERC-20 & Carbon Credit', viTopics: 'ERC-20 · Coin vs Token · GreenCarbonToken · Dự báo giá Carbon', enTopics: 'ERC-20 · Coin vs Token · GreenCarbonToken · Carbon Price Forecasting' },
+      { vi: 'Real-World Assets (RWA) & NFT Chuỗi Cung Ứng Bền Vững', en: 'Real-World Assets (RWA) & NFT for Sustainable Supply Chains', viTopics: 'ERC-721 · Metadata/IPFS · Greenwashing · NFT chuỗi cung ứng', enTopics: 'ERC-721 · Metadata/IPFS · Greenwashing · Supply Chain NFT' },
+      { vi: 'Tài chính Phi tập trung (DeFi) & Ngân hàng Xanh', en: 'Decentralized Finance (DeFi) & Green Banking', viTopics: 'Liquidity Pool · Thế chấp/Thanh lý · GreenLending · Dự đoán rủi ro', enTopics: 'Liquidity Pool · Collateral/Liquidation · GreenLending · Risk Prediction' },
+      { vi: 'AI, Phân tích Giao dịch & Tích hợp DApp Xanh', en: 'AI, Transaction Analytics & Green DApp Integration', viTopics: 'On-chain Analytics · AML · Bảo mật Smart Contract · DApp tích hợp', enTopics: 'On-chain Analytics · AML · Smart Contract Security · DApp Integration' }
+    ]
+  };
+  WEEK_CONTENT.CS5423 = WEEK_CONTENT.IT004;
+
   // CS5423 and IT004 are the same database course - CS5423 (CTTT/advanced-program
-  // sections) is taught in English, IT004 in Vietnamese. Session dates below have
-  // already been cleaned up: midterm week and instructor-unavailable days removed.
+  // sections) is taught in English, IT004 in Vietnamese. The only excluded session
+  // in the schedule below is the midterm exam week; every other date is a real class.
   const CLASSES = [
     { code: 'CS5423.R11.CTTT.1', course: 'CS5423', day: 'Thứ 2', period: 'Tiết 6-10', room: 'B4.06',
       sessions: ['21/09', '05/10', '19/10', '16/11', '30/11', '14/12'],
       note: 'Nghỉ giữa kỳ 02/11', noteEn: 'Midterm break 02/11', noteType: 'warn' },
     { code: 'CS5423.R11.CTTT.2', course: 'CS5423', day: 'Thứ 2', period: 'Tiết 6-10', room: 'B4.06',
-      sessions: ['28/09', '12/10', '26/10', '23/11', '07/12'],
-      note: 'Nghỉ 09/11 do GV bận - chờ thông báo lịch bù', noteEn: 'No class 09/11 (instructor unavailable) - makeup date TBA', noteType: 'warn' },
+      sessions: ['28/09', '12/10', '26/10', '09/11', '23/11', '07/12'],
+      note: null, noteEn: null, noteType: null },
     { code: 'IT004.R17.1', course: 'IT004', day: 'Thứ 3', period: 'Tiết 1-5', room: 'B3.08',
       sessions: ['22/09', '06/10', '20/10', '17/11', '01/12', '15/12'],
       note: 'Nghỉ giữa kỳ 03/11', noteEn: 'Midterm break 03/11', noteType: 'warn' },
     { code: 'IT004.R17.2', course: 'IT004', day: 'Thứ 3', period: 'Tiết 1-5', room: 'B3.08',
       sessions: ['29/09', '13/10', '27/10', '10/11', '24/11', '08/12'],
-      note: 'Đủ 6 buổi, không nghỉ', noteEn: 'Full 6 sessions, no breaks', noteType: 'ok' },
+      note: null, noteEn: null, noteType: null },
     { code: 'IT004.R16.1', course: 'IT004', day: 'Thứ 3', period: 'Tiết 6-10', room: 'B2.10',
       sessions: ['22/09', '06/10', '20/10', '17/11', '01/12', '15/12'],
       note: 'Nghỉ giữa kỳ 03/11', noteEn: 'Midterm break 03/11', noteType: 'warn' },
     { code: 'IT004.R16.2', course: 'IT004', day: 'Thứ 3', period: 'Tiết 6-10', room: 'B2.10',
       sessions: ['29/09', '13/10', '27/10', '10/11', '24/11', '08/12'],
-      note: 'Đủ 6 buổi, không nghỉ', noteEn: 'Full 6 sessions, no breaks', noteType: 'ok' },
+      note: null, noteEn: null, noteType: null },
     { code: 'IS355.R11.CTTT.1', course: 'IS355', day: 'Thứ 6', period: 'Tiết 6-10', room: 'B2.02',
-      sessions: ['25/09', '23/10', '20/11', '04/12', '18/12'],
-      note: 'Nghỉ 09/10 do GV bận &amp; nghỉ giữa kỳ 06/11 - chờ thông báo lịch bù', noteEn: 'No class 09/10 (instructor unavailable) &amp; midterm break 06/11 - makeup date TBA', noteType: 'warn' },
+      sessions: ['25/09', '09/10', '23/10', '20/11', '04/12', '18/12'],
+      note: 'Nghỉ giữa kỳ 06/11', noteEn: 'Midterm break 06/11', noteType: 'warn' },
     { code: 'IS355.R11.CTTT.2', course: 'IS355', day: 'Thứ 6', period: 'Tiết 6-10', room: 'B2.02',
-      sessions: ['02/10', '16/10', '30/10', '27/11', '11/12'],
-      note: 'Nghỉ 13/11 do GV bận - chờ thông báo lịch bù', noteEn: 'No class 13/11 (instructor unavailable) - makeup date TBA', noteType: 'warn' },
+      sessions: ['02/10', '16/10', '30/10', '13/11', '27/11', '11/12'],
+      note: null, noteEn: null, noteType: null },
     { code: 'IT004.R121.1', course: 'IT004', day: 'Thứ 7', period: 'Tiết 6-10', room: 'B4.06',
-      sessions: ['26/09', '24/10', '21/11', '05/12', '19/12'],
-      note: 'Nghỉ 10/10 do GV bận &amp; nghỉ giữa kỳ 07/11 - chờ thông báo lịch bù', noteEn: 'No class 10/10 (instructor unavailable) &amp; midterm break 07/11 - makeup date TBA', noteType: 'warn' },
+      sessions: ['26/09', '10/10', '24/10', '21/11', '05/12', '19/12'],
+      note: 'Nghỉ giữa kỳ 07/11', noteEn: 'Midterm break 07/11', noteType: 'warn' },
     { code: 'IT004.R121.2', course: 'IT004', day: 'Thứ 7', period: 'Tiết 6-10', room: 'B4.06',
-      sessions: ['03/10', '17/10', '31/10', '28/11', '12/12'],
-      note: 'Nghỉ 14/11 do GV bận - chờ thông báo lịch bù', noteEn: 'No class 14/11 (instructor unavailable) - makeup date TBA', noteType: 'warn' }
+      sessions: ['03/10', '17/10', '31/10', '14/11', '28/11', '12/12'],
+      note: null, noteEn: null, noteType: null }
   ];
 
   const T = isEnPage
@@ -327,14 +350,16 @@
         instructor: 'Teaching Assistant: Lê Võ Đình Kha',
         empty: 'The official schedule (class codes and session times) for each class hasn’t been finalized yet. It will be published here as soon as it’s available.',
         close: 'Got it', closeLabel: 'Close', sections: 'sections', biweekly: 'biweekly',
-        pick: 'Select a class on the left to see its detailed schedule.'
+        pick: 'Select a class on the left to see its detailed schedule.',
+        weekHint: 'Click a session date to see that week’s topic.', week: 'Week'
       }
     : {
         nav: 'Lịch học', title: 'Lịch học',
         instructor: 'Hướng dẫn thực hành: Lê Võ Đình Kha',
         empty: 'Lịch học chính thức (mã lớp và giờ học) từng lớp hiện chưa có - Sẽ được cập nhật đầy đủ tại đây ngay khi có lịch.',
         close: 'Đã hiểu', closeLabel: 'Đóng', sections: 'lớp', biweekly: 'cách 2 tuần',
-        pick: 'Chọn một lớp bên trái để xem lịch học chi tiết.'
+        pick: 'Chọn một lớp bên trái để xem lịch học chi tiết.',
+        weekHint: 'Bấm vào một buổi học để xem nội dung tuần đó.', week: 'Tuần'
       };
 
   links.forEach((a) => {
@@ -359,13 +384,20 @@
     const accent = ACCENT[c.course] || 'var(--primary)';
     const day = isEnPage ? (DAY_EN[c.day] || c.day) : c.day;
     const period = isEnPage ? c.period.replace('Tiết', 'Period') : c.period;
-    const sessionChips = c.sessions.map((d) => '<span class="schedule-session">' + d + '</span>').join('');
+    const hasWeeks = !!WEEK_CONTENT[c.course];
+    const sessionChips = c.sessions.map((d, i) =>
+      hasWeeks
+        ? '<button type="button" class="schedule-session schedule-session-btn" data-week="' + (i + 1) + '">' + d + '</button>'
+        : '<span class="schedule-session">' + d + '</span>'
+    ).join('');
     const noteText = isEnPage ? c.noteEn : c.note;
     return '<div style="--group-accent:' + accent + '">' +
       '<div class="schedule-detail-course"><span class="schedule-detail-dot"></span><span class="schedule-detail-course-name">' + courseName + '</span></div>' +
       '<span class="schedule-detail-code">' + c.code + '</span>' +
       '<div class="schedule-row-meta"><span>' + ICON_DAY + day + ' · ' + period + '</span><span>' + ICON_ROOM + c.room + '</span></div>' +
-      '<div class="schedule-sessions">' + sessionChips + '</div>' +
+      (hasWeeks ? '<p class="schedule-week-hint">' + T.weekHint + '</p>' : '') +
+      '<div class="schedule-sessions" data-course="' + c.course + '">' + sessionChips + '</div>' +
+      '<div class="schedule-week-info"></div>' +
       (noteText ? '<div class="schedule-note schedule-note-' + c.noteType + '">' + noteText + '</div>' : '') +
     '</div>';
   }
@@ -447,10 +479,25 @@
   if (detailPane) {
     overlay.addEventListener('click', (e) => {
       const item = e.target.closest('.schedule-list-item');
-      if (!item) return;
-      overlay.querySelectorAll('.schedule-list-item.is-active').forEach((el) => el.classList.remove('is-active'));
-      item.classList.add('is-active');
-      detailPane.innerHTML = renderDetail(item.getAttribute('data-class-code'));
+      if (item) {
+        overlay.querySelectorAll('.schedule-list-item.is-active').forEach((el) => el.classList.remove('is-active'));
+        item.classList.add('is-active');
+        detailPane.innerHTML = renderDetail(item.getAttribute('data-class-code'));
+        return;
+      }
+      const weekBtn = e.target.closest('.schedule-session-btn');
+      if (weekBtn) {
+        const wrap = weekBtn.closest('.schedule-sessions');
+        const info = wrap.nextElementSibling;
+        const weeks = WEEK_CONTENT[wrap.getAttribute('data-course')];
+        const week = weeks && weeks[parseInt(weekBtn.getAttribute('data-week'), 10) - 1];
+        if (!week || !info) return;
+        wrap.querySelectorAll('.schedule-session-btn.is-active').forEach((el) => el.classList.remove('is-active'));
+        weekBtn.classList.add('is-active');
+        const title = isEnPage ? week.en : week.vi;
+        const topics = isEnPage ? week.enTopics : week.viTopics;
+        info.innerHTML = '<strong>' + T.week + ' ' + weekBtn.getAttribute('data-week') + ':</strong> ' + title + '<span>' + topics + '</span>';
+      }
     });
   }
 

@@ -286,18 +286,39 @@
   const ICON_ROOM = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17.5s6-5.5 6-10a6 6 0 1 0-12 0c0 4.5 6 10 6 10Z"/><circle cx="10" cy="7.5" r="2"/></svg>';
 
   // CS5423 and IT004 are the same database course - CS5423 (CTTT/advanced-program
-  // sections) is taught in English, IT004 in Vietnamese.
+  // sections) is taught in English, IT004 in Vietnamese. Session dates below have
+  // already been cleaned up: midterm week and instructor-unavailable days removed.
   const CLASSES = [
-    { code: 'CS5423.R11.CTTT.1', course: 'CS5423', day: 'Thứ 2', period: 'Tiết 6-10', room: 'B4.06', dates: '21/09/2026 – 19/12/2026' },
-    { code: 'CS5423.R11.CTTT.2', course: 'CS5423', day: 'Thứ 2', period: 'Tiết 6-10', room: 'B4.06', dates: '28/09/2026 – 12/12/2026' },
-    { code: 'IT004.R17.1', course: 'IT004', day: 'Thứ 3', period: 'Tiết 1-5', room: 'B3.08', dates: '21/09/2026 – 19/12/2026' },
-    { code: 'IT004.R17.2', course: 'IT004', day: 'Thứ 3', period: 'Tiết 1-5', room: 'B3.08', dates: '28/09/2026 – 12/12/2026' },
-    { code: 'IT004.R16.1', course: 'IT004', day: 'Thứ 3', period: 'Tiết 6-10', room: 'B2.10', dates: '21/09/2026 – 19/12/2026' },
-    { code: 'IT004.R16.2', course: 'IT004', day: 'Thứ 3', period: 'Tiết 6-10', room: 'B2.10', dates: '28/09/2026 – 12/12/2026' },
-    { code: 'IS355.R11.CTTT.1', course: 'IS355', day: 'Thứ 6', period: 'Tiết 6-10', room: 'B2.02', dates: '21/09/2026 – 19/12/2026' },
-    { code: 'IS355.R11.CTTT.2', course: 'IS355', day: 'Thứ 6', period: 'Tiết 6-10', room: 'B2.02', dates: '28/09/2026 – 12/12/2026' },
-    { code: 'IT004.R121.1', course: 'IT004', day: 'Thứ 7', period: 'Tiết 6-10', room: 'B4.06', dates: '21/09/2026 – 19/12/2026' },
-    { code: 'IT004.R121.2', course: 'IT004', day: 'Thứ 7', period: 'Tiết 6-10', room: 'B4.06', dates: '28/09/2026 – 12/12/2026' }
+    { code: 'CS5423.R11.CTTT.1', course: 'CS5423', day: 'Thứ 2', period: 'Tiết 6-10', room: 'B4.06',
+      sessions: ['21/09', '05/10', '19/10', '16/11', '30/11', '14/12'],
+      note: 'Nghỉ giữa kỳ 02/11', noteEn: 'Midterm break 02/11', noteType: 'warn' },
+    { code: 'CS5423.R11.CTTT.2', course: 'CS5423', day: 'Thứ 2', period: 'Tiết 6-10', room: 'B4.06',
+      sessions: ['28/09', '12/10', '26/10', '23/11', '07/12'],
+      note: 'Nghỉ 09/11 do GV bận - chờ thông báo lịch bù', noteEn: 'No class 09/11 (instructor unavailable) - makeup date TBA', noteType: 'warn' },
+    { code: 'IT004.R17.1', course: 'IT004', day: 'Thứ 3', period: 'Tiết 1-5', room: 'B3.08',
+      sessions: ['22/09', '06/10', '20/10', '17/11', '01/12', '15/12'],
+      note: 'Nghỉ giữa kỳ 03/11', noteEn: 'Midterm break 03/11', noteType: 'warn' },
+    { code: 'IT004.R17.2', course: 'IT004', day: 'Thứ 3', period: 'Tiết 1-5', room: 'B3.08',
+      sessions: ['29/09', '13/10', '27/10', '10/11', '24/11', '08/12'],
+      note: 'Đủ 6 buổi, không nghỉ', noteEn: 'Full 6 sessions, no breaks', noteType: 'ok' },
+    { code: 'IT004.R16.1', course: 'IT004', day: 'Thứ 3', period: 'Tiết 6-10', room: 'B2.10',
+      sessions: ['22/09', '06/10', '20/10', '17/11', '01/12', '15/12'],
+      note: 'Nghỉ giữa kỳ 03/11', noteEn: 'Midterm break 03/11', noteType: 'warn' },
+    { code: 'IT004.R16.2', course: 'IT004', day: 'Thứ 3', period: 'Tiết 6-10', room: 'B2.10',
+      sessions: ['29/09', '13/10', '27/10', '10/11', '24/11', '08/12'],
+      note: 'Đủ 6 buổi, không nghỉ', noteEn: 'Full 6 sessions, no breaks', noteType: 'ok' },
+    { code: 'IS355.R11.CTTT.1', course: 'IS355', day: 'Thứ 6', period: 'Tiết 6-10', room: 'B2.02',
+      sessions: ['25/09', '23/10', '20/11', '04/12', '18/12'],
+      note: 'Nghỉ 09/10 do GV bận &amp; nghỉ giữa kỳ 06/11 - chờ thông báo lịch bù', noteEn: 'No class 09/10 (instructor unavailable) &amp; midterm break 06/11 - makeup date TBA', noteType: 'warn' },
+    { code: 'IS355.R11.CTTT.2', course: 'IS355', day: 'Thứ 6', period: 'Tiết 6-10', room: 'B2.02',
+      sessions: ['02/10', '16/10', '30/10', '27/11', '11/12'],
+      note: 'Nghỉ 13/11 do GV bận - chờ thông báo lịch bù', noteEn: 'No class 13/11 (instructor unavailable) - makeup date TBA', noteType: 'warn' },
+    { code: 'IT004.R121.1', course: 'IT004', day: 'Thứ 7', period: 'Tiết 6-10', room: 'B4.06',
+      sessions: ['26/09', '24/10', '21/11', '05/12', '19/12'],
+      note: 'Nghỉ 10/10 do GV bận &amp; nghỉ giữa kỳ 07/11 - chờ thông báo lịch bù', noteEn: 'No class 10/10 (instructor unavailable) &amp; midterm break 07/11 - makeup date TBA', noteType: 'warn' },
+    { code: 'IT004.R121.2', course: 'IT004', day: 'Thứ 7', period: 'Tiết 6-10', room: 'B4.06',
+      sessions: ['03/10', '17/10', '31/10', '28/11', '12/12'],
+      note: 'Nghỉ 14/11 do GV bận - chờ thông báo lịch bù', noteEn: 'No class 14/11 (instructor unavailable) - makeup date TBA', noteType: 'warn' }
   ];
 
   const T = isEnPage
@@ -337,10 +358,13 @@
         const rows = items.map((c) => {
           const day = isEnPage ? (DAY_EN[c.day] || c.day) : c.day;
           const period = isEnPage ? c.period.replace('Tiết', 'Period') : c.period;
+          const sessionChips = c.sessions.map((d) => '<span class="schedule-session">' + d + '</span>').join('');
+          const noteText = isEnPage ? c.noteEn : c.note;
           return '<li class="schedule-row">' +
             '<div class="schedule-row-top"><span class="schedule-code">' + c.code + '</span><span class="schedule-tag">' + T.biweekly + '</span></div>' +
             '<div class="schedule-row-meta"><span>' + ICON_DAY + day + ' · ' + period + '</span><span>' + ICON_ROOM + c.room + '</span></div>' +
-            '<div class="schedule-row-dates">' + c.dates + '</div>' +
+            '<div class="schedule-sessions">' + sessionChips + '</div>' +
+            (noteText ? '<div class="schedule-note schedule-note-' + c.noteType + '">' + noteText + '</div>' : '') +
           '</li>';
         }).join('');
         return '<div class="schedule-group" style="--group-accent:' + accent + '">' +

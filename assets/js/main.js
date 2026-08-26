@@ -326,13 +326,15 @@
         nav: 'Class Schedule', title: 'Class Schedule',
         instructor: 'Teaching Assistant: Lê Võ Đình Kha',
         empty: 'The official schedule (class codes and session times) for each class hasn’t been finalized yet. It will be published here as soon as it’s available.',
-        close: 'Got it', sections: 'sections', biweekly: 'biweekly'
+        close: 'Got it', closeLabel: 'Close', sections: 'sections', biweekly: 'biweekly',
+        pick: 'Select a class on the left to see its detailed schedule.'
       }
     : {
         nav: 'Lịch học', title: 'Lịch học',
         instructor: 'Hướng dẫn thực hành: Lê Võ Đình Kha',
         empty: 'Lịch học chính thức (mã lớp và giờ học) từng lớp hiện chưa có - Sẽ được cập nhật đầy đủ tại đây ngay khi có lịch.',
-        close: 'Đã hiểu', sections: 'lớp', biweekly: 'cách 2 tuần'
+        close: 'Đã hiểu', closeLabel: 'Đóng', sections: 'lớp', biweekly: 'cách 2 tuần',
+        pick: 'Chọn một lớp bên trái để xem lịch học chi tiết.'
       };
 
   links.forEach((a) => {
@@ -350,49 +352,75 @@
     groupMap[c.course].push(c);
   });
 
+  function renderDetail(code) {
+    const c = CLASSES.find((x) => x.code === code);
+    if (!c) return '';
+    const courseName = COURSE_NAME[c.course] ? COURSE_NAME[c.course][isEnPage ? 'en' : 'vi'] : c.course;
+    const accent = ACCENT[c.course] || 'var(--primary)';
+    const day = isEnPage ? (DAY_EN[c.day] || c.day) : c.day;
+    const period = isEnPage ? c.period.replace('Tiết', 'Period') : c.period;
+    const sessionChips = c.sessions.map((d) => '<span class="schedule-session">' + d + '</span>').join('');
+    const noteText = isEnPage ? c.noteEn : c.note;
+    return '<div style="--group-accent:' + accent + '">' +
+      '<div class="schedule-detail-course"><span class="schedule-detail-dot"></span><span class="schedule-detail-course-name">' + courseName + '</span></div>' +
+      '<span class="schedule-detail-code">' + c.code + '</span>' +
+      '<div class="schedule-row-meta"><span>' + ICON_DAY + day + ' · ' + period + '</span><span>' + ICON_ROOM + c.room + '</span></div>' +
+      '<div class="schedule-sessions">' + sessionChips + '</div>' +
+      (noteText ? '<div class="schedule-note schedule-note-' + c.noteType + '">' + noteText + '</div>' : '') +
+    '</div>';
+  }
+
   const bodyHtml = CLASSES.length
-    ? '<div class="schedule-groups">' + groupOrder.map((course) => {
+    ? '<div class="schedule-dashboard">' +
+      '<div class="schedule-list-pane">' + groupOrder.map((course) => {
         const items = groupMap[course];
         const courseName = COURSE_NAME[course] ? COURSE_NAME[course][isEnPage ? 'en' : 'vi'] : course;
         const accent = ACCENT[course] || 'var(--primary)';
-        const rows = items.map((c) => {
+        const items_html = items.map((c) => {
           const day = isEnPage ? (DAY_EN[c.day] || c.day) : c.day;
           const period = isEnPage ? c.period.replace('Tiết', 'Period') : c.period;
-          const sessionChips = c.sessions.map((d) => '<span class="schedule-session">' + d + '</span>').join('');
-          const noteText = isEnPage ? c.noteEn : c.note;
-          return '<li class="schedule-row">' +
-            '<div class="schedule-row-top"><span class="schedule-code">' + c.code + '</span><span class="schedule-tag">' + T.biweekly + '</span></div>' +
-            '<div class="schedule-row-meta"><span>' + ICON_DAY + day + ' · ' + period + '</span><span>' + ICON_ROOM + c.room + '</span></div>' +
-            '<div class="schedule-sessions">' + sessionChips + '</div>' +
-            (noteText ? '<div class="schedule-note schedule-note-' + c.noteType + '">' + noteText + '</div>' : '') +
-          '</li>';
+          return '<button type="button" class="schedule-list-item" style="--group-accent:' + accent + '" data-class-code="' + c.code + '">' +
+            '<span class="schedule-list-code">' + c.code + '</span>' +
+            '<span class="schedule-list-meta">' + day + ' · ' + period + '</span>' +
+          '</button>';
         }).join('');
-        return '<div class="schedule-group" style="--group-accent:' + accent + '">' +
-          '<div class="schedule-group-head"><span class="schedule-group-dot"></span><span class="schedule-group-name">' + courseName + '</span><span class="schedule-group-count">' + items.length + ' ' + T.sections + '</span></div>' +
-          '<ul class="schedule-rows">' + rows + '</ul>' +
+        return '<div class="schedule-list-group">' +
+          '<div class="schedule-list-group-label"><span class="schedule-list-dot" style="--group-accent:' + accent + '"></span>' + courseName + '</div>' +
+          items_html +
         '</div>';
-      }).join('') + '</div>'
+      }).join('') + '</div>' +
+      '<div class="schedule-detail-pane"><p class="schedule-detail-empty">' + T.pick + '</p></div>' +
+      '</div>'
     : '<p>' + T.empty + '</p>';
 
   const overlay = document.createElement('div');
   overlay.className = 'schedule-overlay';
   overlay.hidden = true;
   overlay.innerHTML =
-    '<div class="schedule-panel" role="dialog" aria-modal="true" aria-label="' + T.title + '">' +
+    '<div class="schedule-panel' + (CLASSES.length ? ' schedule-panel-wide' : '') + '" role="dialog" aria-modal="true" aria-label="' + T.title + '">' +
+    '<div class="schedule-head-row">' +
     '<div class="schedule-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="13" height="13" rx="1.4"/><path d="M3.5 8h13"/><path d="M7 2.5v3M13 2.5v3"/></svg></div>' +
-    '<h3>' + T.title + '</h3>' +
+    '<div class="schedule-head-text"><h3>' + T.title + '</h3>' +
     (CLASSES.length ? '<p class="schedule-subtitle">' + T.instructor + '</p>' : '') +
+    '</div>' +
+    '<button type="button" class="schedule-close-x" aria-label="' + T.closeLabel + '">✕</button>' +
+    '</div>' +
     bodyHtml +
-    '<button type="button" class="ghost-button schedule-close">' + T.close + '</button>' +
+    (CLASSES.length ? '' : '<button type="button" class="ghost-button schedule-close">' + T.close + '</button>') +
     '</div>';
   document.body.appendChild(overlay);
 
   const panel = overlay.querySelector('.schedule-panel');
-  const closeBtn = overlay.querySelector('.schedule-close');
+  const closeBtn = overlay.querySelector('.schedule-close-x');
+  const detailPane = overlay.querySelector('.schedule-detail-pane');
   let lastFocused = null;
 
   function openSchedule(trigger) {
     lastFocused = trigger || document.activeElement;
+    if (detailPane) {
+      detailPane.innerHTML = '<p class="schedule-detail-empty">' + T.pick + '</p>';
+      overlay.querySelectorAll('.schedule-list-item.is-active').forEach((el) => el.classList.remove('is-active'));
+    }
     overlay.hidden = false;
     document.body.style.overflow = 'hidden';
     closeBtn.focus();
@@ -416,7 +444,17 @@
     });
   });
 
-  closeBtn.addEventListener('click', closeSchedule);
+  if (detailPane) {
+    overlay.addEventListener('click', (e) => {
+      const item = e.target.closest('.schedule-list-item');
+      if (!item) return;
+      overlay.querySelectorAll('.schedule-list-item.is-active').forEach((el) => el.classList.remove('is-active'));
+      item.classList.add('is-active');
+      detailPane.innerHTML = renderDetail(item.getAttribute('data-class-code'));
+    });
+  }
+
+  overlay.querySelectorAll('.schedule-close, .schedule-close-x').forEach((btn) => btn.addEventListener('click', closeSchedule));
   overlay.addEventListener('mousedown', (e) => {
     if (!panel.contains(e.target)) closeSchedule();
   });
@@ -425,8 +463,17 @@
   });
   overlay.addEventListener('keydown', (e) => {
     if (e.key !== 'Tab') return;
-    e.preventDefault();
-    closeBtn.focus();
+    const focusables = panel.querySelectorAll('button');
+    if (!focusables.length) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   });
 })();
 

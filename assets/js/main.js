@@ -417,7 +417,7 @@
           '</button>';
         }).join('');
         return '<div class="schedule-list-group">' +
-          '<div class="schedule-list-group-label"><span class="schedule-list-dot" style="--group-accent:' + accent + '"></span>' + courseName + '</div>' +
+          '<div class="schedule-list-group-label"><span class="schedule-list-dot" style="--group-accent:' + accent + '"></span><span>' + courseName + '</span></div>' +
           items_html +
         '</div>';
       }).join('') + '</div>' +

@@ -100,9 +100,10 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .schedule-close-x:hover{background:var(--line);color:var(--ink)}
 
 .schedule-dashboard{display:flex;gap:0;margin-top:18px;height:min(58vh,460px);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.schedule-list-pane{flex:0 0 240px;overflow-y:auto;padding:10px;border-right:1px solid var(--line);background:var(--tint)}
+.schedule-list-pane{flex:0 0 240px;min-width:0;overflow-y:auto;padding:10px;border-right:1px solid var(--line);background:var(--tint)}
 .schedule-list-group{margin-bottom:10px}
-.schedule-list-group-label{display:flex;align-items:center;gap:6px;padding:0 8px;margin-bottom:4px;color:var(--muted);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.schedule-list-group-label{display:flex;align-items:flex-start;gap:6px;padding:0 8px;margin-bottom:4px;color:var(--muted);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;line-height:1.4}
+.schedule-list-group-label span:last-child{min-width:0;flex:1}
 .schedule-list-dot{width:7px;height:7px;flex-shrink:0;border-radius:50%;background:var(--group-accent,var(--primary))}
 .schedule-list-item{display:flex;flex-direction:column;gap:2px;width:100%;padding:8px 9px;border:0;border-left:3px solid transparent;border-radius:8px;background:none;color:inherit;font-family:inherit;text-align:left;cursor:pointer;transition:.15s var(--ease)}
 .schedule-list-item:hover{background:var(--surface)}
@@ -110,11 +111,11 @@ code:not(pre code){padding:2px 6px;border-radius:4px;background:var(--tint);colo
 .schedule-list-code{color:var(--ink);font:700 11px var(--font-mono)}
 .schedule-list-meta{color:var(--muted);font-size:10.5px}
 
-.schedule-detail-pane{flex:1;overflow-y:auto;padding:18px 20px;background:var(--surface)}
+.schedule-detail-pane{flex:1;min-width:0;overflow-y:auto;padding:18px 20px;background:var(--surface)}
 .schedule-detail-empty{display:flex;align-items:center;justify-content:center;height:100%;margin:0;color:var(--faint);font-size:13px;text-align:center;padding:20px;line-height:1.6}
 .schedule-detail-course{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .schedule-detail-dot{width:9px;height:9px;flex-shrink:0;border-radius:50%;background:var(--group-accent,var(--primary))}
-.schedule-detail-course-name{font-size:14px;font-weight:700;color:var(--ink)}
+.schedule-detail-course-name{flex:1;min-width:0;font-size:14px;font-weight:700;color:var(--ink)}
 .schedule-detail-code{display:block;margin-bottom:16px;color:var(--primary-ink);font:700 13px var(--font-mono)}
 
 .schedule-row-meta{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px}

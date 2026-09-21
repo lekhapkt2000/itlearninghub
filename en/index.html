@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../assets/css/base.css?v=38">
-  <link rel="stylesheet" href="../assets/css/home.css?v=30">
+  <link rel="stylesheet" href="../assets/css/home.css?v=31">
 </head>
 <body>
   <header class="topbar">
@@ -154,13 +154,37 @@
 
   <script src="../assets/js/main.js?v=20"></script>
   <script>
+    var COURSE_ICONS = {
+      IT004: '<ellipse cx="10" cy="4.8" rx="6" ry="2.2"/><path d="M4 4.8v10.4c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2V4.8"/><path d="M4 10c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2"/>',
+      IS201: '<rect x="2.5" y="3" width="6" height="4.4" rx="1"/><rect x="11.5" y="3" width="6" height="4.4" rx="1"/><rect x="7" y="12.6" width="6" height="4.4" rx="1"/><path d="M5.5 7.4v2.6a2 2 0 0 0 2 2h1M14.5 7.4v2.6a2 2 0 0 1-2 2h-1"/>',
+      IS210: '<rect x="3" y="4" width="14" height="4.5" rx="1"/><rect x="3" y="11.5" width="14" height="4.5" rx="1"/><circle cx="6.2" cy="6.25" r=".7" fill="currentColor" stroke="none"/><circle cx="6.2" cy="13.75" r=".7" fill="currentColor" stroke="none"/>',
+      IS336: '<path d="M4 17V5.5l6-2.5 6 2.5V17"/><path d="M8 17v-4.5h4V17"/><path d="M7.5 7.5h1M11.5 7.5h1M7.5 10.5h1M11.5 10.5h1"/>',
+      IS208: '<rect x="3.5" y="3.5" width="13" height="13" rx="2"/><path d="M6.3 10l1.8 1.8L11.7 8"/>',
+      IS355: '<rect x="3" y="7.5" width="6" height="5" rx="1.5"/><rect x="11" y="7.5" width="6" height="5" rx="1.5"/><path d="M9 10h2"/>'
+    };
+    var CHECK_ICON = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l4 4 8-8"/></svg>';
+    var CALENDAR_ICON = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="13" height="13" rx="1.4"/><path d="M3.5 8h13"/><path d="M7 2.5v3M13 2.5v3"/></svg>';
+    var STATUS_ICON = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M10 6.5v4l2.5 1.5"/></svg>';
+
     var COURSES = [
-      { code: 'IT004', name: 'Database', englishName: 'Cơ sở dữ liệu', category: 'Core Foundation', status: 'active', weeks: 6, path: '../courses/it004/index.html' },
-      { code: 'IS201', name: 'Information Systems Analysis and Design', englishName: 'Phân tích thiết kế hệ thống thông tin', category: 'Specialization', status: 'active', weeks: 6, path: '../courses/is201/index.html' },
-      { code: 'IS210', name: 'Database Management Systems', englishName: 'Hệ quản trị cơ sở dữ liệu', category: 'Specialization', status: 'coming-soon', weeks: 6, path: '../courses/is210/index.html' },
-      { code: 'IS336', name: 'Enterprise Resource Planning', englishName: 'Hoạch định nguồn lực doanh nghiệp', category: 'Specialization', status: 'coming-soon', weeks: 6, path: '../courses/is336/index.html' },
-      { code: 'IS208', name: 'IT Project Management', englishName: 'Quản lý dự án công nghệ thông tin', category: 'Specialization', status: 'coming-soon', weeks: 6, path: '../courses/is208/index.html' },
-      { code: 'IS355', name: 'Blockchain Technology', englishName: 'Công nghệ Blockchain', category: 'Specialization', status: 'active', weeks: 6, path: '../courses/is355/index.html' }
+      { code: 'IT004', name: 'Database', englishName: 'Cơ sở dữ liệu', category: 'Core Foundation', status: 'active', weeks: 6, path: '../courses/it004/index.html',
+        desc: 'Foundations of designing, querying and administering relational databases with SQL Server - from data modeling to triggers.',
+        checklist: ['Table design, constraints and core DML operations', 'SQL querying: JOIN, grouping, extended functions, subqueries', 'Triggers and a comprehensive data modeling exercise'] },
+      { code: 'IS201', name: 'Information Systems Analysis and Design', englishName: 'Phân tích thiết kế hệ thống thông tin', category: 'Specialization', status: 'active', weeks: 6, path: '../courses/is201/index.html',
+        desc: 'Object-oriented information systems analysis and design with UML, mapped to the BABOK standard for a Business Analyst career path.',
+        checklist: ['Current-state survey, requirements gathering and SOW', 'Use-Case, Activity, Sequence, Class, State Diagrams', "Applied directly to your team's final project"] },
+      { code: 'IS210', name: 'Database Management Systems', englishName: 'Hệ quản trị cơ sở dữ liệu', category: 'Specialization', status: 'coming-soon', weeks: 6, path: '../courses/is210/index.html',
+        desc: 'Architecture, installation and operation of the database management systems used in industry.',
+        checklist: ['DBMS architecture and storage mechanisms', 'Backup, recovery and data security', 'Query performance tuning and indexing'] },
+      { code: 'IS336', name: 'Enterprise Resource Planning', englishName: 'Hoạch định nguồn lực doanh nghiệp', category: 'Specialization', status: 'coming-soon', weeks: 6, path: '../courses/is336/index.html',
+        desc: 'An overview of ERP systems and how business modules in an enterprise connect with each other.',
+        checklist: ['Overall architecture of an ERP system', 'Modules: finance, HR, logistics, manufacturing', 'Real-world ERP implementation process'] },
+      { code: 'IS208', name: 'IT Project Management', englishName: 'Quản lý dự án công nghệ thông tin', category: 'Specialization', status: 'coming-soon', weeks: 6, path: '../courses/is208/index.html',
+        desc: 'Principles and tools for managing software projects, from planning through progress control.',
+        checklist: ['Planning, estimation and scope management', 'Risk, cost and quality management', 'Tracking tools: Agile/Scrum, Kanban'] },
+      { code: 'IS355', name: 'Blockchain Technology', englishName: 'Công nghệ Blockchain', category: 'Specialization', status: 'active', weeks: 6, path: '../courses/is355/index.html',
+        desc: 'Blockchain foundations, smart contracts and applications in green finance - from cryptography to real-world DeFi.',
+        checklist: ['Blockchain, cryptography and Vyper smart contracts', 'Tokenizing green assets: ERC-20, ERC-721, NFTs', 'DeFi, transaction analytics and DApp integration'] }
     ];
 
     // Courses with content live (active) first, coming-soon ones after -
@@ -178,17 +202,26 @@
         var action = isActive
           ? '<a class="course-cta" href="' + c.path + '">Start Course <span>›</span></a>'
           : '<span class="course-cta is-disabled">Coming Soon <span>›</span></span>';
-        var statusPill = isActive
-          ? '<span class="status-pill">Available Now</span>'
-          : '<span class="status-pill soon">Coming Soon</span>';
+        var statusValue = isActive ? 'All ' + c.weeks + '/' + c.weeks + ' weeks ready' : 'Content in progress';
+        var checklistHtml = c.checklist.map(function (item) {
+          return '<li>' + CHECK_ICON + '<span>' + item + '</span></li>';
+        }).join('');
         html += '<article class="course-card ' + (isActive ? 'is-active' : 'is-soon') + '">'
-          + '<div class="course-card-top"><span class="course-category">' + c.category + '</span>' + statusPill + '</div>'
+          + '<div class="course-card-banner">'
+          + '<span class="course-card-badge course-card-badge-code">' + c.code + '</span>'
+          + '<span class="course-card-badge course-card-badge-weeks">' + CALENDAR_ICON + c.weeks + ' weeks</span>'
+          + '<div class="course-card-icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + COURSE_ICONS[c.code] + '</svg></div>'
+          + '</div>'
           + '<div class="course-card-body">'
-          + '<span class="course-code">' + c.code + '</span>'
+          + '<p class="course-category">' + c.category + '</p>'
           + '<h3>' + c.name + '</h3>'
           + '<p class="course-en">' + c.englishName + '</p>'
+          + '<p class="course-card-desc">' + c.desc + '</p>'
+          + '<ul class="course-card-checklist">' + checklistHtml + '</ul>'
+          + '<div class="course-card-status' + (isActive ? '' : ' is-soon') + '"><span class="icon">' + STATUS_ICON + '</span>'
+          + '<div class="course-card-status-text"><span class="course-card-status-label">COURSE STATUS</span><span class="course-card-status-value">' + statusValue + '</span></div></div>'
+          + action
           + '</div>'
-          + '<div class="course-card-bottom"><span>' + c.weeks + ' weeks</span>' + action + '</div>'
           + '</article>';
       }
       html += '<article class="course-card course-card-placeholder">'

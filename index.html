@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
-  <link rel="stylesheet" href="assets/css/base.css?v=38">
-  <link rel="stylesheet" href="assets/css/home.css?v=31">
+  <link rel="stylesheet" href="assets/css/base.css?v=40">
+  <link rel="stylesheet" href="assets/css/home.css?v=33">
 </head>
 <body>
   <header class="topbar">
@@ -35,19 +35,10 @@
       <div class="hero-inner">
         <div class="hero-copy">
           <span class="hero-status"><span class="status-dot"></span> ĐANG HOẠT ĐỘNG</span>
-          <p class="eyebrow">HỆ THỐNG HỌC LIỆU THỰC HÀNH CNTT</p>
           <h1 class="hero-title">Học tập. <em>Thực hành.</em> Phát triển.</h1>
-          <p class="hero-text">Hệ thống học liệu thực hành theo tuần cho sinh viên ngành Công nghệ Thông tin - Tổng hợp lý thuyết, ví dụ và bài tập cho từng môn học. Học kỳ này đã có IT004 và IS355 triển khai đầy đủ, IS201 đang được bổ sung dần từng tuần, các môn còn lại sẽ lần lượt mở theo từng học kỳ giảng dạy.</p>
           <div class="hero-actions">
             <a class="primary-button" href="courses/it004/index.html">Vào học ngay <span>›</span></a>
             <a class="outline-button" href="#mon-hoc">Xem tất cả môn học</a>
-          </div>
-          <div class="hero-proof">
-            <span><strong id="hub-proof-count">2</strong> môn đang mở</span>
-            <span class="hero-proof-sep"></span>
-            <span><strong>12+</strong> tuần học liệu</span>
-            <span class="hero-proof-sep"></span>
-            <span><strong>100%</strong> miễn phí</span>
           </div>
         </div>
         <div class="hero-visual" aria-label="Minh họa hệ thống môn học">
@@ -62,6 +53,26 @@
             <span class="visual-note-line"><em>WHERE</em> effort = <b>true</b>;</span>
           </div>
         </div>
+      </div>
+      <div class="hero-showcase">
+        <a class="hero-showcase-tile" href="courses/it004/index.html">
+          <div class="hero-showcase-visual" style="background:linear-gradient(135deg,var(--primary),#1d4ed8)">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="4.8" rx="6" ry="2.2"/><path d="M4 4.8v10.4c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2V4.8"/><path d="M4 10c0 1.2 2.7 2.2 6 2.2s6-1 6-2.2"/></svg>
+          </div>
+          <span class="hero-showcase-caption">IT004 · Cơ sở dữ liệu</span>
+        </a>
+        <a class="hero-showcase-tile" href="courses/is201/index.html">
+          <div class="hero-showcase-visual" style="background:linear-gradient(135deg,var(--accent),#5b21b6)">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3" width="6" height="4.4" rx="1"/><rect x="11.5" y="3" width="6" height="4.4" rx="1"/><rect x="7" y="12.6" width="6" height="4.4" rx="1"/><path d="M5.5 7.4v2.6a2 2 0 0 0 2 2h1M14.5 7.4v2.6a2 2 0 0 1-2 2h-1"/></svg>
+          </div>
+          <span class="hero-showcase-caption">IS201 · Phân tích thiết kế HTTT</span>
+        </a>
+        <a class="hero-showcase-tile" href="courses/is355/index.html">
+          <div class="hero-showcase-visual" style="background:linear-gradient(135deg,var(--ok-accent),#15803d)">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="6" height="5" rx="1.5"/><rect x="11" y="7.5" width="6" height="5" rx="1.5"/><path d="M9 10h2"/></svg>
+          </div>
+          <span class="hero-showcase-caption">IS355 · Công nghệ Blockchain</span>
+        </a>
       </div>
     </section>
 
@@ -237,10 +248,6 @@
     var courseCountText = COURSES.length < 10 ? '0' + COURSES.length : String(COURSES.length);
     var hubCount2 = document.getElementById('hub-course-count-2');
     if (hubCount2) { hubCount2.textContent = courseCountText; }
-
-    var activeCourseCount = COURSES.filter(function (c) { return c.status === 'active'; }).length;
-    var hubProofCount = document.getElementById('hub-proof-count');
-    if (hubProofCount) { hubProofCount.textContent = String(activeCourseCount); }
 
     var hubList = document.getElementById('hub-course-list');
     if (hubList) {

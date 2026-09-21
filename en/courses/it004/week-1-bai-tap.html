@@ -128,14 +128,14 @@
         </table></div>
 
         <div class="schema-def">
-          <p class="schema-def-head">LICHTAP (<u>MALOP, NGAYTAP</u>, GIOBATDAU, GIOKETTHUC)</p>
+          <p class="schema-def-head">LICHTAP (<u>MALOP, NGAYTAP, GIOBATDAU</u>, GIOKETTHUC)</p>
           <p class="schema-def-body"><em>Predicate:</em> Stores each class's schedule: the date of a session, the start time, and the end time.</p>
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Attribute</th><th>Data type</th><th>Description</th></tr>
           <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Class code - primary key, foreign key to LOPTAP</td></tr>
           <tr><td><code>NGAYTAP</code></td><td><code>smalldatetime</code></td><td>Session date - primary key</td></tr>
-          <tr><td><code>GIOBATDAU</code></td><td><code>time</code></td><td>Session start time</td></tr>
+          <tr><td><code>GIOBATDAU</code></td><td><code>time</code></td><td>Session start time - primary key</td></tr>
           <tr><td><code>GIOKETTHUC</code></td><td><code>time</code></td><td>Session end time</td></tr>
         </table></div>
 
@@ -274,7 +274,7 @@ CREATE TABLE LICHTAP
     GIOBATDAU TIME,
     GIOKETTHUC TIME,
 
-    PRIMARY KEY (MALOP, NGAYTAP)
+    PRIMARY KEY (MALOP, NGAYTAP, GIOBATDAU)
 );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">WHAT IS IT?</span><p><code>CREATE DATABASE</code> creates 1 empty database, after which you must <code>USE</code> it to switch the working context to that database before creating tables. The primary key is declared right when the table is created: a single-column key uses <code>PRIMARY KEY</code> right after the column, while a composite key (<code>DANGKY</code>, <code>LICHTAP</code>) uses a separate <code>PRIMARY KEY (...)</code> line at the end.</p></div>

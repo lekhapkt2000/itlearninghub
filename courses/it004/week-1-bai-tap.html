@@ -128,14 +128,14 @@
         </table></div>
 
         <div class="schema-def">
-          <p class="schema-def-head">LICHTAP (<u>MALOP, NGAYTAP</u>, GIOBATDAU, GIOKETTHUC)</p>
+          <p class="schema-def-head">LICHTAP (<u>MALOP, NGAYTAP, GIOBATDAU</u>, GIOKETTHUC)</p>
           <p class="schema-def-body"><em>Tân từ:</em> Lưu trữ lịch tập của từng lớp: Ngày diễn ra buổi tập, giờ bắt đầu và giờ kết thúc.</p>
         </div>
         <div class="table-wrap"><table class="ref-table">
           <tr><th>Thuộc tính</th><th>Kiểu dữ liệu</th><th>Diễn giải</th></tr>
           <tr><td><code>MALOP</code></td><td><code>char(5)</code></td><td>Mã lớp tập - Khóa chính, khóa ngoại đến LOPTAP</td></tr>
           <tr><td><code>NGAYTAP</code></td><td><code>smalldatetime</code></td><td>Ngày diễn ra buổi tập - Khóa chính</td></tr>
-          <tr><td><code>GIOBATDAU</code></td><td><code>time</code></td><td>Giờ bắt đầu buổi tập</td></tr>
+          <tr><td><code>GIOBATDAU</code></td><td><code>time</code></td><td>Giờ bắt đầu buổi tập - Khóa chính</td></tr>
           <tr><td><code>GIOKETTHUC</code></td><td><code>time</code></td><td>Giờ kết thúc buổi tập</td></tr>
         </table></div>
 
@@ -274,7 +274,7 @@ CREATE TABLE LICHTAP
     GIOBATDAU TIME,
     GIOKETTHUC TIME,
 
-    PRIMARY KEY (MALOP, NGAYTAP)
+    PRIMARY KEY (MALOP, NGAYTAP, GIOBATDAU)
 );</code></pre></div>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p><code>CREATE DATABASE</code> tạo 1 CSDL rỗng, sau đó phải <code>USE</code> để chuyển ngữ cảnh làm việc sang CSDL đó trước khi tạo bảng. Khóa chính được khai báo ngay lúc tạo bảng: Khóa đơn dùng <code>PRIMARY KEY</code> ngay sau cột, khóa phức hợp (<code>DANGKY</code>, <code>LICHTAP</code>) dùng dòng <code>PRIMARY KEY (...)</code> riêng ở cuối.</p></div>

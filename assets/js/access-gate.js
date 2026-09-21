@@ -127,7 +127,7 @@
             }
           })
           .catch(function () {
-            errorEl.textContent = 'Không thể kết nối máy chủ xác thực. Kiểm tra kết nối mạng (wifi/4G) rồi thử lại.';
+            errorEl.textContent = 'Không thể kết nối máy chủ xác thực. Nếu wifi/4G vẫn hoạt động bình thường, thử tắt trình chặn quảng cáo (ad-blocker) hoặc mở bằng cửa sổ ẩn danh rồi thử lại.';
           })
           .finally(function () {
             submitBtn.disabled = false;

@@ -48,22 +48,33 @@ var LOG_SHEET = 'ACCESS_LOG';
 var LOG_HEADERS = ['timestamp', 'course', 'resource', 'code_hash', 'name', 'class', 'result'];
 
 function doGet(e) {
-  var action = e.parameter.action;
   var result;
-  if (action === 'validate') {
-    result = handleValidate(e.parameter);
-  } else if (action === 'generate') {
-    result = handleGenerate(e.parameter);
-  } else if (action === 'list') {
-    result = handleList(e.parameter);
-  } else if (action === 'revoke') {
-    result = handleRevoke(e.parameter);
-  } else if (action === 'restore') {
-    result = handleRestore(e.parameter);
-  } else if (action === 'delete') {
-    result = handleDelete(e.parameter);
-  } else {
-    result = { ok: false, message: 'Unknown action' };
+  try {
+    var action = e.parameter.action;
+    if (action === 'validate') {
+      result = handleValidate(e.parameter);
+    } else if (action === 'generate') {
+      result = handleGenerate(e.parameter);
+    } else if (action === 'list') {
+      result = handleList(e.parameter);
+    } else if (action === 'revoke') {
+      result = handleRevoke(e.parameter);
+    } else if (action === 'restore') {
+      result = handleRestore(e.parameter);
+    } else if (action === 'delete') {
+      result = handleDelete(e.parameter);
+    } else {
+      result = { ok: false, message: 'Unknown action' };
+    }
+  } catch (err) {
+    // Without this catch, any thrown error (sheet not found, no access to
+    // the spreadsheet, etc.) makes Apps Script return its own HTML error
+    // page instead of our JS callback - the <script> tag on the client
+    // then never fires, and the caller just sees "timeout" with zero
+    // information about what actually broke. Catching it here turns that
+    // silent failure into a real ok:false message the admin panel/gate
+    // can display.
+    result = { ok: false, message: 'Lỗi máy chủ: ' + err.message };
   }
   return respond(result, e.parameter.callback);
 }

@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../assets/css/base.css?v=40">
-  <link rel="stylesheet" href="../assets/css/home.css?v=34">
+  <link rel="stylesheet" href="../assets/css/home.css?v=35">
 </head>
 <body>
   <header class="topbar">
@@ -39,6 +39,13 @@
           <div class="hero-actions">
             <a class="primary-button" href="../courses/it004/index.html">Start Learning <span>›</span></a>
             <a class="outline-button" href="#courses">Browse All Courses</a>
+          </div>
+          <div class="hero-proof">
+            <span><strong id="hub-proof-count">3</strong> courses open</span>
+            <span class="hero-proof-sep"></span>
+            <span><strong>12+</strong> weeks of material</span>
+            <span class="hero-proof-sep"></span>
+            <span><strong>100%</strong> free</span>
           </div>
         </div>
         <div class="hero-visual" aria-label="Course system illustration">
@@ -248,6 +255,10 @@
     var courseCountText = COURSES.length < 10 ? '0' + COURSES.length : String(COURSES.length);
     var hubCount2 = document.getElementById('hub-course-count-2');
     if (hubCount2) { hubCount2.textContent = courseCountText; }
+
+    var activeCourseCount = COURSES.filter(function (c) { return c.status === 'active'; }).length;
+    var hubProofCount = document.getElementById('hub-proof-count');
+    if (hubProofCount) { hubProofCount.textContent = String(activeCourseCount); }
 
     var hubList = document.getElementById('hub-course-list');
     if (hubList) {

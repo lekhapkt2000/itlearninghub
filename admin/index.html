@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard - IT Learning Hub</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/favicon-32.png?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../assets/css/base.css?v=40">
+  <script>
+    // Apply the saved theme before first paint (same key as assets/js/main.js).
+    try { var t = localStorage.getItem('theme'); if (t) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <style>
+    :root{--bar:linear-gradient(90deg,#1d4ed8,#14b8a6);--bar-ok:linear-gradient(90deg,#16a34a,#22c55e);--track:#e8eef6;--side-w:268px}
+    @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--track:#1e293b}}
+    :root[data-theme="dark"]{--track:#1e293b}
+    [hidden]{display:none!important}
+    body{background:var(--bg)}
+    button{cursor:pointer}
+
+    /* Top bar */
+    .ad-top{position:sticky;top:0;z-index:20;height:72px;display:flex;align-items:center;gap:14px;padding:0 24px;background:var(--surface);border-bottom:1px solid var(--line)}
+    .ad-brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .ad-brand img{height:38px;width:auto;display:block}
+    .ad-brand-text strong{display:block;color:var(--ink);font-size:17px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+    .ad-brand-text span{display:block;color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.16em}
+    .ad-top-actions{margin-left:auto;display:flex;gap:10px}
+    .icon-btn{display:grid;place-items:center;width:42px;height:42px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--ink);transition:.2s}
+    .icon-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--tint)}
+    .icon-btn svg{width:19px;height:19px}
+
+    /* Layout */
+    .ad-shell{display:grid;grid-template-columns:var(--side-w) minmax(0,1fr);min-height:calc(100vh - 72px)}
+    .ad-side{position:sticky;top:72px;align-self:start;height:calc(100vh - 72px);overflow-y:auto;padding:22px 16px;border-right:1px solid var(--line);background:var(--surface)}
+    .ad-side-label{margin:22px 12px 8px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.14em}
+    .ad-nav{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:0;border-radius:10px;background:none;color:var(--ink);font-size:14px;font-weight:600;text-align:left;transition:background .15s,color .15s}
+    .ad-nav svg{flex-shrink:0;width:19px;height:19px;color:var(--muted)}
+    .ad-nav:hover{background:var(--tint)}
+    .ad-nav.active{background:var(--tint);color:var(--primary-ink)}
+    .ad-nav.active svg{color:var(--primary)}
+    .ad-nav .count{margin-left:auto;min-width:28px;padding:2px 8px;border-radius:99px;background:var(--bg);border:1px solid var(--line);color:var(--muted);font:600 11px var(--font-mono);text-align:center}
+    .ad-nav .ext{margin-left:auto;color:var(--muted);font-size:12px}
+    .ad-main{padding:30px 34px 80px;min-width:0}
+    .view{display:none}
+    .view.active{display:block}
+    .view-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:24px}
+    .view-head h1{margin:6px 0 0;font-size:26px}
+    .view-head .eyebrow{margin:0}
+    .section-label{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:34px 0 16px}
+    .section-label h2{margin:0;color:var(--ink);font-size:13px;font-weight:800;letter-spacing:.14em}
+
+    /* Cards */
+    .card{padding:24px 26px;background:var(--surface);border:1px solid var(--line);border-radius:16px}
+    .card h3{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 16px;font-size:17px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+    .grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+    .chip{padding:3px 11px;border-radius:99px;font-size:11px;font-weight:700;white-space:nowrap}
+    .chip-ok{background:var(--ok-bg);color:var(--ok-text)}
+    .chip-warn{background:var(--warn-bg);color:var(--warn-text)}
+    .chip-muted{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+    .progress-row{margin-bottom:16px}
+    .progress-row .lbl{display:flex;justify-content:space-between;gap:10px;margin-bottom:7px;color:var(--body);font-size:14px}
+    .progress-row .lbl b{color:var(--ink)}
+    .progress-row .lbl small{color:var(--muted);font-size:14px}
+    .bar{height:8px;border-radius:99px;background:var(--track);overflow:hidden}
+    .bar i{display:block;height:100%;border-radius:99px;background:var(--bar);transition:width .5s}
+    .bar.ok i{background:var(--bar-ok)}
+    .card-foot{margin-top:6px;padding-top:14px;border-top:1px dashed var(--line);color:var(--muted);font-size:13px;line-height:1.6}
+    .card-foot a,.card-foot button{color:var(--primary);font-weight:700;background:none;border:0;padding:0;font-size:13px}
+    .stat{padding:22px 24px;background:var(--surface);border:1px solid var(--line);border-radius:16px;transition:.2s}
+    .stat.hl{border-color:rgb(var(--primary-rgb) / .55)}
+    .stat:hover{transform:translateY(-2px);box-shadow:0 14px 26px -16px rgb(15 23 42 / .3)}
+    .stat strong{display:block;color:var(--primary-ink);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+    .stat span{display:block;margin-top:6px;color:var(--muted);font-size:13px;font-weight:600}
+    .dist-row{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) 34px;align-items:center;gap:12px;margin-bottom:12px;color:var(--body);font-size:13.5px}
+    .dist-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .dist-row b{text-align:right;color:var(--ink);font-family:var(--font-mono)}
+    .empty{padding:18px 0;color:var(--muted);font-size:13px;text-align:center}
+
+    /* Forms & tables */
+    .field{margin-bottom:14px}
+    .field label{display:block;margin-bottom:6px;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.06em}
+    .field input,.field select,.field textarea,.toolbar input,.toolbar select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);font:inherit;font-size:14px}
+    .field textarea{min-height:120px;resize:vertical;font:13px/1.5 var(--font-mono)}
+    .field input:focus,.field select:focus,.field textarea:focus,.toolbar input:focus,.toolbar select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgb(var(--primary-rgb) / .14)}
+    .field-hint{margin:6px 0 0;color:var(--muted);font-size:11.5px;line-height:1.5}
+    .btn-full{width:100%}
+    .primary-button:disabled,.outline-button:disabled{opacity:.6;cursor:wait;transform:none}
+    .btn-sm{padding:8px 13px!important;font-size:11.5px!important}
+    .btn-danger-outline{color:var(--danger-accent);border-color:var(--danger-border)}
+    .btn-danger-outline:hover{color:var(--danger-accent)!important;border-color:var(--danger-accent)!important;background:var(--danger-bg)!important}
+    .msg{min-height:18px;margin:12px 0 0;font-size:12.5px;font-weight:600}
+    .msg.error{color:var(--danger-text)}
+    .msg.ok{color:var(--ok-text)}
+    .code-result{display:none;margin-top:16px;padding:14px;border-radius:12px;background:var(--tint);text-align:center}
+    .code-result.show{display:block}
+    .code-result code{display:block;padding:6px 0;background:none;color:var(--primary-ink);font:700 19px var(--font-mono);user-select:all}
+    .split{display:grid;grid-template-columns:340px minmax(0,1fr);gap:20px;align-items:start}
+    .toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+    .toolbar input{flex:1;min-width:180px}
+    .toolbar select{width:auto;min-width:150px}
+    .table-wrap{overflow-x:auto;margin:0 -26px;padding:0 26px}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th,td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+    th{color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+    tbody tr:hover{background:var(--tint)}
+    td code{padding:0;background:none;color:var(--ink);font-weight:700}
+    td.wrap{white-space:normal;min-width:200px}
+    .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:10.5px;font-weight:700}
+    .badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+    .badge-ok{background:var(--ok-bg);color:var(--ok-text)}
+    .badge-muted{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+    .badge-warn{background:var(--warn-bg);color:var(--warn-text)}
+    .row-actions{display:flex;gap:6px}
+    .table-foot{padding:12px 0 2px;color:var(--muted);font-size:12px}
+
+    /* Groups */
+    .group-list{display:grid;gap:16px}
+    .group-card{padding:22px 24px;background:var(--surface);border:1px solid var(--line);border-radius:16px}
+    .group-top{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:10px}
+    .group-top h3{margin:0;font-size:16px}
+    .group-top .meta{margin-top:4px;color:var(--muted);font-size:12px}
+    .group-title{margin:12px 0 8px;color:var(--primary-ink);font-size:15px;font-weight:700;line-height:1.5}
+    .group-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+    .group-desc{margin:0 0 12px;color:var(--body);font-size:13px;line-height:1.7}
+    .group-card details{margin-top:8px}
+    .group-card summary{color:var(--primary);font-size:12.5px;font-weight:700;cursor:pointer}
+    .group-card ol{margin:10px 0 0;padding-left:20px;color:var(--body);font-size:12.5px;line-height:1.7}
+
+    /* Import preview */
+    .preview{margin-top:14px;padding:14px 16px;border:1px dashed var(--line);border-radius:12px}
+    .preview-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;font-size:13px}
+    .preview table{font-size:12.5px}
+    .preview-warn{margin:8px 0 0;color:var(--warn-text);font-size:12px}
+
+    /* Login */
+    .login-wrap{min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:40px 16px}
+    .login-card{width:100%;max-width:400px;padding:38px 34px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 48px -24px rgb(15 23 42 / .2);text-align:center}
+    .login-icon{display:grid;place-items:center;width:52px;height:52px;margin:0 auto 18px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#1d4ed8);color:#fff}
+    .login-icon svg{width:24px;height:24px}
+    .login-card h1{margin-bottom:8px;font-size:21px}
+    .login-card .hint{margin-bottom:24px;color:var(--muted);font-size:12.5px;line-height:1.7}
+    .login-card form{text-align:left}
+
+    /* Modal + toast */
+    .modal-overlay{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:20px;background:rgb(15 23 42 / .5);backdrop-filter:blur(2px)}
+    .modal-overlay.show{display:flex}
+    .modal-card{width:100%;max-width:400px;padding:26px;background:var(--surface);border-radius:16px;box-shadow:0 30px 60px -20px rgb(15 23 42 / .4)}
+    .modal-card h3{margin-bottom:10px;font-size:16px}
+    .modal-card p{margin-bottom:22px;color:var(--muted);font-size:13px;line-height:1.65}
+    .modal-card p code{color:var(--ink);font-weight:700}
+    .modal-actions{display:flex;justify-content:flex-end;gap:10px}
+    .modal-actions button{padding:10px 18px;font-size:12px}
+    .btn-danger{background:linear-gradient(135deg,#ef4444,#dc2626)!important;box-shadow:0 8px 20px -8px rgb(220 38 38 / .45)!important}
+    .toast{position:fixed;bottom:26px;left:50%;z-index:60;padding:13px 20px;border-radius:11px;color:#fff;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transform:translateX(-50%) translateY(16px);transition:.25s;box-shadow:0 14px 30px -10px rgb(15 23 42 / .35)}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+    .toast.ok{background:#16a34a}
+    .toast.error{background:#dc2626}
+    .loading-line{height:3px;background:var(--bar);background-size:200% 100%;animation:load 1.2s linear infinite;position:fixed;top:72px;left:0;right:0;z-index:25;display:none}
+    .loading-line.show{display:block}
+    @keyframes load{from{background-position:200% 0}to{background-position:0 0}}
+
+    @media(max-width:1100px){.grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:1fr}.split{grid-template-columns:1fr}}
+    @media(max-width:860px){
+      .ad-shell{grid-template-columns:minmax(0,1fr)}
+      .ad-side{min-width:0}
+      .ad-side{position:sticky;top:72px;z-index:15;height:auto;display:flex;gap:4px;overflow-x:auto;padding:8px 12px;border-right:0;border-bottom:1px solid var(--line)}
+      .ad-side-label{display:none}
+      .ad-nav{width:auto;white-space:nowrap;padding:9px 12px;font-size:13px}
+      .ad-nav .count,.ad-nav .ext{margin-left:4px}
+      .ad-main{padding:22px 16px 60px}
+      .ad-brand-text span{display:none}
+      .loading-line{top:72px}
+    }
+    @media(max-width:520px){.grid-4{grid-template-columns:1fr 1fr}.stat strong{font-size:30px}.ad-top{padding:0 16px}.ad-brand img{height:30px}}
+  </style>
+</head>
+<body>
+  <header class="ad-top">
+    <div class="ad-brand">
+      <img src="../assets/img/logo-mark.png?v=1" alt="">
+      <div class="ad-brand-text"><strong>IT LEARNING HUB</strong><span>ADMIN DASHBOARD</span></div>
+    </div>
+    <div class="ad-top-actions">
+      <button type="button" class="icon-btn" id="theme-btn" aria-label="Đổi giao diện sáng/tối" title="Đổi giao diện sáng/tối"></button>
+      <button type="button" class="icon-btn" id="logout-btn" aria-label="Đăng xuất" title="Đăng xuất" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H4"/></svg></button>
+    </div>
+  </header>
+  <div class="loading-line" id="loading"></div>
+
+  <!-- Login -->
+  <section class="login-wrap" id="login-view">
+    <div class="login-card">
+      <div class="login-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <span class="eyebrow">KHU VỰC NỘI BỘ</span>
+      <h1>Đăng nhập quản trị</h1>
+      <p class="hint">Nhập mật khẩu quản trị để vào dashboard. Không chia sẻ mật khẩu này với người khác.</p>
+      <form id="login-form">
+        <div class="field">
+          <label for="login-key">MẬT KHẨU QUẢN TRỊ</label>
+          <input type="password" id="login-key" autocomplete="off" required>
+        </div>
+        <button type="submit" class="primary-button btn-full" id="login-btn">Đăng nhập <span>›</span></button>
+      </form>
+      <p class="msg" id="login-msg"></p>
+    </div>
+  </section>
+
+  <!-- Dashboard -->
+  <div class="ad-shell" id="app" hidden>
+    <nav class="ad-side" aria-label="Điều hướng quản trị">
+      <button type="button" class="ad-nav" data-view="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/></svg>Tổng quan</button>
+
+      <p class="ad-side-label">MÃ TRUY CẬP</p>
+      <button type="button" class="ad-nav" data-view="codes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8"/><path d="M16 7l2 2"/><path d="M14 9l2 2"/></svg>Tạo &amp; quản lý mã<span class="count" id="nav-codes">0</span></button>
+
+      <p class="ad-side-label">IS355 · ĐỒ ÁN</p>
+      <button type="button" class="ad-nav" data-view="roster"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.5c2 .8 3 2.8 3 5.5"/></svg>Danh sách lớp<span class="count" id="nav-roster">0</span></button>
+      <button type="button" class="ad-nav" data-view="groups"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M8.5 13.5l2 2 4-4"/></svg>Đăng ký đề tài<span class="count" id="nav-groups">0</span></button>
+
+      <p class="ad-side-label">LIÊN KẾT</p>
+      <a class="ad-nav" href="../courses/is355/dang-ky-de-tai.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>Form đăng ký đề tài<span class="ext">↗</span></a>
+      <a class="ad-nav" href="../courses/is355/danh-sach-de-tai.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Danh sách đề tài (công khai)<span class="ext">↗</span></a>
+      <a class="ad-nav" href="../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg>Trang chủ</a>
+    </nav>
+
+    <main class="ad-main">
+
+      <!-- Overview -->
+      <section class="view" id="view-overview">
+        <div class="view-head">
+          <div><p class="eyebrow">TỔNG QUAN</p><h1>Xin chào, giảng viên</h1></div>
+          <button type="button" class="outline-button" data-refresh><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg>Làm mới dữ liệu</button>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Đăng ký đề tài <span class="chip" id="ov-reg-chip">-</span></h3>
+            <div id="ov-reg-bars"></div>
+            <div class="card-foot" id="ov-reg-foot"></div>
+          </div>
+          <div class="card">
+            <h3>Nhóm đã đăng ký <span class="chip chip-muted" id="ov-grp-chip">0 nhóm</span></h3>
+            <div id="ov-grp-bars"></div>
+            <div class="card-foot" id="ov-grp-foot"></div>
+          </div>
+          <div class="card">
+            <h3>Mã truy cập <span class="chip chip-muted" id="ov-code-chip">0 mã</span></h3>
+            <div id="ov-code-bars"></div>
+            <div class="card-foot" id="ov-code-foot"></div>
+          </div>
+        </div>
+
+        <div class="section-label">
+          <h2>SỐ LIỆU NHANH</h2>
+          <button type="button" class="outline-button" id="export-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Tải dữ liệu đăng ký (Excel/CSV)</button>
+        </div>
+        <div class="grid-4" id="ov-stats"></div>
+
+        <div class="grid-3" style="margin-top:22px">
+          <div class="card"><h3>Nhóm theo chủ đề</h3><div id="ov-dist-track"></div></div>
+          <div class="card"><h3>Nhóm theo mức độ</h3><div id="ov-dist-level"></div></div>
+          <div class="card"><h3>Mã đang hoạt động theo môn</h3><div id="ov-dist-course"></div></div>
+        </div>
+      </section>
+
+      <!-- Access codes -->
+      <section class="view" id="view-codes">
+        <div class="view-head">
+          <div><p class="eyebrow">MÃ TRUY CẬP</p><h1>Tạo &amp; quản lý mã</h1></div>
+        </div>
+        <div class="split">
+          <div class="card">
+            <h3>Tạo mã mới</h3>
+            <form id="generate-form">
+              <div class="field">
+                <label for="course">MÔN HỌC</label>
+                <select id="course" required>
+                  <option value="IT004">IT004</option>
+                  <option value="IS201">IS201</option>
+                  <option value="IS208">IS208</option>
+                  <option value="IS210">IS210</option>
+                  <option value="IS336">IS336</option>
+                  <option value="IS355">IS355</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="week">TUẦN</label>
+                <select id="week" required>
+                  <option value="1">Tuần 1</option>
+                  <option value="2">Tuần 2</option>
+                  <option value="3">Tuần 3</option>
+                  <option value="4">Tuần 4</option>
+                  <option value="5">Tuần 5</option>
+                  <option value="6">Tuần 6</option>
+                  <option value="TD">Thi thử - Đề</option>
+                  <option value="DA">Thi thử - Đáp án</option>
+                  <option value="">Tất cả các tuần</option>
+                </select>
+                <p class="field-hint">Mã chỉ mở khóa được đúng tuần đã chọn. Chọn "Tất cả các tuần" nếu muốn 1 mã dùng được cho mọi tuần của môn này.</p>
+              </div>
+              <div class="field">
+                <label for="note">GHI CHÚ (TÙY CHỌN)</label>
+                <input type="text" id="note" placeholder="Ví dụ: Lớp thực hành thứ Ba - Tuần 2">
+              </div>
+              <button type="submit" class="primary-button btn-full" id="gen-btn">Tạo mã <span>›</span></button>
+            </form>
+            <div class="code-result" id="code-result">
+              <code id="code-result-value"></code>
+              <button type="button" class="outline-button btn-sm" id="copy-btn">Sao chép</button>
+            </div>
+            <p class="msg" id="gen-msg"></p>
+          </div>
+
+          <div class="card">
+            <h3>Danh sách mã</h3>
+            <div class="toolbar">
+              <input type="search" id="code-search" placeholder="Tìm mã hoặc ghi chú...">
+              <select id="code-course-filter"><option value="">Tất cả môn</option></select>
+              <select id="code-status-filter"><option value="">Mọi trạng thái</option><option value="active">Đang hoạt động</option><option value="revoked">Đã vô hiệu hóa</option></select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Mã</th><th>Môn</th><th>Tuần</th><th>Trạng thái</th><th>Ghi chú</th><th></th></tr></thead>
+                <tbody id="codes-tbody"></tbody>
+              </table>
+            </div>
+            <p class="empty" id="codes-empty" hidden>Không có mã nào.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Roster -->
+      <section class="view" id="view-roster">
+        <div class="view-head">
+          <div><p class="eyebrow">IS355 · ĐỒ ÁN</p><h1>Danh sách lớp</h1></div>
+        </div>
+        <div class="split">
+          <div class="card">
+            <h3>Import danh sách lớp</h3>
+            <div class="field">
+              <label for="imp-class">LỚP</label>
+              <select id="imp-class">
+                <option value="IS355.R11.CTTT.1">IS355.R11.CTTT.1</option>
+                <option value="IS355.R11.CTTT.2">IS355.R11.CTTT.2</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="imp-file">FILE EXCEL / CSV</label>
+              <input type="file" id="imp-file" accept=".xlsx,.xls,.csv,.txt">
+              <p class="field-hint">Cần có cột MSSV và Họ tên (hoặc 2 cột Họ lót + Tên). Hệ thống tự nhận dòng tiêu đề.</p>
+            </div>
+            <div class="field">
+              <label for="imp-paste">HOẶC DÁN TỪ EXCEL</label>
+              <textarea id="imp-paste" placeholder="23520219	Trần Quốc Đại&#10;23520511	Đào Huy Hoàn"></textarea>
+            </div>
+            <button type="button" class="outline-button btn-full" id="imp-preview-btn">Xem trước</button>
+            <div class="preview" id="imp-preview" hidden></div>
+            <p class="msg" id="imp-msg"></p>
+          </div>
+
+          <div class="card">
+            <h3>Sinh viên IS355 <span class="chip chip-muted" id="roster-chip">0 SV</span></h3>
+            <div class="toolbar">
+              <input type="search" id="roster-search" placeholder="Tìm MSSV, họ tên, nhóm...">
+              <select id="roster-class-filter"><option value="">Cả 2 lớp</option><option value="IS355.R11.CTTT.1">IS355.R11.CTTT.1</option><option value="IS355.R11.CTTT.2">IS355.R11.CTTT.2</option></select>
+              <select id="roster-status-filter"><option value="">Mọi trạng thái</option><option value="grouped">Đã có nhóm</option><option value="ungrouped">Chưa có nhóm</option></select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>MSSV</th><th>Họ và tên</th><th>Lớp</th><th>Nhóm</th></tr></thead>
+                <tbody id="roster-tbody"></tbody>
+              </table>
+            </div>
+            <p class="empty" id="roster-empty" hidden>Chưa có sinh viên. Import danh sách lớp ở khung bên trái.</p>
+            <p class="table-foot" id="roster-foot"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Groups -->
+      <section class="view" id="view-groups">
+        <div class="view-head">
+          <div><p class="eyebrow">IS355 · ĐỒ ÁN</p><h1>Đăng ký đề tài</h1></div>
+          <div class="row-actions">
+            <button type="button" class="outline-button" id="toggle-reg-btn">-</button>
+            <button type="button" class="outline-button" id="export-btn-2">Tải Excel/CSV</button>
+          </div>
+        </div>
+        <div class="toolbar">
+          <input type="search" id="group-search" placeholder="Tìm tên nhóm, đề tài, MSSV...">
+          <select id="group-track-filter"><option value="">Mọi chủ đề</option><option value="A">A - Green Finance</option><option value="B">B - DeFi &amp; Banking</option><option value="C">C - Analytics &amp; AML</option><option value="D">D - RWA &amp; Tokenization</option><option value="E">E - AI + Blockchain</option></select>
+        </div>
+        <div class="group-list" id="group-list"></div>
+        <p class="empty" id="groups-empty" hidden>Chưa có nhóm nào đăng ký.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="confirm-overlay">
+    <div class="modal-card">
+      <h3 id="confirm-title">Xác nhận</h3>
+      <p id="confirm-message"></p>
+      <div class="modal-actions">
+        <button type="button" class="outline-button" id="confirm-cancel">Hủy</button>
+        <button type="button" class="primary-button" id="confirm-ok">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script>
+  (function () {
+    var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzl_MDfTRkxNExa--NscWG4HPI7ioAN0QImDGLDyk66UFuXaUo1Zrwi_qvwoIjrS5Vu/exec';
+    var CLASSES = ['IS355.R11.CTTT.1', 'IS355.R11.CTTT.2'];
+    var TRACKS = { A: 'A - Green Finance', B: 'B - DeFi & Banking', C: 'C - Analytics & AML', D: 'D - RWA & Tokenization', E: 'E - AI + Blockchain' };
+    var LEVELS = { '1': 'Mức 1 - Basic', '2': 'Mức 2 - Intermediate', '3': 'Mức 3 - Advanced', '4': 'Mức 4 - Research' };
+    var IDLE_TIMEOUT_MS = 20 * 60 * 1000;
+
+    var state = { key: '', codes: [], students: [], groups: [], regOpen: true, is355Loaded: false };
+    var $ = function (id) { return document.getElementById(id); };
+
+    /* ---------- Helpers ---------- */
+
+    function esc(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+      });
+    }
+
+    // Every call is a plain fetch() POST (text/plain = no CORS preflight).
+    // The old JSONP <script> approach was often blocked by ad-blockers and
+    // strict tracking prevention. A sleeping Apps Script can take 10s+ to
+    // wake up, so each call gets a long timeout and one automatic retry.
+    var TIMEOUT_MS = 30000;
+
+    function apiOnce(body) {
+      var ctrl = window.AbortController ? new AbortController() : null;
+      var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
+      return fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(body),
+        redirect: 'follow',
+        cache: 'no-store',
+        signal: ctrl ? ctrl.signal : undefined
+      }).then(function (r) {
+        return r.text().then(function (text) {
+          try { return JSON.parse(text); } catch (e) {
+            var err = new Error('bad response');
+            err.kind = 'server';
+            throw err;
+          }
+        });
+      }, function (e) {
+        var err = new Error(e && e.name === 'AbortError' ? 'timeout' : 'network');
+        err.kind = e && e.name === 'AbortError' ? 'timeout' : 'network';
+        throw err;
+      }).finally(function () { clearTimeout(timer); });
+    }
+
+    function api(body) {
+      if (!('key' in body)) body.key = state.key;
+      return apiOnce(body).catch(function (err) {
+        if (err.kind === 'server') throw err;
+        return new Promise(function (r) { setTimeout(r, 1500); }).then(function () { return apiOnce(body); });
+      });
+    }
+
+    function netError(err) {
+      if (!navigator.onLine) return 'Máy đang mất kết nối Internet.';
+      if (err && err.kind === 'timeout') return 'Máy chủ Google Apps Script phản hồi quá chậm. Đợi vài giây rồi thử lại.';
+      if (err && err.kind === 'server') return 'Máy chủ trả về dữ liệu lạ. Kiểm tra Apps Script đã deploy bản mới (Who has access: Anyone) chưa.';
+      return 'Trình duyệt không kết nối được tới script.google.com. Thường do trình chặn quảng cáo hoặc chế độ chống theo dõi "Nghiêm ngặt". Hãy tắt chúng cho trang này hoặc thử cửa sổ ẩn danh.';
+    }
+
+    var loadingCount = 0;
+    function busy(p) {
+      loadingCount++;
+      $('loading').classList.add('show');
+      return p.finally(function () { if (--loadingCount <= 0) { loadingCount = 0; $('loading').classList.remove('show'); } });
+    }
+
+    var toastTimer;
+    function toast(msg, type) {
+      clearTimeout(toastTimer);
+      $('toast').textContent = msg;
+      $('toast').className = 'toast show ' + (type || 'ok');
+      toastTimer = setTimeout(function () { $('toast').classList.remove('show'); }, 3200);
+    }
+
+    function confirmBox(opts) {
+      $('confirm-title').textContent = opts.title || 'Xác nhận';
+      $('confirm-message').innerHTML = opts.message || '';
+      $('confirm-ok').textContent = opts.okLabel || 'Xác nhận';
+      $('confirm-ok').className = opts.danger ? 'primary-button btn-danger' : 'primary-button';
+      $('confirm-overlay').classList.add('show');
+      return new Promise(function (resolve) {
+        function done(v) {
+          $('confirm-overlay').classList.remove('show');
+          $('confirm-ok').removeEventListener('click', ok);
+          $('confirm-cancel').removeEventListener('click', no);
+          $('confirm-overlay').removeEventListener('click', bg);
+          resolve(v);
+        }
+        function ok() { done(true); }
+        function no() { done(false); }
+        function bg(e) { if (e.target === $('confirm-overlay')) done(false); }
+        $('confirm-ok').addEventListener('click', ok);
+        $('confirm-cancel').addEventListener('click', no);
+        $('confirm-overlay').addEventListener('click', bg);
+      });
+    }
+
+    function pct(a, b) { return b ? Math.round(a / b * 100) : 0; }
+
+    function bar(label, a, b, ok) {
+      return '<div class="progress-row"><div class="lbl"><span>' + esc(label) + '</span><span><b>' + a + '</b> <small>/ ' + b + '</small></span></div>' +
+        '<div class="bar' + (ok && a === b && b > 0 ? ' ok' : '') + '"><i style="width:' + pct(a, b) + '%"></i></div></div>';
+    }
+
+    function dist(container, entries) {
+      var max = Math.max.apply(null, entries.map(function (e) { return e[1]; }).concat([1]));
+      $(container).innerHTML = entries.some(function (e) { return e[1] > 0; })
+        ? entries.map(function (e) {
+            return '<div class="dist-row"><span title="' + esc(e[0]) + '">' + esc(e[0]) + '</span><div class="bar"><i style="width:' + (e[1] / max * 100) + '%"></i></div><b>' + e[1] + '</b></div>';
+          }).join('')
+        : '<p class="empty">Chưa có dữ liệu.</p>';
+    }
+
+    function fmtTime(iso) {
+      var d = new Date(iso);
+      if (isNaN(d)) return '';
+      return d.toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+
+    /* ---------- Theme ---------- */
+
+    var MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>';
+    var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></svg>';
+    function isDark() {
+      var t = document.documentElement.getAttribute('data-theme');
+      return t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function syncThemeBtn() { $('theme-btn').innerHTML = isDark() ? SUN : MOON; }
+    $('theme-btn').addEventListener('click', function () {
+      var next = isDark() ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      syncThemeBtn();
+    });
+    syncThemeBtn();
+
+    /* ---------- Navigation ---------- */
+
+    var VIEWS = ['overview', 'codes', 'roster', 'groups'];
+    function showView(name) {
+      if (VIEWS.indexOf(name) === -1) name = 'overview';
+      VIEWS.forEach(function (v) { $('view-' + v).classList.toggle('active', v === name); });
+      document.querySelectorAll('.ad-nav[data-view]').forEach(function (b) { b.classList.toggle('active', b.dataset.view === name); });
+      if (location.hash !== '#' + name) {
+        try { history.replaceState(null, '', location.pathname + location.search + '#' + name); } catch (e) {}
+      }
+      window.scrollTo(0, 0);
+    }
+    document.querySelectorAll('.ad-nav[data-view]').forEach(function (b) {
+      b.addEventListener('click', function () { showView(b.dataset.view); });
+    });
+
+    /* ---------- Login / session ---------- */
+
+    var idleTimer;
+    function resetIdle() {
+      if (!state.key) return;
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(function () { logout('Phiên đã hết hạn do không hoạt động. Vui lòng đăng nhập lại.'); }, IDLE_TIMEOUT_MS);
+    }
+    ['click', 'keydown', 'mousemove', 'scroll'].forEach(function (evt) { document.addEventListener(evt, resetIdle, { passive: true }); });
+
+    // keepKey: a network problem is not a wrong password, so keep the
+    // saved key and the typed value - the next click just retries.
+    function logout(message, keepKey) {
+      state.key = "";
+      clearTimeout(idleTimer);
+      if (!keepKey) {
+        try { localStorage.removeItem("admin:key"); } catch (e) {}
+        $("login-key").value = "";
+      }
+      $("app").hidden = true;
+      $("logout-btn").hidden = true;
+      $("login-view").hidden = false;
+      $("login-msg").textContent = message || "";
+      $("login-msg").className = message ? "msg error" : "msg";
+    }
+
+    function login(key) {
+      $('login-btn').disabled = true;
+      $('login-btn').textContent = 'Đang kiểm tra...';
+      return api({ action: 'list', key: key })
+        .then(function (data) {
+          if (!data.ok) { logout(data.message || 'Sai mật khẩu quản trị.'); return; }
+          state.key = key;
+          try { localStorage.setItem('admin:key', key); } catch (e) {}
+          $('login-view').hidden = true;
+          $('app').hidden = false;
+          $('logout-btn').hidden = false;
+          state.codes = data.codes || [];
+          renderCodes();
+          renderOverview();
+          showView(location.hash.slice(1));
+          resetIdle();
+          loadIs355();
+        })
+        .catch(function (err) { if (window.console) console.error(err); logout(netError(err), true); })
+        .finally(function () {
+          $('login-btn').disabled = false;
+          $('login-btn').innerHTML = 'Đăng nhập <span>›</span>';
+        });
+    }
+
+    $('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var key = $('login-key').value.trim();
+      if (key) login(key);
+    });
+    $('logout-btn').addEventListener('click', function () { logout(); });
+
+    function refreshAll() {
+      busy(Promise.all([loadCodes(), loadIs355()]));
+    }
+    document.querySelectorAll('[data-refresh]').forEach(function (b) { b.addEventListener('click', refreshAll); });
+
+    /* ---------- Access codes ---------- */
+
+    function weekLabel(w) {
+      return w === 'TD' ? 'Thi thử - Đề' : w === 'DA' ? 'Thi thử - Đáp án' : w ? 'Tuần ' + w : 'Tất cả';
+    }
+    function isActive(c) { return String(c.status).toLowerCase() === 'active'; }
+
+    function loadCodes() {
+      return api({ action: 'list', key: state.key }).then(function (data) {
+        if (data.ok) { state.codes = data.codes || []; renderCodes(); renderOverview(); }
+        else toast(data.message || 'Không tải được danh sách mã.', 'error');
+      }).catch(function (err) { toast(netError(err), 'error'); });
+    }
+
+    function renderCodes() {
+      $('nav-codes').textContent = state.codes.length;
+      var courses = {};
+      state.codes.forEach(function (c) { courses[c.course] = true; });
+      var sel = $('code-course-filter');
+      var cur = sel.value;
+      sel.innerHTML = '<option value="">Tất cả môn</option>' + Object.keys(courses).sort().map(function (c) {
+        return '<option value="' + esc(c) + '">' + esc(c) + '</option>';
+      }).join('');
+      sel.value = cur;
+
+      var q = $('code-search').value.trim().toLowerCase();
+      var st = $('code-status-filter').value;
+      var list = state.codes.filter(function (c) {
+        if (sel.value && c.course !== sel.value) return false;
+        if (st === 'active' && !isActive(c)) return false;
+        if (st === 'revoked' && isActive(c)) return false;
+        return !q || (String(c.code) + ' ' + String(c.note)).toLowerCase().indexOf(q) !== -1;
+      });
+
+      $('codes-empty').hidden = list.length > 0;
+      $('codes-tbody').innerHTML = list.map(function (c) {
+        var active = isActive(c);
+        return '<tr><td><code>' + esc(c.code) + '</code></td><td>' + esc(c.course) + '</td><td>' + esc(weekLabel(c.week)) + '</td>' +
+          '<td><span class="badge ' + (active ? 'badge-ok' : 'badge-muted') + '">' + (active ? 'Active' : 'Revoked') + '</span></td>' +
+          '<td>' + esc(c.note) + '</td>' +
+          '<td><div class="row-actions">' +
+          '<button type="button" class="outline-button btn-sm" data-act="' + (active ? 'revoke' : 'restore') + '" data-code="' + esc(c.code) + '">' + (active ? 'Vô hiệu hóa' : 'Khôi phục') + '</button>' +
+          '<button type="button" class="outline-button btn-sm btn-danger-outline" data-act="delete" data-code="' + esc(c.code) + '">Xóa</button>' +
+          '</div></td></tr>';
+      }).join('');
+    }
+    ['code-search', 'code-course-filter', 'code-status-filter'].forEach(function (id) {
+      $(id).addEventListener('input', renderCodes);
+    });
+
+    function codeAction(action, code, okMsg, failMsg) {
+      busy(api({ action: action, key: state.key, code: code }).then(function (data) {
+        if (data.ok) { toast(okMsg); return loadCodes(); }
+        toast(data.message || failMsg, 'error');
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    }
+
+    $('codes-tbody').addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-act]');
+      if (!btn) return;
+      var code = btn.dataset.code;
+      var c = '<code>' + esc(code) + '</code>';
+      if (btn.dataset.act === 'revoke') {
+        confirmBox({ title: 'Vô hiệu hóa mã', message: 'Vô hiệu hóa mã ' + c + '? Mã sẽ không dùng được nữa, nhưng có thể khôi phục lại sau.', okLabel: 'Vô hiệu hóa' })
+          .then(function (y) { if (y) codeAction('revoke', code, 'Đã vô hiệu hóa mã ' + code + '.', 'Không vô hiệu hóa được mã.'); });
+      } else if (btn.dataset.act === 'restore') {
+        confirmBox({ title: 'Khôi phục mã', message: 'Khôi phục mã ' + c + ' về trạng thái hoạt động?', okLabel: 'Khôi phục' })
+          .then(function (y) { if (y) codeAction('restore', code, 'Đã khôi phục mã ' + code + '.', 'Không khôi phục được mã.'); });
+      } else {
+        confirmBox({ title: 'Xóa vĩnh viễn mã', message: 'Xóa hẳn mã ' + c + ' khỏi hệ thống? Hành động này không thể hoàn tác.', okLabel: 'Tiếp tục xóa', danger: true })
+          .then(function (y) {
+            if (!y) return;
+            return confirmBox({ title: 'Xác nhận lần cuối', message: 'Bạn có chắc chắn muốn xóa vĩnh viễn mã ' + c + '? Không thể khôi phục sau khi xóa.', okLabel: 'Xóa vĩnh viễn', danger: true })
+              .then(function (y2) { if (y2) codeAction('delete', code, 'Đã xóa mã ' + code + '.', 'Không xóa được mã.'); });
+          });
+      }
+    });
+
+    $('generate-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = $('gen-btn');
+      $('gen-msg').textContent = '';
+      $('code-result').classList.remove('show');
+      btn.disabled = true;
+      btn.textContent = 'Đang tạo...';
+      busy(api({ action: 'generate', key: state.key, course: $('course').value, week: $('week').value, note: $('note').value.trim() })
+        .then(function (data) {
+          if (data.ok) {
+            $('code-result-value').textContent = data.code;
+            $('code-result').classList.add('show');
+            $('note').value = '';
+            toast('Đã tạo mã ' + data.code + '.');
+            return loadCodes();
+          }
+          $('gen-msg').textContent = data.message || 'Không tạo được mã.';
+          $('gen-msg').className = 'msg error';
+        })
+        .catch(function (err) { $('gen-msg').textContent = netError(err); $('gen-msg').className = 'msg error'; })
+        .finally(function () { btn.disabled = false; btn.innerHTML = 'Tạo mã <span>›</span>'; }));
+    });
+
+    $('copy-btn').addEventListener('click', function () {
+      var code = $('code-result-value').textContent;
+      (navigator.clipboard ? navigator.clipboard.writeText(code) : Promise.reject())
+        .then(function () { toast('Đã sao chép ' + code + '.'); })
+        .catch(function () { toast('Không sao chép được, hãy bôi đen để copy.', 'error'); });
+    });
+
+    /* ---------- IS355: data ---------- */
+
+    function loadIs355() {
+      return api({ action: 'rosterAdmin' }).then(function (data) {
+        if (!data.ok) { toast(data.message || 'Không tải được dữ liệu IS355.', 'error'); return; }
+        state.students = data.students || [];
+        state.groups = data.groups || [];
+        state.regOpen = data.registrationOpen !== false;
+        state.is355Loaded = true;
+        renderRoster();
+        renderGroups();
+        renderOverview();
+      }).catch(function () {
+        toast('Không tải được dữ liệu IS355. Hãy kiểm tra Apps Script đã deploy bản mới chưa.', 'error');
+      });
+    }
+
+    /* ---------- Overview ---------- */
+
+    function renderOverview() {
+      var s = state.students, g = state.groups, codes = state.codes;
+      var grouped = s.filter(function (x) { return x.group; }).length;
+      var activeCodes = codes.filter(isActive).length;
+
+      // Registration card
+      var chip = $('ov-reg-chip');
+      chip.textContent = state.regOpen ? 'Đang mở' : 'Đã khóa';
+      chip.className = 'chip ' + (state.regOpen ? 'chip-ok' : 'chip-warn');
+      $('ov-reg-bars').innerHTML = bar('SV đã có nhóm', grouped, s.length, true) +
+        CLASSES.map(function (c) {
+          var inClass = s.filter(function (x) { return x['class'] === c; });
+          return bar('Lớp ' + c.replace('IS355.R11.', ''), inClass.filter(function (x) { return x.group; }).length, inClass.length, true);
+        }).join('');
+      $('ov-reg-foot').innerHTML = !state.is355Loaded ? 'Đang tải dữ liệu...' :
+        !s.length ? 'Chưa có danh sách lớp. <button type="button" data-go="roster">Import ngay</button>' :
+        '<b>' + (s.length - grouped) + '</b> sinh viên chưa có nhóm. <button type="button" data-go="roster" data-filter="ungrouped">Xem danh sách</button>';
+
+      // Groups card
+      var mixed = g.filter(function (x) {
+        var cls = {};
+        x.members.forEach(function (m) { cls[m['class']] = true; });
+        return Object.keys(cls).length > 1;
+      }).length;
+      var full = g.filter(function (x) { return x.members.length >= 5; }).length;
+      $('ov-grp-chip').textContent = g.length + ' nhóm';
+      $('ov-grp-bars').innerHTML = bar('Nhóm ghép 2 lớp', mixed, g.length) + bar('Nhóm từ 5 thành viên', full, g.length);
+      var latest = g.slice().sort(function (a, b) { return String(b.submittedAt).localeCompare(String(a.submittedAt)); })[0];
+      $('ov-grp-foot').innerHTML = latest
+        ? 'Mới nhất: <b>' + esc(latest.groupName) + '</b> lúc ' + esc(fmtTime(latest.submittedAt)) + '. <button type="button" data-go="groups">Xem tất cả</button>'
+        : 'Chưa có nhóm nào đăng ký.';
+
+      // Codes card
+      $('ov-code-chip').textContent = codes.length + ' mã';
+      var is355Active = codes.filter(function (c) { return isActive(c) && c.course === 'IS355'; }).length;
+      var is355All = codes.filter(function (c) { return c.course === 'IS355'; }).length;
+      $('ov-code-bars').innerHTML = bar('Đang hoạt động', activeCodes, codes.length) + bar('Mã IS355 đang hoạt động', is355Active, is355All);
+      $('ov-code-foot').innerHTML = codes.length
+        ? 'Mã mới nhất: <code>' + esc(codes[0].code) + '</code>. <button type="button" data-go="codes">Tạo mã mới</button>'
+        : 'Chưa có mã nào. <button type="button" data-go="codes">Tạo mã mới</button>';
+
+      // Stat tiles
+      var tiles = [
+        [g.length, 'Nhóm đã đăng ký', true],
+        [s.length, 'Sinh viên IS355', true],
+        [s.length - grouped, 'Sinh viên chưa có nhóm', false],
+        [activeCodes, 'Mã truy cập đang hoạt động', false]
+      ];
+      $('ov-stats').innerHTML = tiles.map(function (t) {
+        return '<div class="stat' + (t[2] ? ' hl' : '') + '"><strong>' + t[0] + '</strong><span>' + t[1] + '</span></div>';
+      }).join('');
+
+      dist('ov-dist-track', Object.keys(TRACKS).map(function (k) { return [TRACKS[k], g.filter(function (x) { return x.track === k; }).length]; }));
+      dist('ov-dist-level', Object.keys(LEVELS).map(function (k) { return [LEVELS[k], g.filter(function (x) { return x.level === k; }).length]; }));
+      var byCourse = {};
+      codes.filter(isActive).forEach(function (c) { byCourse[c.course] = (byCourse[c.course] || 0) + 1; });
+      dist('ov-dist-course', Object.keys(byCourse).sort().map(function (k) { return [k, byCourse[k]]; }));
+    }
+
+    document.addEventListener('click', function (e) {
+      var go = e.target.closest('[data-go]');
+      if (!go) return;
+      if (go.dataset.filter) { $('roster-status-filter').value = go.dataset.filter; renderRoster(); }
+      showView(go.dataset.go);
+    });
+
+    /* ---------- Roster ---------- */
+
+    function renderRoster() {
+      var s = state.students;
+      $('nav-roster').textContent = s.length;
+      $('roster-chip').textContent = s.length + ' SV';
+      var q = $('roster-search').value.trim().toLowerCase();
+      var cls = $('roster-class-filter').value;
+      var st = $('roster-status-filter').value;
+      var list = s.filter(function (x) {
+        if (cls && x['class'] !== cls) return false;
+        if (st === 'grouped' && !x.group) return false;
+        if (st === 'ungrouped' && x.group) return false;
+        return !q || (x.studentId + ' ' + x.fullName + ' ' + x.group).toLowerCase().indexOf(q) !== -1;
+      }).sort(function (a, b) { return a['class'].localeCompare(b['class']) || a.studentId.localeCompare(b.studentId); });
+      $('roster-empty').hidden = list.length > 0;
+      $('roster-tbody').innerHTML = list.map(function (x) {
+        return '<tr><td><code>' + esc(x.studentId) + '</code></td><td>' + esc(x.fullName) + '</td><td>' + esc(x['class']) + '</td>' +
+          '<td>' + (x.group ? '<span class="badge badge-ok">' + esc(x.group) + '</span>' : '<span class="badge badge-warn">Chưa có nhóm</span>') + '</td></tr>';
+      }).join('');
+      $('roster-foot').textContent = list.length ? 'Hiển thị ' + list.length + ' / ' + s.length + ' sinh viên.' : '';
+    }
+    ['roster-search', 'roster-class-filter', 'roster-status-filter'].forEach(function (id) {
+      $(id).addEventListener('input', renderRoster);
+    });
+
+    /* ---------- Roster import ---------- */
+
+    var parsed = [];
+
+    function loadSheetJs() {
+      if (window.XLSX) return Promise.resolve();
+      return new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+        s.onload = resolve;
+        s.onerror = function () { reject(new Error('Không tải được thư viện đọc Excel.')); };
+        document.head.appendChild(s);
+      });
+    }
+
+    function fileToRows(file) {
+      if (/\.(csv|txt)$/i.test(file.name)) {
+        return file.text().then(textToRows);
+      }
+      return loadSheetJs().then(function () { return file.arrayBuffer(); }).then(function (buf) {
+        var wb = XLSX.read(buf, { type: 'array' });
+        var ws = wb.Sheets[wb.SheetNames[0]];
+        return XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, defval: '' });
+      });
+    }
+
+    function textToRows(text) {
+      var lines = text.replace(/^﻿/, '').split(/\r?\n/).filter(function (l) { return l.trim(); });
+      var sep = lines.some(function (l) { return l.indexOf('\t') !== -1; }) ? '\t' : (lines.some(function (l) { return l.indexOf(';') !== -1; }) ? ';' : ',');
+      return lines.map(function (l) {
+        return l.split(sep).map(function (c) { return c.replace(/^"|"$/g, '').trim(); });
+      });
+    }
+
+    function norm(s) {
+      return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/gi, 'd').toLowerCase().replace(/\s+/g, ' ').trim();
+    }
+    function cleanName(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
+    function cleanId(v) { return String(v == null ? '' : v).replace(/\.0+$/, '').replace(/\s/g, ''); }
+
+    // Finds MSSV + name columns. Handles "Họ tên"/"Họ và tên", split
+    // "Họ lót" + "Tên", English headers, or no header at all.
+    function parseRoster(rows) {
+      var head = -1, idCol = -1, nameCol = -1, firstCol = -1, lastCol = -1;
+      for (var r = 0; r < Math.min(rows.length, 20) && head === -1; r++) {
+        var cells = rows[r].map(norm);
+        cells.forEach(function (c, i) {
+          if (idCol === -1 && /^(mssv|ma ?sv|ma sinh vien|student ?id|ma so sinh vien|msv)$/.test(c)) idCol = i;
+          if (nameCol === -1 && /^(ho (va )?ten|ho ten sinh vien|ten sinh vien|full ?name|name)$/.test(c)) nameCol = i;
+          if (firstCol === -1 && /^(ho lot|ho dem|ho)$/.test(c)) firstCol = i;
+          if (lastCol === -1 && /^ten$/.test(c)) lastCol = i;
+        });
+        if (idCol !== -1 && (nameCol !== -1 || (firstCol !== -1 && lastCol !== -1))) head = r;
+        else { idCol = nameCol = firstCol = lastCol = -1; }
+      }
+
+      var out = [], skipped = 0, seen = {};
+      rows.forEach(function (row, r) {
+        if (head !== -1 && r <= head) return;
+        var id, name;
+        if (head !== -1) {
+          id = cleanId(row[idCol]);
+          name = nameCol !== -1 ? cleanName(row[nameCol]) : cleanName(row[firstCol] + ' ' + row[lastCol]);
+        } else {
+          // No header: first 8-digit cell is the MSSV, next text cell the name.
+          var i = row.findIndex(function (c) { return /^\d{8}$/.test(cleanId(c)); });
+          if (i === -1) { if (row.join('').trim()) skipped++; return; }
+          id = cleanId(row[i]);
+          var j = i + 1;
+          while (j < row.length && (!cleanName(row[j]) || /^\d+$/.test(cleanName(row[j])))) j++;
+          name = cleanName(row[j]);
+        }
+        if (!/^\d{8}$/.test(id) || !name) { if (row.join('').trim()) skipped++; return; }
+        if (seen[id]) { skipped++; return; }
+        seen[id] = true;
+        out.push({ studentId: id, fullName: name });
+      });
+      return { students: out, skipped: skipped, header: head !== -1 };
+    }
+
+    function showPreview(result) {
+      parsed = result.students;
+      var box = $('imp-preview');
+      box.hidden = false;
+      if (!parsed.length) {
+        box.innerHTML = '<p class="preview-warn">Không đọc được sinh viên nào. Kiểm tra file có cột MSSV (8 chữ số) và Họ tên.</p>';
+        return;
+      }
+      var cls = $('imp-class').value;
+      var existing = state.students.filter(function (x) { return x['class'] === cls; }).length;
+      box.innerHTML =
+        '<div class="preview-head"><span>Đọc được <b>' + parsed.length + '</b> sinh viên' + (result.skipped ? ', bỏ qua ' + result.skipped + ' dòng' : '') + '.</span>' +
+        '<button type="button" class="primary-button btn-sm" id="imp-confirm">Nhập vào ' + esc(cls.replace('IS355.R11.', '')) + ' <span>›</span></button></div>' +
+        '<div class="table-wrap" style="margin:0;padding:0;max-height:260px;overflow:auto"><table><thead><tr><th>#</th><th>MSSV</th><th>Họ và tên</th></tr></thead><tbody>' +
+        parsed.map(function (x, i) { return '<tr><td>' + (i + 1) + '</td><td><code>' + esc(x.studentId) + '</code></td><td>' + esc(x.fullName) + '</td></tr>'; }).join('') +
+        '</tbody></table></div>' +
+        (existing ? '<p class="preview-warn">Lớp ' + esc(cls) + ' đang có ' + existing + ' sinh viên. Import sẽ thay toàn bộ danh sách cũ của lớp này (các đăng ký nhóm đã gửi vẫn giữ nguyên).</p>' : '');
+      $('imp-confirm').addEventListener('click', doImport);
+    }
+
+    $('imp-preview-btn').addEventListener('click', function () {
+      $('imp-msg').textContent = '';
+      var file = $('imp-file').files[0];
+      var text = $('imp-paste').value.trim();
+      if (!file && !text) { $('imp-msg').textContent = 'Chọn file hoặc dán danh sách trước.'; $('imp-msg').className = 'msg error'; return; }
+      var p = file ? fileToRows(file) : Promise.resolve(textToRows(text));
+      p.then(function (rows) { showPreview(parseRoster(rows)); })
+        .catch(function (err) { $('imp-msg').textContent = err.message || 'Không đọc được file.'; $('imp-msg').className = 'msg error'; });
+    });
+    $('imp-file').addEventListener('change', function () { if (this.files[0]) $('imp-preview-btn').click(); });
+    $('imp-class').addEventListener('change', function () { if (parsed.length) showPreview({ students: parsed, skipped: 0 }); });
+
+    function doImport() {
+      var cls = $('imp-class').value;
+      confirmBox({
+        title: 'Nhập danh sách lớp',
+        message: 'Thay danh sách lớp <code>' + esc(cls) + '</code> bằng <b>' + parsed.length + '</b> sinh viên vừa đọc?',
+        okLabel: 'Nhập danh sách'
+      }).then(function (y) {
+        if (!y) return;
+        var btn = $('imp-confirm');
+        btn.disabled = true;
+        btn.textContent = 'Đang nhập...';
+        busy(api({ action: 'importRoster', 'class': cls, students: parsed }).then(function (data) {
+          if (!data.ok) { toast(data.message || 'Không nhập được danh sách.', 'error'); btn.disabled = false; btn.innerHTML = 'Thử lại'; return; }
+          toast('Đã nhập ' + data.count + ' sinh viên vào ' + cls + '.');
+          parsed = [];
+          $('imp-preview').hidden = true;
+          $('imp-file').value = '';
+          $('imp-paste').value = '';
+          return loadIs355();
+        }).catch(function (err) { toast(netError(err), 'error'); btn.disabled = false; btn.innerHTML = 'Thử lại'; }));
+      });
+    }
+
+    /* ---------- Groups ---------- */
+
+    function renderGroups() {
+      var g = state.groups;
+      $('nav-groups').textContent = g.length;
+      $('toggle-reg-btn').textContent = state.regOpen ? 'Khóa đăng ký' : 'Mở lại đăng ký';
+      $('toggle-reg-btn').className = 'outline-button' + (state.regOpen ? ' btn-danger-outline' : '');
+      var q = $('group-search').value.trim().toLowerCase();
+      var tr = $('group-track-filter').value;
+      var list = g.filter(function (x) {
+        if (tr && x.track !== tr) return false;
+        if (!q) return true;
+        var hay = [x.groupName, x.groupCode, x.title].concat(x.members.map(function (m) { return m.studentId + ' ' + m.fullName; })).join(' ').toLowerCase();
+        return hay.indexOf(q) !== -1;
+      });
+      $('groups-empty').hidden = list.length > 0;
+      $('group-list').innerHTML = list.map(function (x) {
+        return '<article class="group-card">' +
+          '<div class="group-top"><div><h3>' + esc(x.groupName) + ' <span class="chip chip-muted">Mã ' + esc(x.groupCode || String(x.submissionId).toUpperCase()) + '</span>' + '</h3>' +
+          '<div class="meta">Gửi lúc ' + esc(fmtTime(x.submittedAt)) + '</div></div>' +
+          '<span class="chip chip-muted">' + x.members.length + ' thành viên</span></div>' +
+          '<p class="group-title">' + esc(x.title) + '</p>' +
+          '<div class="group-tags"><span class="chip chip-ok">' + esc(TRACKS[x.track] || x.track) + '</span><span class="chip chip-muted">' + esc(LEVELS[x.level] || x.level) + '</span></div>' +
+          '<div class="table-wrap"><table><thead><tr><th>#</th><th>MSSV</th><th>Họ và tên</th><th>Lớp</th><th>Email</th></tr></thead><tbody>' +
+          x.members.map(function (m, i) {
+            return '<tr><td>' + (i + 1) + '</td><td><code>' + esc(m.studentId) + '</code></td><td>' + esc(m.fullName) +
+              (m.role === 'Leader' ? ' <span class="badge badge-ok">Trưởng nhóm</span>' : '') + '</td><td>' + esc(m['class']) + '</td><td>' + esc(m.email) + '</td></tr>';
+          }).join('') + '</tbody></table></div>' +
+          '<details><summary>Mô tả &amp; ' + x.refs.length + ' tài liệu tham khảo</summary>' +
+          '<p class="group-desc" style="margin-top:10px"><b>Tiếng Việt:</b> ' + esc(x.description) + '</p>' +
+          '<p class="group-desc"><b>English:</b> ' + esc(x.descriptionEn || '-') + '</p>' +
+          '<ol>' + x.refs.map(function (r) { return '<li><b>' + esc(r.type) + ':</b> ' + esc(r.citation) + '</li>'; }).join('') + '</ol></details>' +
+          '</article>';
+      }).join('');
+    }
+    ['group-search', 'group-track-filter'].forEach(function (id) { $(id).addEventListener('input', renderGroups); });
+
+    $('toggle-reg-btn').addEventListener('click', function () {
+      var open = !state.regOpen;
+      confirmBox({
+        title: open ? 'Mở lại đăng ký' : 'Khóa đăng ký',
+        message: open ? 'Sinh viên sẽ gửi được form đăng ký đề tài trở lại.' : 'Sinh viên sẽ không gửi hoặc cập nhật đăng ký được nữa cho tới khi mở lại.',
+        okLabel: open ? 'Mở lại' : 'Khóa đăng ký',
+        danger: !open
+      }).then(function (y) {
+        if (!y) return;
+        busy(api({ action: 'setRegistrationOpen', open: open }).then(function (data) {
+          if (!data.ok) { toast(data.message || 'Không đổi được trạng thái.', 'error'); return; }
+          state.regOpen = data.registrationOpen;
+          renderGroups();
+          renderOverview();
+          toast(open ? 'Đã mở lại đăng ký.' : 'Đã khóa đăng ký.');
+        }).catch(function (err) { toast(netError(err), 'error'); }));
+      });
+    });
+
+    /* ---------- Export (CSV opens directly in Excel) ---------- */
+
+    function exportCsv() {
+      if (!state.groups.length) { toast('Chưa có nhóm nào để xuất.', 'error'); return; }
+      var head = ['Group Code', 'Group Name', 'No.', 'Student ID', 'Full Name', 'Class', 'Email', 'Role', 'Topic Track', 'Level', 'Project Title', 'Short Description (VI)', 'Short Description (EN)'];
+      for (var i = 1; i <= 5; i++) head.push('Ref ' + i + ' - Type', 'Ref ' + i + ' - Citation');
+      head.push('Submitted At');
+      var lines = [head];
+      state.groups.forEach(function (g) {
+        g.members.forEach(function (m, n) {
+          var first = n === 0;
+          var row = [g.groupCode || String(g.submissionId).toUpperCase(), g.groupName, n + 1, m.studentId, m.fullName, m['class'], m.email, m.role,
+            first ? g.track : '', first ? g.level : '', first ? g.title : '', first ? g.description : '', first ? (g.descriptionEn || '') : ''];
+          for (var r = 0; r < 5; r++) {
+            var ref = first ? g.refs[r] : null;
+            row.push(ref ? ref.type : '', ref ? ref.citation : '');
+          }
+          row.push(fmtTime(g.submittedAt));
+          lines.push(row);
+        });
+      });
+      var csv = lines.map(function (row) {
+        return row.map(function (v) {
+          v = String(v == null ? '' : v);
+          // ="..." keeps MSSV and all-digit group codes as text in Excel.
+          if (/^\d{6,}$/.test(v)) return '="' + v + '"';
+          return '"' + v.replace(/"/g, '""') + '"';
+        }).join(',');
+      }).join('\r\n');
+      var blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'IS355-dang-ky-de-tai-' + new Date().toISOString().slice(0, 10) + '.csv';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    }
+    $('export-btn').addEventListener('click', exportCsv);
+    $('export-btn-2').addEventListener('click', exportCsv);
+
+    /* ---------- Boot ---------- */
+
+    renderOverview();
+    try {
+      var saved = localStorage.getItem('admin:key');
+      if (saved) { $('login-key').value = saved; login(saved); }
+      // Wake Apps Script up while the teacher types the password.
+      else apiOnce({ action: 'ping' }).catch(function () {});
+    } catch (e) {}
+  })();
+  </script>
+</body>
+</html>

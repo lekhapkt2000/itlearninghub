@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Final project topic registration form for IS355 Blockchain Technology, classes IS355.R11.CTTT.1 and IS355.R11.CTTT.2.">
+  <title>Topic Registration · Project Lab - IS355</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../../assets/img/favicon-32.png?v=3">
+  <link rel="icon" type="image/png" sizes="512x512" href="../../../assets/img/favicon-512.png?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../../assets/img/apple-touch-icon.png?v=3">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="../../../assets/css/base.css?v=40">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=58">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../../../en/index.html" aria-label="IT Learning Hub home"><picture><source srcset="../../../assets/img/logo-mark.png?v=1" media="(max-width: 760px)"><source srcset="../../../assets/img/logo-dark.png?v=1" media="(prefers-color-scheme: dark)"><img class="brand-mark" src="../../../assets/img/logo-light.png?v=1" alt="IT Learning Hub"></picture><span>IT Learning<span> Hub</span></span></a>
+      <nav class="main-nav" id="main-nav" aria-label="Main navigation">
+        <a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a>
+      </nav>
+      <div class="topbar-actions"><div class="lang-switch"><a href="../../../courses/is355/dang-ky-de-tai.html">VI</a><a href="dang-ky-de-tai.html" class="active">EN</a></div><button class="mobile-toggle" type="button" aria-label="Open menu" aria-controls="main-nav" aria-expanded="false">☰</button><a class="outline-button" href="project-lab.html">Project Lab <span>›</span></a></div>
+    </div>
+  </header>
+
+  <main class="course-shell">
+    <p class="breadcrumb"><a href="../../../en/index.html">Home</a><span>/</span><a href="index.html">IS355</a><span>/</span><a href="project-lab.html">Project Lab</a><span>/</span>Topic registration</p>
+
+    <div class="week-header">
+      <div class="week-header-content">
+        <span class="week-tag">PROJECT LAB · TOPIC REGISTRATION</span>
+        <h1>Final project topic registration</h1>
+        <div class="week-meta"><span>IS355.R11.CTTT.1</span><span>IS355.R11.CTTT.2</span><span>1 form per group</span><span>Up to 6 members</span></div>
+      </div>
+    </div>
+
+    <nav class="course-nav" aria-label="IS355 navigation">
+      <a href="index.html">Overview</a>
+      <a href="week-1.html">Week 1</a>
+      <a href="week-2.html">Week 2</a>
+      <a href="week-3.html">Week 3</a>
+      <a href="week-4.html">Week 4</a>
+      <a href="week-5.html">Week 5</a>
+      <a href="week-6.html">Week 6</a>
+      <span class="nav-item" aria-disabled="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="9" width="10" height="8" rx="1.5"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/></svg>Week 7 <small>Coming Soon</small></span>
+      <a href="project-lab.html" class="active">Project Lab</a>
+    </nav>
+
+    <div class="reg-wrap">
+      <p class="reg-intro">Only <strong>one member</strong> per group (ideally the leader) needs to fill in and submit this form. Before registering, read <a href="project-lab.html#chu-de">Project topics</a> and <a href="project-lab.html#muc-do">Project levels</a> in the Project Lab, and check the <a href="danh-sach-de-tai.html">Topic list</a> to avoid overlapping.</p>
+
+      <div class="inline-ok">Need to change something after submitting? Submit the form again with the <strong>same leader student ID</strong> and verify the OTP with the email of a member already in the earlier submission - The new version replaces the old one. What you type is saved as a draft in this browser, so reloading the page won't lose it.</div>
+
+      <form id="reg-form" novalidate>
+        <section class="reg-card">
+          <div class="reg-card-head"><b>01</b><h2>Group</h2></div>
+          <p class="reg-card-hint">A group may mix students from IS355.R11.CTTT.1 and IS355.R11.CTTT.2. The system assigns a random group code after you register.</p>
+          <div class="reg-grid">
+            <label class="reg-field reg-span"><span>Group name <i>*</i></span><input type="text" name="groupName" maxlength="80" placeholder="e.g. GreenCredit" required></label>
+          </div>
+        </section>
+
+        <section class="reg-card">
+          <div class="reg-card-head"><b>02</b><h2>Members</h2></div>
+          <p class="reg-card-hint">Row 1 is the group leader, up to 6 members. Just enter the student ID: The name, class and email (<code>ID@gm.uit.edu.vn</code>) fill in automatically. Empty rows are ignored.</p>
+          <div id="reg-members"></div>
+          <button type="button" class="outline-button reg-add" id="reg-add-member">+ Add member</button>
+        </section>
+
+        <section class="reg-card">
+          <div class="reg-card-head"><b>03</b><h2>Project</h2></div>
+          <p class="reg-card-hint">Write the title in English, as on the registration template. Write the short description in both Vietnamese and English, 3-5 sentences each: The problem, data, method/model, the Blockchain part (smart contract, testnet) and the demo interface.</p>
+          <div class="reg-grid">
+            <label class="reg-field"><span>Topic group <i>*</i></span>
+              <select name="track" required>
+                <option value="">- Choose -</option>
+                <option value="A">A - Green Finance</option>
+                <option value="B">B - DeFi &amp; Banking</option>
+                <option value="C">C - Blockchain Analytics &amp; AML</option>
+                <option value="D">D - RWA &amp; Tokenization</option>
+                <option value="E">E - AI + Blockchain</option>
+              </select>
+            </label>
+            <label class="reg-field"><span>Project level <i>*</i></span>
+              <select name="level" required>
+                <option value="">- Choose -</option>
+                <option value="1">★ Level 1 - Basic</option>
+                <option value="2">★★ Level 2 - Intermediate</option>
+                <option value="3">★★★ Level 3 - Advanced</option>
+                <option value="4">★★★★ Level 4 - Research</option>
+              </select>
+            </label>
+            <label class="reg-field reg-span"><span>Project title <i>*</i></span><input type="text" name="title" maxlength="300" placeholder="e.g. Explainable AI Credit Risk Assessment with Blockchain-based Auditability" required></label>
+            <label class="reg-field reg-span"><span>Short description (Vietnamese) <i>*</i></span><textarea name="description" maxlength="1500" placeholder="Ví dụ: So sánh Logistic Regression, Random Forest, XGBoost trên bộ Home Credit Default Risk, giải thích bằng SHAP. Smart contract trên testnet ghi mã quyết định, phiên bản mô hình và hash bản ghi off-chain; dashboard Streamlit kiểm tra toàn vẹn dữ liệu." required></textarea><small class="reg-count" id="reg-desc-count"></small></label>
+            <label class="reg-field reg-span"><span>Short description (English) <i>*</i></span><textarea name="descriptionEn" maxlength="1500" placeholder="e.g. Compare Logistic Regression, Random Forest and XGBoost on the Home Credit Default Risk dataset, explained with SHAP. A testnet smart contract records the decision code, model version and hash of the off-chain record; a Streamlit dashboard checks data integrity." required></textarea><small class="reg-count" id="reg-desc-en-count"></small></label>
+          </div>
+        </section>
+
+        <section class="reg-card">
+          <div class="reg-card-head"><b>04</b><h2>References</h2></div>
+          <p class="reg-card-hint">At least 3, at most 5. You need at least 1 <strong>Dataset</strong>, 1 <strong>Method</strong> and 1 <strong>Related Survey</strong>. Give a full citation or a link (DOI, arXiv, Kaggle, GitHub).</p>
+          <div id="reg-refs"></div>
+        </section>
+
+        <section class="reg-card">
+          <div class="reg-card-head"><b>05</b><h2>Email verification</h2></div>
+          <p class="reg-card-hint">Whoever submits the form (the leader or a member) picks their own school email, clicks <strong>Send OTP</strong> and enters the 6-digit code. After registering, the whole group receives a confirmation email.</p>
+          <div class="reg-otp">
+            <label class="reg-field"><span>Email for OTP <i>*</i></span><select name="otpEmail"></select></label>
+            <button type="button" class="outline-button reg-otp-send" id="reg-otp-send">Send OTP</button>
+            <label class="reg-field"><span>OTP code <i>*</i></span><input type="text" name="otp" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="••••••" class="reg-otp-input"></label>
+          </div>
+          <p class="reg-otp-msg" id="reg-otp-msg" aria-live="polite"></p>
+        </section>
+
+        <div class="inline-warning" id="reg-error" role="alert" hidden></div>
+
+        <div class="reg-actions">
+          <button type="submit" class="primary-button" id="reg-submit">Submit registration <span>›</span></button>
+          <p>Your information goes to the course instructor and is only used to manage course projects.</p>
+        </div>
+      </form>
+
+      <section class="reg-success" id="reg-success" hidden aria-live="polite">
+        <h2>Registration submitted</h2>
+        <p class="reg-success-msg"></p>
+        <div class="reg-success-summary"></div>
+        <button type="button" class="outline-button" id="reg-edit-again">Edit and resubmit</button>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+        <div class="footer-grid">
+      <div class="footer-brand">
+      <div class="brand"><picture><source srcset="../../../assets/img/logo-mark.png?v=1" media="(max-width: 760px)"><source srcset="../../../assets/img/logo-dark.png?v=1" media="(prefers-color-scheme: dark)"><img class="brand-mark" src="../../../assets/img/logo-light.png?v=1" alt="IT Learning Hub"></picture><span>IT Learning<span> Hub</span></span></div>
+      <p class="footer-tagline">A learning resource hub for Information Technology students</p>
+      </div>
+    <nav class="footer-links"><a href="../../../en/index.html#courses">Courses</a><a href="../../../en/index.html#about">About</a><a href="../../../en/index.html#contact">Contact</a></nav>
+    </div>
+    <div class="footer-bottom">© 2026 IT Learning Hub</div>
+  </footer>
+  <script src="../../../assets/js/main.js?v=20"></script>
+  <script src="../../../assets/js/project-registration.js?v=4"></script>
+</body>
+</html>

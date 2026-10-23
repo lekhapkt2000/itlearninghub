@@ -768,7 +768,12 @@ function handleRequestOtp(body) {
 
   var code = String(Math.floor(100000 + Math.random() * 900000));
   var record = { code: code, tries: 0, expiresAt: Date.now() + OTP_TTL_SECONDS * 1000 };
-  sendOtpEmail(email, roster[sid].fullName, code);
+  try {
+    sendOtpEmail(email, roster[sid].fullName, code);
+  } catch (mailErr) {
+    Logger.log('OTP email failed: ' + mailErr.message);
+    return { ok: false, message: mailErrorMessage(mailErr) };
+  }
   cache.put(otpCacheKey('otp_', email), JSON.stringify(record), OTP_TTL_SECONDS);
   cache.put(otpCacheKey('otp_rl_', email), '1', OTP_RESEND_SECONDS);
   cache.put(otpCacheKey('otp_n_', email), String(sentToday + 1), 21600);
@@ -828,6 +833,35 @@ function emailShell(preheader, heading, innerHtml) {
     '<tr><td style="padding:16px 28px;background:#f8fafc;border-top:1px solid #e2e8f0;color:#64748b;font-size:12px;line-height:1.6">' +
     'Email tự động từ hệ thống đăng ký đề tài IS355 - IT Learning Hub. Vui lòng không trả lời email này.' +
     '</td></tr></table></td></tr></table></body></html>';
+}
+
+/** Turns a MailApp exception into a message the student/teacher can act on. */
+function mailErrorMessage(err) {
+  var msg = String(err && err.message || err);
+  if (/permission|authoriz|quyền/i.test(msg)) {
+    return 'Máy chủ chưa được cấp quyền gửi email. Giảng viên cần mở Apps Script, chạy hàm authorizeMail() và bấm Allow.';
+  }
+  if (/quota|limit|too many|service invoked too many/i.test(msg)) {
+    return 'Hệ thống đã hết hạn mức gửi email hôm nay. Vui lòng thử lại vào ngày mai hoặc liên hệ giảng viên.';
+  }
+  return 'Không gửi được email OTP: ' + msg;
+}
+
+/**
+ * Run once from the Apps Script editor (pick authorizeMail, press Run):
+ * it triggers the "send email" permission prompt and mails a test message
+ * to the script owner, then logs how many emails are left today.
+ * Needed whenever a new version adds MailApp and OTP sending fails.
+ */
+function authorizeMail() {
+  var me = Session.getEffectiveUser().getEmail();
+  MailApp.sendEmail({
+    to: me,
+    subject: '[IS355] Thử gửi email - OK',
+    name: MAIL_SENDER_NAME,
+    htmlBody: emailShell('Email thử', 'Gửi email hoạt động bình thường', '<p style="margin:0">Apps Script đã được cấp quyền gửi email. Form đăng ký đề tài có thể gửi OTP và email xác nhận.</p>')
+  });
+  Logger.log('Đã gửi email thử tới ' + me + '. Hạn mức còn lại hôm nay: ' + MailApp.getRemainingDailyQuota());
 }
 
 function sendOtpEmail(email, fullName, code) {

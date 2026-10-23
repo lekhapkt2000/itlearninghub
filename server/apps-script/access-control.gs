@@ -803,6 +803,8 @@ function consumeOtp(email) {
 
 var MAIL_SENDER_NAME = 'IS355 Công nghệ Blockchain';
 var REG_FORM_URL = 'https://itlearninghub.io.vn/courses/is355/dang-ky-de-tai.html';
+// Instructor is CC'd on every confirmation (not on OTP codes).
+var REG_CC_EMAIL = 'khalvd@uit.edu.vn';
 var TRACK_LABELS = { A: 'A - Green Finance', B: 'B - DeFi & Banking', C: 'C - Blockchain Analytics & AML', D: 'D - RWA & Tokenization', E: 'E - AI + Blockchain' };
 var LEVEL_LABELS = { '1': 'Mức 1 - Basic', '2': 'Mức 2 - Intermediate', '3': 'Mức 3 - Advanced', '4': 'Mức 4 - Research' };
 
@@ -898,7 +900,7 @@ function sendConfirmationEmail(g) {
   var emails = g.members.map(function (m) { return m.email; });
   MailApp.sendEmail({
     to: emails[0],
-    cc: emails.slice(1).join(','),
+    cc: emails.slice(1).concat(REG_CC_EMAIL).join(','),
     subject: '[IS355] ' + (g.updated ? 'Cập nhật' : 'Xác nhận') + ' đăng ký đề tài - Nhóm ' + g.groupName,
     name: MAIL_SENDER_NAME,
     htmlBody: emailShell('Đề tài: ' + g.title, g.updated ? 'Đã cập nhật đăng ký đề tài' : 'Xác nhận đăng ký đề tài', inner),

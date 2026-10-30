@@ -162,8 +162,13 @@
           '<small>' + esc(shortClass(m['class'])) + (m.leader ? ' · ' + T.leader : '') + '</small></li>';
       }).join('');
       var refs = g.refs.map(function (r) {
-        var cite = esc(r.citation).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener nofollow">$1</a>');
-        return '<li><b>' + esc(r.type) + ':</b> ' + cite + '</li>';
+        // IEEE string comes pre-escaped from the server (journal in <i>).
+        var m = r.meta;
+        var cite = m && m.ieeeHtml && m.status !== 'suggested'
+          ? m.ieeeHtml
+          : esc(r.citation).replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener nofollow">$1</a>');
+        var b = window.IS355Tools ? IS355Tools.refBadge(m, EN ? 'en' : 'vi') : null;
+        return '<li><b>' + esc(r.type) + ':</b> ' + cite + (b ? ' <span class="ref-badge ' + b.cls + '">' + esc(b.label) + '</span>' : '') + '</li>';
       }).join('');
       return '<article class="tl-card">' +
         '<div class="tl-card-head">' +

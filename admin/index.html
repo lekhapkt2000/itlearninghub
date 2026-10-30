@@ -189,6 +189,40 @@
     .review-actions{padding:14px 24px;border-top:1px solid var(--line);margin:0}
     @media(max-width:900px){.review-body{grid-template-columns:1fr}#rv-frame{min-height:420px}}
 
+    /* Smart features */
+    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .ref-badge{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:99px;font-size:10.5px;font-weight:700;white-space:nowrap;vertical-align:1px}
+    .ref-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+    .ref-badge.ok{background:var(--ok-bg);color:var(--ok-text)}
+    .ref-badge.info{background:var(--tint);color:var(--primary-ink)}
+    .ref-badge.warn{background:var(--warn-bg);color:var(--warn-text)}
+    .ref-badge.bad{background:var(--danger-bg);color:var(--danger-text)}
+    .ref-badge.muted{background:var(--bg);color:var(--muted);border:1px solid var(--line)}
+    .insights{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+    .insight{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:8px;border:1px solid var(--line);background:var(--bg);font-size:12px;color:var(--body)}
+    .insight b{color:var(--ink)}
+    .insight.warn{border-color:var(--warn-border);background:var(--warn-bg);color:var(--warn-text)}
+    .insight.bad{border-color:var(--danger-border);background:var(--danger-bg);color:var(--danger-text)}
+    .insight.ok{border-color:var(--ok-border);background:var(--ok-bg);color:var(--ok-text)}
+    .q-mini{margin:8px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 14px;font-size:12px}
+    .q-mini li::before{content:'✓ ';color:var(--ok-accent);font-weight:800}
+    .q-mini li.miss::before{content:'! ';color:var(--warn-accent)}
+    .ai-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:14px;padding:10px 12px;border-radius:10px;background:var(--tint)}
+    .ai-bar span{flex:1;min-width:180px;color:var(--primary-ink);font-size:12px;line-height:1.5}
+    .ms-table input{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font:inherit;font-size:13px}
+    .ms-table td{vertical-align:top;white-space:normal}
+    .ms-table td:first-child input{width:56px}
+    .pg-table td,.pg-table th{vertical-align:top;white-space:normal}
+    .pg-table td:first-child{min-width:170px}
+    .pg-cell{min-width:190px;font-size:12px;line-height:1.6;color:var(--body)}
+    .pg-cell a{color:var(--primary);word-break:break-all}
+    .pg-cell .ref-badge{margin:2px 4px 2px 0}
+    .pg-cell .pg-actions{display:flex;gap:8px;margin-top:6px}
+    .pg-missing{color:var(--warn-text);font-weight:700}
+    .pg-head-actions{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+    .group-card .refs-ieee li{margin-bottom:6px}
+    @media(max-width:600px){.field-row{grid-template-columns:1fr}.q-mini{grid-template-columns:1fr}}
+
     /* Login */
     .login-wrap{min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:40px 16px}
     .login-card{width:100%;max-width:400px;padding:38px 34px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 48px -24px rgb(15 23 42 / .2);text-align:center}
@@ -273,10 +307,14 @@
       <p class="ad-side-label">IS355 · ĐỒ ÁN</p>
       <button type="button" class="ad-nav" data-view="roster"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.5c2 .8 3 2.8 3 5.5"/></svg>Danh sách lớp<span class="count" id="nav-roster">0</span></button>
       <button type="button" class="ad-nav" data-view="groups"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M8.5 13.5l2 2 4-4"/></svg>Đăng ký đề tài<span class="count" id="nav-groups">0</span></button>
+      <button type="button" class="ad-nav" data-view="progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-4 3 3 5-6"/></svg>Tiến độ đồ án<span class="count" id="nav-progress">0</span></button>
+      <button type="button" class="ad-nav" data-view="defense"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>Lịch bảo vệ<span class="count" id="nav-defense">0</span></button>
 
       <p class="ad-side-label">LIÊN KẾT</p>
       <a class="ad-nav" href="../courses/is355/dang-ky-de-tai.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>Form đăng ký đề tài<span class="ext">↗</span></a>
       <a class="ad-nav" href="../courses/is355/danh-sach-de-tai.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>Danh sách đề tài (công khai)<span class="ext">↗</span></a>
+      <a class="ad-nav" href="../courses/is355/tim-nhom.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.5-5.5"/></svg>Tìm nhóm (công khai)<span class="count" id="nav-findgroup">0</span></a>
+      <a class="ad-nav" href="../courses/is355/tien-do.html" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>Cổng nộp tiến độ (SV)<span class="ext">↗</span></a>
       <a class="ad-nav" href="../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v10h12V10"/></svg>Trang chủ</a>
     </nav>
 
@@ -309,7 +347,7 @@
 
         <div class="section-label">
           <h2>SỐ LIỆU NHANH</h2>
-          <button type="button" class="outline-button" id="export-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Tải dữ liệu đăng ký (Excel/CSV)</button>
+          <button type="button" class="outline-button" id="export-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Xuất Excel (mẫu IS355)</button>
         </div>
         <div class="grid-4" id="ov-stats"></div>
 
@@ -459,7 +497,8 @@
         <div class="view-head">
           <div><p class="eyebrow">IS355 · ĐỒ ÁN</p><h1>Đăng ký đề tài</h1></div>
           <div class="row-actions">
-            <button type="button" class="outline-button" id="export-btn-2">Tải Excel/CSV</button>
+            <button type="button" class="outline-button" id="export-csv">Tải CSV</button>
+            <button type="button" class="primary-button btn-sm" id="export-btn-2">Xuất Excel (mẫu IS355) <span>›</span></button>
           </div>
         </div>
 
@@ -488,6 +527,81 @@
         <p class="empty" id="groups-empty" hidden>Chưa có nhóm nào đăng ký.</p>
       </section>
 
+      <!-- Progress -->
+      <section class="view" id="view-progress">
+        <div class="view-head">
+          <div><p class="eyebrow">IS355 · ĐỒ ÁN</p><h1>Tiến độ đồ án</h1></div>
+          <a class="outline-button" href="../courses/is355/tien-do.html" target="_blank" rel="noopener">Mở cổng nộp tiến độ ↗</a>
+        </div>
+        <p class="field-hint" id="pg-integrations" style="margin:-10px 0 18px"></p>
+
+        <div class="card" style="margin-bottom:20px">
+          <h3>Các mốc nộp <button type="button" class="outline-button btn-sm" id="ms-save">Lưu các mốc</button></h3>
+          <div class="table-wrap">
+            <table class="ms-table">
+              <thead><tr><th>Mã</th><th>Tên mốc</th><th>Cần nộp</th><th>Hạn</th><th>Đã nộp</th><th></th></tr></thead>
+              <tbody id="ms-tbody"></tbody>
+            </table>
+          </div>
+          <button type="button" class="link-btn" id="ms-add" style="margin:10px 0 0">+ Thêm mốc</button>
+        </div>
+
+        <div class="card">
+          <h3>Tiến độ từng nhóm</h3>
+          <div class="table-wrap">
+            <table class="pg-table">
+              <thead id="pg-thead"></thead>
+              <tbody id="pg-tbody"></tbody>
+            </table>
+          </div>
+          <p class="empty" id="pg-empty" hidden>Chưa có nhóm nào đăng ký.</p>
+        </div>
+      </section>
+
+      <!-- Defense -->
+      <section class="view" id="view-defense">
+        <div class="view-head">
+          <div><p class="eyebrow">IS355 · ĐỒ ÁN</p><h1>Lịch bảo vệ</h1></div>
+          <div class="row-actions">
+            <a class="outline-button" href="../courses/is355/lich-bao-ve.html" target="_blank" rel="noopener">Trang lịch công khai ↗</a>
+            <button type="button" class="outline-button" id="df-remind">Gửi nhắc lịch (36 giờ tới)</button>
+          </div>
+        </div>
+        <div class="card settings-bar">
+          <div class="settings-item">
+            <span class="settings-label">ĐĂNG KÝ LỊCH</span>
+            <span class="chip" id="df-state">-</span>
+            <button type="button" class="outline-button btn-sm" id="df-toggle">-</button>
+          </div>
+          <p class="settings-note">Chỉ nhóm có đề tài <b>Đã duyệt</b> mới chọn được lịch. Nhóm tự chọn hoặc đổi khung giờ trên trang lịch bảo vệ, có email xác nhận (CC giảng viên). Để tự nhắc trước 1 ngày, chạy hàm <code>installDefenseReminderTrigger()</code> một lần trong Apps Script.</p>
+        </div>
+        <div class="split">
+          <div class="card">
+            <h3>Tạo khung giờ</h3>
+            <div class="field"><label for="df-start">BẮT ĐẦU</label><input type="datetime-local" id="df-start"></div>
+            <div class="field-row">
+              <div class="field"><label for="df-duration">MỖI NHÓM (PHÚT)</label><input type="number" id="df-duration" value="20" min="5" max="180"></div>
+              <div class="field"><label for="df-gap">NGHỈ GIỮA (PHÚT)</label><input type="number" id="df-gap" value="5" min="0" max="60"></div>
+            </div>
+            <div class="field"><label for="df-count">SỐ KHUNG GIỜ</label><input type="number" id="df-count" value="8" min="1" max="40"></div>
+            <div class="field"><label for="df-room">PHÒNG / LINK</label><input type="text" id="df-room" maxlength="120" placeholder="Ví dụ: Phòng B4.12 hoặc link Google Meet"></div>
+            <p class="field-hint" id="df-preview"></p>
+            <button type="button" class="primary-button btn-full" id="df-add">Tạo khung giờ <span>›</span></button>
+          </div>
+          <div class="card">
+            <h3>Lịch <span class="chip chip-muted" id="df-chip">0 khung</span></h3>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Thời gian</th><th>Phòng</th><th>Nhóm</th><th></th></tr></thead>
+                <tbody id="df-tbody"></tbody>
+              </table>
+            </div>
+            <p class="empty" id="df-empty" hidden>Chưa có khung giờ nào.</p>
+            <p class="table-foot" id="df-foot"></p>
+          </div>
+        </div>
+      </section>
+
     </main>
   </div>
 
@@ -505,6 +619,7 @@
 
       <div class="review-body">
         <div class="review-form">
+          <div class="ai-bar"><span id="rv-ai-note">AI đọc đề tài, đối chiếu yêu cầu Project Lab rồi soạn sẵn kết quả, nhận xét và mục cần làm rõ. Bạn xem và sửa trước khi gửi.</span><button type="button" class="outline-button btn-sm" id="rv-ai-btn">✨ AI gợi ý nhận xét</button></div>
           <div class="field">
             <label>KẾT QUẢ</label>
             <div class="rv-status">
@@ -567,6 +682,7 @@
   </div>
   <div class="toast" id="toast"></div>
 
+  <script src="../assets/js/topic-tools.js?v=1"></script>
   <script>
   (function () {
     var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzl_MDfTRkxNExa--NscWG4HPI7ioAN0QImDGLDyk66UFuXaUo1Zrwi_qvwoIjrS5Vu/exec';
@@ -607,7 +723,8 @@
 
     var state = {
       key: '', codes: [], students: [], groups: [], regOpen: true, is355Loaded: false,
-      manualClosed: false, deadline: '', mailQuota: -1, statusFilter: ''
+      manualClosed: false, deadline: '', mailQuota: -1, statusFilter: '',
+      milestones: [], progress: {}, slots: [], defenseOpen: false, aiEnabled: false, etherscanEnabled: false, findGroupPosts: 0
     };
     var $ = function (id) { return document.getElementById(id); };
 
@@ -625,9 +742,9 @@
     // wake up, so each call gets a long timeout and one automatic retry.
     var TIMEOUT_MS = 30000;
 
-    function apiOnce(body) {
+    function apiOnce(body, timeoutMs) {
       var ctrl = window.AbortController ? new AbortController() : null;
-      var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
+      var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, timeoutMs || TIMEOUT_MS);
       return fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
@@ -650,11 +767,11 @@
       }).finally(function () { clearTimeout(timer); });
     }
 
-    function api(body) {
+    function api(body, timeoutMs) {
       if (!('key' in body)) body.key = state.key;
-      return apiOnce(body).catch(function (err) {
+      return apiOnce(body, timeoutMs).catch(function (err) {
         if (err.kind === 'server') throw err;
-        return new Promise(function (r) { setTimeout(r, 1500); }).then(function () { return apiOnce(body); });
+        return new Promise(function (r) { setTimeout(r, 1500); }).then(function () { return apiOnce(body, timeoutMs); });
       });
     }
 
@@ -744,7 +861,7 @@
 
     /* ---------- Navigation ---------- */
 
-    var VIEWS = ['overview', 'codes', 'roster', 'groups'];
+    var VIEWS = ['overview', 'codes', 'roster', 'groups', 'progress', 'defense'];
     function showView(name) {
       if (VIEWS.indexOf(name) === -1) name = 'overview';
       VIEWS.forEach(function (v) { $('view-' + v).classList.toggle('active', v === name); });
@@ -940,11 +1057,23 @@
         state.manualClosed = !!data.manualClosed;
         state.deadline = data.deadline || '';
         state.mailQuota = typeof data.mailQuota === 'number' ? data.mailQuota : -1;
+        state.milestones = data.milestones || [];
+        state.progress = data.progress || {};
+        state.slots = data.slots || [];
+        state.defenseOpen = !!data.defenseOpen;
+        state.aiEnabled = !!data.aiEnabled;
+        state.etherscanEnabled = !!data.etherscanEnabled;
+        state.findGroupPosts = data.findGroupPosts || 0;
+        computeInsights();
+        $('nav-findgroup').textContent = state.findGroupPosts;
         state.is355Loaded = true;
         renderRoster();
         renderGroups();
         renderOverview();
-      }).catch(function () {
+        renderProgress();
+        renderDefense();
+      }).catch(function (err) {
+        if (window.console) console.error(err);
         toast('Không tải được dữ liệu IS355. Hãy kiểm tra Apps Script đã deploy bản mới chưa.', 'error');
       });
     }
@@ -1261,6 +1390,41 @@
     /* ---------- Groups ---------- */
 
     function groupCodeOf(x) { return x.groupCode || String(x.submissionId).toUpperCase(); }
+
+    /* ---------- Smart insights (quality, similarity, references) ---------- */
+
+    // Runs once per data load: each group gets _q (self-check) and _sim (closest topics).
+    function computeInsights() {
+      if (!window.IS355Tools) return;
+      state.groups.forEach(function (g) {
+        g._q = IS355Tools.quality(g, 'vi');
+        g._sim = IS355Tools.similar(g, state.groups, 0.25).slice(0, 2);
+        g._badRefs = g.refs.filter(function (r) { return !r.meta || r.meta.status === 'unverified' || r.meta.status === 'suggested' || r.meta.mismatch; }).length;
+      });
+    }
+
+    function insightsHtml(x) {
+      if (!x._q) return '';
+      var q = x._q;
+      var cls = q.passed === q.total ? 'ok' : q.passed >= q.total - 2 ? '' : 'warn';
+      var out = '<span class="insight ' + cls + '">Tự kiểm tra <b>' + q.passed + '/' + q.total + '</b></span>';
+      out += x._badRefs
+        ? '<span class="insight bad"><b>' + x._badRefs + '</b> tài liệu chưa xác minh được</span>'
+        : '<span class="insight ok">Tài liệu đều xác minh được</span>';
+      x._sim.forEach(function (h) {
+        out += '<span class="insight ' + (h.score >= 0.4 ? 'bad' : 'warn') + '">Giống <b>' + esc(h.group.groupName) + '</b> ' + Math.round(h.score * 100) + '%' + (h.sameDataset ? ', cùng dataset' : '') + '</span>';
+      });
+      return '<div class="insights">' + out + '</div>';
+    }
+
+    function refHtml(r) {
+      var m = r.meta;
+      var b = window.IS355Tools ? IS355Tools.refBadge(m, 'vi') : null;
+      // ieeeHtml is built and escaped by the backend.
+      var body = m && m.ieeeHtml && m.status !== 'suggested' ? m.ieeeHtml : esc(r.citation);
+      return '<li><b>' + esc(r.type) + ':</b> ' + body + (b ? ' <span class="ref-badge ' + b.cls + '">' + esc(b.label) + '</span>' : '') +
+        (m && m.note ? '<br><span style="color:var(--muted);font-size:12px">' + esc(m.note) + '</span>' : '') + '</li>';
+    }
     function lastReviewOf(x) { return x.reviews && x.reviews.length ? x.reviews[x.reviews.length - 1] : null; }
     function statusBadge(st) {
       var r = REVIEW[st] || REVIEW.pending;
@@ -1342,6 +1506,7 @@
           '<button type="button" class="primary-button btn-sm" data-review="' + esc(groupCodeOf(x)) + '">' + (last ? 'Xét duyệt lại' : 'Xét duyệt') + ' <span>›</span></button></div></div>' +
           '<p class="group-title">' + esc(x.title) + '</p>' +
           '<div class="group-tags"><span class="chip chip-ok">' + esc(TRACKS[x.track] || x.track) + '</span><span class="chip chip-muted">' + esc(LEVELS[x.level] || x.level) + '</span></div>' +
+          insightsHtml(x) +
           '<div class="table-wrap"><table><thead><tr><th>#</th><th>MSSV</th><th>Họ và tên</th><th>Lớp</th><th>Email</th></tr></thead><tbody>' +
           x.members.map(function (m, i) {
             return '<tr><td>' + (i + 1) + '</td><td><code>' + esc(m.studentId) + '</code></td><td>' + esc(m.fullName) +
@@ -1350,7 +1515,10 @@
           '<details><summary>Mô tả &amp; ' + x.refs.length + ' tài liệu tham khảo</summary>' +
           '<p class="group-desc" style="margin-top:10px"><b>Tiếng Việt:</b> ' + esc(x.description) + '</p>' +
           '<p class="group-desc"><b>English:</b> ' + esc(x.descriptionEn || '-') + '</p>' +
-          '<ol>' + x.refs.map(function (r) { return '<li><b>' + esc(r.type) + ':</b> ' + esc(r.citation) + '</li>'; }).join('') + '</ol></details>' +
+          '<ol class="refs-ieee">' + x.refs.map(refHtml).join('') + '</ol>' +
+          (x._q ? '<p class="group-desc" style="margin:12px 0 0"><b>Tự kiểm tra:</b></p><ul class="q-mini">' +
+            x._q.checks.map(function (c) { return '<li class="' + (c.ok ? '' : 'miss') + '">' + esc(c.label) + '</li>'; }).join('') + '</ul>' : '') +
+          '</details>' +
           lastHtml +
           '</article>';
       }).join('');
@@ -1490,6 +1658,15 @@
       }).join('');
       $('rv-custom').innerHTML = '';
       lastItems.filter(function (t) { return PRESET_ITEMS.indexOf(t) === -1; }).forEach(function (t) { addCustomItem(t); });
+      // First review: start from what the self-check found missing.
+      if (!last && x._q) {
+        var boxes = $("rv-presets").querySelectorAll("input");
+        x._q.failedPresets.forEach(function (i) { if (boxes[i]) boxes[i].checked = true; });
+      }
+      $("rv-ai-btn").disabled = !state.aiEnabled;
+      $("rv-ai-note").textContent = state.aiEnabled
+        ? "AI đọc đề tài, đối chiếu yêu cầu Project Lab rồi soạn sẵn kết quả, nhận xét và mục cần làm rõ. Bạn xem và sửa trước khi gửi."
+        : "AI gợi ý chưa bật: Thêm Script Property ANTHROPIC_API_KEY trong Apps Script để dùng.";
       $('rv-deadline').value = last && last.deadline ? last.deadline : '';
       $('rv-send').checked = true;
       $('rv-msg').textContent = '';
@@ -1518,6 +1695,35 @@
     $('rv-cancel').addEventListener('click', closeReview);
     $('rv-preview-btn').addEventListener('click', loadPreview);
     $('rv-add-item').addEventListener('click', function () { addCustomItem('').focus(); });
+    $('rv-ai-btn').addEventListener('click', function () {
+      if (!reviewing) return;
+      var x = reviewing;
+      var btn = $('rv-ai-btn');
+      // What the local checks found, passed along as hints (the model may disagree).
+      var signals = [];
+      if (x._q) x._q.checks.forEach(function (c) { if (!c.ok) signals.push('Chưa đạt: ' + c.label); });
+      (x._sim || []).forEach(function (h) { signals.push('Giống ' + Math.round(h.score * 100) + '% với đề tài "' + h.group.title + '"' + (h.sameDataset ? ' (cùng dataset)' : '')); });
+      btn.disabled = true;
+      btn.textContent = 'AI đang đọc đề tài...';
+      $('rv-msg').textContent = '';
+      api({ action: 'aiReviewDraft', groupCode: groupCodeOf(x), presets: PRESET_ITEMS, signals: signals }, 120000).then(function (data) {
+        if (!data.ok) { $('rv-msg').textContent = data.message || 'AI chưa gợi ý được.'; $('rv-msg').className = 'msg error'; return; }
+        if (reviewing !== x) return; // modal moved on to another group
+        var d = data.draft;
+        document.querySelectorAll('input[name="rv-status"]').forEach(function (r) { r.checked = r.value === d.status; });
+        $('rv-comment').value = d.comment;
+        var boxes = $('rv-presets').querySelectorAll('input');
+        boxes.forEach(function (b) { b.checked = d.items.indexOf(b.value) !== -1; });
+        $('rv-custom').innerHTML = '';
+        d.items.filter(function (t) { return PRESET_ITEMS.indexOf(t) === -1; }).forEach(function (t) { addCustomItem(t); });
+        $('rv-msg').textContent = 'Đã điền gợi ý của AI. Hãy đọc lại và chỉnh trước khi gửi.';
+        $('rv-msg').className = 'msg ok';
+        syncReviewLabels();
+        loadPreview();
+      }).catch(function (err) { $('rv-msg').textContent = netError(err); $('rv-msg').className = 'msg error'; })
+        .finally(function () { btn.disabled = !state.aiEnabled; btn.textContent = '✨ AI gợi ý nhận xét'; });
+    });
+
     $('rv-template').addEventListener('click', function () {
       var t = COMMENT_TEMPLATES[rvStatus()];
       var cur = $('rv-comment').value.trim();
@@ -1592,8 +1798,369 @@
       a.click();
       setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
     }
-    $('export-btn').addEventListener('click', exportCsv);
-    $('export-btn-2').addEventListener('click', exportCsv);
+    $('export-csv').addEventListener('click', exportCsv);
+
+    /* ---------- Excel in the "IS355 Course Project Registration" layout ---------- */
+
+    function loadExcelJs() {
+      if (window.ExcelJS) return Promise.resolve();
+      return new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js';
+        s.onload = resolve;
+        s.onerror = function () { reject(new Error('Không tải được thư viện Excel.')); };
+        document.head.appendChild(s);
+      });
+    }
+
+    function exportXlsx() {
+      if (!state.groups.length) { toast('Chưa có nhóm nào để xuất.', 'error'); return; }
+      busy(loadExcelJs().then(function () {
+        var wb = new ExcelJS.Workbook();
+        wb.creator = 'IT Learning Hub';
+        var ws = wb.addWorksheet('Registration', { views: [{ state: 'frozen', ySplit: 5 }], pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0, paperSize: 9 } });
+        var COLS = [
+          ['No.', 6], ['Group Code', 11], ['Group Name', 16], ['Student ID', 12], ['Full Name', 24], ['Class', 17],
+          ['Project Title', 34], ['Short Description', 52], ['Ref - Type', 15], ['Ref - Citation (IEEE)', 70], ['Review Status', 15], ['Instructor Comment', 44]
+        ];
+        ws.columns = COLS.map(function (c) { return { width: c[1] }; });
+        var navy = 'FF0F1B33', thin = { style: 'thin', color: { argb: 'FFBFC7D5' } };
+        var border = { top: thin, left: thin, bottom: thin, right: thin };
+
+        ws.mergeCells('A1:L1');
+        ws.getCell('A1').value = 'IS355 - BLOCKCHAIN TECHNOLOGY';
+        ws.getCell('A1').font = { bold: true, size: 13, color: { argb: 'FF0F172A' } };
+        ws.mergeCells('A2:L2');
+        ws.getCell('A2').value = 'COURSE PROJECT REGISTRATION';
+        ws.getCell('A2').font = { bold: true, size: 15, color: { argb: 'FFDC2626' } };
+        ws.mergeCells('A3:L3');
+        ws.getCell('A3').value = 'One row per student. Project title, short description and review go on the group\'s merged cells; references are listed one per row in IEEE format. Exported ' + fmtTime(new Date().toISOString()) + '.';
+        ws.getCell('A3').font = { italic: true, size: 10, color: { argb: 'FFB91C1C' } };
+        ws.getCell('A3').fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFFFF7ED' } };
+        [['A4:H4', 'A. GROUP & PROJECT INFORMATION'], ['I4:J4', 'B. REFERENCES (Dataset, Method, Related Survey)'], ['K4:L4', 'C. REVIEW']].forEach(function (s) {
+          ws.mergeCells(s[0]);
+          var c = ws.getCell(s[0].split(':')[0]);
+          c.value = s[1];
+          c.font = { bold: true, size: 10 };
+          c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF1F5F9' } };
+          c.border = border;
+        });
+        [1, 2, 3, 4].forEach(function (r) { ws.getRow(r).alignment = { horizontal: 'center', vertical: 'middle', wrapText: true }; });
+        ws.getRow(3).height = 30;
+        var head = ws.getRow(5);
+        head.values = COLS.map(function (c) { return c[0]; });
+        head.height = 24;
+        head.eachCell(function (c) {
+          c.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 10 };
+          c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: navy } };
+          c.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
+          c.border = border;
+        });
+
+        var rowNo = 6, studentNo = 0;
+        state.groups.forEach(function (g, gi) {
+          var span = Math.max(g.members.length, g.refs.length, 1);
+          var last = lastReviewOf(g);
+          var shade = gi % 2 ? 'FFF8FAFC' : 'FFFFFFFF';
+          for (var i = 0; i < span; i++) {
+            var m = g.members[i];
+            var ref = g.refs[i];
+            var cite = ref ? (ref.meta && ref.meta.ieee && ref.meta.status !== 'suggested' ? ref.meta.ieee : ref.citation) : '';
+            if (ref && ref.meta && (ref.meta.status === 'unverified' || ref.meta.mismatch)) cite += '  [chưa xác minh]';
+            var row = ws.getRow(rowNo + i);
+            row.values = [
+              m ? ++studentNo : '', groupCodeOf(g), g.groupName,
+              m ? m.studentId : '', m ? m.fullName + (m.role === 'Leader' ? ' (Leader)' : '') : '', m ? m['class'] : '',
+              g.title, g.description + (g.descriptionEn ? '\n\n' + g.descriptionEn : ''),
+              ref ? ref.type : '', cite,
+              (REVIEW[g.reviewStatus] || REVIEW.pending).label,
+              last ? [last.comment].concat(last.items.map(function (t) { return '- ' + t; })).filter(Boolean).join('\n') : ''
+            ];
+            row.eachCell({ includeEmpty: true }, function (c, col) {
+              c.border = border;
+              c.alignment = { vertical: 'middle', wrapText: true, horizontal: [1, 2, 4, 9, 11].indexOf(col) !== -1 ? 'center' : 'left' };
+              c.font = { size: 10, bold: col === 7 || (m && m.role === 'Leader' && col === 5) };
+              c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: shade } };
+            });
+            row.getCell(4).numFmt = '@';
+            row.height = Math.max(22, Math.min(110, Math.ceil(cite.length / 70) * 14 + 8));
+          }
+          if (span > 1) {
+            ['B', 'C', 'G', 'H', 'K', 'L'].forEach(function (col) { ws.mergeCells(col + rowNo + ':' + col + (rowNo + span - 1)); });
+          }
+          rowNo += span;
+        });
+
+        // One line per group for quick sorting/filtering.
+        var sum = wb.addWorksheet('Summary', { views: [{ state: 'frozen', ySplit: 1 }] });
+        sum.columns = [
+          { header: 'Group Code', width: 12 }, { header: 'Group Name', width: 18 }, { header: 'Project Title', width: 46 },
+          { header: 'Topic', width: 24 }, { header: 'Level', width: 20 }, { header: 'Members', width: 9 }, { header: 'Classes', width: 22 },
+          { header: 'Review Status', width: 15 }, { header: 'Self-check', width: 11 }, { header: 'Unverified refs', width: 14 },
+          { header: 'Most similar topic', width: 40 }, { header: 'Submitted', width: 18 }
+        ];
+        state.groups.forEach(function (g) {
+          var cls = {};
+          g.members.forEach(function (m) { cls[m['class'].replace('IS355.R11.', '')] = 1; });
+          var top = g._sim && g._sim[0];
+          sum.addRow([groupCodeOf(g), g.groupName, g.title, TRACKS[g.track] || g.track, LEVELS[g.level] || g.level, g.members.length,
+            Object.keys(cls).join(', '), (REVIEW[g.reviewStatus] || REVIEW.pending).label,
+            g._q ? g._q.passed + '/' + g._q.total : '', g._badRefs || 0,
+            top ? top.group.groupName + ' (' + Math.round(top.score * 100) + '%)' : '', fmtTime(g.submittedAt)]);
+        });
+        sum.getRow(1).eachCell(function (c) {
+          c.font = { bold: true, color: { argb: 'FFFFFFFF' } };
+          c.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: navy } };
+        });
+        sum.autoFilter = 'A1:L1';
+
+        return wb.xlsx.writeBuffer();
+      }).then(function (buf) {
+        var blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'IS355-Course-Project-Registration-' + new Date().toISOString().slice(0, 10) + '.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+        toast('Đã xuất file Excel.');
+      }).catch(function (err) { toast((err && err.message) || 'Không xuất được Excel, hãy dùng Tải CSV.', 'error'); }));
+    }
+    $('export-btn').addEventListener('click', exportXlsx);
+    $('export-btn-2').addEventListener('click', exportXlsx);
+
+    /* ---------- Progress ---------- */
+
+    var msDraft = null; // milestones being edited (null = not touched)
+
+    function fmtDay(iso) {
+      var d = new Date(iso);
+      return isNaN(d) ? '' : d.toLocaleDateString('vi-VN', { weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+    function fmtHm(iso) {
+      var d = new Date(iso);
+      return isNaN(d) ? '' : d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+    }
+    function toDateInput(iso) { return iso ? toLocalInput(iso).slice(0, 10) : ''; }
+
+    function renderMilestoneEditor() {
+      var list = msDraft || state.milestones;
+      $('ms-tbody').innerHTML = list.map(function (m, i) {
+        var done = state.groups.filter(function (g) { return (state.progress[groupCodeOf(g)] || {})[m.id]; }).length;
+        return '<tr data-ms="' + i + '"><td><input data-f="id" value="' + esc(m.id) + '" maxlength="8"></td>' +
+          '<td><input data-f="name" value="' + esc(m.name) + '" maxlength="80"></td>' +
+          '<td><input data-f="desc" value="' + esc(m.desc) + '" maxlength="300"></td>' +
+          '<td><input data-f="deadline" type="date" value="' + esc(toDateInput(m.deadline)) + '"></td>' +
+          '<td><b>' + done + '</b>/' + state.groups.length + '</td>' +
+          '<td><button type="button" class="outline-button btn-sm btn-danger-outline" data-ms-del="' + i + '">Xóa</button></td></tr>';
+      }).join('');
+    }
+    function readMilestoneEditor() {
+      return Array.prototype.map.call($('ms-tbody').querySelectorAll('tr'), function (tr) {
+        var v = function (f) { return tr.querySelector('[data-f="' + f + '"]').value.trim(); };
+        var dl = v('deadline');
+        return { id: v('id'), name: v('name'), desc: v('desc'), deadline: dl ? new Date(dl + 'T23:59:00').toISOString() : '' };
+      });
+    }
+    $('ms-tbody').addEventListener('input', function () { msDraft = readMilestoneEditor(); });
+    $('ms-tbody').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-ms-del]');
+      if (!b) return;
+      msDraft = readMilestoneEditor();
+      msDraft.splice(Number(b.dataset.msDel), 1);
+      renderMilestoneEditor();
+    });
+    $('ms-add').addEventListener('click', function () {
+      msDraft = readMilestoneEditor();
+      msDraft.push({ id: 'M' + (msDraft.length + 1), name: '', desc: '', deadline: '' });
+      renderMilestoneEditor();
+    });
+    $('ms-save').addEventListener('click', function () {
+      var list = readMilestoneEditor();
+      busy(api({ action: 'setMilestones', milestones: list }).then(function (data) {
+        if (!data.ok) { toast(data.message || 'Không lưu được.', 'error'); return; }
+        state.milestones = data.milestones;
+        msDraft = null;
+        renderProgress();
+        toast('Đã lưu các mốc nộp.');
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    function checkHtml(check) {
+      if (!check) return '';
+      var out = '';
+      var gh = check.github;
+      if (gh) {
+        out += gh.ok
+          ? '<div><span class="ref-badge ok">GitHub</span>' + esc(gh.commits) + ' commit · cập nhật ' + esc(fmtTime(gh.lastCommit || gh.pushedAt)) + (gh.language ? ' · ' + esc(gh.language) : '') + '</div>'
+          : '<div><span class="ref-badge bad">GitHub</span>' + esc(gh.error || 'Lỗi') + '</div>';
+      }
+      (check.contracts || []).forEach(function (c) {
+        var short = c.address.slice(0, 6) + '...' + c.address.slice(-4);
+        if (!c.deployed) { out += '<div><span class="ref-badge bad">' + esc(short) + '</span>' + esc(c.error || 'Không có contract') + '</div>'; return; }
+        out += '<div><a href="' + esc(c.explorer) + '" target="_blank" rel="noopener"><span class="ref-badge ok">' + esc(short) + '</span></a>' +
+          (c.verified === true ? '<span class="ref-badge ok">Đã verify' + (c.name ? ' · ' + esc(c.name) : '') + '</span>' : c.verified === false ? '<span class="ref-badge warn">Chưa verify source</span>' : '') +
+          (typeof c.txCount === 'number' ? esc(c.txCount) + (c.txCountCapped ? '+' : '') + ' giao dịch, ' + esc(c.callers) + ' ví' + (c.lastTx ? ', gần nhất ' + esc(fmtTime(c.lastTx)) : '') : '') + '</div>';
+      });
+      return out ? out + '<div style="color:var(--muted)">Kiểm tra lúc ' + esc(fmtTime(check.checkedAt)) + '</div>' : '';
+    }
+
+    function renderProgress() {
+      var groups = state.groups.filter(function (g) { return g.reviewStatus !== 'rejected'; });
+      var ms = state.milestones;
+      $('nav-progress').textContent = groups.filter(function (g) { return Object.keys(state.progress[groupCodeOf(g)] || {}).length; }).length;
+      $('pg-integrations').innerHTML = 'Kiểm tra tự động: GitHub qua API công khai' + ' · Sepolia: kiểm tra contract đã deploy' +
+        (state.etherscanEnabled ? ' · Etherscan: <b>đã bật</b> (verify source, số giao dịch)' : ' · Etherscan: <b>chưa bật</b>, thêm Script Property <code>ETHERSCAN_API_KEY</code> (miễn phí) để xem verify và số giao dịch');
+      if (!msDraft) renderMilestoneEditor();
+      $('pg-empty').hidden = groups.length > 0;
+      $('pg-thead').innerHTML = '<tr><th>Nhóm</th>' + ms.map(function (m) {
+        var missing = groups.filter(function (g) { return !(state.progress[groupCodeOf(g)] || {})[m.id]; }).length;
+        return '<th><div class="pg-head-actions"><span>' + esc(m.id) + ' · ' + esc(m.name) + '</span>' +
+          (m.deadline ? '<span style="text-transform:none;letter-spacing:0">Hạn ' + esc(fmtDay(m.deadline)) + '</span>' : '') +
+          (missing ? '<button type="button" class="link-btn" style="margin:0" data-remind-ms="' + esc(m.id) + '">Nhắc ' + missing + ' nhóm chưa nộp</button>' : '') +
+          '</div></th>';
+      }).join('') + '</tr>';
+      $('pg-tbody').innerHTML = groups.map(function (g) {
+        var code = groupCodeOf(g);
+        var p = state.progress[code] || {};
+        return '<tr><td><b>' + esc(g.groupName) + '</b><br><code>' + esc(code) + '</code> ' + statusBadge(g.reviewStatus) + '</td>' + ms.map(function (m) {
+          var s = p[m.id];
+          if (!s) {
+            var late = m.deadline && Date.now() > new Date(m.deadline).getTime();
+            return '<td class="pg-cell"><span class="pg-missing">' + (late ? 'Trễ hạn, chưa nộp' : 'Chưa nộp') + '</span></td>';
+          }
+          var link = function (u, label) { return u ? '<div>' + label + ': <a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(u.replace(/^https:\/\//, '').slice(0, 48)) + '</a></div>' : ''; };
+          return '<td class="pg-cell"><div><b>Nộp ' + esc(fmtTime(s.timestamp)) + '</b>' +
+            (m.deadline && new Date(s.timestamp) > new Date(m.deadline) ? ' <span class="ref-badge warn">trễ hạn</span>' : '') + '</div>' +
+            link(s.github, 'GitHub') + link(s.demo, 'Demo') + link(s.docs, 'Tài liệu') +
+            (s.note ? '<div style="color:var(--muted)">' + esc(s.note) + '</div>' : '') +
+            checkHtml(s.check) +
+            ((s.github || s.contracts.length) ? '<div class="pg-actions"><button type="button" class="link-btn" style="margin:0" data-recheck="' + esc(code) + '|' + esc(m.id) + '">Kiểm tra lại</button></div>' : '') +
+            '</td>';
+        }).join('') + '</tr>';
+      }).join('');
+    }
+
+    $('pg-tbody').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-recheck]');
+      if (!b) return;
+      var parts = b.dataset.recheck.split('|');
+      b.textContent = 'Đang kiểm tra...';
+      busy(api({ action: 'recheckProgress', groupCode: parts[0], milestone: parts[1] }, 90000).then(function (data) {
+        if (!data.ok) { toast(data.message || 'Không kiểm tra được.', 'error'); return; }
+        toast('Đã kiểm tra lại.');
+        return loadIs355();
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    $('pg-thead').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-remind-ms]');
+      if (!b) return;
+      var ms = b.dataset.remindMs;
+      busy(api({ action: 'remindMilestone', milestone: ms, preview: true }).then(function (data) {
+        if (!data.ok) { toast(data.message || 'Không tạo được email.', 'error'); return; }
+        showMailPreview(data.subject, 'Mẫu cho nhóm đầu tiên. Sẽ gửi cho ' + data.count + ' nhóm chưa nộp (cả nhóm nhận).', data.html);
+        return confirmBox({ title: 'Nhắc nộp tiến độ', message: 'Gửi email nhắc mốc <b>' + esc(ms) + '</b> cho <b>' + data.count + '</b> nhóm chưa nộp?', okLabel: 'Gửi nhắc' })
+          .then(function (y) {
+            $('mail-overlay').classList.remove('show');
+            if (!y) return;
+            return api({ action: 'remindMilestone', milestone: ms }).then(function (r) {
+              if (!r.ok) { toast(r.message || 'Không gửi được.', 'error'); return; }
+              toast('Đã nhắc ' + r.sent + ' nhóm' + (r.failed ? ', lỗi ' + r.failed + ': ' + r.message : '') + '.', r.failed ? 'error' : 'ok');
+            });
+          });
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    /* ---------- Defense schedule ---------- */
+
+    function renderDefense() {
+      var slots = state.slots;
+      var groupsByCode = {};
+      state.groups.forEach(function (g) { groupsByCode[groupCodeOf(g)] = g; });
+      var booked = slots.filter(function (s) { return s.groupCode; }).length;
+      $('nav-defense').textContent = booked + '/' + slots.length;
+      $('df-chip').textContent = slots.length + ' khung · ' + booked + ' đã chọn';
+      $('df-state').textContent = state.defenseOpen ? 'Đang mở' : 'Đang đóng';
+      $('df-state').className = 'chip ' + (state.defenseOpen ? 'chip-ok' : 'chip-warn');
+      $('df-toggle').textContent = state.defenseOpen ? 'Đóng đăng ký lịch' : 'Mở đăng ký lịch';
+      $('df-empty').hidden = slots.length > 0;
+      var approved = state.groups.filter(function (g) { return g.reviewStatus === 'approved'; });
+      var noSlot = approved.filter(function (g) { return !slots.some(function (s) { return s.groupCode === groupCodeOf(g); }); });
+      $('df-foot').innerHTML = approved.length
+        ? '<b>' + noSlot.length + '</b>/' + approved.length + ' nhóm đã duyệt chưa chọn lịch' + (noSlot.length ? ': ' + noSlot.map(function (g) { return esc(g.groupName); }).join(', ') : '') + '.'
+        : 'Chưa có nhóm nào được duyệt đề tài.';
+      var lastDay = '';
+      $('df-tbody').innerHTML = slots.map(function (s) {
+        var g = groupsByCode[s.groupCode];
+        var day = fmtDay(s.start);
+        var dayRow = day !== lastDay ? '<tr><td colspan="4" style="background:var(--bg);font-weight:800;color:var(--primary-ink)">' + esc(day) + '</td></tr>' : '';
+        lastDay = day;
+        return dayRow + '<tr><td><b>' + esc(fmtHm(s.start)) + ' - ' + esc(fmtHm(s.end)) + '</b></td><td>' + esc(s.room) + '</td>' +
+          '<td>' + (g ? '<b>' + esc(g.groupName) + '</b> <code>' + esc(s.groupCode) + '</code><br><span style="color:var(--muted);white-space:normal">' + esc(g.title) + '</span>' : '<span style="color:var(--muted)">Trống</span>') + '</td>' +
+          '<td><div class="row-actions">' + (s.groupCode ? '<button type="button" class="outline-button btn-sm" data-slot-op="unbook" data-slot="' + esc(s.id) + '">Hủy chọn</button>' : '') +
+          '<button type="button" class="outline-button btn-sm btn-danger-outline" data-slot-op="delete" data-slot="' + esc(s.id) + '">Xóa</button></div></td></tr>';
+      }).join('');
+      updateSlotPreview();
+    }
+
+    function updateSlotPreview() {
+      var v = $('df-start').value;
+      if (!v) { $('df-preview').textContent = ''; return; }
+      var start = new Date(v);
+      var dur = Number($('df-duration').value) || 20, gap = Number($('df-gap').value) || 0, n = Number($('df-count').value) || 1;
+      var end = new Date(start.getTime() + (n * dur + (n - 1) * gap) * 60000);
+      $('df-preview').textContent = 'Sẽ tạo ' + n + ' khung, từ ' + fmtHm(start.toISOString()) + ' đến ' + fmtHm(end.toISOString()) + ' ngày ' + fmtDay(start.toISOString()) + '.';
+    }
+    ['df-start', 'df-duration', 'df-gap', 'df-count'].forEach(function (id) { $(id).addEventListener('input', updateSlotPreview); });
+
+    $('df-add').addEventListener('click', function () {
+      var v = $('df-start').value;
+      if (!v) { toast('Chọn giờ bắt đầu trước.', 'error'); return; }
+      busy(api({ action: 'manageSlots', op: 'add', start: new Date(v).toISOString(), duration: $('df-duration').value, gap: $('df-gap').value, count: $('df-count').value, room: $('df-room').value.trim() }).then(function (data) {
+        if (!data.ok) { toast(data.message || 'Không tạo được.', 'error'); return; }
+        toast('Đã tạo ' + data.added + ' khung giờ.');
+        return loadIs355();
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    $('df-tbody').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-slot-op]');
+      if (!b) return;
+      var op = b.dataset.slotOp, id = b.dataset.slot;
+      confirmBox({
+        title: op === 'delete' ? 'Xóa khung giờ' : 'Hủy lịch của nhóm',
+        message: op === 'delete' ? 'Xóa khung giờ này? Nếu đã có nhóm chọn, nhóm sẽ phải chọn lại.' : 'Gỡ nhóm khỏi khung giờ này để nhóm khác có thể chọn?',
+        okLabel: op === 'delete' ? 'Xóa' : 'Hủy chọn', danger: op === 'delete'
+      }).then(function (y) {
+        if (!y) return;
+        busy(api({ action: 'manageSlots', op: op, slotId: id }).then(function (data) {
+          if (!data.ok) { toast(data.message || 'Không thực hiện được.', 'error'); return; }
+          return loadIs355();
+        }).catch(function (err) { toast(netError(err), 'error'); }));
+      });
+    });
+
+    $('df-toggle').addEventListener('click', function () {
+      var open = !state.defenseOpen;
+      busy(api({ action: 'manageSlots', op: 'open', open: open }).then(function (data) {
+        if (!data.ok) { toast(data.message || 'Không đổi được.', 'error'); return; }
+        state.defenseOpen = data.open;
+        renderDefense();
+        toast(open ? 'Đã mở đăng ký lịch bảo vệ.' : 'Đã đóng đăng ký lịch bảo vệ.');
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    $('df-remind').addEventListener('click', function () {
+      confirmBox({ title: 'Nhắc lịch bảo vệ', message: 'Gửi email nhắc cho các nhóm bảo vệ trong 36 giờ tới (mỗi nhóm chỉ nhắc 1 lần)?', okLabel: 'Gửi nhắc' })
+        .then(function (y) {
+          if (!y) return;
+          busy(api({ action: 'sendDefenseReminders' }).then(function (data) {
+            if (!data.ok) { toast(data.message || 'Không gửi được.', 'error'); return; }
+            toast(data.sent ? 'Đã nhắc ' + data.sent + ' nhóm.' : 'Không có nhóm nào cần nhắc trong 36 giờ tới.');
+          }).catch(function (err) { toast(netError(err), 'error'); }));
+        });
+    });
 
     /* ---------- Boot ---------- */
 

@@ -63,6 +63,16 @@
     mailOk: 'A confirmation email has been sent to every member.',
     mailFail: 'The registration is saved, but the confirmation email could not be sent. Take a screenshot of this page to keep.',
     chars: 'characters',
+    refChecking: 'Checking reference...',
+    refCheckFail: 'Could not check right now, it will be checked on submit.',
+    copy: 'Copy',
+    copied: 'Copied',
+    simTitle: 'Similar to topics already registered:',
+    simWith: 'similar to',
+    sameDataset: 'same dataset',
+    simHint: 'You can still register, but make your topic clearly different (problem, data or method) or the instructor may ask you to revise.',
+    simConfirm: function (g, p) { return 'Your topic is ' + p + '% similar to group ' + g + '. Submit anyway?'; },
+    qPassed: 'checks passed. Missing items are what the instructor usually asks you to clarify.',
     deadline: function (t) { return 'Registration deadline: <b>' + t + '</b>. The form closes automatically after this time.'; },
     closed: 'Registration is closed.'
   } : {
@@ -109,6 +119,16 @@
     mailOk: 'Email xác nhận đã được gửi tới tất cả thành viên trong nhóm.',
     mailFail: 'Đăng ký đã được lưu nhưng chưa gửi được email xác nhận. Hãy chụp lại màn hình này để lưu.',
     chars: 'ký tự',
+    refChecking: 'Đang kiểm tra tài liệu...',
+    refCheckFail: 'Chưa kiểm tra được lúc này, hệ thống sẽ kiểm tra lại khi gửi.',
+    copy: 'Sao chép',
+    copied: 'Đã chép',
+    simTitle: 'Đề tài đang giống với đề tài đã đăng ký:',
+    simWith: 'giống nhóm',
+    sameDataset: 'cùng dataset',
+    simHint: 'Nhóm vẫn có thể đăng ký, nhưng nên làm khác biệt rõ (bài toán, dữ liệu hoặc phương pháp) để tránh bị yêu cầu chỉnh sửa.',
+    simConfirm: function (g, p) { return 'Đề tài giống ' + p + '% với nhóm ' + g + '. Vẫn gửi đăng ký?'; },
+    qPassed: 'mục đạt. Các mục còn thiếu thường là điểm giảng viên yêu cầu làm rõ.',
     deadline: function (t) { return 'Hạn đăng ký đề tài: <b>' + t + '</b>. Sau thời điểm này form sẽ tự khóa.'; },
     closed: 'Đăng ký đề tài đã đóng.'
   };
@@ -283,10 +303,120 @@
         '<span class="reg-ref-no">' + (i + 1) + '</span>' +
         '<label class="reg-field"><span>' + T.refType + '</span><select data-r="type">' + opts + '</select></label>' +
         '<label class="reg-field"><span>' + T.refCite + '</span><input type="text" maxlength="500" data-r="citation" value="' + esc(r.citation) + '" placeholder="' + T.refPlaceholder + '"></label>' +
+        '<div class="reg-ref-meta" data-r="meta"></div>' +
         '</div>';
     }
     refsEl.innerHTML = html;
+    refsEl.querySelectorAll('[data-r="citation"]').forEach(function (inp) { if (inp.value.trim()) resolveRef(inp.value.trim()); });
+    paintRefMeta();
   }
+
+  /* ---------- Reference check + IEEE (server resolves DOI / arXiv / links) ---------- */
+
+  var refMeta = {};      // citation text -> meta | 'loading' | 'error'
+  var refTimers = {};
+
+  function resolveRef(input) {
+    if (!input || input.length < 4 || refMeta[input]) return;
+    refMeta[input] = 'loading';
+    paintRefMeta();
+    post({ action: 'resolveRef', input: input })
+      .then(function (res) { refMeta[input] = res && res.ok ? res.ref : 'error'; })
+      .catch(function () { refMeta[input] = 'error'; })
+      .then(function () { paintRefMeta(); scheduleChecks(); });
+  }
+
+  function paintRefMeta() {
+    refsEl.querySelectorAll('.reg-ref').forEach(function (row) {
+      var input = row.querySelector('[data-r="citation"]').value.trim();
+      var box = row.querySelector('[data-r="meta"]');
+      var m = refMeta[input];
+      if (!input || !m) { box.innerHTML = ''; return; }
+      if (m === 'loading') { box.innerHTML = '<span class="ref-badge muted">' + T.refChecking + '</span>'; return; }
+      if (m === 'error') { box.innerHTML = '<span class="ref-badge muted">' + T.refCheckFail + '</span>'; return; }
+      var b = window.IS355Tools ? IS355Tools.refBadge(m, EN ? 'en' : 'vi') : { cls: 'muted', label: m.status };
+      box.innerHTML = '<span class="ref-badge ' + b.cls + '">' + esc(b.label) + '</span>' +
+        (m.ieeeHtml && m.status !== 'suggested' ? '<div class="ref-ieee"><span class="ref-ieee-label">IEEE</span> ' + m.ieeeHtml +
+          ' <button type="button" class="link-copy" data-copy="' + esc(m.ieee) + '">' + T.copy + '</button></div>' : '') +
+        (m.note ? '<div class="ref-note">' + esc(m.note) + '</div>' : '');
+    });
+  }
+
+  refsEl.addEventListener('input', function (e) {
+    if (e.target.dataset.r !== 'citation') return;
+    var row = e.target.closest('.reg-ref');
+    var input = e.target.value.trim();
+    paintRefMeta();
+    clearTimeout(refTimers[row.querySelector('.reg-ref-no').textContent]);
+    refTimers[row.querySelector('.reg-ref-no').textContent] = setTimeout(function () { resolveRef(input); }, 900);
+  });
+  refsEl.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-copy]');
+    if (!b) return;
+    (navigator.clipboard ? navigator.clipboard.writeText(b.dataset.copy) : Promise.reject()).then(function () {
+      b.textContent = T.copied;
+      setTimeout(function () { b.textContent = T.copy; }, 1500);
+    }).catch(function () {});
+  });
+
+  /* ---------- Similar topics + self-check ---------- */
+
+  var otherGroups = [];
+  var simEl = document.getElementById('reg-similar');
+  var qualityEl = document.getElementById('reg-quality');
+  var lastSimilar = [];
+
+  function loadOtherTopics() {
+    post({ action: 'publicTopics' }).then(function (res) {
+      if (res && res.ok) { otherGroups = res.groups || []; scheduleChecks(); }
+    }).catch(function () { /* similarity is a hint only */ });
+  }
+
+  function currentTopic() {
+    var refs = readRefs().map(function (r) {
+      var m = refMeta[r.citation];
+      return { type: r.type, citation: r.citation, meta: m && typeof m === 'object' ? m : null };
+    });
+    return {
+      groupName: form.elements.groupName.value.trim(),
+      title: form.elements.title.value.trim(),
+      description: descEl.value.trim(),
+      descriptionEn: descEnEl.value.trim(),
+      track: form.elements.track.value,
+      level: form.elements.level.value,
+      refs: refs
+    };
+  }
+
+  var checkTimer;
+  function scheduleChecks() {
+    clearTimeout(checkTimer);
+    checkTimer = setTimeout(runChecks, 500);
+  }
+
+  function runChecks() {
+    if (!window.IS355Tools) return;
+    var t = currentTopic();
+    // Similar topics
+    lastSimilar = t.title.length > 8 ? IS355Tools.similar(t, otherGroups, 0.25) : [];
+    simEl.hidden = !lastSimilar.length;
+    simEl.innerHTML = lastSimilar.length
+      ? '<b>' + T.simTitle + '</b><ul>' + lastSimilar.slice(0, 3).map(function (h) {
+          return '<li><b>' + Math.round(h.score * 100) + '%</b> ' + T.simWith + ' <b>' + esc(h.group.groupName) + '</b>: ' + esc(h.group.title) +
+            (h.sameDataset ? ' <span class="ref-badge warn">' + T.sameDataset + '</span>' : '') + '</li>';
+        }).join('') + '</ul><span>' + T.simHint + '</span>'
+      : '';
+    // Self-check
+    var q = IS355Tools.quality(t, EN ? 'en' : 'vi');
+    qualityEl.innerHTML = '<div class="q-score"><b>' + q.passed + '/' + q.total + '</b> ' + T.qPassed + '</div><ul class="q-list">' +
+      q.checks.map(function (c) { return '<li class="' + (c.ok ? 'ok' : 'miss') + '">' + esc(c.label) + '</li>'; }).join('') + '</ul>';
+  }
+
+  ['title', 'description', 'descriptionEn', 'track', 'level', 'groupName'].forEach(function (n) {
+    form.elements[n].addEventListener('input', scheduleChecks);
+    form.elements[n].addEventListener('change', scheduleChecks);
+  });
+  refsEl.addEventListener('change', scheduleChecks);
 
   function readRefs() {
     return Array.prototype.map.call(refsEl.querySelectorAll('.reg-ref'), function (row) {
@@ -513,6 +643,8 @@
       return;
     }
     showError('');
+    var top = lastSimilar[0];
+    if (top && top.score >= 0.4 && !window.confirm(T.simConfirm(top.group.groupName, Math.round(top.score * 100)))) return;
 
     submitBtn.disabled = true;
     submitBtn.textContent = T.sending;
@@ -543,6 +675,8 @@
 
   loadDraft();
   loadFormInfo();
+  loadOtherTopics();
   refreshOtpEmails();
   updateCount();
+  scheduleChecks();
 })();

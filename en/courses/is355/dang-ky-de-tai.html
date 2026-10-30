@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
   <link rel="stylesheet" href="../../../assets/css/base.css?v=40">
-  <link rel="stylesheet" href="../../../assets/css/course.css?v=60">
+  <link rel="stylesheet" href="../../../assets/css/course.css?v=61">
 </head>
 <body>
   <header class="topbar">
@@ -96,6 +96,7 @@
             <label class="reg-field reg-span"><span>Short description (Vietnamese) <i>*</i></span><textarea name="description" maxlength="1500" placeholder="Ví dụ: So sánh Logistic Regression, Random Forest, XGBoost trên bộ Home Credit Default Risk, giải thích bằng SHAP. Smart contract trên testnet ghi mã quyết định, phiên bản mô hình và hash bản ghi off-chain; dashboard Streamlit kiểm tra toàn vẹn dữ liệu." required></textarea><small class="reg-count" id="reg-desc-count"></small></label>
             <label class="reg-field reg-span"><span>Short description (English) <i>*</i></span><textarea name="descriptionEn" maxlength="1500" placeholder="e.g. Compare Logistic Regression, Random Forest and XGBoost on the Home Credit Default Risk dataset, explained with SHAP. A testnet smart contract records the decision code, model version and hash of the off-chain record; a Streamlit dashboard checks data integrity." required></textarea><small class="reg-count" id="reg-desc-en-count"></small></label>
           </div>
+          <div class="reg-similar" id="reg-similar" hidden></div>
         </section>
 
         <section class="reg-card">
@@ -103,9 +104,15 @@
           <p class="reg-card-hint">At least 3, at most 5. You need at least 1 <strong>Dataset</strong>, 1 <strong>Method</strong> and 1 <strong>Related Survey</strong>. Give a full citation or a link (DOI, arXiv, Kaggle, GitHub).</p>
           <div id="reg-refs"></div>
         </section>
+        <section class="reg-card">
+          <div class="reg-card-head"><b>05</b><h2>Self-check before submitting</h2></div>
+          <p class="reg-card-hint">Updates as you type. Missing items do not block submission, but they are what the instructor usually asks about.</p>
+          <div class="reg-quality" id="reg-quality"></div>
+        </section>
+
 
         <section class="reg-card">
-          <div class="reg-card-head"><b>05</b><h2>Email verification</h2></div>
+          <div class="reg-card-head"><b>06</b><h2>Email verification</h2></div>
           <p class="reg-card-hint">Whoever submits the form (the leader or a member) picks their own school email, clicks <strong>Send OTP</strong> and enters the 6-digit code. After registering, the whole group receives a confirmation email.</p>
           <div class="reg-otp">
             <label class="reg-field"><span>Email for OTP <i>*</i></span><select name="otpEmail"></select></label>
@@ -143,6 +150,7 @@
     <div class="footer-bottom">© 2026 IT Learning Hub</div>
   </footer>
   <script src="../../../assets/js/main.js?v=20"></script>
-  <script src="../../../assets/js/project-registration.js?v=5"></script>
+  <script src="../../../assets/js/topic-tools.js?v=1"></script>
+  <script src="../../../assets/js/project-registration.js?v=6"></script>
 </body>
 </html>

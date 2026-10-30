@@ -137,6 +137,58 @@
     .preview table{font-size:12.5px}
     .preview-warn{margin:8px 0 0;color:var(--warn-text);font-size:12px}
 
+    /* Review workflow */
+    .stack{display:grid;gap:20px;align-content:start}
+    .field textarea.plain{font:14px/1.6 var(--font-sans)}
+    .check-row{display:flex;align-items:center;gap:8px;color:var(--body);font-size:13px;cursor:pointer}
+    .check-row input{width:16px;height:16px;accent-color:var(--primary)}
+    .link-btn{margin-left:8px;padding:0;border:0;background:none;color:var(--primary);font-size:11px;font-weight:700;letter-spacing:0;text-transform:none;cursor:pointer}
+    .link-btn:hover{text-decoration:underline}
+    .badge-danger{background:var(--danger-bg);color:var(--danger-text)}
+    .badge-info{background:var(--tint);color:var(--primary-ink)}
+    .settings-bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;margin-bottom:16px;padding:16px 20px}
+    .settings-item{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+    .settings-label{color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.1em}
+    .settings-item input{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:13px}
+    .settings-note{flex-basis:100%;margin:0;color:var(--muted);font-size:12px}
+    .status-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+    .status-tab{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:99px;background:var(--surface);color:var(--body);font-size:12.5px;font-weight:600}
+    .status-tab b{font-family:var(--font-mono);color:var(--ink)}
+    .status-tab.active{border-color:var(--primary);background:var(--tint);color:var(--primary-ink)}
+    .group-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+    .last-review{margin:14px 0 0;padding:12px 14px;border-radius:10px;background:var(--bg);border:1px solid var(--line);font-size:12.5px;color:var(--body);line-height:1.6}
+    .last-review b{color:var(--ink)}
+    .last-review ul{margin:6px 0 0;padding-left:18px}
+    .modal-card.review-card{max-width:1120px;max-height:calc(100vh - 40px);display:flex;flex-direction:column;padding:0;overflow:hidden}
+    .review-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:20px 24px;border-bottom:1px solid var(--line)}
+    .review-head h3{margin:4px 0 2px;font-size:17px;line-height:1.4}
+    .review-sub{margin:0!important;color:var(--muted);font-size:12.5px}
+    .review-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:22px;padding:20px 24px;overflow-y:auto}
+    .rv-status{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .field .rv-opt{margin:0;letter-spacing:0;position:relative;display:flex;align-items:center;justify-content:center;padding:10px;border:1.5px solid var(--line);border-radius:10px;font-size:13px;font-weight:700;color:var(--body);cursor:pointer;text-align:center}
+    .rv-opt input{position:absolute;opacity:0}
+    .rv-opt:has(input:focus-visible){box-shadow:0 0 0 3px rgb(var(--primary-rgb) / .3)}
+    .rv-approved:has(input:checked){border-color:var(--ok-accent);background:var(--ok-bg);color:var(--ok-text)}
+    .rv-revise:has(input:checked){border-color:var(--warn-accent);background:var(--warn-bg);color:var(--warn-text)}
+    .rv-rejected:has(input:checked){border-color:var(--danger-accent);background:var(--danger-bg);color:var(--danger-text)}
+    .rv-presets{display:grid;gap:6px;margin-bottom:8px}
+    .rv-presets label{display:flex;align-items:flex-start;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;color:var(--body);font-size:12.5px;font-weight:500;letter-spacing:0;line-height:1.5;cursor:pointer}
+    .rv-presets label:has(input:checked){border-color:var(--primary);background:var(--tint);color:var(--ink)}
+    .field .rv-presets input{width:auto;flex:none;margin-top:3px;padding:0;accent-color:var(--primary)}
+    .rv-custom-row{display:flex;gap:6px;margin-bottom:6px}
+    .rv-custom-row input{flex:1}
+    .rv-custom-row button{width:38px;border:1px solid var(--line);border-radius:8px;background:none;color:var(--muted)}
+    .review-preview{display:flex;flex-direction:column;gap:10px;min-width:0}
+    .preview-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--ink);font-size:12.5px;font-weight:700}
+    #rv-frame,.mail-frame{width:100%;min-height:520px;flex:1;border:1px solid var(--line);border-radius:12px;background:#f1f5f9}
+    .mail-frame{margin:16px 24px 24px;width:calc(100% - 48px);min-height:62vh}
+    .rv-history{font-size:12px;color:var(--muted)}
+    .rv-history details{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+    .rv-history summary{cursor:pointer;color:var(--primary);font-weight:700}
+    .rv-history li{margin-top:8px;line-height:1.55}
+    .review-actions{padding:14px 24px;border-top:1px solid var(--line);margin:0}
+    @media(max-width:900px){.review-body{grid-template-columns:1fr}#rv-frame{min-height:420px}}
+
     /* Login */
     .login-wrap{min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:40px 16px}
     .login-card{width:100%;max-width:400px;padding:38px 34px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 24px 48px -24px rgb(15 23 42 / .2);text-align:center}
@@ -244,7 +296,7 @@
             <div class="card-foot" id="ov-reg-foot"></div>
           </div>
           <div class="card">
-            <h3>Nhóm đã đăng ký <span class="chip chip-muted" id="ov-grp-chip">0 nhóm</span></h3>
+            <h3>Xét duyệt đề tài <span class="chip chip-muted" id="ov-grp-chip">0 nhóm</span></h3>
             <div id="ov-grp-bars"></div>
             <div class="card-foot" id="ov-grp-foot"></div>
           </div>
@@ -340,6 +392,25 @@
           <div><p class="eyebrow">IS355 · ĐỒ ÁN</p><h1>Danh sách lớp</h1></div>
         </div>
         <div class="split">
+          <div class="stack">
+          <div class="card">
+            <h3>Nhắc nhở SV chưa có nhóm <span class="chip chip-warn" id="rem-chip">0 SV</span></h3>
+            <p class="field-hint" style="margin:-6px 0 14px">Gửi email riêng cho từng sinh viên chưa có tên trong nhóm nào (theo bộ lọc lớp ở bảng bên phải). Hạn đăng ký và link form được tự động thêm vào email.</p>
+            <div class="field">
+              <label for="rem-subject">TIÊU ĐỀ EMAIL</label>
+              <input type="text" id="rem-subject" maxlength="150" value="[IS355] Nhắc nhở: Bạn chưa đăng ký nhóm đồ án cuối kỳ">
+            </div>
+            <div class="field">
+              <label for="rem-message">LỜI NHẮN</label>
+              <textarea id="rem-message" class="plain" rows="5">Hệ thống ghi nhận bạn chưa có tên trong nhóm đồ án nào của học phần IS355 Công nghệ Blockchain. Bạn vui lòng lập nhóm và đăng ký đề tài trước hạn để giảng viên kịp xét duyệt.</textarea>
+            </div>
+            <label class="check-row"><input type="checkbox" id="rem-skip-recent" checked> Bỏ qua bạn đã được nhắc trong 24 giờ qua</label>
+            <div class="row-actions" style="margin-top:14px">
+              <button type="button" class="outline-button" id="rem-preview-btn">Xem trước</button>
+              <button type="button" class="primary-button" id="rem-send-btn">Gửi nhắc nhở <span>›</span></button>
+            </div>
+            <p class="field-hint" id="rem-quota"></p>
+          </div>
           <div class="card">
             <h3>Import danh sách lớp</h3>
             <div class="field">
@@ -362,6 +433,7 @@
             <div class="preview" id="imp-preview" hidden></div>
             <p class="msg" id="imp-msg"></p>
           </div>
+          </div>
 
           <div class="card">
             <h3>Sinh viên IS355 <span class="chip chip-muted" id="roster-chip">0 SV</span></h3>
@@ -372,7 +444,7 @@
             </div>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>MSSV</th><th>Họ và tên</th><th>Lớp</th><th>Nhóm</th></tr></thead>
+                <thead><tr><th>MSSV</th><th>Họ và tên</th><th>Lớp</th><th>Nhóm</th><th>Nhắc gần nhất</th></tr></thead>
                 <tbody id="roster-tbody"></tbody>
               </table>
             </div>
@@ -387,12 +459,29 @@
         <div class="view-head">
           <div><p class="eyebrow">IS355 · ĐỒ ÁN</p><h1>Đăng ký đề tài</h1></div>
           <div class="row-actions">
-            <button type="button" class="outline-button" id="toggle-reg-btn">-</button>
             <button type="button" class="outline-button" id="export-btn-2">Tải Excel/CSV</button>
           </div>
         </div>
+
+        <div class="card settings-bar">
+          <div class="settings-item">
+            <span class="settings-label">TRẠNG THÁI</span>
+            <span class="chip" id="reg-state-chip">-</span>
+            <button type="button" class="outline-button btn-sm" id="toggle-reg-btn">-</button>
+          </div>
+          <div class="settings-item">
+            <label class="settings-label" for="deadline-input">HẠN ĐĂNG KÝ</label>
+            <input type="datetime-local" id="deadline-input">
+            <button type="button" class="outline-button btn-sm" id="deadline-save">Lưu hạn</button>
+            <button type="button" class="outline-button btn-sm" id="deadline-clear">Bỏ hạn</button>
+          </div>
+          <p class="settings-note" id="deadline-note"></p>
+        </div>
+
+        <div class="status-tabs" id="status-tabs" role="tablist" aria-label="Lọc theo trạng thái xét duyệt"></div>
+
         <div class="toolbar">
-          <input type="search" id="group-search" placeholder="Tìm tên nhóm, đề tài, MSSV...">
+          <input type="search" id="group-search" placeholder="Tìm tên nhóm, mã nhóm, đề tài, MSSV...">
           <select id="group-track-filter"><option value="">Mọi chủ đề</option><option value="A">A - Green Finance</option><option value="B">B - DeFi &amp; Banking</option><option value="C">C - Analytics &amp; AML</option><option value="D">D - RWA &amp; Tokenization</option><option value="E">E - AI + Blockchain</option></select>
         </div>
         <div class="group-list" id="group-list"></div>
@@ -400,6 +489,70 @@
       </section>
 
     </main>
+  </div>
+
+  <!-- Review modal -->
+  <div class="modal-overlay" id="review-overlay">
+    <div class="modal-card review-card" role="dialog" aria-modal="true" aria-labelledby="rv-title">
+      <div class="review-head">
+        <div>
+          <p class="eyebrow" style="margin:0">XÉT DUYỆT ĐỀ TÀI · <span id="rv-code"></span></p>
+          <h3 id="rv-title">-</h3>
+          <p class="review-sub" id="rv-sub"></p>
+        </div>
+        <button type="button" class="icon-btn" id="rv-close" aria-label="Đóng">✕</button>
+      </div>
+
+      <div class="review-body">
+        <div class="review-form">
+          <div class="field">
+            <label>KẾT QUẢ</label>
+            <div class="rv-status">
+              <label class="rv-opt rv-approved"><input type="radio" name="rv-status" value="approved"><span>Đồng ý</span></label>
+              <label class="rv-opt rv-revise"><input type="radio" name="rv-status" value="revise" checked><span>Cần chỉnh sửa</span></label>
+              <label class="rv-opt rv-rejected"><input type="radio" name="rv-status" value="rejected"><span>Không duyệt</span></label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="rv-comment">NHẬN XÉT CHUNG <button type="button" class="link-btn" id="rv-template">Dùng câu mẫu</button></label>
+            <textarea id="rv-comment" class="plain" rows="5" placeholder="Nhận xét ngắn gọn về đề tài: điểm mạnh, điểm cần lưu ý..."></textarea>
+          </div>
+          <div class="field">
+            <label id="rv-items-label">CẦN LÀM RÕ / BỔ SUNG</label>
+            <div class="rv-presets" id="rv-presets"></div>
+            <div id="rv-custom"></div>
+            <button type="button" class="link-btn" id="rv-add-item">+ Thêm nội dung khác</button>
+          </div>
+          <div class="field" id="rv-deadline-field">
+            <label for="rv-deadline">HẠN NHÓM CẬP NHẬT (TÙY CHỌN)</label>
+            <input type="date" id="rv-deadline">
+          </div>
+          <label class="check-row"><input type="checkbox" id="rv-send" checked> Gửi email cho cả nhóm (CC giảng viên)</label>
+          <p class="msg" id="rv-msg"></p>
+        </div>
+        <div class="review-preview">
+          <div class="preview-bar"><span id="rv-subject">Xem trước email</span><button type="button" class="outline-button btn-sm" id="rv-preview-btn">Cập nhật xem trước</button></div>
+          <iframe id="rv-frame" title="Xem trước email" sandbox=""></iframe>
+          <div class="rv-history" id="rv-history"></div>
+        </div>
+      </div>
+
+      <div class="modal-actions review-actions">
+        <button type="button" class="outline-button" id="rv-cancel">Hủy</button>
+        <button type="button" class="primary-button" id="rv-submit">Lưu &amp; gửi email <span>›</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generic email preview (reminders) -->
+  <div class="modal-overlay" id="mail-overlay">
+    <div class="modal-card review-card" style="max-width:720px">
+      <div class="review-head">
+        <div><p class="eyebrow" style="margin:0">XEM TRƯỚC EMAIL</p><h3 id="mail-subject">-</h3><p class="review-sub" id="mail-sub"></p></div>
+        <button type="button" class="icon-btn" id="mail-close" aria-label="Đóng">✕</button>
+      </div>
+      <iframe id="mail-frame" class="mail-frame" title="Xem trước email" sandbox=""></iframe>
+    </div>
   </div>
 
   <div class="modal-overlay" id="confirm-overlay">
@@ -422,7 +575,40 @@
     var LEVELS = { '1': 'Mức 1 - Basic', '2': 'Mức 2 - Intermediate', '3': 'Mức 3 - Advanced', '4': 'Mức 4 - Research' };
     var IDLE_TIMEOUT_MS = 20 * 60 * 1000;
 
-    var state = { key: '', codes: [], students: [], groups: [], regOpen: true, is355Loaded: false };
+    // Review states (computed by the backend; "resubmitted" = updated after the last review).
+    var REVIEW = {
+      pending: { label: 'Chờ duyệt', badge: 'badge-muted' },
+      resubmitted: { label: 'Chờ duyệt lại', badge: 'badge-info' },
+      revise: { label: 'Cần chỉnh sửa', badge: 'badge-warn' },
+      approved: { label: 'Đã duyệt', badge: 'badge-ok' },
+      rejected: { label: 'Không duyệt', badge: 'badge-danger' }
+    };
+    var REVIEW_ORDER = ['pending', 'resubmitted', 'revise', 'approved', 'rejected'];
+
+    // One-click items for "Cần làm rõ / bổ sung" in the review email.
+    var PRESET_ITEMS = [
+      'Làm rõ vai trò của Blockchain: Vì sao dữ liệu/nghiệp vụ cần đưa lên chuỗi thay vì dùng cơ sở dữ liệu thông thường?',
+      'Làm rõ nguồn dữ liệu (dataset): Tên, link, số lượng mẫu, các thuộc tính chính và cách tiền xử lý.',
+      'Làm rõ cơ chế đưa kết quả AI/off-chain lên on-chain (Oracle, chữ ký số EIP-712, hash bằng chứng...).',
+      'Mô tả rõ smart contract: Các hàm chính, vai trò người dùng (access control) và các event.',
+      'Thu hẹp phạm vi đề tài cho phù hợp thời lượng một học kỳ, tập trung vào một bài toán cốt lõi.',
+      'Bổ sung chỉ số đánh giá cụ thể (Precision, Recall, F1, ROC-AUC, gas, độ trễ...).',
+      'Bổ sung kế hoạch kiểm thử smart contract và phân tích ít nhất 3 rủi ro bảo mật.',
+      'Cập nhật tài liệu tham khảo phù hợp hơn (đủ Dataset, Method, Related Survey; ưu tiên bài báo gần đây).',
+      'Tên đề tài cần ngắn gọn hơn và phản ánh đúng nội dung chính.',
+      'Mức độ đồ án đã chọn chưa khớp với khối lượng công việc mô tả.',
+      'Mô tả tiếng Anh cần viết lại cho rõ ý và đúng thuật ngữ.'
+    ];
+    var COMMENT_TEMPLATES = {
+      approved: 'Đề tài phù hợp với định hướng học phần, có bài toán rõ ràng và phần Blockchain có vai trò thực chất. Nhóm triển khai theo kế hoạch, chú ý bám sát 5 thành phần bắt buộc trong Project Lab.',
+      revise: 'Đề tài có hướng đi tốt nhưng một số nội dung chưa đủ rõ để duyệt. Nhóm vui lòng làm rõ các điểm bên dưới và cập nhật lại bản đăng ký.',
+      rejected: 'Đề tài chưa đáp ứng yêu cầu của học phần (phần Blockchain chưa có vai trò thực chất hoặc trùng hướng với nhóm khác). Nhóm vui lòng chọn hướng khác và đăng ký lại.'
+    };
+
+    var state = {
+      key: '', codes: [], students: [], groups: [], regOpen: true, is355Loaded: false,
+      manualClosed: false, deadline: '', mailQuota: -1, statusFilter: ''
+    };
     var $ = function (id) { return document.getElementById(id); };
 
     /* ---------- Helpers ---------- */
@@ -751,6 +937,9 @@
         state.students = data.students || [];
         state.groups = data.groups || [];
         state.regOpen = data.registrationOpen !== false;
+        state.manualClosed = !!data.manualClosed;
+        state.deadline = data.deadline || '';
+        state.mailQuota = typeof data.mailQuota === 'number' ? data.mailQuota : -1;
         state.is355Loaded = true;
         renderRoster();
         renderGroups();
@@ -778,21 +967,18 @@
         }).join('');
       $('ov-reg-foot').innerHTML = !state.is355Loaded ? 'Đang tải dữ liệu...' :
         !s.length ? 'Chưa có danh sách lớp. <button type="button" data-go="roster">Import ngay</button>' :
-        '<b>' + (s.length - grouped) + '</b> sinh viên chưa có nhóm. <button type="button" data-go="roster" data-filter="ungrouped">Xem danh sách</button>';
+        (state.deadline ? 'Hạn đăng ký: <b>' + esc(fmtTime(state.deadline)) + '</b>. ' : 'Chưa đặt hạn đăng ký. ') +
+        '<b>' + (s.length - grouped) + '</b> SV chưa có nhóm. <button type="button" data-go="roster" data-filter="ungrouped">Nhắc nhở</button>';
 
-      // Groups card
-      var mixed = g.filter(function (x) {
-        var cls = {};
-        x.members.forEach(function (m) { cls[m['class']] = true; });
-        return Object.keys(cls).length > 1;
-      }).length;
-      var full = g.filter(function (x) { return x.members.length >= 5; }).length;
+      // Review card
+      var count = function (st) { return g.filter(function (x) { return x.reviewStatus === st; }).length; };
+      var waiting = count('pending') + count('resubmitted');
       $('ov-grp-chip').textContent = g.length + ' nhóm';
-      $('ov-grp-bars').innerHTML = bar('Nhóm ghép 2 lớp', mixed, g.length) + bar('Nhóm từ 5 thành viên', full, g.length);
-      var latest = g.slice().sort(function (a, b) { return String(b.submittedAt).localeCompare(String(a.submittedAt)); })[0];
-      $('ov-grp-foot').innerHTML = latest
-        ? 'Mới nhất: <b>' + esc(latest.groupName) + '</b> lúc ' + esc(fmtTime(latest.submittedAt)) + '. <button type="button" data-go="groups">Xem tất cả</button>'
-        : 'Chưa có nhóm nào đăng ký.';
+      $('ov-grp-bars').innerHTML = bar('Đã duyệt', count('approved'), g.length, true) +
+        bar('Cần chỉnh sửa', count('revise'), g.length) + bar('Chờ duyệt / duyệt lại', waiting, g.length);
+      $('ov-grp-foot').innerHTML = !g.length ? 'Chưa có nhóm nào đăng ký.' : waiting
+        ? '<b>' + waiting + '</b> nhóm đang chờ xét duyệt. <button type="button" data-go="groups" data-status="waiting">Xét duyệt ngay</button>'
+        : 'Đã xét duyệt hết các nhóm. <button type="button" data-go="groups">Xem tất cả</button>';
 
       // Codes card
       $('ov-code-chip').textContent = codes.length + ' mã';
@@ -806,9 +992,9 @@
       // Stat tiles
       var tiles = [
         [g.length, 'Nhóm đã đăng ký', true],
-        [s.length, 'Sinh viên IS355', true],
+        [waiting, 'Nhóm chờ xét duyệt', true],
         [s.length - grouped, 'Sinh viên chưa có nhóm', false],
-        [activeCodes, 'Mã truy cập đang hoạt động', false]
+        [state.mailQuota < 0 ? '-' : state.mailQuota, 'Email còn gửi được hôm nay', false]
       ];
       $('ov-stats').innerHTML = tiles.map(function (t) {
         return '<div class="stat' + (t[2] ? ' hl' : '') + '"><strong>' + t[0] + '</strong><span>' + t[1] + '</span></div>';
@@ -825,6 +1011,7 @@
       var go = e.target.closest('[data-go]');
       if (!go) return;
       if (go.dataset.filter) { $('roster-status-filter').value = go.dataset.filter; renderRoster(); }
+      if (go.dataset.status) { state.statusFilter = go.dataset.status; renderGroups(); }
       showView(go.dataset.go);
     });
 
@@ -846,10 +1033,92 @@
       $('roster-empty').hidden = list.length > 0;
       $('roster-tbody').innerHTML = list.map(function (x) {
         return '<tr><td><code>' + esc(x.studentId) + '</code></td><td>' + esc(x.fullName) + '</td><td>' + esc(x['class']) + '</td>' +
-          '<td>' + (x.group ? '<span class="badge badge-ok">' + esc(x.group) + '</span>' : '<span class="badge badge-warn">Chưa có nhóm</span>') + '</td></tr>';
+          '<td>' + (x.group ? '<span class="badge badge-ok">' + esc(x.group) + '</span>' : '<span class="badge badge-warn">Chưa có nhóm</span>') + '</td>' +
+          '<td>' + (x.group ? '' : x.lastReminded ? esc(fmtTime(x.lastReminded)) : '<span style="color:var(--muted)">Chưa nhắc</span>') + '</td></tr>';
       }).join('');
       $('roster-foot').textContent = list.length ? 'Hiển thị ' + list.length + ' / ' + s.length + ' sinh viên.' : '';
+      renderReminderBox();
     }
+
+    /* ---------- Reminders ---------- */
+
+    // Ungrouped students in the class picked in the roster filter,
+    // optionally skipping anyone reminded in the last 24h.
+    function reminderTargets() {
+      var cls = $('roster-class-filter').value;
+      var skipRecent = $('rem-skip-recent').checked;
+      var dayAgo = Date.now() - 24 * 3600 * 1000;
+      return state.students.filter(function (x) {
+        if (x.group) return false;
+        if (cls && x['class'] !== cls) return false;
+        if (skipRecent && x.lastReminded && new Date(x.lastReminded).getTime() > dayAgo) return false;
+        return true;
+      });
+    }
+
+    function renderReminderBox() {
+      var n = reminderTargets().length;
+      var cls = $('roster-class-filter').value;
+      $('rem-chip').textContent = n + ' SV';
+      $('rem-send-btn').disabled = !n;
+      $('rem-preview-btn').disabled = !n;
+      $('rem-quota').textContent = (cls ? 'Lớp ' + cls + '. ' : 'Cả 2 lớp. ') +
+        (state.mailQuota >= 0 ? 'Hạn mức email còn lại hôm nay: ' + state.mailQuota + '.' : '') +
+        (state.deadline ? ' Hạn đăng ký: ' + fmtTime(state.deadline) + '.' : ' Chưa đặt hạn đăng ký (đặt ở mục Đăng ký đề tài).');
+    }
+    $('rem-skip-recent').addEventListener('change', renderReminderBox);
+
+    function reminderPayload(preview) {
+      return {
+        action: 'sendReminders',
+        preview: preview,
+        subject: $('rem-subject').value.trim(),
+        message: $('rem-message').value.trim(),
+        studentIds: reminderTargets().map(function (x) { return x.studentId; })
+      };
+    }
+
+    function showMailPreview(subject, sub, html) {
+      $('mail-subject').textContent = subject;
+      $('mail-sub').textContent = sub;
+      $('mail-frame').srcdoc = html;
+      $('mail-overlay').classList.add('show');
+    }
+    $('mail-close').addEventListener('click', function () { $('mail-overlay').classList.remove('show'); });
+    $('mail-overlay').addEventListener('click', function (e) { if (e.target === $('mail-overlay')) $('mail-overlay').classList.remove('show'); });
+
+    $('rem-preview-btn').addEventListener('click', function () {
+      busy(api(reminderPayload(true)).then(function (data) {
+        if (!data.ok) { toast(data.message || 'Không tạo được bản xem trước.', 'error'); return; }
+        showMailPreview(data.subject, 'Mẫu gửi cho sinh viên đầu tiên trong danh sách. Sẽ gửi riêng cho ' + data.count + ' sinh viên, mỗi email ghi đúng tên người nhận.', data.html);
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    $('rem-send-btn').addEventListener('click', function () {
+      var targets = reminderTargets();
+      if (!targets.length) return;
+      var over = state.mailQuota >= 0 && targets.length > state.mailQuota;
+      confirmBox({
+        title: 'Gửi nhắc nhở',
+        message: 'Gửi email nhắc nhở riêng cho <b>' + targets.length + '</b> sinh viên chưa có nhóm' +
+          ($('roster-class-filter').value ? ' của lớp <code>' + esc($('roster-class-filter').value) + '</code>' : '') + '?' +
+          (over ? '<br><br>Hạn mức email hôm nay chỉ còn ' + state.mailQuota + ', máy chủ sẽ từ chối. Hãy lọc theo lớp để gửi ít hơn.' : ''),
+        okLabel: 'Gửi ' + targets.length + ' email'
+      }).then(function (y) {
+        if (!y) return;
+        var btn = $('rem-send-btn');
+        btn.disabled = true;
+        btn.textContent = 'Đang gửi...';
+        busy(api(reminderPayload(false)).then(function (data) {
+          if (!data.ok) { toast(data.message || 'Không gửi được nhắc nhở.', 'error'); return; }
+          toast('Đã gửi ' + data.sent + ' email nhắc nhở' + (data.failed ? ', lỗi ' + data.failed + ' email: ' + data.message : '') + '.', data.failed ? 'error' : 'ok');
+          return loadIs355();
+        }).catch(function (err) { toast(netError(err), 'error'); }).finally(function () {
+          btn.innerHTML = 'Gửi nhắc nhở <span>›</span>';
+          renderReminderBox();
+        }));
+      });
+    });
     ['roster-search', 'roster-class-filter', 'roster-status-filter'].forEach(function (id) {
       $(id).addEventListener('input', renderRoster);
     });
@@ -991,25 +1260,86 @@
 
     /* ---------- Groups ---------- */
 
+    function groupCodeOf(x) { return x.groupCode || String(x.submissionId).toUpperCase(); }
+    function lastReviewOf(x) { return x.reviews && x.reviews.length ? x.reviews[x.reviews.length - 1] : null; }
+    function statusBadge(st) {
+      var r = REVIEW[st] || REVIEW.pending;
+      return '<span class="badge ' + r.badge + '">' + r.label + '</span>';
+    }
+
+    function renderSettings() {
+      var chip = $('reg-state-chip');
+      var pastDeadline = state.deadline && Date.now() > new Date(state.deadline).getTime();
+      chip.textContent = state.regOpen ? 'Đang mở' : (pastDeadline && !state.manualClosed ? 'Đã hết hạn' : 'Đã khóa');
+      chip.className = 'chip ' + (state.regOpen ? 'chip-ok' : 'chip-warn');
+      $('toggle-reg-btn').textContent = state.manualClosed ? 'Mở lại đăng ký' : 'Khóa đăng ký';
+      $('toggle-reg-btn').className = 'outline-button btn-sm' + (state.manualClosed ? '' : ' btn-danger-outline');
+      if (document.activeElement !== $('deadline-input')) $('deadline-input').value = toLocalInput(state.deadline);
+      $('deadline-clear').disabled = !state.deadline;
+      $('deadline-note').textContent = state.deadline
+        ? (pastDeadline ? 'Đã quá hạn ' + fmtTime(state.deadline) + ', form tự khóa. Muốn mở lại, hãy lùi hạn hoặc bỏ hạn.'
+          : 'Form tự khóa lúc ' + fmtTime(state.deadline) + '. Hạn này cũng được ghi trong email nhắc nhở và hiện trên form.')
+        : 'Chưa đặt hạn: Form mở cho tới khi bạn bấm Khóa đăng ký.';
+    }
+
+    // ISO -> value for <input type="datetime-local"> in local time.
+    function toLocalInput(iso) {
+      if (!iso) return '';
+      var d = new Date(iso);
+      if (isNaN(d)) return '';
+      var pad = function (n) { return String(n).padStart(2, '0'); };
+      return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+    }
+
+    function renderStatusTabs() {
+      var g = state.groups;
+      var tabs = [['', 'Tất cả', g.length], ['waiting', 'Chờ xét duyệt', g.filter(function (x) { return x.reviewStatus === 'pending' || x.reviewStatus === 'resubmitted'; }).length]]
+        .concat(['revise', 'approved', 'rejected'].map(function (k) {
+          return [k, REVIEW[k].label, g.filter(function (x) { return x.reviewStatus === k; }).length];
+        }));
+      $('status-tabs').innerHTML = tabs.map(function (t) {
+        return '<button type="button" class="status-tab' + (state.statusFilter === t[0] ? ' active' : '') + '" data-status-tab="' + t[0] + '">' + t[1] + ' <b>' + t[2] + '</b></button>';
+      }).join('');
+    }
+    $('status-tabs').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-status-tab]');
+      if (!b) return;
+      state.statusFilter = b.dataset.statusTab;
+      renderGroups();
+    });
+
     function renderGroups() {
       var g = state.groups;
       $('nav-groups').textContent = g.length;
-      $('toggle-reg-btn').textContent = state.regOpen ? 'Khóa đăng ký' : 'Mở lại đăng ký';
-      $('toggle-reg-btn').className = 'outline-button' + (state.regOpen ? ' btn-danger-outline' : '');
+      renderSettings();
+      renderStatusTabs();
       var q = $('group-search').value.trim().toLowerCase();
       var tr = $('group-track-filter').value;
+      var sf = state.statusFilter;
       var list = g.filter(function (x) {
         if (tr && x.track !== tr) return false;
+        if (sf === 'waiting' && x.reviewStatus !== 'pending' && x.reviewStatus !== 'resubmitted') return false;
+        if (sf && sf !== 'waiting' && x.reviewStatus !== sf) return false;
         if (!q) return true;
         var hay = [x.groupName, x.groupCode, x.title].concat(x.members.map(function (m) { return m.studentId + ' ' + m.fullName; })).join(' ').toLowerCase();
         return hay.indexOf(q) !== -1;
       });
       $('groups-empty').hidden = list.length > 0;
       $('group-list').innerHTML = list.map(function (x) {
+        var last = lastReviewOf(x);
+        var lastHtml = last
+          ? '<div class="last-review"><b>Xét duyệt gần nhất (' + esc(fmtTime(last.timestamp)) + '):</b> ' + statusBadge(last.status) +
+            (last.emailedTo ? ' <span style="color:var(--muted)">· Đã gửi email</span>' : ' <span style="color:var(--warn-text)">· Chưa gửi email</span>') +
+            (last.comment ? '<div style="margin-top:6px">' + esc(last.comment) + '</div>' : '') +
+            (last.items.length ? '<ul>' + last.items.map(function (it) { return '<li>' + esc(it) + '</li>'; }).join('') + '</ul>' : '') +
+            (x.reviewStatus === 'resubmitted' ? '<div style="margin-top:6px;color:var(--primary-ink)"><b>Nhóm đã cập nhật đăng ký sau lần xét duyệt này.</b></div>' : '') +
+            '</div>'
+          : '';
         return '<article class="group-card">' +
-          '<div class="group-top"><div><h3>' + esc(x.groupName) + ' <span class="chip chip-muted">Mã ' + esc(x.groupCode || String(x.submissionId).toUpperCase()) + '</span>' + '</h3>' +
-          '<div class="meta">Gửi lúc ' + esc(fmtTime(x.submittedAt)) + '</div></div>' +
-          '<span class="chip chip-muted">' + x.members.length + ' thành viên</span></div>' +
+          '<div class="group-top"><div><h3>' + esc(x.groupName) + ' <span class="chip chip-muted">Mã ' + esc(groupCodeOf(x)) + '</span>' + '</h3>' +
+          '<div class="meta">Gửi lúc ' + esc(fmtTime(x.submittedAt)) + ' · ' + x.members.length + ' thành viên</div></div>' +
+          '<div class="group-actions">' + statusBadge(x.reviewStatus) +
+          '<button type="button" class="primary-button btn-sm" data-review="' + esc(groupCodeOf(x)) + '">' + (last ? 'Xét duyệt lại' : 'Xét duyệt') + ' <span>›</span></button></div></div>' +
           '<p class="group-title">' + esc(x.title) + '</p>' +
           '<div class="group-tags"><span class="chip chip-ok">' + esc(TRACKS[x.track] || x.track) + '</span><span class="chip chip-muted">' + esc(LEVELS[x.level] || x.level) + '</span></div>' +
           '<div class="table-wrap"><table><thead><tr><th>#</th><th>MSSV</th><th>Họ và tên</th><th>Lớp</th><th>Email</th></tr></thead><tbody>' +
@@ -1021,28 +1351,207 @@
           '<p class="group-desc" style="margin-top:10px"><b>Tiếng Việt:</b> ' + esc(x.description) + '</p>' +
           '<p class="group-desc"><b>English:</b> ' + esc(x.descriptionEn || '-') + '</p>' +
           '<ol>' + x.refs.map(function (r) { return '<li><b>' + esc(r.type) + ':</b> ' + esc(r.citation) + '</li>'; }).join('') + '</ol></details>' +
+          lastHtml +
           '</article>';
       }).join('');
     }
     ['group-search', 'group-track-filter'].forEach(function (id) { $(id).addEventListener('input', renderGroups); });
 
+    function applyRegState(data) {
+      state.regOpen = data.registrationOpen;
+      state.manualClosed = !!data.manualClosed;
+      state.deadline = data.deadline || '';
+      renderGroups();
+      renderOverview();
+      renderReminderBox();
+    }
+
     $('toggle-reg-btn').addEventListener('click', function () {
-      var open = !state.regOpen;
+      var open = state.manualClosed;
       confirmBox({
         title: open ? 'Mở lại đăng ký' : 'Khóa đăng ký',
-        message: open ? 'Sinh viên sẽ gửi được form đăng ký đề tài trở lại.' : 'Sinh viên sẽ không gửi hoặc cập nhật đăng ký được nữa cho tới khi mở lại.',
+        message: open ? 'Sinh viên sẽ gửi được form đăng ký đề tài trở lại (nếu chưa quá hạn đăng ký).' : 'Sinh viên sẽ không gửi hoặc cập nhật đăng ký được nữa cho tới khi mở lại.',
         okLabel: open ? 'Mở lại' : 'Khóa đăng ký',
         danger: !open
       }).then(function (y) {
         if (!y) return;
         busy(api({ action: 'setRegistrationOpen', open: open }).then(function (data) {
           if (!data.ok) { toast(data.message || 'Không đổi được trạng thái.', 'error'); return; }
-          state.regOpen = data.registrationOpen;
-          renderGroups();
-          renderOverview();
+          applyRegState(data);
           toast(open ? 'Đã mở lại đăng ký.' : 'Đã khóa đăng ký.');
         }).catch(function (err) { toast(netError(err), 'error'); }));
       });
+    });
+
+    function saveDeadline(value) {
+      busy(api({ action: 'setDeadline', deadline: value }).then(function (data) {
+        if (!data.ok) { toast(data.message || 'Không lưu được hạn đăng ký.', 'error'); return; }
+        applyRegState(data);
+        toast(value ? 'Đã đặt hạn đăng ký ' + fmtTime(data.deadline) + '.' : 'Đã bỏ hạn đăng ký.');
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    }
+    $('deadline-save').addEventListener('click', function () {
+      var v = $('deadline-input').value;
+      if (!v) { toast('Chọn ngày giờ hạn đăng ký trước.', 'error'); return; }
+      saveDeadline(new Date(v).toISOString()); // input is local (VN) time
+    });
+    $('deadline-clear').addEventListener('click', function () {
+      confirmBox({ title: 'Bỏ hạn đăng ký', message: 'Form sẽ mở cho tới khi bạn bấm Khóa đăng ký.', okLabel: 'Bỏ hạn' })
+        .then(function (y) { if (y) saveDeadline(''); });
+    });
+
+    /* ---------- Review modal ---------- */
+
+    var reviewing = null;
+
+    function rvStatus() {
+      var c = document.querySelector('input[name="rv-status"]:checked');
+      return c ? c.value : 'revise';
+    }
+
+    function rvItems() {
+      var items = [];
+      $('rv-presets').querySelectorAll('input:checked').forEach(function (i) { items.push(i.value); });
+      $('rv-custom').querySelectorAll('input').forEach(function (i) { if (i.value.trim()) items.push(i.value.trim()); });
+      return items;
+    }
+
+    function addCustomItem(value) {
+      var row = document.createElement('div');
+      row.className = 'rv-custom-row';
+      row.innerHTML = '<input type="text" maxlength="300" placeholder="Nội dung cần làm rõ / góp ý khác">' +
+        '<button type="button" aria-label="Xóa">✕</button>';
+      row.querySelector('input').value = value || '';
+      row.querySelector('button').addEventListener('click', function () { row.remove(); schedulePreview(); });
+      $('rv-custom').appendChild(row);
+      return row.querySelector('input');
+    }
+
+    function syncReviewLabels() {
+      var st = rvStatus();
+      $('rv-items-label').firstChild.textContent = st === 'approved' ? 'GÓP Ý THÊM KHI TRIỂN KHAI (TÙY CHỌN)' : 'CẦN LÀM RÕ / BỔ SUNG';
+      $('rv-deadline-field').hidden = st !== 'revise';
+      $('rv-submit').innerHTML = ($('rv-send').checked ? 'Lưu &amp; gửi email' : 'Chỉ lưu kết quả') + ' <span>›</span>';
+    }
+
+    function reviewPayload(preview) {
+      return {
+        action: 'reviewGroup',
+        preview: preview,
+        groupCode: reviewing ? groupCodeOf(reviewing) : '',
+        status: rvStatus(),
+        comment: $('rv-comment').value.trim(),
+        items: rvItems(),
+        deadline: rvStatus() === 'revise' ? $('rv-deadline').value : '',
+        sendEmail: $('rv-send').checked
+      };
+    }
+
+    var previewTimer, previewSeq = 0;
+    function schedulePreview() {
+      clearTimeout(previewTimer);
+      previewTimer = setTimeout(loadPreview, 700);
+    }
+    function loadPreview() {
+      if (!reviewing) return;
+      var seq = ++previewSeq;
+      var p = reviewPayload(true);
+      if (p.status !== 'approved' && !p.comment && !p.items.length) {
+        $('rv-subject').textContent = 'Nhập nhận xét hoặc chọn nội dung cần làm rõ để xem trước email';
+        $('rv-frame').srcdoc = '';
+        return;
+      }
+      $('rv-subject').textContent = 'Đang tạo bản xem trước...';
+      api(p).then(function (data) {
+        if (seq !== previewSeq) return; // a newer preview is on its way
+        if (!data.ok) { $('rv-subject').textContent = data.message || 'Không tạo được bản xem trước.'; return; }
+        $('rv-subject').textContent = data.subject;
+        $('rv-frame').srcdoc = data.html;
+      }).catch(function (err) { if (seq === previewSeq) $('rv-subject').textContent = netError(err); });
+    }
+
+    function openReview(code) {
+      reviewing = state.groups.filter(function (x) { return groupCodeOf(x) === code; })[0];
+      if (!reviewing) return;
+      var x = reviewing;
+      var last = lastReviewOf(x);
+      $('rv-code').textContent = groupCodeOf(x);
+      $('rv-title').textContent = x.groupName + ' · ' + x.title;
+      $('rv-sub').textContent = x.members.length + ' thành viên · ' + (TRACKS[x.track] || x.track) + ' · ' + (LEVELS[x.level] || x.level) + ' · Trạng thái: ' + (REVIEW[x.reviewStatus] || REVIEW.pending).label;
+
+      // Start from the last review so a re-review only needs small edits.
+      var st = last ? last.status : 'revise';
+      document.querySelectorAll('input[name="rv-status"]').forEach(function (r) { r.checked = r.value === st; });
+      $('rv-comment').value = last ? last.comment : '';
+      var lastItems = last ? last.items.slice() : [];
+      $('rv-presets').innerHTML = PRESET_ITEMS.map(function (t, i) {
+        var on = lastItems.indexOf(t) !== -1;
+        return '<label><input type="checkbox" value="' + esc(t) + '"' + (on ? ' checked' : '') + '><span>' + esc(t) + '</span></label>';
+      }).join('');
+      $('rv-custom').innerHTML = '';
+      lastItems.filter(function (t) { return PRESET_ITEMS.indexOf(t) === -1; }).forEach(function (t) { addCustomItem(t); });
+      $('rv-deadline').value = last && last.deadline ? last.deadline : '';
+      $('rv-send').checked = true;
+      $('rv-msg').textContent = '';
+      $('rv-history').innerHTML = x.reviews && x.reviews.length
+        ? '<details><summary>Lịch sử xét duyệt (' + x.reviews.length + ')</summary><ol>' +
+          x.reviews.slice().reverse().map(function (r) {
+            return '<li>' + esc(fmtTime(r.timestamp)) + ' · ' + statusBadge(r.status) + (r.emailedTo ? ' · đã gửi email' : '') +
+              (r.comment ? '<br>' + esc(r.comment) : '') + (r.items.length ? '<br>' + r.items.map(esc).join('<br>') : '') + '</li>';
+          }).join('') + '</ol></details>'
+        : '';
+      syncReviewLabels();
+      $('review-overlay').classList.add('show');
+      loadPreview();
+    }
+
+    function closeReview() {
+      $('review-overlay').classList.remove('show');
+      reviewing = null;
+    }
+
+    $('group-list').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-review]');
+      if (b) openReview(b.dataset.review);
+    });
+    $('rv-close').addEventListener('click', closeReview);
+    $('rv-cancel').addEventListener('click', closeReview);
+    $('rv-preview-btn').addEventListener('click', loadPreview);
+    $('rv-add-item').addEventListener('click', function () { addCustomItem('').focus(); });
+    $('rv-template').addEventListener('click', function () {
+      var t = COMMENT_TEMPLATES[rvStatus()];
+      var cur = $('rv-comment').value.trim();
+      $('rv-comment').value = cur ? cur + '\n' + t : t;
+      schedulePreview();
+    });
+    document.querySelectorAll('input[name="rv-status"]').forEach(function (r) {
+      r.addEventListener('change', function () { syncReviewLabels(); schedulePreview(); });
+    });
+    $('rv-send').addEventListener('change', syncReviewLabels);
+    ['rv-comment', 'rv-deadline'].forEach(function (id) { $(id).addEventListener('input', schedulePreview); });
+    $('rv-presets').addEventListener('change', schedulePreview);
+    $('rv-custom').addEventListener('input', schedulePreview);
+
+    $('rv-submit').addEventListener('click', function () {
+      if (!reviewing) return;
+      var p = reviewPayload(false);
+      if (p.status !== 'approved' && !p.comment && !p.items.length) {
+        $('rv-msg').textContent = 'Cần nhập nhận xét hoặc chọn ít nhất một nội dung cần làm rõ.';
+        $('rv-msg').className = 'msg error';
+        return;
+      }
+      var name = reviewing.groupName;
+      var btn = $('rv-submit');
+      btn.disabled = true;
+      btn.textContent = 'Đang lưu...';
+      busy(api(p).then(function (data) {
+        if (!data.ok) { $('rv-msg').textContent = data.message || 'Không lưu được.'; $('rv-msg').className = 'msg error'; return; }
+        closeReview();
+        if (p.sendEmail && !data.emailSent) toast('Đã lưu kết quả nhưng chưa gửi được email: ' + (data.message || ''), 'error');
+        else toast((p.sendEmail ? 'Đã gửi kết quả xét duyệt cho nhóm ' : 'Đã lưu kết quả xét duyệt nhóm ') + name + '.');
+        return loadIs355();
+      }).catch(function (err) { $('rv-msg').textContent = netError(err); $('rv-msg').className = 'msg error'; })
+        .finally(function () { btn.disabled = false; syncReviewLabels(); }));
     });
 
     /* ---------- Export (CSV opens directly in Excel) ---------- */
@@ -1051,7 +1560,7 @@
       if (!state.groups.length) { toast('Chưa có nhóm nào để xuất.', 'error'); return; }
       var head = ['Group Code', 'Group Name', 'No.', 'Student ID', 'Full Name', 'Class', 'Email', 'Role', 'Topic Track', 'Level', 'Project Title', 'Short Description (VI)', 'Short Description (EN)'];
       for (var i = 1; i <= 5; i++) head.push('Ref ' + i + ' - Type', 'Ref ' + i + ' - Citation');
-      head.push('Submitted At');
+      head.push('Submitted At', 'Review Status', 'Review Comment', 'Review Items');
       var lines = [head];
       state.groups.forEach(function (g) {
         g.members.forEach(function (m, n) {
@@ -1062,7 +1571,8 @@
             var ref = first ? g.refs[r] : null;
             row.push(ref ? ref.type : '', ref ? ref.citation : '');
           }
-          row.push(fmtTime(g.submittedAt));
+          var lr = first ? lastReviewOf(g) : null;
+          row.push(fmtTime(g.submittedAt), first ? (REVIEW[g.reviewStatus] || REVIEW.pending).label : '', lr ? lr.comment : '', lr ? lr.items.join(' | ') : '');
           lines.push(row);
         });
       });

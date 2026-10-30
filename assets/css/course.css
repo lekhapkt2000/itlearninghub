@@ -604,3 +604,8 @@
 .week-meta .tl-closed{background:var(--warn-bg)!important;color:var(--warn-text)!important;border-color:var(--warn-border)!important}
 @media(max-width:860px){.tl-summary{grid-template-columns:repeat(3,minmax(0,1fr))}.tl-toolbar{grid-template-columns:1fr 1fr}.tl-toolbar input{grid-column:1/-1}}
 @media(max-width:480px){.tl-summary{grid-template-columns:1fr 1fr}.tl-card{padding:18px 16px}}
+.tl-review{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;white-space:nowrap;border:1px solid transparent}
+.tl-review-pending,.tl-review-resubmitted{background:var(--bg);border-color:var(--line);color:var(--muted)}
+.tl-review-approved{background:var(--ok-bg);border-color:var(--ok-border);color:var(--ok-text)}
+.tl-review-revise{background:var(--warn-bg);border-color:var(--warn-border);color:var(--warn-text)}
+.tl-review-rejected{background:var(--danger-bg);border-color:var(--danger-border);color:var(--danger-text)}

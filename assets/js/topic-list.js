@@ -17,6 +17,7 @@
     updated: function (t) { return 'Updated ' + t; },
     group: 'Code',
     leader: 'Leader',
+    review: { pending: 'Pending review', resubmitted: 'Re-review pending', revise: 'Needs revision', approved: 'Approved', rejected: 'Not approved' },
     descVi: 'Vietnamese:',
     descEn: 'English:',
     members: function (n) { return n + ' members'; },
@@ -37,6 +38,7 @@
     updated: function (t) { return 'Cập nhật ' + t; },
     group: 'Mã',
     leader: 'Trưởng nhóm',
+    review: { pending: 'Chờ duyệt', resubmitted: 'Chờ duyệt lại', revise: 'Cần chỉnh sửa', approved: 'Đã duyệt', rejected: 'Không duyệt' },
     descVi: 'Tiếng Việt:',
     descEn: 'Tiếng Anh:',
     members: function (n) { return n + ' thành viên'; },
@@ -169,6 +171,7 @@
         '<div class="tl-card-group"><b>' + esc(g.groupName) + '</b>' + (g.groupCode ? '<span>' + T.group + ' <code>' + esc(g.groupCode) + '</code></span>' : '') + '</div>' +
         '<span class="tl-tag tl-track-' + esc(g.track) + '">' + esc(T.tracks[g.track] || g.track) + '</span>' +
         '<span class="tl-tag tl-level">' + esc(T.levels[g.level] || g.level) + '</span>' +
+        '<span class="tl-review tl-review-' + esc(g.reviewStatus || 'pending') + '">' + esc(T.review[g.reviewStatus] || T.review.pending) + '</span>' +
         '</div>' +
         '<h3 class="tl-title">' + esc(g.title) + '</h3>' +
         '<ul class="tl-members" aria-label="' + T.members(g.members.length) + '">' + members + '</ul>' +

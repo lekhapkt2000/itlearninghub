@@ -62,7 +62,9 @@
     okUpdated: 'Registration updated. The new version replaces your earlier submission.',
     mailOk: 'A confirmation email has been sent to every member.',
     mailFail: 'The registration is saved, but the confirmation email could not be sent. Take a screenshot of this page to keep.',
-    chars: 'characters'
+    chars: 'characters',
+    deadline: function (t) { return 'Registration deadline: <b>' + t + '</b>. The form closes automatically after this time.'; },
+    closed: 'Registration is closed.'
   } : {
     leader: 'Trưởng nhóm',
     groupCode: 'Mã nhóm',
@@ -106,7 +108,9 @@
     okUpdated: 'Đã cập nhật đăng ký. Bản mới thay thế bản nhóm đã gửi trước đó.',
     mailOk: 'Email xác nhận đã được gửi tới tất cả thành viên trong nhóm.',
     mailFail: 'Đăng ký đã được lưu nhưng chưa gửi được email xác nhận. Hãy chụp lại màn hình này để lưu.',
-    chars: 'ký tự'
+    chars: 'ký tự',
+    deadline: function (t) { return 'Hạn đăng ký đề tài: <b>' + t + '</b>. Sau thời điểm này form sẽ tự khóa.'; },
+    closed: 'Đăng ký đề tài đã đóng.'
   };
 
   var membersEl = document.getElementById('reg-members');
@@ -139,6 +143,31 @@
       body: JSON.stringify(data),
       redirect: 'follow'
     }).then(function (res) { return res.json(); });
+  }
+
+  /* ---------- Deadline / closed state ---------- */
+
+  function fmtDeadline(iso) {
+    var d = new Date(iso);
+    return isNaN(d) ? '' : d.toLocaleString(EN ? 'en-GB' : 'vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+  }
+
+  function loadFormInfo() {
+    post({ action: 'formInfo' }).then(function (info) {
+      if (!info || !info.ok) return;
+      var box = document.createElement('div');
+      if (!info.open) {
+        box.className = 'inline-warning';
+        box.innerHTML = '<b>' + T.closed + '</b> ' + esc(info.message || '');
+        form.querySelectorAll('button, input, select, textarea').forEach(function (el) { el.disabled = true; });
+      } else if (info.deadline) {
+        box.className = 'inline-warning';
+        box.innerHTML = T.deadline(esc(fmtDeadline(info.deadline)));
+      } else {
+        return;
+      }
+      form.parentNode.insertBefore(box, form);
+    }).catch(function () { /* the server re-checks on submit anyway */ });
   }
 
   /* ---------- Roster lookup (MSSV -> name + class) ---------- */
@@ -513,6 +542,7 @@
   });
 
   loadDraft();
+  loadFormInfo();
   refreshOtpEmails();
   updateCount();
 })();

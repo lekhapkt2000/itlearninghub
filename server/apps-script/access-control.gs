@@ -40,6 +40,12 @@
  *     /exec URL stays the same. Close registration with Script Property
  *     IS355_REG_CLOSED = 1. Import each class roster (MSSV + họ tên) at
  *     admin/index.html first - the form only accepts listed MSSVs.
+ * 12. Topic review (dashboard > Đăng ký đề tài > Xét duyệt) writes to the
+ *     IS355_XET_DUYET tab and emails the group; reminders to students
+ *     without a group and every dashboard email are logged in
+ *     IS355_EMAIL_LOG. The registration deadline lives in Script Property
+ *     IS355_REG_DEADLINE (set it from the dashboard). Run setup() after
+ *     updating so the new tabs exist.
  *
  * Gotcha this file avoids: SpreadsheetApp.getActiveSpreadsheet() returns
  * null when a Web App's doGet/doPost actually runs (no active UI in
@@ -75,6 +81,14 @@ var REG_HEADERS = (function () {
 // form fills names/classes from here and only accepts MSSVs listed here.
 var ROSTER_SHEET = 'IS355_DANH_SACH_LOP';
 var ROSTER_HEADERS = ['student_id', 'full_name', 'class', 'imported_at'];
+// Teacher's review of each topic: one row per review, newest last.
+var REVIEW_SHEET = 'IS355_XET_DUYET';
+var REVIEW_HEADERS = ['timestamp', 'group_code', 'group_name', 'project_title', 'status', 'comment',
+  'clarify_items', 'revise_deadline', 'emailed_to'];
+var REVIEW_STATUSES = { approved: 'Đã duyệt', revise: 'Cần chỉnh sửa', rejected: 'Không duyệt' };
+// Every email the dashboard sends (reviews, reminders), for the record.
+var MAIL_LOG_SHEET = 'IS355_EMAIL_LOG';
+var MAIL_LOG_HEADERS = ['timestamp', 'type', 'group_code', 'student_ids', 'recipients', 'subject', 'result'];
 // Student emails are always <MSSV>@gm.uit.edu.vn (form fills it, server enforces it).
 var STUDENT_EMAIL_DOMAIN = 'gm.uit.edu.vn';
 
@@ -293,6 +307,8 @@ function setup() {
   ensureSheetWithHeaders(ss, LOG_SHEET, LOG_HEADERS);
   ensureSheetWithHeaders(ss, REG_SHEET, REG_HEADERS);
   ensureSheetWithHeaders(ss, ROSTER_SHEET, ROSTER_HEADERS);
+  ensureSheetWithHeaders(ss, REVIEW_SHEET, REVIEW_HEADERS);
+  ensureSheetWithHeaders(ss, MAIL_LOG_SHEET, MAIL_LOG_HEADERS);
   Logger.log('Setup complete.');
 }
 
@@ -375,6 +391,14 @@ function doPost(e) {
       result = handleRosterAdmin(body);
     } else if (body.action === 'setRegistrationOpen') {
       result = handleSetRegistrationOpen(body);
+    } else if (body.action === 'setDeadline') {
+      result = handleSetDeadline(body);
+    } else if (body.action === 'formInfo') {
+      result = handleFormInfo();
+    } else if (body.action === 'reviewGroup') {
+      result = handleReviewGroup(body);
+    } else if (body.action === 'sendReminders') {
+      result = handleSendReminders(body);
     } else {
       result = { ok: false, message: 'Unknown action' };
     }
@@ -467,20 +491,80 @@ function handleRosterAdmin(body) {
 
   var roster = readRoster();
   var data = readGroups();
+  var lastReminded = readLastReminded();
   var students = Object.keys(roster).map(function (sid) {
-    return { studentId: sid, fullName: roster[sid].fullName, 'class': roster[sid]['class'], group: data.groupOf[sid] || '' };
+    return {
+      studentId: sid, fullName: roster[sid].fullName, 'class': roster[sid]['class'],
+      group: data.groupOf[sid] || '', lastReminded: lastReminded[sid] || ''
+    };
   });
+  var state = registrationState();
+  var quota = -1;
+  try { quota = MailApp.getRemainingDailyQuota(); } catch (e) { /* no mail permission yet */ }
   return {
     ok: true,
     students: students,
     groups: data.groups,
-    registrationOpen: isRegistrationOpen()
+    registrationOpen: state.open,
+    manualClosed: state.manualClosed,
+    deadline: state.deadline,
+    mailQuota: quota
   };
 }
 
+/**
+ * Registration is open unless the teacher closed it by hand
+ * (IS355_REG_CLOSED) or the deadline (IS355_REG_DEADLINE, ISO time) passed.
+ */
+function registrationState() {
+  var props = PropertiesService.getScriptProperties();
+  var closed = props.getProperty('IS355_REG_CLOSED');
+  var manualClosed = !!(closed && closed !== '0');
+  var deadline = props.getProperty('IS355_REG_DEADLINE') || '';
+  var pastDeadline = !!deadline && Date.now() > new Date(deadline).getTime();
+  return { open: !manualClosed && !pastDeadline, manualClosed: manualClosed, deadline: deadline, pastDeadline: pastDeadline };
+}
+
 function isRegistrationOpen() {
-  var closed = PropertiesService.getScriptProperties().getProperty('IS355_REG_CLOSED');
-  return !(closed && closed !== '0');
+  return registrationState().open;
+}
+
+function closedMessage() {
+  var st = registrationState();
+  if (st.pastDeadline) {
+    return 'Đã hết hạn đăng ký đề tài (' + formatVnTime(st.deadline) + '). Vui lòng liên hệ giảng viên.';
+  }
+  return 'Đăng ký đề tài đang tạm khóa. Vui lòng liên hệ giảng viên.';
+}
+
+function formatVnTime(iso) {
+  var d = iso instanceof Date ? iso : new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  return Utilities.formatDate(d, Session.getScriptTimeZone() || 'Asia/Ho_Chi_Minh', 'HH:mm, dd/MM/yyyy');
+}
+
+/** Public: what the registration form needs to know before showing itself. */
+function handleFormInfo() {
+  var st = registrationState();
+  return { ok: true, open: st.open, deadline: st.deadline, message: st.open ? '' : closedMessage() };
+}
+
+/** Admin: set (ISO time) or clear ('') the registration deadline. */
+function handleSetDeadline(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var props = PropertiesService.getScriptProperties();
+  var value = String(body.deadline || '').trim();
+  if (!value) {
+    props.deleteProperty('IS355_REG_DEADLINE');
+  } else {
+    var d = new Date(value);
+    if (isNaN(d.getTime())) return { ok: false, message: 'Hạn đăng ký không hợp lệ.' };
+    props.setProperty('IS355_REG_DEADLINE', d.toISOString());
+  }
+  CacheService.getScriptCache().remove('public_topics');
+  var st = registrationState();
+  return { ok: true, deadline: st.deadline, registrationOpen: st.open, manualClosed: st.manualClosed };
 }
 
 /**
@@ -505,12 +589,15 @@ function handlePublicTopics() {
       description: g.description || '',
       descriptionEn: g.descriptionEn || '',
       refs: g.refs,
+      // Status only - the teacher's comments stay private to the group.
+      reviewStatus: g.reviewStatus,
       members: g.members.map(function (m) {
         return { fullName: m.fullName, 'class': m['class'], leader: m.role === 'Leader' };
       })
     };
   });
-  var result = { ok: true, groups: groups, registrationOpen: isRegistrationOpen(), updatedAt: new Date().toISOString() };
+  var st = registrationState();
+  var result = { ok: true, groups: groups, registrationOpen: st.open, deadline: st.deadline, updatedAt: new Date().toISOString() };
   try { cache.put('public_topics', JSON.stringify(result), 60); } catch (e) { /* >100KB: skip caching */ }
   return result;
 }
@@ -556,7 +643,20 @@ function readGroups() {
       }
     }
   }
-  return { groups: order.map(function (id) { return groupsById[id]; }), groupOf: groupOf };
+  var groups = order.map(function (id) { return groupsById[id]; });
+
+  // Attach review state. A group that resubmitted after its latest review
+  // goes back to "resubmitted" so the teacher knows to look again.
+  var reviews = readReviews();
+  groups.forEach(function (g) {
+    var list = reviews[g.groupCode] || [];
+    var last = list.length ? list[list.length - 1] : null;
+    g.reviews = list;
+    if (!last) g.reviewStatus = 'pending';
+    else if (new Date(last.timestamp).getTime() < new Date(g.submittedAt).getTime()) g.reviewStatus = 'resubmitted';
+    else g.reviewStatus = last.status;
+  });
+  return { groups: groups, groupOf: groupOf };
 }
 
 /** Admin: open/close topic registration (same flag as the Script Property). */
@@ -566,13 +666,14 @@ function handleSetRegistrationOpen(body) {
   var props = PropertiesService.getScriptProperties();
   if (body.open) props.deleteProperty('IS355_REG_CLOSED');
   else props.setProperty('IS355_REG_CLOSED', '1');
-  return { ok: true, registrationOpen: !!body.open };
+  CacheService.getScriptCache().remove('public_topics');
+  var st = registrationState();
+  return { ok: true, registrationOpen: st.open, manualClosed: st.manualClosed, deadline: st.deadline };
 }
 
 function handleRegisterProject(body) {
-  var closed = PropertiesService.getScriptProperties().getProperty('IS355_REG_CLOSED');
-  if (closed && closed !== '0') {
-    return { ok: false, code: 'closed', message: 'Đã hết hạn đăng ký đề tài. Vui lòng liên hệ giảng viên.' };
+  if (!isRegistrationOpen()) {
+    return { ok: false, code: 'closed', message: closedMessage() };
   }
 
   var groupName = regClean(body.groupName, 80);
@@ -746,9 +847,8 @@ function otpCacheKey(prefix, email) {
 
 /** Public: send a 6-digit code to the email of a student on the roster. */
 function handleRequestOtp(body) {
-  var closed = PropertiesService.getScriptProperties().getProperty('IS355_REG_CLOSED');
-  if (closed && closed !== '0') {
-    return { ok: false, code: 'closed', message: 'Đã hết hạn đăng ký đề tài. Vui lòng liên hệ giảng viên.' };
+  if (!isRegistrationOpen()) {
+    return { ok: false, code: 'closed', message: closedMessage() };
   }
   var sid = regClean(body.studentId, 12);
   var roster = readRoster();
@@ -844,7 +944,7 @@ function mailErrorMessage(err) {
   if (/quota|limit|too many|service invoked too many/i.test(msg)) {
     return 'Hệ thống đã hết hạn mức gửi email hôm nay. Vui lòng thử lại vào ngày mai hoặc liên hệ giảng viên.';
   }
-  return 'Không gửi được email OTP: ' + msg;
+  return 'Không gửi được email: ' + msg;
 }
 
 /**
@@ -905,7 +1005,7 @@ function sendConfirmationEmail(g) {
     '<p style="margin:0 0 14px">Chào nhóm <b>' + htmlEsc(g.groupName) + '</b>,</p>' +
     '<p style="margin:0 0 18px">' + (g.updated
       ? 'Bản đăng ký đề tài của nhóm đã được <b>cập nhật</b>. Thông tin dưới đây thay thế hoàn toàn bản trước.'
-      : 'Hệ thống đã ghi nhận đăng ký đề tài đồ án cuối kỳ của nhóm. Giảng viên sẽ xem xét và phản hồi trong thời gian sớm nhất.') + '</p>' +
+      : 'Hệ thống đã ghi nhận đăng ký đề tài đồ án cuối kỳ của nhóm. Giảng viên sẽ xem xét và gửi kết quả xét duyệt (đồng ý, cần chỉnh sửa hoặc góp ý) tới email của cả nhóm.') + '</p>' +
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:10px;border-collapse:separate;overflow:hidden;margin-bottom:22px">' +
     row('Mã nhóm', '<span style="font-family:Consolas,Menlo,monospace;font-weight:700">' + htmlEsc(g.submissionId.toUpperCase()) + '</span>') +
     row('Thời gian', htmlEsc(when)) +
@@ -940,4 +1040,290 @@ function sendConfirmationEmail(g) {
     htmlBody: emailShell('Đề tài: ' + g.title, g.updated ? 'Đã cập nhật đăng ký đề tài' : 'Xác nhận đăng ký đề tài', inner),
     body: 'Nhóm ' + g.groupName + ' đã ' + (g.updated ? 'cập nhật' : 'đăng ký') + ' đề tài: ' + g.title + '. Mã nhóm: ' + g.submissionId.toUpperCase() + '.'
   });
+}
+
+/* ------------------------------------------------------------------ */
+/* IS355 topic review + reminders                                      */
+/* ------------------------------------------------------------------ */
+
+var SITE_URL = 'https://itlearninghub.io.vn/courses/is355/';
+var REVIEW_MAX_ITEMS = 15;
+var REMINDER_MAX_PER_RUN = 150;
+
+/** { GROUPCODE: [review, ...] } oldest first. */
+function readReviews() {
+  var rows = getOrCreateSheet(REVIEW_SHEET, REVIEW_HEADERS).getDataRange().getValues();
+  var h = rows[0];
+  var col = function (name) { return h.indexOf(name); };
+  var map = {};
+  for (var i = 1; i < rows.length; i++) {
+    var r = rows[i];
+    var code = String(r[col('group_code')]).toUpperCase();
+    if (!code) continue;
+    var ts = r[col('timestamp')];
+    var dl = r[col('revise_deadline')];
+    (map[code] = map[code] || []).push({
+      timestamp: ts instanceof Date ? ts.toISOString() : String(ts),
+      status: String(r[col('status')]),
+      comment: String(r[col('comment')] || ''),
+      items: String(r[col('clarify_items')] || '').split('\n').filter(function (x) { return x.trim(); }),
+      deadline: dl instanceof Date ? Utilities.formatDate(dl, Session.getScriptTimeZone() || 'Asia/Ho_Chi_Minh', 'yyyy-MM-dd') : String(dl || ''),
+      emailedTo: String(r[col('emailed_to')] || '')
+    });
+  }
+  Object.keys(map).forEach(function (k) {
+    map[k].sort(function (a, b) { return String(a.timestamp).localeCompare(String(b.timestamp)); });
+  });
+  return map;
+}
+
+/** { MSSV: ISO time of the last reminder sent to that student }. */
+function readLastReminded() {
+  var rows = getOrCreateSheet(MAIL_LOG_SHEET, MAIL_LOG_HEADERS).getDataRange().getValues();
+  var h = rows[0];
+  var iType = h.indexOf('type'), iIds = h.indexOf('student_ids'), iTs = h.indexOf('timestamp'), iRes = h.indexOf('result');
+  var last = {};
+  for (var i = 1; i < rows.length; i++) {
+    if (String(rows[i][iType]) !== 'reminder' || String(rows[i][iRes]) !== 'sent') continue;
+    var ts = rows[i][iTs];
+    var iso = ts instanceof Date ? ts.toISOString() : String(ts);
+    String(rows[i][iIds]).split(',').forEach(function (sid) {
+      sid = sid.trim();
+      if (sid && (!last[sid] || last[sid] < iso)) last[sid] = iso;
+    });
+  }
+  return last;
+}
+
+function logMail(type, groupCode, studentIds, recipients, subject, result) {
+  getOrCreateSheet(MAIL_LOG_SHEET, MAIL_LOG_HEADERS)
+    .appendRow([new Date(), type, groupCode || '', studentIds.join(','), recipients.join(','), subject, result]);
+}
+
+function cleanItems(list) {
+  return (Array.isArray(list) ? list : [])
+    .map(function (x) { return String(x || '').replace(/\s+/g, ' ').trim().slice(0, 300); })
+    .filter(function (x) { return x; })
+    .slice(0, REVIEW_MAX_ITEMS);
+}
+
+/**
+ * Admin: review a group's topic. With preview:true only builds the email
+ * (subject + html) so the dashboard can show it; otherwise saves the
+ * review and, unless sendEmail is false, emails the whole group (CC teacher).
+ */
+function handleReviewGroup(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+
+  var code = regClean(body.groupCode, 12).toUpperCase();
+  var status = String(body.status || '');
+  if (!REVIEW_STATUSES[status]) return { ok: false, message: 'Kết quả xét duyệt không hợp lệ.' };
+  var comment = String(body.comment || '').trim().slice(0, 3000);
+  var items = cleanItems(body.items);
+  var deadline = /^\d{4}-\d{2}-\d{2}$/.test(String(body.deadline || '')) ? String(body.deadline) : '';
+  if (status !== 'approved' && !comment && !items.length) {
+    return { ok: false, message: 'Cần nhập nhận xét hoặc ít nhất một nội dung cần làm rõ.' };
+  }
+
+  var group = null;
+  readGroups().groups.forEach(function (g) { if (g.groupCode === code) group = g; });
+  if (!group) return { ok: false, message: 'Không tìm thấy nhóm ' + code + '.' };
+
+  var review = { status: status, comment: comment, items: items, deadline: deadline };
+  var mail = buildReviewEmail(group, review);
+  var recipients = group.members.map(function (m) { return m.email; });
+  if (body.preview) {
+    return { ok: true, subject: mail.subject, html: mail.html, recipients: recipients.concat(REG_CC_EMAIL) };
+  }
+
+  var sendEmail = body.sendEmail !== false;
+  var emailSent = false, mailError = '';
+  if (sendEmail) {
+    try {
+      MailApp.sendEmail({
+        to: recipients[0],
+        cc: recipients.slice(1).concat(REG_CC_EMAIL).join(','),
+        subject: mail.subject,
+        name: MAIL_SENDER_NAME,
+        htmlBody: mail.html,
+        body: mail.text
+      });
+      emailSent = true;
+    } catch (err) {
+      mailError = mailErrorMessage(err);
+    }
+    logMail('review', code, group.members.map(function (m) { return m.studentId; }), recipients, mail.subject, emailSent ? 'sent' : 'failed: ' + mailError);
+  }
+
+  // Save the review even if the email failed - the teacher can resend.
+  getOrCreateSheet(REVIEW_SHEET, REVIEW_HEADERS).appendRow([
+    new Date(), code, group.groupName, group.title, status, comment, items.join('\n'), deadline,
+    emailSent ? recipients.join(',') : ''
+  ]);
+  CacheService.getScriptCache().remove('public_topics');
+
+  return { ok: true, emailSent: emailSent, message: mailError };
+}
+
+/**
+ * Admin: email students who still have no group. The server re-checks
+ * who is ungrouped, so a stale dashboard can't remind someone who just
+ * registered. preview:true returns the email for the first student.
+ */
+function handleSendReminders(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+
+  var message = String(body.message || '').trim().slice(0, 3000);
+  var subject = regClean(body.subject, 150) || '[IS355] Nhắc nhở: Bạn chưa đăng ký nhóm đồ án cuối kỳ';
+  var roster = readRoster();
+  var groupOf = readGroups().groupOf;
+  var wanted = Array.isArray(body.studentIds) ? body.studentIds.map(function (x) { return String(x).trim(); }) : [];
+  var targets = wanted.filter(function (sid, i) {
+    return roster[sid] && !groupOf[sid] && wanted.indexOf(sid) === i;
+  });
+  if (!targets.length) return { ok: false, message: 'Không có sinh viên nào cần nhắc (tất cả đã có nhóm hoặc không có trong danh sách lớp).' };
+  if (targets.length > REMINDER_MAX_PER_RUN) return { ok: false, message: 'Mỗi lần gửi tối đa ' + REMINDER_MAX_PER_RUN + ' sinh viên. Hãy lọc theo lớp rồi gửi từng đợt.' };
+
+  var deadline = registrationState().deadline;
+  if (body.preview) {
+    var sample = targets[0];
+    var m = buildReminderEmail({ studentId: sample, fullName: roster[sample].fullName }, message, deadline, subject);
+    return { ok: true, subject: m.subject, html: m.html, count: targets.length, skipped: wanted.length - targets.length };
+  }
+
+  var quota = MailApp.getRemainingDailyQuota();
+  if (targets.length > quota) {
+    return { ok: false, message: 'Hạn mức email hôm nay chỉ còn ' + quota + ', không đủ gửi cho ' + targets.length + ' sinh viên. Hãy gửi ít hơn hoặc đợi ngày mai.' };
+  }
+
+  var sent = [], failed = [], lastError = '';
+  targets.forEach(function (sid) {
+    var mail = buildReminderEmail({ studentId: sid, fullName: roster[sid].fullName }, message, deadline, subject);
+    try {
+      MailApp.sendEmail({ to: studentEmail(sid), subject: mail.subject, name: MAIL_SENDER_NAME, htmlBody: mail.html, body: mail.text });
+      sent.push(sid);
+    } catch (err) {
+      failed.push(sid);
+      lastError = mailErrorMessage(err);
+    }
+  });
+  if (sent.length) logMail('reminder', '', sent, sent.map(studentEmail), subject, 'sent');
+  if (failed.length) logMail('reminder', '', failed, failed.map(studentEmail), subject, 'failed: ' + lastError);
+
+  return {
+    ok: true, sent: sent.length, failed: failed.length,
+    skipped: wanted.length - targets.length, message: lastError,
+    sentAt: new Date().toISOString(), sentIds: sent
+  };
+}
+
+/* ---------- Review / reminder emails ---------- */
+
+var REVIEW_THEME = {
+  approved: { color: '#15803d', bg: '#f0fdf4', border: '#86efac', label: 'ĐÃ DUYỆT', icon: '&#10003;' },
+  revise: { color: '#b45309', bg: '#fffbeb', border: '#fcd34d', label: 'CẦN CHỈNH SỬA', icon: '&#9998;' },
+  rejected: { color: '#b91c1c', bg: '#fef2f2', border: '#fca5a5', label: 'KHÔNG DUYỆT', icon: '&#10007;' }
+};
+
+function sectionTitle(text) {
+  return '<div style="font-size:12px;font-weight:700;letter-spacing:.08em;color:#1d4ed8;margin:0 0 8px">' + text + '</div>';
+}
+
+function emailButton(href, label, color) {
+  return '<p style="margin:24px 0 0;text-align:center"><a href="' + htmlEsc(href) + '" style="display:inline-block;padding:12px 22px;border-radius:8px;background:' +
+    (color || '#2563eb') + ';color:#ffffff;text-decoration:none;font-weight:700;font-size:13px">' + label + '</a></p>';
+}
+
+function formatVnDate(ymd) {
+  var p = String(ymd || '').split('-');
+  return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : '';
+}
+
+function buildReviewEmail(g, r) {
+  var theme = REVIEW_THEME[r.status];
+  var intro = {
+    approved: 'Giảng viên đã xem xét và <b>đồng ý</b> đề tài của nhóm. Nhóm có thể bắt đầu triển khai theo kế hoạch đã đăng ký.',
+    revise: 'Giảng viên đã xem xét đề tài của nhóm. Đề tài <b>cần chỉnh sửa hoặc làm rõ thêm</b> trước khi được duyệt. Nhóm vui lòng xem góp ý bên dưới và cập nhật lại bản đăng ký.',
+    rejected: 'Giảng viên đã xem xét đề tài của nhóm. Đề tài <b>chưa phù hợp</b> với yêu cầu đồ án. Nhóm vui lòng xem nhận xét bên dưới, chọn hướng khác và đăng ký lại.'
+  }[r.status];
+  var row = function (label, value) {
+    return '<tr><td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:13px;width:130px;vertical-align:top">' + label + '</td>' +
+      '<td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#0f172a">' + value + '</td></tr>';
+  };
+
+  var html =
+    '<p style="margin:0 0 14px">Chào nhóm <b>' + htmlEsc(g.groupName) + '</b>,</p>' +
+    '<p style="margin:0 0 18px">' + intro + '</p>' +
+    '<div style="margin:0 0 22px;padding:14px 18px;border-radius:10px;background:' + theme.bg + ';border:1px solid ' + theme.border + '">' +
+    '<span style="display:inline-block;margin-right:8px;font-size:18px;color:' + theme.color + '">' + theme.icon + '</span>' +
+    '<span style="font-size:15px;font-weight:800;letter-spacing:.06em;color:' + theme.color + '">' + theme.label + '</span>' +
+    (r.status === 'revise' && r.deadline ? '<div style="margin-top:6px;font-size:13px;color:' + theme.color + '">Hạn cập nhật: <b>' + formatVnDate(r.deadline) + '</b></div>' : '') +
+    '</div>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:10px;border-collapse:separate;overflow:hidden;margin-bottom:22px">' +
+    row('Mã nhóm', '<span style="font-family:Consolas,Menlo,monospace;font-weight:700">' + htmlEsc(g.groupCode) + '</span>') +
+    row('Tên đề tài', '<b>' + htmlEsc(g.title) + '</b>') +
+    row('Nhóm chủ đề', htmlEsc(TRACK_LABELS[g.track] || g.track)) +
+    row('Mức độ', htmlEsc(LEVEL_LABELS[g.level] || g.level)) +
+    row('Thành viên', g.members.map(function (m) { return htmlEsc(m.fullName); }).join(', ')) +
+    '</table>';
+
+  if (r.comment) {
+    html += sectionTitle('NHẬN XÉT CỦA GIẢNG VIÊN') +
+      '<div style="margin:0 0 22px;padding:14px 16px;border-left:3px solid #2563eb;background:#f8fafc;border-radius:0 8px 8px 0;white-space:pre-line;font-size:14px;color:#0f172a">' +
+      htmlEsc(r.comment) + '</div>';
+  }
+  if (r.items.length) {
+    html += sectionTitle(r.status === 'approved' ? 'GÓP Ý THÊM KHI TRIỂN KHAI' : 'NỘI DUNG CẦN LÀM RÕ / BỔ SUNG') +
+      '<ol style="margin:0 0 22px;padding-left:22px;font-size:14px;line-height:1.75">' +
+      r.items.map(function (x) { return '<li style="margin-bottom:6px">' + htmlEsc(x) + '</li>'; }).join('') + '</ol>';
+  }
+
+  var next = {
+    approved: 'Bước tiếp theo: Nhóm bám theo 5 thành phần bắt buộc trong Project Lab và chuẩn bị báo cáo tiến độ. Nếu cần thay đổi lớn về đề tài, hãy trao đổi với giảng viên trước.',
+    revise: 'Cách cập nhật: Mở form đăng ký, nhập cùng MSSV trưởng nhóm, chỉnh sửa theo góp ý rồi xác thực OTP và gửi lại. Bản mới sẽ thay thế bản cũ và được xét duyệt lại.',
+    rejected: 'Cách đăng ký lại: Mở form đăng ký, nhập cùng MSSV trưởng nhóm, chọn đề tài mới rồi xác thực OTP và gửi lại.'
+  }[r.status];
+  html += '<div style="padding:12px 14px;border-radius:8px;background:#eff6ff;border-left:3px solid #2563eb;color:#1e3a8a;font-size:13px">' + next + '</div>';
+  html += r.status === 'approved'
+    ? emailButton(SITE_URL + 'project-lab.html', 'Xem yêu cầu đồ án (Project Lab)')
+    : emailButton(REG_FORM_URL, r.status === 'revise' ? 'Cập nhật đăng ký đề tài' : 'Đăng ký lại đề tài', theme.color);
+
+  var subject = '[IS355] Kết quả xét duyệt đề tài - Nhóm ' + g.groupName + ': ' + REVIEW_STATUSES[r.status];
+  var text = 'Nhóm ' + g.groupName + ' (' + g.groupCode + ') - ' + REVIEW_STATUSES[r.status] + '.\n' +
+    (r.comment ? '\nNhận xét: ' + r.comment + '\n' : '') +
+    (r.items.length ? '\nCần làm rõ:\n' + r.items.map(function (x, i) { return (i + 1) + '. ' + x; }).join('\n') + '\n' : '') +
+    (r.status === 'revise' && r.deadline ? '\nHạn cập nhật: ' + formatVnDate(r.deadline) + '\n' : '');
+  return {
+    subject: subject,
+    html: emailShell(REVIEW_STATUSES[r.status] + ' - ' + g.title, 'Kết quả xét duyệt đề tài', html),
+    text: text
+  };
+}
+
+function buildReminderEmail(student, message, deadline, subject) {
+  var html =
+    '<p style="margin:0 0 14px">Chào <b>' + htmlEsc(student.fullName) + '</b> (MSSV ' + htmlEsc(student.studentId) + '),</p>' +
+    (message
+      ? '<div style="margin:0 0 18px;white-space:pre-line;font-size:14px;color:#0f172a">' + htmlEsc(message) + '</div>'
+      : '<p style="margin:0 0 18px">Hệ thống ghi nhận bạn <b>chưa có tên trong nhóm đồ án nào</b> của học phần IS355 Công nghệ Blockchain.</p>') +
+    (deadline
+      ? '<div style="margin:0 0 20px;padding:14px 18px;border-radius:10px;background:#fffbeb;border:1px solid #fcd34d;color:#92400e;font-size:14px">' +
+        'Hạn đăng ký đề tài: <b>' + htmlEsc(formatVnTime(deadline)) + '</b></div>'
+      : '') +
+    sectionTitle('CÁCH ĐĂNG KÝ') +
+    '<ol style="margin:0 0 6px;padding-left:22px;font-size:14px;line-height:1.8">' +
+    '<li>Lập nhóm tối đa 6 thành viên. Nhóm có thể ghép sinh viên của cả 2 lớp IS355.R11.CTTT.1 và .2.</li>' +
+    '<li>Xem <a href="' + SITE_URL + 'danh-sach-de-tai.html" style="color:#2563eb">danh sách đề tài đã đăng ký</a> để tránh chọn trùng hướng.</li>' +
+    '<li>Một thành viên điền form đăng ký (chỉ cần nhập MSSV), xác thực OTP qua email trường và gửi.</li>' +
+    '</ol>' +
+    emailButton(REG_FORM_URL, 'Đăng ký đề tài ngay') +
+    '<p style="margin:18px 0 0;color:#64748b;font-size:12.5px">Nếu bạn đã thống nhất nhóm với các bạn khác nhưng nhóm chưa gửi form, hãy nhắc trưởng nhóm đăng ký sớm. Nếu có khó khăn khi tìm nhóm, hãy liên hệ giảng viên.</p>';
+  return {
+    subject: subject,
+    html: emailShell('Bạn chưa đăng ký nhóm đồ án IS355', 'Nhắc nhở đăng ký nhóm đồ án', html),
+    text: 'Chào ' + student.fullName + ', bạn chưa đăng ký nhóm đồ án IS355. ' + (message ? message + ' ' : '') +
+      (deadline ? 'Hạn đăng ký: ' + formatVnTime(deadline) + '. ' : '') + 'Đăng ký tại: ' + REG_FORM_URL
+  };
 }

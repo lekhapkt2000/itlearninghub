@@ -197,6 +197,18 @@
     .rv-history summary{cursor:pointer;color:var(--primary);font-weight:700}
     .rv-history li{margin-top:8px;line-height:1.55}
     .review-actions{padding:14px 24px;border-top:1px solid var(--line);margin:0}
+    /* Progress feedback */
+    #fb-frame{width:100%;min-height:560px;flex:1;border:1px solid var(--line);border-radius:12px;background:#f1f5f9}
+    .fb-split{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+    .fb-table td.wrap{max-width:460px;line-height:1.5}
+    .fb-sub{margin-top:3px;color:var(--muted);font-size:11.5px}
+    .fb-rubric{display:grid;gap:10px}
+    .fb-rubric-row{display:grid;grid-template-columns:minmax(0,1fr) 76px 34px;gap:6px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+    .fb-rubric-row input,.fb-rubric-row textarea{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font:13px/1.5 var(--font-sans)}
+    .fb-rubric-row textarea{grid-column:1/-1;resize:vertical}
+    .fb-rubric-row button{border:1px solid var(--line);border-radius:8px;background:none;color:var(--muted);cursor:pointer}
+    #fb-notes{min-height:240px}
+    .review-form.stack .field{margin:0}
     @media(max-width:900px){.review-body{grid-template-columns:1fr}#rv-frame{min-height:420px}}
 
     /* Smart features */
@@ -323,6 +335,7 @@
       <button type="button" class="ad-nav" data-view="roster"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.5c2 .8 3 2.8 3 5.5"/></svg>Danh sách lớp<span class="count" id="nav-roster">0</span></button>
       <button type="button" class="ad-nav" data-view="groups"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M8.5 13.5l2 2 4-4"/></svg>Đăng ký đề tài<span class="count" id="nav-groups">0</span></button>
       <button type="button" class="ad-nav" data-view="progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-4 3 3 5-6"/></svg>Tiến độ đồ án<span class="count" id="nav-progress">0</span></button>
+      <button type="button" class="ad-nav" data-view="feedback"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12.5h5"/></svg>Góp ý tiến độ<span class="count" id="nav-feedback">0</span></button>
       <button type="button" class="ad-nav" data-view="defense"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>Lịch bảo vệ<span class="count" id="nav-defense">0</span></button>
 
       <p class="ad-side-label">LIÊN KẾT</p>
@@ -573,6 +586,57 @@
         </div>
       </section>
 
+      <!-- Progress feedback -->
+      <section class="view" id="view-feedback">
+        <div class="view-head">
+          <div><p class="eyebrow">IS355 · ĐỒ ÁN</p><h1>Góp ý tiến độ</h1></div>
+          <div class="row-actions">
+            <label class="outline-button" for="fb-import-file" style="cursor:pointer">Nhập bản nháp (JSON)</label>
+            <input type="file" id="fb-import-file" accept=".json,application/json" hidden>
+            <button type="button" class="primary-button btn-sm" id="fb-send-all" disabled>Gửi tất cả bản nháp <span>›</span></button>
+          </div>
+        </div>
+
+        <div class="card settings-bar">
+          <div class="settings-item">
+            <label class="settings-label" for="fb-round">ĐỢT GÓP Ý</label>
+            <input type="text" id="fb-round" maxlength="60" placeholder="Ví dụ: Tuần 3">
+            <button type="button" class="outline-button btn-sm" id="fb-round-save">Lưu đợt</button>
+          </div>
+          <div class="settings-item" id="fb-summary"></div>
+          <p class="settings-note">Mỗi nhóm có một bản góp ý cho mỗi đợt: Soạn, lưu nháp, xem trước rồi gửi. Email gửi cả nhóm (CC giảng viên), kèm lưu ý chung và tiêu chí chấm điểm bên dưới. Đổi sang đợt mới thì các nhóm bắt đầu bản góp ý mới, bản cũ vẫn được giữ.</p>
+        </div>
+
+        <div class="card" style="margin-bottom:20px">
+          <h3>Các nhóm</h3>
+          <div class="table-wrap">
+            <table class="fb-table">
+              <thead><tr><th>Nhóm</th><th>Đề tài</th><th>Đợt này</th><th></th></tr></thead>
+              <tbody id="fb-tbody"></tbody>
+            </table>
+          </div>
+          <p class="empty" id="fb-empty" hidden>Chưa có nhóm nào đăng ký.</p>
+        </div>
+
+        <div class="split fb-split">
+          <div class="card">
+            <h3>Lưu ý chung cho tất cả các nhóm</h3>
+            <p class="field-hint" style="margin:-4px 0 10px">Gửi kèm trong mọi email góp ý. Mỗi dòng một ý.</p>
+            <div class="field"><textarea id="fb-notes" class="plain" rows="10"></textarea></div>
+          </div>
+          <div class="card">
+            <h3>Tiêu chí chấm điểm <span class="chip chip-muted" id="fb-total">-</span></h3>
+            <div class="fb-rubric" id="fb-rubric"></div>
+            <button type="button" class="link-btn" id="fb-rubric-add" style="margin:10px 0 14px">+ Thêm tiêu chí</button>
+            <div class="field"><label for="fb-rubric-footer">ĐIỀU KIỆN ĐẠT ĐIỂM TỐI ĐA</label><textarea id="fb-rubric-footer" class="plain" rows="3"></textarea></div>
+            <div class="row-actions" style="justify-content:flex-end;margin-top:12px">
+              <button type="button" class="outline-button btn-sm" id="fb-rubric-reset">Khôi phục mặc định</button>
+              <button type="button" class="primary-button btn-sm" id="fb-settings-save">Lưu lưu ý &amp; tiêu chí</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Defense -->
       <section class="view" id="view-defense">
         <div class="view-head">
@@ -670,6 +734,50 @@
       <div class="modal-actions review-actions">
         <button type="button" class="outline-button" id="rv-cancel">Hủy</button>
         <button type="button" class="primary-button" id="rv-submit">Lưu &amp; gửi email <span>›</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress feedback modal -->
+  <div class="modal-overlay" id="fb-overlay">
+    <div class="modal-card review-card" role="dialog" aria-modal="true" aria-labelledby="fb-m-title">
+      <div class="review-head">
+        <div>
+          <p class="eyebrow" style="margin:0">GÓP Ý TIẾN ĐỘ · <span id="fb-m-code"></span> · ĐỢT <span id="fb-m-round"></span></p>
+          <h3 id="fb-m-title">-</h3>
+          <p class="review-sub" id="fb-m-sub"></p>
+        </div>
+        <button type="button" class="icon-btn" id="fb-close" aria-label="Đóng">✕</button>
+      </div>
+      <div class="review-body">
+        <div class="review-form stack">
+          <p class="field-hint" id="fb-copy-prev" hidden></p>
+          <div class="field"><label for="fb-docs">TÀI LIỆU ĐÃ XEM</label><input type="text" id="fb-docs" maxlength="300" placeholder="Ví dụ: Báo cáo Tuần 3 (06/11/2026)"></div>
+          <div class="field"><label for="fb-strengths">ĐIỂM TỐT</label><textarea id="fb-strengths" class="plain" rows="5" placeholder="Mỗi dòng một ý"></textarea></div>
+          <div class="field">
+            <label for="fb-todo">CẦN HOÀN THIỆN CHO ĐỒ ÁN</label>
+            <textarea id="fb-todo" class="plain" rows="9" placeholder="[Cao] Việc cần sửa trước lần nộp tiếp theo&#10;[TB] Việc xử lý trong các tuần tới&#10;[Thấp] Chỉnh sửa trình bày"></textarea>
+            <p class="field-hint">Mỗi dòng một ý. Mở đầu bằng [Cao], [TB] hoặc [Thấp] để hiện mức ưu tiên.</p>
+          </div>
+          <div class="field">
+            <label for="fb-ext">HƯỚNG MỞ RỘNG SAU MÔN HỌC (TÙY CHỌN)</label>
+            <textarea id="fb-ext" class="plain" rows="4" placeholder="Mỗi dòng một ý"></textarea>
+            <p class="field-hint">Email ghi rõ phần này là tham khảo, không bắt buộc và không tính điểm.</p>
+          </div>
+          <div class="field"><label for="fb-note">GHI CHÚ THÊM (TÙY CHỌN)</label><textarea id="fb-note" class="plain" rows="2"></textarea></div>
+          <label class="check-row"><input type="checkbox" id="fb-rubric-on" checked> Kèm tiêu chí chấm điểm</label>
+          <p class="msg" id="fb-msg"></p>
+        </div>
+        <div class="review-preview">
+          <div class="preview-bar"><span id="fb-subject">Xem trước email</span><button type="button" class="outline-button btn-sm" id="fb-preview-btn">Cập nhật xem trước</button></div>
+          <iframe id="fb-frame" title="Xem trước email" sandbox=""></iframe>
+          <p class="field-hint" id="fb-recipients"></p>
+        </div>
+      </div>
+      <div class="modal-actions review-actions">
+        <button type="button" class="outline-button" id="fb-cancel">Hủy</button>
+        <button type="button" class="outline-button" id="fb-save">Lưu nháp</button>
+        <button type="button" class="primary-button" id="fb-send">Lưu &amp; gửi email <span>›</span></button>
       </div>
     </div>
   </div>
@@ -895,9 +1003,10 @@
 
     /* ---------- Navigation ---------- */
 
-    var VIEWS = ['overview', 'codes', 'roster', 'groups', 'progress', 'defense'];
+    var VIEWS = ['overview', 'codes', 'roster', 'groups', 'progress', 'feedback', 'defense'];
     function showView(name) {
       if (VIEWS.indexOf(name) === -1) name = 'overview';
+      if (name === 'feedback' && fb && !fb.loaded && !fb.loading && state.key) loadFeedback();
       VIEWS.forEach(function (v) { $('view-' + v).classList.toggle('active', v === name); });
       document.querySelectorAll('.ad-nav[data-view]').forEach(function (b) { b.classList.toggle('active', b.dataset.view === name); });
       if (location.hash !== '#' + name) {
@@ -1108,6 +1217,7 @@
         renderOverview();
         renderProgress();
         renderDefense();
+        if (fb.loaded) renderFeedback(); else if (!fb.loading) loadFeedback(true);
       }).catch(function (err) {
         if (window.console) console.error(err);
         toast('Không tải được dữ liệu IS355. Hãy kiểm tra Apps Script đã deploy bản mới chưa.', 'error');
@@ -1794,6 +1904,315 @@
         return loadIs355();
       }).catch(function (err) { $('rv-msg').textContent = netError(err); $('rv-msg').className = 'msg error'; })
         .finally(function () { btn.disabled = false; syncReviewLabels(); }));
+    });
+
+    /* ---------- IS355: progress feedback ---------- */
+
+    var fb = { loaded: false, loading: false, settings: null, rows: [], editing: null };
+
+    function fbRecord(code, round) {
+      return fb.rows.filter(function (r) { return r.groupCode === code && r.round === round; })[0];
+    }
+    function fbPrevious(code, round) {
+      return fb.rows.filter(function (r) { return r.groupCode === code && r.round !== round; })
+        .sort(function (a, b) { return String(b.updatedAt).localeCompare(String(a.updatedAt)); })[0];
+    }
+
+    function loadFeedback(silent) {
+      fb.loading = true;
+      var p = api({ action: 'feedbackAdmin' }).then(function (d) {
+        if (!d.ok) { if (!silent) toast(d.message || 'Không tải được góp ý tiến độ.', 'error'); return; }
+        fb.loaded = true;
+        fb.settings = d.settings;
+        fb.rows = d.feedback || [];
+        fillFbSettings();
+        renderFeedback();
+      }).catch(function (err) { if (!silent) toast(netError(err), 'error'); })
+        .finally(function () { fb.loading = false; });
+      return silent ? p : busy(p);
+    }
+
+    function rubricRowHtml(it) {
+      return '<div class="fb-rubric-row">' +
+        '<input type="text" data-k="name" maxlength="120" placeholder="Tên tiêu chí" value="' + esc(it.name || '') + '">' +
+        '<input type="number" data-k="points" step="0.25" min="0" max="10" placeholder="Điểm" value="' + esc(it.points == null ? '' : it.points) + '">' +
+        '<button type="button" data-del aria-label="Xóa tiêu chí">✕</button>' +
+        '<textarea data-k="desc" rows="2" maxlength="600" placeholder="Mô tả mức xuất sắc">' + esc(it.desc || '') + '</textarea></div>';
+    }
+    function readRubric() {
+      var items = [];
+      $('fb-rubric').querySelectorAll('.fb-rubric-row').forEach(function (row) {
+        var v = function (k) { return row.querySelector('[data-k="' + k + '"]').value.trim(); };
+        if (v('name') || v('desc')) items.push({ name: v('name'), points: parseFloat(v('points')) || 0, desc: v('desc') });
+      });
+      return { items: items, footer: $('fb-rubric-footer').value.trim() };
+    }
+    function updateRubricTotal() {
+      var total = readRubric().items.reduce(function (s, it) { return s + it.points; }, 0);
+      total = Math.round(total * 100) / 100;
+      $('fb-total').textContent = 'Tổng ' + String(total).replace('.', ',') + ' điểm';
+      $('fb-total').className = 'chip ' + (total === 10 ? 'chip-ok' : 'chip-warn');
+    }
+    function fillFbSettings() {
+      var s = fb.settings;
+      $('fb-round').value = s.round;
+      $('fb-notes').value = s.notes;
+      $('fb-rubric').innerHTML = s.rubric.items.map(rubricRowHtml).join('');
+      $('fb-rubric-footer').value = s.rubric.footer || '';
+      updateRubricTotal();
+    }
+
+    function renderFeedback() {
+      if (!fb.loaded) return;
+      var round = fb.settings.round;
+      var list = state.groups.slice().sort(function (a, b) { return String(a.groupName).localeCompare(String(b.groupName), 'vi'); });
+      var sent = 0, drafts = 0;
+      $('fb-tbody').innerHTML = list.map(function (x) {
+        var code = groupCodeOf(x);
+        var r = fbRecord(code, round);
+        var st;
+        if (!r) st = '<span class="badge badge-muted">Chưa soạn</span>';
+        else if (r.sentAt) { sent++; st = '<span class="badge badge-ok">Đã gửi</span><div class="fb-sub">' + esc(fmtTime(r.sentAt)) + (r.updatedAt > r.sentAt ? ' · đã sửa sau khi gửi' : '') + '</div>'; }
+        else { drafts++; st = '<span class="badge badge-warn">Bản nháp</span>'; }
+        var older = fb.rows.filter(function (y) { return y.groupCode === code && y.round !== round && y.sentAt; }).length;
+        var label = !r ? 'Soạn góp ý' : (r.sentAt ? 'Xem / gửi lại' : 'Sửa &amp; gửi');
+        return '<tr><td><b>' + esc(x.groupName) + '</b><div class="fb-sub">' + esc(code) + ' · ' + x.members.length + ' thành viên</div></td>' +
+          '<td class="wrap">' + esc(x.title) + '</td>' +
+          '<td>' + st + (older ? '<div class="fb-sub">' + older + ' đợt trước đã gửi</div>' : '') + '</td>' +
+          '<td><button type="button" class="' + (r && r.sentAt ? 'outline-button' : 'primary-button') + ' btn-sm" data-fb="' + esc(code) + '">' + label + ' <span>›</span></button></td></tr>';
+      }).join('');
+      $('fb-empty').hidden = list.length > 0;
+      $('fb-summary').innerHTML =
+        '<span class="chip chip-ok">' + sent + ' đã gửi</span>' +
+        '<span class="chip chip-warn">' + drafts + ' bản nháp</span>' +
+        '<span class="chip chip-muted">' + (list.length - sent - drafts) + ' chưa soạn</span>';
+      $('nav-feedback').textContent = sent + '/' + list.length;
+      $('fb-send-all').disabled = drafts === 0;
+      $('fb-send-all').innerHTML = 'Gửi tất cả bản nháp' + (drafts ? ' (' + drafts + ')' : '') + ' <span>›</span>';
+    }
+
+    function fbFill(r) {
+      $('fb-docs').value = r ? r.reviewedDocs : '';
+      $('fb-strengths').value = r ? r.strengths : '';
+      $('fb-todo').value = r ? r.todo : '';
+      $('fb-ext').value = r ? r.extensions : '';
+      $('fb-note').value = r ? r.note : '';
+    }
+
+    function openFeedback(code) {
+      var x = state.groups.filter(function (g) { return groupCodeOf(g) === code; })[0];
+      if (!x) return;
+      var round = fb.settings.round;
+      var r = fbRecord(code, round);
+      var prev = fbPrevious(code, round);
+      fb.editing = { group: x, code: code, round: round, prev: prev };
+      $('fb-m-code').textContent = code;
+      $('fb-m-round').textContent = round.toUpperCase();
+      $('fb-m-title').textContent = x.groupName + ' · ' + x.title;
+      $('fb-m-sub').textContent = x.members.length + ' thành viên · ' + (TRACKS[x.track] || x.track) + ' · ' + (LEVELS[x.level] || x.level) +
+        (r && r.sentAt ? ' · Đã gửi lúc ' + fmtTime(r.sentAt) : (r ? ' · Bản nháp' : ''));
+      fbFill(r);
+      if (!r && prev) {
+        $('fb-copy-prev').innerHTML = 'Nhóm đã có góp ý đợt <b>' + esc(prev.round) + '</b>. <button type="button" class="link-btn" id="fb-copy-btn" style="margin:0">Chép nội dung đợt đó để sửa</button>';
+        $('fb-copy-prev').hidden = false;
+      } else {
+        $('fb-copy-prev').hidden = true;
+      }
+      $('fb-rubric-on').checked = true;
+      $('fb-msg').textContent = '';
+      $('fb-send').innerHTML = (r && r.sentAt ? 'Lưu &amp; gửi lại' : 'Lưu &amp; gửi email') + ' <span>›</span>';
+      $('fb-overlay').classList.add('show');
+      loadFbPreview();
+    }
+    function closeFeedback() { $('fb-overlay').classList.remove('show'); fb.editing = null; }
+
+    function fbPayload(extra) {
+      var e = fb.editing;
+      var p = {
+        action: 'saveFeedback', groupCode: e.code, round: e.round,
+        reviewedDocs: $('fb-docs').value, strengths: $('fb-strengths').value, todo: $('fb-todo').value,
+        extensions: $('fb-ext').value, note: $('fb-note').value, includeRubric: $('fb-rubric-on').checked
+      };
+      Object.keys(extra || {}).forEach(function (k) { p[k] = extra[k]; });
+      return p;
+    }
+    function fbEmpty() {
+      return !['fb-strengths', 'fb-todo', 'fb-ext', 'fb-note'].some(function (id) { return $(id).value.trim(); });
+    }
+
+    var fbPreviewSeq = 0, fbPreviewTimer;
+    function loadFbPreview() {
+      if (!fb.editing) return;
+      var seq = ++fbPreviewSeq;
+      if (fbEmpty()) {
+        $('fb-subject').textContent = 'Nhập góp ý để xem trước email.';
+        $('fb-frame').srcdoc = '';
+        $('fb-recipients').textContent = '';
+        return;
+      }
+      $('fb-subject').textContent = 'Đang tạo bản xem trước...';
+      api(fbPayload({ preview: true })).then(function (d) {
+        if (seq !== fbPreviewSeq) return;
+        if (!d.ok) { $('fb-subject').textContent = d.message || 'Không tạo được bản xem trước.'; return; }
+        $('fb-subject').textContent = d.subject;
+        $('fb-frame').srcdoc = d.html;
+        $('fb-recipients').textContent = 'Gửi tới: ' + d.recipients.join(', ');
+      }).catch(function (err) { if (seq === fbPreviewSeq) $('fb-subject').textContent = netError(err); });
+    }
+    function scheduleFbPreview() { clearTimeout(fbPreviewTimer); fbPreviewTimer = setTimeout(loadFbPreview, 800); }
+
+    function saveFeedbackNow(send) {
+      if (!fb.editing) return;
+      if (fbEmpty()) { $('fb-msg').textContent = 'Góp ý đang trống. Cần nhập ít nhất một mục.'; $('fb-msg').className = 'msg error'; return; }
+      var name = fb.editing.group.groupName;
+      var go = send
+        ? confirmBox({ title: 'Gửi góp ý cho nhóm ' + name + '?', message: 'Email gửi tới ' + fb.editing.group.members.length + ' thành viên, CC giảng viên.', okLabel: 'Gửi email' })
+        : Promise.resolve(true);
+      go.then(function (ok) {
+        if (!ok) return;
+        var btn = $(send ? 'fb-send' : 'fb-save');
+        btn.disabled = true;
+        busy(api(fbPayload({ send: !!send })).then(function (d) {
+          if (!d.ok) { $('fb-msg').textContent = d.message || 'Không lưu được.'; $('fb-msg').className = 'msg error'; return; }
+          closeFeedback();
+          if (send && !d.emailSent) toast('Đã lưu nhưng chưa gửi được email: ' + (d.message || ''), 'error');
+          else toast(send ? 'Đã gửi góp ý cho nhóm ' + name + '.' : 'Đã lưu bản nháp nhóm ' + name + '.');
+          return loadFeedback(true);
+        }).catch(function (err) { $('fb-msg').textContent = netError(err); $('fb-msg').className = 'msg error'; })
+          .finally(function () { btn.disabled = false; }));
+      });
+    }
+
+    $('fb-tbody').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-fb]');
+      if (b) openFeedback(b.dataset.fb);
+    });
+    $('fb-copy-prev').addEventListener('click', function (e) {
+      if (!e.target.closest('#fb-copy-btn') || !fb.editing || !fb.editing.prev) return;
+      fbFill(fb.editing.prev);
+      $('fb-docs').value = '';
+      $('fb-copy-prev').hidden = true;
+      loadFbPreview();
+    });
+    $('fb-close').addEventListener('click', closeFeedback);
+    $('fb-cancel').addEventListener('click', closeFeedback);
+    $('fb-preview-btn').addEventListener('click', loadFbPreview);
+    ['fb-docs', 'fb-strengths', 'fb-todo', 'fb-ext', 'fb-note'].forEach(function (id) { $(id).addEventListener('input', scheduleFbPreview); });
+    $('fb-rubric-on').addEventListener('change', loadFbPreview);
+    $('fb-save').addEventListener('click', function () { saveFeedbackNow(false); });
+    $('fb-send').addEventListener('click', function () { saveFeedbackNow(true); });
+
+    $('fb-round-save').addEventListener('click', function () {
+      var round = $('fb-round').value.trim();
+      if (!round) { toast('Cần nhập tên đợt góp ý.', 'error'); return; }
+      busy(api({ action: 'saveFeedbackSettings', round: round }).then(function (d) {
+        if (!d.ok) { toast(d.message || 'Không lưu được.', 'error'); return; }
+        fb.settings = d.settings;
+        renderFeedback();
+        toast('Đã chuyển sang đợt ' + round + '.');
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    $('fb-rubric').addEventListener('input', updateRubricTotal);
+    $('fb-rubric').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-del]');
+      if (b) { b.closest('.fb-rubric-row').remove(); updateRubricTotal(); }
+    });
+    $('fb-rubric-add').addEventListener('click', function () {
+      $('fb-rubric').insertAdjacentHTML('beforeend', rubricRowHtml({}));
+      $('fb-rubric').lastElementChild.querySelector('input').focus();
+      updateRubricTotal();
+    });
+    $('fb-settings-save').addEventListener('click', function () {
+      var rubric = readRubric();
+      if (rubric.items.some(function (it) { return !it.name || !(it.points > 0); })) { toast('Mỗi tiêu chí cần có tên và điểm lớn hơn 0.', 'error'); return; }
+      busy(api({ action: 'saveFeedbackSettings', rubric: rubric, notes: $('fb-notes').value }).then(function (d) {
+        if (!d.ok) { toast(d.message || 'Không lưu được.', 'error'); return; }
+        fb.settings = d.settings;
+        fillFbSettings();
+        toast('Đã lưu lưu ý chung và tiêu chí chấm điểm.');
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+    $('fb-rubric-reset').addEventListener('click', function () {
+      confirmBox({ title: 'Khôi phục tiêu chí mặc định?', message: 'Bảng tiêu chí đang lưu sẽ được thay bằng bản mặc định (7 tiêu chí, thang 10).', okLabel: 'Khôi phục' }).then(function (ok) {
+        if (!ok) return;
+        busy(api({ action: 'saveFeedbackSettings', resetRubric: true }).then(function (d) {
+          if (!d.ok) { toast(d.message || 'Không khôi phục được.', 'error'); return; }
+          fb.settings = d.settings;
+          fillFbSettings();
+          toast('Đã khôi phục tiêu chí mặc định.');
+        }).catch(function (err) { toast(netError(err), 'error'); }));
+      });
+    });
+
+    $('fb-import-file').addEventListener('change', function (e) {
+      var file = e.target.files[0];
+      e.target.value = '';
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function () {
+        var items;
+        try {
+          var data = JSON.parse(String(reader.result).replace(/^﻿/, ''));
+          items = Array.isArray(data) ? data : data.items;
+        } catch (err) { toast('File không phải JSON hợp lệ.', 'error'); return; }
+        if (!Array.isArray(items) || !items.length) { toast('File không có góp ý nào.', 'error'); return; }
+        var round = fb.settings.round;
+        confirmBox({
+          title: 'Nhập ' + items.length + ' bản nháp?',
+          message: 'Các bản nháp được lưu cho đợt <b>' + esc(round) + '</b> (nếu trong file không ghi đợt). Bản góp ý cùng đợt của các nhóm này sẽ bị thay. <b>Chưa gửi email nào</b>, bạn xem lại rồi gửi sau.',
+          okLabel: 'Nhập bản nháp'
+        }).then(function (ok) {
+          if (!ok) return;
+          busy(api({ action: 'importFeedback', items: items, round: round }, 90000).then(function (d) {
+            if (!d.ok) { toast(d.message || 'Không nhập được.', 'error'); return; }
+            toast('Đã nhập ' + d.saved + ' bản nháp' + (d.missing.length ? '. Không khớp nhóm: ' + d.missing.join(', ') : '.'), d.missing.length ? 'error' : 'ok');
+            return loadFeedback(true);
+          }).catch(function (err) { toast(netError(err), 'error'); }));
+        });
+      };
+      reader.readAsText(file, 'utf-8');
+    });
+
+    $('fb-send-all').addEventListener('click', function () {
+      var round = fb.settings.round;
+      var todo = fb.rows.filter(function (r) { return r.round === round && !r.sentAt; })
+        .filter(function (r) { return state.groups.some(function (g) { return groupCodeOf(g) === r.groupCode; }); });
+      if (!todo.length) return;
+      var emails = todo.reduce(function (s, r) {
+        var g = state.groups.filter(function (x) { return groupCodeOf(x) === r.groupCode; })[0];
+        return s + (g ? g.members.length : 0);
+      }, 0);
+      if (state.mailQuota >= 0 && emails > state.mailQuota) {
+        toast('Hạn mức email hôm nay còn ' + state.mailQuota + ', cần khoảng ' + emails + '. Hãy gửi từng nhóm hoặc đợi ngày mai.', 'error');
+        return;
+      }
+      confirmBox({
+        title: 'Gửi góp ý cho ' + todo.length + ' nhóm?',
+        message: 'Gửi tất cả bản nháp đợt <b>' + esc(round) + '</b> chưa gửi (' + todo.map(function (r) { return esc(r.groupName); }).join(', ') + '), kèm tiêu chí chấm điểm, CC giảng viên.',
+        okLabel: 'Gửi ' + todo.length + ' email'
+      }).then(function (ok) {
+        if (!ok) return;
+        var btn = $('fb-send-all');
+        btn.disabled = true;
+        var okCount = 0, failed = [];
+        var chain = Promise.resolve();
+        todo.forEach(function (r, i) {
+          chain = chain.then(function () {
+            btn.textContent = 'Đang gửi ' + (i + 1) + '/' + todo.length + '...';
+            return api({
+              action: 'saveFeedback', groupCode: r.groupCode, round: r.round, reviewedDocs: r.reviewedDocs, strengths: r.strengths,
+              todo: r.todo, extensions: r.extensions, note: r.note, includeRubric: true, send: true
+            }, 60000).then(function (d) {
+              if (d.ok && d.emailSent) okCount++; else failed.push(r.groupName + (d.message ? ' (' + d.message + ')' : ''));
+            }).catch(function (err) { failed.push(r.groupName + ' (' + netError(err) + ')'); });
+          });
+        });
+        busy(chain.then(function () {
+          toast('Đã gửi ' + okCount + '/' + todo.length + ' nhóm.' + (failed.length ? ' Lỗi: ' + failed.join('; ') : ''), failed.length ? 'error' : 'ok');
+          return loadFeedback(true);
+        }).finally(function () { renderFeedback(); }));
+      });
     });
 
     /* ---------- Export (CSV opens directly in Excel) ---------- */

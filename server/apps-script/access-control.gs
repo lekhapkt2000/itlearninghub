@@ -57,6 +57,11 @@
  *     Run installDefenseReminderTrigger() once for daily defense reminders.
  *     After pasting: run setup() and authorize (UrlFetchApp + triggers are
  *     new permissions), then deploy a New version.
+ * 14. Progress feedback (dashboard > Góp ý tiến độ) saves drafts to the
+ *     IS355_GOP_Y tab (one row per group per round) and emails the group
+ *     (CC teacher). Rubric, notes and the current round are kept in Script
+ *     Properties IS355_FB_RUBRIC, IS355_FB_NOTES, IS355_FB_ROUND (edited
+ *     from the dashboard). Paste, run setup(), deploy a New version.
  *
  * Gotcha this file avoids: SpreadsheetApp.getActiveSpreadsheet() returns
  * null when a Web App's doGet/doPost actually runs (no active UI in
@@ -321,6 +326,7 @@ function setup() {
   ensureSheetWithHeaders(ss, ROSTER_SHEET, ROSTER_HEADERS);
   ensureSheetWithHeaders(ss, REVIEW_SHEET, REVIEW_HEADERS);
   ensureSheetWithHeaders(ss, MAIL_LOG_SHEET, MAIL_LOG_HEADERS);
+  ensureSheetWithHeaders(ss, FEEDBACK_SHEET, FEEDBACK_HEADERS);
   smartSetup(ss);
   Logger.log('Setup complete.');
 }
@@ -2289,6 +2295,315 @@ function handleAiReviewDraft(body) {
   };
 }
 
+/* ------------------------------------------------------------------ */
+/* IS355 progress feedback emails (góp ý tiến độ)                      */
+/* ------------------------------------------------------------------ */
+// One row per group per round (đợt). Drafts are saved here first; the
+// teacher previews and sends from the dashboard. The grading rubric and
+// the notes for every group live in Script Properties so they can be
+// edited from the dashboard without redeploying.
+
+var FEEDBACK_SHEET = 'IS355_GOP_Y';
+var FEEDBACK_HEADERS = ['timestamp', 'group_code', 'group_name', 'round', 'reviewed_docs', 'strengths', 'todo',
+  'extensions', 'note', 'sent_at', 'emailed_to'];
+var FB_MAX_LINES = 25;
+var FB_LINE_MAX = 700;
+
+var DEFAULT_RUBRIC = {
+  items: [
+    { name: 'Bài toán và tính mới', points: 1.5, desc: 'Bài toán rõ ràng, giải thích được vì sao cần dùng Blockchain. Có khảo sát các công trình liên quan và chỉ ra điểm khác biệt của nhóm.' },
+    { name: 'Thiết kế hệ thống', points: 1.5, desc: 'Có kiến trúc, mô hình dữ liệu (on-chain và off-chain), sơ đồ luồng và smart contract hợp lý. Giải thích được các lựa chọn kỹ thuật và đánh đổi.' },
+    { name: 'Hiện thực', points: 2.5, desc: 'Smart contract và DApp/giao diện chạy được end-to-end, deploy trên testnet hoặc mạng local. Code có cấu trúc tốt, có README và hướng dẫn chạy lại.' },
+    { name: 'Dữ liệu và đánh giá', points: 2, desc: 'Dùng dữ liệu thật hoặc ghi rõ cách sinh dữ liệu (tham số, seed). Có baseline để so sánh, có chỉ số đo (gas, độ trễ, độ chính xác...). Phân tích kết quả trung thực, nêu cả hạn chế.' },
+    { name: 'Bảo mật và chất lượng contract', points: 1, desc: 'Có test cho cả trường hợp đúng và trường hợp phải bị từ chối. Chạy công cụ phân tích (Slither hoặc công cụ tương đương cho Vyper), nhận diện được các lỗ hổng phổ biến.' },
+    { name: 'Báo cáo và trình bày', points: 1, desc: 'Đúng template, trích dẫn đầy đủ. Không còn nội dung nháp hoặc nội dung chưa được nhóm rà soát. Demo và trả lời vấn đáp tốt.' },
+    { name: 'Làm việc nhóm', points: 0.5, desc: 'Phân công rõ ràng, có lịch sử commit chứng minh đóng góp của từng thành viên.' }
+  ],
+  footer: 'Để đạt 10 điểm: Cần đạt mức xuất sắc ở tất cả các mục. Ngoài ra nên có thêm một điểm nổi bật, ví dụ dùng dữ liệu thật, có phát hiện đáng chú ý, hoặc sản phẩm dùng được ngay. Mọi thành viên đều phải giải thích được phần mình làm.'
+};
+
+var DEFAULT_FB_NOTES = [
+  'Giai đoạn này tập trung vào nội dung và phương pháp. Hình thức trình bày (bìa, mẫu báo cáo, chính tả, chú thích) sẽ hoàn thiện khi viết báo cáo cuối kỳ.',
+  'Phân tích và thí nghiệm dựa trên dữ liệu thật mà nhóm đã tải; nếu dùng dữ liệu mô phỏng, ghi rõ cách sinh, tham số và seed.',
+  'Nêu rõ Blockchain đảm bảo điều gì (toàn vẹn, không phát hành trùng, lưu vết) và không đảm bảo điều gì (dữ liệu đầu vào đúng, mô hình đúng); ai đưa dữ liệu lên chuỗi và rủi ro nếu bên đó khai sai hoặc lộ khóa.',
+  'Ghi lại các thay đổi so với đề cương (dữ liệu, công cụ, phương pháp) và lý do, để dễ tổng hợp khi viết báo cáo.',
+  'Smart contract dùng Vyper + Ape theo môn học; nhóm nào cần dùng công cụ khác nên trao đổi trước khi chuyển.',
+  'Nghiên cứu liên quan ưu tiên bài đã bình duyệt, có DOI hoặc link kiểm chứng được.',
+  'Mỗi cải tiến có baseline cụ thể và độ đo; baseline nên là cách làm hợp lý mà người khác có thể chọn, không phải phương án cố tình yếu.'
+].join('\n');
+
+function fbLines(text) {
+  return String(text == null ? '' : text).split(/\r?\n/)
+    .map(function (x) { return x.replace(/^\s*(?:[-•*]|\d+[.)])\s+/, '').replace(/\s+/g, ' ').trim().slice(0, FB_LINE_MAX); })
+    .filter(function (x) { return x; })
+    .slice(0, FB_MAX_LINES);
+}
+
+function readFeedbackSettings() {
+  var props = PropertiesService.getScriptProperties();
+  var rubric = DEFAULT_RUBRIC;
+  try {
+    var raw = props.getProperty('IS355_FB_RUBRIC');
+    if (raw) rubric = JSON.parse(raw);
+  } catch (e) { rubric = DEFAULT_RUBRIC; }
+  var notes = props.getProperty('IS355_FB_NOTES');
+  return {
+    round: props.getProperty('IS355_FB_ROUND') || 'Tuần 3',
+    rubric: rubric,
+    notes: notes == null ? DEFAULT_FB_NOTES : notes
+  };
+}
+
+function rubricTotal(rubric) {
+  return Math.round(rubric.items.reduce(function (s, it) { return s + (Number(it.points) || 0); }, 0) * 100) / 100;
+}
+
+function handleSaveFeedbackSettings(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var props = PropertiesService.getScriptProperties();
+  if (body.round != null) {
+    var round = regClean(body.round, 60);
+    if (!round) return { ok: false, message: 'Cần nhập tên đợt góp ý.' };
+    props.setProperty('IS355_FB_ROUND', round);
+  }
+  if (body.rubric) {
+    var items = (Array.isArray(body.rubric.items) ? body.rubric.items : []).map(function (it) {
+      return { name: regClean(it.name, 120), points: Math.round(Number(it.points) * 100) / 100, desc: String(it.desc || '').replace(/\s+/g, ' ').trim().slice(0, 600) };
+    }).filter(function (it) { return it.name && it.points > 0; }).slice(0, 15);
+    if (!items.length) return { ok: false, message: 'Tiêu chí chấm điểm cần ít nhất một mục có tên và điểm.' };
+    props.setProperty('IS355_FB_RUBRIC', JSON.stringify({ items: items, footer: String(body.rubric.footer || '').trim().slice(0, 1500) }));
+  }
+  if (body.notes != null) props.setProperty('IS355_FB_NOTES', fbLines(body.notes).join('\n'));
+  if (body.resetRubric) props.deleteProperty('IS355_FB_RUBRIC');
+  return { ok: true, settings: readFeedbackSettings() };
+}
+
+/** All feedback rows: [{groupCode, round, ..., row}] (row = 1-based sheet row). */
+function readFeedbackRows() {
+  var sheet = getOrCreateSheet(FEEDBACK_SHEET, FEEDBACK_HEADERS);
+  var rows = sheet.getDataRange().getValues();
+  var h = rows[0];
+  var c = function (n) { return h.indexOf(n); };
+  var iso = function (v) { return v instanceof Date ? v.toISOString() : String(v || ''); };
+  var out = [];
+  for (var i = 1; i < rows.length; i++) {
+    var r = rows[i];
+    if (!r[c('group_code')]) continue;
+    out.push({
+      row: i + 1,
+      updatedAt: iso(r[c('timestamp')]),
+      groupCode: String(r[c('group_code')]).toUpperCase(),
+      groupName: String(r[c('group_name')] || ''),
+      round: String(r[c('round')] || ''),
+      reviewedDocs: String(r[c('reviewed_docs')] || ''),
+      strengths: String(r[c('strengths')] || ''),
+      todo: String(r[c('todo')] || ''),
+      extensions: String(r[c('extensions')] || ''),
+      note: String(r[c('note')] || ''),
+      sentAt: iso(r[c('sent_at')]),
+      emailedTo: String(r[c('emailed_to')] || '')
+    });
+  }
+  return out;
+}
+
+function handleFeedbackAdmin(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var settings = readFeedbackSettings();
+  return { ok: true, settings: settings, total: rubricTotal(settings.rubric), feedback: readFeedbackRows() };
+}
+
+/** Insert or update the row for (group, round); returns the saved record. */
+function upsertFeedback(group, rec, sent) {
+  var sheet = getOrCreateSheet(FEEDBACK_SHEET, FEEDBACK_HEADERS);
+  var existing = readFeedbackRows().filter(function (x) { return x.groupCode === group.groupCode && x.round === rec.round; })[0];
+  var values = [new Date(), group.groupCode, group.groupName, rec.round, rec.reviewedDocs,
+    rec.strengths.join('\n'), rec.todo.join('\n'), rec.extensions.join('\n'), rec.note,
+    sent ? sent.at : (existing ? existing.sentAt : ''), sent ? sent.to : (existing ? existing.emailedTo : '')];
+  if (existing) sheet.getRange(existing.row, 1, 1, values.length).setValues([values]);
+  else sheet.appendRow(values);
+}
+
+function feedbackFromBody(b, defaultRound) {
+  return {
+    round: regClean(b.round, 60) || defaultRound,
+    reviewedDocs: regClean(b.reviewedDocs, 300),
+    strengths: fbLines(b.strengths),
+    todo: fbLines(b.todo),
+    extensions: fbLines(b.extensions),
+    note: String(b.note || '').trim().slice(0, 2000)
+  };
+}
+
+function findGroup(code) {
+  var found = null;
+  readGroups().groups.forEach(function (g) { if (g.groupCode === code) found = g; });
+  return found;
+}
+
+/**
+ * Admin: save a group's feedback for the current round.
+ * preview:true -> only build the email. send:true -> also email the group (CC teacher).
+ */
+function handleSaveFeedback(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var settings = readFeedbackSettings();
+  var group = findGroup(regClean(body.groupCode, 12).toUpperCase());
+  if (!group) return { ok: false, message: 'Không tìm thấy nhóm ' + body.groupCode + '.' };
+  var rec = feedbackFromBody(body, settings.round);
+  if (!rec.strengths.length && !rec.todo.length && !rec.extensions.length && !rec.note) {
+    return { ok: false, message: 'Góp ý đang trống. Cần nhập ít nhất một mục.' };
+  }
+  var includeRubric = body.includeRubric !== false;
+  var mail = buildFeedbackEmail(group, rec, settings, includeRubric);
+  var recipients = group.members.map(function (m) { return m.email; });
+  if (body.preview) return { ok: true, subject: mail.subject, html: mail.html, recipients: recipients.concat(REG_CC_EMAIL) };
+
+  if (!body.send) {
+    upsertFeedback(group, rec, null);
+    return { ok: true, saved: true };
+  }
+
+  var emailSent = false, mailError = '';
+  try {
+    MailApp.sendEmail({
+      to: recipients[0],
+      cc: recipients.slice(1).concat(REG_CC_EMAIL).join(','),
+      subject: mail.subject,
+      name: MAIL_SENDER_NAME,
+      htmlBody: mail.html,
+      body: mail.text
+    });
+    emailSent = true;
+  } catch (err) {
+    mailError = mailErrorMessage(err);
+  }
+  logMail('feedback', group.groupCode, group.members.map(function (m) { return m.studentId; }), recipients, mail.subject, emailSent ? 'sent' : 'failed: ' + mailError);
+  upsertFeedback(group, rec, emailSent ? { at: new Date(), to: recipients.join(',') } : null);
+  return { ok: true, saved: true, emailSent: emailSent, message: mailError };
+}
+
+/** Admin: bulk-load drafts (JSON from the dashboard). Never sends email. */
+function handleImportFeedback(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var settings = readFeedbackSettings();
+  var items = Array.isArray(body.items) ? body.items.slice(0, 80) : [];
+  if (!items.length) return { ok: false, message: 'File không có góp ý nào.' };
+  var groups = readGroups().groups;
+  var byCode = {}, byName = {};
+  groups.forEach(function (g) { byCode[g.groupCode] = g; byName[String(g.groupName).toLowerCase().trim()] = g; });
+  var saved = [], missing = [];
+  items.forEach(function (it) {
+    var g = byCode[String(it.groupCode || '').toUpperCase().trim()] || byName[String(it.groupName || '').toLowerCase().trim()];
+    if (!g) { missing.push(it.groupName || it.groupCode || '?'); return; }
+    var join = function (v) { return Array.isArray(v) ? v.join('\n') : v; };
+    var rec = feedbackFromBody({
+      round: it.round || body.round, reviewedDocs: it.reviewedDocs,
+      strengths: join(it.strengths), todo: join(it.todo), extensions: join(it.extensions), note: it.note
+    }, settings.round);
+    upsertFeedback(g, rec, null);
+    saved.push(g.groupName);
+  });
+  return { ok: true, saved: saved.length, missing: missing };
+}
+
+var FB_PRIORITY = {
+  cao: { label: 'Cao', color: '#b91c1c', bg: '#fef2f2', border: '#fecaca' },
+  tb: { label: 'TB', color: '#b45309', bg: '#fffbeb', border: '#fde68a' },
+  'thấp': { label: 'Thấp', color: '#475569', bg: '#f1f5f9', border: '#e2e8f0' }
+};
+
+function parsePriority(line) {
+  var m = /^\[(cao|tb|trung bình|thấp|thap)\]\s*/i.exec(line);
+  if (!m) return { p: null, text: line };
+  var k = m[1].toLowerCase();
+  k = k === 'trung bình' ? 'tb' : (k === 'thap' ? 'thấp' : k);
+  return { p: FB_PRIORITY[k], text: line.slice(m[0].length) };
+}
+
+function fmtPoints(n) { return String(Math.round(Number(n) * 100) / 100).replace('.', ','); }
+
+function buildFeedbackEmail(g, f, settings, includeRubric) {
+  var li = function (x) { return '<li style="margin-bottom:7px">' + htmlEsc(x) + '</li>'; };
+  var box = function (bg, border, inner) {
+    return '<div style="margin:0 0 22px;padding:14px 18px;border-radius:10px;background:' + bg + ';border:1px solid ' + border + '">' + inner + '</div>';
+  };
+  var row = function (label, value) {
+    return '<tr><td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;color:#64748b;font-size:13px;width:130px;vertical-align:top">' + label + '</td>' +
+      '<td style="padding:8px 12px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#0f172a">' + value + '</td></tr>';
+  };
+
+  var html =
+    '<p style="margin:0 0 14px">Chào nhóm <b>' + htmlEsc(g.groupName) + '</b>,</p>' +
+    '<p style="margin:0 0 18px">Dưới đây là góp ý tiến độ đồ án của nhóm (đợt <b>' + htmlEsc(f.round) + '</b>). Nhóm xem kỹ các mục cần hoàn thiện, ưu tiên các mục <b>[Cao]</b>, rồi tiếp tục thực hiện theo kế hoạch.</p>' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:10px;border-collapse:separate;overflow:hidden;margin-bottom:22px">' +
+    row('Mã nhóm', '<span style="font-family:Consolas,Menlo,monospace;font-weight:700">' + htmlEsc(g.groupCode) + '</span>') +
+    row('Tên đề tài', '<b>' + htmlEsc(g.title) + '</b>') +
+    (f.reviewedDocs ? row('Tài liệu đã xem', htmlEsc(f.reviewedDocs)) : '') +
+    '</table>';
+
+  if (f.strengths.length) {
+    html += sectionTitle('ĐIỂM TỐT') +
+      box('#f0fdf4', '#bbf7d0', '<ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.7;color:#14532d">' + f.strengths.map(li).join('') + '</ul>');
+  }
+  if (f.todo.length) {
+    var anyP = false;
+    var items = f.todo.map(function (line) {
+      var x = parsePriority(line);
+      if (x.p) anyP = true;
+      var badge = x.p ? '<span style="display:inline-block;min-width:34px;margin-right:8px;padding:1px 7px;border-radius:99px;background:' + x.p.bg + ';border:1px solid ' + x.p.border +
+        ';color:' + x.p.color + ';font-size:11px;font-weight:800;text-align:center">' + x.p.label + '</span>' : '';
+      return '<li style="margin-bottom:9px">' + badge + htmlEsc(x.text) + '</li>';
+    }).join('');
+    html += sectionTitle('CẦN HOÀN THIỆN CHO ĐỒ ÁN') +
+      (anyP ? '<p style="margin:0 0 10px;font-size:12px;color:#64748b">Mức ưu tiên: <b style="color:#b91c1c">Cao</b> - Nên xử lý trước lần nộp tiếp theo · <b style="color:#b45309">TB</b> - Xử lý trong các tuần tới · <b style="color:#475569">Thấp</b> - Chỉnh sửa trình bày.</p>' : '') +
+      '<ol style="margin:0 0 22px;padding-left:22px;font-size:14px;line-height:1.7;color:#0f172a">' + items + '</ol>';
+  }
+  if (f.extensions.length) {
+    html += sectionTitle('HƯỚNG MỞ RỘNG SAU MÔN HỌC (THAM KHẢO, KHÔNG BẮT BUỘC)') +
+      box('#fffbeb', '#fde68a',
+        '<ul style="margin:0 0 8px;padding-left:20px;font-size:14px;line-height:1.7;color:#78350f">' + f.extensions.map(li).join('') + '</ul>' +
+        '<div style="font-size:12px;color:#92400e">Phần này chỉ gợi ý cho nhóm muốn phát triển đề tài sau khi kết thúc môn học (nghiên cứu khoa học sinh viên, khóa luận). Không thuộc yêu cầu đồ án và không tính vào điểm.</div>');
+  }
+  if (f.note) {
+    html += sectionTitle('GHI CHÚ THÊM') +
+      '<div style="margin:0 0 22px;padding:14px 16px;border-left:3px solid #2563eb;background:#f8fafc;border-radius:0 8px 8px 0;white-space:pre-line;font-size:14px;color:#0f172a">' + htmlEsc(f.note) + '</div>';
+  }
+  var notes = fbLines(settings.notes);
+  if (notes.length) {
+    html += sectionTitle('LƯU Ý CHUNG CHO TẤT CẢ CÁC NHÓM') +
+      '<ul style="margin:0 0 22px;padding-left:20px;font-size:13.5px;line-height:1.7;color:#334155">' + notes.map(li).join('') + '</ul>';
+  }
+  if (includeRubric && settings.rubric && settings.rubric.items.length) {
+    var total = rubricTotal(settings.rubric);
+    var cell = 'padding:9px 10px;border-bottom:1px solid #e2e8f0;font-size:13px;vertical-align:top';
+    html += sectionTitle('TIÊU CHÍ CHẤM ĐIỂM ĐỒ ÁN (THANG ' + fmtPoints(total) + ')') +
+      '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e2e8f0;border-radius:10px;border-collapse:separate;overflow:hidden;margin-bottom:12px">' +
+      '<tr><td style="' + cell + ';background:#eff6ff;color:#1e3a8a;font-weight:700;width:24px">#</td><td style="' + cell + ';background:#eff6ff;color:#1e3a8a;font-weight:700">Tiêu chí</td><td style="' + cell + ';background:#eff6ff;color:#1e3a8a;font-weight:700;text-align:right;width:52px">Điểm</td></tr>' +
+      settings.rubric.items.map(function (it, i) {
+        return '<tr><td style="' + cell + ';color:#64748b">' + (i + 1) + '</td><td style="' + cell + '"><b style="color:#0f172a">' + htmlEsc(it.name) + '</b>' +
+          (it.desc ? '<div style="margin-top:3px;color:#475569;line-height:1.6">' + htmlEsc(it.desc) + '</div>' : '') + '</td>' +
+          '<td style="' + cell + ';text-align:right;font-weight:700;color:#0f172a">' + fmtPoints(it.points) + '</td></tr>';
+      }).join('') +
+      '<tr><td style="' + cell + ';border-bottom:0"></td><td style="' + cell + ';border-bottom:0;font-weight:700">Tổng</td><td style="' + cell + ';border-bottom:0;text-align:right;font-weight:800;color:#1d4ed8">' + fmtPoints(total) + '</td></tr>' +
+      '</table>' +
+      (settings.rubric.footer ? '<div style="margin:0 0 22px;padding:12px 14px;border-radius:8px;background:#eff6ff;border-left:3px solid #2563eb;color:#1e3a8a;font-size:13px;line-height:1.65">' + htmlEsc(settings.rubric.footer) + '</div>' : '');
+  }
+  html += emailButton(SITE_URL + 'tien-do.html', 'Mở cổng nộp tiến độ');
+
+  var subject = '[IS355] Góp ý tiến độ đồ án (' + f.round + ') - Nhóm ' + g.groupName;
+  var text = 'Góp ý tiến độ đồ án (' + f.round + ') - Nhóm ' + g.groupName + ' (' + g.groupCode + ')\n' +
+    (f.strengths.length ? '\nĐiểm tốt:\n- ' + f.strengths.join('\n- ') + '\n' : '') +
+    (f.todo.length ? '\nCần hoàn thiện cho đồ án:\n' + f.todo.map(function (x, i) { return (i + 1) + '. ' + x; }).join('\n') + '\n' : '') +
+    (f.extensions.length ? '\nHướng mở rộng sau môn học (tham khảo, không bắt buộc):\n- ' + f.extensions.join('\n- ') + '\n' : '') +
+    (f.note ? '\nGhi chú: ' + f.note + '\n' : '');
+  return { subject: subject, html: emailShell('Góp ý tiến độ đồ án ' + f.round + ' - ' + g.title, 'Góp ý tiến độ đồ án', html), text: text };
+}
+
 // doPost routes for the smart features (admin ones check the key themselves).
 var SMART_ACTIONS = {
   resolveRef: handleResolveRef,
@@ -2304,5 +2619,9 @@ var SMART_ACTIONS = {
   manageSlots: handleManageSlots,
   bookSlot: handleBookSlot,
   sendDefenseReminders: handleSendDefenseReminders,
-  aiReviewDraft: handleAiReviewDraft
+  aiReviewDraft: handleAiReviewDraft,
+  feedbackAdmin: handleFeedbackAdmin,
+  saveFeedback: handleSaveFeedback,
+  saveFeedbackSettings: handleSaveFeedbackSettings,
+  importFeedback: handleImportFeedback
 };

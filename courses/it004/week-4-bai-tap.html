@@ -445,21 +445,6 @@ SET DIEMTB = (
           WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
       )
 );</code></pre></div>
-              <details><summary>Cách khác (UPDATE ... FROM ... JOIN)</summary>
-                <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">UPDATE HOCVIEN
-SET DIEMTB = t.Diem
-FROM HOCVIEN
-JOIN (
-    SELECT kq.MAHV, AVG(kq.DIEM) AS Diem
-    FROM KETQUATHI kq
-    WHERE kq.LANTHI = (
-        SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
-        WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
-    )
-    GROUP BY kq.MAHV
-) t ON HOCVIEN.MAHV = t.MAHV;</code></pre></div>
-                <p>Cú pháp <code>UPDATE ... FROM ... JOIN</code> (đặc trưng của SQL Server) tính điểm trung bình 1 lần bằng <code>GROUP BY</code> trong bảng dẫn xuất <code>t</code>, rồi <code>JOIN</code> thẳng vào <code>HOCVIEN</code> - Cho cùng kết quả với cách scalar subquery ở trên, nhưng chỉ chạy 1 lượt tính toán cho tất cả học viên thay vì lặp lại subquery cho từng dòng, nên thường nhanh hơn trên bảng lớn. Mẹo an toàn: Chạy thử phần <code>SELECT</code> bên trong <code>t</code> trước khi <code>UPDATE</code> để kiểm tra số liệu đúng chưa.</p>
-              </details>
               <div class="qa-explain">
                 <div><span class="qa-explain-label">LÀ GÌ?</span><p>Subquery lồng trong cùng dùng <code>MAX(LANTHI)</code> để chỉ lấy đúng lần thi sau cùng của từng cặp (<code>MAHV</code>, <code>MAMH</code>); subquery ngoài <code>AVG(DIEM)</code> trên đúng tập đã lọc đó cho từng học viên.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Không thể <code>AVG(DIEM)</code> trực tiếp trên toàn bộ <code>KETQUATHI</code> vì 1 học viên có thể có nhiều dòng cho cùng 1 môn (thi lại) - Nếu không lọc lần thi sau cùng, điểm trung bình sẽ bị lệch do tính luôn cả những lần thi trước đó chưa đạt.</p></div>
@@ -956,30 +941,23 @@ ORDER BY COUNT(*) DESC;</code></pre></div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 27 (PHẦN III) · CORRELATED SUBQUERY ... MAX</p>
+              <p class="eyebrow">CÂU 27 (PHẦN III) · GROUP BY ... HAVING &gt;= ALL</p>
               <p><strong>Đề bài:</strong> Trong từng lớp, tìm học viên (mã học viên, họ tên) có số môn đạt điểm 9,10 nhiều nhất.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT t.MALOP, t.MAHV, t.HOTEN, t.SoMon
-FROM (
-    SELECT hv.MALOP, hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, COUNT(*) AS SoMon
-    FROM HOCVIEN hv
-    JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
-    WHERE kq.DIEM IN (9, 10)
-    GROUP BY hv.MALOP, hv.MAHV, hv.HO, hv.TEN
-) t
-WHERE t.SoMon = (
-    SELECT MAX(t2.SoMon)
-    FROM (
-        SELECT hv2.MALOP, hv2.MAHV, COUNT(*) AS SoMon
-        FROM HOCVIEN hv2
-        JOIN KETQUATHI kq2 ON hv2.MAHV = kq2.MAHV
-        WHERE kq2.DIEM IN (9, 10)
-        GROUP BY hv2.MALOP, hv2.MAHV
-    ) t2
-    WHERE t2.MALOP = t.MALOP
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT hv.MALOP, hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, COUNT(*) AS SoMon
+FROM HOCVIEN hv
+JOIN KETQUATHI kq ON hv.MAHV = kq.MAHV
+WHERE kq.DIEM IN (9, 10)
+GROUP BY hv.MALOP, hv.MAHV, hv.HO, hv.TEN
+HAVING COUNT(*) &gt;= ALL (
+    SELECT COUNT(*)
+    FROM HOCVIEN hv2
+    JOIN KETQUATHI kq2 ON hv2.MAHV = kq2.MAHV
+    WHERE kq2.DIEM IN (9, 10) AND hv2.MALOP = hv.MALOP
+    GROUP BY hv2.MAHV
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Truy vấn con <code>t</code> tính số môn đạt điểm 9-10 của từng học viên; truy vấn con <code>t2</code> tính lại số liệu tương tự rồi lấy <code>MAX</code> theo đúng lớp tương ứng (<code>t2.MALOP = t.MALOP</code>) để so sánh riêng cho từng lớp.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 26 (so sánh toàn trường), câu này phải tìm giá trị lớn nhất riêng cho từng lớp - Không thể dùng chung 1 giá trị <code>MAX</code> như Câu 19/24, nên phải tương quan (correlated) <code>MAX</code> theo đúng <code>MALOP</code> đang xét.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Truy vấn ngoài <code>GROUP BY</code> theo học viên để đếm số môn đạt điểm 9-10; subquery trong <code>HAVING</code> đếm số liệu tương tự cho từng học viên cùng lớp (<code>hv2.MALOP = hv.MALOP</code>), và <code>&gt;= ALL</code> giữ lại học viên có số lượng lớn hơn hoặc bằng tất cả bạn cùng lớp.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Khác Câu 26 (so sánh toàn trường), câu này phải tìm giá trị lớn nhất riêng cho từng lớp, nên subquery phải tương quan (correlated) theo đúng <code>MALOP</code> đang xét - Điều kiện so sánh trên giá trị đã gom nhóm (<code>COUNT(*)</code>) nên đặt ở <code>HAVING</code>, không phải <code>WHERE</code>. Được phép dùng <code>hv.MALOP</code> trong subquery vì cột này có trong <code>GROUP BY</code>.</p></div>
               </div>
             </div>
 
@@ -996,27 +974,21 @@ GROUP BY MAGV, HOCKY, NAM;</code></pre></div>
             </div>
 
             <div class="qa-block">
-              <p class="eyebrow">CÂU 29 (PHẦN III) · CORRELATED SUBQUERY ... MAX</p>
+              <p class="eyebrow">CÂU 29 (PHẦN III) · GROUP BY ... HAVING &gt;= ALL</p>
               <p><strong>Đề bài:</strong> Trong từng học kỳ của từng năm, tìm giáo viên (mã giáo viên, họ tên) giảng dạy nhiều nhất.</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT t.MAGV, gv.HOTEN, t.HOCKY, t.NAM, t.SoLuot
-FROM (
-    SELECT MAGV, HOCKY, NAM, COUNT(*) AS SoLuot
-    FROM GIANGDAY
-    GROUP BY MAGV, HOCKY, NAM
-) t
-JOIN GIAOVIEN gv ON t.MAGV = gv.MAGV
-WHERE t.SoLuot = (
-    SELECT MAX(t2.SoLuot)
-    FROM (
-        SELECT MAGV, COUNT(*) AS SoLuot
-        FROM GIANGDAY
-        WHERE HOCKY = t.HOCKY AND NAM = t.NAM
-        GROUP BY MAGV
-    ) t2
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT gd.HOCKY, gd.NAM, gd.MAGV, gv.HOTEN, COUNT(*) AS SoLuot
+FROM GIANGDAY gd
+JOIN GIAOVIEN gv ON gd.MAGV = gv.MAGV
+GROUP BY gd.HOCKY, gd.NAM, gd.MAGV, gv.HOTEN
+HAVING COUNT(*) &gt;= ALL (
+    SELECT COUNT(*)
+    FROM GIANGDAY gd2
+    WHERE gd2.HOCKY = gd.HOCKY AND gd2.NAM = gd.NAM
+    GROUP BY gd2.MAGV
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Truy vấn con <code>t</code> tính số lượt phân công (số dòng <code>GIANGDAY</code>) của từng giáo viên theo từng (học kỳ, năm); so sánh với <code>MAX</code> của đúng học kỳ/năm đó (tương quan qua <code>HOCKY</code>, <code>NAM</code>) để giữ lại giáo viên dạy nhiều nhất trong từng nhóm.</p></div>
-                <div><span class="qa-explain-label">VÌ SAO?</span><p>Tương tự Câu 27, "nhiều nhất" ở đây là nhiều nhất riêng trong từng học kỳ/năm - Không phải nhiều nhất toàn bộ dữ liệu, nên <code>MAX</code> phải tương quan theo đúng <code>(HOCKY, NAM)</code> đang xét.</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Truy vấn ngoài đếm số lượt phân công (số dòng <code>GIANGDAY</code>) của từng giáo viên theo từng (học kỳ, năm); subquery trong <code>HAVING</code> đếm số lượt của mọi giáo viên trong đúng học kỳ/năm đó (tương quan qua <code>HOCKY</code>, <code>NAM</code>), <code>&gt;= ALL</code> giữ lại giáo viên dạy nhiều nhất trong từng nhóm.</p></div>
+                <div><span class="qa-explain-label">VÌ SAO?</span><p>Tương tự Câu 27, "nhiều nhất" ở đây là nhiều nhất riêng trong từng học kỳ/năm - Không phải nhiều nhất toàn bộ dữ liệu, nên subquery phải tương quan theo đúng <code>(HOCKY, NAM)</code> đang xét.</p></div>
               </div>
             </div>
 
@@ -1121,31 +1093,25 @@ WHERE NOT EXISTS (
             <div class="qa-block">
               <p class="eyebrow">CÂU 35 (PHẦN III) · CORRELATED SUBQUERY ... MAX</p>
               <p><strong>Đề bài:</strong> ** Tìm học viên (mã học viên, họ tên) có điểm thi cao nhất trong từng môn (lấy điểm ở lần thi sau cùng).</p>
-              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT t.MAMH, mh.TENMH, t.MAHV, t.HOTEN, t.Diem
-FROM (
-    SELECT kq.MAMH, hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.DIEM AS Diem
-    FROM KETQUATHI kq
-    JOIN HOCVIEN hv ON kq.MAHV = hv.MAHV
-    WHERE kq.LANTHI = (
-        SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
-        WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
-    )
-) t
-JOIN MONHOC mh ON t.MAMH = mh.MAMH
-WHERE t.Diem = (
-    SELECT MAX(t2.Diem)
-    FROM (
-        SELECT kq3.MAMH, kq3.DIEM AS Diem
-        FROM KETQUATHI kq3
-        WHERE kq3.LANTHI = (
-            SELECT MAX(kq4.LANTHI) FROM KETQUATHI kq4
-            WHERE kq4.MAHV = kq3.MAHV AND kq4.MAMH = kq3.MAMH
-        )
-    ) t2
-    WHERE t2.MAMH = t.MAMH
+              <div class="code-block"><button class="copy-btn" type="button">Copy</button><pre><code class="language-sql">SELECT kq.MAMH, mh.TENMH, hv.MAHV, hv.HO + N' ' + hv.TEN AS HOTEN, kq.DIEM
+FROM KETQUATHI kq
+JOIN HOCVIEN hv ON kq.MAHV = hv.MAHV
+JOIN MONHOC mh ON kq.MAMH = mh.MAMH
+WHERE kq.LANTHI = (
+    SELECT MAX(kq2.LANTHI) FROM KETQUATHI kq2
+    WHERE kq2.MAHV = kq.MAHV AND kq2.MAMH = kq.MAMH
+)
+AND kq.DIEM = (
+    SELECT MAX(kq3.DIEM)
+    FROM KETQUATHI kq3
+    WHERE kq3.MAMH = kq.MAMH
+      AND kq3.LANTHI = (
+          SELECT MAX(kq4.LANTHI) FROM KETQUATHI kq4
+          WHERE kq4.MAHV = kq3.MAHV AND kq4.MAMH = kq3.MAMH
+      )
 );</code></pre></div>
               <div class="qa-explain">
-                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Truy vấn con <code>t</code> dựng danh sách điểm ở đúng lần thi sau cùng của từng cặp (học viên, môn học) - Kỹ thuật giống Câu 17; sau đó lọc lại những dòng có điểm bằng đúng điểm cao nhất của riêng môn đó (<code>t2.MAMH = t.MAMH</code>).</p></div>
+                <div><span class="qa-explain-label">LÀ GÌ?</span><p>Điều kiện thứ nhất trong <code>WHERE</code> chỉ giữ dòng ở đúng lần thi sau cùng của từng cặp (học viên, môn học) - Kỹ thuật giống Câu 17; điều kiện thứ hai so sánh điểm với điểm cao nhất của riêng môn đó (<code>kq3.MAMH = kq.MAMH</code>), cũng chỉ tính trên các lần thi sau cùng.</p></div>
                 <div><span class="qa-explain-label">VÌ SAO?</span><p>Đây là bài toán "giá trị lớn nhất theo từng nhóm" (giống Câu 27, Câu 29) áp dụng trên tập dữ liệu đã lọc lần thi sau cùng (giống Câu 17) - Phải kết hợp cả 2 kỹ thuật cùng lúc: Vừa tương quan <code>MAX</code> theo <code>MAMH</code>, vừa loại các lần thi không phải sau cùng.</p></div>
               </div>
             </div>

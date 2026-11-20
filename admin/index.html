@@ -234,6 +234,10 @@
     .ms-table input{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font:inherit;font-size:13px}
     .ms-table td{vertical-align:top;white-space:normal}
     .ms-table td:first-child input{width:56px}
+    .ms-table input[type=radio]{width:auto;accent-color:var(--primary)}
+    .pg-contrib{margin:4px 0;padding:6px 8px;border-radius:7px;background:var(--bg)}
+    .pg-contrib div{display:flex;gap:6px}
+    .pg-contrib b{min-width:34px;text-align:right;color:var(--primary-ink)}
     .pg-table td,.pg-table th{vertical-align:top;white-space:normal}
     .pg-table td:first-child{min-width:170px}
     .pg-cell{min-width:190px;font-size:12px;line-height:1.6;color:var(--body)}
@@ -243,6 +247,65 @@
     .pg-missing{color:var(--warn-text);font-weight:700}
     .pg-head-actions{display:flex;flex-direction:column;gap:4px;align-items:flex-start}
     .group-card .refs-ieee li{margin-bottom:6px}
+    .ck-table th,.ck-table td{vertical-align:top}
+    .ck-table td:first-child{min-width:180px;white-space:normal}
+    .ck-table th.ck-week{text-align:center;border-bottom:0;padding-bottom:0;color:var(--primary-ink)}
+    .ck-table th.ck-item{min-width:118px;white-space:normal;text-transform:none;letter-spacing:0;font-size:11.5px;color:var(--ink)}
+    .ck-table th.ck-item small{display:block;margin-top:3px;color:var(--muted);font-weight:600}
+    .ck-table th.ck-item .link-btn{margin:2px 0 0}
+    .ck-cell{padding:6px!important}
+    .ck-btn{display:flex;flex-direction:column;gap:1px;width:100%;min-height:42px;padding:6px 8px;border:1px solid transparent;border-radius:8px;background:var(--bg);color:var(--muted);font:inherit;font-size:11.5px;line-height:1.35;text-align:left;cursor:pointer}
+    .ck-btn:hover{border-color:var(--primary)}
+    .ck-btn b{font-size:12px}
+    .ck-btn small{font-size:10.5px;opacity:.9}
+    .ck-btn.ck-ok{background:var(--ok-bg);color:var(--ok-text)}
+    .ck-btn.ck-late{background:var(--warn-bg);color:var(--warn-text)}
+    .ck-btn.ck-overdue{background:var(--danger-bg);color:var(--danger-text)}
+    .ck-btn.ck-open,.ck-btn.ck-alt{background:var(--tint);color:var(--primary-ink)}
+    .ck-btn .ck-note{font-style:italic}
+    .ck-row-sum{display:block;margin-top:4px;color:var(--muted);font-size:11px}
+    .ck-modal{max-width:600px!important;max-height:calc(100vh - 40px);overflow:auto}
+    .ck-grid{display:grid;grid-template-columns:200px 90px minmax(0,1fr);gap:0 12px}
+    .ck-modal{max-width:720px!important}
+    .ck-fmt code{padding:1px 5px;border-radius:4px;background:var(--tint);color:var(--primary-ink);font-size:11px}
+    #mail-overlay{z-index:56}
+    #confirm-overlay{z-index:57}
+    .ck-score{font-weight:800;color:var(--primary-ink)}
+    .ck-common textarea{min-height:200px;font:13px/1.6 var(--font-sans)!important}
+    .ck-jimp td,.ck-jimp th{vertical-align:top;white-space:normal}
+    .ck-jimp select{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font:inherit;font-size:12.5px}
+    .ck-jimp .ck-fbprev{max-width:260px;color:var(--muted);font-size:11.5px;white-space:pre-line;max-height:64px;overflow:hidden}
+    .ck-fb-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+    .ck-fb-head label{margin:0!important}
+    .ck-fb textarea{min-height:170px;font:13.5px/1.6 var(--font-sans)!important}
+    .ck-fb textarea:disabled{opacity:.5}
+    .ck-fbtag{margin-top:2px;font-weight:700}
+    .ck-fb-draft,.ck-fb-edited{color:var(--warn-text)}
+    .ck-btn.ck-ok .ck-fb-sent{color:var(--ok-text)}
+    @media(max-width:560px){.ck-grid{grid-template-columns:1fr}}
+    .ck-sum{min-width:130px;white-space:normal!important}
+    .ck-sum b{font-size:17px;color:var(--ink)}
+    .ck-sum small{display:block;margin-top:3px;color:var(--muted);font-size:11px;line-height:1.4}
+    .ck-sum .ck-miss{color:var(--danger-text);font-weight:700}
+    .ck-bar{display:block;height:5px;margin-top:5px;border-radius:99px;background:var(--line);overflow:hidden}
+    .ck-bar i{display:block;height:100%;border-radius:99px;background:var(--primary)}
+    .ck-sum-ok .ck-bar i{background:var(--ok-accent)}
+    .ck-sum-bad .ck-bar i{background:var(--danger-accent)}
+    .ck-legend{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:12px}
+    .ck-dot{display:inline-block;width:10px;height:10px;margin-right:-4px;border-radius:3px;background:var(--bg);border:1px solid var(--line)}
+    .ck-dot.ck-ok{background:var(--ok-accent);border-color:var(--ok-accent)}
+    .ck-dot.ck-late{background:var(--warn-accent);border-color:var(--warn-accent)}
+    .ck-dot.ck-overdue{background:var(--danger-accent);border-color:var(--danger-accent)}
+    .ck-dot.ck-open{background:var(--primary);border-color:var(--primary)}
+    .ck-items input,.ck-items select{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font:inherit;font-size:12.5px}
+    .ck-items td{vertical-align:top;white-space:normal}
+    .ck-items td:first-child input{width:58px}
+    .ck-items td:nth-child(3){min-width:200px}
+    .ck-dt{display:grid;gap:4px;min-width:190px}
+    .ck-dt label{display:grid;grid-template-columns:30px 1fr;align-items:center;gap:4px;color:var(--muted);font-size:10.5px;font-weight:700}
+    .ck-imp-preview{max-height:300px;overflow:auto;margin-bottom:16px;font-size:12.5px;color:var(--body)}
+    .ck-imp-preview table td,.ck-imp-preview table th{padding:6px 8px}
+    .ck-imp-preview .ck-warn{color:var(--warn-text)}
     @media(max-width:600px){.field-row{grid-template-columns:1fr}.q-mini{grid-template-columns:1fr}}
 
     /* Login */
@@ -335,6 +398,7 @@
       <button type="button" class="ad-nav" data-view="roster"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.5c2 .8 3 2.8 3 5.5"/></svg>Danh sách lớp<span class="count" id="nav-roster">0</span></button>
       <button type="button" class="ad-nav" data-view="groups"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M8.5 13.5l2 2 4-4"/></svg>Đăng ký đề tài<span class="count" id="nav-groups">0</span></button>
       <button type="button" class="ad-nav" data-view="progress"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-4 3 3 5-6"/></svg>Tiến độ đồ án<span class="count" id="nav-progress">0</span></button>
+      <button type="button" class="ad-nav" data-view="checklist"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M8 8.5l1.5 1.5 3-3"/><path d="M8 15l1.5 1.5 3-3"/><path d="M15 9h1.5M15 15.5h1.5"/></svg>Checklist bài nộp<span class="count" id="nav-checklist">0</span></button>
       <button type="button" class="ad-nav" data-view="feedback"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12.5h5"/></svg>Góp ý tiến độ<span class="count" id="nav-feedback">0</span></button>
       <button type="button" class="ad-nav" data-view="defense"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>Lịch bảo vệ<span class="count" id="nav-defense">0</span></button>
 
@@ -567,7 +631,7 @@
           <h3>Các mốc nộp <button type="button" class="outline-button btn-sm" id="ms-save">Lưu các mốc</button></h3>
           <div class="table-wrap">
             <table class="ms-table">
-              <thead><tr><th>Mã</th><th>Tên mốc</th><th>Cần nộp</th><th>Hạn</th><th>Đã nộp</th><th></th></tr></thead>
+              <thead><tr><th>Mã</th><th>Tên mốc</th><th>Cần nộp</th><th>Hạn</th><th title="Mốc nộp bài cuối kỳ: Form đầy đủ 5 sản phẩm, chỉ nhóm đã duyệt, khóa sau hạn">Bài cuối</th><th>Đã nộp</th><th></th></tr></thead>
               <tbody id="ms-tbody"></tbody>
             </table>
           </div>
@@ -583,6 +647,54 @@
             </table>
           </div>
           <p class="empty" id="pg-empty" hidden>Chưa có nhóm nào đăng ký.</p>
+        </div>
+      </section>
+
+      <!-- Submission checklist -->
+      <section class="view" id="view-checklist">
+        <div class="view-head">
+          <div><p class="eyebrow">IS355 · ĐỒ ÁN</p><h1>Checklist 5 file đồ án</h1></div>
+          <div class="row-actions">
+            <button type="button" class="outline-button btn-sm" id="ck-import-btn">Nhập file Moodle (CSV)</button>
+            <button type="button" class="outline-button btn-sm" id="ck-jimp-btn">Nhập nhận xét (JSON)</button>
+            <button type="button" class="outline-button btn-sm" id="ck-export">Tải CSV</button>
+          </div>
+        </div>
+        <div class="card settings-bar" id="ck-summary"></div>
+        <div class="toolbar">
+          <input type="search" id="ck-search" placeholder="Tìm nhóm, mã nhóm, MSSV, họ tên...">
+          <select id="ck-class"><option value="">Cả 2 lớp</option><option value="IS355.R11.CTTT.1">IS355.R11.CTTT.1</option><option value="IS355.R11.CTTT.2">IS355.R11.CTTT.2</option></select>
+          <select id="ck-show"><option value="">Mọi nhóm</option><option value="missing">Thiếu file đã hết hạn</option><option value="notall">Chưa nộp đủ 5 file</option><option value="all">Đã nộp đủ</option><option value="late">Có file nộp trễ</option><option value="nofb">Có file đã nộp chưa nhận xét</option><option value="fbdraft">Có nhận xét chưa gửi</option></select>
+          <select id="ck-sort"><option value="">Thứ tự đăng ký</option><option value="fewest">Ít file nhất trước</option></select>
+        </div>
+        <div class="card">
+          <div class="table-wrap">
+            <table class="ck-table">
+              <thead id="ck-thead"></thead>
+              <tbody id="ck-tbody"></tbody>
+            </table>
+          </div>
+          <p class="empty" id="ck-empty" hidden>Chưa có nhóm nào.</p>
+          <p class="field-hint ck-legend"><span class="ck-dot ck-ok"></span>Đúng hạn <span class="ck-dot ck-late"></span>Nộp trễ <span class="ck-dot ck-overdue"></span>Quá hạn chưa nộp <span class="ck-dot ck-open"></span>Đang mở <span class="ck-dot"></span>Chưa mở / chưa giao / không áp dụng · Bấm vào ô để đánh dấu hoặc sửa thời gian nộp. Hạn tính theo lớp của trưởng nhóm.</p>
+        </div>
+
+        <div class="card" style="margin-top:20px">
+          <h3>Các file cần nộp <span class="row-actions"><button type="button" class="outline-button btn-sm" id="ck-items-reset">Khôi phục 5 file mặc định</button><button type="button" class="outline-button btn-sm" id="ck-items-save">Lưu danh sách</button></span></h3>
+          <p class="field-hint" style="margin:-4px 0 12px">Thời gian mở / hạn nộp lấy theo Moodle, riêng từng lớp. Để trống của một lớp nghĩa là lớp đó chưa được giao: File đó chưa bị tính là thiếu. Khi Moodle giao File 4, File 5 hoặc lớp CTTT.1 có hạn mới, cập nhật ở đây rồi bấm Lưu. "Lấy từ cổng" tự điền thời gian nộp từ một mốc của cổng Nộp tiến độ (ví dụ M3).</p>
+          <div class="table-wrap">
+            <table class="ck-items">
+              <thead><tr><th>Tuần</th><th>Tên file</th><th>IS355.R11.CTTT.1</th><th>IS355.R11.CTTT.2</th><th>Lấy từ cổng</th><th></th></tr></thead>
+              <tbody id="ck-items-tbody"></tbody>
+            </table>
+          </div>
+          <button type="button" class="link-btn" id="ck-item-add" style="margin:10px 0 0">+ Thêm bài</button>
+        </div>
+
+        <div class="card ck-common" style="margin-top:20px">
+          <h3>Lưu ý chung theo file <button type="button" class="outline-button btn-sm" id="ck-common-save">Lưu lưu ý chung</button></h3>
+          <p class="field-hint" style="margin:-4px 0 12px">Gửi kèm ở cuối mọi email nhận xét của file được chọn, ví dụ cách đọc mức ưu tiên và các lỗi nhiều nhóm cùng gặp. Cùng định dạng với nhận xét: <code># Tiêu đề</code>, mỗi dòng một ý, <code>**in đậm**</code>, <code>[Cao]</code> <code>[TB]</code> <code>[Thấp]</code>. Để trống nếu không cần.</p>
+          <div class="field"><label for="ck-common-item">FILE</label><select id="ck-common-item"></select></div>
+          <div class="field"><label for="ck-common-text">LƯU Ý CHUNG</label><textarea id="ck-common-text" class="plain" rows="10"></textarea></div>
         </div>
       </section>
 
@@ -793,6 +905,62 @@
     </div>
   </div>
 
+  <!-- Checklist: one cell -->
+  <div class="modal-overlay" id="ck-overlay">
+    <div class="modal-card ck-modal">
+      <h3 id="ck-title">-</h3>
+      <p id="ck-sub" style="margin-bottom:16px"></p>
+      <label class="check-row" style="margin-bottom:14px"><input type="checkbox" id="ck-done"> Đã nộp</label>
+      <div class="ck-grid">
+        <div class="field"><label for="ck-time">THỜI GIAN NỘP</label><input type="datetime-local" id="ck-time"></div>
+        <div class="field"><label for="ck-score">ĐIỂM (NỘI BỘ)</label><input type="text" id="ck-score" inputmode="decimal" maxlength="5" placeholder="0-10"></div>
+        <div class="field"><label for="ck-note">GHI CHÚ RIÊNG</label><input type="text" id="ck-note" maxlength="300" placeholder="Không gửi nhóm"></div>
+      </div>
+      <div class="field ck-fb">
+        <div class="ck-fb-head"><label for="ck-fb">NHẬN XÉT GỬI NHÓM</label><span id="ck-fb-state" class="ref-badge muted">Chưa có</span></div>
+        <textarea id="ck-fb" rows="12" maxlength="12000" placeholder="# Điểm đạt được&#10;- Pipeline có input / output rõ ở từng bước&#10;# Điểm cần lưu ý&#10;[Cao] **Ngưỡng:** Chọn trên tập hiệu chuẩn riêng&#10;[TB] Bổ sung bảng so sánh với các công trình liên quan&#10;[Thấp] Thống nhất định dạng trích dẫn IEEE"></textarea>
+        <p class="field-hint ck-fmt">Định dạng: <code># Tiêu đề</code> mở một mục, mỗi dòng là một ý, <code>**chữ**</code> in đậm, mở đầu dòng bằng <code>[Cao]</code> <code>[TB]</code> <code>[Thấp]</code> để gắn nhãn ưu tiên. Điểm và ghi chú riêng không bao giờ được gửi.</p>
+        <p class="field-hint" id="ck-fb-hint"></p>
+      </div>
+      <p class="msg" id="ck-msg"></p>
+      <div class="modal-actions">
+        <button type="button" class="outline-button" id="ck-cancel">Hủy</button>
+        <button type="button" class="outline-button" id="ck-preview">Xem trước email</button>
+        <button type="button" class="outline-button" id="ck-save">Lưu</button>
+        <button type="button" class="primary-button" id="ck-send">Lưu &amp; gửi email <span>›</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checklist: import comments (JSON) -->
+  <div class="modal-overlay" id="ck-jimp-overlay">
+    <div class="modal-card" style="max-width:860px;max-height:calc(100vh - 40px);overflow:auto">
+      <h3>Nhập nhận xét từ file JSON</h3>
+      <p style="margin-bottom:16px">Nhận xét được lưu dạng <b>nháp</b>, chưa gửi email. Hệ thống tự khớp tên nhóm, dòng nào chưa khớp thì chọn nhóm bằng tay. Sau khi lưu, mở từng ô để xem trước email rồi gửi.</p>
+      <div class="field"><label for="ck-jimp-file">FILE JSON</label><input type="file" id="ck-jimp-file" accept=".json,application/json"></div>
+      <div id="ck-jimp-preview" class="ck-imp-preview" style="max-height:none"></div>
+      <div class="modal-actions">
+        <button type="button" class="outline-button" id="ck-jimp-cancel">Hủy</button>
+        <button type="button" class="primary-button" id="ck-jimp-ok" disabled>Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checklist: import Moodle grading worksheet -->
+  <div class="modal-overlay" id="ck-imp-overlay">
+    <div class="modal-card" style="max-width:680px">
+      <h3>Nhập bài nộp từ Moodle</h3>
+      <p style="margin-bottom:16px">Trong Moodle, mở bài tập ➜ View all submissions ➜ Grading action: <b>Download grading worksheet</b>. Chọn đúng bài bên dưới rồi chọn file CSV vừa tải. Hệ thống khớp MSSV với nhóm và lấy cột thời gian nộp (Last modified (submission)).</p>
+      <div class="field"><label for="ck-imp-item">BÀI</label><select id="ck-imp-item"></select></div>
+      <div class="field"><label for="ck-imp-file">FILE CSV</label><input type="file" id="ck-imp-file" accept=".csv,text/csv"></div>
+      <div id="ck-imp-preview" class="ck-imp-preview"></div>
+      <div class="modal-actions">
+        <button type="button" class="outline-button" id="ck-imp-cancel">Hủy</button>
+        <button type="button" class="primary-button" id="ck-imp-ok" disabled>Lưu</button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="confirm-overlay">
     <div class="modal-card">
       <h3 id="confirm-title">Xác nhận</h3>
@@ -847,7 +1015,7 @@
     var state = {
       key: '', codes: [], students: [], groups: [], regOpen: true, is355Loaded: false,
       manualClosed: false, deadline: '', mailQuota: -1, statusFilter: '',
-      milestones: [], progress: {}, slots: [], defenseOpen: false, aiEnabled: false, etherscanEnabled: false, findGroupPosts: 0
+      milestones: [], progress: {}, finalLate: { all: false, groups: [] }, slots: [], defenseOpen: false, aiEnabled: false, etherscanEnabled: false, findGroupPosts: 0
     };
     var $ = function (id) { return document.getElementById(id); };
 
@@ -1003,10 +1171,11 @@
 
     /* ---------- Navigation ---------- */
 
-    var VIEWS = ['overview', 'codes', 'roster', 'groups', 'progress', 'feedback', 'defense'];
+    var VIEWS = ['overview', 'codes', 'roster', 'groups', 'progress', 'checklist', 'feedback', 'defense'];
     function showView(name) {
       if (VIEWS.indexOf(name) === -1) name = 'overview';
       if (name === 'feedback' && fb && !fb.loaded && !fb.loading && state.key) loadFeedback();
+      if (name === 'checklist' && ck && !ck.loaded && !ck.loading && state.key) loadChecklist();
       VIEWS.forEach(function (v) { $('view-' + v).classList.toggle('active', v === name); });
       document.querySelectorAll('.ad-nav[data-view]').forEach(function (b) { b.classList.toggle('active', b.dataset.view === name); });
       if (location.hash !== '#' + name) {
@@ -1204,6 +1373,7 @@
         state.mailQuota = typeof data.mailQuota === 'number' ? data.mailQuota : -1;
         state.milestones = data.milestones || [];
         state.progress = data.progress || {};
+        state.finalLate = data.finalLate || { all: false, groups: [] };
         state.slots = data.slots || [];
         state.defenseOpen = !!data.defenseOpen;
         state.aiEnabled = !!data.aiEnabled;
@@ -1218,6 +1388,7 @@
         renderProgress();
         renderDefense();
         if (fb.loaded) renderFeedback(); else if (!fb.loading) loadFeedback(true);
+        if (ck.loaded) renderChecklist(); else if (!ck.loading) loadChecklist(true);
       }).catch(function (err) {
         if (window.console) console.error(err);
         toast('Không tải được dữ liệu IS355. Hãy kiểm tra Apps Script đã deploy bản mới chưa.', 'error');
@@ -2406,6 +2577,7 @@
           '<td><input data-f="name" value="' + esc(m.name) + '" maxlength="80"></td>' +
           '<td><input data-f="desc" value="' + esc(m.desc) + '" maxlength="300"></td>' +
           '<td><input data-f="deadline" type="date" value="' + esc(toDateInput(m.deadline)) + '"></td>' +
+          '<td style="text-align:center"><input type="radio" name="ms-final" data-final' + (m.final ? ' checked' : '') + ' aria-label="Bài cuối"></td>' +
           '<td><b>' + done + '</b>/' + state.groups.length + '</td>' +
           '<td><button type="button" class="outline-button btn-sm btn-danger-outline" data-ms-del="' + i + '">Xóa</button></td></tr>';
       }).join('');
@@ -2414,7 +2586,7 @@
       return Array.prototype.map.call($('ms-tbody').querySelectorAll('tr'), function (tr) {
         var v = function (f) { return tr.querySelector('[data-f="' + f + '"]').value.trim(); };
         var dl = v('deadline');
-        return { id: v('id'), name: v('name'), desc: v('desc'), deadline: dl ? new Date(dl + 'T23:59:00').toISOString() : '' };
+        return { id: v('id'), name: v('name'), desc: v('desc'), deadline: dl ? new Date(dl + 'T23:59:00').toISOString() : '', final: tr.querySelector('[data-final]').checked };
       });
     }
     $('ms-tbody').addEventListener('input', function () { msDraft = readMilestoneEditor(); });
@@ -2457,6 +2629,20 @@
           (c.verified === true ? '<span class="ref-badge ok">Đã verify' + (c.name ? ' · ' + esc(c.name) : '') + '</span>' : c.verified === false ? '<span class="ref-badge warn">Chưa verify source</span>' : '') +
           (typeof c.txCount === 'number' ? esc(c.txCount) + (c.txCountCapped ? '+' : '') + ' giao dịch, ' + esc(c.callers) + ' ví' + (c.lastTx ? ', gần nhất ' + esc(fmtTime(c.lastTx)) : '') : '') + '</div>';
       });
+      if (check.readme) {
+        out += check.readme.ok
+          ? '<div><span class="ref-badge ok">README</span>' + esc(check.readme.path) + ' · ' + (Math.round(check.readme.size / 102.4) / 10) + ' KB</div>'
+          : '<div><span class="ref-badge bad">README</span>' + esc(check.readme.error) + '</div>';
+      }
+      var linkLabels = { report: 'Báo cáo', slides: 'Slide', video: 'Video', demo: 'DApp' };
+      var linkKeys = Object.keys(check.links || {});
+      if (linkKeys.length) {
+        out += '<div>' + linkKeys.map(function (k) {
+          var l = check.links[k];
+          return '<span class="ref-badge ' + (l.ok ? 'ok' : 'bad') + '"' + (l.ok ? '' : ' title="' + esc(l.error) + '"') + '>' + esc(linkLabels[k] || k) + (l.ok ? '' : ' ✗') + '</span>';
+        }).join('') + '</div>' +
+          linkKeys.filter(function (k) { return !check.links[k].ok; }).map(function (k) { return '<div style="color:var(--danger-text)">' + esc(linkLabels[k] || k) + ': ' + esc(check.links[k].error) + '</div>'; }).join('');
+      }
       return out ? out + '<div style="color:var(--muted)">Kiểm tra lúc ' + esc(fmtTime(check.checkedAt)) + '</div>' : '';
     }
 
@@ -2468,10 +2654,17 @@
         (state.etherscanEnabled ? ' · Etherscan: <b>đã bật</b> (verify source, số giao dịch)' : ' · Etherscan: <b>chưa bật</b>, thêm Script Property <code>ETHERSCAN_API_KEY</code> (miễn phí) để xem verify và số giao dịch');
       if (!msDraft) renderMilestoneEditor();
       $('pg-empty').hidden = groups.length > 0;
+      var late = state.finalLate;
+      var isPast = function (m) { return !!m.deadline && Date.now() > new Date(m.deadline).getTime(); };
       $('pg-thead').innerHTML = '<tr><th>Nhóm</th>' + ms.map(function (m) {
-        var missing = groups.filter(function (g) { return !(state.progress[groupCodeOf(g)] || {})[m.id]; }).length;
+        var missing = groups.filter(function (g) {
+          return !(state.progress[groupCodeOf(g)] || {})[m.id] && (!m.final || g.reviewStatus === 'approved');
+        }).length;
         return '<th><div class="pg-head-actions"><span>' + esc(m.id) + ' · ' + esc(m.name) + '</span>' +
+          (m.final ? '<span class="ref-badge info">Bài cuối</span>' : '') +
           (m.deadline ? '<span style="text-transform:none;letter-spacing:0">Hạn ' + esc(fmtDay(m.deadline)) + '</span>' : '') +
+          (m.final && isPast(m) ? '<span class="ref-badge ' + (late.all ? 'warn' : 'muted') + '">' + (late.all ? 'Đang mở nộp trễ cho tất cả' : 'Đã khóa' + (late.groups.length ? ', mở trễ ' + late.groups.length + ' nhóm' : '')) + '</span>' +
+            '<button type="button" class="link-btn" style="margin:0" data-late-all="' + (late.all ? '0' : '1') + '">' + (late.all ? 'Khóa lại tất cả' : 'Mở nộp trễ cho tất cả') + '</button>' : '') +
           (missing ? '<button type="button" class="link-btn" style="margin:0" data-remind-ms="' + esc(m.id) + '">Nhắc ' + missing + ' nhóm chưa nộp</button>' : '') +
           '</div></th>';
       }).join('') + '</tr>';
@@ -2480,23 +2673,59 @@
         var p = state.progress[code] || {};
         return '<tr><td><b>' + esc(g.groupName) + '</b><br><code>' + esc(code) + '</code> ' + statusBadge(g.reviewStatus) + '</td>' + ms.map(function (m) {
           var s = p[m.id];
+          var fin = s && s.final;
+          // Final milestone after its deadline: per-group reopen / lock (unless reopened for everyone).
+          var lateCtl = '';
+          if (m.final && isPast(m) && g.reviewStatus === 'approved' && !late.all) {
+            var open = late.groups.indexOf(code) !== -1;
+            lateCtl = '<button type="button" class="link-btn" style="margin:0" data-late-group="' + esc(code) + '" data-allow="' + (open ? '0' : '1') + '">' + (open ? 'Khóa lại' : 'Mở nộp trễ') + '</button>' +
+              (open ? ' <span class="ref-badge warn">đang mở nộp trễ</span>' : '');
+          }
           if (!s) {
-            var late = m.deadline && Date.now() > new Date(m.deadline).getTime();
-            return '<td class="pg-cell"><span class="pg-missing">' + (late ? 'Trễ hạn, chưa nộp' : 'Chưa nộp') + '</span></td>';
+            if (m.final && g.reviewStatus !== 'approved') return '<td class="pg-cell"><span style="color:var(--muted)">Đề tài chưa duyệt, chưa nộp được</span></td>';
+            return '<td class="pg-cell"><span class="pg-missing">' + (isPast(m) ? 'Trễ hạn, chưa nộp' : 'Chưa nộp') + '</span>' +
+              (lateCtl ? '<div class="pg-actions">' + lateCtl + '</div>' : '') + '</td>';
           }
           var link = function (u, label) { return u ? '<div>' + label + ': <a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(u.replace(/^https:\/\//, '').slice(0, 48)) + '</a></div>' : ''; };
+          var isLate = fin ? fin.late : (m.deadline && new Date(s.timestamp) > new Date(m.deadline));
+          var who = (g.members || []).filter(function (x) { return x.studentId === s.submittedBy; })[0];
           return '<td class="pg-cell"><div><b>Nộp ' + esc(fmtTime(s.timestamp)) + '</b>' +
-            (m.deadline && new Date(s.timestamp) > new Date(m.deadline) ? ' <span class="ref-badge warn">trễ hạn</span>' : '') + '</div>' +
-            link(s.github, 'GitHub') + link(s.demo, 'Demo') + link(s.docs, 'Tài liệu') +
+            (isLate ? ' <span class="ref-badge ' + (fin ? 'bad' : 'warn') + '">' + (fin ? 'nộp trễ' : 'trễ hạn') + '</span>' : '') + '</div>' +
+            (fin && who ? '<div style="color:var(--muted)">Người nộp: ' + esc(who.fullName) + '</div>' : '') +
+            link(s.github, 'GitHub') +
+            (fin
+              ? link(s.docs, 'Báo cáo') + link(fin.slides, 'Slide') + link(fin.video, 'Video') + link(s.demo, 'DApp') +
+                '<div class="pg-contrib">' + (fin.contributions || []).map(function (c) {
+                  return '<div title="' + esc(c.tasks) + '"><b>' + esc(c.percent) + '%</b><span>' + esc(c.fullName) + ': ' + esc(c.tasks) + '</span></div>';
+                }).join('') + '</div>' +
+                (fin.pledge ? '<div><span class="ref-badge ok">Đã cam kết bài làm</span></div>' : '')
+              : link(s.demo, 'Demo') + link(s.docs, 'Tài liệu')) +
             (s.note ? '<div style="color:var(--muted)">' + esc(s.note) + '</div>' : '') +
             checkHtml(s.check) +
-            ((s.github || s.contracts.length) ? '<div class="pg-actions"><button type="button" class="link-btn" style="margin:0" data-recheck="' + esc(code) + '|' + esc(m.id) + '">Kiểm tra lại</button></div>' : '') +
+            '<div class="pg-actions">' +
+            ((s.github || s.contracts.length) ? '<button type="button" class="link-btn" style="margin:0" data-recheck="' + esc(code) + '|' + esc(m.id) + '">Kiểm tra lại</button>' : '') +
+            lateCtl + '</div>' +
             '</td>';
         }).join('') + '</tr>';
       }).join('');
     }
 
+    function setFinalLate(payload, okMsg) {
+      return busy(api(Object.assign({ action: 'setFinalLate' }, payload)).then(function (data) {
+        if (!data.ok) { toast(data.message || 'Không lưu được.', 'error'); return; }
+        state.finalLate = data.finalLate;
+        renderProgress();
+        toast(okMsg);
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    }
+
     $('pg-tbody').addEventListener('click', function (e) {
+      var lg = e.target.closest('[data-late-group]');
+      if (lg) {
+        var allow = lg.dataset.allow === '1';
+        setFinalLate({ groupCode: lg.dataset.lateGroup, allow: allow }, allow ? 'Đã mở nộp trễ cho nhóm ' + lg.dataset.lateGroup + '. Bài nộp sẽ bị gắn cờ nộp trễ.' : 'Đã khóa lại nhóm ' + lg.dataset.lateGroup + '.');
+        return;
+      }
       var b = e.target.closest('[data-recheck]');
       if (!b) return;
       var parts = b.dataset.recheck.split('|');
@@ -2509,6 +2738,20 @@
     });
 
     $('pg-thead').addEventListener('click', function (e) {
+      var la = e.target.closest('[data-late-all]');
+      if (la) {
+        var allow = la.dataset.lateAll === '1';
+        confirmBox({
+          title: allow ? 'Mở nộp trễ cho tất cả' : 'Khóa lại tất cả',
+          message: allow
+            ? 'Mọi nhóm đã duyệt sẽ nộp / nộp lại được bài cuối kỳ dù đã quá hạn. Bài nộp từ lúc này bị gắn cờ <b>nộp trễ</b>.'
+            : 'Khóa form nộp bài cuối kỳ cho tất cả nhóm, kể cả các nhóm đang được mở nộp trễ riêng.',
+          okLabel: allow ? 'Mở nộp trễ' : 'Khóa lại'
+        }).then(function (y) {
+          if (y) setFinalLate({ scope: 'all', allow: allow }, allow ? 'Đã mở nộp trễ cho tất cả nhóm.' : 'Đã khóa nộp bài cuối kỳ.');
+        });
+        return;
+      }
       var b = e.target.closest('[data-remind-ms]');
       if (!b) return;
       var ms = b.dataset.remindMs;
@@ -2525,6 +2768,770 @@
             });
           });
       }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    /* ---------- IS355: submission checklist ---------- */
+
+    // Teacher's record of which group handed in which Moodle assignment, and when.
+    var ck = { loaded: false, loading: false, items: [], entries: {}, itemsDraft: null, editing: null, imp: null };
+    var CK_KINDS = { lab: 'Lab', project: 'Đồ án', final: 'Cuối kỳ' };
+
+    function loadChecklist(silent) {
+      ck.loading = true;
+      var p = api({ action: 'checklistAdmin' }).then(function (d) {
+        if (!d.ok) { if (!silent) toast(d.message || 'Không tải được checklist.', 'error'); return; }
+        ck.loaded = true;
+        ck.items = d.items || [];
+        ck.common = d.common || {};
+        setCkEntries(d.entries || []);
+        renderChecklist();
+      }).catch(function (err) { if (!silent) toast(netError(err), 'error'); })
+        .finally(function () { ck.loading = false; });
+      return silent ? p : busy(p);
+    }
+
+    function setCkEntries(list) {
+      ck.entries = {};
+      list.forEach(function (e) { (ck.entries[e.groupCode] = ck.entries[e.groupCode] || {})[e.itemId] = e; });
+    }
+
+    function ckGroups() { return state.groups.filter(function (g) { return g.reviewStatus !== 'rejected'; }); }
+    function ckClassOf(g) {
+      var ms = g.members || [];
+      var l = ms.filter(function (m) { return m.role === 'Leader'; })[0] || ms[0];
+      return l ? l['class'] : '';
+    }
+    function ckShortClass(c) { return String(c || '').replace('IS355.R11.', ''); }
+    function ckItem(id) { return ck.items.filter(function (x) { return x.id === id; })[0]; }
+    function ckSorted() {
+      return ck.items.map(function (it, i) { return { it: it, i: i }; })
+        .sort(function (a, b) { return (a.it.week - b.it.week) || (a.i - b.i); })
+        .map(function (x) { return x.it; });
+    }
+    function ckShort(iso) {
+      var d = new Date(iso);
+      if (isNaN(d)) return '';
+      var pad = function (n) { return String(n).padStart(2, '0'); };
+      return pad(d.getDate()) + '/' + pad(d.getMonth() + 1) + ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+    }
+    function ckDur(ms) {
+      var m = Math.round(ms / 60000);
+      if (m < 60) return m + ' phút';
+      var h = Math.round(m / 60);
+      if (h < 48) return h + ' giờ';
+      return Math.round(h / 24) + ' ngày';
+    }
+
+    // Manual / imported entry first, else a portal milestone submission when the item is linked to one.
+    function ckEntry(code, it) {
+      var e = (ck.entries[code] || {})[it.id];
+      if (e) return e;
+      if (it.portal) {
+        var p = (state.progress[code] || {})[it.portal];
+        if (p) return { submittedAt: p.timestamp, source: 'portal', note: '' };
+      }
+      return null;
+    }
+
+    /**
+     * ok | late | overdue | alt (overdue, but did the lab/project alternative) |
+     * open | upcoming | na (replaced by the project item) | unassigned
+     */
+    function ckStatus(g, it) {
+      var code = groupCodeOf(g);
+      var d = (it.due || {})[ckClassOf(g)] || null;
+      var dueT = d && d.due ? new Date(d.due).getTime() : 0;
+      var e = ckEntry(code, it);
+      if (e) {
+        var t = new Date(e.submittedAt).getTime();
+        var lateMs = dueT && t > dueT ? t - dueT : 0;
+        return { st: lateMs ? 'late' : 'ok', e: e, d: d, lateMs: lateMs };
+      }
+      var rep = ck.items.filter(function (x) { return x.replaces === it.id && ckEntry(code, x); })[0];
+      if (rep) return { st: 'na', d: d, label: 'Thay bằng ' + rep.name };
+      var alt = it.replaces ? ckItem(it.replaces) : null;
+      var altDone = alt && ckEntry(code, alt) ? alt : null;
+      if (!d || (!d.open && !d.due)) return { st: 'unassigned', d: d };
+      if (d.open && Date.now() < new Date(d.open).getTime()) return { st: 'upcoming', d: d };
+      if (dueT && Date.now() > dueT) return { st: altDone ? 'alt' : 'overdue', d: d, alt: altDone };
+      return { st: 'open', d: d, alt: altDone };
+    }
+    function ckDone(s) { return s.st === 'ok' || s.st === 'late'; }
+    function ckCounts(s) { return ['ok', 'late', 'overdue', 'alt', 'open'].indexOf(s.st) !== -1; }
+    // Counted in "x / y due": handed in (even early), or past the deadline and still missing.
+    function ckDue(s) { return ckDone(s) || s.st === 'overdue' || s.st === 'alt'; }
+
+    function ckCellHtml(g, it) {
+      var s = ckStatus(g, it);
+      var inner;
+      if (s.st === 'ok') inner = '<b>✓ ' + esc(ckShort(s.e.submittedAt)) + '</b>' + (s.e.source === 'portal' ? '<small>Từ cổng nộp</small>' : s.e.source === 'moodle' ? '<small>Từ Moodle</small>' : '');
+      else if (s.st === 'late') inner = '<b>' + esc(ckShort(s.e.submittedAt)) + '</b><small>Trễ ' + ckDur(s.lateMs) + '</small>';
+      else if (s.st === 'overdue') inner = '<b>Quá hạn</b><small>Hạn ' + esc(ckShort(s.d.due)) + '</small>';
+      else if (s.st === 'alt') inner = '<b>Chưa nộp</b><small>Đã làm ' + esc(s.alt.name) + '</small>';
+      else if (s.st === 'open') inner = '<b>Đang mở</b><small>' + (s.d.due ? 'Hạn ' + esc(ckShort(s.d.due)) : 'Chưa có hạn') + '</small>';
+      else if (s.st === 'upcoming') inner = '<b>Chưa mở</b><small>Mở ' + esc(ckShort(s.d.open)) + '</small>';
+      else if (s.st === 'na') inner = '<small>Không áp dụng</small><small>' + esc(s.label) + '</small>';
+      else inner = '<small>Chưa giao</small>';
+      var note = s.e && s.e.note ? s.e.note : '';
+      if (note) inner += '<small class="ck-note">' + esc(note.length > 40 ? note.slice(0, 40) + '...' : note) + '</small>';
+      var ownE = (ck.entries[groupCodeOf(g)] || {})[it.id];
+      if (ownE && ownE.score !== '' && ownE.score != null) inner += '<small class="ck-score">Điểm ' + esc(String(ownE.score).replace('.', ',')) + '</small>';
+      var fs = ckFbState(ownE);
+      if (fs !== 'none') inner += '<small class="ck-fbtag ck-fb-' + fs + '">' + CK_FB_LABEL[fs] + '</small>';
+      return '<td class="ck-cell"><button type="button" class="ck-btn ck-' + s.st + '" data-ck="' + esc(groupCodeOf(g)) + '|' + esc(it.id) + '"' + (note ? ' title="' + esc(note) + '"' : '') + '>' + inner + '</button></td>';
+    }
+
+    function ckFiltered() {
+      var q = $('ck-search').value.trim().toLowerCase();
+      var cls = $('ck-class').value;
+      var show = $('ck-show').value;
+      var items = ckSorted();
+      return ckGroups().filter(function (g) {
+        if (cls && ckClassOf(g) !== cls) return false;
+        if (q) {
+          var hay = [g.groupName, groupCodeOf(g), g.title].concat((g.members || []).map(function (m) { return m.studentId + ' ' + m.fullName; })).join(' ').toLowerCase();
+          if (hay.indexOf(q) === -1) return false;
+        }
+        var st = ckGroupStats(g, items);
+        if (show === 'missing') return st.overdue.length > 0;
+        if (show === 'notall') return st.done < items.length;
+        if (show === 'all') return st.done === items.length;
+        if (show === 'late') return st.late > 0;
+        if (show === 'fbdraft') return ckUnsentPairs([g]).length > 0;
+        if (show === 'nofb') return items.some(function (it) { return ckDone(ckStatus(g, it)) && ckFbState((ck.entries[groupCodeOf(g)] || {})[it.id]) === 'none'; });
+        return true;
+      }).sort(function (a, b) {
+        if ($('ck-sort').value !== 'fewest') return 0;
+        var x = ckGroupStats(a, items), y = ckGroupStats(b, items);
+        return (x.done - y.done) || (y.overdue.length - x.overdue.length);
+      });
+    }
+
+    // Per group: files handed in, files past due and still missing, late hand-ins.
+    function ckGroupStats(g, items) {
+      var out = { done: 0, late: 0, overdue: [], pending: [] };
+      items.forEach(function (it, i) {
+        var s = ckStatus(g, it);
+        if (ckDone(s)) { out.done++; if (s.st === 'late') out.late++; }
+        else if (s.st === 'overdue' || s.st === 'alt') out.overdue.push(i + 1);
+        else out.pending.push(i + 1);
+      });
+      return out;
+    }
+
+    function renderChecklist() {
+      if (!ck.loaded) return;
+      var items = ckSorted();
+      var all = ckGroups();
+      var total = items.length;
+      var full = 0, missingGroups = 0, overdueFiles = 0, lateFiles = 0;
+      all.forEach(function (g) {
+        var st = ckGroupStats(g, items);
+        if (st.done === total) full++;
+        if (st.overdue.length) missingGroups++;
+        overdueFiles += st.overdue.length;
+        lateFiles += st.late;
+      });
+      $('nav-checklist').textContent = missingGroups;
+      $('ck-summary').innerHTML =
+        '<div class="settings-item"><span class="chip chip-muted">' + all.length + ' nhóm</span>' +
+        '<span class="chip chip-ok">' + full + ' nhóm đủ ' + total + '/' + total + ' file</span>' +
+        '<span class="chip ' + (missingGroups ? '' : 'chip-muted') + '" style="' + (missingGroups ? 'background:var(--danger-bg);color:var(--danger-text)' : '') + '">' + missingGroups + ' nhóm thiếu file đã hết hạn (' + overdueFiles + ' file)</span>' +
+        '<span class="chip chip-warn">' + lateFiles + ' file nộp trễ</span></div>' +
+        (function () {
+          var n = ckUnsentPairs(all).length;
+          return n ? '<div class="settings-item"><button type="button" class="primary-button btn-sm" id="ck-send-all">Gửi ' + n + ' nhận xét chưa gửi <span>›</span></button></div>' : '';
+        })() +
+        '<p class="settings-note">Mỗi nhóm cần nộp đủ ' + total + ' file đồ án. File chưa đến hạn hoặc lớp chưa được giao thì chưa tính là thiếu.</p>';
+
+      // File N header with how many groups have handed it in.
+      $('ck-thead').innerHTML = '<tr><th>Nhóm</th><th>Đã nộp</th>' + items.map(function (it, i) {
+        var ok = 0;
+        all.forEach(function (g) { if (ckDone(ckStatus(g, it))) ok++; });
+        return '<th class="ck-item"><span style="color:var(--primary-ink)">File ' + (i + 1) + (it.week ? ' · Tuần ' + esc(it.week) : '') + '</span><br>' + esc(it.name) +
+          '<small>' + ok + '/' + all.length + ' nhóm đã nộp</small>' +
+          '<button type="button" class="link-btn" data-ck-import="' + esc(it.id) + '">Nhập CSV</button></th>';
+      }).join('') + '</tr>';
+
+      var groups = ckFiltered();
+      $('ck-empty').hidden = groups.length > 0;
+      $('ck-empty').textContent = all.length ? 'Không có nhóm nào khớp bộ lọc.' : 'Chưa có nhóm nào.';
+      $('ck-tbody').innerHTML = groups.map(function (g) {
+        var st = ckGroupStats(g, items);
+        var tone = st.done === total ? 'ok' : st.overdue.length ? 'bad' : 'wait';
+        return '<tr><td><b>' + esc(g.groupName) + '</b><br><code>' + esc(groupCodeOf(g)) + '</code> · ' + esc(ckShortClass(ckClassOf(g))) + ' ' + statusBadge(g.reviewStatus) + '</td>' +
+          '<td class="ck-sum ck-sum-' + tone + '"><b>' + st.done + '/' + total + '</b><span class="ck-bar"><i style="width:' + (total ? st.done / total * 100 : 0) + '%"></i></span>' +
+          (st.done === total ? '<small>Đã đủ file' + (st.late ? ', ' + st.late + ' file trễ' : '') + '</small>'
+            : (st.overdue.length ? '<small class="ck-miss">Thiếu file ' + st.overdue.join(', ') + '</small>' : '') +
+              (st.pending.length ? '<small>Chưa đến hạn: File ' + st.pending.join(', ') + '</small>' : '')) +
+          '</td>' +
+          items.map(function (it) { return ckCellHtml(g, it); }).join('') + '</tr>';
+      }).join('');
+      if (!ck.itemsDraft) renderCkItems();
+      renderCkCommon();
+    }
+
+    ['ck-search', 'ck-class', 'ck-show', 'ck-sort'].forEach(function (id) {
+      $(id).addEventListener('input', renderChecklist);
+      $(id).addEventListener('change', renderChecklist);
+    });
+
+    /* Cell editor */
+
+    function openCkCell(code, itemId) {
+      var g = ckGroups().filter(function (x) { return groupCodeOf(x) === code; })[0];
+      var it = ckItem(itemId);
+      if (!g || !it) return;
+      var s = ckStatus(g, it);
+      var own = (ck.entries[code] || {})[itemId];
+      ck.editing = { code: code, itemId: itemId };
+      $('ck-title').textContent = g.groupName + ' · ' + it.name;
+      $('ck-sub').innerHTML = esc(ckClassOf(g)) + (s.d && s.d.due ? ' · Hạn <b>' + esc(fmtTime(s.d.due)) + '</b>' : ' · Lớp này chưa có hạn') +
+        (s.e && s.e.source === 'portal' && !own ? '<br>Đang lấy thời gian từ cổng Nộp tiến độ. Lưu ở đây sẽ ghi đè.' : '') +
+        (own && own.source === 'moodle' ? '<br>Dữ liệu nhập từ file Moodle.' : '');
+      $('ck-done').checked = !!s.e;
+      $('ck-time').value = toLocalInput(s.e ? s.e.submittedAt : new Date().toISOString());
+      $('ck-note').value = own ? own.note : '';
+      $('ck-fb').value = own ? own.feedback || '' : '';
+      $('ck-score').value = own && own.score !== '' && own.score != null ? String(own.score) : '';
+      ck.editing.orig = { done: !!s.e, time: $('ck-time').value, note: $('ck-note').value, fb: $('ck-fb').value, score: $('ck-score').value, own: !!own, source: s.e ? s.e.source : '' };
+      var fs = ckFbState(own);
+      $('ck-fb-state').textContent = fs === 'none' ? 'Chưa có' : CK_FB_LABEL[fs];
+      $('ck-fb-state').className = 'ref-badge ' + { none: 'muted', draft: 'warn', edited: 'warn', sent: 'ok' }[fs];
+      $('ck-fb-hint').innerHTML = own && own.feedbackSentAt
+        ? 'Đã gửi lúc ' + esc(fmtTime(own.feedbackSentAt)) + ' tới ' + esc(String(own.feedbackSentTo).split(',').length) + ' thành viên.' + (fs === 'edited' ? ' Nội dung đã sửa sau lần gửi đó.' : '')
+        : 'Email gửi tới cả nhóm, kèm tên file và thời gian nộp. Nhận xét chỉ gửi khi bạn bấm "Lưu & gửi email".';
+      $('ck-msg').textContent = '';
+      syncCkFbEnabled();
+      $('ck-overlay').classList.add('show');
+      (s.e ? $('ck-fb') : $('ck-time')).focus();
+    }
+    function closeCkCell() { $('ck-overlay').classList.remove('show'); ck.editing = null; }
+    function syncCkFbEnabled() {
+      $('ck-fb').disabled = !$('ck-done').checked;
+      $('ck-send').disabled = !$('ck-done').checked;
+    }
+
+    // none | draft (never sent) | edited (changed after sending) | sent
+    var CK_FB_LABEL = { draft: 'Nhận xét chưa gửi', edited: 'Nhận xét sửa, chưa gửi lại', sent: '✉ Đã gửi nhận xét' };
+    function ckFbState(e) {
+      if (!e || !e.feedback) return 'none';
+      if (!e.feedbackSentAt) return 'draft';
+      return new Date(e.feedbackAt) > new Date(e.feedbackSentAt) ? 'edited' : 'sent';
+    }
+    function ckUnsentPairs(groups) {
+      var out = [];
+      (groups || ckGroups()).forEach(function (g) {
+        var code = groupCodeOf(g);
+        ck.items.forEach(function (it) {
+          var fs = ckFbState((ck.entries[code] || {})[it.id]);
+          if (fs === 'draft' || fs === 'edited') out.push({ groupCode: code, itemId: it.id });
+        });
+      });
+      return out;
+    }
+
+    // Preview the first email, confirm, then send. Resolves true when at least one email went out.
+    function sendCkFeedback(pairs) {
+      return busy(api({ action: 'sendChecklistFeedback', pairs: pairs, preview: true }).then(function (d) {
+        if (!d.ok) { toast(d.message || 'Không tạo được email.', 'error'); return false; }
+        showMailPreview(d.subject, d.count > 1 ? 'Mẫu cho nhóm đầu tiên. Sẽ gửi ' + d.count + ' email, mỗi email tới cả nhóm.' : 'Gửi tới: ' + d.recipients.join(', '), d.html);
+        return confirmBox({ title: 'Gửi nhận xét', message: 'Gửi <b>' + d.count + '</b> email nhận xét tới các nhóm (CC ' + esc(d.recipients[d.recipients.length - 1]) + ')?', okLabel: 'Gửi email' })
+          .then(function (y) {
+            $('mail-overlay').classList.remove('show');
+            if (!y) return false;
+            return api({ action: 'sendChecklistFeedback', pairs: pairs }, 120000).then(function (r) {
+              if (!r.ok) { toast(r.message || 'Không gửi được.', 'error'); return false; }
+              if (r.entries) setCkEntries(r.entries);
+              renderChecklist();
+              toast('Đã gửi ' + r.sent + ' email nhận xét' + (r.failed ? ', lỗi ' + r.failed + ': ' + r.message : '') + '.', r.failed ? 'error' : 'ok');
+              return r.sent > 0;
+            });
+          });
+      }).catch(function (err) { toast(netError(err), 'error'); return false; }));
+    }
+
+    // Saves what changed in the cell dialog: hand-in state first, then the comment.
+    function saveCkCell() {
+      var ed = ck.editing;
+      var o = ed.orig;
+      var done = $('ck-done').checked;
+      var t = $('ck-time').value;
+      var fbText = $('ck-fb').value.trim();
+      if (done && !t) { $('ck-msg').textContent = 'Cần nhập thời gian nộp.'; $('ck-msg').className = 'msg error'; return Promise.resolve(false); }
+      var steps = Promise.resolve(true);
+      if (!done) {
+        if (!o.own) return Promise.resolve(true);
+        return (o.fb ? confirmBox({ title: 'Bỏ đánh dấu đã nộp', message: 'Nhận xét của file này cũng sẽ bị xóa.', okLabel: 'Bỏ đánh dấu', danger: true }) : Promise.resolve(true))
+          .then(function (y) { return y ? saveCkEntries([{ groupCode: ed.code, itemId: ed.itemId, remove: true }], 'Đã bỏ đánh dấu.') : false; });
+      }
+      var handInChanged = !o.done || t !== o.time || $('ck-note').value.trim() !== o.note;
+      if (handInChanged) {
+        steps = steps.then(function () {
+          return saveCkEntries([{ groupCode: ed.code, itemId: ed.itemId, submittedAt: new Date(t).toISOString(), note: $('ck-note').value.trim(), source: o.done && o.time === t ? (o.source || 'manual') : 'manual' }], 'Đã lưu.');
+        });
+      }
+      var score = $('ck-score').value.trim().replace(',', '.');
+      if (score && !(Number(score) >= 0 && Number(score) <= 10)) { $('ck-msg').textContent = 'Điểm phải là số từ 0 đến 10.'; $('ck-msg').className = 'msg error'; return Promise.resolve(false); }
+      if (fbText !== o.fb || score !== o.score) {
+        steps = steps.then(function (ok) {
+          if (!ok) return false;
+          return busy(api({ action: 'saveChecklistFeedback', groupCode: ed.code, itemId: ed.itemId, feedback: fbText, score: score, submittedAt: new Date(t).toISOString(), source: o.source || 'manual' }).then(function (d) {
+            if (!d.ok) { toast(d.message || 'Không lưu được nhận xét.', 'error'); return false; }
+            setCkEntries(d.entries || []);
+            renderChecklist();
+            toast('Đã lưu nhận xét.');
+            return true;
+          }).catch(function (err) { toast(netError(err), 'error'); return false; }));
+        });
+      }
+      return steps;
+    }
+
+    function saveCkEntries(entries, okMsg) {
+      return busy(api({ action: 'saveChecklistEntries', entries: entries }).then(function (d) {
+        if (!d.ok) { toast(d.message || 'Không lưu được.', 'error'); return false; }
+        setCkEntries(d.entries || []);
+        renderChecklist();
+        toast(okMsg);
+        return true;
+      }).catch(function (err) { toast(netError(err), 'error'); return false; }));
+    }
+
+    $('ck-tbody').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-ck]');
+      if (!b) return;
+      var p = b.dataset.ck.split('|');
+      openCkCell(p[0], p[1]);
+    });
+    $('ck-done').addEventListener('change', function () {
+      if ($('ck-done').checked && !$('ck-time').value) $('ck-time').value = toLocalInput(new Date().toISOString());
+      syncCkFbEnabled();
+    });
+    $('ck-time').addEventListener('input', function () { if ($('ck-time').value) { $('ck-done').checked = true; syncCkFbEnabled(); } });
+    $('ck-cancel').addEventListener('click', closeCkCell);
+    $('ck-overlay').addEventListener('click', function (e) { if (e.target === $('ck-overlay')) closeCkCell(); });
+    $('ck-save').addEventListener('click', function () {
+      if (!ck.editing) return;
+      saveCkCell().then(function (ok) { if (ok) closeCkCell(); });
+    });
+    $('ck-send').addEventListener('click', function () {
+      var ed = ck.editing;
+      if (!ed) return;
+      if (!$('ck-fb').value.trim()) { $('ck-msg').textContent = 'Cần nhập nhận xét trước khi gửi.'; $('ck-msg').className = 'msg error'; $('ck-fb').focus(); return; }
+      var pair = { groupCode: ed.code, itemId: ed.itemId };
+      saveCkCell().then(function (ok) {
+        if (!ok) return;
+        closeCkCell(); // the email preview opens below this dialog otherwise
+        return sendCkFeedback([pair]);
+      });
+    });
+    $('ck-summary').addEventListener('click', function (e) {
+      if (!e.target.closest('#ck-send-all')) return;
+      var pairs = ckUnsentPairs();
+      if (pairs.length) sendCkFeedback(pairs);
+    });
+    // Save, then show exactly what the group will receive (common notes included). Sends nothing.
+    $('ck-preview').addEventListener('click', function () {
+      var ed = ck.editing;
+      if (!ed) return;
+      if (!$('ck-fb').value.trim()) { $('ck-msg').textContent = 'Cần nhập nhận xét trước khi xem trước.'; $('ck-msg').className = 'msg error'; return; }
+      var pair = { groupCode: ed.code, itemId: ed.itemId };
+      saveCkCell().then(function (ok) {
+        if (!ok) return;
+        ed.orig.fb = $('ck-fb').value.trim();
+        ed.orig.score = $('ck-score').value.trim().replace(',', '.');
+        ed.orig.note = $('ck-note').value.trim();
+        ed.orig.time = $('ck-time').value;
+        ed.orig.done = ed.orig.own = true;
+        return busy(api({ action: 'sendChecklistFeedback', pairs: [pair], preview: true }).then(function (d) {
+          if (!d.ok) { toast(d.message || 'Không tạo được email.', 'error'); return; }
+          showMailPreview(d.subject, 'Xem trước, chưa gửi. Gửi tới: ' + d.recipients.join(', '), d.html);
+        }).catch(function (err) { toast(netError(err), 'error'); }));
+      });
+    });
+
+    /* Common notes per file ("Lưu ý chung", emailed with every group's comments on that file) */
+
+    function renderCkCommon() {
+      var sel = $('ck-common-item');
+      var cur = sel.value;
+      sel.innerHTML = ckSorted().map(function (it, i) {
+        return '<option value="' + esc(it.id) + '">File ' + (i + 1) + ' · ' + esc(it.name) + (ck.common[it.id] ? ' (có lưu ý)' : '') + '</option>';
+      }).join('');
+      if (cur && ckItem(cur)) sel.value = cur;
+      if (!ck.commonDirty) $('ck-common-text').value = ck.common[sel.value] || '';
+    }
+    $('ck-common-item').addEventListener('change', function () { ck.commonDirty = false; renderCkCommon(); });
+    $('ck-common-text').addEventListener('input', function () { ck.commonDirty = true; });
+    $('ck-common-save').addEventListener('click', function () {
+      var id = $('ck-common-item').value;
+      busy(api({ action: 'saveChecklistCommon', itemId: id, text: $('ck-common-text').value }).then(function (d) {
+        if (!d.ok) { toast(d.message || 'Không lưu được.', 'error'); return; }
+        if (d.text) ck.common[id] = d.text; else delete ck.common[id];
+        ck.commonDirty = false;
+        renderCkCommon();
+        toast('Đã lưu lưu ý chung.');
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    /* Import comments from a JSON file (drafts, nothing is emailed) */
+
+    // { itemId?, common?: "text", records: [{ group: "name or code", itemId?, feedback, score?, note?, submittedAt? }] }
+    function ckMatchGroup(hint) {
+      var h = plain(hint).replace(/^nhom\s+/, '').trim();
+      if (!h) return null;
+      var groups = ckGroups();
+      var exact = groups.filter(function (g) { return plain(groupCodeOf(g)) === h || plain(g.groupName) === h; });
+      if (exact.length === 1) return exact[0];
+      var words = h.split(/[^a-z0-9]+/).filter(function (w) { return w.length >= 3 && !/^\d+$/.test(w); });
+      var hits = groups.filter(function (g) {
+        var n = plain(g.groupName);
+        return words.length && words.every(function (w) { return n.indexOf(w) !== -1; });
+      });
+      return hits.length === 1 ? hits[0] : null;
+    }
+
+    function openCkJsonImport() {
+      if (!ck.loaded) { toast('Checklist chưa tải xong.', 'error'); return; }
+      ck.jimp = null;
+      $('ck-jimp-file').value = '';
+      renderCkJsonImport();
+      $('ck-jimp-overlay').classList.add('show');
+    }
+    function closeCkJsonImport() { $('ck-jimp-overlay').classList.remove('show'); ck.jimp = null; }
+
+    function renderCkJsonImport() {
+      var j = ck.jimp;
+      var box = $('ck-jimp-preview');
+      $('ck-jimp-ok').disabled = true;
+      if (!j) { box.innerHTML = ''; return; }
+      if (j.error) { box.innerHTML = '<p class="msg error">' + esc(j.error) + '</p>'; return; }
+      var groupOpts = function (sel) {
+        return '<option value="">Chọn nhóm...</option>' + ckGroups().map(function (g) {
+          var c = groupCodeOf(g);
+          return '<option value="' + esc(c) + '"' + (c === sel ? ' selected' : '') + '>' + esc(g.groupName) + ' · ' + esc(c) + ' · ' + esc(ckShortClass(ckClassOf(g))) + '</option>';
+        }).join('');
+      };
+      var itemOpts = function (sel) {
+        return ckSorted().map(function (it, i) { return '<option value="' + esc(it.id) + '"' + (it.id === sel ? ' selected' : '') + '>File ' + (i + 1) + ' · ' + esc(it.name) + '</option>'; }).join('');
+      };
+      var ready = 0;
+      box.innerHTML = (j.common ? '<p class="field-hint" style="margin:0 0 10px">File có kèm <b>lưu ý chung</b> (' + j.common.length + ' ký tự), sẽ lưu cho file được chọn ở từng dòng.</p>' : '') +
+        '<table class="ck-jimp"><thead><tr><th>Trong file JSON</th><th>Nhóm</th><th>File</th><th>Trạng thái</th></tr></thead><tbody>' +
+        j.rows.map(function (r, i) {
+          var cur = r.groupCode && r.itemId ? (ck.entries[r.groupCode] || {})[r.itemId] : null;
+          var g = r.groupCode ? ckGroups().filter(function (x) { return groupCodeOf(x) === r.groupCode; })[0] : null;
+          var it = ckItem(r.itemId);
+          var derived = g && it ? ckEntry(r.groupCode, it) : null;
+          var st;
+          if (!r.groupCode) st = '<span class="ck-warn">Chưa khớp nhóm</span>';
+          else if (!cur && !derived && !r.submittedAt) st = '<span class="ck-warn">Nhóm chưa được đánh dấu đã nộp file này</span>';
+          else {
+            ready++;
+            st = (cur || derived ? 'Đã nộp ' + esc(ckShort((cur || derived).submittedAt)) : 'Sẽ đánh dấu nộp ' + esc(ckShort(r.submittedAt))) +
+              (cur && cur.feedbackSentAt ? '<br><span class="ck-warn">Đã gửi nhận xét trước đó, nhập sẽ thay nội dung</span>' : cur && cur.feedback ? '<br><span class="ck-warn">Ghi đè bản nháp cũ</span>' : '') +
+              (r.score !== '' && r.score != null ? '<br>Điểm ' + esc(String(r.score).replace('.', ',')) : '');
+          }
+          return '<tr><td><b>' + esc(r.hint) + '</b><div class="ck-fbprev">' + esc(r.feedback.slice(0, 160)) + '</div></td>' +
+            '<td><select data-jg="' + i + '">' + groupOpts(r.groupCode) + '</select></td>' +
+            '<td><select data-ji="' + i + '">' + itemOpts(r.itemId) + '</select></td><td>' + st + '</td></tr>';
+        }).join('') + '</tbody></table>';
+      $('ck-jimp-ok').disabled = !ready || ready !== j.rows.length;
+      $('ck-jimp-ok').textContent = 'Lưu ' + j.rows.length + ' nhận xét nháp';
+    }
+
+    $('ck-jimp-btn').addEventListener('click', openCkJsonImport);
+    $('ck-jimp-cancel').addEventListener('click', closeCkJsonImport);
+    $('ck-jimp-overlay').addEventListener('click', function (e) { if (e.target === $('ck-jimp-overlay')) closeCkJsonImport(); });
+    $('ck-jimp-file').addEventListener('change', function () {
+      var f = this.files[0];
+      if (!f) { ck.jimp = null; renderCkJsonImport(); return; }
+      var reader = new FileReader();
+      reader.onload = function () {
+        var data;
+        try { data = JSON.parse(String(reader.result || '').replace(/^﻿/, '')); } catch (e) { ck.jimp = { error: 'File JSON không hợp lệ: ' + e.message }; renderCkJsonImport(); return; }
+        var list = Array.isArray(data) ? data : data.records;
+        if (!Array.isArray(list) || !list.length) { ck.jimp = { error: 'Không tìm thấy danh sách "records" trong file.' }; renderCkJsonImport(); return; }
+        var defItem = data.itemId && ckItem(data.itemId) ? data.itemId : '';
+        ck.jimp = {
+          common: typeof data.common === 'string' ? data.common.trim() : '',
+          rows: list.map(function (r) {
+            var hint = String(r.groupCode || r.group || '').trim();
+            var g = r.groupCode && ckGroups().filter(function (x) { return groupCodeOf(x) === String(r.groupCode).toUpperCase(); })[0] || ckMatchGroup(r.group || r.groupCode);
+            return {
+              hint: hint || '(không có tên)', groupCode: g ? groupCodeOf(g) : '', itemId: r.itemId && ckItem(r.itemId) ? r.itemId : defItem || (ckSorted()[0] || {}).id,
+              feedback: String(r.feedback || ''), score: r.score == null ? '' : r.score, note: r.note || '', submittedAt: r.submittedAt || ''
+            };
+          })
+        };
+        renderCkJsonImport();
+      };
+      reader.readAsText(f, 'utf-8');
+    });
+    $('ck-jimp-preview').addEventListener('change', function (e) {
+      var j = ck.jimp;
+      if (!j) return;
+      if (e.target.dataset.jg) j.rows[Number(e.target.dataset.jg)].groupCode = e.target.value;
+      if (e.target.dataset.ji) j.rows[Number(e.target.dataset.ji)].itemId = e.target.value;
+      renderCkJsonImport();
+    });
+    $('ck-jimp-ok').addEventListener('click', function () {
+      var j = ck.jimp;
+      if (!j) return;
+      var common = {};
+      if (j.common) j.rows.forEach(function (r) { common[r.itemId] = j.common; });
+      busy(api({
+        action: 'importChecklistFeedback', common: common,
+        records: j.rows.map(function (r) {
+          return { groupCode: r.groupCode, itemId: r.itemId, feedback: r.feedback, score: r.score, note: r.note, submittedAt: r.submittedAt ? new Date(r.submittedAt).toISOString() : '' };
+        })
+      }, 60000).then(function (d) {
+        if (!d.ok) { toast(d.message || 'Không nhập được.', 'error'); return; }
+        setCkEntries(d.entries || []);
+        ck.common = d.common || ck.common;
+        ck.commonDirty = false;
+        renderChecklist();
+        closeCkJsonImport();
+        toast('Đã lưu ' + d.saved + ' nhận xét nháp. Kiểm tra từng ô rồi bấm Gửi.');
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    /* Item list editor */
+
+    function renderCkItems() {
+      var list = ck.itemsDraft || ck.items;
+      var opt = function (v, label, sel) { return '<option value="' + esc(v) + '"' + (v === sel ? ' selected' : '') + '>' + esc(label) + '</option>'; };
+      $('ck-items-tbody').innerHTML = list.map(function (it, i) {
+        var dt = function (cls) {
+          var x = (it.due || {})[cls] || {};
+          return '<td><div class="ck-dt"><label>Mở<input type="datetime-local" data-c="' + esc(cls) + '" data-t="open" value="' + esc(toLocalInput(x.open)) + '"></label>' +
+            '<label>Hạn<input type="datetime-local" data-c="' + esc(cls) + '" data-t="due" value="' + esc(toLocalInput(x.due)) + '"></label></div></td>';
+        };
+        return '<tr data-id="' + esc(it.id) + '"><td><input type="number" min="0" max="20" data-f="week" value="' + esc(it.week) + '"></td>' +
+          '<td><input data-f="name" maxlength="100" value="' + esc(it.name) + '" placeholder="File ' + (i + 1) + '"></td>' +
+          CLASSES.map(dt).join('') +
+          '<td><select data-f="portal">' + opt('', '-', it.portal) + state.milestones.map(function (m) { return opt(m.id, m.id + ' · ' + m.name, it.portal); }).join('') + '</select></td>' +
+          '<td><button type="button" class="outline-button btn-sm btn-danger-outline" data-ck-del="' + i + '">Xóa</button></td></tr>';
+      }).join('');
+    }
+    function readCkItems() {
+      return Array.prototype.map.call($('ck-items-tbody').querySelectorAll('tr'), function (tr) {
+        var v = function (f) { return tr.querySelector('[data-f="' + f + '"]').value.trim(); };
+        var due = {};
+        CLASSES.forEach(function (c) {
+          var o = tr.querySelector('[data-c="' + c + '"][data-t="open"]').value;
+          var d = tr.querySelector('[data-c="' + c + '"][data-t="due"]').value;
+          if (o || d) due[c] = { open: o ? new Date(o).toISOString() : '', due: d ? new Date(d).toISOString() : '' };
+        });
+        var prev = (ck.itemsDraft || ck.items).filter(function (x) { return x.id === tr.dataset.id; })[0] || {};
+        return { id: tr.dataset.id, week: Number(v('week')) || 0, kind: prev.kind || 'project', name: v('name'), replaces: prev.replaces || '', portal: v('portal'), due: due };
+      });
+    }
+    $('ck-items-tbody').addEventListener('input', function () { ck.itemsDraft = readCkItems(); });
+    $('ck-items-tbody').addEventListener('change', function () { ck.itemsDraft = readCkItems(); });
+    $('ck-items-reset').addEventListener('click', function () {
+      confirmBox({ title: 'Khôi phục 5 file mặc định', message: 'Danh sách file và hạn nộp quay về mặc định (Proposal ➜ Method & pipeline ➜ Method details & Test plan ➜ Results & Evaluation ➜ Final report). Các đánh dấu đã nộp vẫn được giữ.', okLabel: 'Khôi phục' })
+        .then(function (y) {
+          if (!y) return;
+          return busy(api({ action: 'saveChecklistItems', reset: true }).then(function (d) {
+            if (!d.ok) { toast(d.message || 'Không khôi phục được.', 'error'); return; }
+            ck.items = d.items;
+            ck.itemsDraft = null;
+            renderChecklist();
+            toast('Đã khôi phục 5 file mặc định.');
+          }).catch(function (err) { toast(netError(err), 'error'); }));
+        });
+    });
+    $('ck-items-tbody').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-ck-del]');
+      if (!b) return;
+      ck.itemsDraft = readCkItems();
+      ck.itemsDraft.splice(Number(b.dataset.ckDel), 1);
+      renderCkItems();
+    });
+    $('ck-item-add').addEventListener('click', function () {
+      ck.itemsDraft = readCkItems();
+      var maxWeek = ck.itemsDraft.reduce(function (m, x) { return Math.max(m, x.week || 0); }, 0);
+      ck.itemsDraft.push({ id: 'i' + Date.now().toString(36), week: maxWeek, kind: 'project', name: '', replaces: '', portal: '', due: {} });
+      renderCkItems();
+    });
+    $('ck-items-save').addEventListener('click', function () {
+      var list = readCkItems();
+      busy(api({ action: 'saveChecklistItems', items: list }).then(function (d) {
+        if (!d.ok) { toast(d.message || 'Không lưu được.', 'error'); return; }
+        ck.items = d.items;
+        ck.itemsDraft = null;
+        renderChecklist();
+        toast('Đã lưu danh sách bài.');
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    /* Export */
+
+    $('ck-export').addEventListener('click', function () {
+      var items = ckSorted();
+      var label = { overdue: 'Quá hạn chưa nộp', alt: 'Chưa nộp (đã làm bài thay thế)', open: 'Đang mở', upcoming: 'Chưa mở', na: 'Không áp dụng', unassigned: 'Chưa giao' };
+      var rows = [['Nhóm', 'Mã nhóm', 'Lớp', 'Đã nộp', 'Thiếu (đã hết hạn)'].concat(items.map(function (it, i) { return 'File ' + (i + 1) + ' - ' + it.name; }))];
+      ckFiltered().forEach(function (g) {
+        var st = ckGroupStats(g, items);
+        rows.push([g.groupName, groupCodeOf(g), ckClassOf(g), st.done + '/' + items.length, st.overdue.map(function (n) { return 'File ' + n; }).join(', ')].concat(items.map(function (it) {
+          var s = ckStatus(g, it);
+          var own = (ck.entries[groupCodeOf(g)] || {})[it.id];
+          var sc = own && own.score !== '' && own.score != null ? ' · điểm ' + String(own.score).replace('.', ',') : '';
+          if (s.st === 'ok') return fmtTime(s.e.submittedAt) + sc;
+          if (s.st === 'late') return fmtTime(s.e.submittedAt) + ' (trễ ' + ckDur(s.lateMs) + ')' + sc;
+          return label[s.st] || '';
+        })));
+      });
+      var csv = '﻿' + rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\r\n');
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+      a.download = 'IS355-checklist-bai-nop.csv';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    });
+
+    /* Import Moodle grading worksheet (CSV) */
+
+    function parseCsv(text) {
+      text = text.replace(/^﻿/, '');
+      var first = text.split(/\r?\n/)[0] || '';
+      var delim = [',', ';', '\t'].sort(function (a, b) { return first.split(b).length - first.split(a).length; })[0];
+      var rows = [], row = [], cell = '', q = false;
+      for (var i = 0; i < text.length; i++) {
+        var ch = text[i];
+        if (q) {
+          if (ch === '"') { if (text[i + 1] === '"') { cell += '"'; i++; } else q = false; }
+          else cell += ch;
+        } else if (ch === '"') q = true;
+        else if (ch === delim) { row.push(cell); cell = ''; }
+        else if (ch === '\n' || ch === '\r') {
+          if (ch === '\r' && text[i + 1] === '\n') i++;
+          row.push(cell); rows.push(row); row = []; cell = '';
+        } else cell += ch;
+      }
+      if (cell || row.length) { row.push(cell); rows.push(row); }
+      return rows.filter(function (r) { return r.some(function (c) { return c.trim(); }); });
+    }
+    function plain(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd'); }
+
+    var EN_MONTHS = { january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12 };
+    var VI_MONTHS = { 'mot': 1, 'hai': 2, 'ba': 3, 'tu': 4, 'bon': 4, 'nam': 5, 'sau': 6, 'bay': 7, 'tam': 8, 'chin': 9, 'muoi': 10, 'muoi mot': 11, 'muoi hai': 12 };
+    // Moodle dates ("Friday, 16 October 2026, 4:12 PM", "Thứ Sáu, 16 Tháng 10 2026, 16:12", ...) in local time.
+    function parseMoodleTime(raw) {
+      var s = plain(raw).trim();
+      if (!s || s === '-') return null;
+      var y, mo, d, h, mi, ap, m;
+      if ((m = s.match(/(\d{1,2})\s+([a-z]+)\s+(\d{4}),?\s+(\d{1,2}):(\d{2})\s*(am|pm)?/)) && EN_MONTHS[m[2]]) {
+        d = m[1]; mo = EN_MONTHS[m[2]]; y = m[3]; h = m[4]; mi = m[5]; ap = m[6];
+      } else if ((m = s.match(/(\d{1,2})\s+thang\s+(\d{1,2}|[a-z ]+?),?\s+(\d{4}),?\s+(\d{1,2}):(\d{2})\s*(am|pm|sa|ch)?/))) {
+        d = m[1]; mo = /^\d+$/.test(m[2]) ? Number(m[2]) : VI_MONTHS[m[2].trim()]; y = m[3]; h = m[4]; mi = m[5]; ap = m[6];
+      } else if ((m = s.match(/(\d{4})-(\d{2})-(\d{2})[ t](\d{2}):(\d{2})/))) {
+        y = m[1]; mo = Number(m[2]); d = m[3]; h = m[4]; mi = m[5];
+      } else if ((m = s.match(/(\d{1,2})\/(\d{1,2})\/(\d{4}),?\s+(\d{1,2}):(\d{2})\s*(am|pm|sa|ch)?/))) {
+        d = m[1]; mo = Number(m[2]); y = m[3]; h = m[4]; mi = m[5]; ap = m[6];
+      } else return null;
+      if (!mo) return null;
+      h = Number(h);
+      if ((ap === 'pm' || ap === 'ch') && h < 12) h += 12;
+      if ((ap === 'am' || ap === 'sa') && h === 12) h = 0;
+      var dt = new Date(Number(y), mo - 1, Number(d), h, Number(mi));
+      return isNaN(dt) ? null : dt;
+    }
+
+    function ckAnalyze(rows, it) {
+      if (rows.length < 2) return { error: 'File không có dữ liệu.' };
+      var head = rows[0].map(plain);
+      var timeCol = head.findIndex(function (h) { return /(submission|bai nop|nop bai)/.test(h) && /(modified|sua|cap nhat|lan cuoi)/.test(h); });
+      if (timeCol === -1) timeCol = head.findIndex(function (h) { return /(submission|nop)/.test(h) && rows.slice(1).some(function (r) { return parseMoodleTime(r[head.indexOf(h)]); }); });
+      if (timeCol === -1) return { error: 'Không tìm thấy cột thời gian nộp (Last modified (submission)). Hãy dùng file "Download grading worksheet" của Moodle.' };
+      var statusCol = head.findIndex(function (h) { return /^(status|trang thai)/.test(h); });
+      var byStudent = {};
+      ckGroups().forEach(function (g) { (g.members || []).forEach(function (m) { byStudent[m.studentId] = g; }); });
+      var perGroup = {}, unknown = {}, skipped = 0;
+      rows.slice(1).forEach(function (r) {
+        var t = parseMoodleTime(r[timeCol]);
+        var st = statusCol === -1 ? '' : plain(r[statusCol]);
+        if (!t || /no submission|khong co bai|chua nop|draft|ban nhap|new/.test(st) && !/submitted|da nop/.test(st)) { skipped++; return; }
+        var ids = (r.join(' ').match(/\b\d{8}\b/g) || []);
+        var g = null;
+        ids.some(function (id) { if (byStudent[id]) { g = byStudent[id]; return true; } return false; });
+        if (!g) { if (ids[0]) unknown[ids[0]] = 1; else skipped++; return; }
+        var code = groupCodeOf(g);
+        if (!perGroup[code] || perGroup[code].t < t) perGroup[code] = { g: g, t: t };
+      });
+      var list = Object.keys(perGroup).map(function (c) { return perGroup[c]; });
+      return { list: list, unknown: Object.keys(unknown), skipped: skipped, item: it };
+    }
+
+    function renderCkImport() {
+      var imp = ck.imp;
+      var box = $('ck-imp-preview');
+      $('ck-imp-ok').disabled = true;
+      if (!imp) { box.innerHTML = ''; return; }
+      if (imp.error) { box.innerHTML = '<p class="msg error">' + esc(imp.error) + '</p>'; return; }
+      var it = imp.item;
+      box.innerHTML = '<p style="margin:0 0 8px">Khớp <b>' + imp.list.length + '</b> nhóm có bài nộp' +
+        (imp.skipped ? ', bỏ qua ' + imp.skipped + ' dòng chưa nộp' : '') + '.</p>' +
+        (imp.unknown.length ? '<p class="ck-warn" style="margin:0 0 8px">MSSV không thuộc nhóm nào: ' + esc(imp.unknown.join(', ')) + '</p>' : '') +
+        (imp.list.length ? '<table><thead><tr><th>Nhóm</th><th>Lớp</th><th>Nộp lúc</th><th>Hạn</th><th>Hiện tại</th></tr></thead><tbody>' + imp.list.map(function (x) {
+          var code = groupCodeOf(x.g);
+          var d = (it.due || {})[ckClassOf(x.g)] || {};
+          var late = d.due && x.t.getTime() > new Date(d.due).getTime();
+          var cur = (ck.entries[code] || {})[it.id];
+          return '<tr><td><b>' + esc(x.g.groupName) + '</b> <code>' + esc(code) + '</code></td><td>' + esc(ckShortClass(ckClassOf(x.g))) + '</td>' +
+            '<td>' + esc(fmtTime(x.t.toISOString())) + (late ? ' <span class="ref-badge warn">trễ ' + ckDur(x.t.getTime() - new Date(d.due).getTime()) + '</span>' : '') + '</td>' +
+            '<td>' + (d.due ? esc(ckShort(d.due)) : '-') + '</td>' +
+            '<td>' + (cur ? (new Date(cur.submittedAt).getTime() === x.t.getTime() ? 'Đã có' : '<span class="ck-warn">Ghi đè ' + esc(ckShort(cur.submittedAt)) + '</span>') : 'Mới') + '</td></tr>';
+        }).join('') + '</tbody></table>' : '');
+      $('ck-imp-ok').disabled = !imp.list.length;
+      $('ck-imp-ok').textContent = 'Lưu ' + imp.list.length + ' nhóm';
+    }
+
+    function openCkImport(itemId) {
+      if (!ck.loaded) { toast('Checklist chưa tải xong.', 'error'); return; }
+      $('ck-imp-item').innerHTML = ckSorted().map(function (it) {
+        return '<option value="' + esc(it.id) + '"' + (it.id === itemId ? ' selected' : '') + '>Tuần ' + esc(it.week) + ' · ' + esc(it.name) + '</option>';
+      }).join('');
+      $('ck-imp-file').value = '';
+      ck.imp = null;
+      ck.impRows = null;
+      renderCkImport();
+      $('ck-imp-overlay').classList.add('show');
+    }
+    function closeCkImport() { $('ck-imp-overlay').classList.remove('show'); ck.imp = null; ck.impRows = null; }
+    function reanalyzeCk() {
+      if (!ck.impRows) { ck.imp = null; renderCkImport(); return; }
+      ck.imp = ckAnalyze(ck.impRows, ckItem($('ck-imp-item').value));
+      renderCkImport();
+    }
+
+    $('ck-import-btn').addEventListener('click', function () { openCkImport(''); });
+    $('ck-thead').addEventListener('click', function (e) {
+      var b = e.target.closest('[data-ck-import]');
+      if (b) openCkImport(b.dataset.ckImport);
+    });
+    $('ck-imp-item').addEventListener('change', reanalyzeCk);
+    $('ck-imp-file').addEventListener('change', function () {
+      var f = this.files[0];
+      if (!f) { ck.impRows = null; reanalyzeCk(); return; }
+      var reader = new FileReader();
+      reader.onload = function () { ck.impRows = parseCsv(String(reader.result || '')); reanalyzeCk(); };
+      reader.onerror = function () { ck.imp = { error: 'Không đọc được file.' }; renderCkImport(); };
+      reader.readAsText(f, 'utf-8');
+    });
+    $('ck-imp-cancel').addEventListener('click', closeCkImport);
+    $('ck-imp-overlay').addEventListener('click', function (e) { if (e.target === $('ck-imp-overlay')) closeCkImport(); });
+    $('ck-imp-ok').addEventListener('click', function () {
+      var imp = ck.imp;
+      if (!imp || !imp.list || !imp.list.length) return;
+      var entries = imp.list.map(function (x) {
+        var cur = (ck.entries[groupCodeOf(x.g)] || {})[imp.item.id];
+        return { groupCode: groupCodeOf(x.g), itemId: imp.item.id, submittedAt: x.t.toISOString(), note: cur ? cur.note : '', source: 'moodle' };
+      });
+      saveCkEntries(entries, 'Đã nhập ' + entries.length + ' nhóm cho ' + imp.item.name + '.').then(function (ok) { if (ok) closeCkImport(); });
     });
 
     /* ---------- Defense schedule ---------- */

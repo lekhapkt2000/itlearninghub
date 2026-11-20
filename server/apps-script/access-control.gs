@@ -62,6 +62,22 @@
  *     (CC teacher). Rubric, notes and the current round are kept in Script
  *     Properties IS355_FB_RUBRIC, IS355_FB_NOTES, IS355_FB_ROUND (edited
  *     from the dashboard). Paste, run setup(), deploy a New version.
+ * 15. Final submission = the milestone flagged "Bài cuối" on the dashboard
+ *     (default M3). Only approved groups can submit; it needs GitHub (with
+ *     README), Sepolia contract(s), report PDF, slides, video demo, each
+ *     member's contribution (sum 100%) and an integrity pledge, stored in
+ *     IS355_TIEN_DO.final_json. Locked after the deadline unless reopened
+ *     from the dashboard (Script Property IS355_FINAL_LATE); submissions
+ *     after the deadline are flagged late. The group gets a receipt email.
+ *     Paste, run setup() (adds the final_json column), deploy a New version.
+ * 16. Submission checklist (dashboard > Checklist bài nộp): the teacher's
+ *     record of which group handed in which Moodle assignment and when.
+ *     Items in Script Property IS355_CHECKLIST_ITEMS (edited from the
+ *     dashboard), entries in the IS355_CHECKLIST tab. The dashboard can
+ *     import Moodle's "Download grading worksheet" CSV per assignment.
+ *     Each handed-in file can carry a comment (columns feedback*), saved as
+ *     a draft and emailed to the whole group (CC teacher) when sent.
+ *     Paste, run setup(), deploy a New version.
  *
  * Gotcha this file avoids: SpreadsheetApp.getActiveSpreadsheet() returns
  * null when a Web App's doGet/doPost actually runs (no active UI in
@@ -328,6 +344,7 @@ function setup() {
   ensureSheetWithHeaders(ss, MAIL_LOG_SHEET, MAIL_LOG_HEADERS);
   ensureSheetWithHeaders(ss, FEEDBACK_SHEET, FEEDBACK_HEADERS);
   smartSetup(ss);
+  ensureSheetWithHeaders(ss, CHECKLIST_SHEET, CHECKLIST_HEADERS);
   Logger.log('Setup complete.');
 }
 
@@ -532,6 +549,7 @@ function handleRosterAdmin(body) {
     mailQuota: quota,
     milestones: readMilestones(),
     progress: latestProgress(),
+    finalLate: readFinalLate(),
     slots: readSlots(),
     defenseOpen: prop('IS355_DEFENSE_OPEN') === '1',
     findGroupPosts: Object.keys(readProfiles()).length,
@@ -1384,7 +1402,10 @@ function buildReminderEmail(student, message, deadline, subject) {
 /* ================================================================== */
 
 var PROGRESS_SHEET = 'IS355_TIEN_DO';
-var PROGRESS_HEADERS = ['timestamp', 'group_code', 'milestone', 'github', 'contracts', 'demo', 'docs', 'note', 'submitted_by', 'check_json'];
+var PROGRESS_HEADERS = ['timestamp', 'group_code', 'milestone', 'github', 'contracts', 'demo', 'docs', 'note', 'submitted_by', 'check_json', 'final_json'];
+// Final submission: groups the dashboard reopened after the deadline.
+// Script Property IS355_FINAL_LATE = {"all":false,"groups":["ABC123"]}.
+var FINAL_LATE_PROP = 'IS355_FINAL_LATE';
 var FINDGROUP_SHEET = 'IS355_TIM_NHOM';
 var FINDGROUP_HEADERS = ['updated_at', 'student_id', 'type', 'tracks', 'skills', 'note', 'needed'];
 var DEFENSE_SHEET = 'IS355_LICH_BAO_VE';
@@ -1393,7 +1414,7 @@ var DEFENSE_HEADERS = ['slot_id', 'start', 'end', 'room', 'group_code', 'booked_
 var DEFAULT_MILESTONES = [
   { id: 'M1', name: 'Thiết kế & Smart Contract', desc: 'Repo GitHub và smart contract đã deploy lên Sepolia testnet.', deadline: '' },
   { id: 'M2', name: 'Prototype giữa kỳ', desc: 'DApp/Dashboard chạy được, đã tích hợp phần dữ liệu/AI.', deadline: '' },
-  { id: 'M3', name: 'Hoàn thiện & nộp sản phẩm', desc: 'Báo cáo PDF, slide và video/link demo.', deadline: '' }
+  { id: 'M3', name: 'Hoàn thiện & nộp sản phẩm', desc: 'Đủ 5 sản phẩm: Source code + README, báo cáo PDF, slide, video demo 5-10 phút và smart contract trên Sepolia.', deadline: '', final: true }
 ];
 var SKILLS = ['Solidity/Vyper', 'Web3/Backend', 'Python/ML', 'Phân tích dữ liệu', 'Frontend/DApp', 'Báo cáo & thuyết trình'];
 var SEPOLIA_RPC = 'https://ethereum-sepolia-rpc.publicnode.com';
@@ -1721,6 +1742,15 @@ function handlePortalState(body) {
     defenseOpen: prop('IS355_DEFENSE_OPEN') === '1',
     skills: SKILLS
   };
+  var fm = finalMilestone();
+  if (g && fm) {
+    var win = finalWindow(fm, g.groupCode);
+    // Own group only (session): MSSV of each member for the contribution table.
+    result.final = {
+      milestone: fm.id, approved: g.reviewStatus === 'approved', past: win.past, lateAllowed: win.lateAllowed, open: win.open,
+      members: g.members.map(function (m) { return { studentId: m.studentId, fullName: m.fullName }; })
+    };
+  }
   return result;
 }
 
@@ -1731,9 +1761,191 @@ function handlePortalState(body) {
 function readMilestones() {
   try {
     var list = JSON.parse(prop('IS355_MILESTONES') || 'null');
-    if (Array.isArray(list) && list.length) return list;
+    if (Array.isArray(list) && list.length) return markFinalMilestone(list);
   } catch (e) { /* fall back */ }
-  return DEFAULT_MILESTONES;
+  return markFinalMilestone(DEFAULT_MILESTONES);
+}
+
+/**
+ * Exactly one milestone is the final submission (full deliverables form,
+ * approved groups only, locked after its deadline). The flagged one wins,
+ * otherwise the last one.
+ */
+function markFinalMilestone(list) {
+  var idx = -1;
+  list.forEach(function (m, i) { if (m.final) idx = i; });
+  if (idx === -1) idx = list.length - 1;
+  return list.map(function (m, i) {
+    return { id: m.id, name: m.name, desc: m.desc, deadline: m.deadline || '', final: i === idx };
+  });
+}
+
+function finalMilestone() {
+  return readMilestones().filter(function (m) { return m.final; })[0];
+}
+
+function readFinalLate() {
+  try {
+    var s = JSON.parse(prop(FINAL_LATE_PROP) || '{}');
+    return { all: !!s.all, groups: Array.isArray(s.groups) ? s.groups : [] };
+  } catch (e) { return { all: false, groups: [] }; }
+}
+
+/** Can this group submit the final milestone right now? */
+function finalWindow(ms, groupCode) {
+  var past = !!ms.deadline && Date.now() > new Date(ms.deadline).getTime();
+  var late = readFinalLate();
+  var lateAllowed = late.all || late.groups.indexOf(groupCode) !== -1;
+  return { past: past, lateAllowed: lateAllowed, open: !past || lateAllowed };
+}
+
+/** Admin: reopen (or lock again) the final submission after its deadline, for one group or all. */
+function handleSetFinalLate(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var late = readFinalLate();
+  if (body.scope === 'all') {
+    late.all = !!body.allow;
+    if (!body.allow) late.groups = [];
+  } else {
+    var code = regClean(body.groupCode, 12).toUpperCase();
+    if (!code) return { ok: false, message: 'Thiếu mã nhóm.' };
+    late.groups = late.groups.filter(function (c) { return c !== code; });
+    if (body.allow) late.groups.push(code);
+  }
+  PropertiesService.getScriptProperties().setProperty(FINAL_LATE_PROP, JSON.stringify(late));
+  return { ok: true, finalLate: late };
+}
+
+/** Links on a final submission that should open for a signed-out visitor. */
+function finalLinks(report, fin, demo) {
+  return { report: report, slides: fin.slides, video: fin.video, demo: demo };
+}
+
+/** Student (session): the full final submission. Called from handleSubmitProgress. */
+function submitFinal(body, sid, g, ms) {
+  if (g.reviewStatus !== 'approved') return { ok: false, message: 'Chỉ nhóm có đề tài đã được duyệt mới nộp được bài cuối kỳ.' };
+  var win = finalWindow(ms, g.groupCode);
+  if (!win.open) return { ok: false, code: 'locked', message: 'Đã hết hạn nộp đồ án (' + formatVnTime(ms.deadline) + '), form đã khóa.' };
+
+  var github = String(body.github || '').trim();
+  var report = String(body.docs || '').trim();
+  var slides = String(body.slides || '').trim();
+  var video = String(body.video || '').trim();
+  var demo = String(body.demo || '').trim();
+  var note = String(body.note || '').trim().slice(0, 1000);
+  var contracts = String(body.contracts || '').split(/[\s,]+/).filter(Boolean).slice(0, 5);
+  if (!/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+/.test(github)) return { ok: false, message: 'Cần link GitHub dạng https://github.com/<user>/<repo>.' };
+  if (!contracts.length) return { ok: false, message: 'Cần ít nhất 1 địa chỉ smart contract trên Sepolia.' };
+  for (var i = 0; i < contracts.length; i++) {
+    if (!/^0x[a-fA-F0-9]{40}$/.test(contracts[i])) return { ok: false, message: 'Địa chỉ contract không hợp lệ: ' + contracts[i] };
+  }
+  var required = [[report, 'báo cáo PDF'], [slides, 'slide thuyết trình'], [video, 'video demo']];
+  for (var j = 0; j < required.length; j++) {
+    if (!isHttpsUrl(required[j][0])) return { ok: false, message: 'Cần link ' + required[j][1] + ' bắt đầu bằng https://' };
+  }
+  if (demo && !isHttpsUrl(demo)) return { ok: false, message: 'Link DApp phải bắt đầu bằng https://' };
+
+  var given = {};
+  (Array.isArray(body.contributions) ? body.contributions : []).forEach(function (c) { given[String(c.studentId)] = c; });
+  var total = 0;
+  var contributions = [];
+  for (var k = 0; k < g.members.length; k++) {
+    var m = g.members[k];
+    var c = given[m.studentId] || {};
+    var pct = c.percent === null || c.percent === undefined || c.percent === '' ? NaN : Number(c.percent);
+    var tasks = regClean(c.tasks, 300);
+    if (!(pct >= 0 && pct <= 100) || Math.round(pct) !== pct) return { ok: false, message: 'Tỉ lệ đóng góp của ' + m.fullName + ' phải là số nguyên từ 0 đến 100.' };
+    if (tasks.length < 3) return { ok: false, message: 'Cần ghi công việc đã làm của ' + m.fullName + '.' };
+    total += pct;
+    contributions.push({ studentId: m.studentId, fullName: m.fullName, percent: pct, tasks: tasks });
+  }
+  if (total !== 100) return { ok: false, message: 'Tổng tỉ lệ đóng góp phải bằng 100% (hiện là ' + total + '%).' };
+  if (body.pledge !== true) return { ok: false, message: 'Nhóm cần xác nhận cam kết về bài làm trước khi nộp.' };
+
+  var fin = { slides: slides, video: video, contributions: contributions, pledge: true, late: win.past };
+  var check = runTechChecks(github, contracts, finalLinks(report, fin, demo));
+  var now = new Date();
+  getOrCreateSheet(PROGRESS_SHEET, PROGRESS_HEADERS).appendRow([
+    now, g.groupCode, ms.id, github, contracts.join(','), demo, report, note, sid, JSON.stringify(check), JSON.stringify(fin)
+  ]);
+
+  // The receipt goes to the whole group; a mail failure never loses the submission.
+  var emailed = false;
+  var to = g.members.map(function (x) { return x.email; });
+  var mail = buildFinalEmail(g, ms, { timestamp: now.toISOString(), github: github, contracts: contracts, docs: report, demo: demo, note: note, final: fin, check: check }, sid);
+  try {
+    MailApp.sendEmail({ to: to[0], cc: to.slice(1).concat([REG_CC_EMAIL]).join(','), subject: mail.subject, name: MAIL_SENDER_NAME, htmlBody: mail.html });
+    emailed = true;
+    logMail('final', g.groupCode, g.members.map(function (x) { return x.studentId; }), to, mail.subject, 'sent');
+  } catch (e) {
+    logMail('final', g.groupCode, g.members.map(function (x) { return x.studentId; }), to, mail.subject, 'failed: ' + mailErrorMessage(e));
+  }
+  return { ok: true, check: check, emailed: emailed, late: win.past, progress: latestProgress()[g.groupCode] || {} };
+}
+
+/** Problems found by the automatic checks, as short Vietnamese lines. */
+function finalIssues(check) {
+  var out = [];
+  if (!check) return out;
+  if (check.github && !check.github.ok) out.push('GitHub: ' + check.github.error);
+  if (check.readme && !check.readme.ok) out.push('README: ' + check.readme.error);
+  (check.contracts || []).forEach(function (c) {
+    var short = c.address.slice(0, 8) + '...' + c.address.slice(-4);
+    if (!c.deployed) out.push('Contract ' + short + ': ' + (c.error || 'Không có contract trên Sepolia.'));
+    else if (c.verified === false) out.push('Contract ' + short + ': Chưa verify source trên Etherscan.');
+  });
+  var labels = { report: 'Báo cáo PDF', slides: 'Slide', video: 'Video demo', demo: 'DApp' };
+  Object.keys(check.links || {}).forEach(function (k) {
+    if (check.links[k] && !check.links[k].ok) out.push(labels[k] + ': ' + check.links[k].error);
+  });
+  return out;
+}
+
+function buildFinalEmail(g, ms, s, sid) {
+  var fin = s.final;
+  var cell = 'padding:9px 12px;border-bottom:1px solid #e2e8f0;vertical-align:top';
+  var a = function (u) { return '<a href="' + htmlEsc(u) + '" style="color:#2563eb;word-break:break-all">' + htmlEsc(u) + '</a>'; };
+  var submitter = g.members.filter(function (m) { return m.studentId === sid; })[0];
+  var rows = [
+    ['Source code (GitHub)', a(s.github)],
+    ['Smart contract (Sepolia)', s.contracts.map(function (c) { return '<a href="https://sepolia.etherscan.io/address/' + c + '" style="color:#2563eb;font-family:Consolas,monospace">' + c + '</a>'; }).join('<br>')],
+    ['Báo cáo PDF', a(s.docs)],
+    ['Slide thuyết trình', a(fin.slides)],
+    ['Video demo', a(fin.video)]
+  ];
+  if (s.demo) rows.push(['DApp', a(s.demo)]);
+  var issues = finalIssues(s.check);
+  var html = '<p style="margin:0 0 14px">Chào nhóm <b>' + htmlEsc(g.groupName) + '</b> (mã ' + htmlEsc(g.groupCode) + '),</p>' +
+    '<p style="margin:0 0 16px">Hệ thống đã ghi nhận bài nộp đồ án cuối kỳ của nhóm lúc <b>' + htmlEsc(formatVnTime(s.timestamp)) + '</b>' +
+    (submitter ? ', người nộp: <b>' + htmlEsc(submitter.fullName) + '</b> (' + htmlEsc(submitter.studentId) + ')' : '') + '.</p>' +
+    (fin.late
+      ? '<div style="margin:0 0 18px;padding:12px 14px;border-radius:8px;background:#fffbeb;border-left:3px solid #d97706;color:#78350f;font-size:13px">Bài được nộp sau hạn (' + htmlEsc(formatVnTime(ms.deadline)) + ') nên được ghi nhận là <b>Nộp trễ</b>.</div>'
+      : '') +
+    sectionTitle('SẢN PHẨM ĐÃ NỘP') +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px">' +
+    rows.map(function (r) { return '<tr><td style="' + cell + ';width:38%;font-weight:600;color:#0f172a">' + r[0] + '</td><td style="' + cell + '">' + r[1] + '</td></tr>'; }).join('') +
+    '</table>' +
+    sectionTitle('ĐÓNG GÓP CỦA THÀNH VIÊN') +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 22px;border:1px solid #e2e8f0;border-radius:8px;font-size:13px">' +
+    fin.contributions.map(function (c) {
+      return '<tr><td style="' + cell + ';width:38%"><b style="color:#0f172a">' + htmlEsc(c.fullName) + '</b><br><span style="color:#64748b">' + htmlEsc(c.studentId) + '</span></td>' +
+        '<td style="' + cell + ';width:56px;text-align:right;font-weight:700;color:#1d4ed8">' + c.percent + '%</td><td style="' + cell + '">' + htmlEsc(c.tasks) + '</td></tr>';
+    }).join('') +
+    '</table>' +
+    sectionTitle('KIỂM TRA TỰ ĐỘNG') +
+    (issues.length
+      ? '<div style="margin:0 0 18px;padding:12px 14px;border-radius:8px;background:#fffbeb;border-left:3px solid #d97706;color:#78350f;font-size:13px;line-height:1.7">Còn ' + issues.length + ' mục cần kiểm tra lại:<br>- ' + issues.map(htmlEsc).join('<br>- ') + '</div>'
+      : '<div style="margin:0 0 18px;padding:12px 14px;border-radius:8px;background:#f0fdf4;border-left:3px solid #16a34a;color:#166534;font-size:13px">Tất cả mục đều đạt: Repo có README, contract đã deploy, các link mở được mà không cần đăng nhập.</div>') +
+    (s.note ? '<p style="margin:0 0 16px"><b>Ghi chú của nhóm:</b> ' + htmlEsc(s.note) + '</p>' : '') +
+    '<p style="margin:0;color:#64748b;font-size:13px">' + (fin.late
+      ? 'Nếu cần sửa, nhóm nộp lại khi form còn mở. Bản nộp mới nhất được dùng để chấm điểm.'
+      : 'Nhóm có thể nộp lại trước hạn' + (ms.deadline ? ' (' + htmlEsc(formatVnTime(ms.deadline)) + ')' : '') + ', bản nộp mới nhất được dùng để chấm điểm. Sau hạn, form sẽ khóa.') + '</p>' +
+    emailButton(SITE_URL + 'tien-do.html', 'Xem bài nộp');
+  return {
+    subject: '[IS355] Xác nhận nộp đồ án' + (fin.late ? ' (nộp trễ)' : '') + ' - Nhóm ' + g.groupName,
+    html: emailShell('Đã ghi nhận bài nộp đồ án cuối kỳ của nhóm ' + g.groupName, 'Xác nhận nộp đồ án cuối kỳ', html)
+  };
 }
 
 /** Admin: replace milestone names/descriptions/deadlines. */
@@ -1745,10 +1957,12 @@ function handleSetMilestones(body) {
       id: regClean(m.id, 8) || 'M' + (i + 1),
       name: regClean(m.name, 80),
       desc: regClean(m.desc, 300),
-      deadline: /^\d{4}-\d{2}-\d{2}/.test(String(m.deadline || '')) ? new Date(m.deadline).toISOString() : ''
+      deadline: /^\d{4}-\d{2}-\d{2}/.test(String(m.deadline || '')) ? new Date(m.deadline).toISOString() : '',
+      final: !!m.final
     };
   }).filter(function (m) { return m.name; });
   if (!list.length) return { ok: false, message: 'Cần ít nhất 1 mốc.' };
+  list = markFinalMilestone(list);
   PropertiesService.getScriptProperties().setProperty('IS355_MILESTONES', JSON.stringify(list));
   return { ok: true, milestones: list };
 }
@@ -1766,6 +1980,8 @@ function latestProgress() {
     var ts = r[col('timestamp')];
     var check = null;
     try { check = JSON.parse(String(r[col('check_json')] || 'null')); } catch (e) { check = null; }
+    var fin = null;
+    try { fin = col('final_json') === -1 ? null : JSON.parse(String(r[col('final_json')] || 'null')); } catch (e) { fin = null; }
     var item = {
       row: i + 1,
       timestamp: ts instanceof Date ? ts.toISOString() : String(ts),
@@ -1775,7 +1991,8 @@ function latestProgress() {
       docs: String(r[col('docs')] || ''),
       note: String(r[col('note')] || ''),
       submittedBy: String(r[col('submitted_by')] || ''),
-      check: check
+      check: check,
+      final: fin
     };
     out[code] = out[code] || {};
     if (!out[code][ms] || out[code][ms].timestamp <= item.timestamp) out[code][ms] = item;
@@ -1791,6 +2008,7 @@ function handleSubmitProgress(body) {
   if (!g) return { ok: false, message: 'Bạn chưa thuộc nhóm nào nên chưa nộp tiến độ được.' };
   var ms = readMilestones().filter(function (m) { return m.id === String(body.milestone); })[0];
   if (!ms) return { ok: false, message: 'Mốc không hợp lệ.' };
+  if (ms.final) return submitFinal(body, sid, g, ms);
 
   var github = String(body.github || '').trim();
   var demo = String(body.demo || '').trim();
@@ -1819,33 +2037,97 @@ function handleRecheckProgress(body) {
   var code = regClean(body.groupCode, 12).toUpperCase();
   var item = (latestProgress()[code] || {})[String(body.milestone)];
   if (!item) return { ok: false, message: 'Nhóm chưa nộp mốc này.' };
-  var check = runTechChecks(item.github, item.contracts);
+  var check = runTechChecks(item.github, item.contracts, item.final ? finalLinks(item.docs, item.final, item.demo) : null);
   var sheet = getOrCreateSheet(PROGRESS_SHEET, PROGRESS_HEADERS);
   sheet.getRange(item.row, PROGRESS_HEADERS.indexOf('check_json') + 1).setValue(JSON.stringify(check));
   return { ok: true, check: check };
 }
 
-function runTechChecks(github, contracts) {
+/**
+ * links (final submission only): { report, slides, video, demo } -> also
+ * checks the repo README and that each link opens without signing in.
+ */
+function runTechChecks(github, contracts, links) {
   var out = { checkedAt: new Date().toISOString(), github: null, contracts: [] };
   if (github) {
     try { out.github = checkGithub(github); } catch (e) { out.github = { ok: false, error: e.message }; }
+    if (links && out.github.ok) {
+      try { out.readme = checkReadme(github); } catch (e) { out.readme = { ok: false, error: e.message }; }
+    }
   }
   (contracts || []).forEach(function (addr) {
     try { out.contracts.push(checkContract(addr)); } catch (e) { out.contracts.push({ address: addr, ok: false, error: e.message }); }
   });
+  if (links) {
+    out.links = {};
+    Object.keys(links).forEach(function (k) { if (links[k]) out.links[k] = checkPublicLink(links[k]); });
+  }
   return out;
 }
 
-function checkGithub(url) {
-  var m = url.match(/github\.com\/([\w.-]+)\/([\w.-]+?)(?:\.git)?(?:\/|$)/);
-  if (!m) return { ok: false, error: 'Link GitHub không hợp lệ.' };
+function githubRepo(url) {
+  var m = String(url || '').match(/github\.com\/([\w.-]+)\/([\w.-]+?)(?:\.git)?(?:\/|$)/);
+  return m ? { owner: m[1], name: m[2], base: 'https://api.github.com/repos/' + m[1] + '/' + m[2] } : null;
+}
+
+function githubHeaders() {
   var headers = { Accept: 'application/vnd.github+json' };
   if (prop('GITHUB_TOKEN')) headers.Authorization = 'Bearer ' + prop('GITHUB_TOKEN');
-  var base = 'https://api.github.com/repos/' + m[1] + '/' + m[2];
+  return headers;
+}
+
+/** README at the repo root, long enough to be a real setup guide. */
+function checkReadme(url) {
+  var gh = githubRepo(url);
+  if (!gh) return { ok: false, error: 'Link GitHub không hợp lệ.' };
+  var res = UrlFetchApp.fetch(gh.base + '/readme', { headers: githubHeaders(), muteHttpExceptions: true });
+  if (res.getResponseCode() === 404) return { ok: false, error: 'Repo chưa có README ở thư mục gốc.' };
+  if (res.getResponseCode() !== 200) return { ok: false, error: 'Không đọc được README (GitHub trả về lỗi ' + res.getResponseCode() + ').' };
+  var r = JSON.parse(res.getContentText());
+  if (Number(r.size) < 300) return { ok: false, path: r.path, size: r.size, error: 'README quá ngắn (' + r.size + ' byte), cần hướng dẫn cài đặt, cấu hình, deploy, chạy DApp, chạy AI và demo.' };
+  return { ok: true, path: r.path, size: r.size };
+}
+
+/**
+ * Opens a link the way a signed-out visitor would. Google Drive / Docs /
+ * OneDrive links that aren't shared publicly redirect to a sign-in page.
+ */
+function checkPublicLink(url) {
+  var loginRe = /accounts\.google\.com|ServiceLogin|login\.microsoftonline\.com|login\.live\.com|github\.com\/login/i;
+  var current = url;
+  try {
+    for (var hop = 0; hop < 6; hop++) {
+      var res = UrlFetchApp.fetch(current, { muteHttpExceptions: true, followRedirects: false, headers: { 'User-Agent': 'Mozilla/5.0 (IS355 link check)' } });
+      var code = res.getResponseCode();
+      if (code >= 300 && code < 400) {
+        var h = res.getHeaders();
+        var loc = String(h.Location || h.location || '');
+        if (!loc) return { ok: false, error: 'Không mở được link (mã ' + code + ').' };
+        if (loc.charAt(0) === '/') loc = current.match(/^https?:\/\/[^\/]+/)[0] + loc;
+        if (loginRe.test(loc)) return { ok: false, error: 'Link yêu cầu đăng nhập, hãy chia sẻ ở chế độ "Bất kỳ ai có đường liên kết".' };
+        current = loc;
+        continue;
+      }
+      if (code >= 200 && code < 300) return { ok: true };
+      if (code === 401 || code === 403) return { ok: false, error: 'Link chưa được chia sẻ công khai (mã ' + code + ').' };
+      if (code === 404) return { ok: false, error: 'Link không tồn tại (404).' };
+      return { ok: false, error: 'Không mở được link (mã ' + code + ').' };
+    }
+    return { ok: false, error: 'Link chuyển hướng quá nhiều lần.' };
+  } catch (e) {
+    return { ok: false, error: 'Không mở được link: ' + String(e.message || e).slice(0, 120) };
+  }
+}
+
+function checkGithub(url) {
+  var gh = githubRepo(url);
+  if (!gh) return { ok: false, error: 'Link GitHub không hợp lệ.' };
+  var headers = githubHeaders();
+  var base = gh.base;
   var repo = UrlFetchApp.fetch(base, { headers: headers, muteHttpExceptions: true });
   var code = repo.getResponseCode();
-  if (code === 404) return { ok: false, repo: m[1] + '/' + m[2], error: 'Repo không tồn tại hoặc đang để private.' };
-  if (code !== 200) return { ok: false, repo: m[1] + '/' + m[2], error: 'GitHub trả về lỗi ' + code + (code === 403 ? ' (hết lượt gọi API, hãy đặt GITHUB_TOKEN).' : '.') };
+  if (code === 404) return { ok: false, repo: gh.owner + '/' + gh.name, error: 'Repo không tồn tại hoặc đang để private.' };
+  if (code !== 200) return { ok: false, repo: gh.owner + '/' + gh.name, error: 'GitHub trả về lỗi ' + code + (code === 403 ? ' (hết lượt gọi API, hãy đặt GITHUB_TOKEN).' : '.') };
   var r = JSON.parse(repo.getContentText());
   var commits = 0, lastCommit = '';
   var c = UrlFetchApp.fetch(base + '/commits?per_page=1', { headers: headers, muteHttpExceptions: true });
@@ -1906,7 +2188,8 @@ function handleRemindMilestone(body) {
   if (!ms) return { ok: false, message: 'Mốc không hợp lệ.' };
   var progress = latestProgress();
   var groups = readGroups().groups.filter(function (g) {
-    return (!body.groupCodes || body.groupCodes.indexOf(g.groupCode) !== -1) && !(progress[g.groupCode] || {})[ms.id] && g.reviewStatus !== 'rejected';
+    return (!body.groupCodes || body.groupCodes.indexOf(g.groupCode) !== -1) && !(progress[g.groupCode] || {})[ms.id] &&
+      (ms.final ? g.reviewStatus === 'approved' : g.reviewStatus !== 'rejected');
   });
   if (!groups.length) return { ok: false, message: 'Tất cả nhóm đã nộp mốc này.' };
   var message = String(body.message || '').trim().slice(0, 2000);
@@ -2604,8 +2887,400 @@ function buildFeedbackEmail(g, f, settings, includeRubric) {
   return { subject: subject, html: emailShell('Góp ý tiến độ đồ án ' + f.round + ' - ' + g.title, 'Góp ý tiến độ đồ án', html), text: text };
 }
 
+/* ------------------------------------------------------------------ */
+/* IS355 submission checklist (dashboard > Checklist bài nộp)          */
+/* ------------------------------------------------------------------ */
+// The teacher's own record of which group handed in which Moodle
+// assignment, and when. Items (assignments, with open/due time per class)
+// live in Script Property IS355_CHECKLIST_ITEMS; one row per group per item
+// in IS355_CHECKLIST. A lab item can be "replaced" by a project item
+// (groups with a topic hand in the project file instead of that week's lab).
+
+var CHECKLIST_SHEET = 'IS355_CHECKLIST';
+var CHECKLIST_HEADERS = ['updated_at', 'group_code', 'item_id', 'submitted_at', 'note', 'source', 'feedback', 'feedback_at', 'feedback_sent_at', 'feedback_sent_to', 'score'];
+var CHECKLIST_PROP = 'IS355_CHECKLIST_ITEMS';
+var CHECKLIST_KINDS = ['lab', 'project', 'final'];
+var C1 = 'IS355.R11.CTTT.1', C2 = 'IS355.R11.CTTT.2';
+
+function vnTime(ymdhm) { return ymdhm ? new Date(ymdhm + ':00+07:00').toISOString() : ''; }
+function dueOf(open, due) { return { open: vnTime(open), due: vnTime(due) }; }
+
+var DEFAULT_CHECKLIST_ITEMS = (function () {
+  var d = function (c1, c2) { var o = {}; if (c1) o[C1] = dueOf(c1[0], c1[1]); if (c2) o[C2] = dueOf(c2[0], c2[1]); return o; };
+  // The 5 project files every group must hand in (Moodle due times per class).
+  return [
+    { id: 'f1-proposal', week: 2, kind: 'project', name: 'Proposal', replaces: '', portal: '',
+      due: d(['2026-10-23T00:00', '2026-10-23T17:00'], ['2026-10-16T00:00', '2026-10-16T17:00']) },
+    { id: 'f2-method', week: 3, kind: 'project', name: 'Related Work & Proposed Method (method, pipeline)', replaces: '', portal: '',
+      due: d(null, ['2026-10-30T00:00', '2026-11-06T20:00']) },
+    { id: 'f3-details', week: 4, kind: 'project', name: 'Proposed Method Details & Test Plan', replaces: '', portal: '',
+      due: d(null, ['2026-11-13T00:00', '2026-11-20T00:00']) },
+    { id: 'f4-results', week: 5, kind: 'project', name: 'Results & Evaluation (kết quả, đánh giá, nhận xét)', replaces: '', portal: '', due: {} },
+    { id: 'f5-report', week: 6, kind: 'final', name: 'Final Report (theo cấu trúc paper)', replaces: '', portal: '', due: {} }
+  ];
+})();
+
+function readChecklistItems() {
+  try {
+    var list = JSON.parse(prop(CHECKLIST_PROP) || 'null');
+    if (Array.isArray(list) && list.length) return list;
+  } catch (e) { /* fall back */ }
+  return DEFAULT_CHECKLIST_ITEMS;
+}
+
+function readChecklistEntries() {
+  var rows = getOrCreateSheet(CHECKLIST_SHEET, CHECKLIST_HEADERS).getDataRange().getValues();
+  var iso = function (v) { return v instanceof Date ? v.toISOString() : String(v || ''); };
+  var out = [];
+  for (var i = 1; i < rows.length; i++) {
+    var r = rows[i];
+    if (!r[1] || !r[2]) continue;
+    out.push({
+      updatedAt: iso(r[0]), groupCode: String(r[1]).toUpperCase(), itemId: String(r[2]), submittedAt: iso(r[3]),
+      note: String(r[4] || ''), source: String(r[5] || ''),
+      feedback: String(r[6] || ''), feedbackAt: iso(r[7]), feedbackSentAt: iso(r[8]), feedbackSentTo: String(r[9] || ''),
+      score: r[10] === '' || r[10] == null ? '' : String(r[10])
+    });
+  }
+  return out;
+}
+
+/** Internal score (never emailed): '' or a number 0..10 as a string with "." decimals. */
+function cleanScore(v) {
+  var s = String(v == null ? '' : v).trim().replace(',', '.');
+  if (!s) return '';
+  var n = Number(s);
+  return isNaN(n) || n < 0 || n > 10 ? null : String(Math.round(n * 100) / 100);
+}
+
+// "Lưu ý chung" per file, emailed with every group's comments on that file.
+function ckCommonKey(itemId) { return 'IS355_CK_COMMON_' + String(itemId).replace(/[^\w-]/g, ''); }
+function readCkCommon(itemId) { return prop(ckCommonKey(itemId)); }
+
+/** Admin: save the common notes of one file. { itemId, text } */
+function handleSaveChecklistCommon(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var id = regClean(body.itemId, 24);
+  if (!id) return { ok: false, message: 'Thiếu file.' };
+  var text = String(body.text || '').replace(/\r/g, '').trim();
+  if (Utilities.newBlob(text).getBytes().length > 8500) return { ok: false, message: 'Lưu ý chung quá dài, hãy rút gọn.' };
+  if (text) PropertiesService.getScriptProperties().setProperty(ckCommonKey(id), text);
+  else PropertiesService.getScriptProperties().deleteProperty(ckCommonKey(id));
+  return { ok: true, itemId: id, text: text };
+}
+
+function checklistMap() {
+  var map = {};
+  readChecklistEntries().forEach(function (e) { map[e.groupCode + '|' + e.itemId] = e; });
+  return map;
+}
+
+/** Rewrites the whole tab (small: groups x items). Call inside the script lock. */
+function writeChecklistMap(map) {
+  var d = function (v) { return v ? new Date(v) : ''; };
+  // Free text starting with = + - @ would be read by Sheets as a formula.
+  var txt = function (v) { v = String(v || ''); return /^[=+\-@]/.test(v) ? "'" + v : v; };
+  var sheet = getOrCreateSheet(CHECKLIST_SHEET, CHECKLIST_HEADERS);
+  var rows = Object.keys(map).map(function (k) {
+    var e = map[k];
+    return [d(e.updatedAt), e.groupCode, e.itemId, d(e.submittedAt), txt(e.note), e.source || '',
+      txt(e.feedback), d(e.feedbackAt), d(e.feedbackSentAt), e.feedbackSentTo || '', e.score === '' || e.score == null ? '' : Number(e.score)];
+  });
+  if (sheet.getLastRow() > 1) sheet.getRange(2, 1, sheet.getLastRow() - 1, CHECKLIST_HEADERS.length).clearContent();
+  if (rows.length) sheet.getRange(2, 1, rows.length, CHECKLIST_HEADERS.length).setValues(rows);
+}
+
+/** Admin: items + every entry. */
+function handleChecklistAdmin(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var items = readChecklistItems();
+  var common = {};
+  items.forEach(function (it) { var t = readCkCommon(it.id); if (t) common[it.id] = t; });
+  return { ok: true, items: items, entries: readChecklistEntries(), common: common, classes: REG_CLASSES };
+}
+
+/** Admin: replace the item list (names, weeks, lab/project, per-class open/due). */
+function handleSaveChecklistItems(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  if (body.reset) {
+    PropertiesService.getScriptProperties().deleteProperty(CHECKLIST_PROP);
+    return { ok: true, items: DEFAULT_CHECKLIST_ITEMS };
+  }
+  var seen = {};
+  var isoOrEmpty = function (v) { var d = new Date(v); return v && !isNaN(d) ? d.toISOString() : ''; };
+  var list = (Array.isArray(body.items) ? body.items : []).slice(0, 30).map(function (it, i) {
+    var id = regClean(it.id, 24).replace(/[^\w-]/g, '') || 'item' + (i + 1);
+    while (seen[id]) id += 'x';
+    seen[id] = 1;
+    var due = {};
+    REG_CLASSES.forEach(function (c) {
+      var x = it.due && it.due[c];
+      if (x && (x.open || x.due)) due[c] = { open: isoOrEmpty(x.open), due: isoOrEmpty(x.due) };
+    });
+    return {
+      id: id, week: Math.max(0, Math.min(20, Math.round(Number(it.week) || 0))),
+      kind: CHECKLIST_KINDS.indexOf(it.kind) !== -1 ? it.kind : 'project',
+      name: regClean(it.name, 100), replaces: regClean(it.replaces, 24), portal: regClean(it.portal, 8), due: due
+    };
+  }).filter(function (it) { return it.name; });
+  if (!list.length) return { ok: false, message: 'Cần ít nhất 1 bài.' };
+  var ids = list.map(function (it) { return it.id; });
+  list.forEach(function (it) { if (ids.indexOf(it.replaces) === -1 || it.replaces === it.id) it.replaces = ''; });
+  var json = JSON.stringify(list);
+  if (json.length > 8500) return { ok: false, message: 'Danh sách bài quá dài, hãy bớt bài hoặc rút gọn tên.' };
+  PropertiesService.getScriptProperties().setProperty(CHECKLIST_PROP, json);
+  return { ok: true, items: list };
+}
+
+/**
+ * Admin: upsert / remove entries.
+ * entries: [{ groupCode, itemId, submittedAt (ISO), note, source, remove }]
+ */
+function handleSaveChecklistEntries(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var incoming = Array.isArray(body.entries) ? body.entries.slice(0, 1000) : [];
+  if (!incoming.length) return { ok: false, message: 'Không có dữ liệu để lưu.' };
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    var map = checklistMap();
+    var key = function (g, i) { return g + '|' + i; };
+    var now = new Date().toISOString();
+    var changed = 0;
+    for (var i = 0; i < incoming.length; i++) {
+      var x = incoming[i];
+      var g = regClean(x.groupCode, 12).toUpperCase();
+      var it = regClean(x.itemId, 24);
+      if (!g || !it) continue;
+      if (x.remove) { if (map[key(g, it)]) { delete map[key(g, it)]; changed++; } continue; }
+      var d = new Date(x.submittedAt);
+      if (!x.submittedAt || isNaN(d)) return { ok: false, message: 'Thời gian nộp không hợp lệ (nhóm ' + g + ').' };
+      var prev = map[key(g, it)] || {};
+      // Feedback (comments + sent state) survives a re-import or a time change.
+      map[key(g, it)] = {
+        updatedAt: now, groupCode: g, itemId: it, submittedAt: d.toISOString(), note: String(x.note || '').trim().slice(0, 300), source: regClean(x.source, 20) || 'manual',
+        feedback: prev.feedback || '', feedbackAt: prev.feedbackAt || '', feedbackSentAt: prev.feedbackSentAt || '', feedbackSentTo: prev.feedbackSentTo || '',
+        score: prev.score || ''
+      };
+      changed++;
+    }
+    writeChecklistMap(map);
+    return { ok: true, changed: changed, entries: readChecklistEntries() };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/**
+ * Admin: save the comment on one group's file (draft, not emailed).
+ * { groupCode, itemId, feedback, submittedAt } - submittedAt creates the
+ * entry when the file only shows as handed in via the portal.
+ */
+function handleSaveChecklistFeedback(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var g = regClean(body.groupCode, 12).toUpperCase();
+  var it = regClean(body.itemId, 24);
+  if (!g || !it) return { ok: false, message: 'Thiếu nhóm hoặc file.' };
+  var text = String(body.feedback || '').replace(/\r/g, '').trim().slice(0, 12000);
+  var score = 'score' in body ? cleanScore(body.score) : undefined;
+  if (score === null) return { ok: false, message: 'Điểm phải là số từ 0 đến 10.' };
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    var map = checklistMap();
+    var e = map[g + '|' + it];
+    if (!e) {
+      var d = new Date(body.submittedAt);
+      if (!body.submittedAt || isNaN(d)) return { ok: false, message: 'Nhóm chưa nộp file này, đánh dấu đã nộp trước khi nhận xét.' };
+      e = map[g + '|' + it] = { updatedAt: new Date().toISOString(), groupCode: g, itemId: it, submittedAt: d.toISOString(), note: '', source: regClean(body.source, 20) || 'portal' };
+    }
+    if (e.feedback !== text) { e.feedback = text; e.feedbackAt = new Date().toISOString(); }
+    if (score !== undefined) e.score = score;
+    writeChecklistMap(map);
+    return { ok: true, entries: readChecklistEntries() };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+/**
+ * Admin: drafts for many groups at once (from a JSON file).
+ * { records: [{ groupCode, itemId, feedback, score?, note?, submittedAt? }], common?: { itemId: text } }
+ * A group not yet marked as handed in needs submittedAt. Nothing is emailed.
+ */
+function handleImportChecklistFeedback(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var records = Array.isArray(body.records) ? body.records.slice(0, 200) : [];
+  if (!records.length) return { ok: false, message: 'Không có nhận xét nào để nhập.' };
+  var known = {};
+  readGroups().groups.forEach(function (g) { known[g.groupCode] = 1; });
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  var saved = 0;
+  try {
+    var map = checklistMap();
+    var now = new Date().toISOString();
+    for (var i = 0; i < records.length; i++) {
+      var r = records[i];
+      var g = regClean(r.groupCode, 12).toUpperCase();
+      var it = regClean(r.itemId, 24);
+      if (!known[g] || !it) return { ok: false, message: 'Dòng ' + (i + 1) + ': Nhóm hoặc file không hợp lệ.' };
+      var score = cleanScore(r.score);
+      if (score === null) return { ok: false, message: 'Dòng ' + (i + 1) + ': Điểm phải là số từ 0 đến 10.' };
+      var e = map[g + '|' + it];
+      if (!e) {
+        var d = new Date(r.submittedAt);
+        if (!r.submittedAt || isNaN(d)) return { ok: false, message: 'Nhóm ' + g + ' chưa được đánh dấu đã nộp file này và dòng nhập không có thời gian nộp.' };
+        e = map[g + '|' + it] = { updatedAt: now, groupCode: g, itemId: it, submittedAt: d.toISOString(), note: '', source: 'review' };
+      }
+      var text = String(r.feedback || '').replace(/\r/g, '').trim().slice(0, 12000);
+      if (text && e.feedback !== text) { e.feedback = text; e.feedbackAt = now; }
+      if (score !== '') e.score = score;
+      if (r.note) e.note = String(r.note).trim().slice(0, 300);
+      saved++;
+    }
+    writeChecklistMap(map);
+  } finally {
+    lock.releaseLock();
+  }
+  var common = body.common && typeof body.common === 'object' ? body.common : {};
+  Object.keys(common).forEach(function (id) {
+    var t = String(common[id] || '').replace(/\r/g, '').trim();
+    if (t && Utilities.newBlob(t).getBytes().length <= 8500) PropertiesService.getScriptProperties().setProperty(ckCommonKey(id), t);
+  });
+  var out = {};
+  readChecklistItems().forEach(function (it) { var t = readCkCommon(it.id); if (t) out[it.id] = t; });
+  return { ok: true, saved: saved, entries: readChecklistEntries(), common: out };
+}
+
+/**
+ * Comment text -> email HTML. Format:
+ *   # Heading          starts a section
+ *   - line / line      one bullet; [Cao] / [TB] / [Thấp] at the start adds a badge
+ *   **text**           bold
+ * Sections whose heading mentions "đạt được" / "điểm tốt" get a green box.
+ */
+function renderCommentHtml(text) {
+  var sections = [];
+  var cur = null;
+  String(text || '').split('\n').forEach(function (raw) {
+    var line = raw.trim();
+    if (!line) return;
+    var h = /^#{1,3}\s+(.+)$/.exec(line);
+    if (h) { cur = { title: h[1].trim(), items: [] }; sections.push(cur); return; }
+    if (!cur) { cur = { title: '', items: [] }; sections.push(cur); }
+    cur.items.push(line.replace(/^[-•*]\s+/, ''));
+  });
+  var inline = function (s) { return htmlEsc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>'); };
+  return sections.map(function (sec) {
+    var good = /đạt được|điểm tốt|điểm mạnh/i.test(sec.title);
+    var list = sec.items.map(function (line) {
+      var x = parsePriority(line);
+      var badge = x.p ? '<span style="display:inline-block;min-width:34px;margin-right:8px;padding:1px 7px;border-radius:99px;background:' + x.p.bg + ';border:1px solid ' + x.p.border +
+        ';color:' + x.p.color + ';font-size:11px;font-weight:800;text-align:center">' + x.p.label + '</span>' : '';
+      return '<li style="margin-bottom:9px">' + badge + inline(x.text) + '</li>';
+    }).join('');
+    return (sec.title ? sectionTitle(htmlEsc(sec.title.toUpperCase())) : '') +
+      '<div style="margin:0 0 20px;padding:14px 18px;border-radius:10px;background:' + (good ? '#f0fdf4' : '#f8fafc') + ';border:1px solid ' + (good ? '#bbf7d0' : '#e2e8f0') + '">' +
+      '<ul style="margin:0;padding-left:20px;font-size:14px;line-height:1.7;color:#0f172a">' + list + '</ul></div>';
+  }).join('');
+}
+
+function buildChecklistFeedbackEmail(g, item, index, e) {
+  var cls = (g.members.filter(function (m) { return m.role === 'Leader'; })[0] || g.members[0] || {})['class'];
+  var due = item.due && item.due[cls] && item.due[cls].due;
+  var late = due && new Date(e.submittedAt).getTime() > new Date(due).getTime();
+  var common = readCkCommon(item.id);
+  var label = 'File ' + index + ' - ' + item.name;
+  var html = '<p style="margin:0 0 14px">Chào nhóm <b>' + htmlEsc(g.groupName) + '</b> (mã ' + htmlEsc(g.groupCode) + '),</p>' +
+    '<p style="margin:0 0 18px">Dưới đây là nhận xét cho file <b>' + htmlEsc(label) + '</b> nhóm đã nộp lúc <b>' + htmlEsc(formatVnTime(e.submittedAt)) + '</b>' +
+    (late ? ' (sau hạn ' + htmlEsc(formatVnTime(due)) + ')' : '') + '. Nhóm tham khảo để chỉnh sửa file này và áp dụng cho các file tiếp theo, đặc biệt là báo cáo cuối kỳ.</p>' +
+    (g.title ? '<p style="margin:0 0 18px;color:#64748b;font-size:13px">Đề tài: <b style="color:#0f172a">' + htmlEsc(g.title) + '</b></p>' : '') +
+    (/^\s*#/m.test(e.feedback) ? '' : sectionTitle('NHẬN XÉT')) +
+    renderCommentHtml(e.feedback) +
+    (common ? '<div style="margin:26px 0 14px;border-top:1px dashed #cbd5e1"></div>' + renderCommentHtml(/^\s*#/m.test(common) ? common : '# Lưu ý chung cho tất cả các nhóm\n' + common) : '') +
+    (!common && /\[(cao|tb|thấp|thap|trung bình)\]/i.test(e.feedback) ? '<p style="margin:0 0 6px;color:#64748b;font-size:13px">Ưu tiên xử lý các mục <b>Cao</b> trước.</p>' : '') +
+    emailButton(SITE_URL + 'project-lab.html', 'Mở Project Lab');
+  return {
+    subject: '[IS355] Nhận xét ' + label + ' - Nhóm ' + g.groupName,
+    html: emailShell('Nhận xét ' + label + ' cho nhóm ' + g.groupName, 'Nhận xét file đồ án', html)
+  };
+}
+
+/**
+ * Admin: email the saved comments. { pairs: [{groupCode, itemId}], preview }
+ * preview -> the first email only. Whole group in To/CC, teacher in CC.
+ */
+function handleSendChecklistFeedback(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var pairs = Array.isArray(body.pairs) ? body.pairs.slice(0, 200) : [];
+  if (!pairs.length) return { ok: false, message: 'Chưa chọn nhận xét nào.' };
+  var items = readChecklistItems();
+  var groups = {};
+  readGroups().groups.forEach(function (g) { groups[g.groupCode] = g; });
+  var map = checklistMap();
+  var jobs = [];
+  for (var i = 0; i < pairs.length; i++) {
+    var code = regClean(pairs[i].groupCode, 12).toUpperCase();
+    var id = regClean(pairs[i].itemId, 24);
+    var e = map[code + '|' + id];
+    var idx = -1;
+    items.forEach(function (x, k) { if (x.id === id) idx = k; });
+    if (!e || !e.feedback || !groups[code] || idx === -1) continue;
+    jobs.push({ g: groups[code], e: e, mail: buildChecklistFeedbackEmail(groups[code], items[idx], idx + 1, e) });
+  }
+  if (!jobs.length) return { ok: false, message: 'Không có nhận xét nào để gửi (cần lưu nhận xét trước).' };
+  if (body.preview) {
+    var to = jobs[0].g.members.map(function (m) { return m.email; });
+    return { ok: true, count: jobs.length, subject: jobs[0].mail.subject, html: jobs[0].mail.html, recipients: to.concat([REG_CC_EMAIL]) };
+  }
+  if (jobs.length > MailApp.getRemainingDailyQuota()) return { ok: false, message: 'Không đủ hạn mức email hôm nay.' };
+  var sent = 0, lastErr = '';
+  jobs.forEach(function (j) {
+    var to = j.g.members.map(function (m) { return m.email; });
+    try {
+      MailApp.sendEmail({ to: to[0], cc: to.slice(1).concat([REG_CC_EMAIL]).join(','), subject: j.mail.subject, name: MAIL_SENDER_NAME, htmlBody: j.mail.html });
+      j.e.feedbackSentAt = new Date().toISOString();
+      j.e.feedbackSentTo = to.join(',');
+      sent++;
+      logMail('file_feedback', j.g.groupCode, j.g.members.map(function (m) { return m.studentId; }), to, j.mail.subject, 'sent');
+    } catch (err) {
+      lastErr = mailErrorMessage(err);
+      logMail('file_feedback', j.g.groupCode, j.g.members.map(function (m) { return m.studentId; }), to, j.mail.subject, 'failed: ' + lastErr);
+    }
+  });
+  var lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    // Re-read so edits made while mails were going out are kept; only stamp the sent state.
+    var fresh = checklistMap();
+    jobs.forEach(function (j) {
+      var f = fresh[j.e.groupCode + '|' + j.e.itemId];
+      if (f && j.e.feedbackSentAt) { f.feedbackSentAt = j.e.feedbackSentAt; f.feedbackSentTo = j.e.feedbackSentTo; }
+    });
+    writeChecklistMap(fresh);
+  } finally {
+    lock.releaseLock();
+  }
+  return { ok: true, sent: sent, failed: jobs.length - sent, message: lastErr, entries: readChecklistEntries() };
+}
+
 // doPost routes for the smart features (admin ones check the key themselves).
 var SMART_ACTIONS = {
+  checklistAdmin: handleChecklistAdmin,
+  saveChecklistItems: handleSaveChecklistItems,
+  saveChecklistEntries: handleSaveChecklistEntries,
+  saveChecklistFeedback: handleSaveChecklistFeedback,
+  sendChecklistFeedback: handleSendChecklistFeedback,
+  saveChecklistCommon: handleSaveChecklistCommon,
+  importChecklistFeedback: handleImportChecklistFeedback,
   resolveRef: handleResolveRef,
   verifyOtp: handleVerifyOtp,
   portalState: handlePortalState,
@@ -2613,6 +3288,7 @@ var SMART_ACTIONS = {
   recheckProgress: handleRecheckProgress,
   setMilestones: handleSetMilestones,
   remindMilestone: handleRemindMilestone,
+  setFinalLate: handleSetFinalLate,
   saveProfile: handleSaveProfile,
   findGroupBoard: handleFindGroupBoard,
   defenseBoard: handleDefenseBoard,

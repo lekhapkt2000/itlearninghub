@@ -675,3 +675,22 @@
 .pt-slot-group span{color:var(--muted);font-size:12px;line-height:1.5}
 .pt-slot .outline-button{align-self:flex-start;margin-top:4px}
 @media(max-width:760px){.pt-login-row{grid-template-columns:1fr}.pt-checks-grid{grid-template-columns:1fr}.pt-toolbar{grid-template-columns:1fr}}
+
+/* IS355 final submission card (tien-do.html, final milestone) */
+.pt-final{border-color:rgb(var(--primary-rgb) / .45)}
+.pt-final-tag{margin-left:auto;padding:3px 10px;border-radius:99px;background:var(--tint);color:var(--primary-ink);font-size:11px;font-weight:700;white-space:nowrap}
+.pt-flag{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:99px;background:var(--danger-bg);border:1px solid var(--danger-border);color:var(--danger-text);font-size:11px;font-weight:700}
+.pt-fieldset{min-width:0;margin:0;padding:0;border:0}
+.pt-fieldset:disabled{opacity:.55}
+.pt-fieldset:disabled .primary-button{cursor:not-allowed}
+.pt-req{color:var(--danger-accent);font-style:normal}
+.pt-contrib{margin-top:20px;padding-top:16px;border-top:1px dashed var(--line)}
+.pt-contrib-row{display:grid;grid-template-columns:minmax(0,1.1fr) 90px minmax(0,2fr);align-items:center;gap:10px 12px;padding:8px 0}
+.pt-contrib-name{display:flex;flex-direction:column;min-width:0;font-size:13.5px;color:var(--ink)}
+.pt-contrib-name small{color:var(--muted);font:500 11px var(--font-mono)}
+.pt-contrib-total{margin:8px 0 0;color:var(--body);font-size:13px;text-align:right}
+.pt-contrib-total .is-ok{color:var(--ok-text)}
+.pt-contrib-total .is-bad{color:var(--danger-text)}
+.pt-pledge{display:flex;align-items:flex-start;gap:10px;margin-top:16px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--body);font-size:13px;line-height:1.6;cursor:pointer}
+.pt-pledge input{margin-top:3px;accent-color:var(--primary);flex:none}
+@media(max-width:760px){.pt-contrib-row{grid-template-columns:minmax(0,1fr) 80px}.pt-contrib-row>label:last-child{grid-column:1/-1}.pt-final .reg-card-head{flex-wrap:wrap}}

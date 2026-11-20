@@ -23,7 +23,7 @@
     // progress
     pgNeedGroup: 'Register your group first, then come back to submit progress.', register: 'Register a topic',
     deadline: 'Deadline', lastSub: 'Last submitted', notYet: 'Not submitted yet', github: 'GitHub repository', contracts: 'Smart contract address(es) on Sepolia',
-    contractsHint: 'One per line or comma-separated, e.g. 0xAbC...', demo: 'Demo link (video / deployed DApp)', docs: 'Report / slides link', note: 'Note for the instructor',
+    contractsHint: 'One per line or comma-separated, e.g. 0xAbC...', demo: 'Demo link (video / deployed DApp)', docs: 'Report / slides link', note: 'Note',
     submit: 'Submit', submitted: 'Submitted. Automatic check results are below.', resubmitHint: 'Submitting again replaces this milestone\'s links.',
     deployed: 'Deployed on Sepolia', notDeployed: 'No contract at this address on Sepolia', verified: 'Source verified', unverifiedSrc: 'Source not verified on Etherscan',
     txs: 'transactions', wallets: 'wallets', commits: 'commits', lastCommit: 'last commit', checkedAt: 'Checked',
@@ -37,7 +37,19 @@
     // defense
     dfClosed: 'Booking is not open yet. The schedule below is for reference.', dfOpenHint: 'Only groups with an approved topic can book. Choosing another slot moves your booking.',
     dfNotApproved: 'Your topic is not approved yet, so you cannot book a slot.', dfBook: 'Choose this slot', dfYours: 'Your group', dfFree: 'Available', dfTaken: 'Taken',
-    dfBooked: 'Booked. A confirmation email was sent to your group.', dfEmpty: 'The instructor has not published the schedule yet.', dfMine: 'Your defense slot:'
+    dfBooked: 'Booked. A confirmation email was sent to your group.', dfEmpty: 'The defense schedule has not been published yet.', dfMine: 'Your defense slot:',
+    // final submission
+    fnTag: 'Final submission', fnNotApproved: 'Only groups with an approved topic can submit the final project.',
+    fnOpen: function (d) { return 'You can resubmit until the deadline' + (d ? ' (' + d + ')' : '') + '; the latest submission is graded. After the deadline the form locks.'; },
+    fnLocked: function (d) { return 'The deadline (' + d + ') has passed, so the final submission is locked.'; },
+    fnLateOpen: 'The deadline has passed but your group has been allowed to submit late. Anything you submit now is recorded as a late submission.',
+    fnLate: 'Late', fnReport: 'Project report (PDF)', fnSlides: 'Presentation slides', fnVideo: 'Demo video (about 5-10 minutes)', fnDapp: 'Deployed DApp link',
+    fnOptional: 'optional', fnLinkHint: 'Google Drive / OneDrive links must be shared as "Anyone with the link", or the check below fails.',
+    fnGithubHint: 'Public repo with a README at the root: setup, configuration, deploy, running the DApp and the AI part, demo.',
+    fnContrib: 'Member contributions', fnContribHint: 'Percentages must add up to 100%. Write the main tasks each member did.',
+    fnPct: '%', fnTasks: 'Main tasks', fnTotal: 'Total', fnPledge: 'Our group confirms this is our own work. We did not copy another group\'s work, and every source, library or code sample we used is cited in the report.',
+    fnNote: 'Note', fnSubmit: 'Submit final project', fnSubmitted: 'Submitted. A confirmation email was sent to the whole group.', fnSubmittedNoMail: 'Submitted, but the confirmation email could not be sent.',
+    readme: 'README', readmeOk: 'found', links: { report: 'Report', slides: 'Slides', video: 'Video', demo: 'DApp' }, linkOk: 'opens without signing in'
   } : {
     signInTitle: 'Đăng nhập bằng MSSV',
     signInHint: 'Hệ thống gửi mã 6 số tới email trường (MSSV@gm.uit.edu.vn). Phiên đăng nhập giữ 6 giờ trên trình duyệt này.',
@@ -48,7 +60,7 @@
     review: { pending: 'Chờ duyệt', resubmitted: 'Chờ duyệt lại', revise: 'Cần chỉnh sửa', approved: 'Đã duyệt', rejected: 'Không duyệt' },
     pgNeedGroup: 'Nhóm cần đăng ký đề tài trước, sau đó quay lại đây để nộp tiến độ.', register: 'Đăng ký đề tài',
     deadline: 'Hạn', lastSub: 'Nộp gần nhất', notYet: 'Chưa nộp', github: 'Repo GitHub', contracts: 'Địa chỉ smart contract trên Sepolia',
-    contractsHint: 'Mỗi địa chỉ một dòng hoặc cách nhau bằng dấu phẩy, ví dụ 0xAbC...', demo: 'Link demo (video / DApp đã deploy)', docs: 'Link báo cáo / slide', note: 'Ghi chú cho giảng viên',
+    contractsHint: 'Mỗi địa chỉ một dòng hoặc cách nhau bằng dấu phẩy, ví dụ 0xAbC...', demo: 'Link demo (video / DApp đã deploy)', docs: 'Link báo cáo / slide', note: 'Ghi chú thêm',
     submit: 'Nộp', submitted: 'Đã nộp. Kết quả kiểm tra tự động ở bên dưới.', resubmitHint: 'Nộp lại sẽ thay các link của mốc này.',
     deployed: 'Đã deploy trên Sepolia', notDeployed: 'Không có contract ở địa chỉ này trên Sepolia', verified: 'Đã verify source', unverifiedSrc: 'Chưa verify source trên Etherscan',
     txs: 'giao dịch', wallets: 'ví', commits: 'commit', lastCommit: 'commit gần nhất', checkedAt: 'Kiểm tra lúc',
@@ -60,7 +72,18 @@
     fgMatch: 'Phù hợp với bạn', fgFilter: 'Mọi chủ đề', fgSearch: 'Tìm tên, kỹ năng, ghi chú...', fgSignInToPost: 'Đăng nhập để đăng hoặc sửa tin của bạn.',
     dfClosed: 'Chưa mở đăng ký lịch bảo vệ. Lịch bên dưới để tham khảo.', dfOpenHint: 'Chỉ nhóm có đề tài đã duyệt mới chọn được lịch. Chọn khung giờ khác sẽ đổi lịch của nhóm.',
     dfNotApproved: 'Đề tài của nhóm chưa được duyệt nên chưa chọn lịch được.', dfBook: 'Chọn khung này', dfYours: 'Nhóm bạn', dfFree: 'Còn trống', dfTaken: 'Đã có nhóm',
-    dfBooked: 'Đã chọn lịch. Email xác nhận đã gửi tới cả nhóm.', dfEmpty: 'Giảng viên chưa công bố lịch bảo vệ.', dfMine: 'Lịch bảo vệ của nhóm:'
+    dfBooked: 'Đã chọn lịch. Email xác nhận đã gửi tới cả nhóm.', dfEmpty: 'Lịch bảo vệ chưa được công bố.', dfMine: 'Lịch bảo vệ của nhóm:',
+    fnTag: 'Nộp bài cuối kỳ', fnNotApproved: 'Chỉ nhóm có đề tài đã được duyệt mới nộp được bài cuối kỳ.',
+    fnOpen: function (d) { return 'Nhóm nộp lại được đến hết hạn' + (d ? ' (' + d + ')' : '') + ', bản nộp mới nhất được dùng để chấm điểm. Sau hạn, form sẽ khóa.'; },
+    fnLocked: function (d) { return 'Đã hết hạn nộp đồ án (' + d + '), form đã khóa.'; },
+    fnLateOpen: 'Đã quá hạn nhưng nhóm được mở lại để nộp trễ. Bài nộp từ bây giờ sẽ được ghi nhận là nộp trễ.',
+    fnLate: 'Nộp trễ', fnReport: 'Báo cáo đồ án (PDF)', fnSlides: 'Slide thuyết trình', fnVideo: 'Video demo (khoảng 5-10 phút)', fnDapp: 'Link DApp đã deploy',
+    fnOptional: 'không bắt buộc', fnLinkHint: 'Link Google Drive / OneDrive phải chia sẻ ở chế độ "Bất kỳ ai có đường liên kết", nếu không phần kiểm tra bên dưới sẽ báo lỗi.',
+    fnGithubHint: 'Repo công khai, có README ở thư mục gốc: Cài đặt, cấu hình, deploy, chạy DApp, chạy AI, demo.',
+    fnContrib: 'Đóng góp của thành viên', fnContribHint: 'Tổng tỉ lệ phải bằng 100%. Ghi các công việc chính mỗi thành viên đã làm.',
+    fnPct: '%', fnTasks: 'Công việc chính', fnTotal: 'Tổng', fnPledge: 'Nhóm cam kết sản phẩm nộp là bài làm của nhóm, không sao chép bài làm của nhóm khác; mọi tài liệu, thư viện và mã nguồn tham khảo đều được trích dẫn trong báo cáo.',
+    fnNote: 'Ghi chú thêm', fnSubmit: 'Nộp đồ án', fnSubmitted: 'Đã nộp. Email xác nhận đã gửi tới cả nhóm.', fnSubmittedNoMail: 'Đã nộp, nhưng chưa gửi được email xác nhận.',
+    readme: 'README', readmeOk: 'Có', links: { report: 'Báo cáo', slides: 'Slide', video: 'Video', demo: 'DApp' }, linkOk: 'Mở được không cần đăng nhập'
   };
 
   var authEl = document.getElementById('pt-auth');
@@ -195,6 +218,15 @@
       if (c.verified === false) out += '<li class="miss">' + a + ': ' + T.unverifiedSrc + '</li>';
       if (typeof c.txCount === 'number') out += '<li class="' + (c.txCount ? 'ok' : 'miss') + '">' + a + ': ' + esc(c.txCount) + ' ' + T.txs + ', ' + esc(c.callers) + ' ' + T.wallets + '</li>';
     });
+    if (check.readme) {
+      out += check.readme.ok
+        ? '<li class="ok">' + T.readme + ': ' + T.readmeOk + ' (' + esc(check.readme.path) + ', ' + Math.round(check.readme.size / 102.4) / 10 + ' KB)</li>'
+        : '<li class="miss">' + T.readme + ': ' + esc(check.readme.error) + '</li>';
+    }
+    Object.keys(check.links || {}).forEach(function (k) {
+      var l = check.links[k];
+      if (l) out += '<li class="' + (l.ok ? 'ok' : 'miss') + '">' + esc(T.links[k] || k) + ': ' + (l.ok ? T.linkOk : esc(l.error)) + '</li>';
+    });
     return out ? '<ul class="q-list pt-checks">' + out + '</ul><p class="pt-muted pt-small">' + T.checkedAt + ' ' + esc(fmt(check.checkedAt)) + '</p>' : '';
   }
 
@@ -206,6 +238,7 @@
     }
     mainEl.innerHTML = me.milestones.map(function (m) {
       var s = me.progress[m.id];
+      if (m.final && me.final) return finalCard(m, s);
       var late = m.deadline && Date.now() > new Date(m.deadline).getTime();
       return '<section class="reg-card" data-ms="' + esc(m.id) + '"><div class="reg-card-head"><b>' + esc(m.id) + '</b><h2>' + esc(m.name) + '</h2></div>' +
         '<p class="reg-card-hint">' + esc(m.desc) + (m.deadline ? ' · ' + T.deadline + ': <b' + (late && !s ? ' class="pt-late"' : '') + '>' + esc(fmt(m.deadline)) + '</b>' : '') + '</p>' +
@@ -219,26 +252,106 @@
         '</div><div class="reg-actions" style="margin-top:14px"><button type="button" class="primary-button" data-submit="' + esc(m.id) + '">' + T.submit + ' <span>›</span></button><p class="pt-msg" data-msg></p></div>' +
         '<div data-check>' + (s ? checkHtml(s.check) : '') + '</div></section>';
     }).join('');
+    mainEl.querySelectorAll('.pt-final').forEach(updateContribTotal);
+  }
+
+  /* Final submission: the 5 deliverables + contributions + pledge, locked after the deadline. */
+  function finalCard(m, s) {
+    var f = me.final;
+    var fin = s && s.final;
+    var dl = m.deadline ? fmt(m.deadline) : '';
+    var val = function (x) { return esc(x || ''); };
+    var head = '<section class="reg-card pt-final" data-ms="' + esc(m.id) + '"><div class="reg-card-head"><b>' + esc(m.id) + '</b><h2>' + esc(m.name) + '</h2><span class="pt-final-tag">' + T.fnTag + '</span></div>' +
+      '<p class="reg-card-hint">' + esc(m.desc) + (dl ? ' · ' + T.deadline + ': <b' + (f.past && !s ? ' class="pt-late"' : '') + '>' + esc(dl) + '</b>' : '') + '</p>' +
+      '<p class="pt-status">' + (s ? T.lastSub + ': <b>' + esc(fmt(s.timestamp)) + '</b>' + (fin && fin.late ? ' <span class="pt-flag">' + T.fnLate + '</span>' : '') : '<b>' + T.notYet + '</b>') + '</p>';
+    if (!f.approved) return head + '<div class="inline-warning">' + T.fnNotApproved + '</div>' + (s ? '<div data-check>' + checkHtml(s.check) + '</div>' : '') + '</section>';
+
+    var notice = !f.open ? '<div class="inline-warning">' + esc(T.fnLocked(dl)) + '</div>'
+      : f.past ? '<div class="inline-warning">' + T.fnLateOpen + '</div>'
+      : '<div class="inline-ok">' + esc(T.fnOpen(dl)) + '</div>';
+    var contrib = {};
+    ((fin && fin.contributions) || []).forEach(function (c) { contrib[c.studentId] = c; });
+    var rows = f.members.map(function (mb) {
+      var c = contrib[mb.studentId] || {};
+      return '<div class="pt-contrib-row" data-sid="' + esc(mb.studentId) + '"><div class="pt-contrib-name"><b>' + esc(mb.fullName) + '</b><small>' + esc(mb.studentId) + '</small></div>' +
+        '<label class="reg-field"><input type="number" min="0" max="100" step="1" inputmode="numeric" data-pct value="' + (c.percent == null ? '' : esc(c.percent)) + '" placeholder="0" aria-label="' + esc(mb.fullName) + ' %"></label>' +
+        '<label class="reg-field"><input type="text" maxlength="300" data-tasks value="' + val(c.tasks) + '" placeholder="' + T.fnTasks + '" aria-label="' + esc(mb.fullName) + ' - ' + T.fnTasks + '"></label></div>';
+    }).join('');
+    var opt = ' <small>(' + T.fnOptional + ')</small>';
+    return head + notice +
+      '<fieldset class="pt-fieldset"' + (f.open ? '' : ' disabled') + '>' +
+      '<div class="reg-grid">' +
+      '<label class="reg-field reg-span"><span>' + T.github + ' <i>*</i></span><input type="url" data-f="github" placeholder="https://github.com/user/repo" value="' + val(s && s.github) + '"><small class="reg-count" style="align-self:flex-start">' + T.fnGithubHint + '</small></label>' +
+      '<label class="reg-field reg-span"><span>' + T.contracts + ' <i>*</i></span><textarea data-f="contracts" rows="2" placeholder="0x..." class="pt-mono">' + esc(s ? s.contracts.join('\n') : '') + '</textarea><small class="reg-count" style="align-self:flex-start">' + T.contractsHint + '</small></label>' +
+      '<label class="reg-field"><span>' + T.fnReport + ' <i>*</i></span><input type="url" data-f="docs" placeholder="https://" value="' + val(s && s.docs) + '"></label>' +
+      '<label class="reg-field"><span>' + T.fnSlides + ' <i>*</i></span><input type="url" data-f="slides" placeholder="https://" value="' + val(fin && fin.slides) + '"></label>' +
+      '<label class="reg-field"><span>' + T.fnVideo + ' <i>*</i></span><input type="url" data-f="video" placeholder="https://youtu.be/..." value="' + val(fin && fin.video) + '"></label>' +
+      '<label class="reg-field"><span>' + T.fnDapp + opt + '</span><input type="url" data-f="demo" placeholder="https://" value="' + val(s && s.demo) + '"></label>' +
+      '<p class="reg-count reg-span" style="align-self:flex-start;margin:-6px 0 0">' + T.fnLinkHint + '</p>' +
+      '</div>' +
+      '<div class="pt-contrib"><span class="pt-label">' + T.fnContrib + ' <i class="pt-req">*</i></span><p class="reg-card-hint" style="margin-bottom:10px">' + T.fnContribHint + '</p>' + rows +
+      '<p class="pt-contrib-total">' + T.fnTotal + ': <b data-total>0%</b></p></div>' +
+      '<label class="pt-pledge"><input type="checkbox" data-pledge><span>' + T.fnPledge + '</span></label>' +
+      '<label class="reg-field" style="margin-top:14px"><span>' + T.fnNote + opt + '</span><input type="text" data-f="note" maxlength="1000" value="' + val(s && s.note) + '"></label>' +
+      '<div class="reg-actions" style="margin-top:16px"><button type="button" class="primary-button" data-submit="' + esc(m.id) + '" data-final="1">' + T.fnSubmit + ' <span>›</span></button><p class="pt-msg" data-msg></p></div>' +
+      '</fieldset>' +
+      '<div data-check>' + (s ? checkHtml(s.check) : '') + '</div></section>';
+  }
+
+  function updateContribTotal(card) {
+    var total = 0;
+    card.querySelectorAll('[data-pct]').forEach(function (i) { total += Number(i.value) || 0; });
+    var el = card.querySelector('[data-total]');
+    if (!el) return;
+    el.textContent = total + '%';
+    el.className = total === 100 ? 'is-ok' : 'is-bad';
+  }
+
+  function finalPayload(card) {
+    return {
+      slides: card.querySelector('[data-f="slides"]').value.trim(),
+      video: card.querySelector('[data-f="video"]').value.trim(),
+      pledge: card.querySelector('[data-pledge]').checked,
+      contributions: Array.prototype.map.call(card.querySelectorAll('[data-sid]'), function (row) {
+        var p = row.querySelector('[data-pct]').value.trim();
+        return { studentId: row.dataset.sid, percent: p === '' ? null : Number(p), tasks: row.querySelector('[data-tasks]').value.trim() };
+      })
+    };
   }
 
   function bindProgress() {
+    mainEl.addEventListener('input', function (e) {
+      if (e.target.matches('[data-pct]')) updateContribTotal(e.target.closest('[data-ms]'));
+    });
     mainEl.addEventListener('click', function (e) {
       var b = e.target.closest('[data-submit]');
       if (!b || PAGE !== 'progress') return;
       var card = b.closest('[data-ms]');
       var v = function (f) { return card.querySelector('[data-f="' + f + '"]').value.trim(); };
       var m = card.querySelector('[data-msg]');
+      var isFinal = !!b.dataset.final;
+      var label = b.innerHTML;
+      var data = { action: 'submitProgress', token: session.token, milestone: b.dataset.submit, github: v('github'), contracts: v('contracts'), demo: v('demo'), docs: v('docs'), note: v('note') };
+      if (isFinal) {
+        var extra = finalPayload(card);
+        Object.keys(extra).forEach(function (k) { data[k] = extra[k]; });
+      }
       b.disabled = true;
       b.textContent = T.checking;
-      post({ action: 'submitProgress', token: session.token, milestone: b.dataset.submit, github: v('github'), contracts: v('contracts'), demo: v('demo'), docs: v('docs'), note: v('note') })
+      post(data)
         .then(function (r) {
-          if (!r.ok) { msg(m, r.message, false); if (r.code === 'session') { clearSession(); boot(); } return; }
+          if (!r.ok) {
+            msg(m, r.message, false);
+            if (r.code === 'session') { clearSession(); boot(); }
+            if (r.code === 'locked') loadMe();
+            return;
+          }
           me.progress = r.progress;
           renderProgress();
           var c = mainEl.querySelector('[data-ms="' + b.dataset.submit + '"] [data-msg]');
-          if (c) msg(c, T.submitted, true);
+          if (c) msg(c, isFinal ? (r.emailed ? T.fnSubmitted : T.fnSubmittedNoMail) : T.submitted, true);
         }).catch(function () { msg(m, T.netErr, false); })
-        .finally(function () { b.disabled = false; b.innerHTML = T.submit + ' <span>›</span>'; });
+        .finally(function () { b.disabled = false; b.innerHTML = label; });
     });
   }
 

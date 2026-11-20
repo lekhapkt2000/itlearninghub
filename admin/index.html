@@ -292,6 +292,10 @@
     .ck-sum-ok .ck-bar i{background:var(--ok-accent)}
     .ck-sum-bad .ck-bar i{background:var(--danger-accent)}
     .ck-legend{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:12px}
+    .ck-btn.ck-reviewed{border:2px solid var(--ok-accent)}
+    .ck-reviewed-tag{margin-top:3px;padding:2px 6px;border-radius:6px;background:var(--ok-accent);color:#fff!important;font-weight:700;opacity:1!important}
+    .ck-btn .ck-file{font-family:var(--font-mono);font-size:10px!important;opacity:.85;word-break:break-all}
+    .ck-dot.ck-rv{background:var(--surface);border:2px solid var(--ok-accent)}
     .ck-dot{display:inline-block;width:10px;height:10px;margin-right:-4px;border-radius:3px;background:var(--bg);border:1px solid var(--line)}
     .ck-dot.ck-ok{background:var(--ok-accent);border-color:var(--ok-accent)}
     .ck-dot.ck-late{background:var(--warn-accent);border-color:var(--warn-accent)}
@@ -664,7 +668,7 @@
         <div class="toolbar">
           <input type="search" id="ck-search" placeholder="Tìm nhóm, mã nhóm, MSSV, họ tên...">
           <select id="ck-class"><option value="">Cả 2 lớp</option><option value="IS355.R11.CTTT.1">IS355.R11.CTTT.1</option><option value="IS355.R11.CTTT.2">IS355.R11.CTTT.2</option></select>
-          <select id="ck-show"><option value="">Mọi nhóm</option><option value="missing">Thiếu file đã hết hạn</option><option value="notall">Chưa nộp đủ 5 file</option><option value="all">Đã nộp đủ</option><option value="late">Có file nộp trễ</option><option value="nofb">Có file đã nộp chưa nhận xét</option><option value="fbdraft">Có nhận xét chưa gửi</option></select>
+          <select id="ck-show"><option value="">Mọi nhóm</option><option value="notall">Chưa nộp đủ 5 file</option><option value="all">Đã nộp đủ</option><option value="none">Chưa nộp file nào</option><option value="nofb">Có file đã nộp chưa gửi nhận xét</option><option value="reviewed">Đã gửi nhận xét ít nhất 1 file</option><option value="fbdraft">Có nhận xét soạn sẵn chưa gửi</option></select>
           <select id="ck-sort"><option value="">Thứ tự đăng ký</option><option value="fewest">Ít file nhất trước</option></select>
         </div>
         <div class="card">
@@ -675,15 +679,15 @@
             </table>
           </div>
           <p class="empty" id="ck-empty" hidden>Chưa có nhóm nào.</p>
-          <p class="field-hint ck-legend"><span class="ck-dot ck-ok"></span>Đúng hạn <span class="ck-dot ck-late"></span>Nộp trễ <span class="ck-dot ck-overdue"></span>Quá hạn chưa nộp <span class="ck-dot ck-open"></span>Đang mở <span class="ck-dot"></span>Chưa mở / chưa giao / không áp dụng · Bấm vào ô để đánh dấu hoặc sửa thời gian nộp. Hạn tính theo lớp của trưởng nhóm.</p>
+          <p class="field-hint ck-legend"><span class="ck-dot ck-ok"></span>Đã nộp (thời gian, tên file) <span class="ck-dot ck-rv"></span>Đã gửi email nhận xét (viền xanh, dòng ✉) <span class="ck-dot"></span>Chưa nộp · Bấm vào ô để đánh dấu, sửa thời gian nộp hoặc nhận xét.</p>
         </div>
 
         <div class="card" style="margin-top:20px">
           <h3>Các file cần nộp <span class="row-actions"><button type="button" class="outline-button btn-sm" id="ck-items-reset">Khôi phục 5 file mặc định</button><button type="button" class="outline-button btn-sm" id="ck-items-save">Lưu danh sách</button></span></h3>
-          <p class="field-hint" style="margin:-4px 0 12px">Thời gian mở / hạn nộp lấy theo Moodle, riêng từng lớp. Để trống của một lớp nghĩa là lớp đó chưa được giao: File đó chưa bị tính là thiếu. Khi Moodle giao File 4, File 5 hoặc lớp CTTT.1 có hạn mới, cập nhật ở đây rồi bấm Lưu. "Lấy từ cổng" tự điền thời gian nộp từ một mốc của cổng Nộp tiến độ (ví dụ M3).</p>
+          <p class="field-hint" style="margin:-4px 0 12px">Tên và tuần của từng file. "Tuần" dùng để tự xếp file khi dán từ Moodle (tên file có "Week3" vào file tuần 3). "Lấy từ cổng" tự điền thời gian nộp từ một mốc của cổng Nộp tiến độ (ví dụ M3).</p>
           <div class="table-wrap">
             <table class="ck-items">
-              <thead><tr><th>Tuần</th><th>Tên file</th><th>IS355.R11.CTTT.1</th><th>IS355.R11.CTTT.2</th><th>Lấy từ cổng</th><th></th></tr></thead>
+              <thead><tr><th>Tuần</th><th>Tên file</th><th>Lấy từ cổng</th><th></th></tr></thead>
               <tbody id="ck-items-tbody"></tbody>
             </table>
           </div>
@@ -950,9 +954,10 @@
   <div class="modal-overlay" id="ck-imp-overlay">
     <div class="modal-card" style="max-width:680px">
       <h3>Nhập bài nộp từ Moodle</h3>
-      <p style="margin-bottom:16px">Trong Moodle, mở bài tập ➜ View all submissions ➜ Grading action: <b>Download grading worksheet</b>. Chọn đúng bài bên dưới rồi chọn file CSV vừa tải. Hệ thống khớp MSSV với nhóm và lấy cột thời gian nộp (Last modified (submission)).</p>
+      <p style="margin-bottom:16px">Chọn đúng bài, rồi dùng <b>một trong hai cách</b>: (1) Chọn file CSV từ Moodle (View all submissions ➜ Grading action: Download grading worksheet), khớp nhóm theo MSSV. (2) Dán danh sách bài nộp copy từ trang View all submissions (giờ nộp + tên file), khớp nhóm theo tên file; dòng nào chưa khớp thì chọn nhóm bằng tay.</p>
       <div class="field"><label for="ck-imp-item">BÀI</label><select id="ck-imp-item"></select></div>
-      <div class="field"><label for="ck-imp-file">FILE CSV</label><input type="file" id="ck-imp-file" accept=".csv,text/csv"></div>
+      <div class="field"><label for="ck-imp-file">CÁCH 1 · FILE CSV</label><input type="file" id="ck-imp-file" accept=".csv,text/csv"></div>
+      <div class="field"><label for="ck-imp-paste">CÁCH 2 · DÁN TỪ MOODLE</label><textarea id="ck-imp-paste" class="plain" rows="5" placeholder="Friday, 23 October 2026, 4:03 PM&#10;GreenPaddy_IS355_Proposal.pdf GreenPaddy_IS355_Proposal.pdf23 October 2026, 4:03 PM&#10;..."></textarea></div>
       <div id="ck-imp-preview" class="ck-imp-preview"></div>
       <div class="modal-actions">
         <button type="button" class="outline-button" id="ck-imp-cancel">Hủy</button>
@@ -2098,6 +2103,7 @@
         fb.rows = d.feedback || [];
         fillFbSettings();
         renderFeedback();
+        if (ck.loaded) renderChecklist(); // "đã gửi góp ý tiến độ" marks in the checklist
       }).catch(function (err) { if (!silent) toast(netError(err), 'error'); })
         .finally(function () { fb.loading = false; });
       return silent ? p : busy(p);
@@ -2833,52 +2839,63 @@
       return null;
     }
 
-    /**
-     * ok | late | overdue | alt (overdue, but did the lab/project alternative) |
-     * open | upcoming | na (replaced by the project item) | unassigned
-     */
+    // Only "handed in (when, which files)" or not: deadlines are not checked here.
     function ckStatus(g, it) {
-      var code = groupCodeOf(g);
-      var d = (it.due || {})[ckClassOf(g)] || null;
-      var dueT = d && d.due ? new Date(d.due).getTime() : 0;
-      var e = ckEntry(code, it);
-      if (e) {
-        var t = new Date(e.submittedAt).getTime();
-        var lateMs = dueT && t > dueT ? t - dueT : 0;
-        return { st: lateMs ? 'late' : 'ok', e: e, d: d, lateMs: lateMs };
-      }
-      var rep = ck.items.filter(function (x) { return x.replaces === it.id && ckEntry(code, x); })[0];
-      if (rep) return { st: 'na', d: d, label: 'Thay bằng ' + rep.name };
-      var alt = it.replaces ? ckItem(it.replaces) : null;
-      var altDone = alt && ckEntry(code, alt) ? alt : null;
-      if (!d || (!d.open && !d.due)) return { st: 'unassigned', d: d };
-      if (d.open && Date.now() < new Date(d.open).getTime()) return { st: 'upcoming', d: d };
-      if (dueT && Date.now() > dueT) return { st: altDone ? 'alt' : 'overdue', d: d, alt: altDone };
-      return { st: 'open', d: d, alt: altDone };
+      var e = ckEntry(groupCodeOf(g), it);
+      return e ? { st: 'ok', e: e } : { st: 'none' };
     }
-    function ckDone(s) { return s.st === 'ok' || s.st === 'late'; }
-    function ckCounts(s) { return ['ok', 'late', 'overdue', 'alt', 'open'].indexOf(s.st) !== -1; }
-    // Counted in "x / y due": handed in (even early), or past the deadline and still missing.
-    function ckDue(s) { return ckDone(s) || s.st === 'overdue' || s.st === 'alt'; }
+    function ckDone(s) { return s.st === 'ok'; }
+    function ckFileList(e) { return String(e && e.files || '').split('\n').filter(Boolean); }
+
+    // "Góp ý tiến độ" round -> checklist file: "Tuần 3" -> the week-3 file, "đề cương" / "proposal" -> the proposal file.
+    function ckRoundItem(round) {
+      var p = plain(round);
+      var wk = p.match(/(?:tuan|week)\s*(\d{1,2})/);
+      if (wk) {
+        var byWeek = ck.items.filter(function (x) { return Number(x.week) === Number(wk[1]); });
+        if (byWeek.length === 1) return byWeek[0].id;
+      }
+      if (/de cuong|proposal/.test(p)) {
+        var pr = ck.items.filter(function (x) { return /proposal/i.test(x.name); });
+        if (pr.length === 1) return pr[0].id;
+      }
+      return '';
+    }
+    // Progress-feedback emails already sent to this group (any round), newest first.
+    function ckProgressFbSent(g) {
+      var code = groupCodeOf(g);
+      return (fb && fb.rows ? fb.rows : []).filter(function (r) { return r.groupCode === code && r.sentAt; })
+        .sort(function (a, b) { return String(b.sentAt).localeCompare(String(a.sentAt)); });
+    }
+    /** Was a comment on this file emailed to the group? From the checklist itself, or an earlier "Góp ý tiến độ" round. */
+    function ckReviewed(g, it) {
+      var own = (ck.entries[groupCodeOf(g)] || {})[it.id];
+      if (own && own.feedbackSentAt) return { sentAt: own.feedbackSentAt, label: 'Đã gửi nhận xét ' + ckShort(own.feedbackSentAt) };
+      var r = ckProgressFbSent(g).filter(function (x) { return ckRoundItem(x.round) === it.id; })[0];
+      if (r) return { sentAt: r.sentAt, label: 'Đã gửi góp ý tiến độ (' + r.round + ') ' + ckShort(r.sentAt) };
+      return null;
+    }
 
     function ckCellHtml(g, it) {
       var s = ckStatus(g, it);
       var inner;
-      if (s.st === 'ok') inner = '<b>✓ ' + esc(ckShort(s.e.submittedAt)) + '</b>' + (s.e.source === 'portal' ? '<small>Từ cổng nộp</small>' : s.e.source === 'moodle' ? '<small>Từ Moodle</small>' : '');
-      else if (s.st === 'late') inner = '<b>' + esc(ckShort(s.e.submittedAt)) + '</b><small>Trễ ' + ckDur(s.lateMs) + '</small>';
-      else if (s.st === 'overdue') inner = '<b>Quá hạn</b><small>Hạn ' + esc(ckShort(s.d.due)) + '</small>';
-      else if (s.st === 'alt') inner = '<b>Chưa nộp</b><small>Đã làm ' + esc(s.alt.name) + '</small>';
-      else if (s.st === 'open') inner = '<b>Đang mở</b><small>' + (s.d.due ? 'Hạn ' + esc(ckShort(s.d.due)) : 'Chưa có hạn') + '</small>';
-      else if (s.st === 'upcoming') inner = '<b>Chưa mở</b><small>Mở ' + esc(ckShort(s.d.open)) + '</small>';
-      else if (s.st === 'na') inner = '<small>Không áp dụng</small><small>' + esc(s.label) + '</small>';
-      else inner = '<small>Chưa giao</small>';
+      if (s.st === 'ok') {
+        var files = ckFileList(s.e);
+        inner = '<b>✓ ' + esc(ckShort(s.e.submittedAt)) + '</b>' +
+          (files.length ? files.map(function (f) { return '<small class="ck-file" title="' + esc(f) + '">' + esc(f.length > 34 ? f.slice(0, 31) + '...' : f) + '</small>'; }).join('')
+            : s.e.source === 'portal' ? '<small>Từ cổng nộp</small>' : s.e.source === 'moodle' ? '<small>Từ Moodle</small>' : '');
+      } else {
+        inner = '<small>Chưa nộp</small>';
+      }
       var note = s.e && s.e.note ? s.e.note : '';
       if (note) inner += '<small class="ck-note">' + esc(note.length > 40 ? note.slice(0, 40) + '...' : note) + '</small>';
       var ownE = (ck.entries[groupCodeOf(g)] || {})[it.id];
       if (ownE && ownE.score !== '' && ownE.score != null) inner += '<small class="ck-score">Điểm ' + esc(String(ownE.score).replace('.', ',')) + '</small>';
       var fs = ckFbState(ownE);
-      if (fs !== 'none') inner += '<small class="ck-fbtag ck-fb-' + fs + '">' + CK_FB_LABEL[fs] + '</small>';
-      return '<td class="ck-cell"><button type="button" class="ck-btn ck-' + s.st + '" data-ck="' + esc(groupCodeOf(g)) + '|' + esc(it.id) + '"' + (note ? ' title="' + esc(note) + '"' : '') + '>' + inner + '</button></td>';
+      var rv = ckReviewed(g, it);
+      if (rv) inner += '<small class="ck-reviewed-tag">✉ ' + esc(rv.label) + '</small>';
+      if (fs === 'draft' || fs === 'edited') inner += '<small class="ck-fbtag ck-fb-' + fs + '">' + CK_FB_LABEL[fs] + '</small>';
+      return '<td class="ck-cell"><button type="button" class="ck-btn ck-' + s.st + (rv ? ' ck-reviewed' : '') + '" data-ck="' + esc(groupCodeOf(g)) + '|' + esc(it.id) + '"' + (note ? ' title="' + esc(note) + '"' : '') + '>' + inner + '</button></td>';
     }
 
     function ckFiltered() {
@@ -2893,28 +2910,26 @@
           if (hay.indexOf(q) === -1) return false;
         }
         var st = ckGroupStats(g, items);
-        if (show === 'missing') return st.overdue.length > 0;
         if (show === 'notall') return st.done < items.length;
         if (show === 'all') return st.done === items.length;
-        if (show === 'late') return st.late > 0;
+        if (show === 'none') return st.done === 0;
+        if (show.indexOf('miss:') === 0) return !ckDone(ckStatus(g, ckItem(show.slice(5)) || {}));
         if (show === 'fbdraft') return ckUnsentPairs([g]).length > 0;
-        if (show === 'nofb') return items.some(function (it) { return ckDone(ckStatus(g, it)) && ckFbState((ck.entries[groupCodeOf(g)] || {})[it.id]) === 'none'; });
+        if (show === 'nofb') return items.some(function (it) { return ckDone(ckStatus(g, it)) && !ckReviewed(g, it); });
+        if (show === 'reviewed') return items.some(function (it) { return ckReviewed(g, it); });
         return true;
       }).sort(function (a, b) {
         if ($('ck-sort').value !== 'fewest') return 0;
-        var x = ckGroupStats(a, items), y = ckGroupStats(b, items);
-        return (x.done - y.done) || (y.overdue.length - x.overdue.length);
+        return ckGroupStats(a, items).done - ckGroupStats(b, items).done;
       });
     }
 
-    // Per group: files handed in, files past due and still missing, late hand-ins.
+    // Per group: how many files handed in, and which (File N) are not yet.
     function ckGroupStats(g, items) {
-      var out = { done: 0, late: 0, overdue: [], pending: [] };
+      var out = { done: 0, missing: [] };
       items.forEach(function (it, i) {
-        var s = ckStatus(g, it);
-        if (ckDone(s)) { out.done++; if (s.st === 'late') out.late++; }
-        else if (s.st === 'overdue' || s.st === 'alt') out.overdue.push(i + 1);
-        else out.pending.push(i + 1);
+        if (ckDone(ckStatus(g, it))) out.done++;
+        else out.missing.push(i + 1);
       });
       return out;
     }
@@ -2924,25 +2939,33 @@
       var items = ckSorted();
       var all = ckGroups();
       var total = items.length;
-      var full = 0, missingGroups = 0, overdueFiles = 0, lateFiles = 0;
+      var full = 0, handed = 0;
       all.forEach(function (g) {
         var st = ckGroupStats(g, items);
         if (st.done === total) full++;
-        if (st.overdue.length) missingGroups++;
-        overdueFiles += st.overdue.length;
-        lateFiles += st.late;
+        handed += st.done;
       });
-      $('nav-checklist').textContent = missingGroups;
+      $('nav-checklist').textContent = handed;
+      // "Thiếu File N" filter options follow the item list.
+      var showSel = $('ck-show'), showCur = showSel.value;
+      showSel.querySelectorAll('[data-miss]').forEach(function (o) { o.remove(); });
+      items.forEach(function (it, i) {
+        var o = document.createElement('option');
+        o.value = 'miss:' + it.id;
+        o.dataset.miss = '1';
+        o.textContent = 'Chưa nộp File ' + (i + 1);
+        showSel.insertBefore(o, showSel.querySelector('[value="nofb"]'));
+      });
+      showSel.value = showCur;
       $('ck-summary').innerHTML =
         '<div class="settings-item"><span class="chip chip-muted">' + all.length + ' nhóm</span>' +
-        '<span class="chip chip-ok">' + full + ' nhóm đủ ' + total + '/' + total + ' file</span>' +
-        '<span class="chip ' + (missingGroups ? '' : 'chip-muted') + '" style="' + (missingGroups ? 'background:var(--danger-bg);color:var(--danger-text)' : '') + '">' + missingGroups + ' nhóm thiếu file đã hết hạn (' + overdueFiles + ' file)</span>' +
-        '<span class="chip chip-warn">' + lateFiles + ' file nộp trễ</span></div>' +
+        '<span class="chip chip-ok">' + handed + ' file đã nộp</span>' +
+        '<span class="chip chip-ok">' + full + ' nhóm đủ ' + total + '/' + total + ' file</span></div>' +
         (function () {
           var n = ckUnsentPairs(all).length;
           return n ? '<div class="settings-item"><button type="button" class="primary-button btn-sm" id="ck-send-all">Gửi ' + n + ' nhận xét chưa gửi <span>›</span></button></div>' : '';
         })() +
-        '<p class="settings-note">Mỗi nhóm cần nộp đủ ' + total + ' file đồ án. File chưa đến hạn hoặc lớp chưa được giao thì chưa tính là thiếu.</p>';
+        '<p class="settings-note">Mỗi ô ghi thời gian nộp và tên file đã nộp trên Moodle. Bảng chỉ ghi nhận đã nộp hay chưa, không so với hạn nộp.</p>';
 
       // File N header with how many groups have handed it in.
       $('ck-thead').innerHTML = '<tr><th>Nhóm</th><th>Đã nộp</th>' + items.map(function (it, i) {
@@ -2958,12 +2981,12 @@
       $('ck-empty').textContent = all.length ? 'Không có nhóm nào khớp bộ lọc.' : 'Chưa có nhóm nào.';
       $('ck-tbody').innerHTML = groups.map(function (g) {
         var st = ckGroupStats(g, items);
-        var tone = st.done === total ? 'ok' : st.overdue.length ? 'bad' : 'wait';
-        return '<tr><td><b>' + esc(g.groupName) + '</b><br><code>' + esc(groupCodeOf(g)) + '</code> · ' + esc(ckShortClass(ckClassOf(g))) + ' ' + statusBadge(g.reviewStatus) + '</td>' +
+        var tone = st.done === total ? 'ok' : 'wait';
+        var rounds = ckProgressFbSent(g);
+        return '<tr><td><b>' + esc(g.groupName) + '</b><br><code>' + esc(groupCodeOf(g)) + '</code> · ' + esc(ckShortClass(ckClassOf(g))) + ' ' + statusBadge(g.reviewStatus) +
+          (rounds.length ? '<span class="ck-row-sum">✉ Góp ý tiến độ đã gửi: ' + rounds.map(function (r) { return esc(r.round) + ' (' + esc(ckShort(r.sentAt)) + ')'; }).join(', ') + '</span>' : '') + '</td>' +
           '<td class="ck-sum ck-sum-' + tone + '"><b>' + st.done + '/' + total + '</b><span class="ck-bar"><i style="width:' + (total ? st.done / total * 100 : 0) + '%"></i></span>' +
-          (st.done === total ? '<small>Đã đủ file' + (st.late ? ', ' + st.late + ' file trễ' : '') + '</small>'
-            : (st.overdue.length ? '<small class="ck-miss">Thiếu file ' + st.overdue.join(', ') + '</small>' : '') +
-              (st.pending.length ? '<small>Chưa đến hạn: File ' + st.pending.join(', ') + '</small>' : '')) +
+          (st.done === total ? '<small>Đã nộp đủ</small>' : '<small>Chưa nộp: File ' + st.missing.join(', ') + '</small>') +
           '</td>' +
           items.map(function (it) { return ckCellHtml(g, it); }).join('') + '</tr>';
       }).join('');
@@ -2986,7 +3009,8 @@
       var own = (ck.entries[code] || {})[itemId];
       ck.editing = { code: code, itemId: itemId };
       $('ck-title').textContent = g.groupName + ' · ' + it.name;
-      $('ck-sub').innerHTML = esc(ckClassOf(g)) + (s.d && s.d.due ? ' · Hạn <b>' + esc(fmtTime(s.d.due)) + '</b>' : ' · Lớp này chưa có hạn') +
+      $('ck-sub').innerHTML = esc(ckClassOf(g)) +
+        (ckFileList(own).length ? '<br>File đã nộp: <b>' + ckFileList(own).map(esc).join('</b>, <b>') + '</b>' : '') +
         (s.e && s.e.source === 'portal' && !own ? '<br>Đang lấy thời gian từ cổng Nộp tiến độ. Lưu ở đây sẽ ghi đè.' : '') +
         (own && own.source === 'moodle' ? '<br>Dữ liệu nhập từ file Moodle.' : '');
       $('ck-done').checked = !!s.e;
@@ -3303,14 +3327,8 @@
       var list = ck.itemsDraft || ck.items;
       var opt = function (v, label, sel) { return '<option value="' + esc(v) + '"' + (v === sel ? ' selected' : '') + '>' + esc(label) + '</option>'; };
       $('ck-items-tbody').innerHTML = list.map(function (it, i) {
-        var dt = function (cls) {
-          var x = (it.due || {})[cls] || {};
-          return '<td><div class="ck-dt"><label>Mở<input type="datetime-local" data-c="' + esc(cls) + '" data-t="open" value="' + esc(toLocalInput(x.open)) + '"></label>' +
-            '<label>Hạn<input type="datetime-local" data-c="' + esc(cls) + '" data-t="due" value="' + esc(toLocalInput(x.due)) + '"></label></div></td>';
-        };
         return '<tr data-id="' + esc(it.id) + '"><td><input type="number" min="0" max="20" data-f="week" value="' + esc(it.week) + '"></td>' +
           '<td><input data-f="name" maxlength="100" value="' + esc(it.name) + '" placeholder="File ' + (i + 1) + '"></td>' +
-          CLASSES.map(dt).join('') +
           '<td><select data-f="portal">' + opt('', '-', it.portal) + state.milestones.map(function (m) { return opt(m.id, m.id + ' · ' + m.name, it.portal); }).join('') + '</select></td>' +
           '<td><button type="button" class="outline-button btn-sm btn-danger-outline" data-ck-del="' + i + '">Xóa</button></td></tr>';
       }).join('');
@@ -3318,14 +3336,8 @@
     function readCkItems() {
       return Array.prototype.map.call($('ck-items-tbody').querySelectorAll('tr'), function (tr) {
         var v = function (f) { return tr.querySelector('[data-f="' + f + '"]').value.trim(); };
-        var due = {};
-        CLASSES.forEach(function (c) {
-          var o = tr.querySelector('[data-c="' + c + '"][data-t="open"]').value;
-          var d = tr.querySelector('[data-c="' + c + '"][data-t="due"]').value;
-          if (o || d) due[c] = { open: o ? new Date(o).toISOString() : '', due: d ? new Date(d).toISOString() : '' };
-        });
         var prev = (ck.itemsDraft || ck.items).filter(function (x) { return x.id === tr.dataset.id; })[0] || {};
-        return { id: tr.dataset.id, week: Number(v('week')) || 0, kind: prev.kind || 'project', name: v('name'), replaces: prev.replaces || '', portal: v('portal'), due: due };
+        return { id: tr.dataset.id, week: Number(v('week')) || 0, kind: prev.kind || 'project', name: v('name'), replaces: prev.replaces || '', portal: v('portal'), due: prev.due || {} };
       });
     }
     $('ck-items-tbody').addEventListener('input', function () { ck.itemsDraft = readCkItems(); });
@@ -3371,18 +3383,18 @@
 
     $('ck-export').addEventListener('click', function () {
       var items = ckSorted();
-      var label = { overdue: 'Quá hạn chưa nộp', alt: 'Chưa nộp (đã làm bài thay thế)', open: 'Đang mở', upcoming: 'Chưa mở', na: 'Không áp dụng', unassigned: 'Chưa giao' };
-      var rows = [['Nhóm', 'Mã nhóm', 'Lớp', 'Đã nộp', 'Thiếu (đã hết hạn)'].concat(items.map(function (it, i) { return 'File ' + (i + 1) + ' - ' + it.name; }))];
+      var head = ['Nhóm', 'Mã nhóm', 'Lớp', 'Đã nộp', 'Chưa nộp'];
+      items.forEach(function (it, i) { head.push('File ' + (i + 1) + ' - thời gian nộp', 'File ' + (i + 1) + ' - tên file', 'File ' + (i + 1) + ' - nhận xét'); });
+      var rows = [head];
       ckFiltered().forEach(function (g) {
         var st = ckGroupStats(g, items);
-        rows.push([g.groupName, groupCodeOf(g), ckClassOf(g), st.done + '/' + items.length, st.overdue.map(function (n) { return 'File ' + n; }).join(', ')].concat(items.map(function (it) {
+        var row = [g.groupName, groupCodeOf(g), ckClassOf(g), st.done + '/' + items.length, st.missing.map(function (n) { return 'File ' + n; }).join(', ')];
+        items.forEach(function (it) {
           var s = ckStatus(g, it);
-          var own = (ck.entries[groupCodeOf(g)] || {})[it.id];
-          var sc = own && own.score !== '' && own.score != null ? ' · điểm ' + String(own.score).replace('.', ',') : '';
-          if (s.st === 'ok') return fmtTime(s.e.submittedAt) + sc;
-          if (s.st === 'late') return fmtTime(s.e.submittedAt) + ' (trễ ' + ckDur(s.lateMs) + ')' + sc;
-          return label[s.st] || '';
-        })));
+          var fb = ckReviewed(g, it);
+          row.push(s.st === 'ok' ? fmtTime(s.e.submittedAt) : 'Chưa nộp', s.st === 'ok' ? ckFileList(s.e).join('; ') : '', fb ? fb.label : '');
+        });
+        rows.push(row);
       });
       var csv = '﻿' + rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\r\n');
       var a = document.createElement('a');
@@ -3462,8 +3474,133 @@
         var code = groupCodeOf(g);
         if (!perGroup[code] || perGroup[code].t < t) perGroup[code] = { g: g, t: t };
       });
-      var list = Object.keys(perGroup).map(function (c) { return perGroup[c]; });
+      var list = Object.keys(perGroup).map(function (c) { return { groupCode: c, t: perGroup[c].t, hint: perGroup[c].g.groupName }; });
       return { list: list, unknown: Object.keys(unknown), skipped: skipped, item: it };
+    }
+
+    function ckGroupByCode(code) { return ckGroups().filter(function (g) { return groupCodeOf(g) === code; })[0] || null; }
+    function compact(s) { return plain(s).replace(/[^a-z0-9]/g, ''); }
+
+    // Words in Moodle file names that describe the assignment, not the group.
+    var CK_FILE_STOP = /^(is355|is|355|project|proposal|week\d*|w\d+|tuan\d*|report|final|draft|en|vi|eng|ver\d*|v\d+|related|work|method|details?|test|plan|results?|evaluation|paper|updated?|ban|nop|revised|revision|rev\d*|sua|bansua|homework|hw|baitap)$/;
+    // A re-upload of a file the group already handed in ("..._REVISED.docx", "..._updated", "ban_sua").
+    var CK_REVISION = /(^|[^a-z])(revised|revision|rev\d*|updated|ban[_\s-]?sua|sua[_\s-]?lai)([^a-z]|$)/;
+
+    // File name -> the part that names the group: "IS355_Week3_Project_Report_JojoSteelBallRun.docx" -> "JojoSteelBallRun".
+    function ckFileBase(name) {
+      return name.replace(/(\.[a-z0-9]{2,5})+$/i, '').split(/[_\s.\-]+/)
+        .filter(function (w) { return w && !CK_FILE_STOP.test(compact(w)); }).join('_');
+    }
+
+    // Which checklist file a Moodle file belongs to: "Week3" -> the week-3 item, "Proposal" -> the proposal item.
+    function ckGuessItem(name, fallbackId) {
+      var p = plain(name);
+      var wk = p.match(/(?:week|tuan)[_\s-]?(\d{1,2})/);
+      if (wk) {
+        var byWeek = ck.items.filter(function (x) { return Number(x.week) === Number(wk[1]); });
+        if (byWeek.length === 1) return byWeek[0].id;
+      }
+      if (/proposal/.test(p)) {
+        var prop = ck.items.filter(function (x) { return /proposal/i.test(x.name); });
+        if (prop.length === 1) return prop[0].id;
+      }
+      return fallbackId;
+    }
+
+    // Group from a Moodle file name such as "07_SuperBells_IS355_Proposal.pdf", "G15_GreenCredit_..." or "9T72NK_TRION_...".
+    function ckMatchFileName(base) {
+      var groups = ckGroups();
+      var tokens = base.split(/[_\s.\-]+/).map(compact).filter(Boolean);
+      var byCode = groups.filter(function (g) { return tokens.indexOf(compact(groupCodeOf(g))) !== -1; });
+      if (byCode.length === 1) return byCode[0];
+      var words = base.split(/[_\s.\-]+/).filter(function (w) {
+        var c = compact(w);
+        return c && !/^\d+$/.test(c) && !/^(g|group|nhom)\d*$/.test(c) && c !== 'groupno';
+      });
+      var whole = compact(words.join(''));
+      var exact = groups.filter(function (g) {
+        var n = compact(g.groupName);
+        return n && (n === whole || n === compact(base) || tokens.indexOf(n) !== -1);
+      });
+      if (exact.length === 1) return exact[0];
+      if (whole.length >= 4) {
+        var hits = groups.filter(function (g) { var n = compact(g.groupName); return n.length >= 3 && (n.indexOf(whole) !== -1 || whole.indexOf(n) !== -1); });
+        if (hits.length === 1) return hits[0];
+      }
+      var byWord = groups.filter(function (g) {
+        var n = compact(g.groupName);
+        return words.some(function (w) { var c = compact(w); return c.length >= 4 && n.indexOf(c) !== -1; });
+      });
+      return byWord.length === 1 ? byWord[0] : null;
+    }
+
+    /**
+     * Text copied from Moodle's "View all submissions": a "Last modified" line
+     * (Friday, 23 October 2026, 4:03 PM) followed by one line per file, each
+     * ending with that file's own upload time. One submission can hold several
+     * files (e.g. a late Proposal handed in together with the Week 3 file), so
+     * every file gets its own row, its own time and its own guessed checklist item.
+     */
+    function ckAnalyzePaste(text, it) {
+      var lines = String(text || '').split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean);
+      var list = [], lastModified = null, skipped = 0;
+      lines.forEach(function (line) {
+        var file = line.match(/^(.+?\.(?:pdf|docx?|pptx?|xlsx?|zip|rar|7z|txt|md|ipynb))(?=\s|$)/i);
+        if (file) {
+          var name = file[1];
+          var t = parseMoodleTime(line.slice(file[0].length)) || lastModified; // "...pdf23 October 2026, 4:03 PM"
+          if (!t) { skipped++; return; }
+          var row = { groupCode: '', itemId: ckGuessItem(name, it.id), t: t, hint: name, revision: CK_REVISION.test(plain(name)) };
+          // A file named after one student (MSSV) is individual work, not the group's file: skipped unless picked by hand.
+          var sid = (name.match(/(?:^|[^0-9])(\d{8})(?=[^0-9]|$)/) || [])[1];
+          if (sid) {
+            var owner = ckGroups().filter(function (g) { return (g.members || []).some(function (m) { return m.studentId === sid; }); })[0];
+            var who = owner ? (owner.members.filter(function (m) { return m.studentId === sid; })[0] || {}).fullName : '';
+            row.indiv = 'Bài cá nhân của ' + (who || 'MSSV ' + sid) + (owner ? ' (nhóm ' + owner.groupName + ')' : ', chưa thuộc nhóm nào') + '. Chọn nhóm nếu muốn tính cho nhóm.';
+          } else {
+            var g = ckMatchFileName(ckFileBase(name) || name);
+            row.groupCode = g ? groupCodeOf(g) : '';
+          }
+          list.push(row);
+          return;
+        }
+        var t2 = parseMoodleTime(line);
+        if (t2) lastModified = t2;
+      });
+      if (!list.length) return { error: 'Không đọc được dòng nào. Cần dán cả dòng giờ nộp và dòng tên file từ trang View all submissions.' };
+      return { list: list, unknown: [], skipped: skipped, item: it, paste: true };
+    }
+
+    /**
+     * Rows -> entries to save, one per group + item. The hand-in time is the
+     * latest normal upload; a revision ("_REVISED") keeps the original time
+     * (already recorded, or from a normal row in the same paste) and is noted
+     * as "Bản sửa dd/mm hh:mm" in the private note instead.
+     */
+    function ckImportEntries(imp) {
+      var acc = {};
+      imp.list.forEach(function (x) {
+        if (!x.groupCode) return;
+        var k = x.groupCode + '|' + (x.itemId || imp.item.id);
+        var o = acc[k] = acc[k] || { t: null, rev: null, files: [] };
+        if (x.revision) { if (!o.rev || o.rev < x.t) o.rev = x.t; }
+        else if (!o.t || o.t < x.t) o.t = x.t;
+        if (x.hint && o.files.indexOf(x.hint) === -1) o.files.push(x.hint);
+      });
+      return Object.keys(acc).map(function (k) {
+        var p = k.split('|'), o = acc[k];
+        var cur = (ck.entries[p[0]] || {})[p[1]];
+        var t = o.t || (cur ? new Date(cur.submittedAt) : o.rev);
+        var note = cur ? cur.note || '' : '';
+        if (o.rev && (o.t || cur)) {
+          var tag = 'Bản sửa ' + ckShort(o.rev.toISOString());
+          if (note.indexOf(tag) === -1) note = note ? note + ' · ' + tag : tag;
+        }
+        // File names: what was already recorded plus this paste (a revision adds its file next to the original).
+        var files = ckFileList(cur);
+        o.files.forEach(function (f) { if (files.indexOf(f) === -1) files.push(f); });
+        return { groupCode: p[0], itemId: p[1], submittedAt: t.toISOString(), note: note.slice(0, 300), files: files.join('\n').slice(0, 1500), source: o.t || !cur ? 'moodle' : cur.source || 'moodle' };
+      });
     }
 
     function renderCkImport() {
@@ -3472,22 +3609,39 @@
       $('ck-imp-ok').disabled = true;
       if (!imp) { box.innerHTML = ''; return; }
       if (imp.error) { box.innerHTML = '<p class="msg error">' + esc(imp.error) + '</p>'; return; }
-      var it = imp.item;
-      box.innerHTML = '<p style="margin:0 0 8px">Khớp <b>' + imp.list.length + '</b> nhóm có bài nộp' +
+      var matched = imp.list.filter(function (x) { return x.groupCode; });
+      var dupes = {};
+      matched.forEach(function (x) { var k = x.groupCode + '|' + (x.itemId || imp.item.id); dupes[k] = (dupes[k] || 0) + 1; });
+      var itemOpts = function (sel) {
+        return ckSorted().map(function (x, i) { return '<option value="' + esc(x.id) + '"' + (x.id === sel ? ' selected' : '') + '>File ' + (i + 1) + ' · ' + esc(x.name) + '</option>'; }).join('');
+      };
+      var groupOpts = function (sel) {
+        return '<option value="">Bỏ qua dòng này</option>' + ckGroups().map(function (g) {
+          var c = groupCodeOf(g);
+          return '<option value="' + esc(c) + '"' + (c === sel ? ' selected' : '') + '>' + esc(g.groupName) + ' · ' + esc(c) + ' · ' + esc(ckShortClass(ckClassOf(g))) + '</option>';
+        }).join('');
+      };
+      box.innerHTML = '<p style="margin:0 0 8px">Khớp <b>' + matched.length + '</b>/' + imp.list.length + ' dòng có bài nộp' +
         (imp.skipped ? ', bỏ qua ' + imp.skipped + ' dòng chưa nộp' : '') + '.</p>' +
         (imp.unknown.length ? '<p class="ck-warn" style="margin:0 0 8px">MSSV không thuộc nhóm nào: ' + esc(imp.unknown.join(', ')) + '</p>' : '') +
-        (imp.list.length ? '<table><thead><tr><th>Nhóm</th><th>Lớp</th><th>Nộp lúc</th><th>Hạn</th><th>Hiện tại</th></tr></thead><tbody>' + imp.list.map(function (x) {
-          var code = groupCodeOf(x.g);
-          var d = (it.due || {})[ckClassOf(x.g)] || {};
-          var late = d.due && x.t.getTime() > new Date(d.due).getTime();
-          var cur = (ck.entries[code] || {})[it.id];
-          return '<tr><td><b>' + esc(x.g.groupName) + '</b> <code>' + esc(code) + '</code></td><td>' + esc(ckShortClass(ckClassOf(x.g))) + '</td>' +
-            '<td>' + esc(fmtTime(x.t.toISOString())) + (late ? ' <span class="ref-badge warn">trễ ' + ckDur(x.t.getTime() - new Date(d.due).getTime()) + '</span>' : '') + '</td>' +
-            '<td>' + (d.due ? esc(ckShort(d.due)) : '-') + '</td>' +
-            '<td>' + (cur ? (new Date(cur.submittedAt).getTime() === x.t.getTime() ? 'Đã có' : '<span class="ck-warn">Ghi đè ' + esc(ckShort(cur.submittedAt)) + '</span>') : 'Mới') + '</td></tr>';
+        (imp.list.length ? '<table class="ck-jimp"><thead><tr><th>Trong Moodle</th><th>Nhóm</th>' + (imp.paste ? '<th>Ghi vào</th>' : '') + '<th>Nộp lúc</th><th>Hiện tại</th></tr></thead><tbody>' + imp.list.map(function (x, i) {
+          var it = ckItem(x.itemId) || imp.item;
+          var g = x.groupCode ? ckGroupByCode(x.groupCode) : null;
+          var cur = g ? (ck.entries[x.groupCode] || {})[it.id] : null;
+          var hasOriginal = x.revision && (cur || imp.list.some(function (y) { return !y.revision && y.groupCode === x.groupCode && (y.itemId || imp.item.id) === it.id; }));
+          var status = !g ? '' : hasOriginal
+            ? '<span class="ref-badge info">Bản sửa</span> Giữ giờ nộp gốc' + (cur ? ' ' + esc(ckShort(cur.submittedAt)) : '') + ', ghi chú lại'
+            : cur ? (new Date(cur.submittedAt).getTime() === x.t.getTime() ? 'Đã có' : '<span class="ck-warn">Ghi đè ' + esc(ckShort(cur.submittedAt)) + '</span>') : 'Mới';
+          return '<tr><td>' + esc(x.hint) + (x.indiv ? '<br><span class="ck-warn">' + esc(x.indiv) + '</span>' : '') + '</td>' +
+            '<td>' + (imp.paste ? '<select data-ckimp="' + i + '">' + groupOpts(x.groupCode) + '</select>' : '<b>' + esc(g ? g.groupName : x.groupCode) + '</b> <code>' + esc(x.groupCode) + '</code>') +
+            (x.groupCode && !x.revision && dupes[x.groupCode + '|' + it.id] > 1 ? '<br><span class="ck-warn">Nhóm có nhiều file cho cùng mục, lấy lần nộp muộn nhất</span>' : '') + '</td>' +
+            (imp.paste ? '<td><select data-ckimp-item="' + i + '">' + itemOpts(it.id) + '</select>' + (it.id !== imp.item.id ? '<br><span class="ck-warn">Khác bài đang chọn (theo tên file)</span>' : '') + '</td>' : '') +
+            '<td>' + esc(fmtTime(x.t.toISOString())) + '</td>' +
+            '<td>' + status + '</td></tr>';
         }).join('') + '</tbody></table>' : '');
-      $('ck-imp-ok').disabled = !imp.list.length;
-      $('ck-imp-ok').textContent = 'Lưu ' + imp.list.length + ' nhóm';
+      var n = Object.keys(dupes).length;
+      $('ck-imp-ok').disabled = !n;
+      $('ck-imp-ok').textContent = 'Lưu ' + n + ' mục nộp';
     }
 
     function openCkImport(itemId) {
@@ -3496,6 +3650,7 @@
         return '<option value="' + esc(it.id) + '"' + (it.id === itemId ? ' selected' : '') + '>Tuần ' + esc(it.week) + ' · ' + esc(it.name) + '</option>';
       }).join('');
       $('ck-imp-file').value = '';
+      $('ck-imp-paste').value = '';
       ck.imp = null;
       ck.impRows = null;
       renderCkImport();
@@ -3503,10 +3658,33 @@
     }
     function closeCkImport() { $('ck-imp-overlay').classList.remove('show'); ck.imp = null; ck.impRows = null; }
     function reanalyzeCk() {
-      if (!ck.impRows) { ck.imp = null; renderCkImport(); return; }
-      ck.imp = ckAnalyze(ck.impRows, ckItem($('ck-imp-item').value));
+      var it = ckItem($('ck-imp-item').value);
+      var pasted = $('ck-imp-paste').value.trim();
+      if (pasted) {
+        // Keep groups picked by hand when only the item changes (items are re-guessed from the file names).
+        var picked = ck.imp && ck.imp.paste ? ck.imp.list.map(function (x) { return x.groupCode; }) : null;
+        ck.imp = ckAnalyzePaste(pasted, it);
+        if (picked && ck.imp.list && ck.imp.list.length === picked.length) ck.imp.list.forEach(function (x, i) { x.groupCode = picked[i]; });
+      } else if (ck.impRows) {
+        ck.imp = ckAnalyze(ck.impRows, it);
+      } else {
+        ck.imp = null;
+      }
       renderCkImport();
     }
+    $('ck-imp-paste').addEventListener('input', function () {
+      if (ck.imp && ck.imp.paste) ck.imp = null; // re-parse from scratch on new text
+      reanalyzeCk();
+    });
+    $('ck-imp-preview').addEventListener('change', function (e) {
+      if (!ck.imp) return;
+      var s = e.target.closest('[data-ckimp]');
+      var si = e.target.closest('[data-ckimp-item]');
+      if (s) ck.imp.list[Number(s.dataset.ckimp)].groupCode = s.value;
+      else if (si) ck.imp.list[Number(si.dataset.ckimpItem)].itemId = si.value;
+      else return;
+      renderCkImport();
+    });
 
     $('ck-import-btn').addEventListener('click', function () { openCkImport(''); });
     $('ck-thead').addEventListener('click', function (e) {
@@ -3527,11 +3705,9 @@
     $('ck-imp-ok').addEventListener('click', function () {
       var imp = ck.imp;
       if (!imp || !imp.list || !imp.list.length) return;
-      var entries = imp.list.map(function (x) {
-        var cur = (ck.entries[groupCodeOf(x.g)] || {})[imp.item.id];
-        return { groupCode: groupCodeOf(x.g), itemId: imp.item.id, submittedAt: x.t.toISOString(), note: cur ? cur.note : '', source: 'moodle' };
-      });
-      saveCkEntries(entries, 'Đã nhập ' + entries.length + ' nhóm cho ' + imp.item.name + '.').then(function (ok) { if (ok) closeCkImport(); });
+      var entries = ckImportEntries(imp);
+      if (!entries.length) return;
+      saveCkEntries(entries, 'Đã nhập ' + entries.length + ' mục nộp từ Moodle.').then(function (ok) { if (ok) closeCkImport(); });
     });
 
     /* ---------- Defense schedule ---------- */

@@ -2897,7 +2897,7 @@ function buildFeedbackEmail(g, f, settings, includeRubric) {
 // (groups with a topic hand in the project file instead of that week's lab).
 
 var CHECKLIST_SHEET = 'IS355_CHECKLIST';
-var CHECKLIST_HEADERS = ['updated_at', 'group_code', 'item_id', 'submitted_at', 'note', 'source', 'feedback', 'feedback_at', 'feedback_sent_at', 'feedback_sent_to', 'score'];
+var CHECKLIST_HEADERS = ['updated_at', 'group_code', 'item_id', 'submitted_at', 'note', 'source', 'feedback', 'feedback_at', 'feedback_sent_at', 'feedback_sent_to', 'score', 'files'];
 var CHECKLIST_PROP = 'IS355_CHECKLIST_ITEMS';
 var CHECKLIST_KINDS = ['lab', 'project', 'final'];
 var C1 = 'IS355.R11.CTTT.1', C2 = 'IS355.R11.CTTT.2';
@@ -2939,7 +2939,8 @@ function readChecklistEntries() {
       updatedAt: iso(r[0]), groupCode: String(r[1]).toUpperCase(), itemId: String(r[2]), submittedAt: iso(r[3]),
       note: String(r[4] || ''), source: String(r[5] || ''),
       feedback: String(r[6] || ''), feedbackAt: iso(r[7]), feedbackSentAt: iso(r[8]), feedbackSentTo: String(r[9] || ''),
-      score: r[10] === '' || r[10] == null ? '' : String(r[10])
+      score: r[10] === '' || r[10] == null ? '' : String(r[10]),
+      files: String(r[11] || '') // Moodle file names, one per line
     });
   }
   return out;
@@ -2985,7 +2986,7 @@ function writeChecklistMap(map) {
   var rows = Object.keys(map).map(function (k) {
     var e = map[k];
     return [d(e.updatedAt), e.groupCode, e.itemId, d(e.submittedAt), txt(e.note), e.source || '',
-      txt(e.feedback), d(e.feedbackAt), d(e.feedbackSentAt), e.feedbackSentTo || '', e.score === '' || e.score == null ? '' : Number(e.score)];
+      txt(e.feedback), d(e.feedbackAt), d(e.feedbackSentAt), e.feedbackSentTo || '', e.score === '' || e.score == null ? '' : Number(e.score), txt(e.files)];
   });
   if (sheet.getLastRow() > 1) sheet.getRange(2, 1, sheet.getLastRow() - 1, CHECKLIST_HEADERS.length).clearContent();
   if (rows.length) sheet.getRange(2, 1, rows.length, CHECKLIST_HEADERS.length).setValues(rows);
@@ -3064,7 +3065,8 @@ function handleSaveChecklistEntries(body) {
       map[key(g, it)] = {
         updatedAt: now, groupCode: g, itemId: it, submittedAt: d.toISOString(), note: String(x.note || '').trim().slice(0, 300), source: regClean(x.source, 20) || 'manual',
         feedback: prev.feedback || '', feedbackAt: prev.feedbackAt || '', feedbackSentAt: prev.feedbackSentAt || '', feedbackSentTo: prev.feedbackSentTo || '',
-        score: prev.score || ''
+        score: prev.score || '',
+        files: x.files != null ? String(x.files).replace(/\r/g, '').slice(0, 1500) : prev.files || ''
       };
       changed++;
     }
@@ -3193,14 +3195,11 @@ function renderCommentHtml(text) {
 }
 
 function buildChecklistFeedbackEmail(g, item, index, e) {
-  var cls = (g.members.filter(function (m) { return m.role === 'Leader'; })[0] || g.members[0] || {})['class'];
-  var due = item.due && item.due[cls] && item.due[cls].due;
-  var late = due && new Date(e.submittedAt).getTime() > new Date(due).getTime();
   var common = readCkCommon(item.id);
   var label = 'File ' + index + ' - ' + item.name;
   var html = '<p style="margin:0 0 14px">Chào nhóm <b>' + htmlEsc(g.groupName) + '</b> (mã ' + htmlEsc(g.groupCode) + '),</p>' +
     '<p style="margin:0 0 18px">Dưới đây là nhận xét cho file <b>' + htmlEsc(label) + '</b> nhóm đã nộp lúc <b>' + htmlEsc(formatVnTime(e.submittedAt)) + '</b>' +
-    (late ? ' (sau hạn ' + htmlEsc(formatVnTime(due)) + ')' : '') + '. Nhóm tham khảo để chỉnh sửa file này và áp dụng cho các file tiếp theo, đặc biệt là báo cáo cuối kỳ.</p>' +
+    '. Nhóm tham khảo để chỉnh sửa file này và áp dụng cho các file tiếp theo, đặc biệt là báo cáo cuối kỳ.</p>' +
     (g.title ? '<p style="margin:0 0 18px;color:#64748b;font-size:13px">Đề tài: <b style="color:#0f172a">' + htmlEsc(g.title) + '</b></p>' : '') +
     (/^\s*#/m.test(e.feedback) ? '' : sectionTitle('NHẬN XÉT')) +
     renderCommentHtml(e.feedback) +

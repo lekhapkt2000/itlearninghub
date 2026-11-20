@@ -292,6 +292,9 @@
     .ck-sum-ok .ck-bar i{background:var(--ok-accent)}
     .ck-sum-bad .ck-bar i{background:var(--danger-accent)}
     .ck-legend{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:12px}
+    .ck-st-items{display:grid;gap:6px}
+    .ck-st-items .check-row{font-size:13px}
+    .ck-st-items small{color:var(--muted)}
     .ck-btn.ck-reviewed{border:2px solid var(--ok-accent)}
     .ck-reviewed-tag{margin-top:3px;padding:2px 6px;border-radius:6px;background:var(--ok-accent);color:#fff!important;font-weight:700;opacity:1!important}
     .ck-btn .ck-file{font-family:var(--font-mono);font-size:10px!important;opacity:.85;word-break:break-all}
@@ -661,7 +664,8 @@
           <div class="row-actions">
             <button type="button" class="outline-button btn-sm" id="ck-import-btn">Nhập file Moodle (CSV)</button>
             <button type="button" class="outline-button btn-sm" id="ck-jimp-btn">Nhập nhận xét (JSON)</button>
-            <button type="button" class="outline-button btn-sm" id="ck-export">Tải CSV</button>
+            <button type="button" class="outline-button btn-sm" id="ck-export">Tải Excel</button>
+            <button type="button" class="primary-button btn-sm" id="ck-status-btn">Gửi email tình hình nộp <span>›</span></button>
           </div>
         </div>
         <div class="card settings-bar" id="ck-summary"></div>
@@ -932,6 +936,23 @@
         <button type="button" class="outline-button" id="ck-preview">Xem trước email</button>
         <button type="button" class="outline-button" id="ck-save">Lưu</button>
         <button type="button" class="primary-button" id="ck-send">Lưu &amp; gửi email <span>›</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checklist: email each group the files received so far -->
+  <div class="modal-overlay" id="ck-st-overlay">
+    <div class="modal-card" style="max-width:640px;max-height:calc(100vh - 40px);overflow:auto">
+      <h3>Gửi email tình hình nộp file</h3>
+      <p style="margin-bottom:14px">Mỗi nhóm nhận 1 email riêng: Các file đã nhận kèm thời gian và tên file. Nhóm đã nộp đủ các file đã giao được báo tiến độ và các file sắp tới. Nhóm còn thiếu được nhờ kiểm tra lại trên Moodle và phản hồi qua email hoặc nhắn tin nếu đã nộp. Email CC và nhận trả lời ở địa chỉ email môn học.</p>
+      <div class="field"><label>CÁC FILE ĐÃ GIAO (TÍNH LÀ PHẢI NỘP)</label><div id="ck-st-items" class="ck-st-items"></div></div>
+      <p class="field-hint" id="ck-st-summary" style="margin:-6px 0 14px"></p>
+      <div class="field"><label for="ck-st-msg">LỜI NHẮN THÊM (TÙY CHỌN)</label><textarea id="ck-st-msg" class="plain" rows="3" placeholder="Ví dụ: File 4 dự kiến mở trên Moodle vào tuần sau."></textarea></div>
+      <div class="field"><label for="ck-st-preview-group">XEM TRƯỚC EMAIL CỦA NHÓM</label><select id="ck-st-preview-group"></select></div>
+      <div class="modal-actions">
+        <button type="button" class="outline-button" id="ck-st-cancel">Hủy</button>
+        <button type="button" class="outline-button" id="ck-st-preview">Xem trước</button>
+        <button type="button" class="primary-button" id="ck-st-send">Gửi <span>›</span></button>
       </div>
     </div>
   </div>
@@ -2789,6 +2810,7 @@
         ck.loaded = true;
         ck.items = d.items || [];
         ck.common = d.common || {};
+        ck.statusMails = d.statusMails || {};
         setCkEntries(d.entries || []);
         renderChecklist();
       }).catch(function (err) { if (!silent) toast(netError(err), 'error'); })
@@ -2847,32 +2869,20 @@
     function ckDone(s) { return s.st === 'ok'; }
     function ckFileList(e) { return String(e && e.files || '').split('\n').filter(Boolean); }
 
-    // "Góp ý tiến độ" round -> checklist file: "Tuần 3" -> the week-3 file, "đề cương" / "proposal" -> the proposal file.
-    function ckRoundItem(round) {
-      var p = plain(round);
-      var wk = p.match(/(?:tuan|week)\s*(\d{1,2})/);
-      if (wk) {
-        var byWeek = ck.items.filter(function (x) { return Number(x.week) === Number(wk[1]); });
-        if (byWeek.length === 1) return byWeek[0].id;
-      }
-      if (/de cuong|proposal/.test(p)) {
-        var pr = ck.items.filter(function (x) { return /proposal/i.test(x.name); });
-        if (pr.length === 1) return pr[0].id;
-      }
-      return '';
-    }
     // Progress-feedback emails already sent to this group (any round), newest first.
     function ckProgressFbSent(g) {
       var code = groupCodeOf(g);
       return (fb && fb.rows ? fb.rows : []).filter(function (r) { return r.groupCode === code && r.sentAt; })
         .sort(function (a, b) { return String(b.sentAt).localeCompare(String(a.sentAt)); });
     }
-    /** Was a comment on this file emailed to the group? From the checklist itself, or an earlier "Góp ý tiến độ" round. */
+    /**
+     * Was a comment on this very file emailed to the group (from the checklist)?
+     * "Góp ý tiến độ" rounds are emailed per group, not per file, so they are
+     * shown on the group (dashboard name column, export column) instead.
+     */
     function ckReviewed(g, it) {
       var own = (ck.entries[groupCodeOf(g)] || {})[it.id];
       if (own && own.feedbackSentAt) return { sentAt: own.feedbackSentAt, label: 'Đã gửi nhận xét ' + ckShort(own.feedbackSentAt) };
-      var r = ckProgressFbSent(g).filter(function (x) { return ckRoundItem(x.round) === it.id; })[0];
-      if (r) return { sentAt: r.sentAt, label: 'Đã gửi góp ý tiến độ (' + r.round + ') ' + ckShort(r.sentAt) };
       return null;
     }
 
@@ -2984,7 +2994,8 @@
         var tone = st.done === total ? 'ok' : 'wait';
         var rounds = ckProgressFbSent(g);
         return '<tr><td><b>' + esc(g.groupName) + '</b><br><code>' + esc(groupCodeOf(g)) + '</code> · ' + esc(ckShortClass(ckClassOf(g))) + ' ' + statusBadge(g.reviewStatus) +
-          (rounds.length ? '<span class="ck-row-sum">✉ Góp ý tiến độ đã gửi: ' + rounds.map(function (r) { return esc(r.round) + ' (' + esc(ckShort(r.sentAt)) + ')'; }).join(', ') + '</span>' : '') + '</td>' +
+          (rounds.length ? '<span class="ck-row-sum">✉ Góp ý tiến độ đã gửi: ' + rounds.map(function (r) { return esc(r.round) + ' (' + esc(ckShort(r.sentAt)) + ')'; }).join(', ') + '</span>' : '') +
+          ((ck.statusMails || {})[groupCodeOf(g)] ? '<span class="ck-row-sum">✉ Đã gửi tình hình nộp: ' + esc(ckShort(ck.statusMails[groupCodeOf(g)])) + '</span>' : '') + '</td>' +
           '<td class="ck-sum ck-sum-' + tone + '"><b>' + st.done + '/' + total + '</b><span class="ck-bar"><i style="width:' + (total ? st.done / total * 100 : 0) + '%"></i></span>' +
           (st.done === total ? '<small>Đã nộp đủ</small>' : '<small>Chưa nộp: File ' + st.missing.join(', ') + '</small>') +
           '</td>' +
@@ -3381,28 +3392,195 @@
 
     /* Export */
 
+    /* Email each group the files received so far ("tình hình nộp") */
+
+    function ckStAssigned() {
+      return Array.prototype.map.call($('ck-st-items').querySelectorAll('input:checked'), function (x) { return x.value; });
+    }
+    function ckStSummary() {
+      var assigned = ckStAssigned();
+      var groups = ckFiltered();
+      var complete = groups.filter(function (g) {
+        return assigned.every(function (id) { return ckDone(ckStatus(g, ckItem(id))); });
+      }).length;
+      $('ck-st-summary').innerHTML = assigned.length
+        ? 'Sẽ gửi cho <b>' + groups.length + '</b> nhóm (theo bộ lọc hiện tại của bảng): <b>' + complete + '</b> nhóm đã nộp đủ, <b>' + (groups.length - complete) + '</b> nhóm còn thiếu file.'
+        : '<span style="color:var(--danger-text)">Chọn ít nhất 1 file đã giao.</span>';
+      $('ck-st-send').disabled = !assigned.length || !groups.length;
+    }
+    function openCkStatus() {
+      if (!ck.loaded) { toast('Checklist chưa tải xong.', 'error'); return; }
+      var items = ckSorted();
+      var groups = ckFiltered();
+      // Default "assigned" = files at least one group has handed in.
+      $('ck-st-items').innerHTML = items.map(function (it, i) {
+        var n = ckGroups().filter(function (g) { return ckDone(ckStatus(g, it)); }).length;
+        return '<label class="check-row"><input type="checkbox" value="' + esc(it.id) + '"' + (n ? ' checked' : '') + '> File ' + (i + 1) + ' · ' + esc(it.name) + ' <small>(' + n + ' nhóm đã nộp)</small></label>';
+      }).join('');
+      $('ck-st-preview-group').innerHTML = groups.map(function (g) {
+        var st = ckGroupStats(g, items);
+        return '<option value="' + esc(groupCodeOf(g)) + '">' + esc(g.groupName) + ' · ' + st.done + '/' + items.length + ' file</option>';
+      }).join('');
+      ckStSummary();
+      $('ck-st-overlay').classList.add('show');
+    }
+    function ckStPayload(extra) {
+      var p = { action: 'sendFileStatus', assigned: ckStAssigned(), message: $('ck-st-msg').value.trim(), groupCodes: ckFiltered().map(groupCodeOf) };
+      Object.keys(extra || {}).forEach(function (k) { p[k] = extra[k]; });
+      return p;
+    }
+    $('ck-status-btn').addEventListener('click', openCkStatus);
+    $('ck-st-items').addEventListener('change', ckStSummary);
+    $('ck-st-cancel').addEventListener('click', function () { $('ck-st-overlay').classList.remove('show'); });
+    $('ck-st-overlay').addEventListener('click', function (e) { if (e.target === $('ck-st-overlay')) $('ck-st-overlay').classList.remove('show'); });
+    $('ck-st-preview').addEventListener('click', function () {
+      busy(api(ckStPayload({ preview: true, previewCode: $('ck-st-preview-group').value })).then(function (d) {
+        if (!d.ok) { toast(d.message || 'Không tạo được email.', 'error'); return; }
+        showMailPreview(d.subject, 'Xem trước, chưa gửi. Nhóm ' + d.groupName + ' · Gửi tới: ' + d.recipients.join(', '), d.html);
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+    $('ck-st-send').addEventListener('click', function () {
+      busy(api(ckStPayload({ preview: true, previewCode: $('ck-st-preview-group').value })).then(function (d) {
+        if (!d.ok) { toast(d.message || 'Không tạo được email.', 'error'); return; }
+        showMailPreview(d.subject, 'Mẫu cho nhóm ' + d.groupName + '. Mỗi nhóm nhận email riêng theo dữ liệu của nhóm.', d.html);
+        return confirmBox({
+          title: 'Gửi email tình hình nộp',
+          message: 'Gửi <b>' + d.count + '</b> email (mỗi nhóm 1 email): <b>' + d.complete + '</b> nhóm đã nộp đủ, <b>' + d.missing + '</b> nhóm còn thiếu file.',
+          okLabel: 'Gửi ' + d.count + ' email'
+        }).then(function (y) {
+          $('mail-overlay').classList.remove('show');
+          if (!y) return;
+          return api(ckStPayload(), 180000).then(function (r) {
+            if (!r.ok) { toast(r.message || 'Không gửi được.', 'error'); return; }
+            ck.statusMails = r.statusMails || ck.statusMails;
+            renderChecklist();
+            $('ck-st-overlay').classList.remove('show');
+            toast('Đã gửi ' + r.sent + ' email' + (r.failed ? ', lỗi ' + r.failed + ': ' + r.message : '') + '.', r.failed ? 'error' : 'ok');
+          });
+        });
+      }).catch(function (err) { toast(netError(err), 'error'); }));
+    });
+
+    // Excel stores dates without a time zone: shift to the browser's local time so 16:03 stays 16:03.
+    function ckXlsDate(iso) {
+      var d = new Date(iso);
+      return new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+    }
+
+    /*
+     * Real .xlsx (not CSV): times are true date cells and "3/5" can't turn into
+     * "5-Mar". Sheet 1 = one row per group, sheet 2 = one row per handed-in file.
+     */
     $('ck-export').addEventListener('click', function () {
       var items = ckSorted();
-      var head = ['Nhóm', 'Mã nhóm', 'Lớp', 'Đã nộp', 'Chưa nộp'];
-      items.forEach(function (it, i) { head.push('File ' + (i + 1) + ' - thời gian nộp', 'File ' + (i + 1) + ' - tên file', 'File ' + (i + 1) + ' - nhận xét'); });
-      var rows = [head];
-      ckFiltered().forEach(function (g) {
-        var st = ckGroupStats(g, items);
-        var row = [g.groupName, groupCodeOf(g), ckClassOf(g), st.done + '/' + items.length, st.missing.map(function (n) { return 'File ' + n; }).join(', ')];
-        items.forEach(function (it) {
-          var s = ckStatus(g, it);
-          var fb = ckReviewed(g, it);
-          row.push(s.st === 'ok' ? fmtTime(s.e.submittedAt) : 'Chưa nộp', s.st === 'ok' ? ckFileList(s.e).join('; ') : '', fb ? fb.label : '');
+      var groups = ckFiltered();
+      if (!groups.length) { toast('Không có nhóm nào để xuất.', 'error'); return; }
+      busy(loadExcelJs().then(function () {
+        var wb = new ExcelJS.Workbook();
+        wb.creator = 'IT Learning Hub';
+        var thin = { style: 'thin', color: { argb: 'FFCBD5E1' } };
+        var border = { top: thin, left: thin, bottom: thin, right: thin };
+        var headFill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFDBEAFE' } };
+        var okFill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFDCFCE7' } };
+        var timeFmt = 'hh:mm dd/mm/yyyy';
+
+        // Sheet 1: one row per group.
+        var ws = wb.addWorksheet('Theo nhóm', { views: [{ state: 'frozen', xSplit: 1, ySplit: 3 }] });
+        var base = ['Nhóm', 'Mã nhóm', 'Lớp', 'Số file đã nộp', 'Chưa nộp', 'Góp ý tiến độ đã gửi'];
+        ws.getCell(1, 1).value = 'IS355 · Checklist file đồ án · xuất lúc ' + fmtTime(new Date().toISOString());
+        ws.getCell(1, 1).font = { bold: true, size: 13 };
+        base.forEach(function (h, i) { ws.mergeCells(2, i + 1, 3, i + 1); ws.getCell(2, i + 1).value = h; });
+        items.forEach(function (it, i) {
+          var c = base.length + 1 + i * 3;
+          ws.mergeCells(2, c, 2, c + 2);
+          ws.getCell(2, c).value = 'File ' + (i + 1) + ' · ' + it.name;
+          ws.getCell(3, c).value = 'Thời gian nộp';
+          ws.getCell(3, c + 1).value = 'Tên file';
+          ws.getCell(3, c + 2).value = 'Nhận xét đã gửi';
         });
-        rows.push(row);
-      });
-      var csv = '﻿' + rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\r\n');
-      var a = document.createElement('a');
-      a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
-      a.download = 'IS355-checklist-bai-nop.csv';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+        var lastCol = base.length + items.length * 3;
+        [2, 3].forEach(function (r) {
+          for (var c = 1; c <= lastCol; c++) {
+            var cell = ws.getCell(r, c);
+            cell.font = { bold: true };
+            cell.fill = headFill;
+            cell.border = border;
+            cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+          }
+        });
+        groups.forEach(function (g, gi) {
+          var r = 4 + gi;
+          var st = ckGroupStats(g, items);
+          var rounds = ckProgressFbSent(g).map(function (x) { return x.round + ' (' + ckShort(x.sentAt) + ')'; }).join('\n');
+          [g.groupName, groupCodeOf(g), ckClassOf(g), st.done + ' / ' + items.length + ' file',
+            st.missing.length ? st.missing.map(function (n) { return 'File ' + n; }).join(', ') : 'Đã nộp đủ', rounds].forEach(function (v, i) {
+            ws.getCell(r, i + 1).value = v;
+          });
+          items.forEach(function (it, i) {
+            var c = base.length + 1 + i * 3;
+            var s = ckStatus(g, it);
+            var rv = ckReviewed(g, it);
+            if (s.st === 'ok') {
+              ws.getCell(r, c).value = ckXlsDate(s.e.submittedAt);
+              ws.getCell(r, c).numFmt = timeFmt;
+              ws.getCell(r, c).fill = okFill;
+              ws.getCell(r, c + 1).value = ckFileList(s.e).join('\n');
+            } else {
+              ws.getCell(r, c).value = 'Chưa nộp';
+              ws.getCell(r, c).font = { color: { argb: 'FF94A3B8' } };
+            }
+            if (rv) {
+              ws.getCell(r, c + 2).value = ckXlsDate(rv.sentAt);
+              ws.getCell(r, c + 2).numFmt = timeFmt;
+            }
+          });
+          for (var c2 = 1; c2 <= lastCol; c2++) {
+            ws.getCell(r, c2).border = border;
+            ws.getCell(r, c2).alignment = { vertical: 'top', wrapText: true };
+          }
+        });
+        [22, 11, 18, 14, 18, 24].forEach(function (w, i) { ws.getColumn(i + 1).width = w; });
+        items.forEach(function (it, i) {
+          var c = base.length + 1 + i * 3;
+          ws.getColumn(c).width = 17;
+          ws.getColumn(c + 1).width = 38;
+          ws.getColumn(c + 2).width = 17;
+        });
+
+        // Sheet 2: one row per handed-in file, easy to sort and filter.
+        var ws2 = wb.addWorksheet('Danh sách đã nộp', { views: [{ state: 'frozen', ySplit: 1 }] });
+        ws2.columns = [
+          { header: 'Nhóm', width: 22 }, { header: 'Mã nhóm', width: 11 }, { header: 'Lớp', width: 18 },
+          { header: 'File', width: 8 }, { header: 'Nội dung', width: 40 }, { header: 'Thời gian nộp', width: 17 },
+          { header: 'Tên file', width: 48 }, { header: 'Nhận xét đã gửi', width: 17 }
+        ];
+        groups.forEach(function (g) {
+          items.forEach(function (it, i) {
+            var s = ckStatus(g, it);
+            if (s.st !== 'ok') return;
+            var rv = ckReviewed(g, it);
+            var row = ws2.addRow([g.groupName, groupCodeOf(g), ckClassOf(g), 'File ' + (i + 1), it.name,
+              ckXlsDate(s.e.submittedAt), ckFileList(s.e).join('\n'), rv ? ckXlsDate(rv.sentAt) : '']);
+            row.getCell(6).numFmt = timeFmt;
+            row.getCell(8).numFmt = timeFmt;
+            row.alignment = { vertical: 'top', wrapText: true };
+          });
+        });
+        ws2.getRow(1).font = { bold: true };
+        ws2.getRow(1).eachCell(function (cell) { cell.fill = headFill; cell.border = border; });
+        ws2.autoFilter = { from: { row: 1, column: 1 }, to: { row: 1, column: 8 } };
+
+        return wb.xlsx.writeBuffer();
+      }).then(function (buf) {
+        if (!buf) return;
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+        a.download = 'IS355-checklist-file-do-an.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+        toast('Đã xuất file Excel.');
+      }).catch(function (err) { toast((err && err.message) || 'Không xuất được Excel.', 'error'); }));
     });
 
     /* Import Moodle grading worksheet (CSV) */

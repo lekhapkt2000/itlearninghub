@@ -978,7 +978,7 @@ function htmlEsc(s) {
 }
 
 /** Shared email layout: table-based with inline styles so it renders in Gmail/Outlook. */
-function emailShell(preheader, heading, innerHtml) {
+function emailShell(preheader, heading, innerHtml, footer) {
   return '<!doctype html><html><body style="margin:0;padding:0;background:#f1f5f9;font-family:Segoe UI,Helvetica,Arial,sans-serif;color:#0f172a">' +
     '<span style="display:none;max-height:0;overflow:hidden;opacity:0">' + htmlEsc(preheader) + '</span>' +
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:28px 12px"><tr><td align="center">' +
@@ -989,7 +989,7 @@ function emailShell(preheader, heading, innerHtml) {
     '</td></tr>' +
     '<tr><td style="padding:26px 28px;font-size:14px;line-height:1.7;color:#334155">' + innerHtml + '</td></tr>' +
     '<tr><td style="padding:16px 28px;background:#f8fafc;border-top:1px solid #e2e8f0;color:#64748b;font-size:12px;line-height:1.6">' +
-    'Email tự động từ hệ thống đăng ký đề tài IS355 - IT Learning Hub. Vui lòng không trả lời email này.' +
+    htmlEsc(footer || 'Email tự động từ hệ thống đăng ký đề tài IS355 - IT Learning Hub. Vui lòng không trả lời email này.') +
     '</td></tr></table></td></tr></table></body></html>';
 }
 
@@ -1751,7 +1751,36 @@ function handlePortalState(body) {
       members: g.members.map(function (m) { return { studentId: m.studentId, fullName: m.fullName }; })
     };
   }
+  if (g) result.checklist = groupChecklist(g.groupCode, result.progress);
   return result;
+}
+
+/**
+ * What the group itself sees about its project files (session, own group
+ * only): which of the files were handed in, when, under which file names,
+ * and when a comment on them was emailed. Never the score, the private
+ * note or the comment text (the group already has that by email).
+ */
+function groupChecklist(code, progress) {
+  var map = checklistMap();
+  var items = readChecklistItems().map(function (it, i) { return { it: it, i: i }; })
+    .sort(function (a, b) { return (a.it.week - b.it.week) || (a.i - b.i); })
+    .map(function (x) { return x.it; });
+  var rounds = readFeedbackRows().filter(function (r) { return r.groupCode === code && r.sentAt; })
+    .map(function (r) { return { round: r.round, sentAt: r.sentAt }; });
+  return {
+    files: items.map(function (it, i) {
+      var e = map[code + '|' + it.id];
+      var p = !e && it.portal ? (progress || {})[it.portal] : null;
+      return {
+        id: it.id, index: i + 1, name: it.name, week: it.week,
+        submittedAt: e ? e.submittedAt : p ? p.timestamp : '',
+        fileNames: e ? String(e.files || '').split('\n').filter(Boolean) : [],
+        reviewedAt: e && e.feedbackSentAt ? e.feedbackSentAt : ''
+      };
+    }),
+    feedbackRounds: rounds
+  };
 }
 
 /* ------------------------------------------------------------------ */
@@ -2999,7 +3028,109 @@ function handleChecklistAdmin(body) {
   var items = readChecklistItems();
   var common = {};
   items.forEach(function (it) { var t = readCkCommon(it.id); if (t) common[it.id] = t; });
-  return { ok: true, items: items, entries: readChecklistEntries(), common: common, classes: REG_CLASSES };
+  return { ok: true, items: items, entries: readChecklistEntries(), common: common, classes: REG_CLASSES, statusMails: readLastFileStatusMails() };
+}
+
+/** { GROUPCODE: ISO time of the last "tình hình nộp file" email sent } from the mail log. */
+function readLastFileStatusMails() {
+  var rows = getOrCreateSheet(MAIL_LOG_SHEET, MAIL_LOG_HEADERS).getDataRange().getValues();
+  var h = rows[0];
+  var iType = h.indexOf('type'), iCode = h.indexOf('group_code'), iTs = h.indexOf('timestamp'), iRes = h.indexOf('result');
+  var out = {};
+  for (var i = 1; i < rows.length; i++) {
+    if (String(rows[i][iType]) !== 'file_status' || String(rows[i][iRes]) !== 'sent') continue;
+    var ts = rows[i][iTs];
+    var iso = ts instanceof Date ? ts.toISOString() : String(ts);
+    var code = String(rows[i][iCode]).toUpperCase();
+    if (!out[code] || out[code] < iso) out[code] = iso;
+  }
+  return out;
+}
+
+/**
+ * "Tình hình nộp file" email for one group: every assigned file with the
+ * time it was received and its file names. Complete -> progress note and the
+ * files still to come; missing -> ask the group to check Moodle and reply.
+ */
+function buildFileStatusEmail(g, ck, assignedIds, message) {
+  var files = ck.files;
+  var assigned = files.filter(function (f) { return assignedIds.indexOf(f.id) !== -1; });
+  var upcoming = files.filter(function (f) { return assignedIds.indexOf(f.id) === -1 && !f.submittedAt; });
+  var missing = assigned.filter(function (f) { return !f.submittedAt; });
+  var received = files.filter(function (f) { return f.submittedAt; });
+  var label = function (f) { return 'File ' + f.index + ' · ' + f.name; };
+  var cell = 'padding:9px 12px;border-bottom:1px solid #e2e8f0;vertical-align:top;font-size:13px';
+  var rows = assigned.concat(files.filter(function (f) { return assignedIds.indexOf(f.id) === -1 && f.submittedAt; })).map(function (f) {
+    return '<tr><td style="' + cell + ';width:42%;font-weight:600;color:#0f172a">' + htmlEsc(label(f)) + '</td>' +
+      (f.submittedAt
+        ? '<td style="' + cell + ';color:#166534"><b>&#10003; ' + htmlEsc(formatVnTime(f.submittedAt)) + '</b>' +
+          (f.fileNames.length ? '<br><span style="color:#64748b;font-family:Consolas,Menlo,monospace;font-size:12px;word-break:break-all">' + f.fileNames.map(htmlEsc).join('<br>') + '</span>' : '') + '</td>'
+        : '<td style="' + cell + ';color:#b45309"><b>Chưa ghi nhận</b></td>') + '</tr>';
+  }).join('');
+  var box = function (bg, border, color, inner) {
+    return '<div style="margin:0 0 18px;padding:13px 16px;border-radius:8px;background:' + bg + ';border-left:3px solid ' + border + ';color:' + color + ';font-size:13.5px;line-height:1.7">' + inner + '</div>';
+  };
+  var upcomingText = upcoming.length
+    ? 'Sắp tới nhóm còn ' + upcoming.length + ' file cần nộp: <b>' + upcoming.map(function (f) { return htmlEsc(label(f)); }).join('</b>, <b>') + '</b>. Thông tin chi tiết và thời hạn sẽ được thông báo trên Moodle.'
+    : '';
+  var status = missing.length
+    ? box('#fffbeb', '#d97706', '#78350f',
+        'Hệ thống <b>chưa ghi nhận</b> ' + missing.length + ' file: <b>' + missing.map(function (f) { return htmlEsc(label(f)); }).join('</b>, <b>') + '</b>.<br>' +
+        'Nhóm vui lòng kiểm tra lại trên Moodle xem bài đã nộp thành công chưa (trạng thái <i>Submitted for grading</i>). ' +
+        'Nếu nhóm đã nộp mà vẫn thấy thiếu, hoặc thông tin file / thời gian ở trên chưa đúng, vui lòng phản hồi qua email <a href="mailto:' + REG_CC_EMAIL + '" style="color:#92400e">' + REG_CC_EMAIL + '</a> hoặc nhắn tin, kèm tên file và thời gian nộp để được kiểm tra lại.')
+    : box('#f0fdf4', '#16a34a', '#166534',
+        '<b>Nhóm đã nộp đủ ' + assigned.length + ' file</b> đã giao đến thời điểm này. Cảm ơn nhóm đã nộp đầy đủ.' + (upcomingText ? '<br>' + upcomingText : ''));
+  var html = '<p style="margin:0 0 14px">Chào nhóm <b>' + htmlEsc(g.groupName) + '</b> (mã ' + htmlEsc(g.groupCode) + '),</p>' +
+    '<p style="margin:0 0 16px">Đây là tình hình nộp file đồ án của nhóm, ghi nhận từ các bài nộp trên Moodle đến <b>' + htmlEsc(formatVnTime(new Date())) + '</b>. ' +
+    'Đã ghi nhận <b>' + received.length + '/' + files.length + '</b> file.</p>' +
+    sectionTitle('CÁC FILE ĐÃ NHẬN') +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 20px;border:1px solid #e2e8f0;border-radius:8px">' + rows + '</table>' +
+    status +
+    (missing.length && upcomingText ? '<p style="margin:0 0 16px;font-size:13.5px">' + upcomingText + '</p>' : '') +
+    (message ? '<div style="margin:0 0 16px;white-space:pre-line">' + htmlEsc(message) + '</div>' : '') +
+    (missing.length ? '' : '<p style="margin:0 0 6px;color:#64748b;font-size:13px">Nếu thông tin file hoặc thời gian ở trên chưa đúng, vui lòng phản hồi qua email ' + REG_CC_EMAIL + ' hoặc nhắn tin để được kiểm tra lại.</p>') +
+    emailButton(SITE_URL + 'tien-do.html#da-nop', 'Xem trên cổng Nộp tiến độ');
+  var subject = '[IS355] ' + (missing.length ? 'Kiểm tra file đồ án đã nộp' : 'Xác nhận đã nhận đủ file đồ án') + ' - Nhóm ' + g.groupName;
+  return { subject: subject, html: emailShell('Đã ghi nhận ' + received.length + '/' + files.length + ' file đồ án của nhóm ' + g.groupName, 'Tình hình nộp file đồ án', html, 'Email từ hệ thống IS355 - IT Learning Hub. Nhóm có thể trả lời email này hoặc gửi tới ' + REG_CC_EMAIL + ' nếu cần kiểm tra lại.'), complete: !missing.length };
+}
+
+/**
+ * Admin: email each group its file status. { assigned: [itemId], groupCodes, message, preview, previewCode }
+ * Replies go to the course email (replyTo), the course email is CC'd.
+ */
+function handleSendFileStatus(body) {
+  var keyError = checkAdminKey(body);
+  if (keyError) return { ok: false, message: keyError };
+  var assigned = (Array.isArray(body.assigned) ? body.assigned : []).map(function (x) { return regClean(x, 24); }).filter(Boolean);
+  if (!assigned.length) return { ok: false, message: 'Chọn ít nhất 1 file đã giao.' };
+  var wanted = Array.isArray(body.groupCodes) ? body.groupCodes.map(function (c) { return String(c).toUpperCase(); }) : null;
+  var groups = readGroups().groups.filter(function (g) { return g.reviewStatus !== 'rejected' && (!wanted || wanted.indexOf(g.groupCode) !== -1); });
+  if (!groups.length) return { ok: false, message: 'Không có nhóm nào để gửi.' };
+  var message = String(body.message || '').trim().slice(0, 2000);
+  var progress = latestProgress();
+  var jobs = groups.map(function (g) {
+    return { g: g, mail: buildFileStatusEmail(g, groupChecklist(g.groupCode, progress[g.groupCode] || {}), assigned, message) };
+  });
+  var complete = jobs.filter(function (j) { return j.mail.complete; }).length;
+  if (body.preview) {
+    var pick = jobs.filter(function (j) { return j.g.groupCode === String(body.previewCode || '').toUpperCase(); })[0] || jobs[0];
+    var to = pick.g.members.map(function (m) { return m.email; });
+    return { ok: true, count: jobs.length, complete: complete, missing: jobs.length - complete, subject: pick.mail.subject, html: pick.mail.html, recipients: to.concat([REG_CC_EMAIL]), groupName: pick.g.groupName };
+  }
+  if (jobs.length > MailApp.getRemainingDailyQuota()) return { ok: false, message: 'Không đủ hạn mức email hôm nay.' };
+  var sent = 0, lastErr = '';
+  jobs.forEach(function (j) {
+    var to = j.g.members.map(function (m) { return m.email; });
+    try {
+      MailApp.sendEmail({ to: to[0], cc: to.slice(1).concat([REG_CC_EMAIL]).join(','), replyTo: REG_CC_EMAIL, subject: j.mail.subject, name: MAIL_SENDER_NAME, htmlBody: j.mail.html });
+      sent++;
+      logMail('file_status', j.g.groupCode, j.g.members.map(function (m) { return m.studentId; }), to, j.mail.subject, 'sent');
+    } catch (err) {
+      lastErr = mailErrorMessage(err);
+      logMail('file_status', j.g.groupCode, j.g.members.map(function (m) { return m.studentId; }), to, j.mail.subject, 'failed: ' + lastErr);
+    }
+  });
+  return { ok: true, sent: sent, failed: jobs.length - sent, message: lastErr, statusMails: readLastFileStatusMails() };
 }
 
 /** Admin: replace the item list (names, weeks, lab/project, per-class open/due). */
@@ -3280,6 +3411,7 @@ var SMART_ACTIONS = {
   sendChecklistFeedback: handleSendChecklistFeedback,
   saveChecklistCommon: handleSaveChecklistCommon,
   importChecklistFeedback: handleImportChecklistFeedback,
+  sendFileStatus: handleSendFileStatus,
   resolveRef: handleResolveRef,
   verifyOtp: handleVerifyOtp,
   portalState: handlePortalState,

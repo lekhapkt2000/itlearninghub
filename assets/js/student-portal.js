@@ -49,7 +49,13 @@
     fnContrib: 'Member contributions', fnContribHint: 'Percentages must add up to 100%. Write the main tasks each member did.',
     fnPct: '%', fnTasks: 'Main tasks', fnTotal: 'Total', fnPledge: 'Our group confirms this is our own work. We did not copy another group\'s work, and every source, library or code sample we used is cited in the report.',
     fnNote: 'Note', fnSubmit: 'Submit final project', fnSubmitted: 'Submitted. A confirmation email was sent to the whole group.', fnSubmittedNoMail: 'Submitted, but the confirmation email could not be sent.',
-    readme: 'README', readmeOk: 'found', links: { report: 'Report', slides: 'Slides', video: 'Video', demo: 'DApp' }, linkOk: 'opens without signing in'
+    readme: 'README', readmeOk: 'found', links: { report: 'Report', slides: 'Slides', video: 'Video', demo: 'DApp' }, linkOk: 'opens without signing in',
+    // handed-in project files (from Moodle)
+    ckTitle: 'Project files your group has handed in',
+    ckHint: 'Recorded from your group\'s Moodle submissions. It is updated in batches, so it can lag behind Moodle by a few days. If a file you handed in is missing here, check its status on Moodle first.',
+    ckCount: function (a, b) { return a + '/' + b + ' files recorded'; }, ckFile: 'File', ckWeek: 'Week',
+    ckDone: 'Handed in', ckNotYet: 'Not recorded yet', ckReviewed: 'Comments emailed', ckRounds: 'Progress feedback emailed to your group',
+    ckEmpty: 'No files recorded yet.'
   } : {
     signInTitle: 'Đăng nhập bằng MSSV',
     signInHint: 'Hệ thống gửi mã 6 số tới email trường (MSSV@gm.uit.edu.vn). Phiên đăng nhập giữ 6 giờ trên trình duyệt này.',
@@ -83,7 +89,12 @@
     fnContrib: 'Đóng góp của thành viên', fnContribHint: 'Tổng tỉ lệ phải bằng 100%. Ghi các công việc chính mỗi thành viên đã làm.',
     fnPct: '%', fnTasks: 'Công việc chính', fnTotal: 'Tổng', fnPledge: 'Nhóm cam kết sản phẩm nộp là bài làm của nhóm, không sao chép bài làm của nhóm khác; mọi tài liệu, thư viện và mã nguồn tham khảo đều được trích dẫn trong báo cáo.',
     fnNote: 'Ghi chú thêm', fnSubmit: 'Nộp đồ án', fnSubmitted: 'Đã nộp. Email xác nhận đã gửi tới cả nhóm.', fnSubmittedNoMail: 'Đã nộp, nhưng chưa gửi được email xác nhận.',
-    readme: 'README', readmeOk: 'Có', links: { report: 'Báo cáo', slides: 'Slide', video: 'Video', demo: 'DApp' }, linkOk: 'Mở được không cần đăng nhập'
+    readme: 'README', readmeOk: 'Có', links: { report: 'Báo cáo', slides: 'Slide', video: 'Video', demo: 'DApp' }, linkOk: 'Mở được không cần đăng nhập',
+    ckTitle: 'File đồ án nhóm đã nộp',
+    ckHint: 'Ghi nhận từ các bài nộp trên Moodle của nhóm. Dữ liệu được cập nhật theo đợt nên có thể chậm hơn Moodle vài ngày. Nếu thấy thiếu file đã nộp, kiểm tra lại trạng thái bài nộp trên Moodle trước.',
+    ckCount: function (a, b) { return 'Đã ghi nhận ' + a + '/' + b + ' file'; }, ckFile: 'File', ckWeek: 'Tuần',
+    ckDone: 'Đã nộp', ckNotYet: 'Chưa ghi nhận', ckReviewed: 'Đã gửi nhận xét qua email', ckRounds: 'Góp ý tiến độ đã gửi qua email cho nhóm',
+    ckEmpty: 'Chưa có file nào được ghi nhận.'
   };
 
   var authEl = document.getElementById('pt-auth');
@@ -236,7 +247,7 @@
       mainEl.innerHTML = '<div class="inline-warning">' + T.pgNeedGroup + ' <a href="dang-ky-de-tai.html"><b>' + T.register + ' ›</b></a></div>';
       return;
     }
-    mainEl.innerHTML = me.milestones.map(function (m) {
+    mainEl.innerHTML = filesCard() + me.milestones.map(function (m) {
       var s = me.progress[m.id];
       if (m.final && me.final) return finalCard(m, s);
       var late = m.deadline && Date.now() > new Date(m.deadline).getTime();
@@ -253,6 +264,31 @@
         '<div data-check>' + (s ? checkHtml(s.check) : '') + '</div></section>';
     }).join('');
     mainEl.querySelectorAll('.pt-final').forEach(updateContribTotal);
+  }
+
+  /* Which project files the group has handed in on Moodle (recorded by the course), with times and file names. */
+  function filesCard() {
+    var ck = me.checklist;
+    if (!ck || !ck.files || !ck.files.length) return '';
+    var done = ck.files.filter(function (f) { return f.submittedAt; }).length;
+    var rows = ck.files.map(function (f) {
+      var ok = !!f.submittedAt;
+      return '<li class="pt-file' + (ok ? ' is-done' : '') + '">' +
+        '<div class="pt-file-no">' + T.ckFile + ' ' + f.index + (f.week ? '<small>' + T.ckWeek + ' ' + esc(f.week) + '</small>' : '') + '</div>' +
+        '<div class="pt-file-body"><b>' + esc(f.name) + '</b>' +
+        (ok
+          ? '<span class="pt-file-when">✓ ' + T.ckDone + ': ' + esc(fmt(f.submittedAt)) + '</span>' +
+            (f.fileNames.length ? '<span class="pt-file-names">' + f.fileNames.map(esc).join('<br>') + '</span>' : '') +
+            (f.reviewedAt ? '<span class="pt-file-rv">✉ ' + T.ckReviewed + ' ' + esc(fmt(f.reviewedAt)) + '</span>' : '')
+          : '<span class="pt-file-when pt-muted">' + T.ckNotYet + '</span>') +
+        '</div></li>';
+    }).join('');
+    var rounds = (ck.feedbackRounds || []).map(function (r) { return esc(r.round) + ' (' + esc(fmt(r.sentAt, { day: '2-digit', month: '2-digit', year: 'numeric' })) + ')'; });
+    return '<section class="reg-card pt-files" id="da-nop"><div class="reg-card-head"><h2>' + T.ckTitle + '</h2><span class="pt-final-tag">' + esc(T.ckCount(done, ck.files.length)) + '</span></div>' +
+      '<p class="reg-card-hint">' + T.ckHint + '</p>' +
+      '<ul class="pt-file-list">' + rows + '</ul>' +
+      (rounds.length ? '<p class="pt-status" style="margin:14px 0 0">✉ ' + T.ckRounds + ': <b>' + rounds.join(', ') + '</b></p>' : '') +
+      '</section>';
   }
 
   /* Final submission: the 5 deliverables + contributions + pledge, locked after the deadline. */
